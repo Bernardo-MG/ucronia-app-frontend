@@ -18,22 +18,22 @@ export const routes: Routes = [
         // Log in form
         path: 'login',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./access/login/containers/login/login.container').then(m => m.LoginContainer)
+        loadComponent: () => import('./access/login/login/login').then(m => m.Login)
       },
       {
         // Password reset form
         path: 'password/reset',
         canActivate: [LoggedOutGuard],
         children: [
-          { path: '', loadComponent: () => import('./access/password-reset/containers/password-reset-request/password-reset-request.container').then(m => m.PasswordResetRequestContainer) },
-          { path: ':token', loadComponent: () => import('./access/password-reset/containers/password-reset/password-reset.container').then(m => m.PasswordResetContainer) }
+          { path: '', loadComponent: () => import('./access/password-reset/password-reset-request/password-reset-request').then(m => m.PasswordResetRequest) },
+          { path: ':token', loadComponent: () => import('./access/password-reset/password-reset/password-reset').then(m => m.PasswordReset) }
         ]
       },
       {
         // Activate user form
         path: 'users/activate',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./access/user-activation/containers/user-activation/user-activation.container').then(m => m.UserActivationContainer)
+        loadComponent: () => import('./access/user-activation/user-activation/user-activation.container').then(m => m.UserActivation)
       },
       // Private routes
       // Security
