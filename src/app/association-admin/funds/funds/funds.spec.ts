@@ -3,24 +3,22 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { FeeReportService } from '@app/association-admin/fees/core/fee-report-service/fee-report-service';
-import { FeeCalendarService } from '../fee-calendar-service/fee-calendar-service';
-import { FeeService } from '../fee-service/fee-service';
-import { FeeList } from './fee-list';
+import { TransactionCalendarService } from '@app/association-admin/funds/transaction-calendar-service/transaction-calendar-service';
+import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
+import { Funds } from './funds';
 
-describe('FeeList', () => {
-  let component: FeeList;
-  let fixture: ComponentFixture<FeeList>;
+describe('Funds', () => {
+  let component: Funds;
+  let fixture: ComponentFixture<Funds>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FeeList
+        Funds
       ],
       providers: [
-        FeeCalendarService,
-        FeeService,
-        FeeReportService,
+        TransactionCalendarService,
+        TransactionBalanceService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
@@ -29,7 +27,7 @@ describe('FeeList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeList);
+    fixture = TestBed.createComponent(Funds);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

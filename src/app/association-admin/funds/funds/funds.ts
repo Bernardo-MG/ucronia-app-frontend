@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TransactionBalanceChartContainer } from '@app/association-admin/funds/core/transaction-balance-chart/transaction-balance-chart';
+import { TransactionBalanceChartContainer } from '@app/association-admin/funds/transaction-balance-chart/transaction-balance-chart';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { CalendarMonth } from '@app/shared/calendar/components/calendar-month/calendar-month';

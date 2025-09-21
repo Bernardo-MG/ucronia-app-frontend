@@ -1,6 +1,6 @@
 
 import { Component, inject, OnDestroy } from '@angular/core';
-import { TransactionBalanceService } from '@app/association-admin/funds/core/transaction-balance-service/transaction-balance-service';
+import { TransactionBalanceService } from '@app/association-admin/funds/transaction-balance-service/transaction-balance-service';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 import { CardModule } from 'primeng/card';

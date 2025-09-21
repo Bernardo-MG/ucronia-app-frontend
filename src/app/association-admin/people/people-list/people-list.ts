@@ -1,7 +1,7 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MembershipEvolutionChartWidgetContainer } from '@app/association-admin/people/core/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
+import { MembershipEvolutionChartWidgetContainer } from '@app/association-admin/people/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { Active } from '@app/domain/person/active';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
