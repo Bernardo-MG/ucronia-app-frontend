@@ -25,9 +25,9 @@ export class PeopleCreationForm extends FormComponent<Person> {
   }
 
   constructor() {
-    const fb = inject(FormBuilder);
-
     super();
+
+    const fb = inject(FormBuilder);
 
     const membership = new Membership();
     membership.active = true;
@@ -37,7 +37,7 @@ export class PeopleCreationForm extends FormComponent<Person> {
         firstName: [null],
         lastName: ['']
       }),
-      membership: membership
+      membership: [membership]
     });
   }
 

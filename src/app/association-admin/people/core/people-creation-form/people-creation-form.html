@@ -7,9 +7,9 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('firstName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
@@ -21,9 +21,9 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('lastName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
