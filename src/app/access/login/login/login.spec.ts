@@ -1,19 +1,19 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute, provideRouter, Router } from '@angular/router';
-import { LoginService } from '../../services/login.service';
-import { LoginContainer } from './login.container';
-import { UserLogin } from '../../models/user-login';
+import { provideRouter, Router } from '@angular/router';
+import { LoginService } from '../login-service';
+import { UserLogin } from '../models/user-login';
+import { Login } from './login';
 
-describe('LoginContainer', () => {
-  let component: LoginContainer;
-  let fixture: ComponentFixture<LoginContainer>;
+describe('Login', () => {
+  let component: Login;
+  let fixture: ComponentFixture<Login>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LoginContainer
+        Login
       ],
       providers: [
         LoginService,
@@ -26,7 +26,7 @@ describe('LoginContainer', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LoginContainer);
+    fixture = TestBed.createComponent(Login);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

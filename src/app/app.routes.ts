@@ -18,7 +18,7 @@ export const routes: Routes = [
         // Log in form
         path: 'login',
         canActivate: [LoggedOutGuard],
-        loadComponent: () => import('./access/login/containers/login/login.container').then(m => m.LoginContainer)
+        loadComponent: () => import('./access/login/login/login').then(m => m.Login)
       },
       {
         // Password reset form

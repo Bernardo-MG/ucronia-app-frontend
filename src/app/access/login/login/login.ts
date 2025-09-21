@@ -2,9 +2,9 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
-import { LoginFormComponent } from '../../components/login-form/login-form.component';
-import { UserLogin } from '../../models/user-login';
-import { LoginService } from '../../services/login.service';
+import { LoginForm } from '../login-form/login-form';
+import { LoginService } from '../login-service';
+import { UserLogin } from '../models/user-login';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.
@@ -24,10 +24,10 @@ import { LoginService } from '../../services/login.service';
  */
 @Component({
   selector: 'login-card',
-  imports: [RouterModule, CardModule, LoginFormComponent],
-  templateUrl: './login.container.html'
+  imports: [RouterModule, CardModule, LoginForm],
+  templateUrl: './login.html'
 })
-export class LoginContainer {
+export class Login {
 
   private readonly service = inject(LoginService);
 

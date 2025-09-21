@@ -3,7 +3,7 @@ import { AuthContainer, LoginStatus, SecurityDetails } from '@bernardo-mg/authen
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { UserLogin } from '../models/user-login';
+import { UserLogin } from './models/user-login';
 
 @Injectable({
   providedIn: "root"
