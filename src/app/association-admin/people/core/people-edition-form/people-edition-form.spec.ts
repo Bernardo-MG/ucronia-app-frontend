@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PeopleEditionForm } from './people-edition-form';
 
-describe('PeopleUpdateFormComponent', () => {
+describe('PeopleEditionForm', () => {
   let component: PeopleEditionForm;
   let fixture: ComponentFixture<PeopleEditionForm>;
 
