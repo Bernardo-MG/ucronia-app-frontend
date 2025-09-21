@@ -26,7 +26,7 @@ export const routes: Routes = [
         canActivate: [LoggedOutGuard],
         children: [
           { path: '', loadComponent: () => import('./access/password-reset/password-reset-request/password-reset-request').then(m => m.PasswordResetRequest) },
-          { path: ':token', loadComponent: () => import('./access/password-reset/containers/password-reset/password-reset.container').then(m => m.PasswordResetContainer) }
+          { path: ':token', loadComponent: () => import('./access/password-reset/password-reset/password-reset').then(m => m.PasswordReset) }
         ]
       },
       {
