@@ -9,7 +9,7 @@ const routes: Routes = [
       {
         path: 'people',
         canActivate: [ResourceGuard("person", "view")],
-        loadChildren: () => import('@app/association-admin/people/people.module').then(m => m.PeopleModule)
+        loadComponent: () => import('./people/core/people-list/people-list').then(m => m.PeopleList)
       },
       {
         path: 'library',
@@ -19,12 +19,12 @@ const routes: Routes = [
       {
         path: 'fees',
         canActivate: [ResourceGuard("fee", "view")],
-        loadChildren: () => import('@app/association-admin/fees/fees.module').then(m => m.FeesModule)
+        loadComponent: () => import('./fees/core/fee-list/fee-list').then(m => m.FeeList)
       },
       {
         path: 'funds',
         canActivate: [ResourceGuard("funds", "view")],
-        loadChildren: () => import('@app/association-admin/funds/funds.module').then(m => m.FundsModule)
+        loadComponent: () => import('./funds/core/funds/funds').then(m => m.Funds)
       }
     ]
   }
