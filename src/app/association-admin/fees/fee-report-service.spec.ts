@@ -1,7 +1,7 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { FeeReportService } from './fee-report-service/fee-report-service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { FeeReportService } from './fee-report-service';
 
 describe('FeeReportService', () => {
   let service: FeeReportService;

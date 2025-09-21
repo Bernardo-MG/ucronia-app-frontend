@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TransactionService } from './transaction-service/transaction-service';
+import { TransactionService } from './transaction-service';
 
 describe('TransactionService', () => {
   let service: TransactionService;

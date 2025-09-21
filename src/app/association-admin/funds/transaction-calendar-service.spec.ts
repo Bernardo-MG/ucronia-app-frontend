@@ -1,7 +1,7 @@
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { TransactionCalendarService } from './transaction-calendar-service/transaction-calendar-service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { TransactionCalendarService } from './transaction-calendar-service';
 
 describe('TransactionCalendarService', () => {
   let service: TransactionCalendarService;
