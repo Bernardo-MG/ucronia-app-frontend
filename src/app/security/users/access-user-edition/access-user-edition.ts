@@ -11,18 +11,18 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
-import { AccessUserForm } from '../../access-user-form/access-user-form';
+import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserMemberEditorComponent } from '../../components/access-user-member-editor/access-user-member-editor.component';
-import { AccessUserRolesEditor } from '../../access-user-roles-editor/access-user-roles-editor';
-import { UserUpdate } from '../../models/user-update';
-import { AccessUserService } from '../../access-user-service';
+import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
+import { UserUpdate } from '../models/user-update';
+import { AccessUserService } from '../access-user-service';
 
 @Component({
   selector: 'access-user-edition',
   imports: [CommonModule, CardModule, SkeletonModule, ButtonModule, AccessUserForm, ModalComponent, AccessUserRolesEditor, AccessUserMemberEditorComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
-  templateUrl: './access-user-edition.container.html'
+  templateUrl: './access-user-edition.html'
 })
-export class AccessUserEditionContainer extends InfoEditorStatusComponent<User> {
+export class AccessUserEdition extends InfoEditorStatusComponent<User> {
 
   private readonly service = inject(AccessUserService);
 

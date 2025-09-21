@@ -21,19 +21,19 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./roles/containers/access-role-list/access-role-list.container').then(m => m.AccessRoleListContainer),
+            loadComponent: () => import('./roles/access-role-list/access-role-list').then(m => m.AccessRoleList),
             canActivate: [ResourceGuard("role", "read")],
             data: { breadcrumb: '' }
           },
           {
             path: 'add',
-            loadComponent: () => import('./roles/containers/access-role-creation/access-role-creation.container').then(m => m.AccessRoleCreationContainer),
+            loadComponent: () => import('./roles/access-role-creation/access-role-creation').then(m => m.AccessRoleCreation),
             canActivate: [ResourceGuard("role", "create")],
             data: { breadcrumb: 'Registrar' }
           },
           {
             path: ':role',
-            loadComponent: () => import('./roles/containers/access-role-edition/access-role-edition.container').then(m => m.AccessRoleInfoEditionContainer),
+            loadComponent: () => import('./roles/access-role-edition/access-role-edition').then(m => m.AccessRoleInfoEdition),
             canActivate: [ResourceGuard("role", "read")],
             data: { breadcrumb: 'Editar' }
           }
@@ -46,19 +46,19 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./users/containers/access-user-list/access-user-list.container').then(m => m.AccessListContainer),
+            loadComponent: () => import('./users/access-user-list/access-user-list').then(m => m.AccessList),
             canActivate: [ResourceGuard("user", "read")],
             data: { breadcrumb: '' }
           },
           {
             path: 'add',
-            loadComponent: () => import('./users/containers/access-user-creation/access-user-creation.container').then(m => m.AccessUserCreationContainer),
+            loadComponent: () => import('./users/access-user-creation/access-user-creation').then(m => m.AccessUserCreation),
             canActivate: [ResourceGuard("user", "create")],
             data: { breadcrumb: 'Registrar' }
           },
           {
             path: ':user',
-            loadComponent: () => import('./users/containers/access-user-edition/access-user-edition.container').then(m => m.AccessUserEditionContainer),
+            loadComponent: () => import('./users/access-user-edition/access-user-edition').then(m => m.AccessUserEdition),
             canActivate: [ResourceGuard("user", "read")],
             data: { breadcrumb: 'Editar' }
           }
@@ -71,13 +71,13 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./user-tokens/containers/user-token-list/user-token-list.container').then(m => m.UserTokenListContainer),
+            loadComponent: () => import('./user-tokens/user-token-list/user-token-list').then(m => m.UserTokenList),
             canActivate: [ResourceGuard("user_token", "read")],
             data: { breadcrumb: '' }
           },
           {
             path: ':token',
-            loadComponent: () => import('./user-tokens/containers/user-token-edition/user-token-edition.container').then(m => m.UserTokenEditionContainer),
+            loadComponent: () => import('./user-tokens/user-token-edition/user-token-edition').then(m => m.UserTokenEdition),
             canActivate: [ResourceGuard("user_token", "read")],
             data: { breadcrumb: 'Editar' }
           }
@@ -87,7 +87,7 @@ const routes: Routes = [
         // Security audit
         path: 'audit',
         canActivate: [ResourceGuard("user", "view")],
-        loadComponent: () => import('./audit/containers/access-audit-login/access-audit-login.container').then(m => m.AccessAuditLoginContainer)
+        loadComponent: () => import('./audit/access-audit-login/access-audit-login').then(m => m.AccessAuditLogin)
       }
     ]
   }
