@@ -56,7 +56,6 @@ export class FeeCalendar implements OnChanges {
 
       if (range?.years?.length) {
         this.index = range.years.indexOf(this.year);
-        console.log("years: " + range.years + " year: " + this.year + " index: " +this.index)
       }
     }
   }

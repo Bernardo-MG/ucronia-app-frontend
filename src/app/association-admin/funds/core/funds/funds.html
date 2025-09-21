@@ -35,7 +35,7 @@
       [disabled]="!createable" aria-label="Nueva transacción" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <shared-calendar-month [events]="events" [month]="month" [selectionMonths]="selectionMonths"
-    [waiting]="loadingCalendar" (changeMonth)="onChangeMonth($event)" (pickDate)="onPickDate($event)" />
+    [waiting]="loadingCalendar" (changeMonth)="onChangeMonth($event)" (pickDate)="onShowInfo($event)" />
 </p-panel>
 <p-drawer [(visible)]="showing" position="full">
   <assoc-transaction-info [transaction]="selectedData" />

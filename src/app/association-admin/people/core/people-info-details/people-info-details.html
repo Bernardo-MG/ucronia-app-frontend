@@ -1,0 +1,55 @@
+<!-- First name -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Nombre</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().name.firstName}}
+    }
+  </div>
+</div>
+<!-- Last name -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Apellidos</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().name.lastName}}
+    }
+  </div>
+</div>
+<!-- Identifier -->
+<div class="row">
+  <div class="col-sm-3 text-primary">DNI</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().identifier}}
+    }
+  </div>
+</div>
+<!-- Birth date -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Fecha de nacimiento</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().birthDate | date:'yyyy-MM-dd'}}
+    }
+  </div>
+</div>
+<!-- Phone -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Teléfono</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().phone}}
+    }
+  </div>
+</div>

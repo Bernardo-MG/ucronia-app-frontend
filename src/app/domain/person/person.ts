@@ -5,7 +5,7 @@ export class Person {
   number = -1;
   identifier = '';
   phone = '';
-  birthDate = '';
+  birthDate = new Date();
   name = new PersonName();
   membership: Membership | undefined = undefined;
 }

@@ -1,0 +1,33 @@
+<!-- Info -->
+<p-card class="mb-2">
+  <!-- Person details -->
+  <assoc-people-info-details [data]="data()" />
+</p-card>
+<p-card>
+  <!-- Membership -->
+  @if (isMember) {
+    <div class="row">
+      <div class="col-sm-2 text-primary">Activo</div>
+      <div class="col-sm-10">
+        @if (isActive) {
+        <span class="pi pi-check text-success"></span>
+        } @else {
+        <span class="pi pi-times text-warning"></span>
+        }
+      </div>
+    </div>
+  }@else {
+    No es socio
+  }
+  <!-- Renewal -->
+  <div class="row">
+    <div class="col-sm-2 text-primary">Renovación</div>
+    <div class="col-sm-10">
+      @if (isRenewed) {
+      <span class="pi pi-check text-success"></span>
+      } @else {
+      <span class="pi pi-times text-warning"></span>
+      }
+    </div>
+  </div>
+</p-card>

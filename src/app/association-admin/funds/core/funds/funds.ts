@@ -135,7 +135,7 @@ export class Funds {
     this.loadCalendar();
   }
 
-  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
+  public onShowInfo(event: CalendarEvent<{ transactionId: number }>) {
     if (event.meta) {
       this.service.getOne(event.meta.transactionId)
         .subscribe(transaction => this.selectedData = transaction);

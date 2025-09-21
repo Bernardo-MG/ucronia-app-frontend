@@ -9,13 +9,12 @@ import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { EMPTY, Observable } from 'rxjs';
 import { MemberStatusSelectComponent } from '../member-status-select/member-status-select.component';
 
 @Component({
   selector: 'assoc-member-select-stepper',
-  imports: [FormsModule, ButtonModule, CardModule, ToggleSwitchModule, ReactiveFormsModule, StepperModule, MemberStatusSelectComponent, SelectionList],
+  imports: [FormsModule, ButtonModule, CardModule, ReactiveFormsModule, StepperModule, MemberStatusSelectComponent, SelectionList],
   templateUrl: './member-select-stepper.html'
 })
 export class MemberSelectStepper implements OnInit {
