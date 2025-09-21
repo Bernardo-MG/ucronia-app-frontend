@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { LoggedInGuard, LoggedOutGuard } from '@bernardo-mg/authentication';
+import { LoggedInGuard, LoggedOutGuard, ResourceGuard } from '@bernardo-mg/authentication';
 
 
 export const routes: Routes = [
@@ -10,27 +10,30 @@ export const routes: Routes = [
     children: [
       // Public routes
       {
-        // Logged out
+        // Frontpage
         path: '',
-        loadChildren: () => import('@app/frontpage/frontpage.module').then(m => m.FrontpageModule)
+        loadComponent: () => import('./frontpage/containers/frontpage/frontpage.container').then(m => m.FrontpageComponent)
       },
       {
         // Log in form
         path: 'login',
         canActivate: [LoggedOutGuard],
-        loadChildren: () => import('@app/access/login/login.module').then(m => m.LoginModule)
+        loadComponent: () => import('./access/login/containers/login/login.container').then(m => m.LoginContainer)
       },
       {
         // Password reset form
         path: 'password/reset',
         canActivate: [LoggedOutGuard],
-        loadChildren: () => import('@app/access/password-reset/password-reset.module').then(m => m.PasswordResetModule)
+        children: [
+          { path: '', loadComponent: () => import('./access/password-reset/containers/password-reset-request/password-reset-request.container').then(m => m.PasswordResetRequestContainer) },
+          { path: ':token', loadComponent: () => import('./access/password-reset/containers/password-reset/password-reset.container').then(m => m.PasswordResetContainer) }
+        ]
       },
       {
         // Activate user form
         path: 'users/activate',
         canActivate: [LoggedOutGuard],
-        loadChildren: () => import('@app/access/user-activation/user-activation.module').then(m => m.UserActivationModule)
+        loadComponent: () => import('./access/user-activation/containers/user-activation/user-activation.container').then(m => m.UserActivationContainer)
       },
       // Private routes
       // Security
@@ -38,7 +41,23 @@ export const routes: Routes = [
         // Account
         path: 'account',
         canActivate: [LoggedInGuard],
-        loadChildren: () => import('@app/account/account.module').then(m => m.AccountModule)
+        children: [
+          {
+            path: '',
+            redirectTo: 'profile',
+            pathMatch: 'full'
+          },
+          {
+            path: 'profile',
+            loadComponent: () => import('./account/containers/account-profile-frontpage/account-profile-frontpage.container').then(m => m.AccountProfileFrontpageContainer),
+            data: { breadcrumb: 'Perfil' }
+          },
+          {
+            path: 'password',
+            loadComponent: () => import('./account/containers/account-password-change/account-password-change.container').then(m => m.AccountPasswordChangeContainer),
+            data: { breadcrumb: 'Contraseña' }
+          }
+        ]
       },
       {
         // Association admin
@@ -59,9 +78,10 @@ export const routes: Routes = [
         loadChildren: () => import('@app/security/security.module').then(m => m.SecurityModule)
       },
       {
+        // Settings
         path: 'settings',
-        canActivate: [LoggedInGuard],
-        loadChildren: () => import('@app/settings/settings.module').then(m => m.SettingsModule)
+        canActivate: [LoggedInGuard, ResourceGuard("association_settings", "view")],
+        loadComponent: () => import('./settings/containers/settings-edition/settings-edition.container').then(m => m.SettingsInfoEditorContainer)
       }
     ]
   }
