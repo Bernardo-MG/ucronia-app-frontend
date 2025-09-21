@@ -1,16 +1,16 @@
 
 import { Component, inject } from '@angular/core';
-import { FrontpageService } from '@app/frontpage/services/frontpage.service';
 import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
 import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
+import { FrontpageService } from '../frontpage-service';
 
 @Component({
   selector: 'app-frontpage-frontpage',
   imports: [TeamupCalendarComponent, GoogleMapsComponent],
-  templateUrl: './frontpage.container.html',
-  styleUrls: ['./frontpage.container.sass']
+  templateUrl: './frontpage.html',
+  styleUrls: ['./frontpage.sass']
 })
-export class FrontpageComponent {
+export class Frontpage {
 
   private service = inject(FrontpageService);
 

@@ -1,22 +1,22 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FrontpageComponent } from './frontpage.container';
+import { Frontpage } from './frontpage';
 
-describe('FrontpageComponent', () => {
-  let component: FrontpageComponent;
-  let fixture: ComponentFixture<FrontpageComponent>;
+describe('Frontpage', () => {
+  let component: Frontpage;
+  let fixture: ComponentFixture<Frontpage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FrontpageComponent
+        Frontpage
       ],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FrontpageComponent);
+    fixture = TestBed.createComponent(Frontpage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

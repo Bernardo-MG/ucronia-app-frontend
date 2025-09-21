@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { FrontpageService } from './frontpage.service';
+import { FrontpageService } from './frontpage-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FrontpageService', () => {
