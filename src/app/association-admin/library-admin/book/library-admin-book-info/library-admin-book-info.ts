@@ -2,7 +2,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LibraryBookLendingsComponent } from '@app/association/library/components/library-book-lendings/library-book-lendings.component';
+import { LibraryBookLendings } from '@app/association/library/library-book-lendings/library-book-lendings';
 import { BookType } from '@app/domain/library/book-type';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
@@ -20,7 +20,7 @@ import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'assoc-library-admin-book-info',
-  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, ToastModule, LibraryBookLendingsComponent, DatePipe],
+  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, ToastModule, LibraryBookLendings, DatePipe],
   templateUrl: './library-admin-book-info.html',
   providers: [ConfirmationService, MessageService]
 })
