@@ -47,7 +47,7 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
       this.chart.destroy();
     }
 
-    const labels = balance.map(b => b.date);
+    const labels = balance.map(b => b.month);
     const totals = balance.map(b => b.total);
 
     const data = {

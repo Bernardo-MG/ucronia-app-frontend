@@ -52,7 +52,7 @@ export class MembershipEvolutionChartWidgetContainer {
     // Read balance range
     this.readingRange = true;
     this.service.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.months = b.map(v => v.date);
+      this.months = b.map(v => v.month);
       this.startMonth = this.months[0];
       this.endMonth = this.months[this.months.length - 1];
       this.readingRange = false;
