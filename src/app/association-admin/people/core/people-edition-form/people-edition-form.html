@@ -43,19 +43,17 @@
     }
   </div>
   <!-- Identifier -->
-  <div formGroupName="name">
-    <p-floatlabel variant="in" class="mb-2 d-flex">
-      <input pInputText type="text" id="identifierInput" formControlName="identifier"
-        [invalid]="isFieldInvalid('identifier')" class="w-100" />
-      <label for="identifierInput">DNI</label>
-    </p-floatlabel>
-    <div class="mb-2">
-      @for (failure of failures().getFailures('identifier'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
-      }
-    </div>
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="identifierInput" formControlName="identifier"
+      [invalid]="isFieldInvalid('identifier')" class="w-100" />
+    <label for="identifierInput">DNI</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('identifier'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
   <!-- Phone -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
