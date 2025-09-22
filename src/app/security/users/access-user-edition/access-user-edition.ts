@@ -12,14 +12,14 @@ import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { Observable } from 'rxjs';
 import { AccessUserForm } from '../access-user-form/access-user-form';
-import { AccessUserMemberEditorComponent } from '../../components/access-user-member-editor/access-user-member-editor.component';
+import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
-import { UserUpdate } from '../models/user-update';
 import { AccessUserService } from '../access-user-service';
+import { UserUpdate } from '../models/user-update';
 
 @Component({
   selector: 'access-user-edition',
-  imports: [CommonModule, CardModule, SkeletonModule, ButtonModule, AccessUserForm, ModalComponent, AccessUserRolesEditor, AccessUserMemberEditorComponent, ControlButtonsComponent, ResponsiveShortColumnsDirective],
+  imports: [CommonModule, CardModule, SkeletonModule, ButtonModule, AccessUserForm, ModalComponent, AccessUserRolesEditor, AccessUserMemberEditor, ControlButtonsComponent, ResponsiveShortColumnsDirective],
   templateUrl: './access-user-edition.html'
 })
 export class AccessUserEdition extends InfoEditorStatusComponent<User> {
