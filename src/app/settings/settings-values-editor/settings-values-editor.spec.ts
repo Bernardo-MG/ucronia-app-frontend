@@ -2,22 +2,22 @@ import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
-import { SettingValuesEditorComponent } from './settings-values-editor.component';
+import { SettingValuesEditor } from './settings-values-editor';
 
-describe('SettingValuesEditorComponent', () => {
-  let component: SettingValuesEditorComponent;
-  let fixture: ComponentFixture<SettingValuesEditorComponent>;
+describe('SettingValuesEditor', () => {
+  let component: SettingValuesEditor;
+  let fixture: ComponentFixture<SettingValuesEditor>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         CommonModule,
         FormsModule,
-        SettingValuesEditorComponent
+        SettingValuesEditor
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SettingValuesEditorComponent);
+    fixture = TestBed.createComponent(SettingValuesEditor);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

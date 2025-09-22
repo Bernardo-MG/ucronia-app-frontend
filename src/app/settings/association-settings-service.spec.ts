@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AssociationSettingsService } from './association-settings.service';
+import { AssociationSettingsService } from './association-settings-service';
 
 describe('AssociationSettingsService', () => {
   let service: AssociationSettingsService;

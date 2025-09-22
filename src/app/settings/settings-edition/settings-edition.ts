@@ -4,15 +4,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { CardModule } from 'primeng/card';
-import { SettingValuesEditorComponent } from '../../components/settings-values-editor/settings-values-editor.component';
-import { AssociationSettingsService } from '../../service/association-settings.service';
+import { AssociationSettingsService } from '../association-settings-service';
+import { SettingValuesEditor } from '../settings-values-editor/settings-values-editor';
 
 @Component({
   selector: 'assoc-settings-edition',
-  imports: [CardModule, ReactiveFormsModule, FormsModule, SettingValuesEditorComponent],
-  templateUrl: './settings-edition.container.html'
+  imports: [CardModule, ReactiveFormsModule, FormsModule, SettingValuesEditor],
+  templateUrl: './settings-edition.html'
 })
-export class SettingsInfoEditorContainer {
+export class SettingsInfoEditor {
 
   public settings: Setting[] = [];
 

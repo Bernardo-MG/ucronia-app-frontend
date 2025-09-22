@@ -7,9 +7,9 @@ import { IconEditComponent } from '@bernardo-mg/icons';
 @Component({
   selector: 'assoc-settings-values-editor',
   imports: [FormsModule, ReactiveFormsModule, IconEditComponent],
-  templateUrl: './settings-values-editor.component.html'
+  templateUrl: './settings-values-editor.html'
 })
-export class SettingValuesEditorComponent {
+export class SettingValuesEditor {
 
   public readonly disabled = input(false);
 

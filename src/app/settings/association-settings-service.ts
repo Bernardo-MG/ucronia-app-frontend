@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
-import { Setting } from '../models/setting';
+import { Setting } from './models/setting';
 
 @Injectable({
   providedIn: "root"
