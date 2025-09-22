@@ -49,7 +49,7 @@ describe('LibraryBookLendings', () => {
     expect(dates.length).toBe(2);
 
     expect(dates[0].nativeElement.textContent.trim()).toBe('2024-01-01');
-    expect(dates[1].nativeElement.textContent.trim()).toBe('2024-01-01');
+    expect(dates[1].nativeElement.textContent.trim()).toBe('2024-01-05');
 
     const names = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-opposite'));
 
