@@ -1,5 +1,5 @@
 export class FeeUpdate {
-  month = '';
+  month = new Date();
   paid = false;
   transaction: FeeUpdateTransaction | undefined;
   member = -1;

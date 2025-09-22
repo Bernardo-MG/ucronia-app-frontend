@@ -12,7 +12,7 @@ export class GameBook {
   lent = false;
   isbn = '';
   language = '';
-  publishDate = '';
+  publishDate = new Date();
   authors: Author[] = [];
   lendings: BookLending[] = [];
   publishers: Publisher[] = [];

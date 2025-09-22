@@ -17,7 +17,7 @@ export class MembershipEvolutionService {
     this.client = clientProvider.url(environment.apiUrl + '/member/monthly');
   }
 
-  public monthly(startDate: string | undefined, endDate: string | undefined): Observable<MemberBalance[]> {
+  public monthly(startDate: Date | undefined, endDate: Date | undefined): Observable<MemberBalance[]> {
     return this.client
       .parameter('startDate', startDate)
       .parameter('endDate', endDate)

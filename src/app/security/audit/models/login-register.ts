@@ -1,5 +1,5 @@
 export class LoginRegister {
   username = '';
-  date = '';
+  date = new Date();
   loggedIn = false;
 }

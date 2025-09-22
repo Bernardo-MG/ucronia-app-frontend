@@ -16,32 +16,32 @@ export class MembershipEvolutionChartWidgetContainer {
 
   public balance: MemberBalance[] = [];
 
-  public months: string[] = [];
+  public months: Date[] = [];
 
-  private _startMonth = '';
+  private _startMonth = new Date();
 
-  public get startMonth() {
+  public get startMonth(): Date {
     return this._startMonth;
   }
 
-  public set startMonth(month: string) {
+  public set startMonth(month: Date) {
     this._startMonth = month;
     this.loadBalance();
   }
 
-  private _endMonth = '';
+  private _endMonth = new Date();
 
-  public get endMonth() {
+  public get endMonth(): Date {
     return this._endMonth;
+  }
+
+  public set endMonth(month: Date) {
+    this._endMonth = month;
+    this.loadBalance();
   }
 
   public get waiting() {
     return (this.readingBalance || this.readingRange);
-  }
-
-  public set endMonth(month: string) {
-    this._endMonth = month;
-    this.loadBalance();
   }
 
   private readingBalance = false;

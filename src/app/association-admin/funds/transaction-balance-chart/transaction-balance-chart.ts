@@ -17,21 +17,21 @@ export class TransactionBalanceChartContainer implements OnDestroy {
 
   public balance: TransactionMonthlyBalance[] = [];
 
-  public months: string[] = [];
+  public months: Date[] = [];
 
-  private startMonth$ = new BehaviorSubject<string>('');
-  public get startMonth(): string {
+  private startMonth$ = new BehaviorSubject<Date>(new Date());
+  public get startMonth(): Date {
     return this.startMonth$.value;
   }
-  public set startMonth(month: string) {
+  public set startMonth(month: Date) {
     this.startMonth$.next(month);
   }
 
-  private endMonth$ = new BehaviorSubject<string>('');
-  public get endMonth(): string {
+  private endMonth$ = new BehaviorSubject<Date>(new Date());
+  public get endMonth(): Date {
     return this.endMonth$.value;
   }
-  public set endMonth(month: string) {
+  public set endMonth(month: Date) {
     this.endMonth$.next(month);
   }
 
@@ -96,7 +96,7 @@ export class TransactionBalanceChartContainer implements OnDestroy {
 
   private loadInitialRange() {
     this.loading = true;
-    this.balanceService.monthly('', '')
+    this.balanceService.monthly(undefined, undefined)
       .pipe(finalize(() => this.loading = false))
       .subscribe(data => {
         if (!data.length) return;

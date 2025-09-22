@@ -4,7 +4,7 @@ import { BookLending } from '@app/domain/library/book-lending';
 import { LentBook } from '@app/domain/library/lent-book';
 import { LibraryBookLendings } from './library-book-lendings';
 
-describe('LibraryBookLendingsComponent', () => {
+describe('LibraryBookLendings', () => {
   let component: LibraryBookLendings;
   let fixture: ComponentFixture<LibraryBookLendings>;
 
@@ -25,8 +25,8 @@ describe('LibraryBookLendingsComponent', () => {
 
   it('should display the correct number of rows', () => {
     const lendings: BookLending[] = [
-      { book: new LentBook(), borrower: { number: 0, name: { firstName: '', lastName: '', fullName: 'John Doe' } }, lendingDate: '2024-01-01', returnDate: '2024-01-05', days: 4 },
-      { book: new LentBook(), borrower: { number: 0, name: { firstName: '', lastName: '', fullName: 'Jane Smith' } }, lendingDate: '2024-02-01', returnDate: '2024-02-10', days: 9 },
+      { book: new LentBook(), borrower: { number: 0, name: { firstName: '', lastName: '', fullName: 'John Doe' } }, lendingDate: new Date('2024-01-01'), returnDate: new Date('2024-01-05'), days: 4 },
+      { book: new LentBook(), borrower: { number: 0, name: { firstName: '', lastName: '', fullName: 'Jane Smith' } }, lendingDate: new Date('2024-02-01'), returnDate: new Date('2024-02-10'), days: 9 },
     ];
 
     component.lendings = lendings;
@@ -38,7 +38,7 @@ describe('LibraryBookLendingsComponent', () => {
 
   it('should display the correct data in each row', () => {
     const lendings: BookLending[] = [
-      { book: new LentBook(), borrower: { number: 0, name: { firstName: '', lastName: '', fullName: 'John Doe' } }, lendingDate: '2024-01-01', returnDate: '2024-01-05', days: 4 },
+      { book: new LentBook(), borrower: { number: 0, name: { firstName: '', lastName: '', fullName: 'John Doe' } }, lendingDate: new Date('2024-01-01'), returnDate: new Date('2024-01-05'), days: 4 },
     ];
 
     component.lendings = lendings;

@@ -44,14 +44,14 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public delete(date: string, memberNumber: number): Observable<boolean> {
+  public delete(date: Date, memberNumber: number): Observable<boolean> {
     return this.feeClient
       .appendRoute(`/${date}/${memberNumber}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
-  public getOne(date: string, memberNumber: number): Observable<Fee> {
+  public getOne(date: Date, memberNumber: number): Observable<Fee> {
     return this.feeClient
       .appendRoute(`/${date}/${memberNumber}`)
       .read<SimpleResponse<Fee>>()

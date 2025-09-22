@@ -8,7 +8,7 @@ export class BookUpdate {
   lent = false;
   isbn = '';
   language = '';
-  publishDate = '';
+  publishDate = new Date();
   authors: number[] = [];
   lendings: BookLending[] = [];
   publishers: number[] = [];

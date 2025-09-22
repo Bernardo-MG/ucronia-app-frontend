@@ -1,4 +1,4 @@
 export class MemberBalance {
-  month = '';
+  month = new Date();
   total = -1;
 }
