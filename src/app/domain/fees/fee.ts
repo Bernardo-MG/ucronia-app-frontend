@@ -1,7 +1,7 @@
 import { PublicPerson } from "../person/public-person";
 
 export class Fee {
-  month = '';
+  month = new Date();
   paid = false;
   transaction: FeeTransaction | undefined;
   member = new PublicPerson();

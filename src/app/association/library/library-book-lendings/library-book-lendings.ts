@@ -13,10 +13,10 @@ import { TimelineModule } from 'primeng/timeline';
 })
 export class LibraryBookLendings {
 
-  public history: { date: string, lent: boolean, borrower: string }[] = [];
+  public history: { date: Date, lent: boolean, borrower: string }[] = [];
 
   @Input() public set lendings(data: BookLending[]) {
-    const result: { date: string, lent: boolean, borrower: string }[] = [];
+    const result: { date: Date, lent: boolean, borrower: string }[] = [];
     data.forEach(d => {
       result.push({ borrower: d.borrower.name.fullName, date: d.lendingDate, lent: true });
       if (d.returnDate) {

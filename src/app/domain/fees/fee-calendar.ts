@@ -7,7 +7,7 @@ export class FeeCalendarYear {
 }
 
 export class FeeCalendarMonth {
-  month = '';
+  month = new Date();
   paid = false;
 }
 

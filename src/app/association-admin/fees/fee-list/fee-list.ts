@@ -142,7 +142,7 @@ export class FeeList {
     });
   }
 
-  public onSelectFee(fee: { member: number, date: string }) {
+  public onSelectFee(fee: { member: number, date: Date }) {
     this.service.getOne(fee.date, fee.member).subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }

@@ -27,7 +27,7 @@ export class FeeCalendar implements OnChanges {
 
   public readonly goToYear = output<number>();
 
-  public readonly selectFee = output<{ member: number, date: string }>();
+  public readonly selectFee = output<{ member: number, date: Date }>();
 
   public year = new Date().getFullYear();
 
@@ -79,28 +79,24 @@ export class FeeCalendar implements OnChanges {
   }
 
   public hasMonth(months: FeeCalendarMonth[], month: number): boolean {
-    return months.find(m => this.getMonthNumber(m.month) === month) !== undefined;
+    return months.find(m => (m.month.getMonth() + 1) === month) !== undefined;
   }
 
-  public onSelectFee(member:number, months: FeeCalendarMonth[], month: number) {
-    const calendarMonth = this.getCalendarMonth(months,month);
-    this.selectFee.emit({member: member, date: calendarMonth.month})
+  public onSelectFee(member: number, months: FeeCalendarMonth[], month: number) {
+    const calendarMonth = this.getCalendarMonth(months, month);
+    this.selectFee.emit({ member: member, date: calendarMonth.month })
   }
 
   public isPaid(months: FeeCalendarMonth[], month: number): boolean {
     return this.getCalendarMonth(months, month).paid;
   }
 
-  public getMonth(months: FeeCalendarMonth[], month: number): string {
+  public getMonth(months: FeeCalendarMonth[], month: number): Date {
     return this.getCalendarMonth(months, month).month;
   }
 
   private getCalendarMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth {
-    return months.find(m => this.getMonthNumber(m.month) === month) as FeeCalendarMonth;
-  }
-
-  private getMonthNumber(date: string): number {
-    return parseInt(date.split("-")[1], 10);
+    return months.find(m => (m.month.getMonth() + 1) === month) as FeeCalendarMonth;
   }
 
 }

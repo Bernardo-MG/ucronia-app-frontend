@@ -16,11 +16,11 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
     this.loadChart(data);
   }
 
-  public readonly startMonth = input('');
+  public readonly startMonth = input(new Date());
 
-  public readonly endMonth = input('');
+  public readonly endMonth = input(new Date());
 
-  public readonly months = input<string[]>([]);
+  public readonly months = input<Date[]>([]);
 
   public readonly startMonthChange = output<string>();
 
