@@ -19,7 +19,7 @@ describe('LibraryGameBookInfo', () => {
     lent: false,
     isbn: '',
     language: '',
-    publishDate: '',
+    publishDate: new Date(),
     authors: [],
     lendings: [],
     publishers: [],
