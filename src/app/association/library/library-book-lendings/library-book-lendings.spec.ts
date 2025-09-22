@@ -4,7 +4,7 @@ import { BookLending } from '@app/domain/library/book-lending';
 import { LentBook } from '@app/domain/library/lent-book';
 import { LibraryBookLendings } from './library-book-lendings';
 
-describe('LibraryBookLendingsComponent', () => {
+describe('LibraryBookLendings', () => {
   let component: LibraryBookLendings;
   let fixture: ComponentFixture<LibraryBookLendings>;
 
@@ -48,8 +48,8 @@ describe('LibraryBookLendingsComponent', () => {
 
     expect(dates.length).toBe(2);
 
-    expect(dates[0].nativeElement.textContent.trim()).toBe(new Date('2024-01-01'));
-    expect(dates[1].nativeElement.textContent.trim()).toBe(new Date('2024-01-05'));
+    expect(dates[0].nativeElement.textContent.trim()).toEqual(new Date('2024-01-01'));
+    expect(dates[1].nativeElement.textContent.trim()).toEqual(new Date('2024-01-05'));
 
     const names = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-opposite'));
 
