@@ -24,14 +24,12 @@ const routes: Routes = [
           {
             path: '',
             loadComponent: () => import('./members/member-list/member-list').then(m => m.MemberList),
-            canActivate: [ResourceGuard("member", "view")],
-            data: { breadcrumb: '' }
+            canActivate: [ResourceGuard("member", "view")]
           },
           {
             path: ':number',
             loadComponent: () => import('./members/member-info/member-info').then(m => m.MemberInfo),
-            canActivate: [ResourceGuard("member", "read")],
-            data: { breadcrumb: 'Info' }
+            canActivate: [ResourceGuard("member", "read")]
           }
         ]
       },
@@ -47,20 +45,17 @@ const routes: Routes = [
           {
             path: '',
             loadComponent: () => import('./library/library-list/library-list').then(m => m.LibraryList),
-            canActivate: [ResourceGuard("library", "view")],
-            data: { breadcrumb: 'Libros' }
+            canActivate: [ResourceGuard("library", "view")]
           },
           {
             path: 'games/:index',
             loadComponent: () => import('./library/library-game-book-info/library-game-book-info').then(m => m.LibraryGameBookInfo),
-            canActivate: [ResourceGuard("library_book", "read")],
-            data: { breadcrumb: 'Juego' }
+            canActivate: [ResourceGuard("library_book", "read")]
           },
           {
             path: 'fiction/:index',
             loadComponent: () => import('./library/library-fiction-book-info/library-fiction-book-info').then(m => m.LibraryFictionBookInfo),
-            canActivate: [ResourceGuard("library_book", "read")],
-            data: { breadcrumb: 'Ficción' }
+            canActivate: [ResourceGuard("library_book", "read")]
           }
         ]
       }

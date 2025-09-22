@@ -49,13 +49,11 @@ export const routes: Routes = [
           },
           {
             path: 'profile',
-            loadComponent: () => import('./account/account-profile-frontpage/account-profile-frontpage').then(m => m.AccountProfileFrontpage),
-            data: { breadcrumb: 'Perfil' }
+            loadComponent: () => import('./account/account-profile-frontpage/account-profile-frontpage').then(m => m.AccountProfileFrontpage)
           },
           {
             path: 'password',
-            loadComponent: () => import('./account/account-password-change/account-password-change').then(m => m.AccountPasswordChange),
-            data: { breadcrumb: 'Contraseña' }
+            loadComponent: () => import('./account/account-password-change/account-password-change').then(m => m.AccountPasswordChange)
           }
         ]
       },

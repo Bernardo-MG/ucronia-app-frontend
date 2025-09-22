@@ -1,6 +1,5 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { RouterBreadcrumbComponent } from '@bernardo-mg/ui';
 import { MenuItem, MessageService } from 'primeng/api';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
@@ -9,7 +8,7 @@ import { NavbarContainer } from '../../containers/navbar/navbar.container';
 
 @Component({
   selector: 'layout-sidebar-layout',
-  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, NavbarContainer, RouterBreadcrumbComponent],
+  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, NavbarContainer],
   templateUrl: './sidebar-layout.component.html',
   providers: [MessageService]
 })
