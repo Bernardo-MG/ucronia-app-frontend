@@ -5,6 +5,7 @@ import { provideRouter } from '@angular/router';
 import { AccessRoleList } from './access-role-list';
 import { AccessRoleService } from '../access-role-service';
 
+describe('AccessRoleList', () => {
   let component: AccessRoleList;
   let fixture: ComponentFixture<AccessRoleList>;
 
