@@ -1,6 +1,6 @@
 <p-panel>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditing('creation')"
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartCreating()"
       [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <p-card>
@@ -42,6 +42,7 @@
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (view) {
   @case ('creation') {
+    <access-user-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('edition') {
   }

@@ -10,11 +10,12 @@ import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
+import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserService } from '../access-user-service';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, IconAddComponent, AccessUserForm],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -87,6 +88,10 @@ export class AccessList implements OnInit {
     this.showing = true;
   }
 
+  public onCreate(toCreate: any): void {
+    this.mutate(() => this.service.create(toCreate));
+  }
+
   public onDelete(event: Event, id: string) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
@@ -108,10 +113,15 @@ export class AccessList implements OnInit {
     });
   }
 
+  public onStartCreating(): void {
+    this.view = 'creation';
+    this.showForm = true;
+  }
+
   public onStartEditing(item: any): void {
     this.selectedData = item;
-    this.showForm = true;
     this.view = 'edition';
+    this.showForm = true;
   }
 
   private load(page: number) {
