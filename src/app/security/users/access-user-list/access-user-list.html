@@ -36,6 +36,8 @@
   <access-user-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('edition') {
+    <access-user-form [create]="false" [waiting]="loading" [data]="selectedData" [failures]="failures"
+      [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
   }
   }
 </p-drawer>

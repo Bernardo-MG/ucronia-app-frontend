@@ -40,18 +40,7 @@ const routes: Routes = [
         // Users
         path: 'users',
         canActivate: [ResourceGuard("user", "view")],
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./users/access-user-list/access-user-list').then(m => m.AccessList),
-            canActivate: [ResourceGuard("user", "read")]
-          },
-          {
-            path: ':user',
-            loadComponent: () => import('./users/access-user-edition/access-user-edition').then(m => m.AccessUserEdition),
-            canActivate: [ResourceGuard("user", "read")]
-          }
-        ]
+        loadComponent: () => import('./users/access-user-list/access-user-list').then(m => m.AccessList)
       },
       {
         // User tokens

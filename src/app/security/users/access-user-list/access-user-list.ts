@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -15,7 +14,7 @@ import { AccessUserService } from '../access-user-service';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, IconAddComponent, AccessUserForm],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, AccessUserForm],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -90,6 +89,14 @@ export class AccessList implements OnInit {
 
   public onCreate(toCreate: any): void {
     this.mutate(() => this.service.create(toCreate));
+  }
+
+  public onUpdate(toUpdate: any): void {
+    this.mutate(() => this.service.update(toUpdate));
+  }
+
+  public onCancel(): void {
+    this.view = 'none';
   }
 
   public onDelete(event: Event, id: string) {

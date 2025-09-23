@@ -37,9 +37,9 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public update(username: string, data: UserUpdate): Observable<User> {
+  public update(data: UserUpdate): Observable<User> {
     return this.client
-      .appendRoute(`/${username}`)
+      .appendRoute(`/${data.username}`)
       .update<SimpleResponse<User>>(data)
       .pipe(map(r => r.content));
   }
