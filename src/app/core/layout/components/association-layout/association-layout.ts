@@ -1,16 +1,23 @@
 import { Component, inject } from '@angular/core';
-import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
+import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { DrawerModule } from 'primeng/drawer';
+import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
+import { NavbarContainer } from '../../containers/navbar/navbar.container';
 
 @Component({
   selector: 'app-association-layout',
-  imports: [SidebarLayoutComponent],
-  templateUrl: './association-layout.html'
+  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, NavbarContainer],
+  templateUrl: './association-layout.html',
+  providers: [MessageService]
 })
 export class AssociationLayout {
 
   public menus: MenuItem[] = [];
+
+  public menuActive = false;
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -36,6 +43,10 @@ export class AssociationLayout {
           );
         }
       });
+  }
+
+  public onToggleMenu(status: boolean) {
+    this.menuActive = status;
   }
 
   private getAssociationItems(authContainer: AuthContainer) {

@@ -1,1 +1,15 @@
-<layout-sidebar-layout [menus]="menus" />
+<body class="min-vh-100 d-flex flex-column bg-light-subtle">
+  <header class="m-1">
+    <layout-navbar (toggleMenu)="onToggleMenu($event)" />
+  </header>
+  <p-drawer [(visible)]="menuActive" header="Ucronía">
+    <p-menu [model]="menus" [style]="{ 'border':0 }" />
+  </p-drawer>
+  <div class="row m-1">
+    <p-toast />
+    <!-- Main content area -->
+    <main>
+      <router-outlet />
+    </main>
+  </div>
+</body>

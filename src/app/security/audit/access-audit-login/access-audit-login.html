@@ -15,12 +15,12 @@
         <td>{{ user.date }}</td>
         <td>
           @switch (user.loggedIn) {
-          @case (true) {
-          <span class="pi pi-times text-warning"></span>
-          }
-          @case (false) {
-          <span class="pi pi-check text-success"></span>
-          }
+            @case (true) {
+              <span class="pi pi-times text-warning"></span>
+            }
+            @case (false) {
+              <span class="pi pi-check text-success"></span>
+            }
           }
         </td>
       </tr>

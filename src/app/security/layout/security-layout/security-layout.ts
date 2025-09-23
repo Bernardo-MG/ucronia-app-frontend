@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SidebarLayoutComponent } from '@app/core/layout/components/sidebar-layout/sidebar-layout.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'layout-security-layout',
-  imports: [RouterModule, SidebarLayoutComponent],
-  templateUrl: './security-layout.container.html'
+  imports: [RouterModule, MenuModule],
+  templateUrl: './security-layout.html'
 })
-export class SecurityLayoutContainer {
+export class SecurityLayout {
 
   public readonly menus: MenuItem[];
 

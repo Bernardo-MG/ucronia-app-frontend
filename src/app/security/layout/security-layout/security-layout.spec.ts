@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { SidebarLayoutComponent } from './sidebar-layout.component';
+import { SecurityLayout } from './security-layout';
 
-describe('SidebarLayoutComponent', () => {
-  let component: SidebarLayoutComponent;
-  let fixture: ComponentFixture<SidebarLayoutComponent>;
+describe('SecurityLayout', () => {
+  let component: SecurityLayout;
+  let fixture: ComponentFixture<SecurityLayout>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        SidebarLayoutComponent
+        SecurityLayout
       ],
       providers: [
         provideAnimationsAsync(),
@@ -19,7 +19,7 @@ describe('SidebarLayoutComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SidebarLayoutComponent);
+    fixture = TestBed.createComponent(SecurityLayout);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -28,3 +28,4 @@ describe('SidebarLayoutComponent', () => {
     expect(component).toBeTruthy();
   });
 });
+
