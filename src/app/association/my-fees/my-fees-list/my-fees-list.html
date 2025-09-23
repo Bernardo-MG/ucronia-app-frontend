@@ -9,7 +9,7 @@
       </tr>
     </ng-template>
     <ng-template #body let-fee>
-      <tr [pSelectableRow]="fee" [ngClass]="{ 'bg-yellow-100 text-yellow-800'': !fee.paid }">
+      <tr [pSelectableRow]="fee" [ngClass]="{ 'table-warning': !fee.paid }">
         <td>{{ fee.month }}</td>
         <td>
           @if (fee.paid) {
