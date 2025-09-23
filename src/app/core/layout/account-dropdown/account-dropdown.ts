@@ -8,17 +8,17 @@ import { MenuModule } from 'primeng/menu';
 @Component({
   selector: 'layout-account-dropdown',
   imports: [RouterModule, ButtonModule, MenuModule],
-  templateUrl: './account-dropdown.container.html'
+  templateUrl: './account-dropdown.html'
 })
-export class AccountDropdownContainer {
+export class AccountDropdown {
 
   private readonly router = inject(Router);
 
   private readonly authContainer = inject(AuthContainer);
 
-  public username = '';
-
   public readonly accountItems: MenuItem[] = [];
+
+  public username = '';
 
   constructor() {
     this.authContainer.securityDetails

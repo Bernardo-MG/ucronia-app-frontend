@@ -6,7 +6,7 @@ export const routes: Routes = [
   // Main app
   {
     path: '',
-    loadComponent: () => import('@app/core/layout/components/association-layout/association-layout').then(m => m.AssociationLayout),
+    loadComponent: () => import('@app/core/layout/association-layout/association-layout').then(m => m.AssociationLayout),
     children: [
       // Public routes
       {

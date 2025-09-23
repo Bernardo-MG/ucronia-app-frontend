@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { CrudService } from '@app/core/layout/services/crud-service';
+import { CrudService } from '@app/shared/data/services/crud-service';
 import { Author } from '@app/domain/library/author';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';

@@ -2,12 +2,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AuthContainer, SecurityDetails } from '@bernardo-mg/authentication';
 import { of } from 'rxjs';
-import { LayoutService } from '../../services/layout.service';
-import { NavbarContainer } from './navbar.container';
+import { LayoutService } from '../layout-service';
+import { Navbar } from './navbar';
 
-describe('NavbarContainer', () => {
-  let component: NavbarContainer;
-  let fixture: ComponentFixture<NavbarContainer>;
+describe('Navbar', () => {
+  let component: Navbar;
+  let fixture: ComponentFixture<Navbar>;
 
   let mockAuthContainer: jasmine.SpyObj<AuthContainer>;
   let mockLayoutService: jasmine.SpyObj<LayoutService>;
@@ -40,7 +40,7 @@ describe('NavbarContainer', () => {
       ]);
 
     await TestBed.configureTestingModule({
-      imports: [NavbarContainer],
+      imports: [Navbar],
       providers: [
         provideRouter([]),
         { provide: AuthContainer, useValue: mockAuthContainer },
@@ -50,7 +50,7 @@ describe('NavbarContainer', () => {
   });
 
   function createComponent() {
-    fixture = TestBed.createComponent(NavbarContainer);
+    fixture = TestBed.createComponent(Navbar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }

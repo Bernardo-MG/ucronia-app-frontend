@@ -5,11 +5,11 @@ import { MenuItem, MessageService } from 'primeng/api';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { NavbarContainer } from '../../containers/navbar/navbar.container';
+import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-association-layout',
-  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, NavbarContainer],
+  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, Navbar],
   templateUrl: './association-layout.html',
   providers: [MessageService]
 })

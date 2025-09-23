@@ -5,25 +5,25 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
-import { LayoutService } from '../../services/layout.service';
-import { AccountDropdownContainer } from '../account-dropdown/account-dropdown.container';
+import { AccountDropdown } from '../account-dropdown/account-dropdown';
+import { LayoutService } from '../layout-service';
 
 @Component({
   selector: 'layout-navbar',
-  imports: [RouterModule, MenubarModule, ButtonModule, MenuModule, AccountDropdownContainer],
-  templateUrl: './navbar.container.html'
+  imports: [RouterModule, MenubarModule, ButtonModule, MenuModule, AccountDropdown],
+  templateUrl: './navbar.html'
 })
-export class NavbarContainer {
+export class Navbar {
 
   public readonly toggleMenu = output<boolean>();
 
   private readonly authContainer = inject(AuthContainer);
 
-  public title = '';
+  public readonly title;
 
-  public showSettings = false;
+  public readonly showSettings;
 
-  public showSecurity = false;
+  public readonly showSecurity;
 
   public get loggedOut() {
     return !this.authContainer.logged;

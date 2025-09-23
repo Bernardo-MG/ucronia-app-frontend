@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AccountDropdownContainer } from './account-dropdown.container';
+import { AccountDropdown } from './account-dropdown';
 
-describe('AccountDropdownContainer', () => {
-  let component: AccountDropdownContainer;
-  let fixture: ComponentFixture<AccountDropdownContainer>;
+describe('AccountDropdown', () => {
+  let component: AccountDropdown;
+  let fixture: ComponentFixture<AccountDropdown>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccountDropdownContainer
+        AccountDropdown
       ],
       providers: [
         provideRouter([])
@@ -17,7 +17,7 @@ describe('AccountDropdownContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountDropdownContainer);
+    fixture = TestBed.createComponent(AccountDropdown);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

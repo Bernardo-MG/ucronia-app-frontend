@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { CrudService } from '@app/core/layout/services/crud-service';
+import { CrudService } from '@app/shared/data/services/crud-service';
 import { FailureResponse, PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';

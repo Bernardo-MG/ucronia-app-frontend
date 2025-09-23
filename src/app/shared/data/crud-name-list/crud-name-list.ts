@@ -1,5 +1,5 @@
 import { Component, inject, input, OnInit } from '@angular/core';
-import { CrudService } from '@app/core/layout/services/crud-service';
+import { CrudService } from '@app/shared/data/services/crud-service';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
