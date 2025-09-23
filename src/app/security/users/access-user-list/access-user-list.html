@@ -29,6 +29,7 @@
   </p-table>
 </p-panel>
 <p-drawer [(visible)]="showing" position="full">
+  <access-user-info [data]="selectedData" [loading]="loading" />
 </p-drawer>
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (view) {
@@ -36,8 +37,8 @@
   <access-user-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('edition') {
-    <access-user-form [create]="false" [waiting]="loading" [data]="selectedData" [failures]="failures"
-      [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
+  <access-user-form [create]="false" [waiting]="loading" [data]="selectedData" [failures]="failures"
+    [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
   }
   }
 </p-drawer>

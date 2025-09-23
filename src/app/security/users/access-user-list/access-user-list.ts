@@ -10,11 +10,12 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { AccessUserForm } from '../access-user-form/access-user-form';
+import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserService } from '../access-user-service';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, AccessUserForm],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, AccessUserForm, AccessUserInfo],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
