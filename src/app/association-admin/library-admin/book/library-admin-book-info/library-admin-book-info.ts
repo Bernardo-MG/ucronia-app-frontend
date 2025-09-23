@@ -8,10 +8,8 @@ import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Language } from '@app/domain/library/language';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -20,9 +18,8 @@ import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'assoc-library-admin-book-info',
-  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, ToastModule, LibraryBookLendings, DatePipe],
-  templateUrl: './library-admin-book-info.html',
-  providers: [ConfirmationService, MessageService]
+  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ToastModule, LibraryBookLendings, DatePipe],
+  templateUrl: './library-admin-book-info.html'
 })
 export class LibraryAdminBookInfo {
 

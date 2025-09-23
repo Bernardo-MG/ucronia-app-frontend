@@ -9,10 +9,9 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
@@ -26,9 +25,8 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, ConfirmPopupModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
-  templateUrl: './people-list.html',
-  providers: [ConfirmationService, MessageService]
+  imports: [FormsModule, PanelModule, MenuModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {
 

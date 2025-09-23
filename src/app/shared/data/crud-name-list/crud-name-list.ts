@@ -4,7 +4,6 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
@@ -15,9 +14,8 @@ import { NameForm } from '../name-form/name-form';
 
 @Component({
   selector: 'shared-crud-name-list',
-  imports: [TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ConfirmPopupModule, ToastModule, NameForm],
-  templateUrl: './crud-name-list.html',
-  providers: [ConfirmationService, MessageService]
+  imports: [TableModule, PanelModule, MenuModule, ButtonModule, DrawerModule, ToastModule, NameForm],
+  templateUrl: './crud-name-list.html'
 })
 export class CrudNameList implements OnInit {
 

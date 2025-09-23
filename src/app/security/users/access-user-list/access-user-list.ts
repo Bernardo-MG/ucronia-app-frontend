@@ -2,24 +2,30 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { AccessUserService } from '../access-user-service';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, IconAddComponent],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
 
   private readonly router = inject(Router);
-
   private readonly service = inject(AccessUserService);
+  private readonly confirmationService = inject(ConfirmationService);
+  private readonly messageService = inject(MessageService);
 
-  public readonly createPermission;
+  public readonly creatable;
+  public readonly editable;
+
+  public showing = false;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -34,13 +40,18 @@ export class AccessList implements OnInit {
    */
   public loading = false;
 
+  public view: string = '';
+
   private sort = new Sorting();
+
+  public failures = new FailureStore();
 
   constructor() {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
-    this.createPermission = authContainer.hasPermission("user", "create");
+    this.creatable = authContainer.hasPermission("user", "create");
+    this.editable = authContainer.hasPermission("user", "update");
   }
 
   public ngOnInit(): void {
@@ -68,11 +79,62 @@ export class AccessList implements OnInit {
     this.router.navigate([`/security/users/${this.selectedData.username}`]);
   }
 
+  public onShowInfo(user: User) {
+    this.selectedData = user;
+    this.showing = true;
+  }
+
+  public onDelete(event: Event, id: string) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Quieres borrar estos datos?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.mutate(() => this.service.delete(id));
+        return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+      }
+    });
+  }
+
+  public onStartEditing(item: any): void {
+    this.selectedData = item;
+    this.view = 'edition';
+  }
+
   private load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  private mutate(action: () => Observable<any>) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
   }
 
 }
