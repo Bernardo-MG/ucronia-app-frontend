@@ -47,11 +47,6 @@ const routes: Routes = [
             canActivate: [ResourceGuard("user", "read")]
           },
           {
-            path: 'add',
-            loadComponent: () => import('./users/access-user-creation/access-user-creation').then(m => m.AccessUserCreation),
-            canActivate: [ResourceGuard("user", "create")]
-          },
-          {
             path: ':user',
             loadComponent: () => import('./users/access-user-edition/access-user-edition').then(m => m.AccessUserEdition),
             canActivate: [ResourceGuard("user", "read")]
