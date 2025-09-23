@@ -6,13 +6,15 @@ import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirec
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DrawerModule } from 'primeng/drawer';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { AccessUserService } from '../access-user-service';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, IconAddComponent],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, IconAddComponent],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -22,10 +24,11 @@ export class AccessList implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
-  public readonly creatable;
+  public readonly createable;
   public readonly editable;
 
   public showing = false;
+  public showForm = false;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -50,7 +53,7 @@ export class AccessList implements OnInit {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
-    this.creatable = authContainer.hasPermission("user", "create");
+    this.createable = authContainer.hasPermission("user", "create");
     this.editable = authContainer.hasPermission("user", "update");
   }
 
@@ -107,6 +110,7 @@ export class AccessList implements OnInit {
 
   public onStartEditing(item: any): void {
     this.selectedData = item;
+    this.showForm = true;
     this.view = 'edition';
   }
 
