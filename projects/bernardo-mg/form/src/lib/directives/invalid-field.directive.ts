@@ -22,9 +22,8 @@ export class InvalidFieldDirective implements OnInit, OnChanges, OnDestroy {
     const control = this.getFormControl();
 
     if (control) {
-      this.statusChangeSubscription = control.statusChanges.subscribe(() => {
-        this.updateFieldClass();
-      });
+      this.statusChangeSubscription = control.statusChanges
+        .subscribe(() => this.updateFieldClass());
     }
   }
 

@@ -1,18 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { finalize } from 'rxjs';
 import { AccessUserService } from '../access-user-service';
 
 @Component({
-    selector: 'access-user-list',
-    imports: [CardModule, RouterModule, TableModule, IconAddComponent],
-    templateUrl: './access-user-list.html'
+  selector: 'access-user-list',
+  imports: [CardModule, RouterModule, TableModule, IconAddComponent],
+  templateUrl: './access-user-list.html'
 })
-export class AccessList {
+export class AccessList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -40,7 +41,9 @@ export class AccessList {
 
     // Check permissions
     this.createPermission = authContainer.hasPermission("user", "create");
+  }
 
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -67,18 +70,9 @@ export class AccessList {
 
   private load(page: number) {
     this.loading = true;
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

@@ -1,18 +1,18 @@
-
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { UserToken } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'access-user-token-list',
   imports: [CardModule, TableModule],
   templateUrl: './user-token-list.html'
 })
-export class UserTokenList {
+export class UserTokenList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -33,7 +33,7 @@ export class UserTokenList {
    */
   public loading = false;
 
-  constructor() {
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -60,18 +60,9 @@ export class UserTokenList {
 
   private load(page: number) {
     this.loading = true;
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

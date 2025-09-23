@@ -72,41 +72,36 @@ describe('AngularCrudClient', () => {
   /** RECEIVE RESPONSES */
 
   it('should receive response from a POST request', () => {
-    client.create(testData).subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.create(testData)
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
 
   it('should receive response from a GET request', () => {
-    client.read().subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.read()
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
 
   it('should receive response from a PUT request', () => {
-    client.update(testData).subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.update(testData)
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
 
   it('should receive response from a DELETE request', () => {
-    client.delete().subscribe(data => {
-      expect(data).toBeNull();
-    });
+    client.delete()
+      .subscribe(data => expect(data).toBeNull());
     const req = httpMock.expectOne(rootUrl);
     req.flush(null);
   });
 
   it('should receive response from a PATCH request', () => {
-    client.patch(testData).subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.patch(testData)
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });

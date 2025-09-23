@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
@@ -6,13 +6,14 @@ import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { AccessRoleService } from '../access-role-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'access-role-list',
   imports: [RouterModule, CardModule, TableModule, IconAddComponent],
   templateUrl: './access-role-list.html'
 })
-export class AccessRoleList {
+export class AccessRoleList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -40,7 +41,9 @@ export class AccessRoleList {
 
     // Check permissions
     this.createPermission = authContainer.hasPermission("role", "create");
+  }
 
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -67,18 +70,9 @@ export class AccessRoleList {
 
   private load(page: number) {
     this.loading = true;
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

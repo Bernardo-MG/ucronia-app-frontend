@@ -61,7 +61,7 @@ export class AuthContainer {
   }
 
   constructor() {
-    this.detailsSubject.subscribe((s) => (this.details = s));
+    this.detailsSubject.subscribe(s => this.details = s);
     this.loadDetailsFromLocal();
     this.checkTokenExpiration();
   }

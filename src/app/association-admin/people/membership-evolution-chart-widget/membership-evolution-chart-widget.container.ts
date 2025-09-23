@@ -4,6 +4,7 @@ import { MemberBalance } from '@app/domain/members/member-balance';
 import { CardModule } from 'primeng/card';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 import { MembershipEvolutionService } from '../membership-evolution-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'widget-membership-evolution-chart',
@@ -51,21 +52,21 @@ export class MembershipEvolutionChartWidgetContainer {
   constructor() {
     // Read balance range
     this.readingRange = true;
-    this.service.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.months = b.map(v => v.month);
-      this.startMonth = this.months[0];
-      this.endMonth = this.months[this.months.length - 1];
-      this.readingRange = false;
-      this.loadBalance();
-    });
+    this.service.monthly(this.startMonth, this.endMonth)
+      .pipe(finalize(() => this.readingRange = false))
+      .subscribe(b => {
+        this.months = b.map(v => v.month);
+        this.startMonth = this.months[0];
+        this.endMonth = this.months[this.months.length - 1];
+        this.loadBalance();
+      });
   }
 
   private loadBalance() {
     this.readingBalance = true;
-    this.service.monthly(this.startMonth, this.endMonth).subscribe(b => {
-      this.balance = b;
-      this.readingBalance = false;
-    });
+    this.service.monthly(this.startMonth, this.endMonth)
+      .pipe(finalize(() => this.readingBalance = false))
+      .subscribe(response => this.balance = response);
   }
 
 }

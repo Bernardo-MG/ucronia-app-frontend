@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BookService } from '../book-service';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-library-fiction-book-info',
@@ -54,7 +55,6 @@ export class LibraryFictionBookInfo {
   constructor() {
     const route = inject(ActivatedRoute);
 
-
     // Get id
     route.paramMap.subscribe(params => {
       const indexParam = params.get('index');
@@ -71,15 +71,8 @@ export class LibraryFictionBookInfo {
   private load(index: number): void {
     this.loading = true;
     this.service.getOneFictionBook(index)
-      .subscribe({
-        next: response => {
-          this.data = response;
-          this.loading = false;
-        },
-        error: error => {
-          this.loading = false;
-        }
-      });
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

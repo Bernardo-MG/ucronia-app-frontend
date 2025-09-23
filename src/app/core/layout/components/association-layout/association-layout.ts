@@ -14,27 +14,28 @@ export class AssociationLayout {
 
   constructor() {
     const authContainer = inject(AuthContainer);
-    authContainer.securityDetails.subscribe(details => {
-      const items = this.getAssociationItems(authContainer);
-      const adminItems = this.getAdminItems(authContainer);
-      this.menus = [];
-      if (items.length) {
-        this.menus.push(
-          {
-            label: 'Asociación',
-            items: items
-          }
-        );
-      }
-      if (adminItems.length) {
-        this.menus.push(
-          {
-            label: 'Administración',
-            items: adminItems
-          }
-        );
-      }
-    });
+    authContainer.securityDetails
+      .subscribe(details => {
+        const items = this.getAssociationItems(authContainer);
+        const adminItems = this.getAdminItems(authContainer);
+        this.menus = [];
+        if (items.length) {
+          this.menus.push(
+            {
+              label: 'Asociación',
+              items: items
+            }
+          );
+        }
+        if (adminItems.length) {
+          this.menus.push(
+            {
+              label: 'Administración',
+              items: adminItems
+            }
+          );
+        }
+      });
   }
 
   private getAssociationItems(authContainer: AuthContainer) {

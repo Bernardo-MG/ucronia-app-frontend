@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TransactionBalanceChartContainer } from '@app/association-admin/funds/transaction-balance-chart/transaction-balance-chart';
 import { Transaction } from '@app/domain/transactions/transaction';
@@ -26,10 +26,11 @@ import { TransactionService } from '../transaction-service';
   imports: [RouterModule, PanelModule, CardModule, ButtonModule, DrawerModule, CalendarMonth, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer, BlockUiDirective],
   templateUrl: './funds.html'
 })
-export class Funds {
+export class Funds implements OnInit {
 
   private readonly service = inject(TransactionService);
   private readonly transactionCalendarService = inject(TransactionCalendarService);
+  private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
 
   public selectionMonths: Month[] = [];
@@ -56,26 +57,28 @@ export class Funds {
 
   constructor() {
     const authContainer = inject(AuthContainer);
-    const transactionBalanceService = inject(TransactionBalanceService);
 
     // Check permissions
     this.createable = authContainer.hasPermission("transaction", "create");
     this.editable = authContainer.hasPermission("transaction", "update");
+  }
 
+  public ngOnInit(): void {
     // Read range
-    this.transactionCalendarService.getRange().subscribe(months => {
-      // To show in the selection box we have to reverse the order
-      this.selectionMonths = months;
-      // TODO: What happens if this date is not in the range?
-      if (!this.loadingCalendar) {
-        this.setInitialMonth();
-        this.loadCalendar();
-      }
-    });
+    this.transactionCalendarService.getRange()
+      .subscribe(months => {
+        // To show in the selection box we have to reverse the order
+        this.selectionMonths = months;
+        // TODO: What happens if this date is not in the range?
+        if (!this.loadingCalendar) {
+          this.setInitialMonth();
+          this.loadCalendar();
+        }
+      });
 
     // Read balance
     this.loadingBalance = true;
-    transactionBalanceService.current()
+    this.transactionBalanceService.current()
       .pipe(finalize(() => this.loadingBalance = false))
       .subscribe(b => this.balance = b);
   }
@@ -106,22 +109,23 @@ export class Funds {
 
   private mutate(action: () => Observable<any>) {
     this.loading = true;
-    action().subscribe({
-      next: () => {
-        this.failures.clear();
-        this.view = 'none';
-        this.loadCalendar();
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
           this.failures.clear();
+          this.view = 'none';
+          this.loadCalendar();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
         }
-        this.loading = false;
-        return throwError(() => error);
-      }
-    });
+      });
   }
 
   public onStartEditingView(view: string): void {

@@ -1,17 +1,20 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookInfo } from '@app/domain/library/book-info';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { BookService } from '../book-service';
+import { finalize, Observable } from 'rxjs';
+import { FictionBook } from '@app/domain/library/fiction-book';
+import { GameBook } from '@app/domain/library/game-book';
 
 @Component({
   selector: 'assoc-library-list',
   imports: [RouterModule, CardModule, TableModule],
   templateUrl: './library-list.html'
 })
-export class LibraryList {
+export class LibraryList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -34,7 +37,7 @@ export class LibraryList {
 
   private sort = new Sorting();
 
-  constructor() {
+  public ngOnInit(): void {
     // Load books
     this.load(0);
   }
@@ -50,7 +53,6 @@ export class LibraryList {
 
     this.load(this.data.page);
   }
-
 
   public onChangeSource(event: any) {
     this.source = event.target.value as 'game' | 'fiction';
@@ -69,33 +71,15 @@ export class LibraryList {
   private load(page: number) {
     this.loading = true;
 
+    let books: Observable<PaginatedResponse<FictionBook | GameBook>>;
     if (this.source === 'game') {
-      this.service.getAllGameBooks(page, this.sort).subscribe({
-        next: response => {
-          this.data = response;
-
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
+      books = this.service.getAllGameBooks(page, this.sort);
     } else {
-      this.service.getAllFictionBooks(page, this.sort).subscribe({
-        next: response => {
-          this.data = response;
-
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
+      books = this.service.getAllFictionBooks(page, this.sort);
     }
+    books
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

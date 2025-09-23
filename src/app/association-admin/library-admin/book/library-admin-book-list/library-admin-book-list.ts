@@ -1,5 +1,5 @@
 
-import { Component, inject, Input, ViewChild } from '@angular/core';
+import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
@@ -26,7 +26,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { Observable, throwError } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { BookAdminService } from '../book-admin-service';
 import { LibraryAdminBookCreationForm } from '../library-admin-book-creation-form/library-admin-book-creation-form';
 import { LibraryAdminBookDonorsForm } from '../library-admin-book-donors-form/library-admin-book-donors-form';
@@ -41,7 +41,7 @@ import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/li
   templateUrl: './library-admin-book-list.html',
   providers: [ConfirmationService, MessageService]
 })
-export class LibraryAdminBookList {
+export class LibraryAdminBookList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -105,9 +105,6 @@ export class LibraryAdminBookList {
 
   constructor() {
     const authContainer = inject(AuthContainer);
-
-    // Load data
-    this.load(0);
 
     // Check permissions
     this.createable = authContainer.hasPermission("library_book", "create");
@@ -209,6 +206,10 @@ export class LibraryAdminBookList {
       });
   }
 
+  public ngOnInit(): void {
+    this.load(0);
+  }
+
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     this.selectedData = book;
     if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
@@ -288,14 +289,8 @@ export class LibraryAdminBookList {
   public downloadExcel() {
     this.loadingExcel = true;
     this.reportService.downloadExcelReport()
-      .subscribe({
-        next: response => {
-          this.loadingExcel = false;
-        },
-        error: error => {
-          this.loadingExcel = false;
-        }
-      });
+      .pipe(finalize(() => this.loadingExcel = false))
+      .subscribe();
   }
 
   public onStartEditingView(view: string): void {
@@ -305,25 +300,20 @@ export class LibraryAdminBookList {
 
   private onUpdate(toSave: BookUpdate) {
     this.loading = true;
+    let book: Observable<FictionBook | GameBook>;
     if (this.source === 'game') {
-      this.service.updateGameBookNew(toSave.number, toSave).subscribe({
-        next: response => {
-          this.interceptSave(response);
-        },
-        error: error => {
-          this.interceptError(error);
-        }
-      });
+      book = this.service.updateGameBookNew(toSave.number, toSave);
     } else {
-      this.service.updateFictionBookNew(toSave.number, toSave).subscribe({
-        next: response => {
-          this.interceptSave(response);
-        },
-        error: error => {
-          this.interceptError(error);
-        }
-      });
+      book = this.service.updateFictionBookNew(toSave.number, toSave);
     }
+    book.subscribe({
+      next: response => {
+        this.interceptSave(response);
+      },
+      error: error => {
+        this.interceptError(error);
+      }
+    });
   }
 
   public onSetAuthors(authors: Author[]) {
@@ -478,53 +468,36 @@ export class LibraryAdminBookList {
   private load(page: number) {
     this.loading = true;
 
+    let operation: Observable<PaginatedResponse<FictionBook | GameBook>>;
     if (this.source === 'game') {
-      this.service.getAllGameBooks(page, this.sort).subscribe({
-        next: response => {
-          this.data = response;
-
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
+      operation = this.service.getAllGameBooks(page, this.sort);
     } else {
-      this.service.getAllFictionBooks(page, this.sort).subscribe({
-        next: response => {
-          this.data = response;
-
-          // Reactivate view
-          this.loading = false;
-        },
-        error: error => {
-          // Reactivate view
-          this.loading = false;
-        }
-      });
+      operation = this.service.getAllFictionBooks(page, this.sort);
     }
+    operation
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
   protected mutate(action: () => Observable<any>) {
     this.loading = true;
-    action().subscribe({
-      next: () => {
-        this.failures.clear();
-        this.view = 'none';
-        this.load(this.data.page);
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
           this.failures.clear();
+          this.view = 'none';
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
         }
-        this.loading = false;
-        return throwError(() => error);
-      }
-    });
+      });
   }
 
 }

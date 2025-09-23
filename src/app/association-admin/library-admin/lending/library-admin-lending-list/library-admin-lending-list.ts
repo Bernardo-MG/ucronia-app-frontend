@@ -8,6 +8,7 @@ import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { BookLendingService } from '../book-lending-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-library-admin-lending-list',
@@ -73,18 +74,9 @@ export class LibraryAdminLendingList {
   private load(page: number) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

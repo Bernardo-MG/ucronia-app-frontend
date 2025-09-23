@@ -9,13 +9,13 @@
       </tr>
     </ng-template>
     <ng-template #body let-fee>
-      <tr [pSelectableRow]="fee" [ngClass]="{ 'table-warning': !fee.paid }">
+      <tr [pSelectableRow]="fee" [ngClass]="{ 'bg-yellow-100 text-yellow-800'': !fee.paid }">
         <td>{{ fee.month }}</td>
-        <td> @if (fee.paid) {
-          {{fee.payment?.date}}
-          }
-          @if (!fee.paid) {
-          <span class="pi pi-times text-danger"></span>
+        <td>
+          @if (fee.paid) {
+            {{fee.payment?.date}}
+          } @else {
+            <span class="pi pi-times text-danger"></span>
           }
         </td>
       </tr>

@@ -62,9 +62,8 @@ describe('AccessUserActivateService', () => {
       const response = { content: new UserTokenStatus(true, 'username') };
       client.read.and.returnValue(of(response));
 
-      service.validateToken(token).subscribe(res => {
-        expect(res).toEqual(response);
-      });
+      service.validateToken(token)
+        .subscribe(res => expect(res).toEqual(response));
 
       expect(client.appendRoute).toHaveBeenCalledWith(`/${token}`);
     });
@@ -74,9 +73,8 @@ describe('AccessUserActivateService', () => {
       const response = { content: new UserTokenStatus(true, 'username') };
       client.read.and.returnValue(of(response));
 
-      service.validateToken(token).subscribe(res => {
-        expect(res).toEqual(response);
-      });
+      service.validateToken(token)
+        .subscribe(res => expect(res).toEqual(response));
 
       expect(client.read).toHaveBeenCalled();
     });

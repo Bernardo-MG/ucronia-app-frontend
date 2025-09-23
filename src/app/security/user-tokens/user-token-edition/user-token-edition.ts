@@ -41,13 +41,14 @@ export class UserTokenEdition extends InfoEditorStatusComponent<UserToken> {
     this.editable = authContainer.hasPermission("user_token", "update");
 
     // Get id
-    route.paramMap.subscribe(params => {
-      const tokenParam = params.get('token');
-      if (tokenParam) {
-        this.token = tokenParam;
-      }
-      this.load();
-    });
+    route.paramMap
+      .subscribe(params => {
+        const tokenParam = params.get('token');
+        if (tokenParam) {
+          this.token = tokenParam;
+        }
+        this.load();
+      });
   }
 
   public onChangeView(newView: string) {
@@ -56,29 +57,31 @@ export class UserTokenEdition extends InfoEditorStatusComponent<UserToken> {
 
   public onRevoke(): void {
     this.saving = true;
-    this.service.revoke(this.data.token).subscribe({
-      next: response => {
-        this.interceptSave(response);
-      },
-      error: error => {
-        this.interceptError(error);
-      }
-    });
+    this.service.revoke(this.data.token)
+      .subscribe({
+        next: response => {
+          this.interceptSave(response);
+        },
+        error: error => {
+          this.interceptError(error);
+        }
+      });
   }
 
   public onExtendExpiration(): void {
     const expirationDate = this.extendExpirationForm.value.expirationDate;
     if (expirationDate) {
       this.saving = true;
-      this.service.extend(this.data.token, expirationDate).subscribe({
-        next: response => {
-          this.interceptSave(response);
-          this.extendExpirationForm.patchValue(this.data.expirationDate as any);
-        },
-        error: error => {
-          this.interceptError(error);
-        }
-      });
+      this.service.extend(this.data.token, expirationDate)
+        .subscribe({
+          next: response => {
+            this.interceptSave(response);
+            this.extendExpirationForm.patchValue(this.data.expirationDate as any);
+          },
+          error: error => {
+            this.interceptError(error);
+          }
+        });
     }
   }
 

@@ -53,13 +53,8 @@ export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefin
   }
 
   public onGoToSelectionPage(page: number) {
-    this.getSelection()(page).subscribe({
-      next: response => {
-        this.selection = response;
-      },
-      error: error => {
-      }
-    });
+    this.getSelection()(page)
+      .subscribe(response => this.selection = response);
   }
 
   public onStartSelectingDonor() {

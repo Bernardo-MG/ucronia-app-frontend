@@ -1,5 +1,5 @@
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { Observable, throwError } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 
 export abstract class InfoEditorStatusComponent<Data> {
 
@@ -132,15 +132,8 @@ export abstract class InfoEditorStatusComponent<Data> {
   protected load(): void {
     this.reading = true;
     this.read()
-      .subscribe({
-        next: response => {
-          this.onLoad(response);
-          this.reading = false;
-        },
-        error: error => {
-          this.reading = false;
-        }
-      });
+      .pipe(finalize(() => this.reading = false))
+      .subscribe(response => this.onLoad(response));
   }
 
   protected onLoad(data: Data): void {

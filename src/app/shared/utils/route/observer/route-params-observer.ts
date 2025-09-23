@@ -21,15 +21,16 @@ export class RouteParametersObserver<T> implements ParamsObserver<T> {
     parser: ParametersParser<T>
   ) {
     // Listens to parameter changes
-    route.queryParamMap.subscribe(params => {
-      // Parses the new data from the parameters
-      const data = parser.parse(params);
+    route.queryParamMap
+      .subscribe(params => {
+        // Parses the new data from the parameters
+        const data = parser.parse(params);
 
-      // Updates subject
-      if (!lodash.isEqual(this.subject.value, data)) {
-        this.subject.next(data);
-      }
-    });
+        // Updates subject
+        if (!lodash.isEqual(this.subject.value, data)) {
+          this.subject.next(data);
+        }
+      });
   }
 
 }

@@ -22,7 +22,8 @@ export class LayoutService {
 
     this.loadPermissions();
     // If the user changes, reload permissions
-    authContainer.securityDetails.subscribe(u => { this.loadPermissions() });
+    authContainer.securityDetails
+      .subscribe(u => this.loadPermissions());
   }
 
   /**

@@ -75,7 +75,8 @@ describe('PaginationSizeSelectorTemplateComponent', () => {
     fixture.detectChanges();
 
     let size: number | undefined;
-    component.selectSize.pipe(first()).subscribe((p: number) => size = p);
+    component.selectSize.pipe(first())
+      .subscribe((p: number) => size = p);
 
     const select = fixture.nativeElement.querySelector('select');
     select.value = select.options[1].value;
