@@ -133,7 +133,13 @@ export abstract class InfoEditorStatusComponent<Data> {
     this.reading = true;
     this.read()
       .pipe(finalize(() => this.reading = false))
-      .subscribe(response => this.onLoad(response));
+      .subscribe({
+        next: response => {
+          this.onLoad(response);
+        },
+        error: error => {
+        }
+      });
   }
 
   protected onLoad(data: Data): void {
