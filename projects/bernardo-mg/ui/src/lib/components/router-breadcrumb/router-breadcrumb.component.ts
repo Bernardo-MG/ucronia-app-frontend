@@ -27,9 +27,7 @@ export class RouterBreadcrumbComponent {
     // Build breadcrumbs on initialization and on route change
     router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.breadcrumbs = this.buildBreadcrumbs();
-      });
+      .subscribe(() => this.breadcrumbs = this.buildBreadcrumbs());
   }
 
   private buildBreadcrumbs(): MenuItem[] {

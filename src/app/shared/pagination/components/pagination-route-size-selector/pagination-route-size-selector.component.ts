@@ -24,11 +24,12 @@ export class PaginationSizeSelectorComponent {
     const route = inject(ActivatedRoute);
 
     this.routeActuator = new RouteApiActuator(router);
-    new PaginationRouteObserver(route).subject.subscribe(p => {
-      if ((p) && (p.size)) {
-        this.selected = p.size;
-      }
-    });
+    new PaginationRouteObserver(route).subject
+      .subscribe(p => {
+        if ((p) && (p.size)) {
+          this.selected = p.size;
+        }
+      });
   }
 
   public onSelect(size: number) {

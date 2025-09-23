@@ -8,6 +8,7 @@ import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { BookService } from '../book-service';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-library-game-book-info',
@@ -72,15 +73,8 @@ export class LibraryGameBookInfo {
   private load(): void {
     this.loading = true;
     this.service.getOneGameBook(this.index)
-      .subscribe({
-        next: response => {
-          this.data = response;
-          this.loading = false;
-        },
-        error: error => {
-          this.loading = false;
-        }
-      });
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

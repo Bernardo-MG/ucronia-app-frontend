@@ -6,9 +6,9 @@ import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SortingButtonComponent } from '../sorting-button/sorting-button.component';
 
 @Component({
-    selector: 'sorting-route-button',
-    imports: [SortingButtonComponent],
-    templateUrl: './sorting-route-button.component.html'
+  selector: 'sorting-route-button',
+  imports: [SortingButtonComponent],
+  templateUrl: './sorting-route-button.component.html'
 })
 export class SortingRouteButtonComponent {
 
@@ -25,18 +25,19 @@ export class SortingRouteButtonComponent {
     const route = inject(ActivatedRoute);
 
     this.routeActuator = new RouteApiActuator(router);
-    new SortRouteObserver(route).subject.subscribe(p => {
-      if (p) {
-        const propertySort = p.find(s => s.property === this.property);
-        if (propertySort) {
-          this.direction = propertySort.direction as SortingDirection;
+    new SortRouteObserver(route).subject
+      .subscribe(p => {
+        if (p) {
+          const propertySort = p.find(s => s.property === this.property);
+          if (propertySort) {
+            this.direction = propertySort.direction as SortingDirection;
+          } else {
+            this.direction = SortingDirection.Unsorted;
+          }
         } else {
           this.direction = SortingDirection.Unsorted;
         }
-      } else {
-        this.direction = SortingDirection.Unsorted;
-      }
-    });
+      });
   }
 
   public onChangeDirection(sort: SortingProperty) {

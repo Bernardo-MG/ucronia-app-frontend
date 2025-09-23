@@ -25,13 +25,14 @@ export class PaginationRouteNavigationComponent {
     const route = inject(ActivatedRoute);
 
     this.routeActuator = new RouteApiActuator(router);
-    new PaginationRouteObserver(route).subject.subscribe(p => {
-      if ((p) && (p.page)) {
-        this.page = p.page;
-      } else {
-        this.page = 1;
-      }
-    });
+    new PaginationRouteObserver(route).subject
+      .subscribe(p => {
+        if ((p) && (p.page)) {
+          this.page = p.page;
+        } else {
+          this.page = 1;
+        }
+      });
   }
 
   public onGoTo(page: number) {

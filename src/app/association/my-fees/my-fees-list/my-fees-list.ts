@@ -1,10 +1,10 @@
-
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Fee } from '@app/domain/fees/fee';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { finalize } from 'rxjs';
 import { MyFeesService } from '../my-fees-service';
 
 @Component({
@@ -12,7 +12,7 @@ import { MyFeesService } from '../my-fees-service';
   imports: [CommonModule, CardModule, TableModule],
   templateUrl: './my-fees-list.html'
 })
-export class MyFeesList {
+export class MyFeesList implements OnInit {
 
   private readonly service = inject(MyFeesService);
 
@@ -27,7 +27,7 @@ export class MyFeesList {
    */
   public loading = false;
 
-  constructor() {
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -39,18 +39,9 @@ export class MyFeesList {
   private load(page: number) {
     this.loading = true;
 
-    this.service.getAll(page).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

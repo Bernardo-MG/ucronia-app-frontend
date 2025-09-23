@@ -10,7 +10,7 @@ import { ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { AccessRoleAddPermission } from '../access-role-add-permission/access-role-add-permission';
 import { AccessRoleService } from '../access-role-service';
 
@@ -55,16 +55,17 @@ export class AccessRoleInfoEdition extends InfoEditorStatusComponent<Role> {
     this.deletable = authContainer.hasPermission("user", "delete");
 
     // Get id
-    route.paramMap.subscribe(params => {
-      const roleParam = params.get('role');
-      if (roleParam) {
-        this.role = roleParam;
-        this.load();
+    route.paramMap
+      .subscribe(params => {
+        const roleParam = params.get('role');
+        if (roleParam) {
+          this.role = roleParam;
+          this.load();
 
-        // Initial permissions
-        this.onLoadPermissions(0);
-      }
-    });
+          // Initial permissions
+          this.onLoadPermissions(0);
+        }
+      });
   }
 
   public onChangeView(newView: string) {
@@ -92,12 +93,9 @@ export class AccessRoleInfoEdition extends InfoEditorStatusComponent<Role> {
 
   public onLoadPermissions(page: number) {
     this.loadingPermissions = true;
-    this.service.getAvailablePermissions(this.role, page, this.permissionsSort).subscribe({
-      next: response => {
-        this.permissions = response;
-        this.loadingPermissions = false;
-      }
-    });
+    this.service.getAvailablePermissions(this.role, page, this.permissionsSort)
+      .pipe(finalize(() => this.loadingPermissions = false))
+      .subscribe(response => this.permissions = response);
   }
 
   public onChangePermissionsDirection(field: SortingProperty) {
@@ -116,9 +114,10 @@ export class AccessRoleInfoEdition extends InfoEditorStatusComponent<Role> {
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.name).subscribe(r => {
-      this.router.navigate([`/security/roles`]);
-    });
+    this.service.delete(this.data.name)
+      .subscribe(r => {
+        this.router.navigate([`/security/roles`]);
+      });
   }
 
   protected override read(): Observable<Role> {

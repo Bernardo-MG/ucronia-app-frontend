@@ -1,17 +1,18 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { LoginRegister } from '../models/login-register';
 import { AccessAuditLoginService } from '../access-audit-login-service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'access-audit-login',
   imports: [CardModule, TableModule],
   templateUrl: './access-audit-login.html'
 })
-export class AccessAuditLogin {
+export class AccessAuditLogin implements OnInit {
 
   private readonly service = inject(AccessAuditLoginService);
 
@@ -28,7 +29,7 @@ export class AccessAuditLogin {
 
   private sort = new Sorting();
 
-  constructor() {
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -45,18 +46,9 @@ export class AccessAuditLogin {
 
   private load(page: number) {
     this.loading = true;
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

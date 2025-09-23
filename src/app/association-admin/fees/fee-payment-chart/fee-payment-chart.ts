@@ -21,7 +21,8 @@ export class FeePaymentChart implements OnDestroy {
     this.report.paid = 0;
     this.report.unpaid = 0;
 
-    service.getPaymentReport().subscribe(response => this.loadChart(response));
+    service.getPaymentReport()
+      .subscribe(response => this.loadChart(response));
   }
 
   public ngOnDestroy(): void {

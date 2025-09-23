@@ -33,13 +33,15 @@ export class SelectionList implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['getSelection'] && this.getSelection) {
-      this.getSelection()(0).subscribe(response => this.selection = response);
+      this.getSelection()(0)
+        .subscribe(response => this.selection = response);
     }
   }
 
   public onGoToSelectionPage(event: TablePageEvent) {
     const page = (event.first / this.selection.size) + 1;
-    this.getSelection()(page).subscribe(response => this.selection = response);
+    this.getSelection()(page)
+      .subscribe(response => this.selection = response);
   }
 
   public onSelectRow() {

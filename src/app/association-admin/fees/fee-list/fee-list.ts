@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
@@ -32,7 +32,7 @@ import { FeeCalendarSelection } from '../model/fee-calendar-selection';
   imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-list.html'
 })
-export class FeeList {
+export class FeeList implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
 
@@ -73,8 +73,9 @@ export class FeeList {
     // Check permissions
     this.createable = authContainer.hasPermission("fee", "create");
     this.editable = authContainer.hasPermission("fee", "update");
+  }
 
-    // Load range
+  public ngOnInit(): void {
     this.feeCalendarService.getRange().subscribe(d => {
       this.range = d;
       const lastYear = Number(this.range.years[this.range.years.length - 1]);
@@ -124,26 +125,28 @@ export class FeeList {
 
   private mutate(action: () => Observable<any>) {
     this.loading = true;
-    action().subscribe({
-      next: () => {
-        this.failures.clear();
-        this.view = 'none';
-        this.loadCalendar(this.year);
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
           this.failures.clear();
+          this.view = 'none';
+          this.loadCalendar(this.year);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
         }
-        this.loading = false;
-        return throwError(() => error);
-      }
-    });
+      });
   }
 
   public onSelectFee(fee: { member: number, date: Date }) {
-    this.service.getOne(fee.date, fee.member).subscribe(fee => this.selectedData = fee);
+    this.service.getOne(fee.date, fee.member)
+      .subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }
 

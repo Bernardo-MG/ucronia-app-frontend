@@ -1,5 +1,5 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -12,7 +12,7 @@ import { SettingValuesEditor } from '../settings-values-editor/settings-values-e
   imports: [CardModule, ReactiveFormsModule, FormsModule, SettingValuesEditor],
   templateUrl: './settings-edition.html'
 })
-export class SettingsInfoEditor {
+export class SettingsInfoEditor implements OnInit {
 
   public settings: Setting[] = [];
 
@@ -25,24 +25,15 @@ export class SettingsInfoEditor {
 
     // Check permissions
     this.editable = authContainer.hasPermission("association_settings", "update");
+  }
 
+  public ngOnInit(): void {
     this.service.getAll()
-      .subscribe({
-        next: response => {
-          this.settings = response;
-        },
-        error: error => {
-        }
-      });
+      .subscribe(response => this.settings = response);
   }
 
   public onSaveConfig(config: Setting) {
-    return this.service.update(config.code, config).subscribe({
-      next: response => {
-      },
-      error: error => {
-      }
-    });
+    return this.service.update(config.code, config).subscribe();
   }
 
 }

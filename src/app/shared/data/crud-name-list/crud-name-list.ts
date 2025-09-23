@@ -10,7 +10,7 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { EMPTY, Observable, throwError } from 'rxjs';
+import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { NameForm } from '../name-form/name-form';
 
 @Component({
@@ -156,13 +156,9 @@ export class CrudNameList implements OnInit {
     this.loading = true;
     const service = this.service();
     if (service) {
-      return service.getAll(page, this.sort).subscribe({
-        next: response => {
-          this.data = response;
-          this.loading = false;
-        },
-        error: () => this.loading = false
-      });
+      return service.getAll(page, this.sort)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(response => this.data = response);
     } else {
       this.loading = false;
       return EMPTY;
@@ -171,22 +167,23 @@ export class CrudNameList implements OnInit {
 
   protected mutate(action: () => Observable<any>) {
     this.loading = true;
-    action().subscribe({
-      next: () => {
-        this.failures.clear();
-        this.shownForm = 'none';
-        this.load(this.data.page);
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
           this.failures.clear();
+          this.shownForm = 'none';
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
         }
-        this.loading = false;
-        return throwError(() => error);
-      }
-    });
+      });
   }
 
 }

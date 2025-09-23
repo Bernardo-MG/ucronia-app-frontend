@@ -1,17 +1,18 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/member-service';
 import { Member } from '@app/domain/members/member';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-member-list',
   imports: [RouterModule, CardModule, TableModule],
   templateUrl: './member-list.html'
 })
-export class MemberList {
+export class MemberList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -32,7 +33,7 @@ export class MemberList {
    */
   public loading = false;
 
-  constructor() {
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -63,18 +64,9 @@ export class MemberList {
   private load(page: number) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort).subscribe({
-      next: response => {
-        this.data = response;
-
-        // Reactivate view
-        this.loading = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

@@ -6,6 +6,7 @@ import { Member } from '@app/domain/members/member';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-member-info',
@@ -41,15 +42,8 @@ export class MemberInfo {
   private load(id: number): void {
     this.loading = true;
     this.service.getOne(id)
-      .subscribe({
-        next: response => {
-          this.data = response;
-          this.loading = false;
-        },
-        error: error => {
-          this.loading = false;
-        }
-      });
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

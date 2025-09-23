@@ -21,8 +21,9 @@ export class AccountDropdownContainer {
   public readonly accountItems: MenuItem[] = [];
 
   constructor() {
-    this.authContainer.securityDetails.subscribe(u => { this.username = u.username });
-    
+    this.authContainer.securityDetails
+      .subscribe(u => this.username = u.username);
+
     this.accountItems.push(
       {
         label: this.username,

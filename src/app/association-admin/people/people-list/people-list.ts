@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { MembershipEvolutionChartWidgetContainer } from '@app/association-admin/people/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
@@ -17,7 +17,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { debounceTime, Observable, Subject, throwError } from 'rxjs';
+import { debounceTime, finalize, Observable, Subject, throwError } from 'rxjs';
 import { PeopleCreationForm } from '../people-creation-form/people-creation-form';
 import { PeopleEditionForm } from '../people-edition-form/people-edition-form';
 import { PeopleInfo } from '../people-info/people-info';
@@ -30,7 +30,7 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
   templateUrl: './people-list.html',
   providers: [ConfirmationService, MessageService]
 })
-export class PeopleList {
+export class PeopleList implements OnInit {
 
   private readonly router = inject(Router);
 
@@ -80,12 +80,12 @@ export class PeopleList {
     this.createable = authContainer.hasPermission("person", "create");
     this.editable = authContainer.hasPermission("person", "update");
 
-    this.nameFilterSubject.pipe(
-      debounceTime(300)
-    ).subscribe(() => {
-      this.load(0);
-    });
+    this.nameFilterSubject
+      .pipe(debounceTime(300))
+      .subscribe(() => this.load(0));
+  }
 
+  public ngOnInit(): void {
     this.load(0);
   }
 
@@ -270,35 +270,30 @@ export class PeopleList {
 
   private mutate(action: () => Observable<any>) {
     this.loading = true;
-    action().subscribe({
-      next: () => {
-        this.failures.clear();
-        this.view = 'none';
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
           this.failures.clear();
+          this.view = 'none';
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
         }
-        this.loading = false;
-        return throwError(() => error);
-      }
-    });
+      });
   }
 
   private load(page: number) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter).subscribe({
-      next: response => {
-        this.data = response;
-        this.loading = false;
-      },
-      error: error => {
-        this.loading = false;
-      }
-    });
+    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
 }

@@ -7,6 +7,7 @@ import { Person } from '@app/domain/person/person';
 import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'account-profile-frontpage',
@@ -27,15 +28,9 @@ export class AccountProfileFrontpage {
     const service = inject(AccountService);
 
     this.loading = true;
-    service.getAccount().subscribe({
-      next: response => {
-        this.account = response;
-        this.loading = false;
-      },
-      error: error => {
-        this.loading = false;
-      }
-    });
+    service.getAccount()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.account = response);
   }
 
 }

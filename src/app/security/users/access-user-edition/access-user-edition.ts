@@ -10,7 +10,7 @@ import { ModalComponent, ResponsiveShortColumnsDirective } from '@bernardo-mg/ui
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
@@ -54,65 +54,41 @@ export class AccessUserEdition extends InfoEditorStatusComponent<User> {
     this.deletable = authContainer.hasPermission("user", "delete");
 
     // Get id
-    route.paramMap.subscribe(params => {
-      const usernameParam = params.get('user');
-      if (usernameParam) {
-        this.username = usernameParam;
-      }
-      this.load();
-    });
+    route.paramMap
+      .subscribe(params => {
+        const usernameParam = params.get('user');
+        if (usernameParam) {
+          this.username = usernameParam;
+        }
+        this.load();
+      });
 
     // Load member
-    this.service.getMember(this.username).subscribe({
-      next: response => {
+    this.service.getMember(this.username)
+      .pipe(finalize(() => this.readingMember = false))
+      .subscribe(response => {
         if (response) {
           this.member = response;
         } else {
           this.member = new Member();
         }
-
-        // Reactivate view
-        this.readingMember = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingMember = false;
-      }
-    });
+      });
 
     this.onGoToRoleSelectionPage(1);
   }
 
   public onGoToRoleSelectionPage(page: number) {
     this.readingRoleSelection = true;
-    this.service.getAvailableRoles(this.username, page).subscribe({
-      next: response => {
-        this.rolesSelection = response;
-
-        // Reactivate view
-        this.readingRoleSelection = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingRoleSelection = false;
-      }
-    });
+    this.service.getAvailableRoles(this.username, page)
+      .pipe(finalize(() => this.readingRoleSelection = false))
+      .subscribe(response => this.rolesSelection = response);
   }
 
   public onGoToMemberSelectionPage(page: number) {
     this.readingMemberSelection = true;
-    this.service.getAvailableMembers(this.username, page).subscribe({
-      next: response => {
-        this.membersSelection = response;
-
-        // Reactivate view
-        this.readingMemberSelection = false;
-      },
-      error: error => {
-        // Reactivate view
-        this.readingMemberSelection = false;
-      }
-    });
+    this.service.getAvailableMembers(this.username, page)
+      .pipe(finalize(() => this.readingMemberSelection = false))
+      .subscribe(response => this.membersSelection = response);
   }
 
   public onAddRole(role: Role): void {
@@ -121,16 +97,8 @@ export class AccessUserEdition extends InfoEditorStatusComponent<User> {
   }
 
   public onSelectMember(member: Member): void {
-    this.service.assignMember(this.username, member).subscribe({
-      next: response => {
-        this.member = response;
-
-        // Reactivate view
-      },
-      error: error => {
-        // Reactivate view
-      }
-    });
+    this.service.assignMember(this.username, member)
+      .subscribe(response => this.member = response);
   }
 
   public onRemoveRole(role: Role): void {
@@ -153,9 +121,8 @@ export class AccessUserEdition extends InfoEditorStatusComponent<User> {
   }
 
   protected override delete(): void {
-    this.service.delete(this.data.username).subscribe(r => {
-      this.router.navigate([`/security/users`]);
-    });
+    this.service.delete(this.data.username)
+      .subscribe(r => this.router.navigate([`/security/users`]));
   }
 
   protected override read(): Observable<User> {
