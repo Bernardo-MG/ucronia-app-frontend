@@ -45,7 +45,7 @@
     <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)"/>
   }
   @case ('member') {
-    <access-user-member-editor [getSelection]="onLoadMembers.bind(this)" />
+    <access-user-member-editor [username]="selectedData.username" [getSelection]="onLoadMembers.bind(this)" [getMember]="onGetMembers.bind(this)" (selectMember)="onSelectMember($event)" />
   }
   }
 </p-drawer>

@@ -16,6 +16,7 @@ import { AccessUserMemberEditor } from '../access-user-member-editor/access-user
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
 import { AccessUserService } from '../access-user-service';
 import { AccessUserStatus } from '../access-user-status/access-user-status';
+import { Member } from '@app/domain/members/member';
 
 @Component({
   selector: 'access-user-list',
@@ -89,6 +90,10 @@ export class AccessList implements OnInit {
     return this.service.getAvailableMembers(this.selectedData.username, page);
   }
 
+  public onGetMembers(username: string) {
+    return this.service.getMember(username);
+  }
+
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
@@ -109,6 +114,11 @@ export class AccessList implements OnInit {
 
   public onCancel(): void {
     this.view = 'none';
+  }
+
+  public onSelectMember(member: Member): void {
+    this.service.assignMember(this.selectedData.username, member)
+      .subscribe();
   }
 
   public openEditionMenu(event: Event, user: User) {
