@@ -45,7 +45,7 @@
     <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)"/>
   }
   @case ('member') {
-    <access-user-member-editor />
+    <access-user-member-editor [getSelection]="onLoadMembers.bind(this)" />
   }
   }
 </p-drawer>

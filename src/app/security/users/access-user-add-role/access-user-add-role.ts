@@ -37,7 +37,7 @@ export class AccessUserAddRole implements OnInit {
     this.addRole.emit(data);
   }
 
-  public onGoToPage(page: number): void {
+  private onGoToPage(page: number): void {
     this.loading = true;
     this.getSelection()(page)
       .pipe(finalize(() => this.loading = false))

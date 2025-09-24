@@ -85,6 +85,10 @@ export class AccessList implements OnInit {
     return this.service.getAvailableRoles(this.selectedData.username, page);
   }
 
+  public onLoadMembers(page: number) {
+    return this.service.getAvailableMembers(this.selectedData.username, page);
+  }
+
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
