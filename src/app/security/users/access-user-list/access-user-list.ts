@@ -1,11 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
+import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
@@ -16,7 +17,7 @@ import { AccessUserStatus } from '../access-user-status/access-user-status';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, AccessUserForm, AccessUserInfo, AccessUserStatus],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserStatus],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -26,11 +27,15 @@ export class AccessList implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
+  @ViewChild('editionMenu') editionMenu!: Menu;
+
   public readonly createable;
   public readonly editable;
 
   public showing = false;
   public showForm = false;
+
+  public editionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -80,10 +85,6 @@ export class AccessList implements OnInit {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/security/users/${this.selectedData.username}`]);
-  }
-
   public onShowInfo(user: User) {
     this.selectedData = user;
     this.showing = true;
@@ -99,6 +100,58 @@ export class AccessList implements OnInit {
 
   public onCancel(): void {
     this.view = 'none';
+  }
+
+  public openEditionMenu(event: Event, user: User) {
+    this.selectedData = user;
+
+    this.editionMenuItems = [];
+
+    // Load edition menu
+    this.editionMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.onStartEditing('details')
+      });
+    // Active/Deactivate toggle
+    const isActive = user.enabled;
+    this.editionMenuItems.push({
+      label: isActive ? 'Desactivar' : 'Activar',
+      command: () => this.onConfirmSetActive(event, !isActive)
+    });
+
+    this.editionMenu.toggle(event);
+  }
+
+  public onConfirmSetActive(event: Event, status: boolean) {
+    let message;
+    if (status) {
+      message = '¿Estás seguro de querer activar el usuario?';
+    } else {
+      message = '¿Estás seguro de querer desactivar el usuario?';
+    }
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message,
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.onSetActive(status);
+      }
+    });
+  }
+
+  public onSetActive(status: boolean) {
+    this.selectedData.enabled = status;
+    this.onUpdate(this.selectedData);
   }
 
   public onDelete(event: Event, id: string) {
