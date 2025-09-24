@@ -18,8 +18,20 @@
         <td>{{ token.username }}</td>
         <td>{{ token.scope }}</td>
         <td>{{ token.creationDate | date:'yyyy-MM-dd hh:mm:ss' }}</td>
-        <td>{{ token.consumed }}</td>
-        <td>{{ token.revoked }}</td>
+        <td>
+          @if (token.consumed) {
+            <span class="pi pi-times text-warning"></span>
+          } @else {
+            <span class="pi pi-check text-success"></span>
+          }
+        </td>
+        <td>
+          @if (token.revoked) {
+            <span class="pi pi-times text-warning"></span>
+          } @else {
+            <span class="pi pi-check text-success"></span>
+          }
+        </td>
         <td>
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(token)" rounded text />
         </td>
