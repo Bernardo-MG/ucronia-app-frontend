@@ -1,3 +1,4 @@
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-card>
   <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
     [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
@@ -34,6 +35,8 @@
         </td>
         <td>
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(token)" rounded text />
+          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+            [attr.aria-disabled]="!editable" (click)="editionMenu.toggle($event)" rounded text />
         </td>
       </tr>
     </ng-template>
@@ -42,4 +45,10 @@
 <p-drawer [(visible)]="showing" position="full">
   <access-user-token-info [data]="selectedData" [loading]="loading" />
   <access-user-token-status [data]="selectedData" [loading]="loading" />
+</p-drawer>
+<p-drawer [(visible)]="editing" position="right">
+  @switch (view) {
+  @case ('details') {
+  }
+  }
 </p-drawer>

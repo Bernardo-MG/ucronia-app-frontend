@@ -1,12 +1,14 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
-import { UserToken } from '@bernardo-mg/authentication';
+import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
@@ -14,14 +16,17 @@ import { UserTokenStatus } from '../user-token-status/user-token-status';
 
 @Component({
   selector: 'access-user-token-list',
-  imports: [CardModule, TableModule, DrawerModule, ButtonModule, UserTokenInfo, UserTokenStatus, DatePipe],
+  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenStatus, DatePipe],
   templateUrl: './user-token-list.html'
 })
 export class UserTokenList implements OnInit {
 
   private readonly router = inject(Router);
-
   private readonly service = inject(UserTokenService);
+
+  public readonly editionMenuItems: MenuItem[] = [];
+
+  @ViewChild('editionMenu') editionMenu!: Menu;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -38,6 +43,34 @@ export class UserTokenList implements OnInit {
    */
   public loading = false;
   public showing = false;
+  public editing = false;
+
+  public readonly editable;
+
+  public view: string = '';
+
+  public constructor() {
+    const authContainer = inject(AuthContainer);
+
+    this.editable = authContainer.hasPermission("user_token", "update");
+
+    // Load edition menu
+    this.editionMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.onStartEditingView('details')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Extender expiración',
+        command: () => this.onStartEditingView('details')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Revocar',
+        command: () => this.onStartEditingView('details')
+      });
+  }
 
   public ngOnInit(): void {
     this.load(0);
@@ -46,6 +79,11 @@ export class UserTokenList implements OnInit {
   public onShowInfo(token: UserToken) {
     this.selectedData = token;
     this.showing = true;
+  }
+
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
