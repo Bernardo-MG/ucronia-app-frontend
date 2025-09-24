@@ -2,6 +2,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { UserTokenList } from './user-token-list';
 
 describe('UserTokenList', () => {
@@ -14,6 +15,7 @@ describe('UserTokenList', () => {
         UserTokenList
       ],
       providers: [
+        ConfirmationService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
