@@ -153,10 +153,6 @@ export class UserTokenList implements OnInit {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/security/user-tokens/${this.selectedData.token}`]);
-  }
-
   private load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort)
