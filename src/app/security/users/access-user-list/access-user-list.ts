@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthContainer, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -12,17 +12,18 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserInfo } from '../access-user-info/access-user-info';
+import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
+import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
 import { AccessUserService } from '../access-user-service';
 import { AccessUserStatus } from '../access-user-status/access-user-status';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserStatus],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserStatus, AccessUserRolesEditor, AccessUserMemberEditor],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
 
-  private readonly router = inject(Router);
   private readonly service = inject(AccessUserService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
@@ -80,6 +81,10 @@ export class AccessList implements OnInit {
     this.load(this.data.page);
   }
 
+  public onLoadRoles(page: number) {
+    return this.service.getAvailableRoles(this.selectedData.username, page);
+  }
+
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
@@ -111,17 +116,17 @@ export class AccessList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Datos',
-        command: () => this.onStartEditing('details')
+        command: () => this.onStartEditing(user, 'details')
       });
     this.editionMenuItems.push(
       {
         label: 'Roles',
-        command: () => this.onStartEditing('roles')
+        command: () => this.onStartEditing(user, 'roles')
       });
     this.editionMenuItems.push(
       {
         label: 'Socio',
-        command: () => this.onStartEditing('member')
+        command: () => this.onStartEditing(user, 'member')
       });
     // Active/Deactivate toggle
     const isActive = user.enabled;
@@ -190,9 +195,9 @@ export class AccessList implements OnInit {
     this.showForm = true;
   }
 
-  public onStartEditing(item: any): void {
+  public onStartEditing(item: User, view: string): void {
     this.selectedData = item;
-    this.view = 'edition';
+    this.view = view;
     this.showForm = true;
   }
 

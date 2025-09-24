@@ -42,8 +42,10 @@
     [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
   }
   @case ('roles') {
+    <access-user-roles-editor [getSelection]="onLoadRoles.bind(this)"/>
   }
   @case ('member') {
+    <access-user-member-editor />
   }
   }
 </p-drawer>

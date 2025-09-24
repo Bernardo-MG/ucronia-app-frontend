@@ -14,10 +14,6 @@ export class AccessUserRoles implements OnChanges {
 
   public readonly roles = input<Role[]>([]);
 
-  public readonly editable = input(false);
-
-  public readonly deletable = input(false);
-
   public readonly loading = input(false);
 
   public readonly remove = output<Role>();
