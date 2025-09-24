@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
-import { AuthContainer, User, UserToken } from '@bernardo-mg/authentication';
+import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -11,12 +11,13 @@ import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
+import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
 import { UserTokenStatus } from '../user-token-status/user-token-status';
 
 @Component({
   selector: 'access-user-token-list',
-  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenStatus, DatePipe],
+  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenStatus, UserTokenExtendForm, DatePipe],
   templateUrl: './user-token-list.html'
 })
 export class UserTokenList implements OnInit {
@@ -103,19 +104,18 @@ export class UserTokenList implements OnInit {
       });
   }
 
+  public onExtendExpiration(date: Date): void {
+    this.mutate(() => this.service.extend(this.selectedData.token, date));
+  }
+
   public openEditionMenu(event: Event, token: UserToken) {
 
     this.editionMenuItems = [];
     // Load edition menu
     this.editionMenuItems.push(
       {
-        label: 'Datos',
-        command: () => this.onStartEditingView('details')
-      });
-    this.editionMenuItems.push(
-      {
         label: 'Extender expiración',
-        command: () => this.onStartEditingView('details')
+        command: () => this.onStartEditingView('extend')
       });
     this.editionMenuItems.push(
       {

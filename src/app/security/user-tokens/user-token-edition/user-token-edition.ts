@@ -34,7 +34,7 @@ export class UserTokenEdition extends InfoEditorStatusComponent<UserToken> {
     super(new UserToken());
 
     this.extendExpirationForm = fb.group({
-      expirationDate: ['', Validators.required]
+      expirationDate: [new Date(), Validators.required]
     });
 
     // Check permissions
@@ -69,7 +69,7 @@ export class UserTokenEdition extends InfoEditorStatusComponent<UserToken> {
   }
 
   public onExtendExpiration(): void {
-    const expirationDate = this.extendExpirationForm.value.expirationDate;
+    const expirationDate = this.extendExpirationForm.value.expirationDate as Date;
     if (expirationDate) {
       this.saving = true;
       this.service.extend(this.data.token, expirationDate)

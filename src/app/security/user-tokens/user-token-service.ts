@@ -50,7 +50,7 @@ export class UserTokenService {
       .pipe(map(r => r.content));
   }
 
-  public extend(token: string, date: string): Observable<UserToken> {
+  public extend(token: string, date: Date): Observable<UserToken> {
     return this.client
       .appendRoute(`/${token}`)
       .patch<SimpleResponse<UserToken>>({ expirationDate: date })

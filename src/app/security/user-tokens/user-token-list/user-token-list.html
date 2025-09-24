@@ -21,16 +21,16 @@
         <td>{{ token.creationDate | date:'yyyy-MM-dd hh:mm:ss' }}</td>
         <td>
           @if (token.consumed) {
-            <span class="pi pi-times text-warning"></span>
-          } @else {
             <span class="pi pi-check text-success"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
           }
         </td>
         <td>
           @if (token.revoked) {
-            <span class="pi pi-times text-warning"></span>
-          } @else {
             <span class="pi pi-check text-success"></span>
+          } @else {
+            <span class="pi pi-times text-warning"></span>
           }
         </td>
         <td>
@@ -48,7 +48,9 @@
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
-  @case ('details') {
-  }
+    @case ('extend') {
+      <p>Selecciona una nueva fecha:</p>
+      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" (save)="onExtendExpiration($event)" />
+    }
   }
 </p-drawer>
