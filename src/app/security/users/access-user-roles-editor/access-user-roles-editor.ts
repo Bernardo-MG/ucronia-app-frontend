@@ -16,7 +16,6 @@ export class AccessUserRolesEditor {
 
   public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Role>>>((page: number) => EMPTY);
   public readonly waiting = input(false);
-  public readonly username = input('');
   public readonly roles = input<Role[]>([]);
 
   public readonly remove = output<Role>();
