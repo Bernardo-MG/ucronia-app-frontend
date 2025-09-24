@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthContainer, User } from '@bernardo-mg/authentication';
+import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -92,6 +92,16 @@ export class AccessList implements OnInit {
 
   public onGetMembers(username: string) {
     return this.service.getMember(username);
+  }
+
+  public onAddRole(role: Role): void {
+    this.selectedData.roles.push(role);
+    this.onUpdate(this.selectedData);
+  }
+
+  public onRemoveRole(role: Role): void {
+    this.selectedData.roles = this.selectedData.roles.filter(r => r.name != role.name);
+    this.onUpdate(this.selectedData);
   }
 
   public onPageChange(event: TablePageEvent) {

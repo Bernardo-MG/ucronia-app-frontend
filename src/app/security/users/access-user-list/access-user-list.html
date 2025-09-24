@@ -42,7 +42,7 @@
     [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
   }
   @case ('roles') {
-    <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)"/>
+    <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)" (add)="onAddRole($event)" (remove)="onRemoveRole($event)"/>
   }
   @case ('member') {
     <access-user-member-editor [username]="selectedData.username" [getSelection]="onLoadMembers.bind(this)" [getMember]="onGetMembers.bind(this)" (selectMember)="onSelectMember($event)" />
