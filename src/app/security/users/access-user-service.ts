@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Member } from '@app/domain/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
@@ -37,9 +37,9 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public update(username: string, data: UserUpdate): Observable<User> {
+  public update(data: UserUpdate): Observable<User> {
     return this.client
-      .appendRoute(`/${username}`)
+      .appendRoute(`/${data.username}`)
       .update<SimpleResponse<User>>(data)
       .pipe(map(r => r.content));
   }

@@ -1,0 +1,33 @@
+<!-- Username -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Usuario</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().username}}
+    }
+  </div>
+</div>
+<!-- Name -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Nombre</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().name}}
+    }
+  </div>
+</div>
+<!-- Email -->
+<div class="row">
+  <div class="col-sm-3 text-primary">E-mail</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().email}}
+    }
+  </div>
+</div>

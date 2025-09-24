@@ -1,40 +1,47 @@
 
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { EMPTY, finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'access-user-add-role',
   imports: [TableModule, IconAddComponent],
   templateUrl: './access-user-add-role.html'
 })
-export class AccessUserAddRole {
+export class AccessUserAddRole implements OnInit {
 
-  public readonly roles = input(new PaginatedResponse<Role>());
-
-  public readonly loading = input(false);
+  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Role>>>((page: number) => EMPTY);
 
   public readonly addRole = output<Role>();
 
-  public readonly goToPage = output<number>();
+  public selection = new PaginatedResponse<Role>();
+  public loading = false;
 
   public get first() {
-    return (this.roles().page - 1) * this.roles().size;
+    return (this.selection.page - 1) * this.selection.size;
+  }
+
+  public ngOnInit(): void {
+    this.onGoToPage(0);
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.roles().size) + 1;
-    this.goToPage.emit(page);
+    const page = (event.first / this.selection.size) + 1;
+    this.onGoToPage(page);
   }
 
   public onAdd(data: Role): void {
     this.addRole.emit(data);
   }
 
-  public onGoToPage(page: number): void {
-    this.goToPage.emit(page);
+  private onGoToPage(page: number): void {
+    this.loading = true;
+    this.getSelection()(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.selection = response);
   }
 
 }

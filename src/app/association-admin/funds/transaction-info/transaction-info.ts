@@ -2,10 +2,8 @@
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Transaction } from '@app/domain/transactions/transaction';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -14,9 +12,8 @@ import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'assoc-transaction-info',
-  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ConfirmPopupModule, ToastModule],
-  templateUrl: './transaction-info.html',
-  providers: [ConfirmationService, MessageService]
+  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ToastModule],
+  templateUrl: './transaction-info.html'
 })
 export class LibraryAdminBookInfo {
 

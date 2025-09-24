@@ -3,6 +3,7 @@ import { Component, input, output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { EMPTY, Observable } from 'rxjs';
 import { AccessUserAddRole } from '../access-user-add-role/access-user-add-role';
 import { AccessUserRoles } from '../access-user-roles/access-user-roles';
 
@@ -13,24 +14,12 @@ import { AccessUserRoles } from '../access-user-roles/access-user-roles';
 })
 export class AccessUserRolesEditor {
 
-  readonly editable = input(false);
-
-  readonly deletable = input(false);
-
-  readonly waiting = input(false);
-
-  readonly waitingRolesSelection = input(false);
-
-  readonly username = input('');
-
-  readonly roles = input<Role[]>([]);
-
-  readonly rolesSelection = input(new PaginatedResponse<Role>());
+  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Role>>>((page: number) => EMPTY);
+  public readonly waiting = input(false);
+  public readonly roles = input<Role[]>([]);
 
   public readonly remove = output<Role>();
-
   public readonly add = output<Role>();
-
   public readonly goToSelectionPage = output<number>();
 
   public view: 'list' | 'add' = 'list';
@@ -50,10 +39,6 @@ export class AccessUserRolesEditor {
 
   public onCancelAddRole() {
     this.view = "list";
-  }
-
-  public onGoToSelectionPage(page: number): void {
-    this.goToSelectionPage.emit(page);
   }
 
 }

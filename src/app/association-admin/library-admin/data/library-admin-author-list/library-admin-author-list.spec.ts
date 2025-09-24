@@ -3,10 +3,11 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuthorCrudService } from '../author-crud-service';
 import { LibraryAdminAuthorList } from './library-admin-author-list';
 
-describe('LibraryAdminAuthorListContainer', () => {
+describe('LibraryAdminAuthorList', () => {
   let component: LibraryAdminAuthorList;
   let fixture: ComponentFixture<LibraryAdminAuthorList>;
 
@@ -17,6 +18,8 @@ describe('LibraryAdminAuthorListContainer', () => {
       ],
       providers: [
         AuthorCrudService,
+        MessageService,
+        ConfirmationService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),

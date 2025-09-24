@@ -1,36 +1,47 @@
 
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { Member } from '@app/domain/members/member';
-import { PaginationNavigationComponent } from '@app/shared/pagination/components/pagination-navigation/pagination-navigation.component';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { TableModule, TablePageEvent } from 'primeng/table';
+import { EMPTY, finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'access-user-select-member',
-  imports: [PaginationNavigationComponent, JustifyCenterDirective, BlockUiDirective, IconAddComponent],
+  imports: [TableModule, IconAddComponent],
   templateUrl: './access-user-select-member.html'
 })
-export class AccessUserSelectMember {
+export class AccessUserSelectMember implements OnInit {
 
-  public readonly members = input(new PaginatedResponse<Member>());
-
-  public readonly waiting = input(false);
+  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Member>>>((page: number) => EMPTY);
 
   public readonly selectMember = output<Member>();
 
-  public readonly goToPage = output<number>();
+  public selection = new PaginatedResponse<Member>();
+  public loading = false;
 
-  constructor() {
+  public ngOnInit(): void {
     this.onGoToPage(0);
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.selection.size) + 1;
+    this.onGoToPage(page);
+  }
+
+  public get first() {
+    return (this.selection.page - 1) * this.selection.size;
   }
 
   public onSelect(data: Member): void {
     this.selectMember.emit(data);
   }
 
-  public onGoToPage(page: number): void {
-    this.goToPage.emit(page);
+  private onGoToPage(page: number): void {
+    this.loading = true;
+    this.getSelection()(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.selection = response);
   }
 
 }

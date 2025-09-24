@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
@@ -9,9 +10,9 @@ import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-association-layout',
-  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, Navbar],
+  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, ConfirmPopupModule, Navbar],
   templateUrl: './association-layout.html',
-  providers: [MessageService]
+  providers: [ConfirmationService, MessageService]
 })
 export class AssociationLayout {
 

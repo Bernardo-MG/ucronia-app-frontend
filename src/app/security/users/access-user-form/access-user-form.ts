@@ -14,9 +14,9 @@ export class AccessUserForm extends FormComponent<User> {
   public readonly create = input(true);
 
   constructor() {
-    const fb = inject(FormBuilder);
-
     super();
+
+    const fb = inject(FormBuilder);
 
     this.form = fb.group({
       username: ['', Validators.required],

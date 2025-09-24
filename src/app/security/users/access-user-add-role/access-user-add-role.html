@@ -1,5 +1,5 @@
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="roles().content" paginator="true"
-  [rows]="roles().size" [totalRecords]="roles().totalElements" [first]="first" (onPage)="onPageChange($event)"
+<p-table lazy="true" dataKey="number" [loading]="loading" [value]="selection.content" paginator="true"
+  [rows]="selection.size" [totalRecords]="selection.totalElements" [first]="first" (onPage)="onPageChange($event)"
   showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
   <ng-template #header>
     <tr>
