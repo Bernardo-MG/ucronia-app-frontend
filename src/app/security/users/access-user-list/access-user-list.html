@@ -1,12 +1,12 @@
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartCreating()" [disabled]="!createable"
       aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-  <p-table lazy="true" dataKey="username" selectionMode="single" [loading]="loading" [value]="data.content"
-    [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements" [first]="first"
-    (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" showCurrentPageReport="true"
-    currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
+  <p-table lazy="true" dataKey="username" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
+    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
+    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
     <ng-template #header>
       <tr>
         <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
@@ -14,13 +14,13 @@
       </tr>
     </ng-template>
     <ng-template #body let-user>
-      <tr [pSelectableRow]="user">
+      <tr>
         <td>{{ user.name }}</td>
         <td>
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
             (click)="onShowInfo(user)" rounded text />
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-            [attr.aria-disabled]="!editable" (click)="onStartEditing(user)" rounded text />
+            [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, user)" rounded text />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
             [attr.aria-disabled]="!editable" (click)="onDelete($event, user.number)" rounded text />
         </td>
