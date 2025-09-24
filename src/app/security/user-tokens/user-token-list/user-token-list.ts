@@ -131,7 +131,7 @@ export class UserTokenList implements OnInit {
     this.showing = true;
   }
 
-  public onStartEditingView(view: string): void {
+  private onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
   }

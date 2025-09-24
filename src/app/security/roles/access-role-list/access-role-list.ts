@@ -1,25 +1,33 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { AccessRoleService } from '../access-role-service';
 import { finalize } from 'rxjs';
+import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, CardModule, TableModule, IconAddComponent],
+  imports: [RouterModule, CardModule, TableModule, ButtonModule, MenuModule, IconAddComponent],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {
 
   private readonly router = inject(Router);
-
   private readonly service = inject(AccessRoleService);
 
+  @ViewChild('editionMenu') editionMenu!: Menu;
+
   public readonly createPermission;
+
+  public readonly editable;
+
+  public readonly editionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -33,18 +41,40 @@ export class AccessRoleList implements OnInit {
    * Loading flag.
    */
   public loading = false;
+  public showing = false;
+  public editing = false;
 
   private sort = new Sorting();
+
+  public view: string = '';
 
   constructor() {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
     this.createPermission = authContainer.hasPermission("role", "create");
+    this.editable = authContainer.hasPermission("role", "update");
+
+    // Load edition menu
+    this.editionMenuItems.push(
+      {
+        label: 'Cambiar permisos',
+        command: () => this.onStartEditingView('permissions')
+      });
   }
 
   public ngOnInit(): void {
     this.load(0);
+  }
+
+  public onShowInfo(role: Role) {
+    this.selectedData = role;
+    this.showing = true;
+  }
+
+  public openEditionMenu(event: Event, role: Role) {
+    this.selectedData = role;
+    this.editionMenu.toggle(event);
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -73,6 +103,11 @@ export class AccessRoleList implements OnInit {
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  private onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
   }
 
 }
