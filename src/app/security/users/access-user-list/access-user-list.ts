@@ -12,10 +12,11 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserService } from '../access-user-service';
+import { AccessUserStatus } from '../access-user-status/access-user-status';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, AccessUserForm, AccessUserInfo],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, AccessUserForm, AccessUserInfo, AccessUserStatus],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {

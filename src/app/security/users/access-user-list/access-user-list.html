@@ -30,6 +30,7 @@
 </p-panel>
 <p-drawer [(visible)]="showing" position="full">
   <access-user-info [data]="selectedData" [loading]="loading" />
+  <access-user-status [data]="selectedData" />
 </p-drawer>
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (view) {
