@@ -6,14 +6,16 @@ import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
+import { AccessRoleInfo } from '../access-role-info/access-role-info';
 import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, CardModule, TableModule, ButtonModule, MenuModule, IconAddComponent],
+  imports: [RouterModule, CardModule, TableModule, ButtonModule, MenuModule, DrawerModule, IconAddComponent, AccessRoleInfo],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {

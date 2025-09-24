@@ -1,6 +1,5 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -21,7 +20,6 @@ import { UserTokenInfo } from '../user-token-info/user-token-info';
 })
 export class UserTokenList implements OnInit {
 
-  private readonly router = inject(Router);
   private readonly service = inject(UserTokenService);
   private readonly confirmationService = inject(ConfirmationService);
 

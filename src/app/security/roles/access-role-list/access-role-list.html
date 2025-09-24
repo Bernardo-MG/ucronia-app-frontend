@@ -30,3 +30,6 @@
     </ng-template>
   </p-table>
 </p-card>
+<p-drawer [(visible)]="showing" position="full">
+  <access-role-info [data]="selectedData" />
+</p-drawer>
