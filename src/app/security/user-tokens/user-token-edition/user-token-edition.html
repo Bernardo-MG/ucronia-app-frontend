@@ -1,6 +1,6 @@
 <div uiResponsiveShortColumns>
   <p-card>
-    <access-user-token-info [failures]="failures" [data]="data" [loading]="waiting" />
+    <access-user-token-info [data]="data" [loading]="waiting" />
     <ng-template #footer>
       <!-- Extend expiration button -->
       <button type="submit" name="Extend expiration" class="btn btn-primary" [uiWaiting]="waiting"

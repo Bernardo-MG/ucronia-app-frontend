@@ -49,7 +49,7 @@
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().creationDate}}
+      {{data().creationDate | date:'yyyy-MM-dd hh:mm:ss'}}
     }
   </div>
 </div>
@@ -61,14 +61,7 @@
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().expirationDate}}
-    }
-  </div>
-  <div class="col-sm-12">
-    @for (failure of failures().getFailures('expirationDate'); track failure) {
-      <div class="text-danger">
-        {{failure.message}}
-      </div>
+      {{data().expirationDate | date:'yyyy-MM-dd hh:mm:ss'}}
     }
   </div>
 </div>
