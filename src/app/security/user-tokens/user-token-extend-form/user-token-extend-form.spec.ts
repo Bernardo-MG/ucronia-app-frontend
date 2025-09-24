@@ -5,7 +5,7 @@ import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { provideRouter } from '@angular/router';
 import { UserTokenExtendForm } from './user-token-extend-form';
 
-describe('UserTokenEdition', () => {
+describe('UserTokenExtendForm', () => {
   let component: UserTokenExtendForm;
   let fixture: ComponentFixture<UserTokenExtendForm>;
 
