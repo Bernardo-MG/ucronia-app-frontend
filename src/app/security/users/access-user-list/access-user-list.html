@@ -41,5 +41,9 @@
   <access-user-form [create]="false" [waiting]="loading" [data]="selectedData" [failures]="failures"
     [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
   }
+  @case ('roles') {
+  }
+  @case ('member') {
+  }
   }
 </p-drawer>

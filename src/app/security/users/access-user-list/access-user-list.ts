@@ -27,7 +27,7 @@ export class AccessList implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
-  @ViewChild('editionMenu') editionMenu!: Menu;
+  @ViewChild('editionMenu') private editionMenu!: Menu;
 
   public readonly createable;
   public readonly editable;
@@ -112,6 +112,16 @@ export class AccessList implements OnInit {
       {
         label: 'Datos',
         command: () => this.onStartEditing('details')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Roles',
+        command: () => this.onStartEditing('roles')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Socio',
+        command: () => this.onStartEditing('member')
       });
     // Active/Deactivate toggle
     const isActive = user.enabled;
