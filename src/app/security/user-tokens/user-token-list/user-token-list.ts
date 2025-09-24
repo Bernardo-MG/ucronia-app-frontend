@@ -2,15 +2,15 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
-import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MenuItem } from 'primeng/api';
+import { AuthContainer, User, UserToken } from '@bernardo-mg/authentication';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
 import { UserTokenStatus } from '../user-token-status/user-token-status';
 
@@ -23,8 +23,9 @@ export class UserTokenList implements OnInit {
 
   private readonly router = inject(Router);
   private readonly service = inject(UserTokenService);
+  private readonly confirmationService = inject(ConfirmationService);
 
-  public readonly editionMenuItems: MenuItem[] = [];
+  public editionMenuItems: MenuItem[] = [];
 
   @ViewChild('editionMenu') editionMenu!: Menu;
 
@@ -49,11 +50,62 @@ export class UserTokenList implements OnInit {
 
   public view: string = '';
 
+  public failures = new FailureStore();
+
   public constructor() {
     const authContainer = inject(AuthContainer);
 
     this.editable = authContainer.hasPermission("user_token", "update");
+  }
 
+  public ngOnInit(): void {
+    this.load(0);
+  }
+
+  public onConfirmRevoke(event: Event) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer revocar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.mutate(() => this.service.revoke(this.selectedData.token));
+      }
+    });
+  }
+
+  private mutate(action: () => Observable<any>) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
+  }
+
+  public openEditionMenu(event: Event, token: UserToken) {
+
+    this.editionMenuItems = [];
     // Load edition menu
     this.editionMenuItems.push(
       {
@@ -68,12 +120,11 @@ export class UserTokenList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Revocar',
-        command: () => this.onStartEditingView('details')
+        command: () => this.onConfirmRevoke(event)
       });
-  }
 
-  public ngOnInit(): void {
-    this.load(0);
+    this.selectedData = token;
+    this.editionMenu.toggle(event);
   }
 
   public onShowInfo(token: UserToken) {
