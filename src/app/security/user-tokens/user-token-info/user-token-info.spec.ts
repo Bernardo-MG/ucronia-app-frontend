@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { UserTokenInfo } from './user-token-info';
 
-describe('UserTokenInfoComponent', () => {
+describe('UserTokenInfo', () => {
   let component: UserTokenInfo;
   let fixture: ComponentFixture<UserTokenInfo>;
 

@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroupDirective, NgControl } from '@angular/forms';
 import { provideRouter } from '@angular/router';
-import { UserTokenEdition } from './user-token-edition';
+import { UserTokenExtendForm } from './user-token-extend-form';
 
-describe('UserTokenEdition', () => {
-  let component: UserTokenEdition;
-  let fixture: ComponentFixture<UserTokenEdition>;
+describe('UserTokenExtendForm', () => {
+  let component: UserTokenExtendForm;
+  let fixture: ComponentFixture<UserTokenExtendForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        UserTokenEdition
+        UserTokenExtendForm
       ],
       providers: [
         { provide: FormGroupDirective, useValue: { form: { get: () => null } } },
@@ -24,7 +24,7 @@ describe('UserTokenEdition', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserTokenEdition);
+    fixture = TestBed.createComponent(UserTokenExtendForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

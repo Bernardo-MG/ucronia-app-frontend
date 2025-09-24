@@ -1,22 +1,33 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
-import { UserToken } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DrawerModule } from 'primeng/drawer';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
+import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
+import { UserTokenInfo } from '../user-token-info/user-token-info';
 
 @Component({
   selector: 'access-user-token-list',
-  imports: [CardModule, TableModule],
+  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, DatePipe],
   templateUrl: './user-token-list.html'
 })
 export class UserTokenList implements OnInit {
 
   private readonly router = inject(Router);
-
   private readonly service = inject(UserTokenService);
+  private readonly confirmationService = inject(ConfirmationService);
+
+  public editionMenuItems: MenuItem[] = [];
+
+  @ViewChild('editionMenu') editionMenu!: Menu;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -32,9 +43,97 @@ export class UserTokenList implements OnInit {
    * Loading flag.
    */
   public loading = false;
+  public showing = false;
+  public editing = false;
+
+  public readonly editable;
+
+  public view: string = '';
+
+  public failures = new FailureStore();
+
+  public constructor() {
+    const authContainer = inject(AuthContainer);
+
+    this.editable = authContainer.hasPermission("user_token", "update");
+  }
 
   public ngOnInit(): void {
     this.load(0);
+  }
+
+  public onConfirmRevoke(event: Event) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer revocar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.mutate(() => this.service.revoke(this.selectedData.token));
+      }
+    });
+  }
+
+  private mutate(action: () => Observable<any>) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
+  }
+
+  public onExtendExpiration(date: Date): void {
+    this.mutate(() => this.service.extend(this.selectedData.token, date));
+  }
+
+  public openEditionMenu(event: Event, token: UserToken) {
+
+    this.editionMenuItems = [];
+    // Load edition menu
+    this.editionMenuItems.push(
+      {
+        label: 'Extender expiración',
+        command: () => this.onStartEditingView('extend')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Revocar',
+        command: () => this.onConfirmRevoke(event)
+      });
+
+    this.selectedData = token;
+    this.editionMenu.toggle(event);
+  }
+
+  public onShowInfo(token: UserToken) {
+    this.selectedData = token;
+    this.showing = true;
+  }
+
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -52,10 +151,6 @@ export class UserTokenList implements OnInit {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
-  }
-
-  public onSelectRow() {
-    this.router.navigate([`/security/user-tokens/${this.selectedData.token}`]);
   }
 
   private load(page: number) {
