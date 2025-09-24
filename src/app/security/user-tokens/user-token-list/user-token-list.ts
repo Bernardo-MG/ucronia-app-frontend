@@ -13,11 +13,10 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
-import { UserTokenStatus } from '../user-token-status/user-token-status';
 
 @Component({
   selector: 'access-user-token-list',
-  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenStatus, UserTokenExtendForm, DatePipe],
+  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, DatePipe],
   templateUrl: './user-token-list.html'
 })
 export class UserTokenList implements OnInit {

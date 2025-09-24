@@ -46,18 +46,7 @@ const routes: Routes = [
         // User tokens
         path: 'user-tokens',
         canActivate: [ResourceGuard("user_token", "view")],
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./user-tokens/user-token-list/user-token-list').then(m => m.UserTokenList),
-            canActivate: [ResourceGuard("user_token", "read")]
-          },
-          {
-            path: ':token',
-            loadComponent: () => import('./user-tokens/user-token-edition/user-token-edition').then(m => m.UserTokenEdition),
-            canActivate: [ResourceGuard("user_token", "read")]
-          }
-        ]
+        loadComponent: () => import('./user-tokens/user-token-list/user-token-list').then(m => m.UserTokenList)
       },
       {
         // Security audit
