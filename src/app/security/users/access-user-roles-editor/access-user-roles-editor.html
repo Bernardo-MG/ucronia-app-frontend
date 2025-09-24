@@ -1,5 +1,4 @@
 @switch (view) {
-  <!-- List -->
   @case ('list') {
     <access-user-roles [roles]="roles()" [loading]="waiting()" (remove)="onRemoveRole($event)" />
     <div class="d-grid">
@@ -9,7 +8,6 @@
       </button>
     </div>
   }
-  <!-- Add -->
   @case ('add') {
     <access-user-add-role [getSelection]="getSelection()" (addRole)="onAddRole($event)" />
     <div class="d-grid">

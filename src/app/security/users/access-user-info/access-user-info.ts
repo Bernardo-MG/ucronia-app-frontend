@@ -8,10 +8,10 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'access-user-info',
-  imports: [FormsModule, ReactiveFormsModule,ButtonModule,CardModule,SkeletonModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, CardModule, SkeletonModule],
   templateUrl: './access-user-info.html'
 })
-export class AccessUserInfo  {
+export class AccessUserInfo {
 
   public data = input(new User());
 

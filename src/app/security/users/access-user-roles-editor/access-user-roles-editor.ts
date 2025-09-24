@@ -3,9 +3,9 @@ import { Component, input, output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { EMPTY, Observable } from 'rxjs';
 import { AccessUserAddRole } from '../access-user-add-role/access-user-add-role';
 import { AccessUserRoles } from '../access-user-roles/access-user-roles';
-import { Observable, EMPTY } from 'rxjs';
 
 @Component({
   selector: 'access-user-roles-editor',
