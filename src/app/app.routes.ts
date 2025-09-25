@@ -61,19 +61,51 @@ export const routes: Routes = [
         // Association admin
         path: 'association/admin',
         canActivate: [LoggedInGuard],
-        loadChildren: () => import('@app/association-admin/association-admin.module').then(m => m.AssociationAdminModule)
+        loadChildren: () => import('./association-admin/association-admin.module').then(m => m.AssociationAdminModule)
       },
       {
         // Association
         path: 'association',
         canActivate: [LoggedInGuard],
-        loadChildren: () => import('@app/association/association.module').then(m => m.AssociationModule)
+        loadChildren: () => import('./association/association.module').then(m => m.AssociationModule)
       },
       {
         // Security
         path: 'security',
         canActivate: [LoggedInGuard],
-        loadChildren: () => import('@app/security/security.module').then(m => m.SecurityModule)
+        loadComponent: () => import('./security/layout/security-layout/security-layout').then(m => m.SecurityLayout),
+        children: [
+          {
+            // Root
+            path: '',
+            redirectTo: 'users',
+            pathMatch: 'full'
+          },
+          {
+            // Roles
+            path: 'roles',
+            canActivate: [ResourceGuard("role", "view")],
+            loadComponent: () => import('./security/roles/access-role-list/access-role-list').then(m => m.AccessRoleList)
+          },
+          {
+            // Users
+            path: 'users',
+            canActivate: [ResourceGuard("user", "view")],
+            loadComponent: () => import('./security/users/access-user-list/access-user-list').then(m => m.AccessList)
+          },
+          {
+            // User tokens
+            path: 'user-tokens',
+            canActivate: [ResourceGuard("user_token", "view")],
+            loadComponent: () => import('./security/user-tokens/user-token-list/user-token-list').then(m => m.UserTokenList)
+          },
+          {
+            // Security audit
+            path: 'audit',
+            canActivate: [ResourceGuard("user", "view")],
+            loadComponent: () => import('./security/audit/access-audit-login/access-audit-login').then(m => m.AccessAuditLogin)
+          }
+        ]
       },
       {
         // Settings
