@@ -10,15 +10,15 @@ export class ArrayPaginatedResponse<T> extends SimpleResponse<T[]> {
   public first = false;
   public last = false;
 
-  constructor(cont: T[], public page: number, public size: number) {
-    super(cont.slice(size * (page - 1), size * page));
+  constructor(content: T[], public page: number, public size: number) {
+    super(content.slice(size * (page - 1), size * page));
 
     this.size = size;
-    this.totalElements = cont.length;
+    this.totalElements = content.length;
     if (size === 0) {
       this.totalPages = 0;
     } else {
-      this.totalPages = Math.ceil(cont.length / size);
+      this.totalPages = Math.ceil(content.length / size);
     }
     this.elementsInPage = this.content.length;
 

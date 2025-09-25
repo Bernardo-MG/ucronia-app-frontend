@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { AccessRoleService } from '../access-role-service';
-import { AccessRoleCreation } from './access-role-creation';
+import { AccessRoleChangePermission } from './access-role-change-permission';
 
-describe('AccessRoleCreationContainer', () => {
-  let component: AccessRoleCreation;
-  let fixture: ComponentFixture<AccessRoleCreation>;
+describe('AccessRoleChangePermission', () => {
+  let component: AccessRoleChangePermission;
+  let fixture: ComponentFixture<AccessRoleChangePermission>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessRoleCreation
+        AccessRoleChangePermission
       ],
       providers: [
         AccessRoleService,
@@ -23,7 +23,7 @@ describe('AccessRoleCreationContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleCreation);
+    fixture = TestBed.createComponent(AccessRoleChangePermission);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
