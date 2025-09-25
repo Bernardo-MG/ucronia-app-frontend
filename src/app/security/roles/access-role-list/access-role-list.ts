@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -17,7 +16,7 @@ import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DrawerModule, IconAddComponent, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
+  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DrawerModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {

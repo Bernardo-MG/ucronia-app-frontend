@@ -18,23 +18,7 @@ const routes: Routes = [
         // Roles
         path: 'roles',
         canActivate: [ResourceGuard("role", "view")],
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./roles/access-role-list/access-role-list').then(m => m.AccessRoleList),
-            canActivate: [ResourceGuard("role", "read")]
-          },
-          {
-            path: 'add',
-            loadComponent: () => import('./roles/access-role-creation/access-role-creation').then(m => m.AccessRoleCreation),
-            canActivate: [ResourceGuard("role", "create")]
-          },
-          {
-            path: ':role',
-            loadComponent: () => import('./roles/access-role-edition/access-role-edition').then(m => m.AccessRoleInfoEdition),
-            canActivate: [ResourceGuard("role", "read")]
-          }
-        ]
+        loadComponent: () => import('./roles/access-role-list/access-role-list').then(m => m.AccessRoleList)
       },
       {
         // Users
