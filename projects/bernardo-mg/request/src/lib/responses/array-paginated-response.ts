@@ -20,7 +20,7 @@ export class ArrayPaginatedResponse<T> extends SimpleResponse<T[]> {
     } else {
       this.totalPages = Math.ceil(content.length / size);
     }
-    this.elementsInPage = content.length;
+    this.elementsInPage = this.content.length;
 
     this.first = (page <= 1);
     this.last = (page >= this.totalPages);
