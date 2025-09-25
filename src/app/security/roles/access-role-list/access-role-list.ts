@@ -2,21 +2,22 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { IconAddComponent } from '@bernardo-mg/icons';
-import { FailureResponse, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { AccessRoleChangePermission } from '../access-role-change-permission/access-role-change-permission';
+import { AccessRoleForm } from '../access-role-form/access-role-form';
 import { AccessRoleInfo } from '../access-role-info/access-role-info';
 import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, CardModule, TableModule, ButtonModule, MenuModule, DrawerModule, IconAddComponent, AccessRoleInfo, AccessRoleChangePermission],
+  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DrawerModule, IconAddComponent, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {
@@ -26,8 +27,7 @@ export class AccessRoleList implements OnInit {
 
   @ViewChild('editionMenu') editionMenu!: Menu;
 
-  public readonly createPermission;
-
+  public readonly createable;
   public readonly editable;
 
   public readonly editionMenuItems: MenuItem[] = [];
@@ -51,11 +51,13 @@ export class AccessRoleList implements OnInit {
 
   public view: string = '';
 
+  public failures = new FailureStore();
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
     // Check permissions
-    this.createPermission = authContainer.hasPermission("role", "create");
+    this.createable = authContainer.hasPermission("role", "create");
     this.editable = authContainer.hasPermission("role", "update");
 
     // Load edition menu
@@ -73,6 +75,10 @@ export class AccessRoleList implements OnInit {
   public onShowInfo(role: Role) {
     this.selectedData = role;
     this.showing = true;
+  }
+
+  public onCreate(toCreate: Role): void {
+    this.mutate(() => this.service.create(toCreate));
   }
 
   public openEditionMenu(event: Event, role: Role) {
@@ -117,16 +123,16 @@ export class AccessRoleList implements OnInit {
     this.router.navigate([`/security/roles/${this.selectedData.name}`]);
   }
 
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
+  }
+
   private load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
-  }
-
-  private onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
   }
 
   private mutate(action: () => Observable<any>) {
@@ -135,8 +141,16 @@ export class AccessRoleList implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
+          this.failures.clear();
           this.view = 'none';
-          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
         }
       });
   }

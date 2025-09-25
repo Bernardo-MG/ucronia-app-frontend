@@ -1,11 +1,9 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<p-card>
-  <ng-template #header>
-    <!-- Add role -->
-    <button type="button" class="btn btn-link" aria-label="register" routerLink="/security/roles/add"
-      [disabled]="!createPermission" [attr.aria-disabled]="!createPermission">
-      <icon-add />
-    </button>
+<p-panel>
+  <ng-template #icons>
+    <!-- Add transaction -->
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <!-- List -->
   <p-table lazy="true" dataKey="name" selectionMode="single" [loading]="loading" [value]="data.content"
@@ -29,15 +27,19 @@
       </tr>
     </ng-template>
   </p-table>
-</p-card>
+</p-panel>
 <p-drawer [(visible)]="showing" position="full">
   <access-role-info [data]="selectedData" />
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
+    @case ('creation') {
+      <access-role-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+    }
     @case ('permissions') {
-      <access-role-change-permission [rolePermissions]="selectedData.permissions" [getSelection]="getRolePermissionsSelection.bind(this)"
-        (addPermission)="onAddRolePermission($event)" (removePermission)="onRemoveRolePermission($event)" />
+      <access-role-change-permission [rolePermissions]="selectedData.permissions"
+        [getSelection]="getRolePermissionsSelection.bind(this)" (addPermission)="onAddRolePermission($event)"
+        (removePermission)="onRemoveRolePermission($event)" />
     }
   }
 </p-drawer>
