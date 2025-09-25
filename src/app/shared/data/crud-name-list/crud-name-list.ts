@@ -163,7 +163,7 @@ export class CrudNameList implements OnInit {
     }
   }
 
-  protected mutate(action: () => Observable<any>) {
+  private mutate(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))

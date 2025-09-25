@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { ArrayPaginatedResponse } from '@bernardo-mg/request';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -8,7 +7,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-role-info',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, SkeletonModule, TableModule],
+  imports: [CommonModule, SkeletonModule, TableModule],
   templateUrl: './access-role-info.html'
 })
 export class AccessRoleInfo implements OnChanges {

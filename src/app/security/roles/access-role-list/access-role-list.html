@@ -33,3 +33,11 @@
 <p-drawer [(visible)]="showing" position="full">
   <access-role-info [data]="selectedData" />
 </p-drawer>
+<p-drawer [(visible)]="editing" position="right">
+  @switch (view) {
+    @case ('permissions') {
+      <access-role-change-permission [rolePermissions]="selectedData.permissions" [getSelection]="getRolePermissionsSelection.bind(this)"
+        (addPermission)="onAddRolePermission($event)" (removePermission)="onRemoveRolePermission($event)" />
+    }
+  }
+</p-drawer>

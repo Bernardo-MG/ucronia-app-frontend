@@ -477,7 +477,7 @@ export class LibraryAdminBookList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  protected mutate(action: () => Observable<any>) {
+  private mutate(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))

@@ -12,8 +12,8 @@ export class PaginatedResponse<T> extends SimpleResponse<T[]> {
   public first = false;
   public last = false;
 
-  constructor(private cont: T[] = []) {
-    super(cont);
+  constructor(content: T[] = []) {
+    super(content);
   }
 
 }

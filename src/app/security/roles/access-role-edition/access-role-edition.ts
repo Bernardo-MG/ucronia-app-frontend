@@ -125,7 +125,7 @@ export class AccessRoleInfoEdition extends InfoEditorStatusComponent<Role> {
   }
 
   protected override save(toSave: Role): Observable<Role> {
-    return this.service.update(toSave.name, toSave);
+    return this.service.update(toSave);
   }
 
   protected override interceptSave(response: Role) {

@@ -48,9 +48,9 @@ export class AccessRoleService {
       .pipe(map(r => r.content));
   }
 
-  public update(role: string, data: Role): Observable<Role> {
+  public update(data: Role): Observable<Role> {
     return this.client
-      .appendRoute(`/${role}`)
+      .appendRoute(`/${data.name}`)
       .update<SimpleResponse<Role>>(data)
       .pipe(map(r => r.content));
   }
