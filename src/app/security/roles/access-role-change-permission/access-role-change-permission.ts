@@ -53,7 +53,7 @@ export class AccessRoleChangePermission implements OnChanges {
   public onAddPermission(permission: ResourcePermission): void {
     const page = this.assignedPermissions.page;
     this.assignedPermissions = new ArrayPaginatedResponse<ResourcePermission>(this.rolePermissions(), page, this.pageSize);
-    this.pickCloseButton().nativeElement.click();
+    this.choosingPermission = false;
     this.addPermission.emit(permission);
   }
 
