@@ -38,7 +38,7 @@ export class AccessRoleService {
     return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
-      .appendRoute(`/${role}/permission/available`)
+      .appendRoute(`/${role}/permission`)
       .read<PaginatedResponse<ResourcePermission>>();
   }
 

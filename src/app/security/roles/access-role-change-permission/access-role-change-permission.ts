@@ -1,16 +1,15 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, OnChanges, OnInit, output, SimpleChanges, viewChild } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges, viewChild } from '@angular/core';
 import { ResourcePermission } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { ArrayPaginatedResponse, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { ModalComponent } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable } from 'rxjs';
 import { AccessRoleAddPermission } from '../access-role-add-permission/access-role-add-permission';
 
 @Component({
   selector: 'access-role-change-permission',
-  imports: [CommonModule, TableModule, AccessRoleAddPermission, ModalComponent, IconAddComponent],
+  imports: [CommonModule, TableModule, ButtonModule, AccessRoleAddPermission],
   templateUrl: './access-role-change-permission.html'
 })
 export class AccessRoleChangePermission implements OnChanges {
@@ -26,6 +25,7 @@ export class AccessRoleChangePermission implements OnChanges {
   public permissionsSelection = new PaginatedResponse<ResourcePermission>();
 
   public loading = false;
+  public choosingPermission = false;
 
   public view: string = 'details';
 
@@ -42,6 +42,7 @@ export class AccessRoleChangePermission implements OnChanges {
   public ngOnChanges({ rolePermissions }: SimpleChanges): void {
     if (rolePermissions) {
       this.assignedPermissions = new ArrayPaginatedResponse<ResourcePermission>(this.rolePermissions(), 1, this.pageSize);
+      this.onLoadPermissions(1);
     }
   }
 
