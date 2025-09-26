@@ -36,15 +36,8 @@ describe('SelectionList', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load initial data on input change', (done) => {
-    component.ngOnChanges({
-      getSelection: {
-        currentValue: component.getSelection,
-        previousValue: null,
-        firstChange: true,
-        isFirstChange: () => true
-      }
-    });
+  it('should load initial data on init', (done) => {
+    component.ngOnInit();
 
     setTimeout(() => {
       expect(component.selection.page).toBe(0);
