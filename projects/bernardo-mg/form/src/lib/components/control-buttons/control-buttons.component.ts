@@ -1,9 +1,10 @@
 import { Component, Input, output } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
 import { ModalComponent } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'form-control-buttons',
-  imports: [ModalComponent],
+  imports: [ButtonModule, ModalComponent],
   templateUrl: './control-buttons.component.html'
 })
 export class ControlButtonsComponent {
