@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, input, OnInit, output } from '@angular/core';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, Observable } from 'rxjs';
@@ -9,7 +9,7 @@ import { NameNumber } from '../model/name-number';
   imports: [TableModule],
   templateUrl: './selection-list.html'
 })
-export class SelectionList implements OnChanges {
+export class SelectionList implements OnInit {
 
   public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<any>>>((page: number) => EMPTY);
 
@@ -31,11 +31,9 @@ export class SelectionList implements OnChanges {
 
   public selection = new PaginatedResponse<NameNumber>();
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['getSelection'] && this.getSelection) {
-      this.getSelection()(0)
-        .subscribe(response => this.selection = response);
-    }
+  public ngOnInit(): void {
+    this.getSelection()(0)
+      .subscribe(response => this.selection = response);
   }
 
   public onGoToSelectionPage(event: TablePageEvent) {
