@@ -10,9 +10,8 @@
   <ng-template #body let-role>
     <tr>
       <td>
-        <button (click)="onAdd(role)" type="button" class="btn btn-link link-dark" role="button" aria-label="Back">
-          <icon-add />
-        </button>
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onAdd(role)" aria-label="Añadir rol" rounded
+          text />
       </td>
       <td>{{role.name}}</td>
     </tr>

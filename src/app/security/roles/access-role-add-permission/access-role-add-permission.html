@@ -11,10 +11,8 @@
   <ng-template #body let-permission>
     <tr>
       <td>
-        <button (click)="onAddPermission(permission)" type="button" class="btn btn-link link-dark" role="button"
-          aria-label="Añadir permiso">
-          <icon-add />
-        </button>
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onAddPermission(permission)"
+          aria-label="Añadir permiso" rounded text />
       </td>
       <td>{{permission.resource}}</td>
       <td>{{permission.action}}</td>

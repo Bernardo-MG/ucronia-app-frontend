@@ -1,15 +1,15 @@
 
 import { Component, input, output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { EMPTY, Observable } from 'rxjs';
 import { AccessUserAddRole } from '../access-user-add-role/access-user-add-role';
 import { AccessUserRoles } from '../access-user-roles/access-user-roles';
 
 @Component({
   selector: 'access-user-roles-editor',
-  imports: [AccessUserAddRole, AccessUserRoles, IconAddComponent],
+  imports: [ButtonModule, AccessUserAddRole, AccessUserRoles],
   templateUrl: './access-user-roles-editor.html'
 })
 export class AccessUserRolesEditor {

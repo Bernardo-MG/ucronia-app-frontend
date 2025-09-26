@@ -15,29 +15,12 @@
       <!-- Add transaction -->
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
         [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
-    </ng-template>
-    <ng-template #header>
-      <div class="row">
-        <div class="col-sm-3">
-          <!-- Add person -->
-          <button type="button" class="btn btn-link" aria-label="register" routerLink="register"
-            [disabled]="!createable" [attr.aria-disabled]="!createable">
-            <icon-add />
-          </button>
-        </div>
-        <div class="offset-md-7 col-sm-2">
-          <!-- Filter by membership -->
-          <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-        </div>
-      </div>
-      <div class="row">
-        <!-- Filter by name -->
-        <div class="col-sm-5">
-          <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
-          <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-            aria-describedby="nameFilterLabel" maxlength="50">
-        </div>
-      </div>
+      <!-- Filter by membership -->
+      <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+      <!-- Filter by name -->
+      <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
+      <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+        aria-describedby="nameFilterLabel" maxlength="50">
     </ng-template>
     <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
       [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
@@ -55,24 +38,24 @@
           <td>{{ person.name.fullName }}</td>
           <td>
             @switch (person.membership === null) {
-              @case (true) {
-                No es socio
-              }
-              @case (false) {
-                @switch (person.membership?.active) {
-                  @case (true) {
-                    <span class="pi pi-check text-success"></span>
-                  }
-                  @case (false) {
-                    <span class="pi pi-times text-warning"></span>
-                  }
-                }
-              }
+            @case (true) {
+            No es socio
+            }
+            @case (false) {
+            @switch (person.membership?.active) {
+            @case (true) {
+            <span class="pi pi-check text-success"></span>
+            }
+            @case (false) {
+            <span class="pi pi-times text-warning"></span>
+            }
+            }
+            }
             }
           </td>
           <td>
-            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver"
-              (click)="onShowInfo(person)" rounded text />
+            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(person)" rounded
+              text />
             <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
               [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, person)" rounded text />
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
@@ -88,12 +71,12 @@
 </p-drawer>
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
-    @case ('creation') {
-      <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
-    }
-    @case ('edition') {
-      <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures" [cancellable]="true"
-        (save)="onUpdate($event)" />
-    }
+  @case ('creation') {
+  <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
+  }
+  @case ('edition') {
+  <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures" [cancellable]="true"
+    (save)="onUpdate($event)" />
+  }
   }
 </p-drawer>

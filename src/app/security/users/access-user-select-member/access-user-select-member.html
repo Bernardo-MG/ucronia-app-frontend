@@ -10,10 +10,8 @@
   <ng-template #body let-member>
     <tr>
       <td>
-        <button (click)="onSelect(member)" type="button" class="btn btn-link link-dark" role="button"
-          aria-label="Seleccionar">
-          <icon-add />
-        </button>
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onSelect(member)" aria-label="Seleccionar"
+          rounded text />
       </td>
       <td>{{member.name.fullName}}</td>
     </tr>

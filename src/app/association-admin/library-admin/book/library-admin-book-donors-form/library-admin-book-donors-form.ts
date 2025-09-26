@@ -1,22 +1,22 @@
 
 import { Component, inject, Input, input, OnInit } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { Donation } from '@app/domain/library/donation';
 import { Donor } from '@app/domain/library/donor';
+import { NameNumber } from '@app/shared/data/model/name-number';
+import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
-import { IconAddComponent, IconDeleteComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { EMPTY, Observable } from 'rxjs';
-import { NameNumber } from '../../../../shared/data/model/name-number';
 
 @Component({
   selector: 'assoc-library-admin-book-donors-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, SaveControlsComponent, IconAddComponent, IconDeleteComponent, SelectionList],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, ButtonModule, SaveControlsComponent, SelectionList],
   templateUrl: './library-admin-book-donors-form.html'
 })
 export class LibraryAdminBookDonorsForm extends FormComponent<Donation | undefined> implements OnInit {

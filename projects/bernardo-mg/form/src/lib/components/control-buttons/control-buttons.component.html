@@ -1,16 +1,13 @@
 <!-- Buttons -->
 <div uiJustifyBetween>
   <div class="btn-group me-2" role="group">
-    <button type="button" (click)="startEditing.emit()" class="btn btn-link link-dark" [disabled]="editableDisabled"
-      aria-label="Edit">
-      <icon-edit />
-    </button>
+    <p-button icon="pi pi-pencil" severity="secondary" (click)="startEditing.emit()" [disabled]="editableDisabled"
+      aria-label="Editar" [attr.aria-disabled]="editableDisabled" rounded text />
   </div>
   <div class="btn-group" role="group">
-    <button type="button" class="btn btn-link link-dark text-danger" aria-label="Delete" [disabled]="deletableDisabled"
-      data-bs-toggle="modal" data-bs-target="#deleteModal">
-      <icon-delete />
-    </button>
+    <p-button icon="pi pi-trash" severity="secondary" (click)="startEditing.emit()" [disabled]="deletableDisabled"
+      aria-label="Editar" [attr.aria-disabled]="deletableDisabled" rounded text data-bs-toggle="modal"
+      data-bs-target="#deleteModal" />
   </div>
 </div>
 

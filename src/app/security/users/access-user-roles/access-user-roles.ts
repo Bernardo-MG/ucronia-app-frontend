@@ -1,13 +1,13 @@
 
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
-import { IconDeleteComponent } from '@bernardo-mg/icons';
 import { ArrayPaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-user-roles',
-  imports: [TableModule, IconDeleteComponent],
+  imports: [ButtonModule, TableModule],
   templateUrl: './access-user-roles.html'
 })
 export class AccessUserRoles implements OnChanges {

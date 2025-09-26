@@ -6,7 +6,6 @@ import { Active } from '@app/domain/person/active';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ConfirmationService, MenuItem } from 'primeng/api';
@@ -25,7 +24,7 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, IconAddComponent, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {

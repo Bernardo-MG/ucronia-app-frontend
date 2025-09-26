@@ -3,9 +3,8 @@
     <access-user-roles [roles]="roles()" [loading]="waiting()" (remove)="onRemoveRole($event)" />
     <div class="d-grid">
       <!-- Add button -->
-      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onShowAddRole()">
-        <icon-add />
-      </button>
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onShowAddRole()" aria-label="Añadir role" rounded
+        text />
     </div>
   }
   @case ('add') {

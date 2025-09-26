@@ -8,9 +8,9 @@
       </p-floatlabel>
       <div class="mb-2">
         @for (failure of failures().getFailures('date'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
         }
       </div>
       <!-- Donors -->
@@ -31,30 +31,25 @@
             </thead>
             <tbody class="table-group-divider">
               @for (donor of donors; track donor; let i = $index) {
-              <tr>
-                <td>
-                  <button (click)="onRemoveDonor(donor)" [disabled]="!formEnabled" type="button"
-                    class="btn btn-link link-dark" role="button" aria-label="Remove donor">
-                    <icon-delete />
-                  </button>
-                </td>
-                <td>{{donor.name.fullName}}</td>
-              </tr>
+                <tr>
+                  <td>
+                    <p-button icon="pi pi-trash text-danger" (click)="onRemoveDonor(donor)" rounded text />
+                  </td>
+                  <td>{{donor.name.fullName}}</td>
+                </tr>
               }
             </tbody>
           </table>
         </div>
-        <div uiJustifyCenter>
-          <button (click)="onStartSelectingDonor()" type="button" class="btn btn-primary" [disabled]="!formEnabled"
-            aria-label="Add donor" data-bs-toggle="modal" data-bs-target="#donorModal"><icon-add /></button>
-        </div>
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartSelectingDonor()" [disabled]="!formEnabled"
+          aria-label="Nueva transacción" [attr.aria-disabled]="!formEnabled" rounded text />
       </div>
       <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
         [cancellable]="cancellable" (reject)="onCancel()" />
     </form>
   }
   @case (true) {
-    <shared-selection-list heading="Nombre" [nameRenderer]="nameRenderer" [getSelection]="getSelection()" 
-      (choose)="onSelect($event)"/>
+    <shared-selection-list heading="Nombre" [nameRenderer]="nameRenderer" [getSelection]="getSelection()"
+      (choose)="onSelect($event)" />
   }
 }

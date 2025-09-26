@@ -1,14 +1,14 @@
 
 import { Component, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
 import { Member } from '@app/domain/members/member';
-import { IconSearchComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { EMPTY, Observable } from 'rxjs';
 import { AccessUserSelectMember } from '../access-user-select-member/access-user-select-member';
 
 @Component({
   selector: 'access-user-member-editor',
-  imports: [AccessUserSelectMember, IconSearchComponent],
+  imports: [ButtonModule, AccessUserSelectMember],
   templateUrl: './access-user-member-editor.html'
 })
 export class AccessUserMemberEditor implements OnInit, OnChanges {

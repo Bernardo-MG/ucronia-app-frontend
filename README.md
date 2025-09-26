@@ -15,10 +15,6 @@ ng build @bernardo-mg/authentication --configuration development
 ```
 
 ```
-ng build @bernardo-mg/icons --configuration development
-```
-
-```
 ng build @bernardo-mg/request --configuration development
 ```
 

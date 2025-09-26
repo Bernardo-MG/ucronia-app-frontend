@@ -2,20 +2,19 @@
   <form class="needs-validation" (ngSubmit)="onSave(setting, $event)" novalidate>
     <div class="row mb-2">
       <label for="{{setting.code + 'Input'}}" id="{{setting.code + 'Label'}}"
-      class="col-sm-2 col-form-label">{{setting.code}}</label>
+        class="col-sm-2 col-form-label">{{setting.code}}</label>
       <div class="col-sm-9">
         <input name="{{setting.code}}" type="{{setting.type}}" step="any" id="{{setting.code + 'Input'}}"
           class="form-control" formInvalidField="setting.code" [value]="setting.value"
           attr.aria-describedby="{{setting.code + 'Label'}}" [disabled]="disabled() || !isEditing(setting.code)">
-        </div>
-        <div class="col-sm-1">
-          <div class="btn-group me-2" role="group">
-            <button type="button" class="btn btn-link link-dark" aria-label="Edit" (click)="onEdit(setting.code)"
-              [disabled]="disabled() || isEditing(setting.code)">
-              <icon-edit />
-            </button>
-          </div>
+      </div>
+      <div class="col-sm-1">
+        <div class="btn-group me-2" role="group">
+          <p-button icon="pi pi-pencil" severity="secondary" (click)="onEdit(setting.code)"
+            [disabled]="disabled() || isEditing(setting.code)" aria-label="Editar"
+            [attr.aria-disabled]="disabled() || isEditing(setting.code)" rounded text />
         </div>
       </div>
-    </form>
-  }
+    </div>
+  </form>
+}
