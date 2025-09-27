@@ -2,17 +2,20 @@
 import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
-import { FormComponent, InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { FormComponent } from '@bernardo-mg/form';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'account-change-password-form',
-  imports: [FormsModule, ReactiveFormsModule, InputFailureFeedbackComponent, WaitingDirective, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
   templateUrl: './account-change-password-form.html'
 })
 export class AccountChangePasswordForm extends FormComponent<PasswordChange> {
-  private fb = inject(FormBuilder);
 
+  private fb = inject(FormBuilder);
 
   private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     const pass = group.get('newPassword')?.value;
@@ -28,7 +31,9 @@ export class AccountChangePasswordForm extends FormComponent<PasswordChange> {
       newPassword: ['', Validators.required],
       passwordRepeat: ['', Validators.required]
     },
-      { validators: this.checkPasswords });
+      {
+        validators: this.checkPasswords
+      });
   }
 
 }

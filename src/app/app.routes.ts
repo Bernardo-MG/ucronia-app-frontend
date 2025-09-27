@@ -41,6 +41,7 @@ export const routes: Routes = [
         // Account
         path: 'account',
         canActivate: [LoggedInGuard],
+        loadComponent: () => import('./account/account-layout/account-layout').then(m => m.AccountLayout),
         children: [
           {
             path: '',

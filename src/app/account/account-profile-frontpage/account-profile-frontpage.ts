@@ -4,14 +4,13 @@ import { AccountProfilePerson } from '@app/account/account-profile-person/accoun
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account-service';
 import { Person } from '@app/domain/person/person';
-import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';
 
 @Component({
   selector: 'account-profile-frontpage',
-  imports: [CardModule, SkeletonModule, AccountProfilePerson, ResponsiveShortColumnsDirective],
+  imports: [CardModule, SkeletonModule, AccountProfilePerson],
   templateUrl: './account-profile-frontpage.html'
 })
 export class AccountProfileFrontpage {
