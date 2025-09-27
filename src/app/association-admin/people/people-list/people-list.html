@@ -21,7 +21,7 @@
         <!-- Filter by membership -->
         <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
         <!-- Filter by name -->
-        <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
+        <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2">Nombre</label>
         <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
           aria-describedby="nameFilterLabel" maxlength="50">
       </p>

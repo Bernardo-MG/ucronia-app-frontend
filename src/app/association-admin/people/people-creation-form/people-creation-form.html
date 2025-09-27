@@ -8,9 +8,9 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('name.firstName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
@@ -23,23 +23,19 @@
     </p-floatlabel>
     <div class="mb-2">
       @for (failure of failures().getFailures('name.lastName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
       }
     </div>
   </div>
   <!-- Membership -->
-  <div class="form-check">
-    <div class="row">
-      <div class="col-md-2">
-        <p-toggleswitch formControlName="member" />
-      </div>
-      <div class="col-md-10">
-        <label class="form-check-label" for="flexCheckDefault">
-          Socio
-        </label>
-      </div>
+  <div class="row">
+    <div class="col-md-2">
+      <p-toggleswitch formControlName="member" />
+    </div>
+    <div class="col-md-10">
+      Socio
     </div>
   </div>
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
