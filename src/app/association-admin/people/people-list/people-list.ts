@@ -273,6 +273,7 @@ export class PeopleList implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
+          this.load(0);
         },
         error: error => {
           if (error instanceof FailureResponse) {
