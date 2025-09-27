@@ -61,12 +61,4 @@ export class PeopleCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
-  public onChangeMemberStatus(event: ToggleSwitchChangeEvent) {
-    if (event.checked) {
-      this.form.get('member')?.setValue(true);
-    } else {
-      this.form.get('member')?.setValue(false);
-    }
-  }
-
 }
