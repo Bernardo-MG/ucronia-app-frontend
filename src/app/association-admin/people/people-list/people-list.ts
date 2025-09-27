@@ -22,6 +22,7 @@ import { PeopleEditionForm } from '../people-edition-form/people-edition-form';
 import { PeopleInfo } from '../people-info/people-info';
 import { PeopleService } from '../people-service';
 import { PersonStatusSelect } from '../person-status-select/person-status-select';
+import { PersonCreation } from '@app/domain/person/person-creation';
 
 @Component({
   selector: 'assoc-people-list',
@@ -256,7 +257,7 @@ export class PeopleList implements OnInit {
     this.load(0);
   }
 
-  public onCreate(toCreate: Person): void {
+  public onCreate(toCreate: PersonCreation): void {
     this.mutate(() => this.service.create(toCreate));
   }
 

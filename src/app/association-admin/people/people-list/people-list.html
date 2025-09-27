@@ -74,7 +74,7 @@
 @switch (view) {
   @case ('creation') {
     <p-dialog header="Crear persona" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
+      <assoc-people-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     </p-dialog>
   }
   @case ('edition') {

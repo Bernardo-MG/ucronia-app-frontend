@@ -1,8 +1,9 @@
 
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Person } from '@app/domain/person/person';
-import { FormComponent } from '@bernardo-mg/form';
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormStatus } from '@app/core/form/form-status/form-status';
+import { PersonCreation } from '@app/domain/person/person-creation';
+import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,11 +15,19 @@ import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitc
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule],
   templateUrl: './people-creation-form.html'
 })
-export class PeopleCreationForm extends FormComponent<Person> {
+export class PeopleCreationForm implements OnChanges {
+
+  public readonly loading = input(false);
+
+  public readonly failures = input(new FailureStore());
+
+  public readonly save = output<PersonCreation>();
+
+  public formStatus: FormStatus;
+
+  public form: FormGroup;
 
   constructor() {
-    super();
-
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -26,17 +35,37 @@ export class PeopleCreationForm extends FormComponent<Person> {
         firstName: [null],
         lastName: ['']
       }),
-      membership: fb.group({
-        active: [false]
-      })
+      member: [false]
     });
+
+    this.formStatus = new FormStatus(this.form);
+  }
+
+  public ngOnChanges({ loading }: SimpleChanges): void {
+    if (loading) {
+      this.formStatus.loading = this.loading();
+    }
+  }
+
+  /**
+   * Handler for the save event.
+   */
+  public onSave() {
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value);
+    }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
   public onChangeMemberStatus(event: ToggleSwitchChangeEvent) {
     if (event.checked) {
-      this.form.get('membership')?.get('active')?.setValue(true);
+      this.form.get('member')?.setValue(true);
     } else {
-      this.form.get('membership')?.get('active')?.setValue(false);
+      this.form.get('member')?.setValue(false);
     }
   }
 
