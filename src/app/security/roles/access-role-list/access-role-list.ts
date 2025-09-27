@@ -4,7 +4,7 @@ import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentica
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -16,7 +16,7 @@ import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DrawerModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
+  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {
@@ -142,6 +142,9 @@ export class AccessRoleList implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
+          this.showing = false;
+          this.editing = false;
+          this.load(1);
         },
         error: error => {
           if (error instanceof FailureResponse) {

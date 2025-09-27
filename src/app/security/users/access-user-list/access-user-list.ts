@@ -1,11 +1,12 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Member } from '@app/domain/members/member';
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -16,11 +17,10 @@ import { AccessUserMemberEditor } from '../access-user-member-editor/access-user
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
 import { AccessUserService } from '../access-user-service';
 import { AccessUserStatus } from '../access-user-status/access-user-status';
-import { Member } from '@app/domain/members/member';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DrawerModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserStatus, AccessUserRolesEditor, AccessUserMemberEditor],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserStatus, AccessUserRolesEditor, AccessUserMemberEditor],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -34,8 +34,6 @@ export class AccessList implements OnInit {
   public readonly createable;
   public readonly editable;
 
-  public showing = false;
-  public showForm = false;
 
   public editionMenuItems: MenuItem[] = [];
 
@@ -51,6 +49,8 @@ export class AccessList implements OnInit {
    * Loading flag.
    */
   public loading = false;
+  public editing = false;
+  public showing = false;
 
   public view: string = '';
 
@@ -216,13 +216,13 @@ export class AccessList implements OnInit {
 
   public onStartCreating(): void {
     this.view = 'creation';
-    this.showForm = true;
+    this.editing = true;
   }
 
   public onStartEditing(item: User, view: string): void {
     this.selectedData = item;
     this.view = view;
-    this.showForm = true;
+    this.editing = true;
   }
 
   private load(page: number) {
@@ -240,6 +240,9 @@ export class AccessList implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
+          this.editing = false;
+          this.showing = false;
+          this.load(1);
         },
         error: error => {
           if (error instanceof FailureResponse) {
