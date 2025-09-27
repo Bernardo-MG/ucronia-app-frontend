@@ -1,7 +1,6 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MembershipEvolutionChartWidgetContainer } from '@app/association-admin/people/membership-evolution-chart-widget/membership-evolution-chart-widget.container';
 import { Active } from '@app/domain/person/active';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
@@ -19,6 +18,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, finalize, Observable, Subject, throwError } from 'rxjs';
+import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 import { PeopleCreationForm } from '../people-creation-form/people-creation-form';
 import { PeopleEditionForm } from '../people-edition-form/people-edition-form';
 import { PeopleInfo } from '../people-info/people-info';
@@ -27,7 +27,7 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, CardModule, ConfirmPopupModule, ButtonModule, DialogModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, CardModule, ConfirmPopupModule, ButtonModule, DialogModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
   templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {

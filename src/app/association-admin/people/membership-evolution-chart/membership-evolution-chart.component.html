@@ -4,14 +4,14 @@
     Inicio
   </div>
   <div class="col-8">
-    <p-select [ngModel]="startMonth()" [options]="monthsSelection" (onChange)="startMonthChange.emit($event.value)"
+    <p-select [ngModel]="startMonth" [options]="monthsSelection" (onChange)="startMonthChange.emit($event.value)"
       optionLabel="label" optionValue="value" placeholder="Mes inicial" />
   </div>
   <div class="col-4">
     Fin
   </div>
   <div class="col-8">
-    <p-select [ngModel]="endMonth()" [options]="monthsSelection" (onChange)="endMonthChange.emit($event.value)"
+    <p-select [ngModel]="endMonth" [options]="monthsSelection" (onChange)="endMonthChange.emit($event.value)"
       optionLabel="label" optionValue="value" placeholder="Mes final" />
   </div>
 </div>
