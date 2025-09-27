@@ -13,7 +13,7 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
@@ -26,10 +26,11 @@ import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
 import { FeeService } from '../fee-service';
 import { FeeCalendarSelection } from '../model/fee-calendar-selection';
+import { FeeCreation } from '@app/domain/fees/fee-creation';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DrawerModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-list.html'
 })
 export class FeeList implements OnInit {
@@ -118,7 +119,7 @@ export class FeeList implements OnInit {
     this.mutate(() => this.service.pay(data));
   }
 
-  public onCreateUnpaid(data: Fee): void {
+  public onCreateUnpaid(data: FeeCreation): void {
     this.loading = true;
     this.mutate(() => this.service.create(data));
   }

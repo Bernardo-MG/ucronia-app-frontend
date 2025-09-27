@@ -22,27 +22,31 @@
       (goToYear)="onGoToYear($event)" (selectFee)="onSelectFee($event)" />
   </p-panel>
 </div>
-<p-drawer [(visible)]="showing" position="full">
+<p-dialog [(visible)]="showing">
   <assoc-fee-info [data]="selectedData" [loading]="loading" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
     [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
-</p-drawer>
-<p-drawer [(visible)]="editing" position="right">
-  @switch (view) {
-    @case ('create') {
+</p-dialog>
+@switch (view) {
+  @case ('create') {
+    <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
-        <assoc-fee-creation-form [waiting]="loading" [failures]="failures" [member]="selectedMember"
+        <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
           (save)="onCreateUnpaid($event)" />
       </assoc-member-select-stepper>
-    }
-    @case ('pay') {
+    </p-dialog>
+  }
+  @case ('pay') {
+    <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
-        <assoc-fee-pay-form [waiting]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
+        <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
       </assoc-member-select-stepper>
-    }
-    @case ('edition') {
+    </p-dialog>
+  }
+  @case ('edition') {
+    <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures" [cancellable]="true"
         (save)="onUpdate($event)" (reject)="onCancel()" />
-    }
+    </p-dialog>
   }
-</p-drawer>
+}

@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Fee } from '@app/domain/fees/fee';
+import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { FeeUpdate } from '@app/domain/fees/fee-update';
 import { Active } from '@app/domain/person/active';
@@ -24,7 +25,7 @@ export class FeeService {
     this.memberClient = clientProvider.url(environment.apiUrl + '/person');
   }
 
-  public create(data: Fee): Observable<FeePayment> {
+  public create(data: FeeCreation): Observable<FeePayment> {
     return this.feeClient
       .create<SimpleResponse<FeePayment>>(data)
       .pipe(map(r => r.content));

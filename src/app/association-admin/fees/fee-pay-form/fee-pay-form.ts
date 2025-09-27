@@ -1,9 +1,10 @@
 
-import { Component, Input, inject } from '@angular/core';
-import { FormArray, FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, Input, inject, input, output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormStatus } from '@app/core/form/form-status/form-status';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
-import { FormComponent } from '@bernardo-mg/form';
+import { FailureStore } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -15,14 +16,26 @@ import { MessageModule } from 'primeng/message';
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, JustifyCenterDirective],
   templateUrl: './fee-pay-form.html'
 })
-export class FeePayForm extends FormComponent<FeePayment> {
+export class FeePayForm {
 
-  private fb = inject(FormBuilder);
+  public readonly loading = input(false);
+
+  public readonly failures = input(new FailureStore());
 
   @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
     this.fullname = value.name.fullName;
   }
+
+  public readonly save = output<FeePayment>();
+
+  private fb = inject(FormBuilder);
+
+  public formStatus: FormStatus;
+
+  public memberName = "";
+
+  public form: FormGroup;
 
   public fullname = "";
 
@@ -31,13 +44,14 @@ export class FeePayForm extends FormComponent<FeePayment> {
   }
 
   constructor() {
-    super();
 
     this.form = this.fb.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
       months: this.fb.array([''], Validators.required)
     });
+
+    this.formStatus = new FormStatus(this.form);
   }
 
   public addDate() {
@@ -60,6 +74,20 @@ export class FeePayForm extends FormComponent<FeePayment> {
     }
 
     this.months.at(index).setValue(dateValue, { emitEvent: false });
+  }
+
+  /**
+   * Handler for the save event.
+   */
+  public onSave() {
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value);
+    }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

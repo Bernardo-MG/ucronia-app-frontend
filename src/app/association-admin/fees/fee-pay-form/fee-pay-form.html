@@ -4,7 +4,7 @@
   <!-- Payment date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="paymentDateInput" formControlName="paymentDate" [invalid]="isFieldInvalid('paymentDate')"
-      dateFormat="yy-mm-dd" />
+      dateFormat="yy-mm-dd" appendTo="body" />
     <label for="paymentDateInput">Pago</label>
   </p-floatlabel>
   <div class="mb-2">
@@ -22,13 +22,13 @@
       <div class="col-sm-10">
         <p-floatlabel variant="in" class="mb-2 d-flex">
           <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')"
-            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" />
+            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" appendTo="body" />
           <label [for]="'monthYearInput_' + i">Mes</label>
         </p-floatlabel>
       </div>
       <div class="col-sm-2">
         <p-button icon="pi pi-trash" (click)="removeDate(i)"
-          [disabled]="!formEnabled" aria-label="Eliminar mes" [attr.aria-disabled]="!formEnabled" rounded text />
+          [disabled]="!formStatus.formEnabled" aria-label="Eliminar mes" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
       </div>
     </div>
   }
@@ -36,7 +36,7 @@
   <div class="row">
     <div uiJustifyCenter>
       <p-button icon="pi pi-plus-circle" (click)="addDate()"
-        [disabled]="!formEnabled" aria-label="Añadir mes" [attr.aria-disabled]="!formEnabled" rounded text />
+        [disabled]="!formStatus.formEnabled" aria-label="Añadir mes" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
     </div>
   </div>
   <div class="mb-2">
@@ -48,11 +48,6 @@
   </div>
 
   <!-- Save button -->
-  <div class="row">
-    <div class="col-sm-2 d-grid gap-2">
-      <!-- Save button -->
-      <p-button type="submit" name="Login" [loading]="waiting" [disabled]="!saveEnabled"
-        [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
-    </div>
-  </div>
+  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>
