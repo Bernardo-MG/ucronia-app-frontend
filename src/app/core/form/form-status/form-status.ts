@@ -3,40 +3,32 @@ import { AbstractControl } from "@angular/forms";
 export class FormStatus {
 
   private _loading = false;
-  private _cancellable = false;
+
+  public get loading() {
+    return this._loading;
+  }
+
+  public set loading(flag: boolean) {
+    this._loading = flag;
+    this.toggleEnable();
+  }
+
+  public get saveEnabled() {
+    return this.form.valid && !this._loading;
+  }
+
+  public get cancelEnabled() {
+    return !this._loading;
+  }
+
+  public get formEnabled() {
+    return !this.form.disabled;
+  }
 
   constructor(
     private readonly form: AbstractControl
   ) { }
 
-  get loading() {
-    return this._loading;
-  }
-
-  set loading(flag: boolean) {
-    this._loading = flag;
-    this.toggleEnable();
-  }
-
-  get cancellable() {
-    return this._cancellable;
-  }
-  
-  set cancellable(flag: boolean) {
-    this._cancellable = flag;
-  }
-
-  get saveEnabled() {
-    return this.form.valid && !this._loading;
-  }
-
-  get cancelEnabled() {
-    return this._cancellable && !this._loading;
-  }
-
-  get formEnabled() {
-    return !this.form.disabled;
-  }
   /**
    * Indicates if the form field is invalid.
    * 
