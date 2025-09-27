@@ -1,9 +1,9 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -12,7 +12,7 @@ import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'assoc-transaction-info',
-  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ToastModule],
+  imports: [RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ToastModule, DatePipe],
   templateUrl: './transaction-info.html'
 })
 export class LibraryAdminBookInfo {
