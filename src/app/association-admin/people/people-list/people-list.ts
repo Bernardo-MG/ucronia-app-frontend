@@ -245,7 +245,8 @@ export class PeopleList implements OnInit {
   }
 
   public onShowInfo(person: Person) {
-    this.selectedData = person;
+    this.service.getOne(person.number)
+      .subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }
 
