@@ -1,14 +1,16 @@
 
-import { Component, Input, OnDestroy, input, output } from '@angular/core';
+import { Component, Input, OnChanges, OnDestroy, SimpleChanges, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MemberBalance } from '@app/domain/members/member-balance';
 import Chart from 'chart.js/auto';
+import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'assoc-membership-evolution-chart',
-  imports: [],
+  imports: [FormsModule, SelectModule],
   templateUrl: './membership-evolution-chart.component.html'
 })
-export class MembershipEvolutionChartComponent implements OnDestroy {
+export class MembershipEvolutionChartComponent implements OnDestroy, OnChanges {
 
   public readonly waiting = input(false);
 
@@ -28,9 +30,20 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
 
   public chart: any;
 
+  public monthsSelection: { label: string, value: Date }[] = [];
+
   public ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
+    }
+  }
+
+  public ngOnChanges({ months }: SimpleChanges): void {
+    if (months) {
+      this.monthsSelection = months.currentValue.map((m: string) => ({
+        value: m,
+        label: m,
+      }));
     }
   }
 
