@@ -1,6 +1,6 @@
 @switch (selecting) {
   @case (false) {
-    <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+    <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
       <p-table dataKey="number" selectionMode="single" [value]="rows">
         <ng-template #header>
           <tr>

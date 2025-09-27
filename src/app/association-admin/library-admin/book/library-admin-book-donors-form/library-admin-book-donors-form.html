@@ -1,6 +1,6 @@
 @switch (selectingDonor) {
   @case (false) {
-    <form [formGroup]="form" (ngSubmit)="onSave()" class="needs-validation" novalidate>
+    <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
       <!-- Donation date -->
       <p-floatlabel variant="in">
         <p-datepicker dateFormat="yy-mm-dd" [invalid]="isFieldInvalid('date')" id="dateInput" formControlName="date" />

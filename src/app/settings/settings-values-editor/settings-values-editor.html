@@ -1,5 +1,5 @@
 @for (setting of settings(); track setting) {
-  <form class="needs-validation" (ngSubmit)="onSave(setting, $event)" novalidate>
+  <form (ngSubmit)="onSave(setting, $event)" novalidate>
     <div class="row mb-2">
       <label for="{{setting.code + 'Input'}}" id="{{setting.code + 'Label'}}"
         class="col-sm-2 col-form-label">{{setting.code}}</label>
