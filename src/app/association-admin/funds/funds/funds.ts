@@ -13,7 +13,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
+import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { LibraryAdminBookInfo } from '../transaction-info/transaction-info';

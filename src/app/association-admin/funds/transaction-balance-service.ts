@@ -29,8 +29,8 @@ export class TransactionBalanceService {
 
   public monthly(startDate: Date | undefined, endDate: Date | undefined): Observable<TransactionMonthlyBalance[]> {
     return this.monthlyBalanceClient
-      .parameter('startDate', startDate)
-      .parameter('endDate', endDate)
+      .parameter('from', startDate)
+      .parameter('to', endDate)
       .read<SimpleResponse<TransactionMonthlyBalance[]>>()
       .pipe(map(r => r.content));
   }

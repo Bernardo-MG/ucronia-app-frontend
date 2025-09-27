@@ -1,17 +1,19 @@
 
-import { Component, inject, OnDestroy } from '@angular/core';
-import { TransactionBalanceService } from '@app/association-admin/funds/transaction-balance-service/transaction-balance-service';
+import { Component, inject, OnDestroy, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { TransactionBalanceService } from '@app/association-admin/funds/transaction-balance-service';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 import { CardModule } from 'primeng/card';
+import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
-  imports: [CardModule],
+  imports: [FormsModule, CardModule, SelectModule],
   templateUrl: './transaction-balance-chart.html'
 })
-export class TransactionBalanceChartContainer implements OnDestroy {
+export class TransactionBalanceChartContainer {
 
   private readonly balanceService = inject(TransactionBalanceService);
 
@@ -39,6 +41,8 @@ export class TransactionBalanceChartContainer implements OnDestroy {
 
   public chart: any;
 
+  public monthsSelection: { label: string, value: Date }[] = [];
+
   constructor() {
     // Read balance range
     this.loadInitialRange();
@@ -64,7 +68,7 @@ export class TransactionBalanceChartContainer implements OnDestroy {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.month)
+    const labels = this.balance.map(b => b.month.toISOString().slice(0, 7))
     const totals = this.balance.map(b => b.total)
     const results = this.balance.map(b => b.results)
 
@@ -101,6 +105,10 @@ export class TransactionBalanceChartContainer implements OnDestroy {
       .subscribe(data => {
         if (!data.length) return;
         this.months = data.map(d => d.month);
+        this.monthsSelection = this.months.map((m: Date) => ({
+          value: m,
+          label: m.toISOString().slice(0, 7),
+        }));
         this.startMonth = this.months[0];
         this.endMonth = this.months[this.months.length - 1];
       });
