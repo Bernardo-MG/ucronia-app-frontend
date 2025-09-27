@@ -31,14 +31,14 @@
       <ng-template #header>
         Crear autor
       </ng-template>
-      <shared-name-form [cancellable]="true" [waiting]="loading" [failures]="failures"
+      <shared-name-form [loading]="loading" [failures]="failures"
         (save)="onCreate($event)" (reject)="onCancel()" />
     }
     @case ('edition') {
       <ng-template #header>
         Modificar autor
       </ng-template>
-      <shared-name-form [cancellable]="true" [data]="selected" [waiting]="loading" [failures]="failures"
+      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures"
         (save)="onUpdate($event)" (reject)="onCancel()" />
     }
   }
