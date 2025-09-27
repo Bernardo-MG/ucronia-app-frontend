@@ -38,19 +38,19 @@
           <td>{{ person.name.fullName }}</td>
           <td>
             @switch (person.membership === null) {
-            @case (true) {
-            No es socio
-            }
-            @case (false) {
-            @switch (person.membership?.active) {
-            @case (true) {
-            <span class="pi pi-check text-success"></span>
-            }
-            @case (false) {
-            <span class="pi pi-times text-warning"></span>
-            }
-            }
-            }
+              @case (true) {
+                No es socio
+              }
+              @case (false) {
+                @switch (person.membership?.active) {
+                  @case (true) {
+                    <span class="pi pi-check text-success"></span>
+                  }
+                  @case (false) {
+                    <span class="pi pi-times text-warning"></span>
+                  }
+                }
+              }
             }
           </td>
           <td>
