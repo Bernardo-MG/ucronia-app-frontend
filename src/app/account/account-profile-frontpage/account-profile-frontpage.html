@@ -1,46 +1,45 @@
-<div uiResponsiveShortColumns>
-  <p-card><!-- Username -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Nombre de usuario</div>
-      <div class="col-sm-9">
-        @if (loading) {
-          <p-skeleton class="mb-2" />
-        } @else {
-          {{account.username}}
-        }
-      </div>
+<p-card>
+  <!-- Username -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre de usuario</div>
+    <div class="col-sm-9">
+      @if (loading) {
+        <p-skeleton class="mb-2" />
+      } @else {
+        {{account.username}}
+      }
     </div>
-    <!-- Name -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">Nombre</div>
-      <div class="col-sm-9">
-        @if (loading) {
-          <p-skeleton class="mb-2" />
-        } @else {
-          {{account.name}}
-        }
-      </div>
+  </div>
+  <!-- Name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9">
+      @if (loading) {
+        <p-skeleton class="mb-2" />
+      } @else {
+        {{account.name}}
+      }
     </div>
-    <!-- Email -->
-    <div class="row">
-      <div class="col-sm-3 text-primary">E-mail</div>
-      <div class="col-sm-9">
-        @if (loading) {
-          <p-skeleton class="mb-2" />
-        } @else {
-          {{account.email}}
-        }
-      </div>
+  </div>
+  <!-- Email -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">E-mail</div>
+    <div class="col-sm-9">
+      @if (loading) {
+        <p-skeleton class="mb-2" />
+      } @else {
+        {{account.email}}
+      }
     </div>
+  </div>
+</p-card>
+@if (account.person) {
+<article class="p-4">
+  <header>
+    <h2 class="border-bottom">Socio</h2>
+  </header>
+  <p-card>
+    <account-profile-person [data]="person" />
   </p-card>
-  @if (account.person) {
-  <article class="p-4">
-    <header>
-      <h2 class="border-bottom">Socio</h2>
-    </header>
-    <p-card>
-      <account-profile-person [data]="person" />
-    </p-card>
-  </article>
-  }
-</div>
+</article>
+}
