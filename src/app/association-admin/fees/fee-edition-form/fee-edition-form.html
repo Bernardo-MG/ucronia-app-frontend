@@ -28,7 +28,7 @@
   <div formGroupName="transaction">
     <p-floatlabel variant="in" class="mb-2 d-flex">
       <p-datepicker id="transaction.dateInput" formControlName="date" [invalid]="isFieldInvalid('transaction.date')"
-        dateFormat="yy-mm-dd" />
+        dateFormat="yy-mm-dd" appendTo="body" />
       <label for="transaction.dateInput">Pago</label>
     </p-floatlabel>
   </div>

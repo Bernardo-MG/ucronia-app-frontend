@@ -10,10 +10,10 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { TransactionBalanceService } from '../transaction-balance-service/transaction-balance-service';
+import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { LibraryAdminBookInfo } from '../transaction-info/transaction-info';
@@ -22,7 +22,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DrawerModule, CalendarMonth, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, CalendarMonth, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer],
   templateUrl: './funds.html'
 })
 export class Funds implements OnInit {
@@ -129,6 +129,7 @@ export class Funds implements OnInit {
 
   public onStartEditingView(view: string): void {
     this.view = view;
+    this.showing = false;
     this.editing = true;
   }
 

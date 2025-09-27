@@ -1,29 +1,27 @@
-<p-card class="col-9">
-  <!-- Index -->
-  <div class="row">
-    <div class="col-3">
-      # {{transaction().index}}
-    </div>
+<!-- Index -->
+<div class="row">
+  <div class="col-3">
+    # {{transaction().index}}
   </div>
-  <!-- Date -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">Fecha</div>
-    <div class="col-sm-9">
-      {{transaction().date}}
-    </div>
+</div>
+<!-- Date -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Fecha</div>
+  <div class="col-sm-9">
+    {{transaction().date | date:'yyyy-MM-dd'}}
   </div>
-  <!-- Description -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">Descripción</div>
-    <div class="col-3">
-      {{transaction().description}}
-    </div>
+</div>
+<!-- Description -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Descripción</div>
+  <div class="col-3">
+    {{transaction().description}}
   </div>
-  <!-- Amount -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">Importe</div>
-    <div class="col-3">
-      {{transaction().amount}}
-    </div>
+</div>
+<!-- Amount -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Importe</div>
+  <div class="col-3">
+    {{transaction().amount}}
   </div>
-</p-card>
+</div>
