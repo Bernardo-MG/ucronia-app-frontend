@@ -101,11 +101,6 @@ export class FeeList implements OnInit {
     });
   }
 
-  public onCancel(): void {
-    this.view = '';
-    this.editing = false;
-  }
-
   public onUpdate(toUpdate: Fee): void {
     const update = {
       ...toUpdate,

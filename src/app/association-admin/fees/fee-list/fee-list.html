@@ -45,8 +45,7 @@
   }
   @case ('edition') {
     <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-fee-edition-form [waiting]="loading" [data]="selectedData" [failures]="failures" [cancellable]="true"
-        (save)="onUpdate($event)" (reject)="onCancel()" />
+      <assoc-fee-edition-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
     </p-dialog>
   }
 }
