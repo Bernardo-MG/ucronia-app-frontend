@@ -304,14 +304,7 @@ export class LibraryAdminBookList implements OnInit {
     } else {
       book = this.service.updateFictionBookNew(toSave.number, toSave);
     }
-    book.subscribe({
-      next: response => {
-        this.interceptSave(response);
-      },
-      error: error => {
-        this.interceptError(error);
-      }
-    });
+    this.mutate(() => book);
   }
 
   public onSetAuthors(authors: Author[]) {
