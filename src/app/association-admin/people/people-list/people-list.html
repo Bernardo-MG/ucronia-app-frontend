@@ -15,12 +15,16 @@
       <!-- Add transaction -->
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
         [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
-      <!-- Filter by membership -->
-      <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-      <!-- Filter by name -->
-      <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
-      <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-        aria-describedby="nameFilterLabel" maxlength="50">
+    </ng-template>
+    <ng-template #header>
+      <p>
+        <!-- Filter by membership -->
+        <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+        <!-- Filter by name -->
+        <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
+        <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+          aria-describedby="nameFilterLabel" maxlength="50">
+      </p>
     </ng-template>
     <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
       [totalRecords]="data.totalElements" [first]="first" showCurrentPageReport="true"
