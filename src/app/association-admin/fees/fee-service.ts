@@ -53,8 +53,9 @@ export class FeeService {
   }
 
   public getOne(date: Date, memberNumber: number): Observable<Fee> {
+    const formattedDate = date.toISOString().slice(0, 7);
     return this.feeClient
-      .appendRoute(`/${date}/${memberNumber}`)
+      .appendRoute(`/${formattedDate}/${memberNumber}`)
       .read<SimpleResponse<Fee>>()
       .pipe(map(r => r.content));
   }

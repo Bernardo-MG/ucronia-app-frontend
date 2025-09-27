@@ -22,7 +22,7 @@
       (goToYear)="onGoToYear($event)" (selectFee)="onSelectFee($event)" />
   </p-panel>
 </div>
-<p-dialog [(visible)]="showing">
+<p-dialog header="Editar cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <assoc-fee-info [data]="selectedData" [loading]="loading" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
     [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />

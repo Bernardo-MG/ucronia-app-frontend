@@ -1,31 +1,27 @@
-<p-card>
-  <ng-template #title>
-    @if (loading()) {
-      <p-skeleton height="2rem" class="mb-2" />
-    } @else {
-      <h2>{{data().month}} {{data().member.name.fullName}}</h2>
+  @if (loading()) {
+    <p-skeleton height="2rem" class="mb-2" />
+  } @else {
+    <h2>{{data().month | date:'yyyy-MM'}} {{data().member.name.fullName}}</h2>
+  }
+  @if (loading()) {
+    <p-skeleton />
+  } @else {
+    @if (data().paid) {
+      <!-- Active -->
+      <div class="text-success">Pagado</div>
+    }@else {
+      <!-- Not active -->
+      <div class="text-danger">No pagado</div>
     }
+  }
+<!-- Payment date -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Fecha de pago</div>
+  <div class="col-sm-8">
     @if (loading()) {
-      <p-skeleton />
+      <p-skeleton class="mb-2" />
     } @else {
-      @if (data().paid) {
-        <!-- Active -->
-        <div class="text-success">Pagado</div>
-      }@else {
-        <!-- Not active -->
-        <div class="text-danger">No pagado</div>
-      }
+      {{data().transaction?.date | date:'yyyy-MM-dd'}}
     }
-  </ng-template>
-  <!-- Payment date -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">Fecha de pago</div>
-    <div class="col-sm-8">
-      @if (loading()) {
-        <p-skeleton class="mb-2" />
-      } @else {
-        {{data().transaction?.date}}
-      }
-    </div>
   </div>
-</p-card>
+</div>

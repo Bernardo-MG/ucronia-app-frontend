@@ -1,4 +1,5 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
@@ -7,7 +8,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-fee-info',
-  imports: [CardModule, SkeletonModule],
+  imports: [CardModule, SkeletonModule, DatePipe],
   templateUrl: './fee-info.html'
 })
 export class FeeInfo {
