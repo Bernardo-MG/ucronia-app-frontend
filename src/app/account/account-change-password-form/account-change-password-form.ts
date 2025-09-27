@@ -3,7 +3,6 @@ import { Component, inject } from '@angular/core';
 import { AbstractControl, FormBuilder, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { PasswordChange } from '@app/account/models/password-change';
 import { FormComponent } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,7 +10,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'account-change-password-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, WaitingDirective],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
   templateUrl: './account-change-password-form.html'
 })
 export class AccountChangePasswordForm extends FormComponent<PasswordChange> {
