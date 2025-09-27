@@ -5,7 +5,7 @@ import { BookInfo } from '@app/domain/library/book-info';
 import { BookReturned } from '@app/domain/library/book-returned';
 import { Member } from '@app/domain/members/member';
 import { FormComponent } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -13,7 +13,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-admin-book-return-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
   templateUrl: './library-admin-book-return-form.html'
 })
 export class LibraryAdminBookReturnForm extends FormComponent<BookReturned> {

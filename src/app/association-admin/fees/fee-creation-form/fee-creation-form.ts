@@ -4,7 +4,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { Fee } from '@app/domain/fees/fee';
 import { Member } from '@app/domain/members/member';
 import { FormComponent } from '@bernardo-mg/form';
-import { WaitingDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -13,7 +12,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, WaitingDirective],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm extends FormComponent<Fee> {

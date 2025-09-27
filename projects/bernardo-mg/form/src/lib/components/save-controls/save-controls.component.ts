@@ -1,10 +1,11 @@
 
 import { Component, input, output } from '@angular/core';
-import { JustifyBetweenDirective, WaitingDirective } from '@bernardo-mg/ui';
+import { JustifyBetweenDirective } from '@bernardo-mg/ui';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'form-save-controls',
-  imports: [WaitingDirective, JustifyBetweenDirective],
+  imports: [ButtonModule, JustifyBetweenDirective],
   templateUrl: './save-controls.component.html'
 })
 export class SaveControlsComponent {

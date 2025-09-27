@@ -18,8 +18,8 @@
   <div class="row">
     <div class="col-sm-2 d-grid gap-2">
       <!-- Save button -->
-      <button type="submit" name="Save" class="btn btn-primary" [uiWaiting]="waiting" [disabled]="!saveEnabled"
-        [attr.aria-disabled]="!saveEnabled">Guardar</button>
+      <p-button type="submit" name="Save" class="btn btn-primary" [loading]="waiting" [disabled]="!saveEnabled"
+        [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
     </div>
   </div>
 </form>
