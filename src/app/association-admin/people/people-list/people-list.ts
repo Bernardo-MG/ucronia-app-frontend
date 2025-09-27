@@ -5,12 +5,15 @@ import { MembershipEvolutionChartWidgetContainer } from '@app/association-admin/
 import { Active } from '@app/domain/person/active';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
+import { PersonCreation } from '@app/domain/person/person-creation';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { DialogModule } from 'primeng/dialog';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
@@ -24,7 +27,7 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, CardModule, ConfirmPopupModule, ButtonModule, DialogModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {
@@ -70,6 +73,8 @@ export class PeopleList implements OnInit {
 
   public personEditionMenuItems: MenuItem[] = [];
 
+  public modalTitle = '';
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -105,13 +110,13 @@ export class PeopleList implements OnInit {
     // Active/Deactivate toggle
     this.personEditionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: () => this.onConfirmSetActive(event, !isActive)
+      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, !isActive)
     });
 
     // Renewal toggle
     this.personEditionMenuItems.push({
       label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
-      command: () => this.onConfirmSetRenewal(event, !canRenew)
+      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, !canRenew)
     });
 
     // Show menu
@@ -170,6 +175,26 @@ export class PeopleList implements OnInit {
     });
   }
 
+  public onConfirmDelete(event: Event, number: number) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.mutate(() => this.service.delete(number));
+      }
+    });
+  }
+
   public onSetActive(status: boolean) {
     if (this.selectedData.membership === undefined) {
       this.selectedData.membership = new Membership();
@@ -219,26 +244,6 @@ export class PeopleList implements OnInit {
     this.load(this.data.page);
   }
 
-  public onConfirmDelete(event: Event, number: number) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => {
-        this.mutate(() => this.service.delete(number));
-      }
-    });
-  }
-
   public onShowInfo(person: Person) {
     this.selectedData = person;
     this.showing = true;
@@ -249,15 +254,11 @@ export class PeopleList implements OnInit {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/people/${this.selectedData.number}`]);
-  }
-
   public onNameFilterChange(): void {
     this.load(0);
   }
 
-  public onCreate(toCreate: Person): void {
+  public onCreate(toCreate: PersonCreation): void {
     this.mutate(() => this.service.create(toCreate));
   }
 
@@ -273,6 +274,7 @@ export class PeopleList implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
+          this.load(0);
         },
         error: error => {
           if (error instanceof FailureResponse) {

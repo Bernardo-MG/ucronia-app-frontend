@@ -68,6 +68,5 @@
       </p-message>
     }
   </div>
-  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()" />
+  <p-button type="submit" name="Guardar" [loading]="loading()">Guardar</p-button>
 </form>

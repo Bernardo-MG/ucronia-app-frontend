@@ -15,17 +15,21 @@
       <!-- Add transaction -->
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
         [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
-      <!-- Filter by membership -->
-      <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-      <!-- Filter by name -->
-      <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2 col-form-label">Nombre</label>
-      <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-        aria-describedby="nameFilterLabel" maxlength="50">
     </ng-template>
-    <p-table lazy="true" dataKey="number" selectionMode="single" [loading]="loading" [value]="data.content"
-      [(selection)]="selectedData" paginator="true" [rows]="data.size" [totalRecords]="data.totalElements"
-      [first]="first" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
-      (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)" (onRowSelect)="onSelectRow()">
+    <ng-template #header>
+      <p>
+        <!-- Filter by membership -->
+        <assoc-person-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+        <!-- Filter by name -->
+        <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2">Nombre</label>
+        <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+          aria-describedby="nameFilterLabel" maxlength="50">
+      </p>
+    </ng-template>
+    <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
+      [totalRecords]="data.totalElements" [first]="first" showCurrentPageReport="true"
+      currentPageReportTemplate="Total: {totalRecords}" (onSort)="onChangeDirection($event)"
+      (onPage)="onPageChange($event)">
       <ng-template #header>
         <tr>
           <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
@@ -34,23 +38,23 @@
         </tr>
       </ng-template>
       <ng-template #body let-person>
-        <tr [pSelectableRow]="person">
+        <tr>
           <td>{{ person.name.fullName }}</td>
           <td>
             @switch (person.membership === null) {
-            @case (true) {
-            No es socio
-            }
-            @case (false) {
-            @switch (person.membership?.active) {
-            @case (true) {
-            <span class="pi pi-check text-success"></span>
-            }
-            @case (false) {
-            <span class="pi pi-times text-warning"></span>
-            }
-            }
-            }
+              @case (true) {
+                No es socio
+              }
+              @case (false) {
+                @switch (person.membership?.active) {
+                  @case (true) {
+                    <span class="pi pi-check text-success"></span>
+                  }
+                  @case (false) {
+                    <span class="pi pi-times text-warning"></span>
+                  }
+                }
+              }
             }
           </td>
           <td>
@@ -66,17 +70,21 @@
     </p-table>
   </p-panel>
 </div>
-<p-drawer [(visible)]="showing" position="full">
-  <assoc-people-info [data]="selectedData" />
-</p-drawer>
-<p-drawer [(visible)]="editing" position="right">
-  @switch (view) {
+@if(showing) {
+  <p-dialog header="Persona" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+    <assoc-people-info [data]="selectedData" />
+  </p-dialog>
+}
+@switch (view) {
   @case ('creation') {
-  <assoc-people-creation-form [waiting]="saving" [failures]="failures" (save)="onCreate($event)" />
+    <p-dialog header="Crear persona" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <assoc-people-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
   }
   @case ('edition') {
-  <assoc-people-edition-form [waiting]="saving" [data]="selectedData" [failures]="failures" [cancellable]="true"
-    (save)="onUpdate($event)" />
+    <p-dialog header="Editar persona" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <assoc-people-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
+        (save)="onUpdate($event)" />
+    </p-dialog>
   }
-  }
-</p-drawer>
+}

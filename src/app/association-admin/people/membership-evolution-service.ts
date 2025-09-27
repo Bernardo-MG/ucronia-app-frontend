@@ -19,8 +19,8 @@ export class MembershipEvolutionService {
 
   public monthly(startDate: Date | undefined, endDate: Date | undefined): Observable<MemberBalance[]> {
     return this.client
-      .parameter('startDate', startDate)
-      .parameter('endDate', endDate)
+      .parameter('from', startDate)
+      .parameter('to', endDate)
       .read<SimpleResponse<MemberBalance[]>>()
       .pipe(map(r => r.content));
   }

@@ -4,24 +4,14 @@
     Inicio
   </div>
   <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="Start month" [disabled]="waiting()"
-      (change)="onSelectStartMonth($event)">
-      @for (selectionMonth of months(); track selectionMonth) {
-        <option [selected]="selectionMonth === startMonth()" [value]="selectionMonth">
-          {{selectionMonth}}</option>
-      }
-    </select>
+    <p-select [ngModel]="startMonth()" [options]="monthsSelection" (onChange)="startMonthChange.emit($event.value)"
+      optionLabel="label" optionValue="value" placeholder="Mes inicial" />
   </div>
   <div class="col-4">
     Fin
   </div>
   <div class="col-8">
-    <select class="form-select form-select-sm" aria-label="End month" [disabled]="waiting()"
-      (change)="onSelectEndMonth($event)">
-      @for (selectionMonth of months(); track selectionMonth) {
-        <option [selected]="selectionMonth === endMonth()" [value]="selectionMonth">
-          {{selectionMonth}}</option>
-      }
-    </select>
+    <p-select [ngModel]="endMonth()" [options]="monthsSelection" (onChange)="endMonthChange.emit($event.value)"
+      optionLabel="label" optionValue="value" placeholder="Mes final" />
   </div>
 </div>

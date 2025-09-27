@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Active } from '@app/domain/person/active';
 import { Person } from '@app/domain/person/person';
+import { PersonCreation } from '@app/domain/person/person-creation';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -32,7 +33,7 @@ export class PeopleService {
       .read<PaginatedResponse<Person>>();
   }
 
-  public create(data: Person): Observable<Person> {
+  public create(data: PersonCreation): Observable<Person> {
     return this.client
       .create<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
