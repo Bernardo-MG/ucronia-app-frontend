@@ -43,6 +43,12 @@ export class AssociationLayout {
             }
           );
         }
+        // Add close command to every item
+        this.menus.forEach(group =>
+          group.items?.forEach(item =>
+            item.command = () => this.menuActive = false
+          )
+        );
       });
   }
 
@@ -50,7 +56,7 @@ export class AssociationLayout {
     this.menuActive = status;
   }
 
-  private getAssociationItems(authContainer: AuthContainer) {
+  private getAssociationItems(authContainer: AuthContainer): MenuItem[] {
     const items = [];
     if (authContainer.hasPermission('activity_calendar', 'view')) {
       items.push(
@@ -87,7 +93,7 @@ export class AssociationLayout {
     return items;
   }
 
-  private getAdminItems(authContainer: AuthContainer) {
+  private getAdminItems(authContainer: AuthContainer): MenuItem[] {
     const items = [];
     if (authContainer.hasPermission('person', 'view')) {
       items.push(
@@ -121,6 +127,7 @@ export class AssociationLayout {
           icon: 'pi pi-book'
         });
     }
+
     return items;
   }
 
