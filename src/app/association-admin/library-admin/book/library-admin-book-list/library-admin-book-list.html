@@ -72,7 +72,7 @@
       </h2>
     </ng-template>
     <assoc-library-admin-book-edition-form [data]="selectedData" [loading]="loading" [failures]="failures"
-      loading(save)="onSaveBook($event)" />
+      (save)="onSaveBook($event)" />
   </p-dialog>
   }
   @case ('creation') {
