@@ -12,5 +12,5 @@
 </div>
 <!-- Table -->
 <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="viewDate" [events]="events()"
-  [activeDayIsOpen]="activeDayIsOpen" *uiBlock="waiting()" (beforeViewRender)="beforeMonthViewRender($event)"
+  [activeDayIsOpen]="activeDayIsOpen" (beforeViewRender)="beforeMonthViewRender($event)"
   (dayClicked)="onSelectDay($event.day)" (eventClicked)="onSelectEvent($event)" />

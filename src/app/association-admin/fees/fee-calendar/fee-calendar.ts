@@ -4,14 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, JustifyCenterDirective, BlockUiDirective],
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, JustifyCenterDirective],
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
@@ -21,7 +21,7 @@ export class FeeCalendar implements OnChanges {
   /**
    * Loading flag. Shows the loading visual cue.
    */
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
 
   public readonly feeCalendar = input<FeeCalendarYear[]>([]);
 

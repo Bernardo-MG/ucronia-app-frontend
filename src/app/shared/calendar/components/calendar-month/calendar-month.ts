@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
-import { BlockUiDirective, JustifyCenterDirective } from '@bernardo-mg/ui';
+import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameDay, isSameMonth } from 'date-fns';
@@ -10,7 +10,7 @@ import { Month } from '../../models/month';
 @Component({
   selector: 'shared-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, BlockUiDirective, JustifyCenterDirective, CalendarMonthViewComponent],
+  imports: [CommonModule, JustifyCenterDirective, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
