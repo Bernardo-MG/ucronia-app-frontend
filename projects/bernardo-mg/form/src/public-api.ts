@@ -2,7 +2,6 @@
  * Public API Surface of form
  */
 
-export * from './lib/components/control-buttons/control-buttons.component';
 export * from './lib/components/create/create.component';
 export * from './lib/components/form/form.component';
 export * from './lib/components/info-editor-status/info-editor-status.component';

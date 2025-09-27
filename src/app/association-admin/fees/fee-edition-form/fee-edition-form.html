@@ -17,7 +17,11 @@
   <div class="row mb-2">
     <label id="activeLabel" class="col-sm-2 col-form-label">Pagado</label>
     <div class="col-sm-10">
-      <icon-success-or-failure [success]="fee.paid" />
+      @if (fee.paid) {
+        <span class="pi pi-check text-success"></span>
+      } @else {
+        <span class="pi pi-times text-warning"></span>
+      }
     </div>
   </div>
   <!-- Payment date -->

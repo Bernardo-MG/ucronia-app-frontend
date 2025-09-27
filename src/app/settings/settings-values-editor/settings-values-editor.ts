@@ -2,11 +2,11 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
-import { IconEditComponent } from '@bernardo-mg/icons';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'assoc-settings-values-editor',
-  imports: [FormsModule, ReactiveFormsModule, IconEditComponent],
+  imports: [ButtonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './settings-values-editor.html'
 })
 export class SettingValuesEditor {

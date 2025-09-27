@@ -13,9 +13,6 @@
       "@bernardo-mg/form": [
         "./dist/bernardo-mg/form"
       ],
-      "@bernardo-mg/icons": [
-        "./dist/bernardo-mg/icons"
-      ],
       "@bernardo-mg/ui": [
         "./dist/bernardo-mg/ui"
       ],

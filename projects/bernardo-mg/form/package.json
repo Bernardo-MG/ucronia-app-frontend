@@ -5,7 +5,6 @@
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
     "@bernardo-mg/authentication": "0.0.1",
-    "@bernardo-mg/icons": "0.0.1",
     "@bernardo-mg/ui": "0.0.1",
     "@primeng/themes": "^20.0.0",
     "primeng": "^20.0.0"

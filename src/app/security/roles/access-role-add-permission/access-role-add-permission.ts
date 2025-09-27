@@ -1,13 +1,13 @@
 
 import { Component, input, output } from '@angular/core';
 import { ResourcePermission } from '@bernardo-mg/authentication';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse, SortingProperty } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-role-add-permission',
-  imports: [TableModule, IconAddComponent],
+  imports: [TableModule, ButtonModule],
   templateUrl: './access-role-add-permission.html'
 })
 export class AccessRoleAddPermission {

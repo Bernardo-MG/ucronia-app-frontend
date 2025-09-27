@@ -1,14 +1,14 @@
 
 import { Component, input, OnInit, output } from '@angular/core';
 import { Member } from '@app/domain/members/member';
-import { IconAddComponent } from '@bernardo-mg/icons';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable } from 'rxjs';
 
 @Component({
   selector: 'access-user-select-member',
-  imports: [TableModule, IconAddComponent],
+  imports: [ButtonModule, TableModule],
   templateUrl: './access-user-select-member.html'
 })
 export class AccessUserSelectMember implements OnInit {

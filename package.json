@@ -18,7 +18,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open",
-    "build-libs": "ng build @bernardo-mg/authentication --configuration development && ng build @bernardo-mg/icons --configuration development && ng build @bernardo-mg/request --configuration development && ng build @bernardo-mg/ui --configuration development && ng build @bernardo-mg/form --configuration development",
+    "build-libs": "ng build @bernardo-mg/authentication --configuration development && ng build @bernardo-mg/request --configuration development && ng build @bernardo-mg/ui --configuration development && ng build @bernardo-mg/form --configuration development",
     "build": "ng build",
     "build-production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",
@@ -37,7 +37,6 @@
     "@auth0/angular-jwt": "^5.2.0",
     "@bernardo-mg/authentication": "file:dist/bernardo-mg/authentication",
     "@bernardo-mg/form": "file:dist/bernardo-mg/form",
-    "@bernardo-mg/icons": "file:dist/bernardo-mg/icons",
     "@bernardo-mg/request": "file:dist/bernardo-mg/request",
     "@bernardo-mg/ui": "file:dist/bernardo-mg/ui",
     "@fortawesome/angular-fontawesome": "^2.0.0",
