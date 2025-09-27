@@ -75,7 +75,7 @@
     [readonly]="false" [cancellable]="true" (save)="onSaveBook($event)" (reject)="onCancel()" />
   }
   @case ('creation') {
-  <assoc-library-admin-book-creation-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+  <assoc-library-admin-book-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
   }
   @case ('donors') {
   <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
