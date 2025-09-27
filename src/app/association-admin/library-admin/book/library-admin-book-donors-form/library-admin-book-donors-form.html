@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
       <!-- Donation date -->
       <p-floatlabel variant="in">
-        <p-datepicker dateFormat="yy-mm-dd" [invalid]="isFieldInvalid('date')" id="dateInput" formControlName="date" />
+        <p-datepicker dateFormat="yy-mm-dd" [invalid]="isFieldInvalid('date')" id="dateInput" formControlName="date" appendTo="body" />
         <label for="dateInput">Fecha de donación</label>
       </p-floatlabel>
       <div class="mb-2">

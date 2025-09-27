@@ -124,7 +124,7 @@
     } @else {
       <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
         <assoc-library-admin-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
-          (save)="onLend($event)" (getMemberSelection)="service.getMembers.bind(service)" />
+          [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
       </p-dialog>
     }
   }

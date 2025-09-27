@@ -427,11 +427,11 @@ export class LibraryAdminBookList implements OnInit {
   }
 
   public onLend(toSave: BookLent) {
-    this.service.lend(toSave).subscribe();
+    this.mutate(() => this.service.lend(toSave));
   }
 
   public onReturn(toSave: BookReturned) {
-    this.service.return(toSave).subscribe();
+    this.mutate(() => this.service.return(toSave));
   }
 
   public onCancel(): void {

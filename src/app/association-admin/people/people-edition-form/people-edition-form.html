@@ -32,7 +32,7 @@
   <!-- Birth date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="birthDateInput" formControlName="birthDate" [invalid]="isFieldInvalid('birthDate')"
-      dateFormat="yy-mm-dd" />
+      dateFormat="yy-mm-dd" appendTo="body" />
     <label for="birthDateInput">Fecha de nacimiento</label>
   </p-floatlabel>
   <div class="mb-2">

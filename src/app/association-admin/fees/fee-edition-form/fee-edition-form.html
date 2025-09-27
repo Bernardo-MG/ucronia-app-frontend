@@ -4,7 +4,7 @@
   <!-- Month -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
-      (onSelect)="onMonthSelect($event)" />
+      (onSelect)="onMonthSelect($event)" appendTo="body" />
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('month'); track failure) {
