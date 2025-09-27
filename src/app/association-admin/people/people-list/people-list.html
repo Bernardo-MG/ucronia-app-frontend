@@ -67,7 +67,7 @@
   </p-panel>
 </div>
 @if(showing) {
-  <p-dialog header="Persona" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+  <p-dialog header="Persona" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
     <assoc-people-info [data]="selectedData" />
   </p-dialog>
 }
