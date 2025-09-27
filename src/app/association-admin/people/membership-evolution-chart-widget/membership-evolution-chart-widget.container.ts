@@ -19,10 +19,10 @@ export class MembershipEvolutionChartWidgetContainer {
 
   public months: Date[] = [];
 
-  private _startMonth = new Date();
+  private _startMonth: Date | undefined = undefined;
 
   public get startMonth(): Date {
-    return this._startMonth;
+    return this._startMonth as Date;
   }
 
   public set startMonth(month: Date) {
@@ -30,10 +30,10 @@ export class MembershipEvolutionChartWidgetContainer {
     this.loadBalance();
   }
 
-  private _endMonth = new Date();
+  private _endMonth: Date | undefined = undefined;
 
   public get endMonth(): Date {
-    return this._endMonth;
+    return this._endMonth as Date;
   }
 
   public set endMonth(month: Date) {
