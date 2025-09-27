@@ -2,7 +2,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Person } from '@app/domain/person/person';
-import { FormComponent, SaveControlsComponent } from '@bernardo-mg/form';
+import { FormComponent } from '@bernardo-mg/form';
+import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -10,7 +11,7 @@ import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitc
 
 @Component({
   selector: 'assoc-people-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule, SaveControlsComponent],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule],
   templateUrl: './people-creation-form.html'
 })
 export class PeopleCreationForm extends FormComponent<Person> {

@@ -11,6 +11,7 @@ import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
@@ -24,7 +25,7 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, CardModule, ButtonModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, CardModule, ButtonModule, DialogModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartWidgetContainer, JustifyCenterDirective],
   templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {
@@ -69,6 +70,8 @@ export class PeopleList implements OnInit {
   public failures = new FailureStore();
 
   public personEditionMenuItems: MenuItem[] = [];
+
+  public modalTitle = '';
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -247,10 +250,6 @@ export class PeopleList implements OnInit {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
-  }
-
-  public onSelectRow() {
-    this.router.navigate([`/association/admin/people/${this.selectedData.number}`]);
   }
 
   public onNameFilterChange(): void {
