@@ -434,10 +434,6 @@ export class LibraryAdminBookList implements OnInit {
     this.mutate(() => this.service.return(toSave));
   }
 
-  public onCancel(): void {
-    this.editing = false;
-  }
-
   protected interceptSave(response: FictionBook | GameBook) {
     this.load(this.data.page);
 

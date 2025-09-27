@@ -72,7 +72,7 @@
       </h2>
     </ng-template>
     <assoc-library-admin-book-edition-form [data]="selectedData" [loading]="loading" [failures]="failures"
-      loading(save)="onSaveBook($event)" (reject)="onCancel()" />
+      loading(save)="onSaveBook($event)" />
   </p-dialog>
   }
   @case ('creation') {
@@ -84,35 +84,35 @@
   <p-dialog header="Donantes" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
     <assoc-library-admin-book-donors-form [data]="selectedData.donation" [loading]="loading" [failures]="failures"
       [getSelection]="service.getDonors.bind(service)"
-      (save)="onSetDonation($event)" (reject)="onCancel()" />
+      (save)="onSetDonation($event)" />
   </p-dialog>
   }
   @case ('authors') {
   <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
     <h2>Autores</h2>
     <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
-      (save)="onSetAuthors($event)" (reject)="onCancel()" />
+      (save)="onSetAuthors($event)" />
   </p-dialog>
   }
   @case ('gameSystem') {
   <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
     <h2>Sistema</h2>
     <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
-      (save)="onSetGameSystem($event)" (reject)="onCancel()" />
+      (save)="onSetGameSystem($event)" />
   </p-dialog>
   }
   @case ('bookType') {
   <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
     <h2>Tipo</h2>
     <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
-      (save)="onSetBookType($event)" (reject)="onCancel()" />
+      (save)="onSetBookType($event)" />
   </p-dialog>
   }
   @case ('publishers') {
   <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
     <h2>Editores</h2>
     <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
-      (save)="onSetPublishers($event)" (reject)="onCancel()" />
+      (save)="onSetPublishers($event)" />
   </p-dialog>
   }
   @case ('lendings') {
