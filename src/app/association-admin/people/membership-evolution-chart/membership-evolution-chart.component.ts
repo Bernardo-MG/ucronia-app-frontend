@@ -40,9 +40,9 @@ export class MembershipEvolutionChartComponent implements OnDestroy, OnChanges {
 
   public ngOnChanges({ months }: SimpleChanges): void {
     if (months) {
-      this.monthsSelection = months.currentValue.map((m: string) => ({
+      this.monthsSelection = months.currentValue.map((m: Date) => ({
         value: m,
-        label: m,
+        label: m.toISOString().slice(0, 7),
       }));
     }
   }
