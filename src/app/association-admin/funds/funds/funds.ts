@@ -7,7 +7,6 @@ import { CalendarMonth } from '@app/shared/calendar/components/calendar-month/ca
 import { Month } from '@app/shared/calendar/models/month';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { BlockUiDirective } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -23,7 +22,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DrawerModule, CalendarMonth, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer, BlockUiDirective],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DrawerModule, CalendarMonth, LibraryAdminBookInfo, TransactionForm, TransactionBalanceChartContainer],
   templateUrl: './funds.html'
 })
 export class Funds implements OnInit {
