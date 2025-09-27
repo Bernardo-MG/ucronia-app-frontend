@@ -27,7 +27,7 @@
         <!-- Lend book form -->
         <p-button icon="pi pi-step-backward" severity="secondary" (click)="onReturnToMembers()" aria-label="Atrás"
           rounded text />
-        <assoc-library-admin-book-lending-form [waiting]="waiting()" [failures]="failures()" [readonly]="readonly()"
+        <assoc-library-admin-book-lending-form [loading]="waiting()" [failures]="failures()"
           [borrower]="member" [book]="book()" (save)="save.emit($event)" />
       </ng-template>
     </p-step-panel>

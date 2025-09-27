@@ -71,8 +71,8 @@
         }
       </h2>
     </ng-template>
-    <assoc-library-admin-book-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
-      [readonly]="false" [cancellable]="true" (save)="onSaveBook($event)" (reject)="onCancel()" />
+    <assoc-library-admin-book-edition-form [data]="selectedData" [loading]="loading" [failures]="failures"
+      loading(save)="onSaveBook($event)" (reject)="onCancel()" />
   </p-dialog>
   }
   @case ('creation') {
@@ -82,8 +82,8 @@
   }
   @case ('donors') {
   <p-dialog header="Donantes" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
-      [getSelection]="service.getDonors.bind(service)" [readonly]="false" [cancellable]="true"
+    <assoc-library-admin-book-donors-form [data]="selectedData.donation" [loading]="loading" [failures]="failures"
+      [getSelection]="service.getDonors.bind(service)"
       (save)="onSetDonation($event)" (reject)="onCancel()" />
   </p-dialog>
   }
@@ -118,7 +118,7 @@
   @case ('lendings') {
     @if(selectedData.lent) {
       <p-dialog header="Devolver libro" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-        <assoc-library-admin-book-return-form [waiting]="loading" [failures]="failures" [borrower]="borrower"
+        <assoc-library-admin-book-return-form [loading]="loading" [failures]="failures" [borrower]="borrower"
           [book]="selectedData" (save)="onReturn($event)" />
       </p-dialog>
     } @else {

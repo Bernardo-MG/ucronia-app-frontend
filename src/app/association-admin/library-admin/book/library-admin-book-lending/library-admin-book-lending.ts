@@ -21,8 +21,6 @@ export class LibraryAdminBookLending {
 
   public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<any>>>((page: number, active: Active) => EMPTY);
 
-  public readonly readonly = input(false);
-
   public readonly waiting = input(false);
 
   public readonly failures = input(new FailureStore());

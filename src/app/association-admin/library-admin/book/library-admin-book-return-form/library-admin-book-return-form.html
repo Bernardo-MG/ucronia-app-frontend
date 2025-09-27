@@ -15,11 +15,5 @@
   </div>
 
   <!-- Save button -->
-  <div class="row">
-    <div class="col-sm-2 d-grid gap-2">
-      <!-- Save button -->
-      <p-button type="submit" name="Save" class="btn btn-primary" [loading]="waiting" [disabled]="!saveEnabled"
-        [attr.aria-disabled]="!saveEnabled">Guardar</p-button>
-    </div>
-  </div>
+  <p-button type="submit" name="Guardar" [loading]="loading()">Guardar</p-button>
 </form>
