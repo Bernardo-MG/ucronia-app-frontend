@@ -34,7 +34,7 @@
 <p-drawer [(visible)]="editing" position="right">
   @switch (view) {
     @case ('creation') {
-      <access-role-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+      <access-role-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
     }
     @case ('permissions') {
       <access-role-change-permission [rolePermissions]="selectedData.permissions"

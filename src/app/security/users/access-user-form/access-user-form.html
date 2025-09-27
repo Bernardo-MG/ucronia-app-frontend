@@ -8,7 +8,7 @@
           [backendFailure]="failures().hasFailures('username')" aria-describedby="usernameLabel">
         <form-input-failure-feedback [failures]="failures().getFailures('username')" />
       } @else {
-        <input type="text" id="usernameInput" readonly="true" [value]="data?.username" [disabled]="readonly"
+        <input type="text" id="usernameInput" readonly="true" [value]="data.username"
           class="form-control" aria-describedby="usernameLabel">
       }
     </div>
@@ -31,6 +31,6 @@
       <form-input-failure-feedback [failures]="failures().getFailures('email')" />
     </div>
   </div>
-  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()" />
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

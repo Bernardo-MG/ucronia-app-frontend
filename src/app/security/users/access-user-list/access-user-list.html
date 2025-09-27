@@ -35,11 +35,11 @@
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (view) {
     @case ('creation') {
-      <access-user-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+      <access-user-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
     }
     @case ('edition') {
-      <access-user-form [create]="false" [waiting]="loading" [data]="selectedData" [failures]="failures"
-        [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
+      <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
+        (save)="onUpdate($event)" (reject)="onCancel()" />
     }
     @case ('roles') {
       <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)"
