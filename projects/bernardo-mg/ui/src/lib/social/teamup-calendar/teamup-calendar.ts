@@ -4,9 +4,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-teamup-calendar',
   standalone: true,
-  templateUrl: './teamup-calendar.component.html'
+  templateUrl: './teamup-calendar.html'
 })
-export class TeamupCalendarComponent {
+export class TeamupCalendar {
 
   private readonly sanitizer = inject(DomSanitizer);
 

@@ -4,9 +4,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-google-maps',
   standalone: true,
-  templateUrl: './google-maps.component.html'
+  templateUrl: './google-maps.html'
 })
-export class GoogleMapsComponent {
+export class GoogleMaps {
 
   private readonly sanitizer = inject(DomSanitizer);
 

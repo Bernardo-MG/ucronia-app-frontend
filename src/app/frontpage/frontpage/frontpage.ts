@@ -1,12 +1,11 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { GoogleMapsComponent } from '@app/shared/social/components/google-maps/google-maps.component';
-import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
+import { GoogleMaps, TeamupCalendar } from '@bernardo-mg/ui';
 import { FrontpageService } from '../frontpage-service';
 
 @Component({
   selector: 'app-frontpage-frontpage',
-  imports: [TeamupCalendarComponent, GoogleMapsComponent],
+  imports: [TeamupCalendar, GoogleMaps],
   templateUrl: './frontpage.html',
   styleUrls: ['./frontpage.sass']
 })

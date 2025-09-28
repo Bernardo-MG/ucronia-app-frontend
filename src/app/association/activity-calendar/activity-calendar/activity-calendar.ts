@@ -1,13 +1,13 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { TeamupCalendarComponent } from '@app/shared/social/components/teamup-calendar/teamup-calendar.component';
+import { TeamupCalendar } from '../../../../../projects/bernardo-mg/ui/src/lib/social/teamup-calendar/teamup-calendar';
 import { CardModule } from 'primeng/card';
 import { ActivityCalendarService } from '../activity-calendar-service';
 import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-activity-calendar',
-  imports: [CardModule, TeamupCalendarComponent],
+  imports: [CardModule, TeamupCalendar],
   templateUrl: './activity-calendar.html'
 })
 export class ActivityCalendar implements OnInit {
