@@ -2,7 +2,7 @@ import { Component, inject, Input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-google-maps',
+  selector: 'ui-google-maps',
   standalone: true,
   templateUrl: './google-maps.html'
 })

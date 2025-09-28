@@ -2,7 +2,7 @@ import { Component, inject, Input, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-teamup-calendar',
+  selector: 'ui-teamup-calendar',
   standalone: true,
   templateUrl: './teamup-calendar.html'
 })

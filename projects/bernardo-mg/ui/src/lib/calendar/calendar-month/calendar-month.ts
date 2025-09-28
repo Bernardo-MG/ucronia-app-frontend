@@ -8,7 +8,7 @@ import { Month } from '../models/month';
 
 
 @Component({
-  selector: 'shared-calendar-month',
+  selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
   imports: [CommonModule, JustifyCenterDirective, CalendarMonthViewComponent],
   providers: [
