@@ -1,18 +1,17 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { BookLending } from '@app/domain/library/book-lending';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { LibraryLendingService } from '../library-lending-service';
 import { finalize } from 'rxjs';
+import { LibraryLendingService } from '../library-lending-service';
 
 @Component({
   selector: 'app-library-admin-lending-list',
-  imports: [CardModule, RouterModule, TableModule, DatePipe],
+  imports: [CardModule, TableModule, DatePipe],
   templateUrl: './library-lending-list.html'
 })
 export class LibraryLendingList {

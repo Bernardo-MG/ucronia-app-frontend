@@ -7,7 +7,9 @@ describe('LibraryBookEditionForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryBookEditionForm]
+      imports: [
+        LibraryBookEditionForm
+      ]
     })
       .compileComponents();
 

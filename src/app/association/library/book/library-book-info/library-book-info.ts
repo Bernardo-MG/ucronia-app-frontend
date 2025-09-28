@@ -1,24 +1,17 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { BookType } from '@app/domain/library/book-type';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Language } from '@app/domain/library/language';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { MenuModule } from 'primeng/menu';
-import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
-import { TableModule } from 'primeng/table';
-import { ToastModule } from 'primeng/toast';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
 
 @Component({
   selector: 'assoc-library-book-info',
-  imports: [CardModule, RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ToastModule, LibraryBookLendings, DatePipe],
+  imports: [SkeletonModule, LibraryBookLendings, DatePipe],
   templateUrl: './library-book-info.html'
 })
 export class LibraryBookInfo {

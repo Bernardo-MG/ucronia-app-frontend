@@ -9,12 +9,11 @@ import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-book-lending-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, ButtonModule],
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {

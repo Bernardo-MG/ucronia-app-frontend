@@ -2,7 +2,6 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { BookTypeCrudService } from '../book-type-crud-service';
 import { LibraryBookTypeList } from './library-book-type-list';
@@ -22,8 +21,7 @@ describe('LibraryBookTypeList', () => {
         ConfirmationService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        provideRouter([])
+        provideHttpClientTesting()
       ]
     })
       .compileComponents();

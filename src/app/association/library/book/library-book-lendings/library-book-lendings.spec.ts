@@ -10,7 +10,9 @@ describe('LibraryBookLendings', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LibraryBookLendings]
+      imports: [
+        LibraryBookLendings
+      ]
     })
       .compileComponents();
 
