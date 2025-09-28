@@ -1,7 +1,6 @@
 
 import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { BookReportService } from '@app/association-admin/library-admin/report/book-report-service/book-report-service';
 import { Author } from '@app/domain/library/author';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
@@ -26,6 +25,7 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
+import { BookReportService } from '../../report/book-report-service/book-report-service';
 import { BookAdminService } from '../book-admin-service';
 import { LibraryAdminBookCreationForm } from '../library-admin-book-creation-form/library-admin-book-creation-form';
 import { LibraryAdminBookDonorsForm } from '../library-admin-book-donors-form/library-admin-book-donors-form';

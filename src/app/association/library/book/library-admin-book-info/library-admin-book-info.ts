@@ -2,7 +2,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { LibraryBookLendings } from '@app/association/library/library-book-lendings/library-book-lendings';
 import { BookType } from '@app/domain/library/book-type';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
@@ -15,6 +14,7 @@ import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
+import { LibraryBookLendings } from '../../library-book-lendings/library-book-lendings';
 
 @Component({
   selector: 'assoc-library-admin-book-info',

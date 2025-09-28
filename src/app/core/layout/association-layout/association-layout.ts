@@ -119,14 +119,6 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authContainer.hasPermission('library_book', 'view')) {
-      items.push(
-        {
-          label: 'Libros',
-          routerLink: '/association/admin/library/books',
-          icon: 'pi pi-book'
-        });
-    }
 
     return items;
   }
