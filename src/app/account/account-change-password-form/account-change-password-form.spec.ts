@@ -30,9 +30,9 @@ describe('AccountChangePasswordForm', () => {
   });
 
   it('should enable the login button when all the data is set', () => {
-    component.form.get('oldPassword').setValue('1234');
-    component.form.get('newPassword').setValue('abcd');
-    component.form.get('passwordRepeat').setValue('abcd');
+    component.form.get('oldPassword')?.setValue('1234');
+    component.form.get('newPassword')?.setValue('abcd');
+    component.form.get('passwordRepeat')?.setValue('abcd');
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');
@@ -40,9 +40,9 @@ describe('AccountChangePasswordForm', () => {
   });
 
   it('should disable the save button when the password does not match', () => {
-    component.form.get('oldPassword').setValue('1234');
-    component.form.get('newPassword').setValue('abcd');
-    component.form.get('passwordRepeat').setValue('abcde');
+    component.form.get('oldPassword')?.setValue('1234');
+    component.form.get('newPassword')?.setValue('abcd');
+    component.form.get('passwordRepeat')?.setValue('abcde');
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');
