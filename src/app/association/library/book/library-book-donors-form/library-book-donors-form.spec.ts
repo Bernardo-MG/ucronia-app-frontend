@@ -1,21 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LibraryBookInfo } from './transaction-info';
+import { LibraryBookDonorsForm } from './library-book-donors-form';
 
-describe('LibraryBookInfo', () => {
-  let component: LibraryBookInfo;
-  let fixture: ComponentFixture<LibraryBookInfo>;
+describe('LibraryBookDonorsForm', () => {
+  let component: LibraryBookDonorsForm;
+  let fixture: ComponentFixture<LibraryBookDonorsForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        LibraryBookInfo
-      ],
-      providers: [
-      ]
+      imports: [LibraryBookDonorsForm]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryBookInfo);
+    fixture = TestBed.createComponent(LibraryBookDonorsForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

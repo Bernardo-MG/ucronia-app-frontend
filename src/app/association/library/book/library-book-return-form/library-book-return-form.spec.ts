@@ -1,21 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LibraryBookInfo } from './transaction-info';
+import { LibraryBookReturnForm } from './library-book-return-form';
 
-describe('LibraryBookInfo', () => {
-  let component: LibraryBookInfo;
-  let fixture: ComponentFixture<LibraryBookInfo>;
+describe('LibraryBookReturnForm', () => {
+  let component: LibraryBookReturnForm;
+  let fixture: ComponentFixture<LibraryBookReturnForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        LibraryBookInfo
-      ],
-      providers: [
-      ]
+      imports: [LibraryBookReturnForm]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryBookInfo);
+    fixture = TestBed.createComponent(LibraryBookReturnForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

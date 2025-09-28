@@ -103,7 +103,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/data/library-admin-author-list/library-admin-author-list').then(m => m.LibraryAdminAuthorList),
+                    loadComponent: () => import('./association/library/data/library-author-list/library-author-list').then(m => m.LibraryAuthorList),
                     canActivate: [ResourceGuard("library_author", "view")]
                   }
                 ]
@@ -113,7 +113,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/book/library-admin-book-list/library-admin-book-list').then(m => m.LibraryAdminBookList),
+                    loadComponent: () => import('./association/library/book/library-book-list/library-book-list').then(m => m.LibraryBookList),
                     canActivate: [ResourceGuard("library_book", "view")]
                   }
                 ]
@@ -123,7 +123,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/data/library-admin-publisher-list/library-admin-publisher-list').then(m => m.LibraryAdminPublisherList),
+                    loadComponent: () => import('./association/library/data/library-publisher-list/library-publisher-list').then(m => m.LibraryPublisherList),
                     canActivate: [ResourceGuard("library_publisher", "view")]
                   }
                 ]
@@ -133,7 +133,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/data/library-admin-book-type-list/library-admin-book-type-list').then(m => m.LibraryAdminBookTypeList),
+                    loadComponent: () => import('./association/library/data/library-book-type-list/library-book-type-list').then(m => m.LibraryBookTypeList),
                     canActivate: [ResourceGuard("library_book_type", "view")]
                   }
                 ]
@@ -143,7 +143,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/data/library-admin-game-system-list/library-admin-game-system-list').then(m => m.LibraryAdminGameSystemList),
+                    loadComponent: () => import('./association/library/data/library-game-system-list/library-game-system-list').then(m => m.LibraryGameSystemList),
                     canActivate: [ResourceGuard("library_game_system", "view")]
                   }
                 ]
@@ -153,7 +153,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/lending/library-admin-lending-list/library-admin-lending-list').then(m => m.LibraryAdminLendingList),
+                    loadComponent: () => import('./association/library/lending/library-lending-list/library-lending-list').then(m => m.LibraryLendingList),
                     canActivate: [ResourceGuard("library_lending", "view")]
                   }
                 ]
