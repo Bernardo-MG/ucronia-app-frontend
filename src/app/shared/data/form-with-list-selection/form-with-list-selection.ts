@@ -41,7 +41,7 @@ export class FormWithListSelection {
 
 
     this.form = fb.group({
-      rows: [[], Validators.required]
+      rows: [[]]
     });
 
     this.formStatus = new FormStatus(this.form);
