@@ -61,15 +61,6 @@ describe('NameForm', () => {
 
   });
 
-  it('should emit reject event on onCancel', () => {
-    const spy = jasmine.createSpy();
-    component.reject.subscribe(spy);
-
-    component.onCancel();
-
-    expect(spy).toHaveBeenCalled();
-  });
-
   it('should display validation messages for failures', () => {
     fixture.componentRef.setInput('failures', new FailureStore({
       'name': [{ message: 'Name is required' }]

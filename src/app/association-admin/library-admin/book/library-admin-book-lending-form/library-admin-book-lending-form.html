@@ -4,7 +4,7 @@
   <!-- Lending date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="lendingDateInput" formControlName="lendingDate" [invalid]="isFieldInvalid('lendingDate')"
-      dateFormat="yy-mm-dd" />
+      dateFormat="yy-mm-dd" appendTo="body" />
     <label for="lendingDateInput">Fecha</label>
   </p-floatlabel>
   <div class="mb-2">
@@ -16,11 +16,5 @@
   </div>
 
   <!-- Save button -->
-  <div class="row">
-    <div class="col-sm-2 d-grid gap-2">
-      <!-- Save button -->
-      <p-button type="submit" label="Save" [loading]="waiting" [disabled]="!saveEnabled"
-        [attr.aria-disabled]="!saveEnabled" class="w-100" />
-    </div>
-  </div>
+  <p-button type="submit" name="Guardar" [loading]="loading()">Guardar</p-button>
 </form>

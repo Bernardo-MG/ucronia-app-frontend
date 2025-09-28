@@ -20,7 +20,7 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
@@ -36,7 +36,7 @@ import { LibraryAdminBookReturnForm } from '../library-admin-book-return-form/li
 
 @Component({
   selector: 'assoc-library-admin-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DrawerModule, LibraryAdminBookEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLending, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
+  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, LibraryAdminBookEditionForm, LibraryAdminBookDonorsForm, LibraryAdminBookLending, LibraryAdminBookReturnForm, LibraryAdminBookInfo, FormWithListSelection, FormWithSelection, LibraryAdminBookCreationForm],
   templateUrl: './library-admin-book-list.html'
 })
 export class LibraryAdminBookList implements OnInit {
@@ -304,14 +304,7 @@ export class LibraryAdminBookList implements OnInit {
     } else {
       book = this.service.updateFictionBookNew(toSave.number, toSave);
     }
-    book.subscribe({
-      next: response => {
-        this.interceptSave(response);
-      },
-      error: error => {
-        this.interceptError(error);
-      }
-    });
+    this.mutate(() => book);
   }
 
   public onSetAuthors(authors: Author[]) {
@@ -427,15 +420,11 @@ export class LibraryAdminBookList implements OnInit {
   }
 
   public onLend(toSave: BookLent) {
-    this.service.lend(toSave).subscribe();
+    this.mutate(() => this.service.lend(toSave));
   }
 
   public onReturn(toSave: BookReturned) {
-    this.service.return(toSave).subscribe();
-  }
-
-  public onCancel(): void {
-    this.editing = false;
+    this.mutate(() => this.service.return(toSave));
   }
 
   protected interceptSave(response: FictionBook | GameBook) {

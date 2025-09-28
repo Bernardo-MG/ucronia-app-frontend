@@ -110,12 +110,10 @@ export class FeeList implements OnInit {
   }
 
   public onPay(data: FeePayment): void {
-    this.loading = true;
     this.mutate(() => this.service.pay(data));
   }
 
   public onCreateUnpaid(data: FeeCreation): void {
-    this.loading = true;
     this.mutate(() => this.service.create(data));
   }
 
