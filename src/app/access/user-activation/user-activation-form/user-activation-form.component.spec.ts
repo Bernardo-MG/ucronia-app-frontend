@@ -87,7 +87,7 @@ describe('UserActivationForm', () => {
     it('should disable the form button when the form is valid but it is waiting', () => {
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('password');
-      component.waiting = true;
+      fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('form button');
@@ -97,7 +97,7 @@ describe('UserActivationForm', () => {
     it('should disable the form button when the form is invalid and waiting', () => {
       component.form.get('password')?.setValue('');
       component.form.get('confirmPassword')?.setValue('');
-      component.waiting = true;
+      fixture.componentRef.setInput('loading', true);
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('form button');
