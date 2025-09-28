@@ -1,3 +1,6 @@
+<div class="mb-2">
+  <p-select [(ngModel)]="kind" [options]="options" optionLabel="name" optionValue="value" placeholder="Tipo" />
+</div>
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <!-- Title -->
   <div class="row mb-2">
@@ -57,7 +60,7 @@
   </div>
   <!-- Language -->
   <p-select [options]="languages" [invalid]="isFieldInvalid('language')" formControlName="language"
-    optionLabel="name" optionValue="code" placeholder="Idioma" />
+    optionLabel="name" optionValue="code" placeholder="Idioma" appendTo="body" />
   <div class="mb-2">
     @for (failure of failures().getFailures('language'); track failure) {
       <p-message severity="error" size="small" variant="simple">

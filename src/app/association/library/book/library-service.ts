@@ -99,7 +99,7 @@ export class LibraryService {
       .read();
   }
 
-  public createFictionBook(data: FictionBook): Observable<FictionBook> {
+  public createFictionBook(data: BookInfo): Observable<FictionBook> {
     return this.fictionBookClient
       .create<SimpleResponse<FictionBook>>(data)
       .pipe(map(r => r.content));

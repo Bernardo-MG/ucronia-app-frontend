@@ -1,9 +1,8 @@
 
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookInfo } from '@app/domain/library/book-info';
 import { Language } from '@app/domain/library/language';
-import { Member } from '@app/domain/members/member';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -24,24 +23,26 @@ export class LibraryBookCreationForm implements OnChanges {
 
   public readonly failures = input(new FailureStore());
 
-  @Input() public set member(value: Member) {
-    this.form.get('member')?.setValue(value.number);
-    this.memberName = value.name.fullName;
-  }
-
-  public readonly save = output<BookInfo>();
+  public readonly save = output<{ book: BookInfo, kind: 'fiction' | 'game' }>();
 
   public formStatus: FormStatus;
-
-  public memberName = "";
 
   public form: FormGroup;
 
   public readonly languages: Language[] = [];
 
+  public options: { name: string, value: string }[] = [];
+
+  public kind: 'fiction' | 'game' = 'game';
+
   constructor() {
     const fb = inject(FormBuilder);
     const config = inject(LibraryConfig);
+
+    this.options = [
+      { name: 'Juego', value: 'game' },
+      { name: 'Ficción', value: 'fiction' }
+    ];
 
     this.languages = config.getLanguages();
 
@@ -70,7 +71,7 @@ export class LibraryBookCreationForm implements OnChanges {
   public onSave() {
     if (this.form.valid) {
       // Valid form, can emit data
-      this.save.emit(this.form.value);
+      this.save.emit({ book: this.form.value, kind: this.kind });
     }
   }
 

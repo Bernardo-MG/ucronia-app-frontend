@@ -33,6 +33,7 @@ import { LibraryBookInfo } from '../library-book-info/library-book-info';
 import { LibraryBookLending } from '../library-book-lending/library-book-lending';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { LibraryService } from '../library-service';
+import { BookInfo } from '@app/domain/library/book-info';
 
 @Component({
   selector: 'assoc-library-book-list',
@@ -219,12 +220,12 @@ export class LibraryBookList implements OnInit {
     }
   }
 
-  public onCreate(toCreate: any): void {
+  public onCreate(toCreate: { book: BookInfo, kind: 'fiction' | 'game' }): void {
     this.mutate(() => {
-      if (this.source === 'game') {
-        return this.service.createGameBook(toCreate);
+      if (toCreate.kind === 'game') {
+        return this.service.createGameBook(toCreate.book);
       } else {
-        return this.service.createFictionBook(toCreate);
+        return this.service.createFictionBook(toCreate.book);
       }
     });
   }
