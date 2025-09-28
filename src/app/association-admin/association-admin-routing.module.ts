@@ -13,7 +13,7 @@ const routes: Routes = [
       },
       {
         path: 'library',
-        canActivate: [ResourceGuard("library_admin", "view")],
+        canActivate: [ResourceGuard("library", "view")],
         children: [
           {
             path: '',

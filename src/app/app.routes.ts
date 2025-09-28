@@ -68,7 +68,49 @@ export const routes: Routes = [
         // Association
         path: 'association',
         canActivate: [LoggedInGuard],
-        loadChildren: () => import('./association/association.module').then(m => m.AssociationModule)
+        children: [
+          {
+            path: '',
+            redirectTo: 'activity',
+            pathMatch: 'prefix'
+          },
+          {
+            path: 'activity',
+            canActivate: [ResourceGuard("activity_calendar", "view")],
+            loadComponent: () => import('./association/activity-calendar/activity-calendar/activity-calendar').then(m => m.ActivityCalendar)
+          },
+          {
+            path: 'members',
+            canActivate: [ResourceGuard("member", "view")],
+            loadComponent: () => import('./association/members/member-list/member-list').then(m => m.MemberList)
+          },
+          {
+            path: 'myFees',
+            canActivate: [ResourceGuard("my_fees", "view")],
+            loadComponent: () => import('./association/my-fees/my-fees-list/my-fees-list').then(m => m.MyFeesList)
+          },
+          {
+            path: 'library',
+            canActivate: [ResourceGuard("library", "view")],
+            children: [
+              {
+                path: '',
+                loadComponent: () => import('./association/library/library-list/library-list').then(m => m.LibraryList),
+                canActivate: [ResourceGuard("library", "view")]
+              },
+              {
+                path: 'games/:index',
+                loadComponent: () => import('./association/library/library-game-book-info/library-game-book-info').then(m => m.LibraryGameBookInfo),
+                canActivate: [ResourceGuard("library_book", "read")]
+              },
+              {
+                path: 'fiction/:index',
+                loadComponent: () => import('./association/library/library-fiction-book-info/library-fiction-book-info').then(m => m.LibraryFictionBookInfo),
+                canActivate: [ResourceGuard("library_book", "read")]
+              }
+            ]
+          }
+        ]
       },
       {
         // Security
