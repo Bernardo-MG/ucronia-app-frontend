@@ -1,8 +1,0 @@
-<div class="input-group">
-  <span class="input-group-text" id="basic-addon1">page_size</span>
-  <select class="form-select" id="pageSize" [disabled]="disabled" (change)="onSelect($event.target)">
-    @for (s of sizes; track s) {
-      <option value="{{s}}" [selected]="s === selected">{{s}}</option>
-    }
-  </select>
-</div>
