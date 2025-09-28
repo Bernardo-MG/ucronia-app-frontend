@@ -1,9 +1,0 @@
-<div uiJustifyBetween>
-  <!-- Save button -->
-  <p-button type="submit" name="Save" class="btn btn-primary" [loading]="waiting()" [disabled]="saveDisabled()"
-  [attr.aria-disabled]="saveDisabled()">Guardar</p-button>
-  <!-- Cancel button -->
-  @if (cancellable()) {
-    <p-button type="button" class="btn btn-warning" [disabled]="cancelDisabled()" name="Cancel" (click)="reject.emit()">Cancelar</p-button>
-  }
-</div>
