@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { Fee } from '@app/domain/fees/fee';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -9,7 +9,7 @@ import { MyFeesService } from '../my-fees-service';
 
 @Component({
   selector: 'app-my-fees-list',
-  imports: [CommonModule, CardModule, TableModule],
+  imports: [CommonModule, CardModule, TableModule, DatePipe],
   templateUrl: './my-fees-list.html'
 })
 export class MyFeesList implements OnInit {
