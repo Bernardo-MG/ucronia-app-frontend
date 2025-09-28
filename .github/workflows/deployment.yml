@@ -22,7 +22,7 @@ jobs:
     - name: Install Angular CLI
       run: npm install -g @angular/cli
     - name: Build libraries
-      run: npm run build-libs
+      run: npm run build-libs-production
     - name: Build
       run: npm run build-production
     - uses: FirebaseExtended/action-hosting-deploy@v0
