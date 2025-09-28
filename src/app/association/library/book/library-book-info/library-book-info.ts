@@ -14,7 +14,7 @@ import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { LibraryBookLendings } from '../../library-book-lendings/library-book-lendings';
+import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
 
 @Component({
   selector: 'assoc-library-book-info',

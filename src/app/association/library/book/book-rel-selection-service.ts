@@ -13,7 +13,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class BookRelationshipSelection {
+export class BookRelationshipSelectionService {
 
   private readonly authorClient;
 

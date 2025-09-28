@@ -33,7 +33,7 @@ export class LibraryBookEditionForm implements OnChanges {
   public formStatus: FormStatus;
 
   public form: FormGroup;
-  
+
   public readonly languages: Language[] = [];
 
   public view = 'form';

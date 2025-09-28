@@ -41,7 +41,7 @@ export class LibraryBookLendingForm implements OnChanges {
   public formStatus: FormStatus;
 
   public form: FormGroup;
-  
+
   public readonly goToPersonPage = output<number>();
 
   public readonly goToBookPage = output<number>();

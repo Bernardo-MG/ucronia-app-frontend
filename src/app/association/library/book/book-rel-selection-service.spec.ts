@@ -1,22 +1,22 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BookRelationshipSelection } from './book-rel-selection';
+import { BookRelationshipSelectionService } from './book-rel-selection-service';
 
-describe('BookRelationshipSelection', () => {
-  let service: BookRelationshipSelection;
+describe('BookRelationshipSelectionService', () => {
+  let service: BookRelationshipSelectionService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        BookRelationshipSelection,
+        BookRelationshipSelectionService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
 
-    service = TestBed.inject(BookRelationshipSelection);
+    service = TestBed.inject(BookRelationshipSelectionService);
   });
 
   it('should be created', () => {

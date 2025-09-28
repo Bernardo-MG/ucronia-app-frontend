@@ -14,8 +14,8 @@
               <assoc-member-status-select [disabled]="waiting()" (changeStatus)="status = $event" />
             </div>
           </div>
-          <shared-selection-list heading="Socio" [getSelection]="onGetSelection.bind(this)" (choose)="onSelectMember($event)"
-            [nameRenderer]="nameRenderer" />
+          <shared-selection-list heading="Socio" [getSelection]="onGetSelection.bind(this)"
+            (choose)="onSelectMember($event)" [nameRenderer]="nameRenderer" />
         </div>
       </ng-template>
     </p-step-panel>
@@ -27,8 +27,8 @@
         <!-- Lend book form -->
         <p-button icon="pi pi-step-backward" severity="secondary" (click)="onReturnToMembers()" aria-label="Atrás"
           rounded text />
-        <assoc-library-book-lending-form [loading]="waiting()" [failures]="failures()"
-          [borrower]="member" [book]="book()" (save)="save.emit($event)" />
+        <assoc-library-book-lending-form [loading]="waiting()" [failures]="failures()" [borrower]="member"
+          [book]="book()" (save)="save.emit($event)" />
       </ng-template>
     </p-step-panel>
   </p-step-item>
