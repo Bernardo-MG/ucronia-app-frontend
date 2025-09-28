@@ -20,18 +20,7 @@ const routes: Routes = [
       {
         path: 'members',
         canActivate: [ResourceGuard("member", "view")],
-        children: [
-          {
-            path: '',
-            loadComponent: () => import('./members/member-list/member-list').then(m => m.MemberList),
-            canActivate: [ResourceGuard("member", "view")]
-          },
-          {
-            path: ':number',
-            loadComponent: () => import('./members/member-info/member-info').then(m => m.MemberInfo),
-            canActivate: [ResourceGuard("member", "read")]
-          }
-        ]
+        loadComponent: () => import('./members/member-list/member-list').then(m => m.MemberList)
       },
       {
         path: 'myFees',
