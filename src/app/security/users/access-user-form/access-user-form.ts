@@ -4,13 +4,15 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus } from '@app/core/form/form-status/form-status';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { User } from '@bernardo-mg/authentication';
-import { InputFailureFeedbackComponent, InvalidFieldDirective } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputFailureFeedbackComponent, InvalidFieldDirective],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
   templateUrl: './access-user-form.html'
 })
 export class AccessUserForm implements OnChanges {
