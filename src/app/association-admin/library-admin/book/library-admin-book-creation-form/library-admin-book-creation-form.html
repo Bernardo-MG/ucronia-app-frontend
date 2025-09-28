@@ -65,6 +65,8 @@
       </p-message>
     }
   </div>
-  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()" />
+
+  <!-- Save button -->
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

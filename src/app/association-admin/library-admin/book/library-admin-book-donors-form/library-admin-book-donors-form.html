@@ -3,7 +3,7 @@
     <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
       <!-- Donation date -->
       <p-floatlabel variant="in">
-        <p-datepicker dateFormat="yy-mm-dd" [invalid]="isFieldInvalid('date')" id="dateInput" formControlName="date" />
+        <p-datepicker dateFormat="yy-mm-dd" [invalid]="isFieldInvalid('date')" id="dateInput" formControlName="date" appendTo="body" />
         <label for="dateInput">Fecha de donación</label>
       </p-floatlabel>
       <div class="mb-2">
@@ -41,11 +41,10 @@
             </tbody>
           </table>
         </div>
-        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartSelectingDonor()" [disabled]="!formEnabled"
-          aria-label="Nueva transacción" [attr.aria-disabled]="!formEnabled" rounded text />
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartSelectingDonor()" [disabled]="!formStatus.formEnabled"
+          aria-label="Nueva transacción" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
       </div>
-      <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-        [cancellable]="cancellable" (reject)="onCancel()" />
+      <p-button type="submit" name="Guardar" [loading]="loading()">Guardar</p-button>
     </form>
   }
   @case (true) {

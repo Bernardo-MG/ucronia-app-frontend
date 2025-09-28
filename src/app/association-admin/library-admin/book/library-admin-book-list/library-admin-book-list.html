@@ -53,63 +53,79 @@
     </ng-template>
   </p-table>
 </p-panel>
-<p-drawer [(visible)]="showing" position="full">
+<p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <assoc-library-admin-book-info [book]="selectedData" />
-</p-drawer>
-<p-drawer [(visible)]="editing" position="right">
-  @switch (view) {
+</p-dialog>
+@switch (view) {
   @case ('details') {
-  <ng-template #header>
-    <h2>
-      #{{ selectedData.number }}
-      @if (selectedData.title.supertitle) {
-      <sup>{{selectedData.title.supertitle}}</sup>
-      }
-      {{selectedData.title.title}}
-      @if (selectedData.title.subtitle) {
-      <sub>{{selectedData.title.subtitle}}</sub>
-      }
-    </h2>
-  </ng-template>
-  <assoc-library-admin-book-edition-form [data]="selectedData" [waiting]="loading" [failures]="failures"
-    [readonly]="false" [cancellable]="true" (save)="onSaveBook($event)" (reject)="onCancel()" />
+  <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <ng-template #header>
+      <h2>
+        #{{ selectedData.number }}
+        @if (selectedData.title.supertitle) {
+        <sup>{{selectedData.title.supertitle}}</sup>
+        }
+        {{selectedData.title.title}}
+        @if (selectedData.title.subtitle) {
+        <sub>{{selectedData.title.subtitle}}</sub>
+        }
+      </h2>
+    </ng-template>
+    <assoc-library-admin-book-edition-form [data]="selectedData" [loading]="loading" [failures]="failures"
+      (save)="onSaveBook($event)" />
+  </p-dialog>
   }
   @case ('creation') {
-  <assoc-library-admin-book-creation-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
+  <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <assoc-library-admin-book-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+  </p-dialog>
   }
   @case ('donors') {
-  <assoc-library-admin-book-donors-form [data]="selectedData.donation" [waiting]="loading" [failures]="failures"
-    [getSelection]="service.getDonors.bind(service)" [readonly]="false" [cancellable]="true"
-    (save)="onSetDonation($event)" (reject)="onCancel()" />
+  <p-dialog header="Donantes" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <assoc-library-admin-book-donors-form [data]="selectedData.donation" [loading]="loading" [failures]="failures"
+      [getSelection]="service.getDonors.bind(service)"
+      (save)="onSetDonation($event)" />
+  </p-dialog>
   }
   @case ('authors') {
-  <h2>Autores</h2>
-  <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
-    (save)="onSetAuthors($event)" (reject)="onCancel()" />
+  <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <h2>Autores</h2>
+    <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
+      (save)="onSetAuthors($event)" />
+  </p-dialog>
   }
   @case ('gameSystem') {
-  <h2>Sistema</h2>
-  <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
-    (save)="onSetGameSystem($event)" (reject)="onCancel()" />
+  <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <h2>Sistema</h2>
+    <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
+      (save)="onSetGameSystem($event)" />
+  </p-dialog>
   }
   @case ('bookType') {
-  <h2>Tipo</h2>
-  <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
-    (save)="onSetBookType($event)" (reject)="onCancel()" />
+  <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <h2>Tipo</h2>
+    <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
+      (save)="onSetBookType($event)" />
+  </p-dialog>
   }
   @case ('publishers') {
-  <h2>Editores</h2>
-  <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
-    (save)="onSetPublishers($event)" (reject)="onCancel()" />
+  <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <h2>Editores</h2>
+    <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
+      (save)="onSetPublishers($event)" />
+  </p-dialog>
   }
   @case ('lendings') {
-  @if(selectedData.lent) {
-  <assoc-library-admin-book-return-form [waiting]="loading" [failures]="failures" [borrower]="borrower"
-    [book]="selectedData" (save)="onReturn($event)" />
-  } @else {
-  <assoc-library-admin-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
-    (save)="onLend($event)" (getMemberSelection)="service.getMembers.bind(service)" />
+    @if(selectedData.lent) {
+      <p-dialog header="Devolver libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+        <assoc-library-admin-book-return-form [loading]="loading" [failures]="failures" [borrower]="borrower"
+          [book]="selectedData" (save)="onReturn($event)" />
+      </p-dialog>
+    } @else {
+      <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+        <assoc-library-admin-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
+          [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
+      </p-dialog>
+    }
   }
-  }
-  }
-</p-drawer>
+}
