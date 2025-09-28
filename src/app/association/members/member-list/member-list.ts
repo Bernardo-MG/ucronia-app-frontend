@@ -3,13 +3,16 @@ import { Router, RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/member-service';
 import { Member } from '@app/domain/members/member';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
+import { MemberInfo } from '../member-info/member-info';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [RouterModule, CardModule, TableModule],
+  imports: [RouterModule, CardModule, TableModule, DialogModule, ButtonModule, MemberInfo],
   templateUrl: './member-list.html'
 })
 export class MemberList implements OnInit {
@@ -32,6 +35,7 @@ export class MemberList implements OnInit {
    * Loading flag.
    */
   public loading = false;
+  public showing = false;
 
   public ngOnInit(): void {
     this.load(0);
@@ -57,8 +61,10 @@ export class MemberList implements OnInit {
     this.load(page);
   }
 
-  public onSelectRow() {
-    this.router.navigate([`/association/members/${this.selectedData.number}`]);
+  public onShowInfo(member: Member) {
+    this.service.getOne(member.number)
+      .subscribe(fee => this.selectedData = fee);
+    this.showing = true;
   }
 
   private load(page: number) {

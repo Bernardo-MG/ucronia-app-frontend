@@ -1,49 +1,17 @@
 
-import { Component, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { MemberService } from '@app/association/members/member-service';
+import { Component, input } from '@angular/core';
 import { Member } from '@app/domain/members/member';
-import { ResponsiveShortColumnsDirective } from '@bernardo-mg/ui';
-import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize } from 'rxjs';
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [CardModule, SkeletonModule, ResponsiveShortColumnsDirective],
+  imports: [SkeletonModule],
   templateUrl: './member-info.html'
 })
 export class MemberInfo {
 
-  private readonly service = inject(MemberService);
+  public data = input(new Member());
 
-  public data = new Member();
-
-  public view: string = 'details';
-
-  public loading = false;
-
-  constructor() {
-    const route = inject(ActivatedRoute);
-
-    // Get id
-    route.paramMap.subscribe(params => {
-      const numParam = params.get('number');
-      if (numParam) {
-        this.load(Number(numParam));
-      }
-    });
-  }
-
-  public onChangeView(newView: string) {
-    this.view = newView;
-  }
-
-  private load(id: number): void {
-    this.loading = true;
-    this.service.getOne(id)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
-  }
+  public loading = input(false);
 
 }
