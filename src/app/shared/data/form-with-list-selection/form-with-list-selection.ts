@@ -1,8 +1,8 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormStatus } from '@app/core/form/form-status/form-status';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
+import { FormStatus } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';

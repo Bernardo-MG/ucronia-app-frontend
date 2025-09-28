@@ -1,11 +1,11 @@
 
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormStatus } from '@app/core/form/form-status/form-status';
 import { Fee } from '@app/domain/fees/fee';
 import { BookInfo } from '@app/domain/library/book-info';
 import { BookReturned } from '@app/domain/library/book-returned';
 import { Member } from '@app/domain/members/member';
+import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';

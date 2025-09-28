@@ -1,11 +1,11 @@
 
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormStatus } from '@app/core/form/form-status/form-status';
 import { BookInfo } from '@app/domain/library/book-info';
 import { Language } from '@app/domain/library/language';
 import { Member } from '@app/domain/members/member';
 import { isbnValidator } from '@app/shared/validator/isbn.validator';
+import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';

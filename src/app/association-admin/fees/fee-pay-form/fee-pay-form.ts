@@ -1,9 +1,9 @@
 
 import { Component, Input, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FormStatus } from '@app/core/form/form-status/form-status';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
+import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
