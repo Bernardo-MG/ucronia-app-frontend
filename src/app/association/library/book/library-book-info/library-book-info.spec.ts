@@ -3,7 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { BookAdminService } from '../book-admin-service';
+import { LibraryService } from '../library-service';
 import { LibraryBookInfo } from './library-book-info';
 
 describe('LibraryBookInfo', () => {
@@ -16,7 +16,7 @@ describe('LibraryBookInfo', () => {
         LibraryBookInfo
       ],
       providers: [
-        BookAdminService,
+        LibraryService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),

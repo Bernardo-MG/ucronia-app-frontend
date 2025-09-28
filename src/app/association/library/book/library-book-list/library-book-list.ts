@@ -26,7 +26,7 @@ import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../../report/book-report-service/book-report-service';
-import { BookAdminService } from '../book-admin-service';
+import { LibraryService } from '../library-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -43,7 +43,7 @@ export class LibraryBookList implements OnInit {
 
   private readonly router = inject(Router);
 
-  public readonly service = inject(BookAdminService);
+  public readonly service = inject(LibraryService);
 
   private readonly reportService = inject(BookReportService);
 

@@ -1,10 +1,10 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BookLendingService } from './book-lending-service';
+import { LibraryLendingService } from './library-lending-service';
 
-describe('BookLendingService', () => {
-  let service: BookLendingService;
+describe('LibraryLendingService', () => {
+  let service: LibraryLendingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -14,7 +14,7 @@ describe('BookLendingService', () => {
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(BookLendingService);
+    service = TestBed.inject(LibraryLendingService);
   });
 
   it('should be created', () => {

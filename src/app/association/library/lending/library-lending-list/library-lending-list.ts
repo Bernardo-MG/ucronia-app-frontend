@@ -7,7 +7,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { BookLendingService } from '../book-lending-service';
+import { LibraryLendingService } from '../library-lending-service';
 import { finalize } from 'rxjs';
 
 @Component({
@@ -17,7 +17,7 @@ import { finalize } from 'rxjs';
 })
 export class LibraryLendingList {
 
-  private readonly service = inject(BookLendingService);
+  private readonly service = inject(LibraryLendingService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;

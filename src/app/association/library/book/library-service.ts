@@ -19,7 +19,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class BookAdminService {
+export class LibraryService {
 
   private readonly gameBookClient;
 

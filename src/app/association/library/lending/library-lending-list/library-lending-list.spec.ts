@@ -2,7 +2,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { BookLendingService } from '../book-lending-service';
+import { LibraryLendingService } from '../library-lending-service';
 import { LibraryLendingList } from './library-lending-list';
 
 describe('LibraryLendingList', () => {
@@ -15,7 +15,7 @@ describe('LibraryLendingList', () => {
         LibraryLendingList
       ],
       providers: [
-        BookLendingService,
+        LibraryLendingService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])

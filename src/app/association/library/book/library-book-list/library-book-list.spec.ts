@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { BookAdminService } from '../book-admin-service';
+import { LibraryService } from '../library-service';
 import { LibraryBookList } from './library-book-list';
 
 describe('LibraryBookList', () => {
@@ -17,7 +17,7 @@ describe('LibraryBookList', () => {
         LibraryBookList
       ],
       providers: [
-        BookAdminService,
+        LibraryService,
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
