@@ -4,8 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { BookInfo } from '@app/domain/library/book-info';
 import { Language } from '@app/domain/library/language';
 import { Member } from '@app/domain/members/member';
-import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import { FormStatus } from '@bernardo-mg/form';
+import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';

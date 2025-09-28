@@ -3,8 +3,7 @@ import { Component, inject, input, Input, OnChanges, output, SimpleChanges } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BookInfo } from '@app/domain/library/book-info';
 import { Language } from '@app/domain/library/language';
-import { isbnValidator } from '@app/shared/validator/isbn.validator';
-import { FormStatus } from '@bernardo-mg/form';
+import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
