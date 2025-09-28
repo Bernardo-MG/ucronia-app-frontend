@@ -61,21 +61,21 @@
     </ng-template>
   </p-table>
 </p-panel>
-<p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+<p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
   <assoc-library-book-info [book]="selectedData" />
 </p-dialog>
 @switch (view) {
   @case ('details') {
-  <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+  <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <ng-template #header>
       <h2>
         #{{ selectedData.number }}
         @if (selectedData.title.supertitle) {
-        <sup>{{selectedData.title.supertitle}}</sup>
+          <sup>{{selectedData.title.supertitle}}</sup>
         }
         {{selectedData.title.title}}
         @if (selectedData.title.subtitle) {
-        <sub>{{selectedData.title.subtitle}}</sub>
+          <sub>{{selectedData.title.subtitle}}</sub>
         }
       </h2>
     </ng-template>
@@ -84,7 +84,7 @@
   </p-dialog>
   }
   @case ('creation') {
-  <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+  <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-library-book-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
   }
@@ -97,28 +97,24 @@
   }
   @case ('authors') {
   <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-    <h2>Autores</h2>
     <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
       (save)="onSetAuthors($event)" />
   </p-dialog>
   }
   @case ('gameSystem') {
   <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-    <h2>Sistema</h2>
     <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
       (save)="onSetGameSystem($event)" />
   </p-dialog>
   }
   @case ('bookType') {
   <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-    <h2>Tipo</h2>
     <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
       (save)="onSetBookType($event)" />
   </p-dialog>
   }
   @case ('publishers') {
   <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-    <h2>Editores</h2>
     <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
       (save)="onSetPublishers($event)" />
   </p-dialog>
@@ -130,7 +126,7 @@
           [book]="selectedData" (save)="onReturn($event)" />
       </p-dialog>
     } @else {
-      <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
         <assoc-library-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
           [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
       </p-dialog>

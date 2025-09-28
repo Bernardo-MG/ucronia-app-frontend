@@ -20,8 +20,6 @@ export class FormWithSelection {
 
   public readonly save = output<NameNumber>();
 
-  public readonly reject = output<void>();
-
   public readonly formStatus;
 
   public selecting = false;
@@ -64,11 +62,6 @@ export class FormWithSelection {
       // Valid form, can emit data
       this.save.emit((this.form as any).value as NameNumber);
     }
-  }
-
-  public onCancel() {
-    // TODO: The 'emit' function requires a mandatory void argument
-    this.reject.emit();
   }
 
 }

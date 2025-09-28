@@ -14,9 +14,6 @@
         <!-- Save button -->
         <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled"
           [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
-        <!-- Cancel button -->
-        <p-button type="button" severity="danger" name="Cancelar" [disabled]="!formStatus.cancelEnabled"
-          [attr.aria-disabled]="!formStatus.cancelEnabled" (click)="onCancel()">Cancelar</p-button>
       </div>
     </form>
   }
