@@ -6,6 +6,7 @@ export * from './lib/clients/angular-crud-client-provider';
 export * from './lib/clients/angular-crud-client';
 export * from './lib/clients/crud-client';
 export * from './lib/interceptors/angular-error-request-interceptor';
+export * from './lib/interceptors/date-interceptor';
 export * from './lib/params/pagination-params';
 export * from './lib/params/param-loader';
 export * from './lib/params/sorting-params';
