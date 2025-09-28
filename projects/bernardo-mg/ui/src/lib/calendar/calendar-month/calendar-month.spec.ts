@@ -1,6 +1,6 @@
 import { SimpleChange } from '@angular/core';
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Month } from '../../models/month';
+import { Month } from '../models/month';
 import { CalendarMonth } from './calendar-month';
 
 describe('CalendarMonth', () => {

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-calendar-month';
 import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
-import { Month } from '@app/shared/calendar/models/month';
+import { Month } from '@bernardo-mg/ui';
 import { Colors } from '@app/shared/utils/colors';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { CalendarEvent } from 'angular-calendar';
