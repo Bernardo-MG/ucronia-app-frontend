@@ -28,18 +28,20 @@
     </ng-template>
   </p-table>
 </p-panel>
-<p-drawer [(visible)]="showing" position="full">
+<p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <access-role-info [data]="selectedData" />
-</p-drawer>
-<p-drawer [(visible)]="editing" position="right">
-  @switch (view) {
-    @case ('creation') {
-      <access-role-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
-    }
-    @case ('permissions') {
+</p-dialog>
+@switch (view) {
+  @case ('creation') {
+    <p-dialog header="Crear usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-role-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
+  }
+  @case ('permissions') {
+    <p-dialog header="Crear usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <access-role-change-permission [rolePermissions]="selectedData.permissions"
         [getSelection]="getRolePermissionsSelection.bind(this)" (addPermission)="onAddRolePermission($event)"
         (removePermission)="onRemoveRolePermission($event)" />
-    }
+    </p-dialog>
   }
-</p-drawer>
+}

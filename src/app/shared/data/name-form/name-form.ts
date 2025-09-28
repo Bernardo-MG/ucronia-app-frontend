@@ -3,7 +3,6 @@ import { Component, inject, input, Input, OnChanges, output, SimpleChanges } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@app/core/form/form-status/form-status';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
-import { Member } from '@app/domain/members/member';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';

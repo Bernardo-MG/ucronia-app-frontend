@@ -28,26 +28,32 @@
     </ng-template>
   </p-table>
 </p-panel>
-<p-drawer [(visible)]="showing" position="full">
+<p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <access-user-info [data]="selectedData" [loading]="loading" />
   <access-user-status [data]="selectedData" />
-</p-drawer>
-<p-drawer [(visible)]="showForm" [closable]="false" position="right">
-  @switch (view) {
-    @case ('creation') {
-      <access-user-form [waiting]="loading" [failures]="failures" (save)="onCreate($event)" />
-    }
-    @case ('edition') {
-      <access-user-form [create]="false" [waiting]="loading" [data]="selectedData" [failures]="failures"
-        [cancellable]="true" (save)="onUpdate($event)" (reject)="onCancel()" />
-    }
-    @case ('roles') {
+</p-dialog>
+@switch (view) {
+  @case ('creation') {
+    <p-dialog header="Crear usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-user-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
+  }
+  @case ('edition') {
+    <p-dialog header="Editar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
+        (save)="onUpdate($event)" (reject)="onCancel()" />
+    </p-dialog>
+  }
+  @case ('roles') {
+    <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)"
         (add)="onAddRole($event)" (remove)="onRemoveRole($event)" />
-    }
-    @case ('member') {
+    </p-dialog>
+  }
+  @case ('member') {
+    <p-dialog header="Editar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <access-user-member-editor [username]="selectedData.username" [getSelection]="onLoadMembers.bind(this)"
         [getMember]="onGetMembers.bind(this)" (selectMember)="onSelectMember($event)" />
-    }
+    </p-dialog>
   }
-</p-drawer>
+}

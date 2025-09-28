@@ -1,13 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <!-- Name -->
-  <div class="row mb-2">
-    <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
-    <div class="col-sm-10">
-      <input type="text" id="nameInput" formControlName="name" class="form-control" formInvalidField
-        [backendFailure]="failures().hasFailures('name')" aria-describedby="nameLabel">
-      <form-input-failure-feedback [failures]="failures().getFailures('name')" />
-    </div>
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="nameInput" formControlName="name" class="w-100" />
+    <label for="nameInput">Nombre</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('name'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
   </div>
-  <form-save-controls [waiting]="waiting" [saveDisabled]="!saveEnabled" [cancelDisabled]="!cancelEnabled"
-    [cancellable]="cancellable" (reject)="onCancel()" />
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>
