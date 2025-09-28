@@ -29,8 +29,7 @@
   </p-table>
 </p-panel>
 <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-  <access-user-info [data]="selectedData" [loading]="loading" />
-  <access-user-status [data]="selectedData" />
+  <access-user-info [data]="selectedData" [member]="member" [loading]="loading" />
 </p-dialog>
 @switch (view) {
   @case ('creation') {
@@ -53,7 +52,7 @@
   @case ('member') {
     <p-dialog header="Editar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <access-user-member-editor [username]="selectedData.username" [getSelection]="onLoadMembers.bind(this)"
-        [getMember]="onGetMembers.bind(this)" (selectMember)="onSelectMember($event)" />
+        [member]="member" (selectMember)="onSelectMember($event)" />
     </p-dialog>
   }
 }

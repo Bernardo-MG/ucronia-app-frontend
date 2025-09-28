@@ -11,28 +11,17 @@ import { AccessUserSelectMember } from '../access-user-select-member/access-user
   imports: [ButtonModule, AccessUserSelectMember],
   templateUrl: './access-user-member-editor.html'
 })
-export class AccessUserMemberEditor implements OnInit, OnChanges {
+export class AccessUserMemberEditor {
 
   public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Member>>>((page: number) => EMPTY);
   public readonly getMember = input<(username: string) => Observable<Member>>((username: string) => EMPTY);
   public readonly username = input('');
+  public readonly member = input(new Member());
   public readonly waitingMembersSelection = input(false);
 
   public readonly selectMember = output<Member>();
 
   public view: 'member' | 'select' = 'member';
-
-  public member = new Member();
-
-  public ngOnInit(): void {
-    this.getMember()(this.username()).subscribe(response => this.member = response);
-  }
-
-  public ngOnChanges({ username }: SimpleChanges): void {
-    if (username) {
-      this.getMember()(this.username()).subscribe(response => this.member = response);
-    }
-  }
 
   public onShowSelectMember() {
     this.view = "select";

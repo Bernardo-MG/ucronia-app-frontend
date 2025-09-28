@@ -31,3 +31,58 @@
     }
   </div>
 </div>
+<!-- Member -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Socio</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{member().name.fullName}}
+    }
+  </div>
+</div>
+<!-- Enabled -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Activo</div>
+  <div class="col-sm-9">
+    @if (data().enabled) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>
+<!-- Expired -->
+<div class="row">
+  <div class="col-sm-3 text-primary">No expirado</div>
+  <div class="col-sm-9">
+    @if (data().notExpired) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>
+<!-- Password expired -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Clave no expirada</div>
+  <div class="col-sm-9">
+    @if (data().passwordNotExpired) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>
+<!-- Locked -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Desbloqueado</div>
+  <div class="col-sm-9">
+    @if (data().notLocked) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>

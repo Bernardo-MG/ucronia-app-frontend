@@ -16,11 +16,10 @@ import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
 import { AccessUserService } from '../access-user-service';
-import { AccessUserStatus } from '../access-user-status/access-user-status';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserStatus, AccessUserRolesEditor, AccessUserMemberEditor],
+  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserRolesEditor, AccessUserMemberEditor],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -34,7 +33,6 @@ export class AccessList implements OnInit {
   public readonly createable;
   public readonly editable;
 
-
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {
@@ -44,6 +42,7 @@ export class AccessList implements OnInit {
   public data = new PaginatedResponse<User>();
 
   public selectedData = new User();
+  public member = new Member();
 
   /**
    * Loading flag.
@@ -90,7 +89,7 @@ export class AccessList implements OnInit {
     return this.service.getAvailableMembers(this.selectedData.username, page);
   }
 
-  public onGetMembers(username: string) {
+  public onGetMember(username: string) {
     return this.service.getMember(username);
   }
 
@@ -111,6 +110,7 @@ export class AccessList implements OnInit {
 
   public onShowInfo(user: User) {
     this.selectedData = user;
+    this.service.getMember(user.username).subscribe(member => this.member = member);
     this.showing = true;
   }
 
@@ -127,12 +127,12 @@ export class AccessList implements OnInit {
   }
 
   public onSelectMember(member: Member): void {
-    this.service.assignMember(this.selectedData.username, member)
-      .subscribe();
+    this.mutate(() => this.service.assignMember(this.selectedData.username, member));
   }
 
   public openEditionMenu(event: Event, user: User) {
     this.selectedData = user;
+    this.service.getMember(user.username).subscribe(member => this.member = member);
 
     this.editionMenuItems = [];
 
