@@ -11,7 +11,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
-import { BookAdminConfig } from '../book-admin-config/book-admin-config';
+import { LibraryConfig } from '../library-config';
 
 @Component({
   selector: 'assoc-library-book-creation-form',
@@ -41,7 +41,7 @@ export class LibraryBookCreationForm implements OnChanges {
 
   constructor() {
     const fb = inject(FormBuilder);
-    const config = inject(BookAdminConfig);
+    const config = inject(LibraryConfig);
 
     this.languages = config.getLanguages();
 

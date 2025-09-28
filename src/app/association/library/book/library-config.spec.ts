@@ -1,18 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { BookAdminConfig } from './book-admin-config';
+import { LibraryConfig } from './library-config';
 
-describe('BookAdminConfig', () => {
-  let service: BookAdminConfig;
+describe('LibraryConfig', () => {
+  let service: LibraryConfig;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        BookAdminConfig
+        LibraryConfig
       ]
     });
 
-    service = TestBed.inject(BookAdminConfig);
+    service = TestBed.inject(LibraryConfig);
   });
 
   it('should be created', () => {
