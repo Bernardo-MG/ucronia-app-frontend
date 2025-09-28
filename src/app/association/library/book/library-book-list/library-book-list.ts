@@ -227,7 +227,8 @@ export class LibraryBookList implements OnInit {
       } else {
         return this.service.createFictionBook(toCreate.book);
       }
-    });
+    },
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 }));
   }
 
   public onConfirmDelete(event: Event, number: number) {
@@ -307,7 +308,8 @@ export class LibraryBookList implements OnInit {
     } else {
       book = this.service.updateFictionBookNew(toSave.number, toSave);
     }
-    this.mutate(() => book);
+    this.mutate(() => book,
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 }));
   }
 
   public onSetAuthors(authors: Author[]) {
@@ -423,11 +425,13 @@ export class LibraryBookList implements OnInit {
   }
 
   public onLend(toSave: BookLent) {
-    this.mutate(() => this.service.lend(toSave));
+    this.mutate(() => this.service.lend(toSave),
+      () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 }));
   }
 
   public onReturn(toSave: BookReturned) {
-    this.mutate(() => this.service.return(toSave));
+    this.mutate(() => this.service.return(toSave),
+      () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 }));
   }
 
   protected interceptSave(response: FictionBook | GameBook) {
@@ -469,7 +473,7 @@ export class LibraryBookList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private mutate(action: () => Observable<any>) {
+  private mutate(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -478,6 +482,7 @@ export class LibraryBookList implements OnInit {
           this.failures.clear();
           this.view = 'none';
           this.load(this.data.page);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {
