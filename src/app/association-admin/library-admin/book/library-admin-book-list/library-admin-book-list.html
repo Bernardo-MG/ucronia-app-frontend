@@ -6,11 +6,15 @@
 </p-card>
 <p-panel>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-      [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+    @if (createable) {
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+        [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+    }
     <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
       [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
-    <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)" />
+    @if (dataMenuItems) {
+      <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
+    }
   </ng-template>
   <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
     (change)="onChangeSource($event)">
@@ -37,17 +41,21 @@
         <td>
           @if (book.lent) {
           <p-badge value="Prestado" severity="danger" />
-          }@else {
+          } @else {
           <p-badge value="Disponible" severity="success" />
           }
         </td>
         <td>
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
             (click)="onShowBook(book)" rounded text />
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-            [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, book)" rounded text />
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
-            [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
+          @if (editable) {
+            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, book)" rounded text />
+          }
+          @if (deletable) {
+            <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
+              [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
+          }
         </td>
       </tr>
     </ng-template>

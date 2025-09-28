@@ -84,6 +84,7 @@ export class LibraryAdminBookList implements OnInit {
 
   public readonly createable;
   public readonly editable;
+  public readonly deletable;
 
   public readonly fictionEditionMenuItems: MenuItem[] = [];
   public readonly gameEditionMenuItems: MenuItem[] = [];
@@ -107,6 +108,7 @@ export class LibraryAdminBookList implements OnInit {
     // Check permissions
     this.createable = authContainer.hasPermission("library_book", "create");
     this.editable = authContainer.hasPermission("library_book", "update");
+    this.deletable = authContainer.hasPermission("library_book", "delete");
 
     // Load data menu
     if (authContainer.hasPermission('library_author', 'view')) {
