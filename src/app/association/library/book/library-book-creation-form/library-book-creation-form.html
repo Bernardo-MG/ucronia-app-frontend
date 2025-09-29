@@ -1,5 +1,5 @@
 <div class="mb-2">
-  <p-select [(ngModel)]="kind" [options]="options" optionLabel="name" optionValue="value" placeholder="Tipo" />
+  <p-select [(ngModel)]="kind" [options]="options" optionLabel="name" optionValue="value" placeholder="Tipo" appendTo="body" />
 </div>
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <!-- Title -->
@@ -70,6 +70,6 @@
   </div>
 
   <!-- Save button -->
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

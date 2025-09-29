@@ -16,5 +16,6 @@
   </div>
 
   <!-- Save button -->
-  <p-button type="submit" name="Guardar" [loading]="loading()">Guardar</p-button>
+  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

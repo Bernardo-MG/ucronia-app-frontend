@@ -231,6 +231,29 @@ export class LibraryBookList implements OnInit {
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 }));
   }
 
+  private onDelete(toDelete: number): void {
+    this.mutate(() => {
+      if (this.source === 'game') {
+        return this.service.deleteGameBook(toDelete);
+      } else {
+        return this.service.deleteFictionBook(toDelete);
+      }
+    },
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos borrados', life: 3000 }));
+  }
+
+  private onUpdate(toSave: BookUpdate) {
+    this.loading = true;
+    let book: Observable<FictionBook | GameBook>;
+    if (this.source === 'game') {
+      book = this.service.updateGameBookNew(toSave.number, toSave);
+    } else {
+      book = this.service.updateFictionBookNew(toSave.number, toSave);
+    }
+    this.mutate(() => book,
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 }));
+  }
+
   public onConfirmDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
@@ -245,19 +268,7 @@ export class LibraryBookList implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => {
-        if (this.source === 'game') {
-          this.service.deleteGameBook(number).subscribe(r => {
-            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-            this.load(0);
-          });
-        } else {
-          this.service.deleteFictionBook(number).subscribe(r => {
-            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-            this.load(0);
-          });
-        }
-      }
+      accept: () => this.onDelete(number)
     });
   }
 
@@ -298,18 +309,6 @@ export class LibraryBookList implements OnInit {
   public onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
-  }
-
-  private onUpdate(toSave: BookUpdate) {
-    this.loading = true;
-    let book: Observable<FictionBook | GameBook>;
-    if (this.source === 'game') {
-      book = this.service.updateGameBookNew(toSave.number, toSave);
-    } else {
-      book = this.service.updateFictionBookNew(toSave.number, toSave);
-    }
-    this.mutate(() => book,
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 }));
   }
 
   public onSetAuthors(authors: Author[]) {
