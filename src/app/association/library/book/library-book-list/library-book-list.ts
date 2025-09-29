@@ -25,7 +25,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { catchError, EMPTY, finalize, Observable, of, throwError } from 'rxjs';
+import { catchError, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -303,16 +303,7 @@ export class LibraryBookList implements OnInit {
     this.loadingExcel = true;
     this.reportService.downloadExcelReport()
       .pipe(
-        finalize(() => this.loadingExcel = false),
-        catchError(err => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Fallo',
-            detail: 'Error en la petición: ' + err.message,
-            life: 3000
-          });
-          return EMPTY;
-        }))
+        finalize(() => this.loadingExcel = false))
       .subscribe();
   }
 
@@ -478,14 +469,16 @@ export class LibraryBookList implements OnInit {
       operation = this.service.getAllFictionBooks(page, this.sort);
     }
     operation
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
 
   private mutate(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false))
       .subscribe({
         next: () => {
           this.failures.clear();
