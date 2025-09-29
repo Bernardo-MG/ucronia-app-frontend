@@ -116,28 +116,28 @@ export class LibraryBookList implements OnInit {
       this.dataMenuItems.push(
         {
           label: 'Autores',
-          command: () => this.router.navigate(['/association/admin/library/authors'])
+          command: () => this.router.navigate(['/association/library/authors'])
         });
     }
     if (authContainer.hasPermission('library_publisher', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Editores',
-          command: () => this.router.navigate(['/association/admin/library/publishers'])
+          command: () => this.router.navigate(['/association/library/publishers'])
         });
     }
     if (authContainer.hasPermission('library_book_type', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Tipos',
-          command: () => this.router.navigate(['/association/admin/library/types'])
+          command: () => this.router.navigate(['/association/library/types'])
         });
     }
     if (authContainer.hasPermission('library_game_system', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Sistemas',
-          command: () => this.router.navigate(['/association/admin/library/systems'])
+          command: () => this.router.navigate(['/association/library/systems'])
         });
     }
 
