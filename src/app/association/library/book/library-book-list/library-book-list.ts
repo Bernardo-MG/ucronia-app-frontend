@@ -2,6 +2,7 @@
 import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
+import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
 import { BookType } from '@app/domain/library/book-type';
@@ -24,7 +25,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, finalize, Observable, of, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -33,7 +34,6 @@ import { LibraryBookInfo } from '../library-book-info/library-book-info';
 import { LibraryBookLending } from '../library-book-lending/library-book-lending';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { LibraryService } from '../library-service';
-import { BookInfo } from '@app/domain/library/book-info';
 
 @Component({
   selector: 'assoc-library-book-list',
@@ -302,7 +302,17 @@ export class LibraryBookList implements OnInit {
   public downloadExcel() {
     this.loadingExcel = true;
     this.reportService.downloadExcelReport()
-      .pipe(finalize(() => this.loadingExcel = false))
+      .pipe(
+        finalize(() => this.loadingExcel = false),
+        catchError(err => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Fallo',
+            detail: 'Error en la petición: ' + err.message,
+            life: 3000
+          });
+          return EMPTY;
+        }))
       .subscribe();
   }
 
