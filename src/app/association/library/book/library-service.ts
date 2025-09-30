@@ -59,16 +59,16 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public updateGameBookNew(number: number, data: BookUpdate): Observable<GameBook> {
+  public updateGameBookNew(data: BookUpdate): Observable<GameBook> {
     return this.gameBookClient
-      .appendRoute(`/${number}`)
+      .appendRoute(`/${data.number}`)
       .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
 
-  public updateGameBook(number: number, data: GameBook): Observable<GameBook> {
+  public updateGameBook(data: BookUpdate): Observable<GameBook> {
     return this.gameBookClient
-      .appendRoute(`/${number}`)
+      .appendRoute(`/${data.number}`)
       .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
@@ -80,10 +80,10 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public deleteGameBook(number: number): Observable<boolean> {
+  public deleteGameBook(number: number): Observable<GameBook> {
     return this.gameBookClient
       .appendRoute(`/${number}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<GameBook>>()
       .pipe(map(r => r.content));
   }
 
@@ -105,16 +105,9 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public updateFictionBookNew(number: number, data: BookUpdate): Observable<FictionBook> {
+  public updateFictionBook(data: BookUpdate): Observable<FictionBook> {
     return this.fictionBookClient
-      .appendRoute(`/${number}`)
-      .update<SimpleResponse<GameBook>>(data)
-      .pipe(map(r => r.content));
-  }
-
-  public updateFictionBook(number: number, data: FictionBook): Observable<FictionBook> {
-    return this.fictionBookClient
-      .appendRoute(`/${number}`)
+      .appendRoute(`/${data.number}`)
       .update<SimpleResponse<GameBook>>(data)
       .pipe(map(r => r.content));
   }
@@ -126,10 +119,10 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public deleteFictionBook(number: number): Observable<boolean> {
+  public deleteFictionBook(number: number): Observable<FictionBook> {
     return this.fictionBookClient
       .appendRoute(`/${number}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<FictionBook>>()
       .pipe(map(r => r.content));
   }
 

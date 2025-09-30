@@ -25,7 +25,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { catchError, finalize, Observable, throwError } from 'rxjs';
+import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -43,14 +43,10 @@ import { LibraryService } from '../library-service';
 export class LibraryBookList implements OnInit {
 
   private readonly router = inject(Router);
-
-  public readonly service = inject(LibraryService);
-
   private readonly reportService = inject(BookReportService);
-
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly messageService = inject(MessageService);
+  public readonly service = inject(LibraryService);
 
   public failures = new FailureStore();
 
@@ -95,8 +91,11 @@ export class LibraryBookList implements OnInit {
 
   private sort = new Sorting();
 
-  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
+  private delete: (number: number) => Observable<BookInfo> = (number) => EMPTY;
+  private update: (data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
+  private read: (page: number, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
 
+  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
   public get borrower() {
@@ -110,6 +109,11 @@ export class LibraryBookList implements OnInit {
     this.createable = authContainer.hasPermission("library_book", "create");
     this.editable = authContainer.hasPermission("library_book", "update");
     this.deletable = authContainer.hasPermission("library_book", "delete");
+
+    // Initial operations
+    this.delete = this.service.deleteGameBook.bind(this.service);
+    this.update = this.service.updateGameBook.bind(this.service);
+    this.read = this.service.getAllGameBooks.bind(this.service);
 
     // Load data menu
     if (authContainer.hasPermission('library_author', 'view')) {
@@ -221,7 +225,7 @@ export class LibraryBookList implements OnInit {
   }
 
   public onCreate(toCreate: { book: BookInfo, kind: 'fiction' | 'game' }): void {
-    this.mutate(() => {
+    this.call(() => {
       if (toCreate.kind === 'game') {
         return this.service.createGameBook(toCreate.book);
       } else {
@@ -232,25 +236,12 @@ export class LibraryBookList implements OnInit {
   }
 
   private onDelete(toDelete: number): void {
-    this.mutate(() => {
-      if (this.source === 'game') {
-        return this.service.deleteGameBook(toDelete);
-      } else {
-        return this.service.deleteFictionBook(toDelete);
-      }
-    },
+    this.call(() => this.delete(toDelete),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos borrados', life: 3000 }));
   }
 
   private onUpdate(toSave: BookUpdate) {
-    this.loading = true;
-    let book: Observable<FictionBook | GameBook>;
-    if (this.source === 'game') {
-      book = this.service.updateGameBookNew(toSave.number, toSave);
-    } else {
-      book = this.service.updateFictionBookNew(toSave.number, toSave);
-    }
-    this.mutate(() => book,
+    this.call(() => this.update(toSave),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 }));
   }
 
@@ -286,6 +277,15 @@ export class LibraryBookList implements OnInit {
 
   public onChangeSource(event: any) {
     this.source = event.target.value as 'game' | 'fiction';
+    if (this.source === 'game') {
+      this.delete = this.service.deleteGameBook.bind(this.service);
+      this.update = this.service.updateGameBook.bind(this.service);
+      this.read = this.service.getAllGameBooks.bind(this.service);
+    } else {
+      this.delete = this.service.deleteFictionBook.bind(this.service);
+      this.update = this.service.updateFictionBook.bind(this.service);
+      this.read = this.service.getAllFictionBooks.bind(this.service);
+    }
     this.load(0);
   }
 
@@ -425,60 +425,26 @@ export class LibraryBookList implements OnInit {
   }
 
   public onLend(toSave: BookLent) {
-    this.mutate(() => this.service.lend(toSave),
+    this.call(() => this.service.lend(toSave),
       () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 }));
   }
 
   public onReturn(toSave: BookReturned) {
-    this.mutate(() => this.service.return(toSave),
+    this.call(() => this.service.return(toSave),
       () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 }));
-  }
-
-  protected interceptSave(response: FictionBook | GameBook) {
-    this.load(this.data.page);
-
-    this.failures.clear();
-
-    // Reactivate component
-    this.loading = false;
-    this.editing = false;
-  }
-
-  protected interceptError(error: any) {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      // No failure response
-      // Just remove the failures
-      this.failures.clear();
-    }
-
-    // Reactivate component
-    this.loading = false;
-
-    return throwError(() => error);
   }
 
   private load(page: number) {
     this.loading = true;
-
-    let operation: Observable<PaginatedResponse<FictionBook | GameBook>>;
-    if (this.source === 'game') {
-      operation = this.service.getAllGameBooks(page, this.sort);
-    } else {
-      operation = this.service.getAllFictionBooks(page, this.sort);
-    }
-    operation
-      .pipe(
-        finalize(() => this.loading = false))
+    this.read(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
 
-  private mutate(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
-      .pipe(
-        finalize(() => this.loading = false))
+      .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
           this.failures.clear();
