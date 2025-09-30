@@ -2,7 +2,7 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
-import { FormStatus } from '@bernardo-mg/form';
+import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -37,7 +37,7 @@ export class NameForm implements OnChanges {
 
     this.form = fb.group({
       number: [],
-      name: ['', Validators.required]
+      name: ['', [Validators.required, notEmptyStringValidator]]
     });
 
     this.formStatus = new FormStatus(this.form);
