@@ -26,7 +26,7 @@
   </p-table>
 </p-panel>
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
-  @switch (shownForm) {
+  @switch (view) {
     @case ('creation') {
       <ng-template #header>
         Crear autor

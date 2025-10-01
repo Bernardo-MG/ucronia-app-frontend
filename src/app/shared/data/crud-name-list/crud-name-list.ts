@@ -37,9 +37,9 @@ export class CrudNameList implements OnInit {
 
   private _shownForm: 'none' | 'creation' | 'edition' = 'none';
 
-  public get shownForm() { return this._shownForm; }
+  public get view() { return this._shownForm; }
 
-  public set shownForm(form: 'none' | 'creation' | 'edition') {
+  public set view(form: 'none' | 'creation' | 'edition') {
     this._shownForm = form;
     this.showForm = form !== 'none';
   }
@@ -91,37 +91,29 @@ export class CrudNameList implements OnInit {
 
   public onStartEditing(item: any): void {
     this.selected = item;
-    this.shownForm = 'edition';
+    this.view = 'edition';
   }
 
   public onStartCreating(): void {
-    this.shownForm = 'creation';
+    this.view = 'creation';
   }
 
   public onCancel(): void {
-    this.shownForm = 'none';
+    this.view = 'none';
   }
 
   public onCreate(toCreate: any): void {
-    this.mutate(() => {
-      const service = this.service();
-      if (service) {
-        return service.create(toCreate);
-      } else {
-        return EMPTY;
-      }
-    });
+    const service = this.service();
+    if (service) {
+      this.call(() => service.create(toCreate));
+    }
   }
 
   public onUpdate(toUpdate: any): void {
-    this.mutate(() => {
-      const service = this.service();
-      if (service) {
-        return service.update(toUpdate);
-      } else {
-        return EMPTY;
-      }
-    });
+    const service = this.service();
+    if (service) {
+      this.call(() => service.update(toUpdate));
+    }
   }
 
   public onDelete(event: Event, id: number) {
@@ -141,7 +133,7 @@ export class CrudNameList implements OnInit {
       accept: () => {
         const service = this.service();
         if (service != undefined) {
-          this.mutate(() => service.delete(id));
+          this.call(() => service.delete(id));
           return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
         } else {
           return EMPTY;
@@ -151,27 +143,27 @@ export class CrudNameList implements OnInit {
   }
 
   protected load(page: number) {
-    this.loading = true;
     const service = this.service();
     if (service) {
+      this.loading = true;
       return service.getAll(page, this.sort)
         .pipe(finalize(() => this.loading = false))
         .subscribe(response => this.data = response);
     } else {
-      this.loading = false;
       return EMPTY;
     }
   }
 
-  private mutate(action: () => Observable<any>) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.shownForm = 'none';
+          this.view = 'none';
           this.load(this.data.page);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

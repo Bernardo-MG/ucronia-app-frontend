@@ -95,19 +95,19 @@ describe('CrudNameList', () => {
 
     it('should toggle creation', () => {
       component.onStartCreating();
-      expect(component.shownForm).toBe('creation');
+      expect(component.view).toBe('creation');
       expect(component.showForm).toBeTrue();
     });
 
     it('should toggle edition', () => {
       component.onStartEditing({ id: 1 });
-      expect(component.shownForm).toBe('edition');
+      expect(component.view).toBe('edition');
       expect(component.selected).toEqual({ id: 1 });
     });
 
     it('should toggle back on cancel', () => {
       component.onCancel();
-      expect(component.shownForm).toBe('none');
+      expect(component.view).toBe('none');
       expect(component.showForm).toBeFalse();
     });
 
