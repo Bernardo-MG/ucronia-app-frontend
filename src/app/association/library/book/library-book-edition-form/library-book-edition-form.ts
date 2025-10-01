@@ -47,7 +47,7 @@ export class LibraryBookEditionForm implements OnChanges {
     this.form = fb.group({
       number: [undefined],
       index: [-1],
-      isbn: ['', isbnValidator()],
+      isbn: ['', isbnValidator],
       title: fb.group({
         supertitle: [''],
         title: ['', Validators.required],

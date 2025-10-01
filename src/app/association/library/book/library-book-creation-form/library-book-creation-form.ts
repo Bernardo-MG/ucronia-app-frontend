@@ -47,7 +47,7 @@ export class LibraryBookCreationForm implements OnChanges {
     this.languages = config.getLanguages();
 
     this.form = fb.group({
-      isbn: ['', isbnValidator()],
+      isbn: ['', isbnValidator],
       title: fb.group({
         supertitle: [''],
         title: ['', Validators.required],
