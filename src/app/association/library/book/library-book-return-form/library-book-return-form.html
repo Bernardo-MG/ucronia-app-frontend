@@ -8,7 +8,7 @@
     <label for="returnDateInput">Fecha</label>
   </p-floatlabel>
   <div class="mb-2">
-    @for (failure of failures().getFailures('month'); track failure) {
+    @for (failure of failures().getFailures('returnDate'); track failure) {
       <p-message severity="error" size="small" variant="simple">
         {{failure.message}}
       </p-message>
