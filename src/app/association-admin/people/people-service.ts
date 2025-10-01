@@ -25,10 +25,16 @@ export class PeopleService {
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
+    let status;
+    if (active) {
+      status = active.toString().toUpperCase();
+    } else {
+      status = '';
+    }
     return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
-      .parameter('status', active.toString().toUpperCase())
+      .parameter('status', status)
       .parameter('name', name)
       .read<PaginatedResponse<Person>>();
   }
