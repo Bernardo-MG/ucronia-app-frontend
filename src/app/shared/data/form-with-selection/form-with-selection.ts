@@ -1,6 +1,6 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormStatus } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -32,7 +32,7 @@ export class FormWithSelection {
     return this.form.value.name;
   }
 
-  public form;
+  public form: FormGroup;
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -60,7 +60,7 @@ export class FormWithSelection {
   public onSave() {
     if (this.form.valid) {
       // Valid form, can emit data
-      this.save.emit((this.form as any).value as NameNumber);
+      this.save.emit(this.form.value as NameNumber);
     }
   }
 

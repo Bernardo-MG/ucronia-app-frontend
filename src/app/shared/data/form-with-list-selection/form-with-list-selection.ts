@@ -1,6 +1,6 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormStatus } from '@bernardo-mg/form';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -34,14 +34,13 @@ export class FormWithListSelection {
 
   public selecting = false;
 
-  public form;
+  public form: FormGroup;
 
   constructor() {
     const fb = inject(FormBuilder);
 
-
     this.form = fb.group({
-      rows: [[]]
+      rows: [[], Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -51,22 +50,23 @@ export class FormWithListSelection {
     this.selecting = true;
   }
 
-  public onSelect(selected: NameNumber) {
+  public onChoose(selected: NameNumber) {
     if (!this.rows.find(r => r.number === selected.number)) {
-      (this.form as any).get('rows').setValue([...this.rows, selected]);
+      this.form.get('rows')?.setValue([...this.rows, selected]);
+      this.form.markAsDirty();
     }
     this.selecting = false;
   }
 
   public onRemove(row: NameNumber) {
     const filteredRows = this.rows.filter(r => r.number !== row.number);
-    (this.form as any).get('rows').setValue(filteredRows);
+    this.form.get('rows')?.setValue(filteredRows);
   }
 
   public onSave() {
     if (this.form.valid) {
       // Valid form, can emit data
-      this.save.emit((this.form as any).get('rows').value as NameNumber[]);
+      this.save.emit(this.form.get('rows')?.value as NameNumber[]);
     }
   }
 
