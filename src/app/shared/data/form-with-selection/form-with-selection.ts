@@ -54,9 +54,6 @@ export class FormWithSelection {
     this.selecting = false;
   }
 
-  public onRemove() {
-  }
-
   public onSave() {
     if (this.form.valid) {
       // Valid form, can emit data

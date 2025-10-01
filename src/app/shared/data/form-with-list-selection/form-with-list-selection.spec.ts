@@ -45,7 +45,7 @@ describe('FormWithListSelection', () => {
       component.data = [row1];
 
       component.onStartSelecting();
-      component.onSelect(row2);
+      component.onChoose(row2);
 
       expect(component.rows).toEqual([row1, row2]);
       expect(component.selecting).toBeFalse();
@@ -55,7 +55,7 @@ describe('FormWithListSelection', () => {
       const row = { name: 'name', number: 1 };
       component.data = [row];
 
-      component.onSelect(row);
+      component.onChoose(row);
 
       expect(component.rows).toEqual([row]);
     });

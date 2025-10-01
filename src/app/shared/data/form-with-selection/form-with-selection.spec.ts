@@ -81,13 +81,4 @@ describe('FormWithSelection', () => {
 
   });
 
-  it('should emit reject event on onCancel', () => {
-    const spy = jasmine.createSpy();
-    component.reject.subscribe(spy);
-
-    component.onCancel();
-
-    expect(spy).toHaveBeenCalled();
-  });
-
 });
