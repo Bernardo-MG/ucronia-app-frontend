@@ -59,12 +59,6 @@ export const routes: Routes = [
         ]
       },
       {
-        // Association admin
-        path: 'association/admin',
-        canActivate: [LoggedInGuard],
-        loadChildren: () => import('./association-admin/association-admin.module').then(m => m.AssociationAdminModule)
-      },
-      {
         // Association
         path: 'association',
         canActivate: [LoggedInGuard],
@@ -159,6 +153,21 @@ export const routes: Routes = [
                 ]
               }
             ]
+          },
+          {
+            path: 'fees',
+            canActivate: [ResourceGuard("fee", "view")],
+            loadComponent: () => import('./association/fees/fee-list/fee-list').then(m => m.FeeList)
+          },
+          {
+            path: 'people',
+            canActivate: [ResourceGuard("person", "view")],
+            loadComponent: () => import('./association/people/people-list/people-list').then(m => m.PeopleList)
+          },
+          {
+            path: 'funds',
+            canActivate: [ResourceGuard("funds", "view")],
+            loadComponent: () => import('./association/funds/funds/funds').then(m => m.Funds)
           }
         ]
       },

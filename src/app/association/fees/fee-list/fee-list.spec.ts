@@ -3,8 +3,8 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { FeeReportService } from '@app/association-admin/fees/fee-report-service';
 import { FeeCalendarService } from '../fee-calendar-service';
+import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
 import { FeeList } from './fee-list';
 

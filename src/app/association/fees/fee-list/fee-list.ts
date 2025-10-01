@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
+import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
@@ -26,7 +27,6 @@ import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
 import { FeeService } from '../fee-service';
 import { FeeCalendarSelection } from '../model/fee-calendar-selection';
-import { FeeCreation } from '@app/domain/fees/fee-creation';
 
 @Component({
   selector: 'assoc-fee-list',

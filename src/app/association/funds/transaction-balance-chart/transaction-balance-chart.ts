@@ -1,12 +1,12 @@
 
-import { Component, inject, OnDestroy, SimpleChanges } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TransactionBalanceService } from '@app/association-admin/funds/transaction-balance-service';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
 import { CardModule } from 'primeng/card';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
+import { TransactionBalanceService } from '../transaction-balance-service';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',

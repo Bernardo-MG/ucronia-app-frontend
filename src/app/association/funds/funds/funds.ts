@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TransactionBalanceChartContainer } from '@app/association-admin/funds/transaction-balance-chart/transaction-balance-chart';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -12,6 +11,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
+import { TransactionBalanceChartContainer } from '../transaction-balance-chart/transaction-balance-chart';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionForm } from '../transaction-form/transaction-form';
