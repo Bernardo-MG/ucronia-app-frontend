@@ -8,8 +8,7 @@ import { TimelineModule } from 'primeng/timeline';
 @Component({
   selector: 'assoc-library-book-lendings',
   imports: [TableModule, TimelineModule, DatePipe],
-  templateUrl: './library-book-lendings.html',
-  styleUrl: './library-book-lendings.sass'
+  templateUrl: './library-book-lendings.html'
 })
 export class LibraryBookLendings {
 

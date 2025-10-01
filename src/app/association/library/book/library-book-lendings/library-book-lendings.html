@@ -4,9 +4,9 @@
   </ng-template>
   <ng-template #marker let-event>
     @if(event.lent) {
-      <i class="pi pi-upload lent-icon"></i>
+      <i class="pi pi-upload text-danger"></i>
     } @else {
-      <i class="pi pi-download returned-icon"></i>
+      <i class="pi pi-download text-success"></i>
     }
   </ng-template>
   <ng-template #content let-event>
