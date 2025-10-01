@@ -23,10 +23,6 @@ export class LibraryBookReturnForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: BookReturned) {
-    this.form.patchValue(value as any);
-  }
-
   @Input() public set borrower(value: Member) {
     this.form.get('borrower')?.setValue(value.number);
     this.memberName = value.name.fullName;
@@ -34,6 +30,7 @@ export class LibraryBookReturnForm implements OnChanges {
 
   @Input() public set book(value: BookInfo) {
     this.form.get('book')?.setValue(value.number);
+    this.lentDate = value.lendings[value.lendings.length - 1].lendingDate;
   }
 
   public readonly save = output<BookReturned>();
@@ -45,6 +42,9 @@ export class LibraryBookReturnForm implements OnChanges {
   public fee = new Fee();
 
   public memberName = '';
+
+  public lentDate = new Date();
+  public readonly today = new Date();
 
   constructor() {
     const fb = inject(FormBuilder);
