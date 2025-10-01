@@ -81,13 +81,29 @@ describe('FormWithSelection', () => {
 
   });
 
-  it('should emit reject event on onCancel', () => {
-    const spy = jasmine.createSpy();
-    component.reject.subscribe(spy);
+  describe('save button', () => {
 
-    component.onCancel();
+    it('should disable save button when the form is invalid', () => {
+      component.data = { number: 1, name: '' };
 
-    expect(spy).toHaveBeenCalled();
+      expect(component.formStatus.saveEnabled).toBeFalse();
+    });
+
+    it('should enable save button when the form is valid and dirty', () => {
+      component.data = { number: 1, name: 'Test' };
+      component.form.markAsDirty();
+
+      expect(component.formStatus.saveEnabled).toBeTrue();
+    });
+
+    it('should disable save button when loading', () => {
+      component.data = { number: 1, name: 'Test' };
+      component.form.markAsDirty();
+      component.formStatus.loading = true;
+
+      expect(component.formStatus.saveEnabled).toBeFalse();
+    });
+
   });
 
 });

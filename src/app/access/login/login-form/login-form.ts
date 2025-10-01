@@ -1,6 +1,6 @@
 
 import { Component, Input, inject, output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -82,7 +82,7 @@ export class LoginForm {
   /**
    * Form structure.
    */
-  public form;
+  public form: FormGroup;
 
   constructor() {
     const formBuilder = inject(FormBuilder);

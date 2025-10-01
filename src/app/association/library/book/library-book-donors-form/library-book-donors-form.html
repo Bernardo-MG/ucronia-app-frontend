@@ -1,0 +1,52 @@
+@switch (selectingDonor) {
+  @case (false) {
+  <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+    <!-- Donation date -->
+    <p-floatlabel variant="in">
+      <p-datepicker dateFormat="yy-mm-dd" [invalid]="isFieldInvalid('date')" id="dateInput" formControlName="date"
+        appendTo="body" />
+      <label for="dateInput">Fecha de donación</label>
+    </p-floatlabel>
+    <div class="mb-2">
+      @for (failure of failures().getFailures('date'); track failure) {
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
+      }
+    </div>
+    <!-- Donors -->
+    <div class="row mb-2">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">
+            </th>
+            <th scope="col">
+              Nombre
+            </th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          @for (donor of donors; track donor; let i = $index) {
+            <tr>
+              <td>
+                <p-button icon="pi pi-trash text-danger" (click)="onRemoveDonor(donor)" rounded text />
+              </td>
+              <td>{{donor.name.fullName}}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartSelectingDonor()"
+        [disabled]="!formStatus.formEnabled" aria-label="Nueva transacción" [attr.aria-disabled]="!formStatus.formEnabled"
+        rounded text />
+    </div>
+  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  </form>
+  }
+  @case (true) {
+    <shared-selection-list heading="Nombre" [nameRenderer]="nameRenderer" [getSelection]="getSelection()"
+      (choose)="onSelect($event)" />
+  }
+}

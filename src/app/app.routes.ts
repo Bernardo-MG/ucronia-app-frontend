@@ -68,7 +68,99 @@ export const routes: Routes = [
         // Association
         path: 'association',
         canActivate: [LoggedInGuard],
-        loadChildren: () => import('./association/association.module').then(m => m.AssociationModule)
+        children: [
+          {
+            path: '',
+            redirectTo: 'activity',
+            pathMatch: 'prefix'
+          },
+          {
+            path: 'activity',
+            canActivate: [ResourceGuard("activity_calendar", "view")],
+            loadComponent: () => import('./association/activity-calendar/activity-calendar/activity-calendar').then(m => m.ActivityCalendar)
+          },
+          {
+            path: 'members',
+            canActivate: [ResourceGuard("member", "view")],
+            loadComponent: () => import('./association/members/member-list/member-list').then(m => m.MemberList)
+          },
+          {
+            path: 'myFees',
+            canActivate: [ResourceGuard("my_fees", "view")],
+            loadComponent: () => import('./association/my-fees/my-fees-list/my-fees-list').then(m => m.MyFeesList)
+          },
+          {
+            path: 'library',
+            canActivate: [ResourceGuard("library", "view")],
+            children: [
+              {
+                path: '',
+                redirectTo: 'books',
+                pathMatch: 'full'
+              },
+              {
+                path: 'authors',
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () => import('./association/library/data/library-author-list/library-author-list').then(m => m.LibraryAuthorList),
+                    canActivate: [ResourceGuard("library_author", "view")]
+                  }
+                ]
+              },
+              {
+                path: 'books',
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () => import('./association/library/book/library-book-list/library-book-list').then(m => m.LibraryBookList),
+                    canActivate: [ResourceGuard("library_book", "view")]
+                  }
+                ]
+              },
+              {
+                path: 'publishers',
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () => import('./association/library/data/library-publisher-list/library-publisher-list').then(m => m.LibraryPublisherList),
+                    canActivate: [ResourceGuard("library_publisher", "view")]
+                  }
+                ]
+              },
+              {
+                path: 'types',
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () => import('./association/library/data/library-book-type-list/library-book-type-list').then(m => m.LibraryBookTypeList),
+                    canActivate: [ResourceGuard("library_book_type", "view")]
+                  }
+                ]
+              },
+              {
+                path: 'systems',
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () => import('./association/library/data/library-game-system-list/library-game-system-list').then(m => m.LibraryGameSystemList),
+                    canActivate: [ResourceGuard("library_game_system", "view")]
+                  }
+                ]
+              },
+              {
+                path: 'lendings',
+                children: [
+                  {
+                    path: '',
+                    loadComponent: () => import('./association/library/lending/library-lending-list/library-lending-list').then(m => m.LibraryLendingList),
+                    canActivate: [ResourceGuard("library_lending", "view")]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
       {
         // Security

@@ -89,7 +89,7 @@ export class PasswordResetForm implements OnChanges {
    * 
    * @returns true if the passwords match, false otherwise
    */
-  private isPasswordsMatching(): boolean {
+  isPasswordsMatching(): boolean {
     const password = this.form.get('password')?.getRawValue();
     const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
 

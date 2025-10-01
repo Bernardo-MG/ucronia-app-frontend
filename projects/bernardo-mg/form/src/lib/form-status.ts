@@ -14,7 +14,7 @@ export class FormStatus {
   }
 
   public get saveEnabled() {
-    return this.form.valid && !this._loading;
+    return this.form.valid && this.form.dirty && !this._loading;
   }
 
   public get cancelEnabled() {

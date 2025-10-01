@@ -9,11 +9,16 @@ describe('ActivityCalendar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [ActivityCalendar],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-})
-    .compileComponents();
-    
+      imports: [
+        ActivityCalendar
+      ],
+      providers: [
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting()
+      ]
+    })
+      .compileComponents();
+
     fixture = TestBed.createComponent(ActivityCalendar);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
@@ -12,7 +12,7 @@ import { Navbar } from '../navbar/navbar';
   selector: 'app-association-layout',
   imports: [RouterModule, ToastModule, DrawerModule, MenuModule, ConfirmPopupModule, Navbar],
   templateUrl: './association-layout.html',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService]
 })
 export class AssociationLayout {
 
@@ -117,14 +117,6 @@ export class AssociationLayout {
           label: 'Fondos',
           routerLink: '/association/admin/funds',
           icon: 'pi pi-money-bill'
-        });
-    }
-    if (authContainer.hasPermission('library_book', 'view')) {
-      items.push(
-        {
-          label: 'Libros',
-          routerLink: '/association/admin/library/books',
-          icon: 'pi pi-book'
         });
     }
 

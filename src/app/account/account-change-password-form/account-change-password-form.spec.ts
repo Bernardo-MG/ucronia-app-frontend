@@ -33,6 +33,7 @@ describe('AccountChangePasswordForm', () => {
     component.form.get('oldPassword')?.setValue('1234');
     component.form.get('newPassword')?.setValue('abcd');
     component.form.get('passwordRepeat')?.setValue('abcd');
+    component.form.markAsDirty();
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');
@@ -43,6 +44,7 @@ describe('AccountChangePasswordForm', () => {
     component.form.get('oldPassword')?.setValue('1234');
     component.form.get('newPassword')?.setValue('abcd');
     component.form.get('passwordRepeat')?.setValue('abcde');
+    component.form.markAsDirty();
     fixture.detectChanges();
 
     const button = fixture.nativeElement.querySelector('form button');

@@ -15,7 +15,7 @@ import { ToastModule } from 'primeng/toast';
   imports: [RouterModule, SkeletonModule, PanelModule, TableModule, ButtonModule, MenuModule, ToastModule, DatePipe],
   templateUrl: './transaction-info.html'
 })
-export class LibraryAdminBookInfo {
+export class LibraryBookInfo {
 
   public readonly transaction = input(new Transaction());
 
