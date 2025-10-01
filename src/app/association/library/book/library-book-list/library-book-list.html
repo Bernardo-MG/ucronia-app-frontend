@@ -54,7 +54,7 @@
           }
           @if (deletable) {
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
-              [attr.aria-disabled]="!editable" (click)="onConfirmDelete($event, book.number)" rounded text />
+              [attr.aria-disabled]="!editable" (click)="onDelete($event, book.number)" rounded text />
           }
         </td>
       </tr>

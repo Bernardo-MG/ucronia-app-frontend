@@ -225,27 +225,26 @@ export class LibraryBookList implements OnInit {
   }
 
   public onCreate(toCreate: { book: BookInfo, kind: 'fiction' | 'game' }): void {
-    this.call(() => {
-      if (toCreate.kind === 'game') {
-        return this.service.createGameBook(toCreate.book);
-      } else {
-        return this.service.createFictionBook(toCreate.book);
-      }
-    },
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 }));
-  }
-
-  private onDelete(toDelete: number): void {
-    this.call(() => this.delete(toDelete),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos borrados', life: 3000 }));
+    this.call(
+      () => {
+        if (toCreate.kind === 'game') {
+          return this.service.createGameBook(toCreate.book);
+        } else {
+          return this.service.createFictionBook(toCreate.book);
+        }
+      },
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
   }
 
   private onUpdate(toSave: BookUpdate) {
-    this.call(() => this.update(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 }));
+    this.call(
+      () => this.update(toSave),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
-  public onConfirmDelete(event: Event, number: number) {
+  public onDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -259,7 +258,9 @@ export class LibraryBookList implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.onDelete(number)
+      accept: () => this.call(
+        () => this.delete(number),
+        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
     });
   }
 

@@ -105,14 +105,20 @@ export class CrudNameList implements OnInit {
   public onCreate(toCreate: any): void {
     const service = this.service();
     if (service) {
-      this.call(() => service.create(toCreate));
+      this.call(
+        () => service.create(toCreate),
+        () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      );
     }
   }
 
   public onUpdate(toUpdate: any): void {
     const service = this.service();
     if (service) {
-      this.call(() => service.update(toUpdate));
+      this.call(
+        () => service.update(toUpdate),
+        () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      );
     }
   }
 
@@ -133,8 +139,10 @@ export class CrudNameList implements OnInit {
       accept: () => {
         const service = this.service();
         if (service != undefined) {
-          this.call(() => service.delete(id));
-          return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+          return this.call(
+            () => service.delete(id),
+            () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+          );
         } else {
           return EMPTY;
         }
