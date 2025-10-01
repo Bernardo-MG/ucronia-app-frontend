@@ -20,11 +20,8 @@ import { LibraryBookLendingForm } from '../library-book-lending-form/library-boo
 export class LibraryBookLending {
 
   public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<any>>>((page: number, active: Active) => EMPTY);
-
   public readonly waiting = input(false);
-
   public readonly failures = input(new FailureStore());
-
   public readonly book = input(new BookInfo());
 
   public readonly save = output<BookLent>();

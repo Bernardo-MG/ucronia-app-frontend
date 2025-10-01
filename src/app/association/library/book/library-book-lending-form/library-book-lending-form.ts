@@ -22,14 +22,8 @@ export class LibraryBookLendingForm implements OnChanges {
   public readonly failures = input(new FailureStore());
 
   public readonly save = output<BookLent>();
-  public readonly goToPersonPage = output<number>();
-  public readonly goToBookPage = output<number>();
 
   public readonly today = new Date();
-
-  @Input() public set data(value: BookLent) {
-    this.form.patchValue(value as any);
-  }
 
   @Input() public set borrower(value: Member) {
     this.form.get('borrower')?.setValue(value.number);
@@ -40,11 +34,9 @@ export class LibraryBookLendingForm implements OnChanges {
     this.form.get('book')?.setValue(value.number);
   }
 
-
   public formStatus: FormStatus;
 
   public form: FormGroup;
-
 
   public memberName = '';
 
@@ -64,14 +56,6 @@ export class LibraryBookLendingForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
-  }
-
-  public onGoToBookPage(page: number) {
-    this.goToBookPage.emit(page);
-  }
-
-  public onGoToPersonPage(page: number) {
-    this.goToPersonPage.emit(page);
   }
 
   /**
