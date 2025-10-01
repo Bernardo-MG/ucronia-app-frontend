@@ -14,9 +14,9 @@ export class PersonStatusSelect {
 
   public readonly changeStatus = output<Active>();
 
-  public readonly options = [{ name: 'Activo', value: 'Active' }, { name: 'Inactivo', value: 'Inactive' }, { name: 'Todos', value: 'AllMember' }];
+  public readonly options = [{ name: 'Activo', value: 'Active' }, { name: 'Inactivo', value: 'Inactive' }, { name: 'Todos socios', value: 'AllMember' }, { name: 'No socio', value: 'NoMember' }, { name: 'Todos', value: '' }];
 
-  public status: 'Active' | 'Inactive' | 'AllMember' = 'Active';
+  public status: 'Active' | 'Inactive' | 'NoMember' | 'AllMember' = 'Active';
 
   public onChangeStatus() {
     this.changeStatus.emit(Active[this.status]);
