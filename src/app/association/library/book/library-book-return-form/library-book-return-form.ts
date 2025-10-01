@@ -21,20 +21,11 @@ import { MessageModule } from 'primeng/message';
 export class LibraryBookReturnForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: BookReturned) {
     this.form.patchValue(value as any);
   }
-
-  public readonly save = output<BookReturned>();
-
-  public formStatus: FormStatus;
-
-  public form: FormGroup;
-
-  public fee = new Fee();
 
   @Input() public set borrower(value: Member) {
     this.form.get('borrower')?.setValue(value.number);
@@ -45,11 +36,13 @@ export class LibraryBookReturnForm implements OnChanges {
     this.form.get('book')?.setValue(value.number);
   }
 
-  public readonly goToPersonPage = output<number>();
+  public readonly save = output<BookReturned>();
 
-  public readonly goToBookPage = output<number>();
+  public formStatus: FormStatus;
 
-  public today = new Date().toISOString().split('T')[0];
+  public form: FormGroup;
+
+  public fee = new Fee();
 
   public memberName = '';
 
@@ -69,14 +62,6 @@ export class LibraryBookReturnForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
-  }
-
-  public onGoToBookPage(page: number) {
-    this.goToBookPage.emit(page);
-  }
-
-  public onGoToPersonPage(page: number) {
-    this.goToPersonPage.emit(page);
   }
 
   /**
