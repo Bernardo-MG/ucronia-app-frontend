@@ -109,9 +109,19 @@ describe('PasswordResetForm', () => {
 
   describe('enabled form button status on password match', () => {
 
+    it('should indicate passwords match when they do', () => {
+      component.form.get('password')?.setValue('password');
+      component.form.get('confirmPassword')?.setValue('password');
+      component.form.markAsDirty()
+      fixture.detectChanges();
+
+      expect(component.isPasswordsMatching()).toEqual(true);
+    });
+
     it('should enable the form button when the passwords match and are not empty', () => {
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('password');
+      component.form.markAsDirty()
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -121,6 +131,7 @@ describe('PasswordResetForm', () => {
     it('should disable the form button when the passwords don\'t match', () => {
       component.form.get('password')?.setValue('abc');
       component.form.get('confirmPassword')?.setValue('password');
+      component.form.markAsDirty()
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -130,6 +141,7 @@ describe('PasswordResetForm', () => {
     it('should disable the form button when both passwords are empty', () => {
       component.form.get('password')?.setValue('');
       component.form.get('confirmPassword')?.setValue('');
+      component.form.markAsDirty()
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -139,6 +151,7 @@ describe('PasswordResetForm', () => {
     it('should disable the form button when the first password is empty', () => {
       component.form.get('password')?.setValue('');
       component.form.get('confirmPassword')?.setValue('password');
+      component.form.markAsDirty()
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -148,6 +161,7 @@ describe('PasswordResetForm', () => {
     it('should disable the form button when the second password is empty', () => {
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('');
+      component.form.markAsDirty()
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
