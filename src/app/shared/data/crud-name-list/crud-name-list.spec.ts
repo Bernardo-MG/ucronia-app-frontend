@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CrudService } from '@app/shared/data/services/crud-service';
 import { FailureResponse, PaginatedResponse, Sorting } from '@bernardo-mg/request';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { Confirmation, ConfirmationService, MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { CrudNameList } from './crud-name-list';
 
@@ -113,27 +113,114 @@ describe('CrudNameList', () => {
 
   });
 
-  it('should call service on onCreate', () => {
-    spyOn(component as any, 'load');
-    component.onCreate({ id: 123 });
-    
-    expect(mockService.create).toHaveBeenCalledWith({ id: 123 });
+  describe('callbacks', () => {
+
+    it('should call service on onCreate', () => {
+      spyOn(component as any, 'load');
+      component.onCreate({ id: 123 });
+
+      expect(mockService.create).toHaveBeenCalledWith({ id: 123 });
+    });
+
+    it('should call service on onUpdate', () => {
+      spyOn(component as any, 'load');
+      component.onUpdate({ id: 123 });
+      expect(mockService.update).toHaveBeenCalledWith({ id: 123 });
+    });
+
+    it('should confirm delete and call service on accept', () => {
+      spyOn(confirmationService, 'confirm').and.callFake(
+        (confirmation: Confirmation) => (confirmation as any).accept()
+      );
+      spyOn(component as any, 'load');
+
+      component.onDelete(new Event('click'), 123);
+
+      expect(mockService.delete).toHaveBeenCalledWith(123);
+      expect((component as any).load).toHaveBeenCalled();
+    });
+
   });
 
-  it('should call service on onUpdate', () => {
-    spyOn(component as any, 'load');
-    component.onUpdate({ id: 123 });
-    expect(mockService.update).toHaveBeenCalledWith({ id: 123 });
+  describe('messages', () => {
+
+    it('should show message after create', () => {
+      spyOn(messageService, 'add');
+
+      component.onCreate({ id: 1 });
+
+      expect(messageService.add).toHaveBeenCalledWith(jasmine.objectContaining({
+        severity: 'info',
+        summary: 'Creado'
+      }));
+    });
+
+    it('should show message after update', () => {
+      spyOn(messageService, 'add');
+
+      component.onUpdate({ id: 1 });
+
+      expect(messageService.add).toHaveBeenCalledWith(jasmine.objectContaining({
+        severity: 'info',
+        summary: 'Actualizado'
+      }));
+    });
+
+    it('should show message after delete', () => {
+      spyOn(confirmationService, 'confirm').and.callFake(
+        (confirmation: Confirmation) => (confirmation as any).accept()
+      );
+      spyOn(messageService, 'add');
+
+      component.onDelete(new Event('click'), 1);
+
+      expect(messageService.add).toHaveBeenCalledWith(jasmine.objectContaining({
+        severity: 'info',
+        summary: 'Borrado'
+      }));
+    });
+
   });
 
-  it('should handle errors in mutate', () => {
-    const failure = new FailureResponse({ 'field': [{ field: 'password', message: 'too weak' }] });
-    mockService.create.and.returnValue(throwError(() => failure));
+  describe('failures', () => {
 
-    component.onCreate({ id: 1 });
+    it('should handle failures in call', () => {
+      const failure = new FailureResponse({ 'field': [{ field: 'password', message: 'too weak' }] });
+      mockService.create.and.returnValue(throwError(() => failure));
 
-    expect(component.loading).toBeFalse();
-    expect(component.failures).toBe(failure.failures);
+      component.onCreate({ id: 1 });
+
+      expect(component.loading).toBeFalse();
+      expect(component.failures).toBe(failure.failures);
+    });
+
+    it('should clear failures on non-FailureResponse error', () => {
+      spyOn(component.failures, 'clear');
+      mockService.update.and.returnValue(throwError(() => new Error('Unknown error')));
+
+      component.onUpdate({ id: 99 });
+
+      expect(component.failures.clear).toHaveBeenCalled();
+    });
+
+  });
+
+  describe('permissions', () => {
+
+    it('should disable create button when there are no permission', () => {
+      (component as any).auth.hasPermission = () => false;
+      component.ngOnInit();
+
+      expect(component.canCreate).toBeFalse();
+    });
+
+    it('should allow create button when has permission and not loading', () => {
+      (component as any).auth.hasPermission = () => true;
+      component.ngOnInit();
+      
+      expect(component.canCreate).toBeTrue();
+    });
+
   });
 
 });

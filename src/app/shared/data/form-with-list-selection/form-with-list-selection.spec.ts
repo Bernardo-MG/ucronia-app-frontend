@@ -51,13 +51,14 @@ describe('FormWithListSelection', () => {
       expect(component.selecting).toBeFalse();
     });
 
-    it('should not add duplicate row when selected', () => {
+    it('should not add duplicate row when already selected', () => {
       const row = { name: 'name', number: 1 };
       component.data = [row];
 
       component.onChoose(row);
 
       expect(component.rows).toEqual([row]);
+      expect(component.selecting).toBeFalse();
     });
 
   });
@@ -72,6 +73,15 @@ describe('FormWithListSelection', () => {
       component.onRemove(row1);
 
       expect(component.rows).toEqual([row2]);
+    });
+
+    it('should invalidate form when last row is removed', () => {
+      const row = { name: 'only row', number: 1 };
+      component.data = [row];
+
+      component.onRemove(row);
+
+      expect(component.form.valid).toBeFalse();
     });
 
   });
@@ -98,6 +108,33 @@ describe('FormWithListSelection', () => {
       component.onSave();
 
       expect(spy).not.toHaveBeenCalled();
+    });
+
+  });
+
+  describe('save button', () => {
+
+    it('should disable save button when the form is invalid', () => {
+      component.data = [];
+
+      expect(component.formStatus.saveEnabled).toBeFalse();
+    });
+
+    it('should enable save button when the form is valid and dirty', () => {
+      const row = { name: 'valid', number: 1 };
+      component.data = [row];
+      component.form.markAsDirty();
+
+      expect(component.formStatus.saveEnabled).toBeTrue();
+    });
+
+    it('should disable save button when loading', () => {
+      const row = { name: 'valid', number: 1 };
+      component.data = [row];
+      component.form.markAsDirty();
+      component.formStatus.loading = true;
+
+      expect(component.formStatus.saveEnabled).toBeFalse();
     });
 
   });
