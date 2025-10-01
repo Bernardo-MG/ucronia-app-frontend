@@ -15,7 +15,7 @@
             </div>
           </div>
           <shared-selection-list heading="Socio" [getSelection]="onGetSelection.bind(this)"
-            (choose)="onSelectMember($event)" [nameRenderer]="nameRenderer" />
+            (choose)="onSelectMember($event)" [nameRenderer]="nameRenderer" [status]="status" />
         </div>
       </ng-template>
     </p-step-panel>
