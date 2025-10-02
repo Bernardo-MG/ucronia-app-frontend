@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeeCalendar } from './fee-calendar';
+import { SimpleChange } from '@angular/core';
 
 describe('FeeCalendar', () => {
   let component: FeeCalendar;
@@ -150,8 +151,12 @@ describe('FeeCalendar', () => {
 
     it('should go to the previous year and emit the event', () => {
       spyOn(component.goToYear, 'emit');
-      component.currentYear = 1;
-      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.currentYear = 2021;
+      const range = { years: [2020, 2021, 2022] };
+      fixture.componentRef.setInput('range', range);
+      component.ngOnChanges({
+        range: new SimpleChange(null, range, true)
+      });
 
       component.onGoPrevious();
 
@@ -161,8 +166,12 @@ describe('FeeCalendar', () => {
 
     it('should go to the next year and emit the event', () => {
       spyOn(component.goToYear, 'emit');
-      component.currentYear = 1;
-      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
+      component.currentYear = 2021;
+      const range = { years: [2020, 2021, 2022] };
+      fixture.componentRef.setInput('range', range);
+      component.ngOnChanges({
+        range: new SimpleChange(null, range, true)
+      });
 
       component.onGoNext();
 
