@@ -37,10 +37,10 @@ import { FeeService } from '../fee-service';
 export class FeeList implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
-  private readonly service = inject(FeeService);
   private readonly reportService = inject(FeeReportService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
+  public readonly service = inject(FeeService);
 
   public readonly createable;
   public readonly editable;
@@ -165,19 +165,11 @@ export class FeeList implements OnInit {
     this.loadCalendar(this.year);
   }
 
-  public onGoToYear(year: number) {
-    this.loadCalendar(year);
-  }
-
-  public onGetSelection(page: number, active: Active) {
-    return this.service.getPersons(page, active);
-  }
-
   public onSelectMember(member: any) {
     this.selectedMember = (member as Member);
   }
 
-  private loadCalendar(year: number) {
+  public loadCalendar(year: number) {
     this.loadingCalendar = true;
 
     this.feeCalendarService.getCalendar(year, this.activeFilter)

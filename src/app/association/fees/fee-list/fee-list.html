@@ -19,7 +19,7 @@
     </ng-template>
     <!-- Calendar -->
     <assoc-fee-calendar [range]="range" [loading]="loadingCalendar" [feeCalendar]="feeCalendar"
-      (goToYear)="onGoToYear($event)" (selectFee)="onSelectFee($event)" />
+      (goToYear)="loadCalendar($event)" (selectFee)="onSelectFee($event)" />
   </p-panel>
 </div>
 <!-- Dialogs -->
@@ -31,13 +31,13 @@
     [attr.aria-disabled]="!editable" (click)="onDelete($event, selectedData)" rounded text />
 </p-dialog>
 <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="viewCreate" [style]="{ width: '50rem' }">
-  <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
+  <assoc-member-select-stepper [getMemberSelection]="service.getPersons.bind(service)" (selectMember)="onSelectMember($event)">
     <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
       (save)="onCreateUnpaid($event)" />
   </assoc-member-select-stepper>
 </p-dialog>
 <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="viewPay" [style]="{ width: '50rem' }">
-  <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
+  <assoc-member-select-stepper [getMemberSelection]="service.getPersons.bind(service)" (selectMember)="onSelectMember($event)">
     <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
   </assoc-member-select-stepper>
 </p-dialog>
