@@ -11,7 +11,7 @@ import { MemberSelectStepper } from '@app/shared/person/components/member-select
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -36,8 +36,8 @@ import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 export class FeeList implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
-
   private readonly service = inject(FeeService);
+  private readonly messageService = inject(MessageService);
 
   public readonly createable;
   public readonly editable;
@@ -106,36 +106,24 @@ export class FeeList implements OnInit {
       ...toUpdate,
       member: toUpdate.member.number
     }
-    this.mutate(() => this.service.update(update));
+    this.call(
+      () => this.service.update(update),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onPay(data: FeePayment): void {
-    this.mutate(() => this.service.pay(data));
+    this.call(
+      () => this.service.pay(data),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
   }
 
   public onCreateUnpaid(data: FeeCreation): void {
-    this.mutate(() => this.service.create(data));
-  }
-
-  private mutate(action: () => Observable<any>) {
-    this.loading = true;
-    action()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: () => {
-          this.failures.clear();
-          this.view = 'none';
-          this.loadCalendar(this.year);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
-      });
+    this.call(
+      () => this.service.create(data),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
   }
 
   public onSelectFee(fee: { member: number, date: Date }) {
@@ -178,6 +166,28 @@ export class FeeList implements OnInit {
     this.feeCalendarService.getCalendar(year, this.activeFilter)
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
+  }
+
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.loadCalendar(this.year);
+          onSuccess();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
   }
 
 }
