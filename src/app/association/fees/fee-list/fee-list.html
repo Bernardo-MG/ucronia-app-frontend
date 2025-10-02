@@ -5,7 +5,7 @@
       <ng-template #title>
         Pagos de cuotas
       </ng-template>
-      <assoc-fee-payment-chart />
+      <assoc-fee-payment-balance-chart [report]="report" />
     </p-card>
   </div>
 </div>
@@ -18,18 +18,20 @@
         [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
     </ng-template>
     <!-- Calendar -->
-    <assoc-fee-calendar [range]="range" [loading]="loadingCalendar" [feeCalendar]="feeCalendar"
-      (goToYear)="onGoToYear($event)" (selectFee)="onSelectFee($event)" />
+    <assoc-fee-calendar [year]="year" [range]="range" [loading]="loadingCalendar" [feeCalendar]="feeCalendar"
+      (goToYear)="loadCalendar($event)" (selectFee)="onSelectFee($event)" />
   </p-panel>
 </div>
-<p-dialog header="Cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+<p-dialog header="Cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
   <assoc-fee-info [data]="selectedData" [loading]="loading" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
     [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
+  <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
+    [attr.aria-disabled]="!editable" (click)="onDelete($event, selectedData)" rounded text />
 </p-dialog>
 @switch (view) {
   @case ('create') {
-    <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
       <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
         <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
           (save)="onCreateUnpaid($event)" />
@@ -37,14 +39,14 @@
     </p-dialog>
   }
   @case ('pay') {
-    <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
       <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
         <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
       </assoc-member-select-stepper>
     </p-dialog>
   }
   @case ('edition') {
-    <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
       <assoc-fee-edition-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
     </p-dialog>
   }

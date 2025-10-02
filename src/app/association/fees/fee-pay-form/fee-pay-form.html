@@ -3,7 +3,7 @@
   <h2>{{fullname}}</h2>
   <!-- Payment date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [invalid]="isFieldInvalid('paymentDate')"
+    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [maxDate]="today" [invalid]="isFieldInvalid('paymentDate')"
       dateFormat="yy-mm-dd" appendTo="body" />
     <label for="paymentDateInput">Pago</label>
   </p-floatlabel>

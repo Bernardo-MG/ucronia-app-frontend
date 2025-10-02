@@ -19,11 +19,12 @@ import { MessageModule } from 'primeng/message';
 export class FeePayForm {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
+    this.months.clear();
+    this.addDate();
     this.fullname = value.name.fullName;
   }
 
@@ -39,23 +40,24 @@ export class FeePayForm {
 
   public fullname = "";
 
+  public today = new Date();
+
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
   }
 
   constructor() {
-
     this.form = this.fb.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
-      months: this.fb.array([''], Validators.required)
+      months: this.fb.array([], Validators.required)
     });
 
     this.formStatus = new FormStatus(this.form);
   }
 
   public addDate() {
-    this.months.push(this.fb.control(''));
+    this.months.push(this.fb.control(undefined));
   }
 
   public removeDate(index: number): void {

@@ -3,6 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
@@ -21,6 +22,8 @@ describe('FeeList', () => {
         FeeCalendarService,
         FeeService,
         FeeReportService,
+        MessageService,
+        ConfirmationService,
         provideAnimationsAsync(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),

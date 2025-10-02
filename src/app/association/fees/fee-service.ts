@@ -45,17 +45,18 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public delete(date: Date, memberNumber: number): Observable<boolean> {
+  public delete(month: Date, memberNumber: number): Observable<boolean> {
+    const formattedMonth = month.toISOString().slice(0, 7);
     return this.feeClient
-      .appendRoute(`/${date}/${memberNumber}`)
+      .appendRoute(`/${formattedMonth}/${memberNumber}`)
       .delete<SimpleResponse<boolean>>()
       .pipe(map(r => r.content));
   }
 
-  public getOne(date: Date, memberNumber: number): Observable<Fee> {
-    const formattedDate = date.toISOString().slice(0, 7);
+  public getOne(month: Date, memberNumber: number): Observable<Fee> {
+    const formattedMonth = month.toISOString().slice(0, 7);
     return this.feeClient
-      .appendRoute(`/${formattedDate}/${memberNumber}`)
+      .appendRoute(`/${formattedMonth}/${memberNumber}`)
       .read<SimpleResponse<Fee>>()
       .pipe(map(r => r.content));
   }

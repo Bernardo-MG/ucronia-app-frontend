@@ -19,7 +19,6 @@ import { MessageModule } from 'primeng/message';
 export class FeeCreationForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   @Input() public set member(value: Member) {
