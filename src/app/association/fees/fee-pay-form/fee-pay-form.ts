@@ -40,6 +40,8 @@ export class FeePayForm {
 
   public fullname = "";
 
+  public today = new Date();
+
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
   }
