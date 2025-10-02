@@ -37,6 +37,10 @@ export class FeeCalendar implements OnChanges {
 
   private index = 0;
 
+  public get selectionDisabled() {
+    return this.loading() || (this.range().years.length === 0);
+  }
+
   public get canGoNext() {
     return (this.index >= 0) && ((this.index + 1) < this.range().years.length);
   }

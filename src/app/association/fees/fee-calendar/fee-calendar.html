@@ -4,7 +4,7 @@
   <p-button id="previousYearButton" icon="pi pi-caret-left" (click)="onGoPrevious()" [disabled]="!canGoPrevious"
     [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year" rounded text />
   <!-- Current year -->
-  <p-select [(ngModel)]="year" [disabled]="loading()" [options]="years" (onChange)="onGoTo($event)" />
+  <p-select [(ngModel)]="year" [disabled]="selectionDisabled" [options]="years" (onChange)="onGoTo($event)" />
   <!-- To next year button -->
   <p-button id="nextYearButton" icon="pi pi-caret-right" (click)="onGoNext()" [disabled]="!canGoNext"
     [attr.aria-disabled]="!canGoNext" aria-label="Previous year" rounded text />
