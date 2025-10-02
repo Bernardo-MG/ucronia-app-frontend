@@ -25,13 +25,13 @@ import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
-import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
+import { FeePaymentBalanceChart } from '../fee-payment-balance-chart/fee-payment-balance-chart';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
 
 @Component({
   selector: 'assoc-fee-list',
-  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentBalanceChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-list.html'
 })
 export class FeeList implements OnInit {

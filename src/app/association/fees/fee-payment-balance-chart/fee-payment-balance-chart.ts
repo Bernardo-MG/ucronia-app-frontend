@@ -4,11 +4,11 @@ import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'assoc-fee-payment-chart',
+  selector: 'assoc-fee-payment-balance-chart',
   imports: [],
-  templateUrl: './fee-payment-chart.html'
+  templateUrl: './fee-payment-balance-chart.html'
 })
-export class FeePaymentChart implements OnInit, OnDestroy {
+export class FeePaymentBalanceChart implements OnInit, OnDestroy {
 
   public readonly report = input(new FeePaymentReport());
 
