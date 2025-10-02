@@ -1,5 +1,5 @@
 
-import { Component, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
 
@@ -8,14 +8,16 @@ import Chart from 'chart.js/auto';
   imports: [],
   templateUrl: './fee-payment-balance-chart.html'
 })
-export class FeePaymentBalanceChart implements OnInit, OnDestroy {
+export class FeePaymentBalanceChart implements OnChanges, OnDestroy {
 
   public readonly report = input(new FeePaymentReport());
 
   public chart: any;
 
-  public ngOnInit(): void {
-    this.loadChart(this.report());
+  public ngOnChanges({ report }: SimpleChanges): void {
+    if (report) {
+      this.loadChart(report.currentValue);
+    }
   }
 
   public ngOnDestroy(): void {
