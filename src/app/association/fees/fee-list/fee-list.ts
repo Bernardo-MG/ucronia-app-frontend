@@ -92,18 +92,18 @@ export class FeeList implements OnInit {
 
       // Load initial year
       this.loadCalendar(this.year);
-
-      this.creationItems.push(
-        {
-          label: 'Pagar cuota',
-          command: () => this.onStartEditingView('pay')
-        });
-      this.creationItems.push(
-        {
-          label: 'Cuota sin pagar',
-          command: () => this.onStartEditingView('create')
-        });
     });
+
+    this.creationItems.push(
+      {
+        label: 'Pagar cuota',
+        command: () => this.onStartEditingView('pay')
+      });
+    this.creationItems.push(
+      {
+        label: 'Cuota sin pagar',
+        command: () => this.onStartEditingView('create')
+      });
 
     // Load report
     this.loadReport();
@@ -203,6 +203,7 @@ export class FeeList implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
+          this.showing = false;
           this.loadCalendar(this.year);
           this.loadReport();
           onSuccess();
