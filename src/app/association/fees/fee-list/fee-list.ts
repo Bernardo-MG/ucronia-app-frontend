@@ -82,17 +82,7 @@ export class FeeList implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.feeCalendarService.getRange().subscribe(d => {
-      this.range = d;
-      const lastYear = Number(this.range.years[this.range.years.length - 1]);
-      // If the current year is after the last year, move backwards to the last year
-      if (this.year > lastYear) {
-        this.year = lastYear;
-      }
-
-      // Load initial year
-      this.loadCalendar(this.year);
-    });
+    this.loadInitialRange();
 
     this.creationItems.push(
       {
@@ -185,6 +175,7 @@ export class FeeList implements OnInit {
   public loadCalendar(year: number) {
     this.loadingCalendar = true;
 
+    this.year = year;
     this.feeCalendarService.getCalendar(year, this.activeFilter)
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
@@ -193,6 +184,36 @@ export class FeeList implements OnInit {
   private loadReport() {
     this.reportService.getPaymentReport()
       .subscribe(response => this.report = response);
+  }
+
+  private loadInitialRange() {
+    this.feeCalendarService.getRange().subscribe(d => {
+      this.range = d;
+      this.loadYear();
+
+      // Load initial year
+      this.loadCalendar(this.year);
+    });
+  }
+
+  private loadRange() {
+    this.feeCalendarService.getRange().subscribe(d => {
+      this.range = d;
+      this.loadYear();
+    });
+  }
+
+  private loadYear() {
+    if (this.range.years.length) {
+      const firstYear = Number(this.range.years[0]);
+      const lastYear = Number(this.range.years[this.range.years.length - 1]);
+      // If the current year is outside the range, set it back
+      if (this.year < firstYear) {
+        this.year = firstYear;
+      } else if (this.year > lastYear) {
+        this.year = lastYear;
+      }
+    }
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
@@ -204,6 +225,7 @@ export class FeeList implements OnInit {
           this.failures.clear();
           this.view = 'none';
           this.showing = false;
+          this.loadRange();
           this.loadCalendar(this.year);
           this.loadReport();
           onSuccess();
