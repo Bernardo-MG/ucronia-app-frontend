@@ -136,4 +136,92 @@ describe('FeeCalendar', () => {
 
   });
 
+  describe('change year', () => {
+
+    it('should go to a specific year and emit the event', () => {
+      spyOn(component.goToYear, 'emit');
+      component.currentYear = 2023;
+
+      component.onGoTo({ value: 2020 });
+
+      expect(component.currentYear).toBe(2020);
+      expect(component.goToYear.emit).toHaveBeenCalledWith(2020);
+    });
+
+    it('should go to the previous year and emit the event', () => {
+      spyOn(component.goToYear, 'emit');
+      component.currentYear = 2023;
+
+      component.onGoPrevious();
+
+      expect(component.currentYear).toBe(2022);
+      expect(component.goToYear.emit).toHaveBeenCalledWith(2020);
+    });
+
+    it('should go to the next year and emit the event', () => {
+      spyOn(component.goToYear, 'emit');
+      component.currentYear = 2023;
+
+      component.onGoNext();
+
+      expect(component.currentYear).toBe(2024);
+      expect(component.goToYear.emit).toHaveBeenCalledWith(2022);
+    });
+
+  });
+
+  describe('support methods', () => {
+
+    it('should check if a month exists in member fees', () => {
+      const months = [{ month: new Date(2021, 0, 1), paid: true }];
+
+      expect(component.hasMonth(months, 1)).toBeTrue();
+    });
+
+    it('should check if a month doesn\'t exist in member fees', () => {
+      const months = [{ month: new Date(2021, 0, 1), paid: true }];
+
+      expect(component.hasMonth(months, 2)).toBeFalse();
+    });
+
+    it('should check if a month is paid', () => {
+      const months = [{ month: new Date(2021, 0, 1), paid: true }];
+
+      expect(component.isPaid(months, 1)).toBeTrue();
+    });
+
+    it('should check if a month is not paid', () => {
+      const months = [{ month: new Date(2021, 0, 1), paid: false }];
+
+      expect(component.isPaid(months, 1)).toBeFalse();
+    });
+
+    it('should get the correct month date', () => {
+      const months = [{ month: new Date(2021, 0, 1), paid: true }];
+
+      expect(component.getMonth(months, 1)).toEqual(new Date(2021, 0, 1));
+    });
+
+    it('should disable selection when loading', () => {
+      fixture.componentRef.setInput('loading', true);
+      fixture.detectChanges();
+      expect(component.selectionDisabled).toBeTrue();
+    });
+
+    it('should disable selection when range is empty', () => {
+      fixture.componentRef.setInput('range', { years: [] });
+      fixture.detectChanges();
+      expect(component.selectionDisabled).toBeTrue();
+    });
+
+  });
+
+  it('should emit selectFee event with correct payload', () => {
+    spyOn(component.selectFee, 'emit');
+    const months = [{ month: new Date(2021, 0, 1), paid: true }];
+
+    component.onSelectFee(123, months, 1);
+    expect(component.selectFee.emit).toHaveBeenCalledWith({ member: 123, date: new Date(2021, 0, 1) });
+  });
+
 });
