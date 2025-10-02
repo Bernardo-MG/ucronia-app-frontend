@@ -99,7 +99,7 @@ export class AssociationLayout {
       items.push(
         {
           label: 'Gente',
-          routerLink: '/association/admin/people',
+          routerLink: '/association/people',
           icon: 'pi pi-users'
         });
     }
@@ -107,7 +107,7 @@ export class AssociationLayout {
       items.push(
         {
           label: 'Cuotas',
-          routerLink: '/association/admin/fees',
+          routerLink: '/association/fees',
           icon: 'pi pi-money-bill'
         });
     }
@@ -115,7 +115,7 @@ export class AssociationLayout {
       items.push(
         {
           label: 'Fondos',
-          routerLink: '/association/admin/funds',
+          routerLink: '/association/funds',
           icon: 'pi pi-money-bill'
         });
     }
