@@ -45,9 +45,7 @@ export class FeeList implements OnInit {
   public readonly createable;
   public readonly editable;
 
-  public viewCreate = false;
-  public viewPay = false;
-  public viewEdit = false;
+  public editing = false;
 
   public activeFilter = Active.Active;
 
@@ -68,6 +66,8 @@ export class FeeList implements OnInit {
   public failures = new FailureStore();
 
   public feeCalendar: FeeCalendarYear[] = [];
+
+  public view: string = '';
 
   public readonly creationItems: MenuItem[] = [];
 
@@ -96,12 +96,12 @@ export class FeeList implements OnInit {
       this.creationItems.push(
         {
           label: 'Pagar cuota',
-          command: () => this.viewPay = true
+          command: () => this.onStartEditingView('pay')
         });
       this.creationItems.push(
         {
           label: 'Cuota sin pagar',
-          command: () => this.viewCreate = true
+          command: () => this.onStartEditingView('create')
         });
     });
 
@@ -165,6 +165,19 @@ export class FeeList implements OnInit {
     this.loadCalendar(this.year);
   }
 
+  public onGoToYear(year: number) {
+    this.loadCalendar(year);
+  }
+
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
+  }
+
+  public onGetSelection(page: number, active: Active) {
+    return this.service.getPersons(page, active);
+  }
+
   public onSelectMember(member: any) {
     this.selectedMember = (member as Member);
   }
@@ -189,10 +202,7 @@ export class FeeList implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.showing = false;
-          this.viewCreate = false;
-          this.viewPay = false;
-          this.viewEdit = false;
+          this.view = 'none';
           this.loadCalendar(this.year);
           this.loadReport();
           onSuccess();
