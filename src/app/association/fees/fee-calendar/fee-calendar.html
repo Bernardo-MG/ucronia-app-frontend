@@ -20,9 +20,12 @@
     </tr>
   </ng-template>
   <ng-template #body let-memberFees>
-    <tr [ngClass]="{ 'table-warning': !memberFees.member.active}">
+    <tr>
       <td>
         {{memberFees.member.name.fullName}}
+        @if (!memberFees.member.active) {
+          <p-tag severity="danger" value="Inactivo" />
+        }
       </td>
       <!-- Month fees -->
       @for (monthNumber of monthNumbers; track monthNumber) {

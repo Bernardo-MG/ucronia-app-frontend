@@ -8,10 +8,11 @@ import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, JustifyCenterDirective],
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, TagModule , JustifyCenterDirective],
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
