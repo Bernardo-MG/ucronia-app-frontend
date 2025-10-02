@@ -32,6 +32,8 @@ export class TransactionForm implements OnChanges {
 
   public form: FormGroup;
 
+  public today = new Date();
+
   constructor() {
     const fb = inject(FormBuilder);
 

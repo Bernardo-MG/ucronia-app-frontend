@@ -13,7 +13,7 @@
   </div>
   <!-- Date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="dateInput" formControlName="date" [invalid]="isFieldInvalid('date')"
+    <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
       dateFormat="yy-mm-dd" appendTo="body" />
     <label for="dateInput">Fecha</label>
   </p-floatlabel>
