@@ -29,8 +29,6 @@ export class MemberSelectStepper implements OnInit {
 
   public currentStep = 1;
 
-  public pay = true;
-
   public ngOnInit(): void {
     this.getSelection = (page: number) => this.getMemberSelection()(page, Active.Active);
   }
