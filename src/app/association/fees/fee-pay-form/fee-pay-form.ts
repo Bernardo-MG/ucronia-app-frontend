@@ -23,6 +23,8 @@ export class FeePayForm {
 
   @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
+    this.months.clear();
+    this.addDate();
     this.fullname = value.name.fullName;
   }
 
@@ -46,14 +48,14 @@ export class FeePayForm {
     this.form = this.fb.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
-      months: this.fb.array([''], Validators.required)
+      months: this.fb.array([], Validators.required)
     });
 
     this.formStatus = new FormStatus(this.form);
   }
 
   public addDate() {
-    this.months.push(this.fb.control(''));
+    this.months.push(this.fb.control(undefined));
   }
 
   public removeDate(index: number): void {
