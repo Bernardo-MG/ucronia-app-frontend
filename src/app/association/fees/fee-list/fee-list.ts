@@ -82,7 +82,7 @@ export class FeeList implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loadInitialRange();
+    this.loadRange();
 
     this.creationItems.push(
       {
@@ -186,20 +186,13 @@ export class FeeList implements OnInit {
       .subscribe(response => this.report = response);
   }
 
-  private loadInitialRange() {
+  private loadRange() {
     this.feeCalendarService.getRange().subscribe(d => {
       this.range = d;
       this.loadYear();
 
       // Load initial year
       this.loadCalendar(this.year);
-    });
-  }
-
-  private loadRange() {
-    this.feeCalendarService.getRange().subscribe(d => {
-      this.range = d;
-      this.loadYear();
     });
   }
 
@@ -226,7 +219,6 @@ export class FeeList implements OnInit {
           this.view = 'none';
           this.showing = false;
           this.loadRange();
-          this.loadCalendar(this.year);
           this.loadReport();
           onSuccess();
         },
