@@ -5,6 +5,7 @@ import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
+import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/person/active';
 import { MemberSelectStepper } from '@app/shared/person/components/member-select-stepper/member-select-stepper';
@@ -25,8 +26,8 @@ import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeePaymentChart } from '../fee-payment-chart/fee-payment-chart';
+import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
-import { FeeCalendarSelection } from '../model/fee-calendar-selection';
 
 @Component({
   selector: 'assoc-fee-list',
@@ -37,6 +38,7 @@ export class FeeList implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
   private readonly service = inject(FeeService);
+  private readonly reportService = inject(FeeReportService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -69,6 +71,8 @@ export class FeeList implements OnInit {
 
   public readonly creationItems: MenuItem[] = [];
 
+  public report = new FeePaymentReport();
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -100,6 +104,9 @@ export class FeeList implements OnInit {
           command: () => this.viewCreate = true
         });
     });
+
+    // Load report
+    this.loadReport();
   }
 
   public onUpdate(toUpdate: Fee): void {
@@ -178,6 +185,11 @@ export class FeeList implements OnInit {
       .subscribe(data => this.feeCalendar = data);
   }
 
+  private loadReport() {
+    this.reportService.getPaymentReport()
+      .subscribe(response => this.report = response);
+  }
+
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
@@ -190,6 +202,7 @@ export class FeeList implements OnInit {
           this.viewPay = false;
           this.viewEdit = false;
           this.loadCalendar(this.year);
+          this.loadReport();
           onSuccess();
         },
         error: error => {

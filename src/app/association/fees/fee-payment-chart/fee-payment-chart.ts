@@ -1,28 +1,21 @@
 
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, input, OnDestroy, OnInit } from '@angular/core';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import Chart from 'chart.js/auto';
-import { FeeReportService } from '../fee-report-service';
 
 @Component({
   selector: 'assoc-fee-payment-chart',
   imports: [],
   templateUrl: './fee-payment-chart.html'
 })
-export class FeePaymentChart implements OnDestroy {
+export class FeePaymentChart implements OnInit, OnDestroy {
 
-  public report = new FeePaymentReport();
+  public readonly report = input(new FeePaymentReport());
 
   public chart: any;
 
-  constructor() {
-    const service = inject(FeeReportService);
-
-    this.report.paid = 0;
-    this.report.unpaid = 0;
-
-    service.getPaymentReport()
-      .subscribe(response => this.loadChart(response));
+  public ngOnInit(): void {
+    this.loadChart(this.report());
   }
 
   public ngOnDestroy(): void {
