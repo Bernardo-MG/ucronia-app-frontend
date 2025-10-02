@@ -14,7 +14,6 @@ import { SkeletonModule } from 'primeng/skeleton';
 export class FeeInfo {
 
   public readonly loading = input(false);
-
   public readonly data = input(new Fee());
 
   private readonly router = inject(Router);

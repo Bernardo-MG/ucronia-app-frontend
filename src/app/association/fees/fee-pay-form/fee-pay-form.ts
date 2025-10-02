@@ -19,7 +19,6 @@ import { MessageModule } from 'primeng/message';
 export class FeePayForm {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   @Input() public set member(value: Member) {
@@ -44,7 +43,6 @@ export class FeePayForm {
   }
 
   constructor() {
-
     this.form = this.fb.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],

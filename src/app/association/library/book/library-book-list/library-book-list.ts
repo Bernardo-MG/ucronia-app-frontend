@@ -244,6 +244,20 @@ export class LibraryBookList implements OnInit {
     );
   }
 
+  public onLend(toSave: BookLent) {
+    this.call(
+      () => this.service.lend(toSave),
+      () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 })
+    );
+  }
+
+  public onReturn(toSave: BookReturned) {
+    this.call(
+      () => this.service.return(toSave),
+      () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 })
+    );
+  }
+
   public onDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
@@ -423,16 +437,6 @@ export class LibraryBookList implements OnInit {
 
   public getBookType(book: FictionBook | GameBook): BookType {
     return (book as GameBook).bookType as BookType;
-  }
-
-  public onLend(toSave: BookLent) {
-    this.call(() => this.service.lend(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 }));
-  }
-
-  public onReturn(toSave: BookReturned) {
-    this.call(() => this.service.return(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 }));
   }
 
   private load(page: number) {

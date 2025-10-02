@@ -18,7 +18,6 @@ import { MessageModule } from 'primeng/message';
 export class FeeEditionForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: Fee) {
