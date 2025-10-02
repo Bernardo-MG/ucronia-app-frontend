@@ -42,7 +42,9 @@ export class FeeList implements OnInit {
   public readonly createable;
   public readonly editable;
 
-  public editing = false;
+  public viewCreate = false;
+  public viewPay = false;
+  public viewEdit = false;
 
   public activeFilter = Active.Active;
 
@@ -63,8 +65,6 @@ export class FeeList implements OnInit {
   public failures = new FailureStore();
 
   public feeCalendar: FeeCalendarYear[] = [];
-
-  public view: string = '';
 
   public readonly creationItems: MenuItem[] = [];
 
@@ -91,12 +91,12 @@ export class FeeList implements OnInit {
       this.creationItems.push(
         {
           label: 'Pagar cuota',
-          command: () => this.onStartEditingView('pay')
+          command: () => this.viewPay = true
         });
       this.creationItems.push(
         {
           label: 'Cuota sin pagar',
-          command: () => this.onStartEditingView('create')
+          command: () => this.viewCreate = true
         });
     });
   }
@@ -132,12 +132,6 @@ export class FeeList implements OnInit {
     this.showing = true;
   }
 
-  public onSelectMonth(selection: FeeCalendarSelection) {
-    this.service.getOne(selection.month, selection.number)
-      .pipe(finalize(() => this.onStartEditingView('edition')))
-      .subscribe(fee => this.selectedData = fee);
-  }
-
   public onChangeActiveFilter(active: Active) {
     this.activeFilter = active;
     this.loadCalendar(this.year);
@@ -145,11 +139,6 @@ export class FeeList implements OnInit {
 
   public onGoToYear(year: number) {
     this.loadCalendar(year);
-  }
-
-  public onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
   }
 
   public onGetSelection(page: number, active: Active) {
@@ -175,7 +164,9 @@ export class FeeList implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.view = 'none';
+          this.viewCreate = false;
+          this.viewPay = false;
+          this.viewEdit = false;
           this.loadCalendar(this.year);
           onSuccess();
         },

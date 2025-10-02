@@ -22,30 +22,23 @@
       (goToYear)="onGoToYear($event)" (selectFee)="onSelectFee($event)" />
   </p-panel>
 </div>
+<!-- Dialogs -->
 <p-dialog header="Cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <assoc-fee-info [data]="selectedData" [loading]="loading" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-    [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
+    [attr.aria-disabled]="!editable" (click)="viewEdit = true" rounded text />
 </p-dialog>
-@switch (view) {
-  @case ('create') {
-    <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
-        <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
-          (save)="onCreateUnpaid($event)" />
-      </assoc-member-select-stepper>
-    </p-dialog>
-  }
-  @case ('pay') {
-    <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
-        <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
-      </assoc-member-select-stepper>
-    </p-dialog>
-  }
-  @case ('edition') {
-    <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-fee-edition-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
-    </p-dialog>
-  }
-}
+<p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="viewCreate" [style]="{ width: '50rem' }">
+  <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
+    <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
+      (save)="onCreateUnpaid($event)" />
+  </assoc-member-select-stepper>
+</p-dialog>
+<p-dialog header="Pagar cuota" [modal]="true" [(visible)]="viewPay" [style]="{ width: '50rem' }">
+  <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
+    <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
+  </assoc-member-select-stepper>
+</p-dialog>
+<p-dialog header="Editar cuota" [modal]="true" [(visible)]="viewEdit" [style]="{ width: '25rem' }">
+  <assoc-fee-edition-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+</p-dialog>
