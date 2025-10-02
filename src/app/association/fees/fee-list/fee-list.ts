@@ -11,7 +11,7 @@ import { MemberSelectStepper } from '@app/shared/person/components/member-select
 import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -38,6 +38,7 @@ export class FeeList implements OnInit {
   private readonly feeCalendarService = inject(FeeCalendarService);
   private readonly service = inject(FeeService);
   private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly createable;
   public readonly editable;
@@ -126,6 +127,26 @@ export class FeeList implements OnInit {
     );
   }
 
+  public onDelete(event: Event, fee: Fee) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.call(
+        () => this.service.delete(fee.month, fee.member.number),
+        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+    });
+  }
+
   public onSelectFee(fee: { member: number, date: Date }) {
     this.service.getOne(fee.date, fee.member)
       .subscribe(fee => this.selectedData = fee);
@@ -164,6 +185,7 @@ export class FeeList implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
+          this.showing = false;
           this.viewCreate = false;
           this.viewPay = false;
           this.viewEdit = false;

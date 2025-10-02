@@ -27,6 +27,8 @@
   <assoc-fee-info [data]="selectedData" [loading]="loading" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
     [attr.aria-disabled]="!editable" (click)="viewEdit = true" rounded text />
+  <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
+    [attr.aria-disabled]="!editable" (click)="onDelete($event, selectedData)" rounded text />
 </p-dialog>
 <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="viewCreate" [style]="{ width: '50rem' }">
   <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)" (selectMember)="onSelectMember($event)">
