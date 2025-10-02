@@ -150,21 +150,23 @@ describe('FeeCalendar', () => {
 
     it('should go to the previous year and emit the event', () => {
       spyOn(component.goToYear, 'emit');
-      component.currentYear = 2023;
+      component.currentYear = 1;
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
 
       component.onGoPrevious();
 
-      expect(component.currentYear).toBe(2022);
+      expect(component.currentYear).toBe(2020);
       expect(component.goToYear.emit).toHaveBeenCalledWith(2020);
     });
 
     it('should go to the next year and emit the event', () => {
       spyOn(component.goToYear, 'emit');
-      component.currentYear = 2023;
+      component.currentYear = 1;
+      fixture.componentRef.setInput('range', { years: [2020, 2021, 2022] });
 
       component.onGoNext();
 
-      expect(component.currentYear).toBe(2024);
+      expect(component.currentYear).toBe(2022);
       expect(component.goToYear.emit).toHaveBeenCalledWith(2022);
     });
 
