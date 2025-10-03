@@ -161,6 +161,7 @@ export class FeeList implements OnInit {
 
   public onStartEditingView(view: string): void {
     this.view = view;
+    this.showing = false;
     this.editing = true;
   }
 
