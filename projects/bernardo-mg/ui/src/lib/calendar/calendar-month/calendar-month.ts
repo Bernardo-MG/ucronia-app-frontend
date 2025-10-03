@@ -23,7 +23,7 @@ import { Month } from '../models/month';
 })
 export class CalendarMonth implements OnChanges {
 
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
   public readonly events = input<CalendarEvent<any>[]>([]);
   public readonly month = input(new Date());
 
