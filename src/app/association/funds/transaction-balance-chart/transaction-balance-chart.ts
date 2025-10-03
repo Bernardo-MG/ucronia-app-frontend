@@ -12,7 +12,7 @@ import { TransactionBalanceService } from '../transaction-balance-service';
   imports: [FormsModule, SelectModule],
   templateUrl: './transaction-balance-chart.html'
 })
-export class TransactionBalanceChartContainer {
+export class TransactionBalanceChart {
 
   private readonly balanceService = inject(TransactionBalanceService);
 

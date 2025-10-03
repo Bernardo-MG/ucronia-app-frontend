@@ -2,22 +2,22 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionBalanceService } from '../transaction-balance-service';
-import { TransactionBalanceChartContainer } from './transaction-balance-chart';
+import { TransactionBalanceChart } from './transaction-balance-chart';
 
-describe('TransactionBalanceChartContainer', () => {
-  let component: TransactionBalanceChartContainer;
-  let fixture: ComponentFixture<TransactionBalanceChartContainer>;
+describe('TransactionBalanceChart', () => {
+  let component: TransactionBalanceChart;
+  let fixture: ComponentFixture<TransactionBalanceChart>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TransactionBalanceChartContainer],
+      imports: [TransactionBalanceChart],
       providers: [
         TransactionBalanceService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting()
       ]
     });
-    fixture = TestBed.createComponent(TransactionBalanceChartContainer);
+    fixture = TestBed.createComponent(TransactionBalanceChart);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
