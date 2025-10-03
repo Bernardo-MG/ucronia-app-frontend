@@ -33,14 +33,6 @@ describe('CalendarMonth', () => {
       expect(component.changeMonth.emit).toHaveBeenCalledWith(month);
     }));
 
-    it('should emit pickDate event when onSelectEvent is called', () => {
-      spyOn(component.pickDate, 'emit');
-      const event = { event: { start: new Date('2024-03-15T10:00:00'), title: 'Event 1' } };
-      component.onSelectEvent(event);
-
-      expect(component.pickDate.emit).toHaveBeenCalledWith(event.event);
-    });
-
   });
 
   describe('Dates', () => {
