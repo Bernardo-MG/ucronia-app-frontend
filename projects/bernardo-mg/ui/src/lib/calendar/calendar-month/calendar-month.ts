@@ -27,17 +27,17 @@ export class CalendarMonth implements OnChanges {
   public readonly events = input<CalendarEvent<any>[]>([]);
   public readonly month = input(new Date());
 
-  public months: { value: Date, label: string }[] = [];
+  public selectionMonths: { value: Date, label: string }[] = [];
 
-  private _selectionMonths: Date[] = [];
-  @Input() public set selectionMonths(months: Date[]) {
-    this._selectionMonths = [...months].reverse();
-    this.months = this._selectionMonths
+  private _months: Date[] = [];
+  @Input() public set months(months: Date[]) {
+    this._months = [...months].reverse();
+    this.selectionMonths = this._months
       .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
     this.updateCurrentMonth();
   }
-  public get selectionMonths() {
-    return this._selectionMonths;
+  public get months() {
+    return this._months;
   }
 
   public readonly changeMonth = output<Date>();
@@ -75,13 +75,13 @@ export class CalendarMonth implements OnChanges {
   }
 
   private updateCurrentMonth() {
-    if (!this.selectionMonths.length) {
+    if (!this.months.length) {
       this.currentMonth = new Date();
     } else {
-      const exists = this.selectionMonths.some(m => m === this.currentMonth);
+      const exists = this.months.some(m => m === this.currentMonth);
       if (!exists) {
         // Choose latest date
-        this.setMonth(this.selectionMonths[this.selectionMonths.length - 1]);
+        this.setMonth(this.months[this.months.length - 1]);
       }
     }
   }

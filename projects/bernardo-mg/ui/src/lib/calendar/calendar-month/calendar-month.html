@@ -2,7 +2,7 @@
 <div uiJustifyCenter>
   <!-- Current month -->
   <div>
-    <p-select [(ngModel)]="currentMonth" [options]="months" (onChange)="onGoTo($event)" optionLabel="label"
+    <p-select [(ngModel)]="currentMonth" [options]="selectionMonths" (onChange)="onGoTo($event)" optionLabel="label"
       optionValue="value" />
   </div>
 </div>

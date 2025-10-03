@@ -31,7 +31,7 @@ export class Funds implements OnInit {
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
 
-  public selectionMonths: Date[] = [];
+  public months: Date[] = [];
   public month = new Date();
 
   public loading = false;
@@ -66,7 +66,7 @@ export class Funds implements OnInit {
     this.transactionCalendarService.getRange()
       .subscribe(months => {
         // To show in the selection box we have to reverse the order
-        this.selectionMonths = months
+        this.months = months
           .map(m => new Date(`${m.year}-${m.month}`));
         // TODO: What happens if this date is not in the range?
         if (!this.loadingCalendar) {
@@ -84,8 +84,8 @@ export class Funds implements OnInit {
 
   private setInitialMonth() {
     const date = new Date();
-    if (this.selectionMonths.length > 0) {
-      const month = this.selectionMonths[this.selectionMonths.length - 1];
+    if (this.months.length > 0) {
+      const month = this.months[this.months.length - 1];
       if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
         // The current date is after the last date in range
         // Replace with the last date
