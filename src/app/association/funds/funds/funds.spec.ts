@@ -3,6 +3,7 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { Funds } from './funds';
@@ -17,6 +18,8 @@ describe('Funds', () => {
         Funds
       ],
       providers: [
+        MessageService,
+        ConfirmationService,
         TransactionCalendarService,
         TransactionBalanceService,
         provideAnimationsAsync(),
