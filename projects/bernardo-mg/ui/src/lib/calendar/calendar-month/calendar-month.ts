@@ -34,6 +34,7 @@ export class CalendarMonth implements OnChanges {
   public selectionMonths: { value: Date, label: string }[] = [];
 
   public currentMonth = new Date();
+  public viewDate = new Date();
 
   public activeDayIsOpen = false;
 
@@ -55,7 +56,7 @@ export class CalendarMonth implements OnChanges {
     if (isSameMonth(date, this.currentMonth)) {
       const sameDay = isSameDay(this.currentMonth, date);
       this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;
-      this.currentMonth = date;
+      this.viewDate = date;
     }
   }
 
