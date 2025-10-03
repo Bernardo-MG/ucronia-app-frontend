@@ -25,7 +25,8 @@ export class CalendarMonth implements OnChanges {
 
   public readonly loading = input(false);
   public readonly events = input<CalendarEvent<any>[]>([]);
-  public readonly month = input(new Date());
+
+  public readonly month = new Date();
 
   public selectionMonths: { value: Date, label: string }[] = [];
 
@@ -47,9 +48,9 @@ export class CalendarMonth implements OnChanges {
 
   public activeDayIsOpen = false;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['month']) {
-      this.setMonth(this.month());
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['months']) {
+      this.loadInitialMonth();
     }
   }
 
@@ -89,6 +90,23 @@ export class CalendarMonth implements OnChanges {
   private setMonth(month: Date) {
     this.currentMonth = month;
     this.activeDayIsOpen = false;
+  }
+
+
+  private loadInitialMonth() {
+    const date = new Date();
+    if (this.months.length > 0) {
+      const month = this.months[0];
+      if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
+        // The current date is after the last date in range
+        // Replace with the last date
+        this.currentMonth = month;
+      } else {
+        this.currentMonth = new Date();
+      }
+    } else {
+      this.currentMonth = new Date();
+    }
   }
 
 }

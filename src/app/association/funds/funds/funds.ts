@@ -32,7 +32,6 @@ export class Funds implements OnInit {
   private readonly reportService = inject(TransactionReportService);
 
   public months: Date[] = [];
-  public month = new Date();
 
   public loading = false;
   public loadingCalendar = false;
@@ -68,10 +67,8 @@ export class Funds implements OnInit {
         // To show in the selection box we have to reverse the order
         this.months = months
           .map(m => new Date(`${m.year}-${m.month}`));
-        // TODO: What happens if this date is not in the range?
         if (!this.loadingCalendar) {
-          this.setInitialMonth();
-          this.loadCalendar();
+          this.loadCalendar(this.getDefaultMonth());
         }
       });
 
@@ -80,22 +77,6 @@ export class Funds implements OnInit {
     this.transactionBalanceService.current()
       .pipe(finalize(() => this.loadingBalance = false))
       .subscribe(b => this.balance = b);
-  }
-
-  private setInitialMonth() {
-    const date = new Date();
-    if (this.months.length > 0) {
-      const month = this.months[this.months.length - 1];
-      if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
-        // The current date is after the last date in range
-        // Replace with the last date
-        this.month = month;
-      } else {
-        this.month = new Date();
-      }
-    } else {
-      this.month = new Date();
-    }
   }
 
   public onCreate(toCreate: Transaction): void {
@@ -114,7 +95,7 @@ export class Funds implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
-          this.loadCalendar();
+          this.loadCalendar(this.getDefaultMonth());
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -133,12 +114,6 @@ export class Funds implements OnInit {
     this.editing = true;
   }
 
-  public onChangeMonth(date: Date) {
-    // Corrects month value
-    this.month = date;
-    this.loadCalendar();
-  }
-
   public onShowInfo(event: CalendarEvent<{ transactionId: number }>) {
     if (event.meta) {
       this.service.getOne(event.meta.transactionId)
@@ -154,11 +129,21 @@ export class Funds implements OnInit {
       .subscribe();
   }
 
-  private loadCalendar() {
+  public loadCalendar(month: Date) {
     this.loadingCalendar = true;
-    this.transactionCalendarService.getCalendar(this.month.getFullYear(), this.month.getMonth())
+    this.transactionCalendarService.getCalendar(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(events => this.events = events);
+  }
+
+  private getDefaultMonth() {
+    let month;
+    if (this.months.length) {
+      month = this.months[this.months.length - 1];
+    } else {
+      month = new Date();
+    }
+    return month
   }
 
 }
