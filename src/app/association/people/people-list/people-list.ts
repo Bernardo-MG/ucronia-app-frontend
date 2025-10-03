@@ -1,6 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
 import { Active } from '@app/domain/person/active';
 import { Membership } from '@app/domain/person/membership';
 import { Person } from '@app/domain/person/person';
@@ -27,12 +26,10 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, CardModule, ConfirmPopupModule, ButtonModule, DialogModule, DrawerModule, RouterModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, CardModule, ConfirmPopupModule, ButtonModule, DialogModule, DrawerModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
   templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {
-
-  private readonly router = inject(Router);
 
   private readonly service = inject(PeopleService);
 
