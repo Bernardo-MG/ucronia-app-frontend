@@ -6,6 +6,7 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { CalendarMonth } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -30,6 +31,8 @@ export class Funds implements OnInit {
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
+  private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public months: Date[] = [];
 
@@ -81,32 +84,37 @@ export class Funds implements OnInit {
   }
 
   public onCreate(toCreate: Transaction): void {
-    this.mutate(() => this.service.create(toCreate));
+    this.call(
+      () => this.service.create(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onUpdate(toCreate: Transaction): void {
-    this.mutate(() => this.service.update(toCreate));
+    this.call(
+      () => this.service.update(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
   }
 
-  private mutate(action: () => Observable<any>) {
-    this.loading = true;
-    action()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: () => {
-          this.failures.clear();
-          this.view = 'none';
-          this.loadCalendar(this.getDefaultMonth());
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
-      });
+  public onDelete(event: Event, transaction: Transaction) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.call(
+        () => this.service.delete(transaction.index),
+        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+    });
   }
 
   public onStartEditingView(view: string): void {
@@ -145,6 +153,29 @@ export class Funds implements OnInit {
       month = new Date();
     }
     return month
+  }
+
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.showing = false;
+          this.loadCalendar(this.getDefaultMonth());
+          onSuccess();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
   }
 
 }
