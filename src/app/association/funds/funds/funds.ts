@@ -4,7 +4,7 @@ import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { CalendarMonth, Month } from '@bernardo-mg/ui';
+import { CalendarMonth } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -31,8 +31,8 @@ export class Funds implements OnInit {
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
 
-  public selectionMonths: Month[] = [];
-  public month = this.getCurrentMonth();
+  public selectionMonths: Date[] = [];
+  public month = new Date();
 
   public loading = false;
   public loadingCalendar = false;
@@ -66,7 +66,8 @@ export class Funds implements OnInit {
     this.transactionCalendarService.getRange()
       .subscribe(months => {
         // To show in the selection box we have to reverse the order
-        this.selectionMonths = months;
+        this.selectionMonths = months
+          .map(m => new Date(`${m.year}-${m.month}`));
         // TODO: What happens if this date is not in the range?
         if (!this.loadingCalendar) {
           this.setInitialMonth();
@@ -85,15 +86,15 @@ export class Funds implements OnInit {
     const date = new Date();
     if (this.selectionMonths.length > 0) {
       const month = this.selectionMonths[this.selectionMonths.length - 1];
-      if ((date.getFullYear() >= month.year) || ((date.getFullYear() >= month.year) && (date.getMonth() >= month.month))) {
+      if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
         // The current date is after the last date in range
         // Replace with the last date
         this.month = month;
       } else {
-        this.month = this.getCurrentMonth();
+        this.month = new Date();
       }
     } else {
-      this.month = this.getCurrentMonth();
+      this.month = new Date();
     }
   }
 
@@ -132,7 +133,7 @@ export class Funds implements OnInit {
     this.editing = true;
   }
 
-  public onChangeMonth(date: Month) {
+  public onChangeMonth(date: Date) {
     // Corrects month value
     this.month = date;
     this.loadCalendar();
@@ -155,14 +156,9 @@ export class Funds implements OnInit {
 
   private loadCalendar() {
     this.loadingCalendar = true;
-    this.transactionCalendarService.getCalendar(this.month.year, this.month.month)
+    this.transactionCalendarService.getCalendar(this.month.getFullYear(), this.month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(events => this.events = events);
-  }
-
-  private getCurrentMonth() {
-    const now = new Date();
-    return new Month(now.getFullYear(), now.getMonth() + 1);
   }
 
 }

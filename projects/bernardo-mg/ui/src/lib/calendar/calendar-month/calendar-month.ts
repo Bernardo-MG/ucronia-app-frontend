@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angu
 import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { format, isSameDay, isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { JustifyCenterDirective } from '../../directives/justify-center.directive';
@@ -25,30 +25,27 @@ export class CalendarMonth implements OnChanges {
 
   public readonly waiting = input(false);
   public readonly events = input<CalendarEvent<any>[]>([]);
-  public readonly month = input(new Month(0, 0));
+  public readonly month = input(new Date());
 
-  public months: { value: Month, label: string }[] = [];
+  public months: { value: Date, label: string }[] = [];
 
-  private _selectionMonths: Month[] = [];
-  @Input() public set selectionMonths(months: Month[]) {
+  private _selectionMonths: Date[] = [];
+  @Input() public set selectionMonths(months: Date[]) {
     this._selectionMonths = [...months].reverse();
-    this.months = this._selectionMonths.map(m => { return { value: m, label: this.getMonthName(m) } });
+    this.months = this._selectionMonths
+      .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
     this.updateCurrentMonth();
   }
   public get selectionMonths() {
     return this._selectionMonths;
   }
 
-  public readonly changeMonth = output<Month>();
+  public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<any>>();
 
-  public currentMonth = new Month(0, 0);
+  public currentMonth = new Date();
 
   public activeDayIsOpen = false;
-
-  public viewDate = new Date();
-
-  private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['month']) {
@@ -62,10 +59,10 @@ export class CalendarMonth implements OnChanges {
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      const sameDay = isSameDay(this.viewDate, date);
+    if (isSameMonth(date, this.currentMonth)) {
+      const sameDay = isSameDay(this.currentMonth, date);
       this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;
-      this.viewDate = date;
+      this.currentMonth = date;
     }
   }
 
@@ -77,30 +74,21 @@ export class CalendarMonth implements OnChanges {
     body.forEach((day) => day.badgeTotal = day.events.length);
   }
 
-  public getMonthName(month: Month) {
-    return `${month.year} ${this.monthNames[month.month - 1]}`;
-  }
-
   private updateCurrentMonth() {
     if (!this.selectionMonths.length) {
-      this.currentMonth = this.getThisMonth();
+      this.currentMonth = new Date();
     } else {
-      const exists = this.selectionMonths.some(m => m.year === this.currentMonth.year && m.month === this.currentMonth.month);
+      const exists = this.selectionMonths.some(m => m === this.currentMonth);
       if (!exists) {
+        // Choose latest date
         this.setMonth(this.selectionMonths[this.selectionMonths.length - 1]);
       }
     }
   }
 
-  private setMonth(month: Month) {
+  private setMonth(month: Date) {
     this.currentMonth = month;
-    this.viewDate = new Date(`${month.year}-${month.month}`);
     this.activeDayIsOpen = false;
-  }
-
-  private getThisMonth() {
-    const date = new Date();
-    return new Month(date.getFullYear(), date.getMonth() + 1);
   }
 
 }
