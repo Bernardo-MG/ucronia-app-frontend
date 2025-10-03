@@ -16,13 +16,13 @@ import { TransactionBalanceChartContainer } from '../transaction-balance-chart/t
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionForm } from '../transaction-form/transaction-form';
-import { LibraryBookInfo } from '../transaction-info/transaction-info';
+import { TransactionInfo } from '../transaction-info/transaction-info';
 import { TransactionReportService } from '../transaction-report-service';
 import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, CalendarMonth, LibraryBookInfo, TransactionForm, TransactionBalanceChartContainer],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, CalendarMonth, TransactionInfo, TransactionForm, TransactionBalanceChartContainer],
   templateUrl: './funds.html'
 })
 export class Funds implements OnInit {

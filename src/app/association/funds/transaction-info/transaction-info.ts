@@ -9,7 +9,7 @@ import { SkeletonModule } from 'primeng/skeleton';
   imports: [SkeletonModule,  DatePipe],
   templateUrl: './transaction-info.html'
 })
-export class LibraryBookInfo {
+export class TransactionInfo {
 
   public readonly transaction = input(new Transaction());
 
