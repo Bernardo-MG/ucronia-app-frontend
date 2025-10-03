@@ -54,8 +54,8 @@ export class CalendarMonth implements OnChanges {
   }
 
   public onGoTo(event: SelectChangeEvent) {
-    this.setMonth(this.currentMonth);
-    this.changeMonth.emit(this.currentMonth);
+    this.setMonth(event.value);
+    this.changeMonth.emit(event.value);
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
