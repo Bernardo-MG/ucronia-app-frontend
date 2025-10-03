@@ -140,7 +140,7 @@ export class Funds implements OnInit {
   private getDefaultMonth() {
     let month;
     if (this.months.length) {
-      month = this.months[this.months.length - 1];
+      month = this.months[0];
     } else {
       month = new Date();
     }
