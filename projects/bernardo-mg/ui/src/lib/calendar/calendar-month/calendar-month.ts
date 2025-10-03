@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { isSameDay, isSameMonth } from 'date-fns';
+import { ButtonModule } from 'primeng/button';
+import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { JustifyCenterDirective } from '../../directives/justify-center.directive';
 import { Month } from '../models/month';
 
@@ -10,7 +13,7 @@ import { Month } from '../models/month';
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, JustifyCenterDirective, CalendarMonthViewComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, JustifyCenterDirective, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
@@ -24,9 +27,12 @@ export class CalendarMonth implements OnChanges {
   public readonly events = input<CalendarEvent<any>[]>([]);
   public readonly month = input(new Month(0, 0));
 
+  public months: { value: Month, label: string }[] = [];
+
   private _selectionMonths: Month[] = [];
   @Input() public set selectionMonths(months: Month[]) {
     this._selectionMonths = [...months].reverse();
+    this.months = this._selectionMonths.map(m => { return { value: m, label: this.getMonthName(m) } });
     this.updateCurrentMonth();
   }
   public get selectionMonths() {
@@ -50,9 +56,8 @@ export class CalendarMonth implements OnChanges {
     }
   }
 
-  public onGoTo(event: any) {
-    const [year, month] = event.target.value.split('-').map(Number);
-    this.setMonth(new Month(year, month));
+  public onGoTo(event: SelectChangeEvent) {
+    this.setMonth(this.currentMonth);
     this.changeMonth.emit(this.currentMonth);
   }
 

@@ -2,12 +2,8 @@
 <div uiJustifyCenter>
   <!-- Current month -->
   <div>
-    <select class="form-select" aria-label="Select month" [disabled]="waiting()" (change)="onGoTo($event)">
-      @for (selectionMonth of selectionMonths; track selectionMonth) {
-        <option [selected]="selectionMonth === currentMonth" [value]="selectionMonth.year + '-' + selectionMonth.month">
-          {{getMonthName(selectionMonth)}}</option>
-      }
-    </select>
+    <p-select [(ngModel)]="currentMonth" [options]="months" (onChange)="onGoTo($event)" optionLabel="label"
+      optionValue="value" />
   </div>
 </div>
 <!-- Table -->
