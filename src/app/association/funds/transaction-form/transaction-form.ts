@@ -13,7 +13,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-transaction-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, CardModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm implements OnChanges {
