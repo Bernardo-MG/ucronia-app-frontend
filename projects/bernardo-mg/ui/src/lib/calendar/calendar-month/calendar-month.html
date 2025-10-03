@@ -9,4 +9,4 @@
 <!-- Table -->
 <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="currentMonth" [events]="events()"
   [activeDayIsOpen]="activeDayIsOpen" (beforeViewRender)="beforeMonthViewRender($event)"
-  (dayClicked)="onSelectDay($event.day)" (eventClicked)="onSelectEvent($event)" />
+  (dayClicked)="onSelectDay($event.day)" (eventClicked)="pickDate.emit($event.event)" />

@@ -67,6 +67,7 @@ export class Funds implements OnInit {
         // To show in the selection box we have to reverse the order
         this.months = months
           .map(m => new Date(`${m.year}-${m.month}`));
+        this.months = [...this.months].reverse()
         if (!this.loadingCalendar) {
           this.loadCalendar(this.getDefaultMonth());
         }
