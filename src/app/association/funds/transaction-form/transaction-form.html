@@ -13,12 +13,12 @@
   </div>
   <!-- Date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="dateInput" formControlName="date" [invalid]="isFieldInvalid('date')"
+    <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
       dateFormat="yy-mm-dd" appendTo="body" />
     <label for="dateInput">Fecha</label>
   </p-floatlabel>
   <div class="mb-2">
-    @for (failure of failures().getFailures('month'); track failure) {
+    @for (failure of failures().getFailures('date'); track failure) {
       <p-message severity="error" size="small" variant="simple">
         {{failure.message}}
       </p-message>
@@ -36,5 +36,6 @@
       </p-message>
     }
   </div>
-  <p-button type="submit" name="Guardar" [loading]="loading()">Guardar</p-button>
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

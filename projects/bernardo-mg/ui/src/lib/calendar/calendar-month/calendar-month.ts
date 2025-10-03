@@ -1,16 +1,18 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { isSameDay, isSameMonth } from 'date-fns';
+import { format, isSameDay, isSameMonth } from 'date-fns';
+import { ButtonModule } from 'primeng/button';
+import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { JustifyCenterDirective } from '../../directives/justify-center.directive';
-import { Month } from '../models/month';
 
 
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, JustifyCenterDirective, CalendarMonthViewComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, JustifyCenterDirective, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
@@ -20,82 +22,79 @@ import { Month } from '../models/month';
 })
 export class CalendarMonth implements OnChanges {
 
-  public readonly waiting = input(false);
+  public readonly loading = input(false);
   public readonly events = input<CalendarEvent<any>[]>([]);
-  public readonly month = input(new Month(0, 0));
+  public readonly months = input<Date[]>([]);
 
-  private _selectionMonths: Month[] = [];
-  @Input() public set selectionMonths(months: Month[]) {
-    this._selectionMonths = [...months].reverse();
-    this.updateCurrentMonth();
-  }
-  public get selectionMonths() {
-    return this._selectionMonths;
-  }
-
-  public readonly changeMonth = output<Month>();
+  public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<any>>();
 
-  public currentMonth = new Month(0, 0);
+  public readonly month = new Date();
+
+  public selectionMonths: { value: Date, label: string }[] = [];
+
+  public currentMonth = new Date();
+  public viewDate = new Date();
 
   public activeDayIsOpen = false;
 
-  public viewDate = new Date();
-
-  private monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['month']) {
-      this.setMonth(this.month());
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['months']) {
+      this.selectionMonths = this.months()
+        .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
+      this.updateCurrentMonth();
+      this.loadInitialMonth();
     }
   }
 
-  public onGoTo(event: any) {
-    const [year, month] = event.target.value.split('-').map(Number);
-    this.setMonth(new Month(year, month));
-    this.changeMonth.emit(this.currentMonth);
+  public onGoTo(event: SelectChangeEvent) {
+    this.setMonth(event.value);
+    this.changeMonth.emit(event.value);
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      const sameDay = isSameDay(this.viewDate, date);
+    if (isSameMonth(date, this.currentMonth)) {
+      const sameDay = isSameDay(this.currentMonth, date);
       this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;
       this.viewDate = date;
     }
-  }
-
-  public onSelectEvent({ event }: { event: CalendarEvent }): void {
-    this.pickDate.emit(event);
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach((day) => day.badgeTotal = day.events.length);
   }
 
-  public getMonthName(month: Month) {
-    return `${month.year} ${this.monthNames[month.month - 1]}`;
-  }
-
   private updateCurrentMonth() {
-    if (!this.selectionMonths.length) {
-      this.currentMonth = this.getThisMonth();
+    if (!this.months().length) {
+      this.currentMonth = new Date();
     } else {
-      const exists = this.selectionMonths.some(m => m.year === this.currentMonth.year && m.month === this.currentMonth.month);
+      const exists = this.months().some(m => m === this.currentMonth);
       if (!exists) {
-        this.setMonth(this.selectionMonths[this.selectionMonths.length - 1]);
+        // Choose latest date
+        this.setMonth(this.months()[this.months().length - 1]);
       }
     }
   }
 
-  private setMonth(month: Month) {
+  private setMonth(month: Date) {
     this.currentMonth = month;
-    this.viewDate = new Date(`${month.year}-${month.month}`);
     this.activeDayIsOpen = false;
   }
 
-  private getThisMonth() {
+  private loadInitialMonth() {
     const date = new Date();
-    return new Month(date.getFullYear(), date.getMonth() + 1);
+    if (this.months().length > 0) {
+      const month = this.months()[0];
+      if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
+        // The current date is after the last date in range
+        // Replace with the last date
+        this.currentMonth = month;
+      } else {
+        this.currentMonth = new Date();
+      }
+    } else {
+      this.currentMonth = new Date();
+    }
   }
 
 }

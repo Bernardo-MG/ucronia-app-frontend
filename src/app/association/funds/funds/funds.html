@@ -32,13 +32,15 @@
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
       [disabled]="!createable" aria-label="Nueva transacción" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-  <ui-calendar-month [events]="events" [month]="month" [selectionMonths]="selectionMonths"
-    [waiting]="loadingCalendar" (changeMonth)="onChangeMonth($event)" (pickDate)="onShowInfo($event)" />
+  <ui-calendar-month [events]="events" [months]="months" [loading]="loadingCalendar" (changeMonth)="loadCalendar($event)"
+    (pickDate)="onShowInfo($event)" />
 </p-panel>
 <p-dialog header="Transacción" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <assoc-transaction-info [transaction]="selectedData" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
     [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
+  <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
+    [attr.aria-disabled]="!editable" (click)="onDelete($event, selectedData)" rounded text />
 </p-dialog>
 @switch (view) {
   @case ('creation') {

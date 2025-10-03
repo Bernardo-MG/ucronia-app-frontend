@@ -6,13 +6,13 @@ import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
-import { SelectModule } from 'primeng/select';
+import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, TagModule , JustifyCenterDirective],
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, TagModule, JustifyCenterDirective],
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
@@ -49,7 +49,7 @@ export class FeeCalendar implements OnChanges {
     return (this.index > 0);
   }
 
-  public get years() {
+  public get years(): number[] {
     return [...this.range().years].reverse();
   }
 
@@ -66,7 +66,7 @@ export class FeeCalendar implements OnChanges {
     }
   }
 
-  public onGoTo(event: any) {
+  public onGoTo(event: SelectChangeEvent) {
     this.currentYear = Number(event.value);
     this.index = this.range().years.indexOf(this.currentYear);
     this.goToYear.emit(this.currentYear);

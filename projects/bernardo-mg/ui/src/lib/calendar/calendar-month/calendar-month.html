@@ -2,15 +2,11 @@
 <div uiJustifyCenter>
   <!-- Current month -->
   <div>
-    <select class="form-select" aria-label="Select month" [disabled]="waiting()" (change)="onGoTo($event)">
-      @for (selectionMonth of selectionMonths; track selectionMonth) {
-        <option [selected]="selectionMonth === currentMonth" [value]="selectionMonth.year + '-' + selectionMonth.month">
-          {{getMonthName(selectionMonth)}}</option>
-      }
-    </select>
+    <p-select [disabled]="loading()" [(ngModel)]="currentMonth" [options]="selectionMonths" (onChange)="onGoTo($event)"
+      optionLabel="label" optionValue="value" />
   </div>
 </div>
 <!-- Table -->
 <mwl-calendar-month-view [weekStartsOn]="1" [viewDate]="viewDate" [events]="events()"
   [activeDayIsOpen]="activeDayIsOpen" (beforeViewRender)="beforeMonthViewRender($event)"
-  (dayClicked)="onSelectDay($event.day)" (eventClicked)="onSelectEvent($event)" />
+  (dayClicked)="onSelectDay($event.day)" (eventClicked)="pickDate.emit($event.event)" />

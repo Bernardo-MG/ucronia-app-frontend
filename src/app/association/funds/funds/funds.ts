@@ -4,24 +4,25 @@ import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { CalendarMonth, Month } from '@bernardo-mg/ui';
+import { CalendarMonth } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { TransactionBalanceChartContainer } from '../transaction-balance-chart/transaction-balance-chart';
+import { TransactionBalanceChart } from '../transaction-balance-chart/transaction-balance-chart';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionForm } from '../transaction-form/transaction-form';
-import { LibraryBookInfo } from '../transaction-info/transaction-info';
+import { TransactionInfo } from '../transaction-info/transaction-info';
 import { TransactionReportService } from '../transaction-report-service';
 import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, CalendarMonth, LibraryBookInfo, TransactionForm, TransactionBalanceChartContainer],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, CalendarMonth, TransactionInfo, TransactionForm, TransactionBalanceChart],
   templateUrl: './funds.html'
 })
 export class Funds implements OnInit {
@@ -30,9 +31,10 @@ export class Funds implements OnInit {
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
+  private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
 
-  public selectionMonths: Month[] = [];
-  public month = this.getCurrentMonth();
+  public months: Date[] = [];
 
   public loading = false;
   public loadingCalendar = false;
@@ -66,11 +68,11 @@ export class Funds implements OnInit {
     this.transactionCalendarService.getRange()
       .subscribe(months => {
         // To show in the selection box we have to reverse the order
-        this.selectionMonths = months;
-        // TODO: What happens if this date is not in the range?
+        this.months = months
+          .map(m => new Date(`${m.year}-${m.month}`));
+        this.months = [...this.months].reverse()
         if (!this.loadingCalendar) {
-          this.setInitialMonth();
-          this.loadCalendar();
+          this.loadCalendar(this.getDefaultMonth());
         }
       });
 
@@ -81,61 +83,44 @@ export class Funds implements OnInit {
       .subscribe(b => this.balance = b);
   }
 
-  private setInitialMonth() {
-    const date = new Date();
-    if (this.selectionMonths.length > 0) {
-      const month = this.selectionMonths[this.selectionMonths.length - 1];
-      if ((date.getFullYear() >= month.year) || ((date.getFullYear() >= month.year) && (date.getMonth() >= month.month))) {
-        // The current date is after the last date in range
-        // Replace with the last date
-        this.month = month;
-      } else {
-        this.month = this.getCurrentMonth();
-      }
-    } else {
-      this.month = this.getCurrentMonth();
-    }
-  }
-
   public onCreate(toCreate: Transaction): void {
-    this.mutate(() => this.service.create(toCreate));
+    this.call(
+      () => this.service.create(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onUpdate(toCreate: Transaction): void {
-    this.mutate(() => this.service.update(toCreate));
+    this.call(
+      () => this.service.update(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
   }
 
-  private mutate(action: () => Observable<any>) {
-    this.loading = true;
-    action()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: () => {
-          this.failures.clear();
-          this.view = 'none';
-          this.loadCalendar();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
-      });
+  public onDelete(event: Event, transaction: Transaction) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.call(
+        () => this.service.delete(transaction.index),
+        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+    });
   }
 
   public onStartEditingView(view: string): void {
     this.view = view;
     this.showing = false;
     this.editing = true;
-  }
-
-  public onChangeMonth(date: Month) {
-    // Corrects month value
-    this.month = date;
-    this.loadCalendar();
   }
 
   public onShowInfo(event: CalendarEvent<{ transactionId: number }>) {
@@ -153,16 +138,44 @@ export class Funds implements OnInit {
       .subscribe();
   }
 
-  private loadCalendar() {
+  public loadCalendar(month: Date) {
     this.loadingCalendar = true;
-    this.transactionCalendarService.getCalendar(this.month.year, this.month.month)
+    this.transactionCalendarService.getCalendar(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(events => this.events = events);
   }
 
-  private getCurrentMonth() {
-    const now = new Date();
-    return new Month(now.getFullYear(), now.getMonth() + 1);
+  private getDefaultMonth() {
+    let month;
+    if (this.months.length) {
+      month = this.months[0];
+    } else {
+      month = new Date();
+    }
+    return month
+  }
+
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.showing = false;
+          this.loadCalendar(this.getDefaultMonth());
+          onSuccess();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
   }
 
 }
