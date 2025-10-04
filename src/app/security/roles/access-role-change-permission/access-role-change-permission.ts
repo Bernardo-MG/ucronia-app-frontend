@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, OnChanges, output, SimpleChanges, viewChild } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { ArrayPaginatedResponse, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -36,8 +36,6 @@ export class AccessRoleChangePermission implements OnChanges {
   private pageSize = 10;
 
   private permissionsSort = new Sorting();
-
-  private readonly pickCloseButton = viewChild<any>('pickCloseButton');
 
   public ngOnChanges({ rolePermissions }: SimpleChanges): void {
     if (rolePermissions) {

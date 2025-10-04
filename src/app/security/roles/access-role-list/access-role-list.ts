@@ -1,8 +1,7 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -16,13 +15,14 @@ import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
+  imports: [PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {
 
-  private readonly router = inject(Router);
   private readonly service = inject(AccessRoleService);
+  private readonly confirmationService = inject(ConfirmationService);
+  private readonly messageService = inject(MessageService);
 
   @ViewChild('editionMenu') editionMenu!: Menu;
 
@@ -76,10 +76,6 @@ export class AccessRoleList implements OnInit {
     this.showing = true;
   }
 
-  public onCreate(toCreate: Role): void {
-    this.mutate(() => this.service.create(toCreate));
-  }
-
   public openEditionMenu(event: Event, role: Role) {
     this.selectedData = role;
     this.editionMenu.toggle(event);
@@ -101,25 +97,56 @@ export class AccessRoleList implements OnInit {
     this.load(this.data.page);
   }
 
+  public onCreate(toCreate: Role): void {
+    this.call(
+      () => this.service.create(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
+  }
+
   public onAddRolePermission(permission: ResourcePermission) {
     this.selectedData.permissions.push(permission);
 
-    this.mutate(() => this.service.update(this.selectedData));
+    this.call(
+      () => this.service.update(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onRemoveRolePermission(permission: ResourcePermission) {
     this.selectedData.permissions = this.selectedData.permissions.filter(r => r.name != permission.name);
 
-    this.mutate(() => this.service.update(this.selectedData));
+    this.call(
+      () => this.service.update(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onDelete(event: Event, role: Role) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () =>
+        this.call(
+          () => this.service.delete(role.name),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
+    });
   }
 
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
-  }
-
-  public onSelectRow() {
-    this.router.navigate([`/security/roles/${this.selectedData.name}`]);
   }
 
   public onStartEditingView(view: string): void {
@@ -134,7 +161,7 @@ export class AccessRoleList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private mutate(action: () => Observable<any>) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -144,7 +171,8 @@ export class AccessRoleList implements OnInit {
           this.view = 'none';
           this.showing = false;
           this.editing = false;
-          this.load(1);
+          this.load(0);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

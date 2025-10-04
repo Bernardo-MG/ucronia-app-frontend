@@ -55,10 +55,10 @@ export class AccessRoleService {
       .pipe(map(r => r.content));
   }
 
-  public delete(role: string): Observable<boolean> {
+  public delete(role: string): Observable<Role> {
     return this.client
       .appendRoute(`/${role}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<Role>>()
       .pipe(map(r => r.content));
   }
 
