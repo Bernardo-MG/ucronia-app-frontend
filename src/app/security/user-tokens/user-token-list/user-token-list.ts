@@ -117,7 +117,7 @@ export class UserTokenList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Revocar',
-        command: () => this.onConfirmRevoke(event)
+        command: (method) => this.onConfirmRevoke(method.originalEvent as Event)
       });
 
     this.selectedData = token;
