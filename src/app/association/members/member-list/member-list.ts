@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
 import { MemberService } from '@app/association/members/member-service';
 import { Member } from '@app/domain/members/member';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -12,12 +11,10 @@ import { MemberInfo } from '../member-info/member-info';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [RouterModule, CardModule, TableModule, DialogModule, ButtonModule, MemberInfo],
+  imports: [CardModule, TableModule, DialogModule, ButtonModule, MemberInfo],
   templateUrl: './member-list.html'
 })
 export class MemberList implements OnInit {
-
-  private readonly router = inject(Router);
 
   private readonly service = inject(MemberService);
 
@@ -62,8 +59,10 @@ export class MemberList implements OnInit {
   }
 
   public onShowInfo(member: Member) {
+    this.loading = true;
     this.service.getOne(member.number)
-      .subscribe(fee => this.selectedData = fee);
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.selectedData = response);
     this.showing = true;
   }
 
