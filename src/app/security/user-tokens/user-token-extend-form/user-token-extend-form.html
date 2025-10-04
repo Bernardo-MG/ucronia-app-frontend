@@ -1,7 +1,15 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="expirationDateInput" formControlName="expirationDate" dateFormat="yy-mm-dd" appendTo="body" />
+    <p-datepicker id="expirationDateInput" [minDate]="today" formControlName="expirationDate" dateFormat="yy-mm-dd" appendTo="body" />
     <label for="expirationDateInput">Fecha de expiración</label>
   </p-floatlabel>
-  <p-button type="submit" name="Guardar">Cambiar</p-button>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('expirationDate'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

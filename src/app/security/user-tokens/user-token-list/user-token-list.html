@@ -20,16 +20,16 @@
         <td>{{ token.creationDate | date:'yyyy-MM-dd hh:mm:ss' }}</td>
         <td>
           @if (token.consumed) {
-            <span class="pi pi-check text-success"></span>
+            <span class="pi pi-check text-warning"></span>
           } @else {
-            <span class="pi pi-times text-warning"></span>
+            <span class="pi pi-times text-success"></span>
           }
         </td>
         <td>
           @if (token.revoked) {
-            <span class="pi pi-check text-success"></span>
+            <span class="pi pi-check text-warning"></span>
           } @else {
-            <span class="pi pi-times text-warning"></span>
+            <span class="pi pi-times text-success"></span>
           }
         </td>
         <td>
@@ -41,14 +41,14 @@
     </ng-template>
   </p-table>
 </p-card>
-<p-drawer [(visible)]="showing" position="full">
+<p-dialog header="Token" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
   <access-user-token-info [data]="selectedData" [loading]="loading" />
-</p-drawer>
-<p-drawer [(visible)]="editing" position="right">
-  @switch (view) {
-    @case ('extend') {
+</p-dialog>
+@switch (view) {
+  @case ('extend') {
+    <p-dialog header="Extender token" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <p>Selecciona una nueva fecha:</p>
-      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" (save)="onExtendExpiration($event)" />
-    }
+      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
+    </p-dialog>
   }
-</p-drawer>
+}
