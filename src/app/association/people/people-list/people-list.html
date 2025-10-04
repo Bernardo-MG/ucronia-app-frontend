@@ -33,28 +33,16 @@
       <ng-template #header>
         <tr>
           <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
-          <th pSortableColumn="active">Activo <p-sortIcon field="active" /></th>
           <th></th>
         </tr>
       </ng-template>
       <ng-template #body let-person>
         <tr>
-          <td>{{ person.name.fullName }}</td>
-          <td>
-            @switch (person.membership === null) {
-              @case (true) {
-                No es socio
-              }
-              @case (false) {
-                @switch (person.membership?.active) {
-                  @case (true) {
-                    <span class="pi pi-check text-success"></span>
-                  }
-                  @case (false) {
-                    <span class="pi pi-times text-warning"></span>
-                  }
-                }
-              }
+          <td>{{ person.name.fullName }}
+            @if (person.membership === null) {
+              <p-badge value="No es socio" severity="secondary" badgeSize="small" />
+            } @else if (!person.membership?.active) {
+              <p-badge value="Inactivo" severity="warn" badgeSize="small" />
             }
           </td>
           <td>
