@@ -3,7 +3,7 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -22,6 +22,7 @@ export class UserTokenList implements OnInit {
 
   private readonly service = inject(UserTokenService);
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly messageService = inject(MessageService);
 
   public editionMenuItems: MenuItem[] = [];
 
@@ -75,34 +76,19 @@ export class UserTokenList implements OnInit {
         severity: 'danger'
       },
       accept: () => {
-        this.mutate(() => this.service.revoke(this.selectedData.token));
+        this.call(
+          () => this.service.revoke(this.selectedData.token),
+          () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+        );
       }
     });
   }
 
-  private mutate(action: () => Observable<any>) {
-    this.loading = true;
-    action()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: () => {
-          this.failures.clear();
-          this.view = 'none';
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
-      });
-  }
-
   public onExtendExpiration(date: Date): void {
-    this.mutate(() => this.service.extend(this.selectedData.token, date));
+    this.call(
+      () => this.service.extend(this.selectedData.token, date),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public openEditionMenu(event: Event, token: UserToken) {
@@ -149,6 +135,28 @@ export class UserTokenList implements OnInit {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
+  }
+
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.load(0);
+          onSuccess();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
   }
 
   private load(page: number) {
