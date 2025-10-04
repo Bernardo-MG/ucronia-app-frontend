@@ -28,12 +28,14 @@ export class AccessList implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
+  @ViewChild('infoMenu') private infoMenu!: Menu;
   @ViewChild('editionMenu') private editionMenu!: Menu;
 
   public readonly createable;
   public readonly editable;
   public readonly deletable;
 
+  public infoMenuItems: MenuItem[] = [];
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {
@@ -65,6 +67,18 @@ export class AccessList implements OnInit {
     this.createable = authContainer.hasPermission("user", "create");
     this.editable = authContainer.hasPermission("user", "update");
     this.deletable = authContainer.hasPermission("user", "delete");
+
+    // Load info menu
+    this.infoMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.onShowInfo(this.selectedData)
+      },
+      {
+        label: 'Roles',
+        command: () => this.onShowInfo(this.selectedData)
+      }
+    );
   }
 
   public ngOnInit(): void {
@@ -223,6 +237,12 @@ export class AccessList implements OnInit {
           () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
         )
     });
+  }
+  
+  public openInfoMenu(event: Event, user: User) {
+    this.selectedData = user;
+
+    this.infoMenu.toggle(event);
   }
 
   public openEditionMenu(event: Event, user: User) {

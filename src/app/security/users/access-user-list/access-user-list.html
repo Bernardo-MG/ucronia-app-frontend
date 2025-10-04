@@ -1,3 +1,4 @@
+<p-menu #infoMenu [model]="infoMenuItems" [popup]="true" />
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
@@ -18,7 +19,7 @@
         <td>{{ user.name }}</td>
         <td>
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
-            (click)="onShowInfo(user)" rounded text />
+            (click)="openInfoMenu($event, user)" rounded text />
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, user)" rounded text />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
