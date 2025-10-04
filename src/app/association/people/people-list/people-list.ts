@@ -7,7 +7,7 @@ import { PersonCreation } from '@app/domain/person/person-creation';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -32,8 +32,8 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 export class PeopleList implements OnInit {
 
   private readonly service = inject(PeopleService);
-
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly messageService = inject(MessageService);
 
   @ViewChild('personEditionMenu') personEditionMenu!: Menu;
 
@@ -120,6 +120,53 @@ export class PeopleList implements OnInit {
     this.personEditionMenu.toggle(event);
   }
 
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
+  }
+
+  public onChangeActiveFilter(active: Active) {
+    this.activeFilter = active;
+    this.load(0);
+  }
+
+  public onChangeDirection(sorting: { field: string, order: number }) {
+    let direction;
+    if (sorting.field === 'fullName') {
+      if (sorting.order == 1) {
+        direction = SortingDirection.Ascending;
+      } else {
+        direction = SortingDirection.Descending;
+      }
+      this.sort.addField(new SortingProperty('firstName', direction));
+      this.sort.addField(new SortingProperty('lastName', direction));
+    } else {
+      if (sorting.order == 1) {
+        direction = SortingDirection.Ascending;
+      } else {
+        direction = SortingDirection.Descending;
+      }
+      this.sort.addField(new SortingProperty(sorting.field, direction));
+    }
+
+    this.load(this.data.page);
+  }
+
+  public onShowInfo(person: Person) {
+    this.service.getOne(person.number)
+      .subscribe(fee => this.selectedData = fee);
+    this.showing = true;
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.data.size) + 1;
+    this.load(page);
+  }
+
+  public onNameFilterChange(): void {
+    this.load(0);
+  }
+
   public onConfirmSetActive(event: Event, status: boolean) {
     let message;
     if (status) {
@@ -172,7 +219,44 @@ export class PeopleList implements OnInit {
     });
   }
 
-  public onConfirmDelete(event: Event, number: number) {
+  public onSetActive(status: boolean) {
+    if (this.selectedData.membership === undefined) {
+      this.selectedData.membership = new Membership();
+    }
+    this.selectedData.membership.active = status;
+    this.selectedData.membership.renew = status;
+    this.call(
+      () => this.service.patch(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onSetRenewal(status: boolean) {
+    if (this.selectedData.membership === undefined) {
+      this.selectedData.membership = new Membership();
+    }
+    this.selectedData.membership.renew = status;
+    this.call(
+      () => this.service.patch(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onCreate(toCreate: PersonCreation): void {
+    this.call(
+      () => this.service.create(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
+  }
+
+  public onUpdate(toUpdate: Person): void {
+    this.call(
+      () => this.service.patch(toUpdate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -186,85 +270,15 @@ export class PeopleList implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => {
-        this.mutate(() => this.service.delete(number));
-      }
+      accept: () =>
+        this.call(
+          () => this.service.delete(number),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
     });
   }
 
-  public onSetActive(status: boolean) {
-    if (this.selectedData.membership === undefined) {
-      this.selectedData.membership = new Membership();
-    }
-    this.selectedData.membership.active = status;
-    this.selectedData.membership.renew = status;
-    this.onUpdate(this.selectedData);
-  }
-
-  public onSetRenewal(status: boolean) {
-    if (this.selectedData.membership === undefined) {
-      this.selectedData.membership = new Membership();
-    }
-    this.selectedData.membership.renew = status;
-    this.onUpdate(this.selectedData);
-  }
-
-  public onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
-  }
-
-  public onChangeActiveFilter(active: Active) {
-    this.activeFilter = active;
-    this.load(0);
-  }
-
-  public onChangeDirection(sorting: { field: string, order: number }) {
-    let direction;
-    if (sorting.field === 'fullName') {
-      if (sorting.order == 1) {
-        direction = SortingDirection.Ascending;
-      } else {
-        direction = SortingDirection.Descending;
-      }
-      this.sort.addField(new SortingProperty('firstName', direction));
-      this.sort.addField(new SortingProperty('lastName', direction));
-    } else {
-      if (sorting.order == 1) {
-        direction = SortingDirection.Ascending;
-      } else {
-        direction = SortingDirection.Descending;
-      }
-      this.sort.addField(new SortingProperty(sorting.field, direction));
-    }
-
-    this.load(this.data.page);
-  }
-
-  public onShowInfo(person: Person) {
-    this.service.getOne(person.number)
-      .subscribe(fee => this.selectedData = fee);
-    this.showing = true;
-  }
-
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
-  }
-
-  public onNameFilterChange(): void {
-    this.load(0);
-  }
-
-  public onCreate(toCreate: PersonCreation): void {
-    this.mutate(() => this.service.create(toCreate));
-  }
-
-  public onUpdate(toUpdate: Person): void {
-    this.mutate(() => this.service.patch(this.selectedData.number, toUpdate));
-  }
-
-  private mutate(action: () => Observable<any>) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -272,7 +286,8 @@ export class PeopleList implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
-          this.load(0);
+          this.load(this.data.page);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

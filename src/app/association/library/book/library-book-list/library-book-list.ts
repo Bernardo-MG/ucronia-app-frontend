@@ -272,9 +272,11 @@ export class LibraryBookList implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.delete(number),
-        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+      accept: () =>
+        this.call(
+          () => this.delete(number),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
     });
   }
 
