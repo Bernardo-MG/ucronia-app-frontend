@@ -48,7 +48,7 @@
   @case ('extend') {
     <p-dialog header="Extender token" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <p>Selecciona una nueva fecha:</p>
-      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" (save)="onExtendExpiration($event)" />
+      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
     </p-dialog>
   }
 }

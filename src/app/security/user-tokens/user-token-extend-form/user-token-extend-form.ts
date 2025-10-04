@@ -2,18 +2,21 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
+import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-token-extend-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, ButtonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, ButtonModule, MessageModule],
   templateUrl: './user-token-extend-form.html'
 })
 export class UserTokenExtendForm {
 
   public readonly loading = input(false);
+  public readonly failures = input(new FailureStore());
   
   @Input() public set expirationDate(value: Date) {
     this.form.get('expirationDate')?.setValue(value);
