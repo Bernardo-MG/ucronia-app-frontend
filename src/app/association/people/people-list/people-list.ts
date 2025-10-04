@@ -9,10 +9,7 @@ import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirec
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DialogModule } from 'primeng/dialog';
-import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -26,7 +23,7 @@ import { PersonStatusSelect } from '../person-status-select/person-status-select
 
 @Component({
   selector: 'assoc-people-list',
-  imports: [FormsModule, PanelModule, MenuModule, CardModule, ConfirmPopupModule, ButtonModule, DialogModule, DrawerModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, PersonStatusSelect, PeopleCreationForm, PeopleEditionForm, PeopleInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
   templateUrl: './people-list.html'
 })
 export class PeopleList implements OnInit {
