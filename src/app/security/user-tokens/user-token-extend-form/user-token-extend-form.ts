@@ -28,6 +28,8 @@ export class UserTokenExtendForm {
   
   public readonly save = output<Date>();
 
+  public readonly today = new Date();
+
   constructor() {
     const fb = inject(FormBuilder);
 
