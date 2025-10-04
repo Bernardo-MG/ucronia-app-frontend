@@ -14,10 +14,8 @@
     <ng-template #body let-permission>
       <tr>
         <td>
-          <button (click)="onRemovePermission(permission)" type="button" class="btn btn-link link-dark" role="button"
-            aria-label="Back">
-            <span class="pi pi-trash"></span>
-          </button>
+          <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemovePermission(permission)"
+            rounded text />
         </td>
         <td>{{permission.resource}}</td>
         <td>{{permission.action}}</td>
