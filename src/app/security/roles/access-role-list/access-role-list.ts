@@ -171,7 +171,7 @@ export class AccessRoleList implements OnInit {
           this.view = 'none';
           this.showing = false;
           this.editing = false;
-          this.load(1);
+          this.load(0);
           onSuccess();
         },
         error: error => {
