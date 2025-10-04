@@ -25,7 +25,7 @@ export class AccessUserRoles implements OnChanges {
 
   private pageSize = 10;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roles']) {
       this.data = this.buildPage(1);
     }

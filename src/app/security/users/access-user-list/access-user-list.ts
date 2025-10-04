@@ -14,12 +14,13 @@ import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
+import { AccessUserRolesInfo } from '../access-user-roles-info/access-user-roles-info';
 import { AccessUserService } from '../access-user-service';
 import { UserChange } from '../models/user-change';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserRolesEditor, AccessUserMemberEditor],
+  imports: [CardModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserRolesEditor, AccessUserMemberEditor, AccessUserRolesInfo],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -53,6 +54,7 @@ export class AccessList implements OnInit {
   public loading = false;
   public editing = false;
   public showing = false;
+  public showingRoles = false;
 
   public view: string = '';
 
@@ -76,7 +78,7 @@ export class AccessList implements OnInit {
       },
       {
         label: 'Roles',
-        command: () => this.onShowInfo(this.selectedData)
+        command: () => this.onShowRolesInfo(this.selectedData)
       }
     );
   }
@@ -118,6 +120,11 @@ export class AccessList implements OnInit {
     this.selectedData = user;
     this.service.getMember(user.username).subscribe(member => this.member = member);
     this.showing = true;
+  }
+
+  public onShowRolesInfo(user: User) {
+    this.selectedData = user;
+    this.showingRoles = true;
   }
 
   public onCreate(toCreate: UserChange): void {
@@ -305,6 +312,7 @@ export class AccessList implements OnInit {
           this.view = 'none';
           this.editing = false;
           this.showing = false;
+          this.showingRoles = false;
           this.load(0);
           onSuccess();
         },

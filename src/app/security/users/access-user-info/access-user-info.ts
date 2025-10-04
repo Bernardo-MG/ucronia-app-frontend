@@ -14,7 +14,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class AccessUserInfo {
 
-  public readonly data = input(new User());
+  public readonly user = input(new User());
   public readonly member = input(new Member());
 
   public loading = input(false);

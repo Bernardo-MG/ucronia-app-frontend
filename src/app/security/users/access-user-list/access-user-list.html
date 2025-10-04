@@ -29,9 +29,16 @@
     </ng-template>
   </p-table>
 </p-panel>
-<p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-  <access-user-info [data]="selectedData" [member]="member" [loading]="loading" />
-</p-dialog>
+@if (showing) {
+  <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+    <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
+  </p-dialog>
+}
+@if (showingRoles) {
+  <p-dialog header="Roles" [modal]="true" [(visible)]="showingRoles" [style]="{ width: '25rem' }">
+    <access-user-roles-info [user]="selectedData" [loading]="loading" />
+  </p-dialog>
+}
 @switch (view) {
   @case ('creation') {
     <p-dialog header="Crear usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
