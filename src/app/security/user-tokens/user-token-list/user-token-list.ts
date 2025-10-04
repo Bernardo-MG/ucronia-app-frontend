@@ -99,12 +99,16 @@ export class UserTokenList implements OnInit {
       {
         label: 'Extender expiración',
         command: () => this.onStartEditingView('extend')
-      });
-    this.editionMenuItems.push(
-      {
-        label: 'Revocar',
-        command: (method) => this.onConfirmRevoke(method.originalEvent as Event)
-      });
+      }
+    );
+    if (!token.revoked) {
+      this.editionMenuItems.push(
+        {
+          label: 'Revocar',
+          command: (method) => this.onConfirmRevoke(method.originalEvent as Event)
+        }
+      );
+    }
 
     this.selectedData = token;
     this.editionMenu.toggle(event);
