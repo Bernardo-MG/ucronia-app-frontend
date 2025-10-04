@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -21,6 +21,7 @@ import { AccessRoleService } from '../access-role-service';
 export class AccessRoleList implements OnInit {
 
   private readonly service = inject(AccessRoleService);
+  private readonly messageService = inject(MessageService);
 
   @ViewChild('editionMenu') editionMenu!: Menu;
 
@@ -74,10 +75,6 @@ export class AccessRoleList implements OnInit {
     this.showing = true;
   }
 
-  public onCreate(toCreate: Role): void {
-    this.call(() => this.service.create(toCreate));
-  }
-
   public openEditionMenu(event: Event, role: Role) {
     this.selectedData = role;
     this.editionMenu.toggle(event);
@@ -99,16 +96,29 @@ export class AccessRoleList implements OnInit {
     this.load(this.data.page);
   }
 
+  public onCreate(toCreate: Role): void {
+    this.call(
+      () => this.service.create(toCreate),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
+  }
+
   public onAddRolePermission(permission: ResourcePermission) {
     this.selectedData.permissions.push(permission);
 
-    this.call(() => this.service.update(this.selectedData));
+    this.call(
+      () => this.service.update(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onRemoveRolePermission(permission: ResourcePermission) {
     this.selectedData.permissions = this.selectedData.permissions.filter(r => r.name != permission.name);
 
-    this.call(() => this.service.update(this.selectedData));
+    this.call(
+      () => this.service.update(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onPageChange(event: TablePageEvent) {
@@ -128,7 +138,7 @@ export class AccessRoleList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -139,6 +149,7 @@ export class AccessRoleList implements OnInit {
           this.showing = false;
           this.editing = false;
           this.load(1);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

@@ -138,9 +138,11 @@ export class FeeList implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(fee.month, fee.member.number),
-        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+      accept: () =>
+        this.call(
+          () => this.service.delete(fee.month, fee.member.number),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
     });
   }
 
