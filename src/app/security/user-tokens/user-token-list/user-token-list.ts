@@ -6,7 +6,7 @@ import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirec
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
+import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
@@ -15,7 +15,7 @@ import { UserTokenInfo } from '../user-token-info/user-token-info';
 
 @Component({
   selector: 'access-user-token-list',
-  imports: [CardModule, TableModule, DrawerModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, DatePipe],
+  imports: [CardModule, TableModule, DialogModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, DatePipe],
   templateUrl: './user-token-list.html'
 })
 export class UserTokenList implements OnInit {

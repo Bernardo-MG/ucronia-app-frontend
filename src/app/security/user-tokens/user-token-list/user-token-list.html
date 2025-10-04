@@ -41,14 +41,14 @@
     </ng-template>
   </p-table>
 </p-card>
-<p-drawer [(visible)]="showing" position="full">
+<p-dialog header="Token" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <access-user-token-info [data]="selectedData" [loading]="loading" />
-</p-drawer>
-<p-drawer [(visible)]="editing" position="right">
-  @switch (view) {
-    @case ('extend') {
+</p-dialog>
+@switch (view) {
+  @case ('extend') {
+    <p-dialog header="Extender token" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
       <p>Selecciona una nueva fecha:</p>
       <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" (save)="onExtendExpiration($event)" />
-    }
+    </p-dialog>
   }
-</p-drawer>
+}
