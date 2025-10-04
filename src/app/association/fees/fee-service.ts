@@ -45,11 +45,11 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public delete(month: Date, memberNumber: number): Observable<boolean> {
+  public delete(month: Date, memberNumber: number): Observable<Fee> {
     const formattedMonth = month.toISOString().slice(0, 7);
     return this.feeClient
       .appendRoute(`/${formattedMonth}/${memberNumber}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<Fee>>()
       .pipe(map(r => r.content));
   }
 

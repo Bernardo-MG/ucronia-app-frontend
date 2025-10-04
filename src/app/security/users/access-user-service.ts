@@ -44,10 +44,10 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public delete(username: string): Observable<boolean> {
+  public delete(username: string): Observable<User> {
     return this.client
       .appendRoute(`/${username}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<User>>()
       .pipe(map(r => r.content));
   }
 
