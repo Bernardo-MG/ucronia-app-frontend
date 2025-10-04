@@ -133,11 +133,9 @@ export class PeopleList implements OnInit {
   public onChangeDirection(sorting: { field: string, order: number }) {
     let direction;
     if (sorting.field === 'fullName') {
-      if (sorting.order == 1) {
-        direction = SortingDirection.Ascending;
-      } else {
-        direction = SortingDirection.Descending;
-      }
+      const direction = sorting.order === 1
+        ? SortingDirection.Ascending
+        : SortingDirection.Descending;
       this.sort.addField(new SortingProperty('firstName', direction));
       this.sort.addField(new SortingProperty('lastName', direction));
     } else {

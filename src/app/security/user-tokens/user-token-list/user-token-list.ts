@@ -125,12 +125,9 @@ export class UserTokenList implements OnInit {
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
-    let direction;
-    if (sorting.order == 1) {
-      direction = SortingDirection.Ascending;
-    } else {
-      direction = SortingDirection.Descending;
-    }
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
     this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.data.page);
