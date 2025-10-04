@@ -1,12 +1,12 @@
 
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { Person } from '@app/domain/person/person';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-people-info',
-  imports: [CommonModule, SkeletonModule],
+  imports: [CommonModule, SkeletonModule, DatePipe],
   templateUrl: './people-info.html'
 })
 export class PeopleInfo {
