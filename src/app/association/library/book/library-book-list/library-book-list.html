@@ -27,7 +27,6 @@
     <ng-template #header>
       <tr>
         <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
-        <th pSortableColumn="lent">Estado <p-sortIcon field="lent" /></th>
         <th></th>
       </tr>
     </ng-template>
@@ -37,12 +36,8 @@
           <sup>{{book.title.supertitle}}</sup>
           {{book.title.title}}
           <sub>{{book.title.subtitle}}</sub>
-        </td>
-        <td>
           @if (book.lent) {
           <p-badge value="Prestado" severity="danger" />
-          } @else {
-          <p-badge value="Disponible" severity="success" />
           }
         </td>
         <td>
