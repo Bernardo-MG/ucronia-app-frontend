@@ -1,33 +1,83 @@
 <!-- Info -->
-<p-card class="mb-2">
-  <!-- Person details -->
-  <assoc-people-info-details [data]="data()" />
-</p-card>
-<p-card>
-  <!-- Membership -->
-  @if (isMember) {
-    <div class="row">
-      <div class="col-sm-2 text-primary">Activo</div>
-      <div class="col-sm-10">
-        @if (isActive) {
-        <span class="pi pi-check text-success"></span>
-        } @else {
-        <span class="pi pi-times text-warning"></span>
-        }
-      </div>
-    </div>
-  }@else {
-    No es socio
-  }
-  <!-- Renewal -->
-  <div class="row">
-    <div class="col-sm-2 text-primary">Renovación</div>
-    <div class="col-sm-10">
-      @if (isRenewed) {
-      <span class="pi pi-check text-success"></span>
-      } @else {
-      <span class="pi pi-times text-warning"></span>
-      }
-    </div>
+<!-- Person details -->
+<!-- First name -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Nombre</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().name.firstName}}
+    }
   </div>
-</p-card>
+</div>
+<!-- Last name -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Apellidos</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().name.lastName}}
+    }
+  </div>
+</div>
+<!-- Identifier -->
+<div class="row">
+  <div class="col-sm-3 text-primary">DNI</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().identifier}}
+    }
+  </div>
+</div>
+<!-- Birth date -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Fecha de nacimiento</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().birthDate | date:'yyyy-MM-dd'}}
+    }
+  </div>
+</div>
+<!-- Phone -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Teléfono</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().phone}}
+    }
+  </div>
+</div>
+<!-- Membership -->
+@if (isMember) {
+<div class="row">
+  <div class="col-sm-3 text-primary">Activo</div>
+  <div class="col-sm-9">
+    @if (isActive) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>
+}@else {
+  No es socio
+}
+<!-- Renewal -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Renovación</div>
+  <div class="col-sm-9">
+    @if (isRenewed) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>

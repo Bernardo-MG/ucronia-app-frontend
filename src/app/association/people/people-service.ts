@@ -45,9 +45,9 @@ export class PeopleService {
       .pipe(map(r => r.content));
   }
 
-  public patch(number: number, data: Person): Observable<Person> {
+  public patch(data: Person): Observable<Person> {
     return this.client
-      .appendRoute(`/${number}`)
+      .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Person>>(data)
       .pipe(map(r => r.content));
   }

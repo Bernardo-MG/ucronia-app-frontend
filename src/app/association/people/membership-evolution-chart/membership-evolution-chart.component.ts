@@ -1,5 +1,5 @@
 
-import { Component, Input, OnChanges, OnDestroy, SimpleChanges, inject, input, output } from '@angular/core';
+import { Component, OnDestroy, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberBalance } from '@app/domain/members/member-balance';
 import Chart from 'chart.js/auto';
@@ -12,12 +12,11 @@ import { MembershipEvolutionService } from '../membership-evolution-service';
   imports: [FormsModule, SelectModule],
   templateUrl: './membership-evolution-chart.component.html'
 })
-export class MembershipEvolutionChartComponent implements OnDestroy, OnChanges {
+export class MembershipEvolutionChartComponent implements OnDestroy {
 
   private readonly service = inject(MembershipEvolutionService);
 
   public readonly startMonthChange = output<string>();
-
   public readonly endMonthChange = output<string>();
 
   public balance: MemberBalance[] = [];
@@ -65,6 +64,10 @@ export class MembershipEvolutionChartComponent implements OnDestroy, OnChanges {
       .pipe(finalize(() => this.readingRange = false))
       .subscribe(b => {
         this.months = b.map(v => v.month);
+        this.monthsSelection = this.months.map((m: Date) => ({
+          value: m,
+          label: m.toISOString().slice(0, 7),
+        }));
         this.startMonth = this.months[0];
         this.endMonth = this.months[this.months.length - 1];
         this.loadBalance();
@@ -84,15 +87,6 @@ export class MembershipEvolutionChartComponent implements OnDestroy, OnChanges {
   public ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
-    }
-  }
-
-  public ngOnChanges({ months }: SimpleChanges): void {
-    if (months) {
-      this.monthsSelection = months.currentValue.map((m: Date) => ({
-        value: m,
-        label: m.toISOString().slice(0, 7),
-      }));
     }
   }
 
