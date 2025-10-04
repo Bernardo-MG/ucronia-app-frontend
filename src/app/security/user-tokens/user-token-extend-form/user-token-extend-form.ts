@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormStatus } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -12,9 +13,13 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 })
 export class UserTokenExtendForm {
 
+  public readonly loading = input(false);
+  
   @Input() public set expirationDate(value: Date) {
     this.form.get('expirationDate')?.setValue(value);
   }
+
+  public formStatus: FormStatus;
 
   public readonly form;
   
@@ -26,6 +31,8 @@ export class UserTokenExtendForm {
     this.form = fb.group({
       expirationDate: [new Date(), Validators.required]
     });
+
+    this.formStatus = new FormStatus(this.form);
   }
   
   public onSave() {
