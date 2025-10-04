@@ -1,19 +1,20 @@
 @switch (view) {
   @case ('list') {
-    <access-user-roles [roles]="roles()" [loading]="waiting()" (remove)="onRemoveRole($event)" />
+    <access-user-roles [roles]="selection" [loading]="waiting()" (remove)="onRemoveRole($event)" />
     <div class="d-grid">
       <!-- Add button -->
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onShowAddRole()" aria-label="Añadir role" rounded
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onShowAddRole()" aria-label="Añadir rol" rounded
         text />
     </div>
+    <p-button type="submit" name="Guardar" (click)="save.emit(selection)">Guardar</p-button>
   }
   @case ('add') {
     <access-user-add-role [getSelection]="getSelection()" (addRole)="onAddRole($event)" />
     <div class="d-grid">
       <!-- Cancel button -->
-      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelAddRole()">
+      <p-button type="button" class="secondary" aria-label="Añadir rol" (click)="onCancelAddRole()">
         Cancelar
-      </button>
+      </p-button>
     </div>
   }
 }

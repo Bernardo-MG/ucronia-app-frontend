@@ -13,7 +13,7 @@ export class AccessUserRolesInfo implements OnChanges {
 
   public readonly user = input(new User());
   public readonly loading = input(false);
-  
+
   public roles = new ArrayPaginatedResponse<Role>([], 0, 0);
 
   private pageSize = 10;
@@ -22,8 +22,8 @@ export class AccessUserRolesInfo implements OnChanges {
     return (this.roles.page - 1) * this.roles.size;
   }
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['user']) {
+  public ngOnChanges({ user }: SimpleChanges): void {
+    if (user) {
       this.roles = this.buildPage(1);
     }
   }

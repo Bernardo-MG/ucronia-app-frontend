@@ -140,29 +140,14 @@ export class AccessList implements OnInit {
     );
   }
 
-  public onAddRole(role: Role): void {
+  public onSetRoles(roles: Role[]): void {
     const user: UserChange = {
       username: this.selectedData.username,
       name: this.selectedData.name,
       email: this.selectedData.email,
       enabled: this.selectedData.enabled,
       passwordNotExpired: this.selectedData.passwordNotExpired,
-      roles: [...this.selectedData.roles.map(r => r.name), role.name]
-    }
-    this.call(
-      () => this.service.update(user),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
-    );
-  }
-
-  public onRemoveRole(role: Role): void {
-    const user: UserChange = {
-      username: this.selectedData.username,
-      name: this.selectedData.name,
-      email: this.selectedData.email,
-      enabled: this.selectedData.enabled,
-      passwordNotExpired: this.selectedData.passwordNotExpired,
-      roles: this.selectedData.roles.map(r => r.name).filter(r => r != role.name)
+      roles: [...roles.map(r => r.name)]
     }
     this.call(
       () => this.service.update(user),
