@@ -263,7 +263,7 @@ export class AccessList implements OnInit {
     const isActive = user.enabled;
     this.editionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: () => this.onSetActive(event, !isActive)
+      command: (method) => this.onSetActive(method.originalEvent as Event, !isActive)
     });
 
     this.editionMenu.toggle(event);
