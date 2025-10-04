@@ -21,8 +21,8 @@
             (click)="onShowInfo(user)" rounded text />
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, user)" rounded text />
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
-            [attr.aria-disabled]="!editable" (click)="onDelete($event, user.number)" rounded text />
+          <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+            [attr.aria-disabled]="!deletable" (click)="onDelete($event, user.number)" rounded text />
         </td>
       </tr>
     </ng-template>

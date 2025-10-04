@@ -42,6 +42,7 @@ export class PeopleList implements OnInit {
 
   public readonly createable;
   public readonly editable;
+  public readonly deletable;
 
   public data = new PaginatedResponse<Person>();
 
@@ -75,6 +76,7 @@ export class PeopleList implements OnInit {
     // Check permissions
     this.createable = authContainer.hasPermission("person", "create");
     this.editable = authContainer.hasPermission("person", "update");
+    this.deletable = authContainer.hasPermission("person", "delete");
 
     this.nameFilterSubject
       .pipe(debounceTime(300))

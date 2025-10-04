@@ -45,6 +45,7 @@ export class Funds implements OnInit {
 
   public readonly createable;
   public readonly editable;
+  public readonly deletable;
 
   public selectedData = new Transaction();
 
@@ -61,6 +62,7 @@ export class Funds implements OnInit {
     // Check permissions
     this.createable = authContainer.hasPermission("transaction", "create");
     this.editable = authContainer.hasPermission("transaction", "update");
+    this.deletable = authContainer.hasPermission("transaction", "delete");
   }
 
   public ngOnInit(): void {

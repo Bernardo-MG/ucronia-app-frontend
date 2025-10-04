@@ -39,8 +39,8 @@
   <assoc-transaction-info [transaction]="selectedData" />
   <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
     [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
-  <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
-    [attr.aria-disabled]="!editable" (click)="onDelete($event, selectedData)" rounded text />
+  <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+    [attr.aria-disabled]="!deletable" (click)="onDelete($event, selectedData)" rounded text />
 </p-dialog>
 @switch (view) {
   @case ('creation') {

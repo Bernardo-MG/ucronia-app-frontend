@@ -32,6 +32,7 @@ export class AccessList implements OnInit {
 
   public readonly createable;
   public readonly editable;
+  public readonly deletable;
 
   public editionMenuItems: MenuItem[] = [];
 
@@ -63,6 +64,7 @@ export class AccessList implements OnInit {
     // Check permissions
     this.createable = authContainer.hasPermission("user", "create");
     this.editable = authContainer.hasPermission("user", "update");
+    this.deletable = authContainer.hasPermission("user", "delete");
   }
 
   public ngOnInit(): void {

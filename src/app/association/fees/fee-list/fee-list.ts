@@ -44,6 +44,7 @@ export class FeeList implements OnInit {
 
   public readonly createable;
   public readonly editable;
+  public readonly deletable;
 
   public editing = false;
 
@@ -79,6 +80,7 @@ export class FeeList implements OnInit {
     // Check permissions
     this.createable = authContainer.hasPermission("fee", "create");
     this.editable = authContainer.hasPermission("fee", "update");
+    this.deletable = authContainer.hasPermission("fee", "delete");
   }
 
   public ngOnInit(): void {
