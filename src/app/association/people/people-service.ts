@@ -52,10 +52,10 @@ export class PeopleService {
       .pipe(map(r => r.content));
   }
 
-  public delete(number: number): Observable<boolean> {
+  public delete(number: number): Observable<Person> {
     return this.client
       .appendRoute(`/${number}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<Person>>()
       .pipe(map(r => r.content));
   }
 

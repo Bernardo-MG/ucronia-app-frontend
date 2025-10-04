@@ -30,10 +30,10 @@ export class TransactionService {
       .pipe(map(r => r.content));
   }
 
-  public delete(index: number): Observable<boolean> {
+  public delete(index: number): Observable<Transaction> {
     return this.client
       .appendRoute(`/${index}`)
-      .delete<SimpleResponse<boolean>>()
+      .delete<SimpleResponse<Transaction>>()
       .pipe(map(r => r.content));
   }
 
