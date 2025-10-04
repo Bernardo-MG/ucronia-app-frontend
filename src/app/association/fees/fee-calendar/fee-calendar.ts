@@ -5,14 +5,14 @@ import { RouterModule } from '@angular/router';
 import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
 import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, TagModule, JustifyCenterDirective],
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, BadgeModule, JustifyCenterDirective],
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
