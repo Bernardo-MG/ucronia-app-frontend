@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
@@ -10,7 +9,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-token-extend-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, ButtonModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, ButtonModule, MessageModule],
   templateUrl: './user-token-extend-form.html'
 })
 export class UserTokenExtendForm {
