@@ -17,7 +17,6 @@ import { MessageModule } from 'primeng/message';
 export class AccountChangePasswordForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   public readonly save = output<PasswordChange>();
