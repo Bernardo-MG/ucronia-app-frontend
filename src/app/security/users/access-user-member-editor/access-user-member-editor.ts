@@ -1,5 +1,5 @@
 
-import { Component, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Member } from '@app/domain/members/member';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';

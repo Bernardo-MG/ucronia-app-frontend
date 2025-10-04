@@ -13,7 +13,6 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 export class AccessUserRoles implements OnChanges {
 
   public readonly roles = input<Role[]>([]);
-
   public readonly loading = input(false);
 
   public readonly remove = output<Role>();
