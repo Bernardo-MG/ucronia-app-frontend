@@ -1,10 +1,8 @@
-<ng-template #title>
-  @if (loading()) {
-    <p-skeleton height="2rem" class="mb-2" />
-  } @else {
-    <h2># {{data().number}}</h2>
-  }
-</ng-template>
+@if (loading()) {
+  <p-skeleton height="2rem" class="mb-2" />
+} @else {
+  <h2># {{data().number}}</h2>
+}
 @if (loading()) {
   <!-- First name -->
   <div class="row">
