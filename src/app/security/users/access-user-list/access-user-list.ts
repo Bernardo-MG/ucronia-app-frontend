@@ -95,24 +95,6 @@ export class AccessList implements OnInit {
     return this.service.getMember(username);
   }
 
-  public onAddRole(role: Role): void {
-    const userUpdate: UserUpdate = {
-      ...this.selectedData,
-      roles: this.selectedData.roles.map(r => r.name)
-    };
-    userUpdate.roles.push(role.name);
-    this.call(() => this.service.update(userUpdate));
-  }
-
-  public onRemoveRole(role: Role): void {
-    const userUpdate: UserUpdate = {
-      ...this.selectedData,
-      roles: this.selectedData.roles.map(r => r.name)
-    };
-    userUpdate.roles = userUpdate.roles.filter(r => r != role.name);
-    this.call(() => this.service.update(userUpdate));
-  }
-
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
@@ -131,15 +113,48 @@ export class AccessList implements OnInit {
       notExpired: true,
       notLocked: true
     };
-    this.call(() => this.service.create(user));
+    this.call(
+      () => this.service.create(user),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
+  }
+
+  public onAddRole(role: Role): void {
+    const userUpdate: UserUpdate = {
+      ...this.selectedData,
+      roles: this.selectedData.roles.map(r => r.name)
+    };
+    userUpdate.roles.push(role.name);
+    this.call(
+      () => this.service.update(userUpdate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onRemoveRole(role: Role): void {
+    const userUpdate: UserUpdate = {
+      ...this.selectedData,
+      roles: this.selectedData.roles.map(r => r.name)
+    };
+    userUpdate.roles = userUpdate.roles.filter(r => r != role.name);
+    this.call(
+      () => this.service.update(userUpdate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onUpdate(toUpdate: UserUpdate): void {
-    this.call(() => this.service.update(toUpdate));
+    this.call(
+      () => this.service.update(toUpdate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onAssignMember(member: Member): void {
-    this.call(() => this.service.assignMember(this.selectedData.username, member));
+    this.call(
+      () => this.service.assignMember(this.selectedData.username, member),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
 
   public onSetActive(event: Event, status: boolean) {
@@ -168,7 +183,10 @@ export class AccessList implements OnInit {
           roles: this.selectedData.roles.map(r => r.name),
           enabled: status
         };
-        this.call(() => this.service.update(userUpdate));
+        this.call(
+          () => this.service.update(userUpdate),
+          () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+        );
       }
     });
   }
@@ -187,10 +205,11 @@ export class AccessList implements OnInit {
         label: 'Delete',
         severity: 'danger'
       },
-      accept: () => {
-        this.call(() => this.service.delete(id));
-        return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-      }
+      accept: () =>
+        this.call(
+          () => this.service.delete(id),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
     });
   }
 
@@ -254,7 +273,7 @@ export class AccessList implements OnInit {
           this.view = 'none';
           this.editing = false;
           this.showing = false;
-          this.load(1);
+          this.load(0);
           onSuccess();
         },
         error: error => {
