@@ -15,6 +15,7 @@ import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
 import { AccessUserService } from '../access-user-service';
+import { UserUpdate } from '../models/user-update';
 
 @Component({
   selector: 'access-user-list',
@@ -95,13 +96,21 @@ export class AccessList implements OnInit {
   }
 
   public onAddRole(role: Role): void {
-    this.selectedData.roles.push(role);
-    this.onUpdate(this.selectedData);
+    const userUpdate: UserUpdate = {
+      ...this.selectedData,
+      roles: this.selectedData.roles.map(r => r.name)
+    };
+    userUpdate.roles.push(role.name);
+    this.call(() => this.service.update(userUpdate));
   }
 
   public onRemoveRole(role: Role): void {
-    this.selectedData.roles = this.selectedData.roles.filter(r => r.name != role.name);
-    this.onUpdate(this.selectedData);
+    const userUpdate: UserUpdate = {
+      ...this.selectedData,
+      roles: this.selectedData.roles.map(r => r.name)
+    };
+    userUpdate.roles = userUpdate.roles.filter(r => r != role.name);
+    this.call(() => this.service.update(userUpdate));
   }
 
   public onPageChange(event: TablePageEvent) {
@@ -115,20 +124,74 @@ export class AccessList implements OnInit {
     this.showing = true;
   }
 
-  public onCreate(toCreate: any): void {
-    this.mutate(() => this.service.create(toCreate));
+  public onCreate(toCreate: UserUpdate): void {
+    const user: User = {
+      ...toCreate,
+      roles: [],
+      notExpired: true,
+      notLocked: true
+    };
+    this.call(() => this.service.create(user));
   }
 
-  public onUpdate(toUpdate: any): void {
-    this.mutate(() => this.service.update(toUpdate));
+  public onUpdate(toUpdate: UserUpdate): void {
+    this.call(() => this.service.update(toUpdate));
   }
 
-  public onCancel(): void {
-    this.view = 'none';
+  public onAssignMember(member: Member): void {
+    this.call(() => this.service.assignMember(this.selectedData.username, member));
   }
 
-  public onSelectMember(member: Member): void {
-    this.mutate(() => this.service.assignMember(this.selectedData.username, member));
+  public onSetActive(event: Event, status: boolean) {
+    let message;
+    if (status) {
+      message = '¿Estás seguro de querer activar el usuario?';
+    } else {
+      message = '¿Estás seguro de querer desactivar el usuario?';
+    }
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message,
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        const userUpdate: UserUpdate = {
+          ...this.selectedData,
+          roles: this.selectedData.roles.map(r => r.name),
+          enabled: status
+        };
+        this.call(() => this.service.update(userUpdate));
+      }
+    });
+  }
+
+  public onDelete(event: Event, id: string) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Quieres borrar estos datos?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancel',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Delete',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.call(() => this.service.delete(id));
+        return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+      }
+    });
   }
 
   public openEditionMenu(event: Event, user: User) {
@@ -157,62 +220,10 @@ export class AccessList implements OnInit {
     const isActive = user.enabled;
     this.editionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: () => this.onConfirmSetActive(event, !isActive)
+      command: () => this.onSetActive(event, !isActive)
     });
 
     this.editionMenu.toggle(event);
-  }
-
-  public onConfirmSetActive(event: Event, status: boolean) {
-    let message;
-    if (status) {
-      message = '¿Estás seguro de querer activar el usuario?';
-    } else {
-      message = '¿Estás seguro de querer desactivar el usuario?';
-    }
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message,
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => {
-        this.onSetActive(status);
-      }
-    });
-  }
-
-  public onSetActive(status: boolean) {
-    this.selectedData.enabled = status;
-    this.onUpdate(this.selectedData);
-  }
-
-  public onDelete(event: Event, id: string) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Quieres borrar estos datos?',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancel',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Delete',
-        severity: 'danger'
-      },
-      accept: () => {
-        this.mutate(() => this.service.delete(id));
-        return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-      }
-    });
   }
 
   public onStartCreating(): void {
@@ -233,7 +244,7 @@ export class AccessList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private mutate(action: () => Observable<any>) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -244,6 +255,7 @@ export class AccessList implements OnInit {
           this.editing = false;
           this.showing = false;
           this.load(1);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

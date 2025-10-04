@@ -40,7 +40,7 @@
   @case ('edition') {
     <p-dialog header="Editar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
-        (save)="onUpdate($event)" (reject)="onCancel()" />
+        (save)="onUpdate($event)" />
     </p-dialog>
   }
   @case ('roles') {
@@ -52,7 +52,7 @@
   @case ('member') {
     <p-dialog header="Editar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <access-user-member-editor [username]="selectedData.username" [getSelection]="onLoadMembers.bind(this)"
-        [member]="member" (selectMember)="onSelectMember($event)" />
+        [member]="member" (assignMember)="onAssignMember($event)" />
     </p-dialog>
   }
 }

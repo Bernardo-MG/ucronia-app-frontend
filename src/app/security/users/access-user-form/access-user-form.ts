@@ -1,7 +1,6 @@
 
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -9,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { UserUpdate } from '../models/user-update';
 
 @Component({
   selector: 'access-user-form',
@@ -27,7 +27,7 @@ export class AccessUserForm implements OnChanges {
     this.form.patchValue(value as any);
   }
 
-  public readonly save = output<FeeCreation>();
+  public readonly save = output<UserUpdate>();
 
   public formStatus: FormStatus;
 

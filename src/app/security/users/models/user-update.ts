@@ -1,8 +1,8 @@
 export class UserUpdate {
-  username = '';
-  name = '';
-  email = '';
-  enabled = false;
-  passwordNotExpired = true;
-  roles: string[] = [];
+  public username = '';
+  public name = '';
+  public email = '';
+  public enabled = false;
+  public passwordNotExpired = true;
+  public roles: string[] = [];
 }
