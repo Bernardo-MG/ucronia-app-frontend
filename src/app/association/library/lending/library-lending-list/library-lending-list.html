@@ -11,7 +11,7 @@
       </tr>
     </ng-template>
     <ng-template #body let-lending>
-      <tr [pSelectableRow]="lending">
+      <tr>
         <td>{{ lending.book.title.fullTitle }}</td>
         <td>{{ lending.borrower.name.fullName }}</td>
         <td>{{ lending.lendingDate | date:'yyyy-MM-dd' }}</td>

@@ -13,7 +13,7 @@
       </tr>
     </ng-template>
     <ng-template #body let-data>
-      <tr [pSelectableRow]="data">
+      <tr>
         <td>{{ data.name }}</td>
         <td>
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"

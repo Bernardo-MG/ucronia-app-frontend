@@ -1,14 +1,14 @@
-<p-table lazy="true" [dataKey]="dataKey()" selectionMode="single" [loading]="loading" [value]="selection.content"
-  [(selection)]="selectedData" paginator="true" [rows]="selection.size" [totalRecords]="selection.totalElements"
-  [first]="first" (onPage)="onGoToSelectionPage($event)" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onRowSelect)="onSelectRow()">
+<p-table lazy="true" [dataKey]="dataKey()" [loading]="loading" [value]="selection.content" paginator="true"
+  [rows]="selection.size" [totalRecords]="selection.totalElements" [first]="first"
+  (onPage)="onGoToSelectionPage($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
+  (onRowSelect)="onSelectRow()">
   <ng-template #header>
     <tr>
       <th>{{heading()}}</th>
     </tr>
   </ng-template>
   <ng-template #body let-row>
-    <tr [pSelectableRow]="row">
+    <tr>
       <td>{{nameRenderer()(row)}}</td>
     </tr>
   </ng-template>
