@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MenuItem } from 'primeng/api';
@@ -16,12 +15,11 @@ import { AccessRoleService } from '../access-role-service';
 
 @Component({
   selector: 'access-role-list',
-  imports: [RouterModule, PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
+  imports: [PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
   templateUrl: './access-role-list.html'
 })
 export class AccessRoleList implements OnInit {
 
-  private readonly router = inject(Router);
   private readonly service = inject(AccessRoleService);
 
   @ViewChild('editionMenu') editionMenu!: Menu;
@@ -77,7 +75,7 @@ export class AccessRoleList implements OnInit {
   }
 
   public onCreate(toCreate: Role): void {
-    this.mutate(() => this.service.create(toCreate));
+    this.call(() => this.service.create(toCreate));
   }
 
   public openEditionMenu(event: Event, role: Role) {
@@ -104,22 +102,18 @@ export class AccessRoleList implements OnInit {
   public onAddRolePermission(permission: ResourcePermission) {
     this.selectedData.permissions.push(permission);
 
-    this.mutate(() => this.service.update(this.selectedData));
+    this.call(() => this.service.update(this.selectedData));
   }
 
   public onRemoveRolePermission(permission: ResourcePermission) {
     this.selectedData.permissions = this.selectedData.permissions.filter(r => r.name != permission.name);
 
-    this.mutate(() => this.service.update(this.selectedData));
+    this.call(() => this.service.update(this.selectedData));
   }
 
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
-  }
-
-  public onSelectRow() {
-    this.router.navigate([`/security/roles/${this.selectedData.name}`]);
   }
 
   public onStartEditingView(view: string): void {
@@ -134,7 +128,7 @@ export class AccessRoleList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private mutate(action: () => Observable<any>) {
+  private call(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))

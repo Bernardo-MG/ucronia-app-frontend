@@ -10,14 +10,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-    selector: 'access-role-form',
-    imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
-    templateUrl: './access-role-form.html'
+  selector: 'access-role-form',
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
+  templateUrl: './access-role-form.html'
 })
 export class AccessRoleForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: Role) {

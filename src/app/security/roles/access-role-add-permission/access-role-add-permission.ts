@@ -13,13 +13,10 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 export class AccessRoleAddPermission {
 
   public readonly permissions = input(new PaginatedResponse<ResourcePermission>());
-
   public readonly loading = input(false);
 
   public readonly addPermission = output<ResourcePermission>();
-
   public readonly goTo = output<number>();
-
   public readonly changeDirection = output<SortingProperty>();
 
   public get first() {
