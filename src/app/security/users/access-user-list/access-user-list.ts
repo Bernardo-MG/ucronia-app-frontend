@@ -15,7 +15,7 @@ import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
 import { AccessUserService } from '../access-user-service';
-import { UserUpdate } from '../models/user-update';
+import { UserChange } from '../models/user-change';
 
 @Component({
   selector: 'access-user-list',
@@ -106,7 +106,7 @@ export class AccessList implements OnInit {
     this.showing = true;
   }
 
-  public onCreate(toCreate: UserUpdate): void {
+  public onCreate(toCreate: UserChange): void {
     const user: User = {
       ...toCreate,
       roles: [],
@@ -120,32 +120,44 @@ export class AccessList implements OnInit {
   }
 
   public onAddRole(role: Role): void {
-    const userUpdate: UserUpdate = {
-      ...this.selectedData,
-      roles: this.selectedData.roles.map(r => r.name)
-    };
-    userUpdate.roles.push(role.name);
+    const user: UserChange = {
+      username: this.selectedData.username,
+      name: this.selectedData.name,
+      email: this.selectedData.email,
+      enabled: this.selectedData.enabled,
+      passwordNotExpired: this.selectedData.passwordNotExpired,
+      roles: [...this.selectedData.roles.map(r => r.name), role.name]
+    }
     this.call(
-      () => this.service.update(userUpdate),
+      () => this.service.update(user),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
   public onRemoveRole(role: Role): void {
-    const userUpdate: UserUpdate = {
-      ...this.selectedData,
-      roles: this.selectedData.roles.map(r => r.name)
-    };
-    userUpdate.roles = userUpdate.roles.filter(r => r != role.name);
+    const user: UserChange = {
+      username: this.selectedData.username,
+      name: this.selectedData.name,
+      email: this.selectedData.email,
+      enabled: this.selectedData.enabled,
+      passwordNotExpired: this.selectedData.passwordNotExpired,
+      roles: this.selectedData.roles.map(r => r.name).filter(r => r != role.name)
+    }
     this.call(
-      () => this.service.update(userUpdate),
+      () => this.service.update(user),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
-  public onUpdate(toUpdate: UserUpdate): void {
+  public onUpdate(toUpdate: UserChange): void {
+    const user: UserChange = {
+      ...toUpdate,
+      enabled: this.selectedData.enabled,
+      passwordNotExpired: this.selectedData.passwordNotExpired,
+      roles: this.selectedData.roles.map(r => r.name)
+    }
     this.call(
-      () => this.service.update(toUpdate),
+      () => this.service.update(user),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
@@ -178,7 +190,7 @@ export class AccessList implements OnInit {
         severity: 'danger'
       },
       accept: () => {
-        const userUpdate: UserUpdate = {
+        const userUpdate: UserChange = {
           ...this.selectedData,
           roles: this.selectedData.roles.map(r => r.name),
           enabled: status
@@ -223,7 +235,7 @@ export class AccessList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Datos',
-        command: () => this.onStartEditing(user, 'details')
+        command: () => this.onStartEditing(user, 'edition')
       });
     this.editionMenuItems.push(
       {

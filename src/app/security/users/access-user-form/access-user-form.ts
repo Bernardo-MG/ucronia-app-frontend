@@ -8,7 +8,7 @@ import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { UserUpdate } from '../models/user-update';
+import { UserChange } from '../models/user-change';
 
 @Component({
   selector: 'access-user-form',
@@ -18,20 +18,21 @@ import { UserUpdate } from '../models/user-update';
 export class AccessUserForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
-
   public readonly create = input(true);
 
   @Input() public set data(value: User) {
     this.form.patchValue(value as any);
+    this.username = value.username;
   }
 
-  public readonly save = output<UserUpdate>();
+  public readonly save = output<UserChange>();
 
   public formStatus: FormStatus;
 
   public form: FormGroup;
+
+  public username = '';
 
   constructor() {
     const fb = inject(FormBuilder);

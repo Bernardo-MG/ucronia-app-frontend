@@ -4,7 +4,7 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { UserUpdate } from './models/user-update';
+import { UserChange } from './models/user-change';
 
 @Injectable({
   providedIn: "root"
@@ -37,7 +37,7 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public update(data: UserUpdate): Observable<User> {
+  public update(data: UserChange): Observable<User> {
     return this.client
       .appendRoute(`/${data.username}`)
       .update<SimpleResponse<User>>(data)
