@@ -29,11 +29,17 @@ export class CalendarMonth implements OnChanges {
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<any>>();
 
-  public readonly month = new Date();
+  public _month = new Date();
+  public get month() {
+    return this._month;
+  }
+  public set month(value: Date) {
+    this._month = value;
+    this.viewDate = value;
+  }
 
   public selectionMonths: { value: Date, label: string }[] = [];
 
-  public currentMonth = new Date();
   public viewDate = new Date();
 
   public activeDayIsOpen = false;
@@ -53,8 +59,8 @@ export class CalendarMonth implements OnChanges {
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.currentMonth)) {
-      const sameDay = isSameDay(this.currentMonth, date);
+    if (isSameMonth(date, this.viewDate)) {
+      const sameDay = isSameDay(this.viewDate, date);
       this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;
       this.viewDate = date;
     }
@@ -66,9 +72,9 @@ export class CalendarMonth implements OnChanges {
 
   private updateCurrentMonth() {
     if (!this.months().length) {
-      this.currentMonth = new Date();
+      this.viewDate = new Date();
     } else {
-      const exists = this.months().some(m => m === this.currentMonth);
+      const exists = this.months().some(m => m === this.viewDate);
       if (!exists) {
         // Choose latest date
         this.setMonth(this.months()[this.months().length - 1]);
@@ -77,7 +83,7 @@ export class CalendarMonth implements OnChanges {
   }
 
   private setMonth(month: Date) {
-    this.currentMonth = month;
+    this.viewDate = month;
     this.activeDayIsOpen = false;
   }
 
@@ -88,12 +94,12 @@ export class CalendarMonth implements OnChanges {
       if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
         // The current date is after the last date in range
         // Replace with the last date
-        this.currentMonth = month;
+        this.viewDate = month;
       } else {
-        this.currentMonth = new Date();
+        this.viewDate = new Date();
       }
     } else {
-      this.currentMonth = new Date();
+      this.viewDate = new Date();
     }
   }
 
