@@ -13,7 +13,6 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 export class AccessUserRoles implements OnChanges {
 
   public readonly roles = input<Role[]>([]);
-
   public readonly loading = input(false);
 
   public readonly remove = output<Role>();
@@ -26,7 +25,7 @@ export class AccessUserRoles implements OnChanges {
 
   private pageSize = 10;
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes['roles']) {
       this.data = this.buildPage(1);
     }

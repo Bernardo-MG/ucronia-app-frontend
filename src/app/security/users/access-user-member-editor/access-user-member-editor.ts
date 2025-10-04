@@ -1,5 +1,5 @@
 
-import { Component, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Member } from '@app/domain/members/member';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -19,7 +19,7 @@ export class AccessUserMemberEditor {
   public readonly member = input(new Member());
   public readonly waitingMembersSelection = input(false);
 
-  public readonly selectMember = output<Member>();
+  public readonly assignMember = output<Member>();
 
   public view: 'member' | 'select' = 'member';
 
@@ -32,7 +32,7 @@ export class AccessUserMemberEditor {
   }
 
   public onSelectMember(member: Member): void {
-    this.selectMember.emit(member);
+    this.assignMember.emit(member);
     this.view = "member";
   }
 

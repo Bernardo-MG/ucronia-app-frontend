@@ -1,16 +1,20 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <!-- Username -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="usernameInput" formControlName="username" class="w-100" />
-    <label for="usernameInput">Usuario</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('username'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
-  </div>
+  @if(create()) {
+    <p-floatlabel variant="in" class="mb-2 d-flex">
+      <input pInputText type="text" id="usernameInput" formControlName="username" class="w-100" />
+      <label for="usernameInput">Usuario</label>
+    </p-floatlabel>
+    <div class="mb-2">
+      @for (failure of failures().getFailures('username'); track failure) {
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
+      }
+    </div>
+  } @else {
+    <h2>{{username}}</h2>
+  }
   <!-- Name -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <input pInputText type="text" id="nameInput" formControlName="name" class="w-100" />

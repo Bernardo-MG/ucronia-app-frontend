@@ -1,5 +1,5 @@
 
-import { Component, input, output } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { Role } from '@bernardo-mg/authentication';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -12,25 +12,32 @@ import { AccessUserRoles } from '../access-user-roles/access-user-roles';
   imports: [ButtonModule, AccessUserAddRole, AccessUserRoles],
   templateUrl: './access-user-roles-editor.html'
 })
-export class AccessUserRolesEditor {
+export class AccessUserRolesEditor implements OnChanges {
 
   public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Role>>>((page: number) => EMPTY);
   public readonly waiting = input(false);
   public readonly roles = input<Role[]>([]);
 
-  public readonly remove = output<Role>();
-  public readonly add = output<Role>();
+  public readonly save = output<Role[]>();
   public readonly goToSelectionPage = output<number>();
 
   public view: 'list' | 'add' = 'list';
 
+  public selection: Role[] = [];
+
+  public ngOnChanges({ roles }: SimpleChanges): void {
+    if (roles) {
+      this.selection = [...roles.currentValue];
+    }
+  }
+
   public onAddRole(role: Role): void {
-    this.add.emit(role);
-    this.view = "list";
+    this.selection = [...this.selection, role];
+    this.view = 'list';
   }
 
   public onRemoveRole(role: Role): void {
-    this.remove.emit(role);
+    this.selection = [...this.selection.filter(r => r.name != role.name)];
   }
 
   public onShowAddRole() {

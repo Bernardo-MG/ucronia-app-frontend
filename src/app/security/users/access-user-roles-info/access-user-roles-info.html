@@ -1,0 +1,14 @@
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="roles.content" paginator="true" [rows]="roles.size"
+  [totalRecords]="roles.totalElements" [first]="first" (onPage)="onPageChange($event)" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}">
+  <ng-template #header>
+    <tr>
+      <th>Nombre</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-role>
+    <tr>
+      <td>{{role.name}}</td>
+    </tr>
+  </ng-template>
+</p-table>

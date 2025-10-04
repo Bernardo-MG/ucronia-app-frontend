@@ -1,5 +1,4 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { Member } from '@app/domain/members/member';
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -15,11 +14,13 @@ import { AccessUserForm } from '../access-user-form/access-user-form';
 import { AccessUserInfo } from '../access-user-info/access-user-info';
 import { AccessUserMemberEditor } from '../access-user-member-editor/access-user-member-editor';
 import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-roles-editor';
+import { AccessUserRolesInfo } from '../access-user-roles-info/access-user-roles-info';
 import { AccessUserService } from '../access-user-service';
+import { UserChange } from '../models/user-change';
 
 @Component({
   selector: 'access-user-list',
-  imports: [CardModule, RouterModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserRolesEditor, AccessUserMemberEditor],
+  imports: [CardModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserRolesEditor, AccessUserMemberEditor, AccessUserRolesInfo],
   templateUrl: './access-user-list.html'
 })
 export class AccessList implements OnInit {
@@ -28,12 +29,14 @@ export class AccessList implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
+  @ViewChild('infoMenu') private infoMenu!: Menu;
   @ViewChild('editionMenu') private editionMenu!: Menu;
 
   public readonly createable;
   public readonly editable;
   public readonly deletable;
 
+  public infoMenuItems: MenuItem[] = [];
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {
@@ -51,6 +54,7 @@ export class AccessList implements OnInit {
   public loading = false;
   public editing = false;
   public showing = false;
+  public showingRoles = false;
 
   public view: string = '';
 
@@ -65,6 +69,18 @@ export class AccessList implements OnInit {
     this.createable = authContainer.hasPermission("user", "create");
     this.editable = authContainer.hasPermission("user", "update");
     this.deletable = authContainer.hasPermission("user", "delete");
+
+    // Load info menu
+    this.infoMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.onShowInfo(this.selectedData)
+      },
+      {
+        label: 'Roles',
+        command: () => this.onShowRolesInfo(this.selectedData)
+      }
+    );
   }
 
   public ngOnInit(): void {
@@ -95,16 +111,6 @@ export class AccessList implements OnInit {
     return this.service.getMember(username);
   }
 
-  public onAddRole(role: Role): void {
-    this.selectedData.roles.push(role);
-    this.onUpdate(this.selectedData);
-  }
-
-  public onRemoveRole(role: Role): void {
-    this.selectedData.roles = this.selectedData.roles.filter(r => r.name != role.name);
-    this.onUpdate(this.selectedData);
-  }
-
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
@@ -116,55 +122,60 @@ export class AccessList implements OnInit {
     this.showing = true;
   }
 
-  public onCreate(toCreate: any): void {
-    this.mutate(() => this.service.create(toCreate));
-  }
-
-  public onUpdate(toUpdate: any): void {
-    this.mutate(() => this.service.update(toUpdate));
-  }
-
-  public onCancel(): void {
-    this.view = 'none';
-  }
-
-  public onSelectMember(member: Member): void {
-    this.mutate(() => this.service.assignMember(this.selectedData.username, member));
-  }
-
-  public openEditionMenu(event: Event, user: User) {
+  public onShowRolesInfo(user: User) {
     this.selectedData = user;
-    this.service.getMember(user.username).subscribe(member => this.member = member);
-
-    this.editionMenuItems = [];
-
-    // Load edition menu
-    this.editionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.onStartEditing(user, 'details')
-      });
-    this.editionMenuItems.push(
-      {
-        label: 'Roles',
-        command: () => this.onStartEditing(user, 'roles')
-      });
-    this.editionMenuItems.push(
-      {
-        label: 'Socio',
-        command: () => this.onStartEditing(user, 'member')
-      });
-    // Active/Deactivate toggle
-    const isActive = user.enabled;
-    this.editionMenuItems.push({
-      label: isActive ? 'Desactivar' : 'Activar',
-      command: () => this.onConfirmSetActive(event, !isActive)
-    });
-
-    this.editionMenu.toggle(event);
+    this.showingRoles = true;
   }
 
-  public onConfirmSetActive(event: Event, status: boolean) {
+  public onCreate(toCreate: UserChange): void {
+    const user: User = {
+      ...toCreate,
+      roles: [],
+      notExpired: true,
+      notLocked: true
+    };
+    this.call(
+      () => this.service.create(user),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
+  }
+
+  public onSetRoles(roles: Role[]): void {
+    const user: UserChange = {
+      username: this.selectedData.username,
+      name: this.selectedData.name,
+      email: this.selectedData.email,
+      enabled: this.selectedData.enabled,
+      passwordNotExpired: this.selectedData.passwordNotExpired,
+      roles: [...roles.map(r => r.name)]
+    }
+    this.call(
+      () => this.service.update(user),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onUpdate(toUpdate: UserChange): void {
+    const user: UserChange = {
+      ...toUpdate,
+      enabled: this.selectedData.enabled,
+      passwordNotExpired: this.selectedData.passwordNotExpired,
+      roles: this.selectedData.roles.map(r => r.name)
+    }
+    this.call(
+      () => this.service.update(user),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onAssignMember(member: Member): void {
+    this.call(
+      () => this.service.assignMember(this.selectedData.username, member),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onSetActive(event: Event, status: boolean) {
     let message;
     if (status) {
       message = '¿Estás seguro de querer activar el usuario?';
@@ -185,14 +196,17 @@ export class AccessList implements OnInit {
         severity: 'danger'
       },
       accept: () => {
-        this.onSetActive(status);
+        const userUpdate: UserChange = {
+          ...this.selectedData,
+          roles: this.selectedData.roles.map(r => r.name),
+          enabled: status
+        };
+        this.call(
+          () => this.service.update(userUpdate),
+          () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+        );
       }
     });
-  }
-
-  public onSetActive(status: boolean) {
-    this.selectedData.enabled = status;
-    this.onUpdate(this.selectedData);
   }
 
   public onDelete(event: Event, id: string) {
@@ -209,11 +223,50 @@ export class AccessList implements OnInit {
         label: 'Delete',
         severity: 'danger'
       },
-      accept: () => {
-        this.mutate(() => this.service.delete(id));
-        return this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-      }
+      accept: () =>
+        this.call(
+          () => this.service.delete(id),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
     });
+  }
+  
+  public openInfoMenu(event: Event, user: User) {
+    this.selectedData = user;
+
+    this.infoMenu.toggle(event);
+  }
+
+  public openEditionMenu(event: Event, user: User) {
+    this.selectedData = user;
+    this.service.getMember(user.username).subscribe(member => this.member = member);
+
+    this.editionMenuItems = [];
+
+    // Load edition menu
+    this.editionMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.onStartEditing(user, 'edition')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Roles',
+        command: () => this.onStartEditing(user, 'roles')
+      });
+    this.editionMenuItems.push(
+      {
+        label: 'Socio',
+        command: () => this.onStartEditing(user, 'member')
+      });
+    // Active/Deactivate toggle
+    const isActive = user.enabled;
+    this.editionMenuItems.push({
+      label: isActive ? 'Desactivar' : 'Activar',
+      command: (method) => this.onSetActive(method.originalEvent as Event, !isActive)
+    });
+
+    this.editionMenu.toggle(event);
   }
 
   public onStartCreating(): void {
@@ -234,7 +287,7 @@ export class AccessList implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private mutate(action: () => Observable<any>) {
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -244,7 +297,9 @@ export class AccessList implements OnInit {
           this.view = 'none';
           this.editing = false;
           this.showing = false;
-          this.load(1);
+          this.showingRoles = false;
+          this.load(0);
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {
