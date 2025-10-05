@@ -13,7 +13,7 @@ export class SortingParams implements ParamLoader {
   ) { }
 
   public load(setParameter: (name: string, value: any) => void): void {
-    this.getFinalProperties().forEach((property) => setParameter('sort', `${String(property.property)},${property.direction}`));
+    this.getFinalProperties().forEach((property) => setParameter('sort', `${String(property.property)}|${property.direction}`));
   }
 
   public getFinalProperties(): SortingProperty[] {
