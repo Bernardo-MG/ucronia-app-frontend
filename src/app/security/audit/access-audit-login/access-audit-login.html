@@ -12,7 +12,7 @@
     <ng-template #body let-user>
       <tr>
         <td>{{ user.username }}</td>
-        <td>{{ user.date | date:'yyyy-MM-dd hh:mm:ss' }}</td>
+        <td>{{ user.date | date:'yyyy-MM-dd HH:mm:ss' }}</td>
         <td>
           @switch (user.loggedIn) {
             @case (true) {
