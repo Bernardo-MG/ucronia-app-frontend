@@ -54,7 +54,8 @@ export class CalendarMonth implements OnChanges {
   }
 
   public onGoTo(event: SelectChangeEvent) {
-    this.setMonth(event.value);
+    this.viewDate = event.value;
+    this.activeDayIsOpen = false;
     this.changeMonth.emit(event.value);
   }
 
@@ -77,29 +78,16 @@ export class CalendarMonth implements OnChanges {
       const exists = this.months().some(m => m === this.viewDate);
       if (!exists) {
         // Choose latest date
-        this.setMonth(this.months()[this.months().length - 1]);
+        this.viewDate = this.months()[this.months().length - 1];
       }
     }
   }
 
-  private setMonth(month: Date) {
-    this.viewDate = month;
-    this.activeDayIsOpen = false;
-  }
-
   private loadInitialMonth() {
-    const date = new Date();
     if (this.months().length > 0) {
-      const month = this.months()[0];
-      if ((date.getFullYear() >= month.getFullYear()) || ((date.getFullYear() >= month.getFullYear()) && (date.getMonth() >= month.getMonth()))) {
-        // The current date is after the last date in range
-        // Replace with the last date
-        this.viewDate = month;
-      } else {
-        this.viewDate = new Date();
-      }
+        this.month = this.months()[0];
     } else {
-      this.viewDate = new Date();
+      this.month = new Date();
     }
   }
 
