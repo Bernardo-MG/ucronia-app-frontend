@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { TransactionCalendar } from '@app/association/transaction-calendar/transaction-calendar';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { CalendarMonth } from '@bernardo-mg/ui';
 import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -22,7 +22,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds',
-  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, CalendarMonth, TransactionInfo, TransactionForm, TransactionBalanceChart],
+  imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChart],
   templateUrl: './funds.html'
 })
 export class Funds implements OnInit {
@@ -49,7 +49,7 @@ export class Funds implements OnInit {
 
   public selectedData = new Transaction();
 
-  public events: CalendarEvent<{ transactionId: number }>[] = [];
+  public transactions: Transaction[] = [];
   public balance = new TransactionCurrentBalance();
 
   public view: string = '';
@@ -144,7 +144,7 @@ export class Funds implements OnInit {
     this.loadingCalendar = true;
     this.transactionCalendarService.getCalendar(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
-      .subscribe(events => this.events = events);
+      .subscribe(transactions => this.transactions = transactions);
   }
 
   private getDefaultMonth() {

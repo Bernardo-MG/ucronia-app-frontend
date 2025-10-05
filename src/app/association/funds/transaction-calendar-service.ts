@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
+import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-calendar-month';
 import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
-import { Month } from '@bernardo-mg/ui';
-import { Colors } from '@app/shared/utils/colors';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { CalendarEvent } from 'angular-calendar';
+import { Month } from '@bernardo-mg/ui';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 
@@ -24,7 +23,7 @@ export class TransactionCalendarService {
     this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/transaction/calendar/range');
   }
 
-  public getCalendar(year: number, month: number): Observable<CalendarEvent<{ transactionId: number }>[]> {
+  public getCalendar(year: number, month: number): Observable<Transaction[]> {
     let previousYear;
     let previousMonth;
     if (month > 1) {
@@ -49,24 +48,8 @@ export class TransactionCalendarService {
     const nextMonthQuery = this.readCalendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
 
     return concat(previousMonthQuery, thisMonthQuery, nextMonthQuery).pipe(
-      mergeMap((data) => data.transactions.map(t => {
-        const date = new Date(t.date);
-        let color;
-        if (t.amount >= 0) {
-          color = Colors.blue;
-        } else {
-          color = Colors.red;
-        }
-        return {
-          title: `${t.description} (${t.amount}€)`,
-          color: color,
-          start: date,
-          meta: {
-            transactionId: t.index,
-          }
-        };
-      })),
-      toArray(),
+      mergeMap(data => data.transactions),
+      toArray()
     );
   }
 

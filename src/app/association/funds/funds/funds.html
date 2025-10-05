@@ -32,7 +32,7 @@
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
       [disabled]="!createable" aria-label="Nueva transacción" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
-  <ui-calendar-month [events]="events" [months]="months" [loading]="loadingCalendar" (changeMonth)="loadCalendar($event)"
+  <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar" (changeMonth)="loadCalendar($event)"
     (pickDate)="onShowInfo($event)" />
 </p-panel>
 <p-dialog header="Transacción" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">

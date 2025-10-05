@@ -44,8 +44,8 @@ export class CalendarMonth implements OnChanges {
 
   public activeDayIsOpen = false;
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['months']) {
+  public ngOnChanges({ months }: SimpleChanges): void {
+    if (months) {
       this.selectionMonths = this.months()
         .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
       this.updateCurrentMonth();
@@ -85,7 +85,7 @@ export class CalendarMonth implements OnChanges {
 
   private loadInitialMonth() {
     if (this.months().length > 0) {
-        this.month = this.months()[0];
+      this.month = this.months()[0];
     } else {
       this.month = new Date();
     }
