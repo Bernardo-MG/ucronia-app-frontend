@@ -6,10 +6,11 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
 import { AccessAuditLoginService } from '../access-audit-login-service';
 import { LoginRegister } from '../models/login-register';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'access-audit-login',
-  imports: [CardModule, TableModule],
+  imports: [CardModule, TableModule, DatePipe],
   templateUrl: './access-audit-login.html'
 })
 export class AccessAuditLogin implements OnInit {
