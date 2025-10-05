@@ -41,8 +41,8 @@ describe('CalendarMonth', () => {
       const month = new Date("2024-2");
       component.onGoTo({ value: month });
 
-      expect(component.month.getFullYear()).toEqual(month.getFullYear());
-      expect(component.month.getMonth()).toEqual(month.getMonth());
+      expect(component.viewDate.getFullYear()).toEqual(month.getFullYear());
+      expect(component.viewDate.getMonth()).toEqual(month.getMonth());
     });
 
   });
