@@ -20,7 +20,7 @@ describe("SortingParams", () => {
       params[name].push(value);
     });
 
-    expect(params["sort"]).toEqual(["name,asc", "age,desc"]);
+    expect(params["sort"]).toEqual(["name|asc", "age|desc"]);
   });
 
   /** PROPERTY LISTS */
