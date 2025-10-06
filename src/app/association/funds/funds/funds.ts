@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { TransactionCalendar } from '@app/association/transaction-calendar/transaction-calendar';
+import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { AuthContainer } from '@bernardo-mg/authentication';
