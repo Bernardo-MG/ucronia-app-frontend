@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
 import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { addMinutes } from 'date-fns';
+import { environment } from 'environments/environment';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -28,9 +29,24 @@ export class TransactionBalanceService {
   }
 
   public monthly(from: Date | undefined, to: Date | undefined): Observable<TransactionMonthlyBalance[]> {
+    const offset = new Date().getTimezoneOffset();
+    let fromUtc;
+    let toUtc;
+
+    if (from) {
+      fromUtc = addMinutes(from, offset);
+    } else {
+      fromUtc = undefined;
+    }
+    if (to) {
+      toUtc = addMinutes(to, offset);
+    } else {
+      toUtc = undefined;
+    }
+
     return this.monthlyBalanceClient
-      .parameter('from', from?.toISOString())
-      .parameter('to', to?.toISOString())
+      .parameter('from', fromUtc?.toISOString())
+      .parameter('to', toUtc?.toISOString())
       .read<SimpleResponse<TransactionMonthlyBalance[]>>()
       .pipe(map(r => r.content));
   }
