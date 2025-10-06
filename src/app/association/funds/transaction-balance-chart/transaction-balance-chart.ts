@@ -45,7 +45,6 @@ export class TransactionBalanceChart {
   constructor() {
     // Read balance range
     this.loadInitialRange();
-    this.setupBalanceReload();
   }
 
   public ngOnDestroy(): void {
@@ -101,6 +100,7 @@ export class TransactionBalanceChart {
     this.loading = true;
     this.balanceService.monthly(undefined, undefined)
       .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.setupBalanceReload()))
       .subscribe(data => {
         if (!data.length) return;
         this.months = data.map(d => d.month);
