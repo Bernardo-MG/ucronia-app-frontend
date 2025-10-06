@@ -3,9 +3,11 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
+import { format, lastDayOfMonth } from 'date-fns';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
+import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
@@ -98,7 +100,10 @@ export class TransactionBalanceChart {
 
   private loadInitialRange() {
     this.loading = true;
-    this.balanceService.monthly(undefined, undefined)
+    const today = new Date()
+    const from = new Date(format(today, 'yyyy-MM-01'));
+    const to = new Date(format(lastDayOfMonth(today), 'yyyy-MM-dd'));
+    this.balanceService.monthly(from, to)
       .pipe(finalize(() => this.loading = false))
       .pipe(finalize(() => this.setupBalanceReload()))
       .subscribe(data => {
