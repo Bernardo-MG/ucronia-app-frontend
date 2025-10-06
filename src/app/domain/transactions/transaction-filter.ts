@@ -1,5 +1,5 @@
 export class TransactionFilter {
-  startDate: Date | undefined;
-  endDate: Date | undefined;
+  from: Date | undefined;
+  to: Date | undefined;
   date: Date | undefined;
 }

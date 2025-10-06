@@ -17,10 +17,10 @@ export class MembershipEvolutionService {
     this.client = clientProvider.url(environment.apiUrl + '/member/monthly');
   }
 
-  public monthly(startDate: Date | undefined, endDate: Date | undefined): Observable<MemberBalance[]> {
+  public monthly(from: Date | undefined, to: Date | undefined): Observable<MemberBalance[]> {
     return this.client
-      .parameter('from', startDate?.toISOString().slice(0, 7))
-      .parameter('to', endDate?.toISOString().slice(0, 7))
+      .parameter('from', from?.toISOString().slice(0, 7))
+      .parameter('to', to?.toISOString().slice(0, 7))
       .read<SimpleResponse<MemberBalance[]>>()
       .pipe(map(r => r.content));
   }
