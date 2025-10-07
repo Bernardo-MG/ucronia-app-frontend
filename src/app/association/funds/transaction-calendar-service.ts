@@ -4,7 +4,7 @@ import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-c
 import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
 import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
-import { format, lastDayOfMonth, startOfMonth } from 'date-fns';
+import { addDays, addMinutes, format, lastDayOfMonth, startOfMonth } from 'date-fns';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 
@@ -35,13 +35,20 @@ export class TransactionCalendarService {
     const from = startOfMonth(date);
     const to = new Date(format(lastDayOfMonth(date), 'yyyy-MM-dd'));
 
+    const fromWithMargin = addDays(from, -7);
+    const toWithMargin = addDays(to, 7);
+
+    const offset = new Date().getTimezoneOffset();
+    const fromUtc = addMinutes(fromWithMargin, offset);
+    const toUtc = addMinutes(toWithMargin, offset);
+
     const sorting = new SortingParams(
       [new SortingProperty('date'), new SortingProperty('description')]
     );
-    
+
     return this.calendarClient
-      .parameter('from', from.toISOString())
-      .parameter('to', to.toISOString())
+      .parameter('from', fromUtc.toISOString())
+      .parameter('to', toUtc.toISOString())
       .loadParameters(sorting)
       .read<SimpleResponse<Transaction[]>>()
       .pipe(map(r => r.content));
