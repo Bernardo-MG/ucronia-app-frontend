@@ -143,8 +143,7 @@ export class Funds implements OnInit {
 
   public loadCalendar(month: Date) {
     this.loadingCalendar = true;
-    this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth()).subscribe();
-    this.transactionCalendarService.getCalendar(month.getFullYear(), month.getMonth())
+    this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }
