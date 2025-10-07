@@ -2,8 +2,9 @@ import { Injectable, inject } from '@angular/core';
 import { Transaction } from '@app/domain/transactions/transaction';
 import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-calendar-month';
 import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
+import { format, lastDayOfMonth, startOfMonth } from 'date-fns';
 import { environment } from 'environments/environment';
 import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
 
@@ -21,6 +22,29 @@ export class TransactionCalendarService {
 
     this.calendarClient = clientProvider.url(environment.apiUrl + '/transaction/calendar');
     this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/transaction/calendar/range');
+  }
+
+  public getCalendarInRange(year: number, month: number): Observable<Transaction[]> {
+    let dateValue;
+    if (month < 10) {
+      dateValue = `${year}-0${month}`;
+    } else {
+      dateValue = `${year}-${month}`;
+    }
+    const date = new Date(dateValue)
+    const from = startOfMonth(date);
+    const to = new Date(format(lastDayOfMonth(date), 'yyyy-MM-dd'));
+
+    const sorting = new SortingParams(
+      [new SortingProperty('date'), new SortingProperty('description')]
+    );
+    
+    return this.calendarClient
+      .parameter('from', from.toISOString())
+      .parameter('to', to.toISOString())
+      .loadParameters(sorting)
+      .read<SimpleResponse<Transaction[]>>()
+      .pipe(map(r => r.content));
   }
 
   public getCalendar(year: number, month: number): Observable<Transaction[]> {
