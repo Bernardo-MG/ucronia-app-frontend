@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { Transaction } from '@app/domain/transactions/transaction';
-import { TransactionCalendarMonth } from '@app/domain/transactions/transaction-calendar-month';
 import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
+import { addDays, addMinutes, format, lastDayOfMonth, startOfMonth } from 'date-fns';
 import { environment } from 'environments/environment';
-import { Observable, concat, map, mergeMap, toArray } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -23,34 +23,34 @@ export class TransactionCalendarService {
     this.calendarRangeClient = clientProvider.url(environment.apiUrl + '/transaction/calendar/range');
   }
 
-  public getCalendar(year: number, month: number): Observable<Transaction[]> {
-    let previousYear;
-    let previousMonth;
-    if (month > 1) {
-      previousYear = year;
-      previousMonth = month - 1;
+  public getCalendarInRange(year: number, month: number): Observable<Transaction[]> {
+    let dateValue;
+    if (month < 10) {
+      dateValue = `${year}-0${month + 1}`;
     } else {
-      previousYear = year - 1;
-      previousMonth = 12;
+      dateValue = `${year}-${month + 1}`;
     }
-    let nextYear;
-    let nextMonth;
-    if (month < 12) {
-      nextYear = year;
-      nextMonth = month + 1;
-    } else {
-      nextYear = year + 1;
-      nextMonth = 1;
-    }
+    const date = new Date(dateValue)
+    const from = startOfMonth(date);
+    const to = new Date(format(lastDayOfMonth(date), 'yyyy-MM-dd'));
 
-    const previousMonthQuery = this.readCalendarMonth(previousYear, previousMonth).pipe(map(r => r.content));
-    const thisMonthQuery = this.readCalendarMonth(year, month).pipe(map(r => r.content));
-    const nextMonthQuery = this.readCalendarMonth(nextYear, nextMonth).pipe(map(r => r.content));
+    const fromWithMargin = addDays(from, -7);
+    const toWithMargin = addDays(to, 7);
 
-    return concat(previousMonthQuery, thisMonthQuery, nextMonthQuery).pipe(
-      mergeMap(data => data.transactions),
-      toArray()
+    const offset = new Date().getTimezoneOffset();
+    const fromUtc = addMinutes(fromWithMargin, offset);
+    const toUtc = addMinutes(toWithMargin, offset);
+
+    const sorting = new SortingParams(
+      [new SortingProperty('date'), new SortingProperty('description')]
     );
+
+    return this.calendarClient
+      .parameter('from', fromUtc.toISOString())
+      .parameter('to', toUtc.toISOString())
+      .loadParameters(sorting)
+      .read<SimpleResponse<Transaction[]>>()
+      .pipe(map(r => r.content));
   }
 
   public getRange(): Observable<Month[]> {
@@ -63,12 +63,6 @@ export class TransactionCalendarService {
 
         return month;
       })));
-  }
-
-  private readCalendarMonth(year: number, month: number): Observable<SimpleResponse<TransactionCalendarMonth>> {
-    return this.calendarClient
-      .appendRoute(`/${year}/${month}`)
-      .read<SimpleResponse<TransactionCalendarMonth>>();
   }
 
 }

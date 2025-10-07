@@ -34,7 +34,7 @@ export class TransactionCalendar implements OnChanges {
         return {
           title: `${t.description} (${t.amount}€)`,
           color: color,
-          start: addMinutes(t.date, offset),
+          start: addMinutes(t.date, -offset),
           meta: {
             transactionId: t.index,
           }

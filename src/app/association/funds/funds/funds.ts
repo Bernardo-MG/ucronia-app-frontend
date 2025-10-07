@@ -72,7 +72,8 @@ export class Funds implements OnInit {
         // To show in the selection box we have to reverse the order
         this.months = months
           .map(m => new Date(`${m.year}-${m.month}`));
-        this.months = [...this.months].reverse()
+        // TODO: then sort the months instead of reversing
+        this.months = [...this.months].reverse();
         if (!this.loadingCalendar) {
           this.loadCalendar(this.getDefaultMonth());
         }
@@ -142,7 +143,7 @@ export class Funds implements OnInit {
 
   public loadCalendar(month: Date) {
     this.loadingCalendar = true;
-    this.transactionCalendarService.getCalendar(month.getFullYear(), month.getMonth())
+    this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }

@@ -1,20 +1,23 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import Chart from 'chart.js/auto';
+import { format, lastDayOfMonth } from 'date-fns';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
+import { TransactionCalendarService } from '../transaction-calendar-service';
 
 @Component({
   selector: 'assoc-transaction-balance-chart',
   imports: [FormsModule, SelectModule],
   templateUrl: './transaction-balance-chart.html'
 })
-export class TransactionBalanceChart {
+export class TransactionBalanceChart implements OnInit {
 
   private readonly balanceService = inject(TransactionBalanceService);
+  private readonly transactionCalendarService = inject(TransactionCalendarService);
 
   public balance: TransactionMonthlyBalance[] = [];
 
@@ -42,9 +45,23 @@ export class TransactionBalanceChart {
 
   public monthsSelection: { label: string, value: Date }[] = [];
 
-  constructor() {
+  public ngOnInit(): void {
     // Read balance range
-    this.loadInitialRange();
+    this.transactionCalendarService.getRange()
+      .pipe(finalize(() => this.setupBalanceReload()))
+      .subscribe(months => {
+        // To show in the selection box we have to reverse the order
+        this.monthsSelection = months.reverse()
+          .map(m => new Date(`${m.year}-${m.month}`))
+          .map((m: Date) => ({
+            value: m,
+            label: m.toISOString().slice(0, 7),
+          }));
+        if (this.monthsSelection.length) {
+          this.startMonth = this.monthsSelection[this.monthsSelection.length - 1].value;
+          this.endMonth = this.monthsSelection[0].value;
+        }
+      });
   }
 
   public ngOnDestroy(): void {
@@ -94,23 +111,6 @@ export class TransactionBalanceChart {
         responsive: true,
       }
     });
-  }
-
-  private loadInitialRange() {
-    this.loading = true;
-    this.balanceService.monthly(undefined, undefined)
-      .pipe(finalize(() => this.loading = false))
-      .pipe(finalize(() => this.setupBalanceReload()))
-      .subscribe(data => {
-        if (!data.length) return;
-        this.months = data.map(d => d.month);
-        this.monthsSelection = this.months.map((m: Date) => ({
-          value: m,
-          label: m.toISOString().slice(0, 7),
-        }));
-        this.startMonth = this.months[0];
-        this.endMonth = this.months[this.months.length - 1];
-      });
   }
 
   private setupBalanceReload() {
