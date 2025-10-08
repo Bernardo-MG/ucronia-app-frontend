@@ -16,7 +16,7 @@ export class FeeCalendarService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/fee/calendar');
+    this.client = clientProvider.url(environment.apiUrl + '/fee');
   }
 
   public getCalendar(year: number, active: Active): Observable<MemberFees[]> {
