@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { Fee } from '@app/domain/fees/fee';
-import { FeeCalendarYear } from '@app/domain/fees/fee-calendar';
-import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
+import { MemberFees } from '@app/domain/fees/member-fees';
+import { YearsRange } from '@app/domain/fees/years-range';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
@@ -50,7 +50,7 @@ export class FeeList implements OnInit {
 
   public activeFilter = Active.Active;
 
-  public range = new FeeCalendarYearsRange();
+  public range = new YearsRange();
 
   public year = new Date().getFullYear();
 
@@ -66,7 +66,7 @@ export class FeeList implements OnInit {
 
   public failures = new FailureStore();
 
-  public feeCalendar: FeeCalendarYear[] = [];
+  public feeCalendar: MemberFees[] = [];
 
   public view: string = '';
 
