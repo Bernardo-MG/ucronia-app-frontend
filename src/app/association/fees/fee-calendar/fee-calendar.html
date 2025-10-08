@@ -30,11 +30,11 @@
       <!-- Month fees -->
       @for (monthNumber of monthNumbers; track monthNumber) {
         <td>
-          @if (hasMonth(memberFees.months, monthNumber)) {
-            @if(isPaid(memberFees.months, monthNumber)) {
-              <p-button icon="pi pi-check text-success" (click)="onSelectFee(memberFees.member.number, memberFees.months, monthNumber)" rounded text />
+          @if (hasMonth(memberFees.fees, monthNumber)) {
+            @if(isPaid(memberFees.fees, monthNumber)) {
+              <p-button icon="pi pi-check text-success" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
             } @else {
-              <p-button icon="pi pi-times text-danger" (click)="onSelectFee(memberFees.member.number, memberFees.months, monthNumber)" rounded text />
+              <p-button icon="pi pi-times text-danger" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
             }
           }
         </td>

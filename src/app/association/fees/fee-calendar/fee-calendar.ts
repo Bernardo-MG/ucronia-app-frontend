@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { FeeCalendarMonth, FeeCalendarYear } from '@app/domain/fees/fee-calendar';
-import { FeeCalendarYearsRange } from '@app/domain/fees/fee-calendar-years-range';
+import { Fee, MemberFees } from '@app/domain/fees/member-fees';
+import { YearsRange } from '@app/domain/fees/years-range';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
@@ -17,13 +17,13 @@ import { TableModule } from 'primeng/table';
 })
 export class FeeCalendar implements OnChanges {
 
-  public range = input(new FeeCalendarYearsRange());
+  public range = input(new YearsRange());
   /**
    * Loading flag. Shows the loading visual cue.
    */
   public readonly loading = input(false);
   public readonly year = input(new Date().getFullYear());
-  public readonly feeCalendar = input<FeeCalendarYear[]>([]);
+  public readonly feeCalendar = input<MemberFees[]>([]);
 
   // TODO: maybe use bidirectional property
   public readonly goToYear = output<number>();
@@ -84,25 +84,25 @@ export class FeeCalendar implements OnChanges {
     this.goToYear.emit(this.currentYear);
   }
 
-  public hasMonth(months: FeeCalendarMonth[], month: number): boolean {
+  public hasMonth(months: Fee[], month: number): boolean {
     return months.find(m => (m.month.getMonth() + 1) === month) !== undefined;
   }
 
-  public onSelectFee(member: number, months: FeeCalendarMonth[], month: number) {
+  public onSelectFee(member: number, months: Fee[], month: number) {
     const calendarMonth = this.getCalendarMonth(months, month);
     this.selectFee.emit({ member: member, date: calendarMonth.month })
   }
 
-  public isPaid(months: FeeCalendarMonth[], month: number): boolean {
+  public isPaid(months: Fee[], month: number): boolean {
     return this.getCalendarMonth(months, month).paid;
   }
 
-  public getMonth(months: FeeCalendarMonth[], month: number): Date {
+  public getMonth(months: Fee[], month: number): Date {
     return this.getCalendarMonth(months, month).month;
   }
 
-  private getCalendarMonth(months: FeeCalendarMonth[], month: number): FeeCalendarMonth {
-    return months.find(m => (m.month.getMonth() + 1) === month) as FeeCalendarMonth;
+  private getCalendarMonth(months: Fee[], month: number): Fee {
+    return months.find(m => (m.month.getMonth() + 1) === month) as Fee;
   }
 
 }
