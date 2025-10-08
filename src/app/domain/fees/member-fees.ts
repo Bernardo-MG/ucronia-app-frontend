@@ -2,7 +2,7 @@ import { PersonName } from "../person/person-name";
 
 export class MemberFees {
   member = new Member();
-  months: Fee[] = [];
+  fees: Fee[] = [];
 }
 
 export class Fee {
