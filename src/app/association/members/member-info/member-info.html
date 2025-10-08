@@ -1,0 +1,36 @@
+@if (loading()) {
+  <p-skeleton height="2rem" class="mb-2" />
+} @else {
+  <h2># {{data().number}}</h2>
+}
+@if (loading()) {
+  <!-- First name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+  <!-- Last name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Apellidos</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+} @else {
+  <!-- First name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9">
+      {{data().name.firstName}}
+    </div>
+  </div>
+  <!-- Last name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Apellidos</div>
+    <div class="col-sm-9">
+      {{data().name.lastName}}
+    </div>
+  </div>
+}

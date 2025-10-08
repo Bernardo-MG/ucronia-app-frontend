@@ -1,0 +1,56 @@
+<div class="row pb-2">
+  <div class="col-md-4 pb-2"><p-card>
+      <ng-template #title>
+        Evolución
+      </ng-template>
+      <assoc-transaction-balance-chart />
+    </p-card>
+  </div>
+  <div class="col-md-4 pb-2">
+    <p-card>
+      <ng-template #title>
+        Saldo
+      </ng-template>
+      <p>Saldo actual: {{balance.total}}</p>
+      <p>Resultados del mes: {{balance.results}}</p>
+    </p-card>
+  </div>
+  <div class="col-md-4">
+    <p-card>
+      <ng-template #title>Descargas</ng-template>
+      <div class="mt-2" uiJustifyCenter>
+        <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()"
+          aria-label="Descargar excel" [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
+      </div>
+    </p-card>
+  </div>
+</div>
+<!-- Funds calendar -->
+<p-panel>
+  <ng-template #icons>
+    <!-- Add transaction -->
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nueva transacción" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
+  <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar" (changeMonth)="loadCalendar($event)"
+    (pickDate)="onShowInfo($event)" />
+</p-panel>
+<p-dialog header="Transacción" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+  <assoc-transaction-info [transaction]="selectedData" />
+  <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+    [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text />
+  <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+    [attr.aria-disabled]="!deletable" (click)="onDelete($event, selectedData)" rounded text />
+</p-dialog>
+@switch (view) {
+  @case ('creation') {
+    <p-dialog header="Crear transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <assoc-transaction-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
+  }
+  @case ('edition') {
+    <p-dialog header="Editar transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <assoc-transaction-form [data]="selectedData" [loading]="loading" [failures]="failures" (save)="onUpdate($event)" />
+    </p-dialog>
+  }
+}

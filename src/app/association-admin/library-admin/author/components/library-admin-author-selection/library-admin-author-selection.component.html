@@ -1,6 +1,0 @@
-<div>Escoge un autor</div>
-<layout-button-list [values]="values" [renderer]="nameRenderer" (pick)="onPick($event)"></layout-button-list>
-<div JustifyCenterDirective class="mt-1" *layoutBlockUi="waiting">
-  <pagination-navigation [disabled]="waiting" [current]="current" [pages]="pages" (goTo)="onGoToPage($event)">
-  </pagination-navigation>
-</div>

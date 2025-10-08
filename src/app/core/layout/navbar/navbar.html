@@ -1,0 +1,27 @@
+<p-menubar>
+  <ng-template pTemplate="start">
+    <a class="navbar-brand flex items-center" routerLink="/">
+      <img src="img/brand-icon.png" alt="Ucronía" width="20" height="24" class="mr-2" />
+      {{ title }}
+    </a>
+    @if (!loggedOut) {
+      <p-button class="ms-1" icon="pi pi-bars" (click)="toggleMenu.emit(true)" severity="secondary" rounded text />
+    }
+  </ng-template>
+
+  <ng-template pTemplate="end">
+    <div class="d-flex align-items-center gap-2">
+      @if (loggedOut) {
+        <p-button icon="pi pi-sign-in" [link]="true" routerLink="/login" aria-label="Login" />
+      } @else {
+        @if (showSecurity) {
+          <p-button icon="pi pi-shield" [link]="true" routerLink="/security" aria-label="Seguridad" />
+        }
+        @if (showSettings) {
+          <p-button icon="pi pi-cog" [link]="true" routerLink="/settings" aria-label="Configuración" />
+        }
+        <layout-account-dropdown />
+      }
+    </div>
+  </ng-template>
+</p-menubar>

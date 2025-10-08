@@ -1,4 +1,5 @@
-
 export class UserActivate {
-  password = '';
+  constructor(
+    public password = ''
+  ) { }
 }

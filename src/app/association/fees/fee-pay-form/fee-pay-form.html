@@ -1,0 +1,53 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <!-- Person -->
+  <h2>{{fullname}}</h2>
+  <!-- Payment date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [maxDate]="today" [invalid]="isFieldInvalid('paymentDate')"
+      dateFormat="yy-mm-dd" appendTo="body" />
+    <label for="paymentDateInput">Pago</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('paymentDate'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Fees -->
+  <h3>Cuotas</h3>
+  <!-- Each fee -->
+  @for (date of months.controls; track date; let i = $index) {
+    <div class="row">
+      <div class="col-sm-10">
+        <p-floatlabel variant="in" class="mb-2 d-flex">
+          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')"
+            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" appendTo="body" />
+          <label [for]="'monthYearInput_' + i">Mes</label>
+        </p-floatlabel>
+      </div>
+      <div class="col-sm-2">
+        <p-button icon="pi pi-trash" (click)="removeDate(i)"
+          [disabled]="!formStatus.formEnabled" aria-label="Eliminar mes" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
+      </div>
+    </div>
+  }
+  <!-- Add fee button -->
+  <div class="row">
+    <div uiJustifyCenter>
+      <p-button icon="pi pi-plus-circle" (click)="addDate()"
+        [disabled]="!formStatus.formEnabled" aria-label="Añadir mes" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
+    </div>
+  </div>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('months[]'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+
+  <!-- Save button -->
+  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

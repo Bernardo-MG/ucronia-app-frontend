@@ -1,0 +1,35 @@
+<div class="container pb-3">
+  <!-- Logo -->
+  <div class="row">
+    <div class="d-flex col-md-4 offset-md-4">
+      <img src='img/Ucronia_logo-01.png' alt='Instagram' class="img-fluid" height="300">
+    </div>
+  </div>
+  <!-- Activities -->
+  <div class="pb-5">
+    <header>
+      <h1 class="border-bottom">Actividades</h1>
+    </header>
+    <ui-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
+      [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true" [disableSidePanel]="true" />
+  </div>
+  <!-- Location -->
+  <div class="pb-5">
+    <header>
+      <h1 class="border-bottom">Dónde estamos</h1>
+    </header>
+    <ui-google-maps [code]="locationCode" />
+  </div>
+  <!-- Contact -->
+  <header>
+    <h1 class="border-bottom">Contacta con nosotros</h1>
+  </header>
+  <div class="container text-center">
+    <a [href]="instagramLink" class="me-3">
+      <img src='img/Instagram_Glyph_Black.svg' alt='Instagram' width="50" height="50">
+    </a>
+    <a [href]="emailLink">
+      <img src='img/email-icon.png' alt='Instagram' width="50" height="50">
+    </a>
+  </div>
+</div>

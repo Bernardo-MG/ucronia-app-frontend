@@ -13,11 +13,8 @@
       "@bernardo-mg/form": [
         "./dist/bernardo-mg/form"
       ],
-      "@bernardo-mg/icons": [
-        "./dist/bernardo-mg/icons"
-      ],
-      "@bernardo-mg/layout": [
-        "./dist/bernardo-mg/layout"
+      "@bernardo-mg/ui": [
+        "./dist/bernardo-mg/ui"
       ],
       "@bernardo-mg/request": [
         "./dist/bernardo-mg/request"
@@ -34,7 +31,7 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
@@ -42,7 +39,8 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "skipLibCheck": true
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

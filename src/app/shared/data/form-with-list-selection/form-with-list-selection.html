@@ -1,0 +1,34 @@
+@switch (selecting) {
+  @case (false) {
+    <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+      <p-table dataKey="number" [value]="rows">
+        <ng-template #header>
+          <tr>
+            <th>Nombre</th>
+            <th scope="col">
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-row>
+          <tr>
+            <td>{{row.name}}</td>
+            <td>
+              <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemove(row)" rounded text />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+      <div uiJustifyCenter>
+        <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
+      </div>
+      <div uiJustifyBetween>
+        <!-- Save button -->
+        <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled"
+          [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+      </div>
+    </form>
+  }
+  @case (true) {
+    <shared-selection-list heading="Nombre" [getSelection]="getSelection()" (choose)="onChoose($event)" />
+  }
+}

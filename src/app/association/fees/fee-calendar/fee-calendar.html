@@ -1,0 +1,44 @@
+<!-- Controls -->
+<div uiJustifyCenter class="pb-2">
+  <!-- To previous year button -->
+  <p-button id="previousYearButton" icon="pi pi-caret-left" (click)="onGoPrevious()" [disabled]="!canGoPrevious"
+    [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year" rounded text />
+  <!-- Current year -->
+  <p-select [(ngModel)]="currentYear" [disabled]="selectionDisabled" [options]="years" (onChange)="onGoTo($event)" />
+  <!-- To next year button -->
+  <p-button id="nextYearButton" icon="pi pi-caret-right" (click)="onGoNext()" [disabled]="!canGoNext"
+    [attr.aria-disabled]="!canGoNext" aria-label="Previous year" rounded text />
+</div>
+<!-- Table -->
+<p-table [loading]="loading()" [value]="feeCalendar()">
+  <ng-template #header>
+    <tr>
+      <th>Socio</th>
+      @for (monthName of monthNames; track monthName) {
+        <th> {{monthName}}</th>
+      }
+    </tr>
+  </ng-template>
+  <ng-template #body let-memberFees>
+    <tr>
+      <td>
+        {{memberFees.member.name.fullName}}
+        @if (!memberFees.member.active) {
+          <p-badge value="Inactivo" severity="warn" badgeSize="small" />
+        }
+      </td>
+      <!-- Month fees -->
+      @for (monthNumber of monthNumbers; track monthNumber) {
+        <td>
+          @if (hasMonth(memberFees.fees, monthNumber)) {
+            @if(isPaid(memberFees.fees, monthNumber)) {
+              <p-button icon="pi pi-check text-success" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
+            } @else {
+              <p-button icon="pi pi-times text-danger" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
+            }
+          }
+        </td>
+      }
+    </tr>
+  </ng-template>
+</p-table>

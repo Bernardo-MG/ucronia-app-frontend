@@ -1,0 +1,21 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <!-- Member -->
+  <h2>{{memberName}}</h2>
+  <!-- Lending date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="lendingDateInput" formControlName="lendingDate" [invalid]="isFieldInvalid('lendingDate')"
+      dateFormat="yy-mm-dd" [maxDate]="today" appendTo="body" />
+    <label for="lendingDateInput">Fecha</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('lendingDate'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+
+  <!-- Save button -->
+  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

@@ -1,0 +1,71 @@
+
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { PasswordChange } from '@app/account/models/password-change';
+import { FormStatus } from '@bernardo-mg/form';
+import { FailureStore } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
+
+@Component({
+  selector: 'account-change-password-form',
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
+  templateUrl: './account-change-password-form.html'
+})
+export class AccountChangePasswordForm implements OnChanges {
+
+  public readonly loading = input(false);
+  public readonly failures = input(new FailureStore());
+
+  public readonly save = output<PasswordChange>();
+
+  public formStatus: FormStatus;
+
+  public form: FormGroup;
+
+  constructor() {
+    const fb = inject(FormBuilder);
+
+    this.form = fb.group(
+      {
+        oldPassword: ['', Validators.required],
+        newPassword: ['', Validators.required],
+        passwordRepeat: ['', Validators.required]
+      },
+      {
+        validators: this.checkPasswords
+      }
+    );
+
+    this.formStatus = new FormStatus(this.form);
+  }
+
+  public ngOnChanges({ loading }: SimpleChanges): void {
+    if (loading) {
+      this.formStatus.loading = this.loading();
+    }
+  }
+
+  /**
+   * Handler for the save event.
+   */
+  public onSave() {
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value);
+    }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+  }
+
+  private checkPasswords: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
+    const pass = group.get('newPassword')?.value;
+    const confirmPass = group.get('passwordRepeat')?.value
+    return pass === confirmPass ? null : { notSame: true }
+  }
+
+}

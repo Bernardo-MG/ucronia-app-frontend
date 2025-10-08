@@ -1,0 +1,25 @@
+@for (setting of settings(); track setting) {
+  <form (ngSubmit)="onSave(setting, $event)" novalidate>
+    <div class="row mb-2">
+      <p-floatlabel variant="in" class="mb-2 d-flex">
+        <input pInputText type="{{setting.type}}" step="any" id="{{setting.code + 'Input'}}"
+          formControlName="{{setting.code}}" class="w-100" [disabled]="disabled() || !isEditing(setting.code)" />
+        <label for="{{setting.code + 'Input'}}">{{setting.code}}</label>
+      </p-floatlabel>
+      <div class="mb-2">
+        @for (failure of failures().getFailures('description'); track failure) {
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
+        }
+      </div>
+      <div class="col-sm-1">
+        <div class="btn-group me-2" role="group">
+          <p-button icon="pi pi-pencil" severity="secondary" (click)="onEdit(setting.code)"
+            [disabled]="disabled() || isEditing(setting.code)" aria-label="Editar"
+            [attr.aria-disabled]="disabled() || isEditing(setting.code)" rounded text />
+        </div>
+      </div>
+    </div>
+  </form>
+}

@@ -1,0 +1,93 @@
+<ng-template #header>
+  <span class="p-panel-title"># {{book().number}} {{book().title.fullTitle}}</span>
+</ng-template>
+<!-- Number -->
+<div class="row">
+  <div class="col-3">
+    # {{book().number}}
+  </div>
+</div>
+<!-- ISBN -->
+<div class="row">
+  <div class="col-sm-3 text-primary">ISBN</div>
+  <div class="col-sm-9">
+    {{book().isbn}}
+  </div>
+</div>
+<!-- Title -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Título</div>
+  <div class="col-sm-9">
+    <sup>{{book().title.supertitle}}</sup>
+    {{book().title.title}}
+    <sub>{{book().title.subtitle}}</sub>
+  </div>
+</div>
+<!-- Language -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Idioma</div>
+  <div class="col-sm-9">
+    {{language}}
+  </div>
+</div>
+<!-- Publish date -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Fecha de publicación</div>
+  <div class="col-sm-9">
+    {{book().publishDate | date:'yyyy-MM-dd'}}
+  </div>
+</div>
+<!-- Authors -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Autor</div>
+  <div class="col-sm-9">
+    {{authors}}
+  </div>
+</div>
+<!-- Publishers -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Editor</div>
+  <div class="col-sm-9">
+    {{publishers}}
+  </div>
+</div>
+@if(bookType) {
+  <!-- Book type -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Tipo</div>
+    <div class="col-sm-9">
+      {{bookType.name}}
+    </div>
+  </div>
+}
+@if(gameSystem) {
+  <!-- Game system -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Sistema</div>
+    <div class="col-sm-9">
+      {{gameSystem.name}}
+    </div>
+  </div>
+}
+
+<!-- Donors -->
+<!-- Donation date -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Fecha de donación</div>
+  <div class="col-sm-9">
+    {{book().donation?.date | date:'yyyy-MM-dd'}}
+  </div>
+</div>
+<!-- Donors -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Donante</div>
+  <div class="col-sm-9">
+    {{donors}}
+  </div>
+</div>
+
+<!-- Lendings -->
+<ng-template #header>
+  <span class="p-panel-title">Préstamos</span>
+</ng-template>
+<assoc-library-book-lendings [lendings]="book().lendings" />

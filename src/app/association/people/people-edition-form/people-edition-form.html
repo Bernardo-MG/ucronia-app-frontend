@@ -1,0 +1,73 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <!-- First name -->
+  <div formGroupName="name">
+    <p-floatlabel variant="in" class="mb-2 d-flex">
+      <input pInputText type="text" id="firstNameInput" formControlName="firstName"
+        [invalid]="isFieldInvalid('name.firstName')" class="w-100" />
+      <label for="firstNameInput">Nombre</label>
+    </p-floatlabel>
+    <div class="mb-2">
+      @for (failure of failures().getFailures('name.firstName'); track failure) {
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
+      }
+    </div>
+  </div>
+  <!-- Last name -->
+  <div formGroupName="name">
+    <p-floatlabel variant="in" class="mb-2 d-flex">
+      <input pInputText type="text" id="lastNameInput" formControlName="lastName"
+        [invalid]="isFieldInvalid('name.lastName')" class="w-100" />
+      <label for="lastNameInput">Apellidos</label>
+    </p-floatlabel>
+    <div class="mb-2">
+      @for (failure of failures().getFailures('name.lastName'); track failure) {
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
+      }
+    </div>
+  </div>
+  <!-- Birth date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="birthDateInput" formControlName="birthDate" [invalid]="isFieldInvalid('birthDate')"
+      dateFormat="yy-mm-dd" appendTo="body" />
+    <label for="birthDateInput">Fecha de nacimiento</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('birthDate'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Identifier -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="identifierInput" formControlName="identifier"
+      [invalid]="isFieldInvalid('identifier')" class="w-100" />
+    <label for="identifierInput">DNI</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('identifier'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Phone -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="phoneInput" formControlName="phone" [invalid]="isFieldInvalid('phone')"
+      class="w-100" />
+    <label for="phoneInput">Teléfono</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('phone'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

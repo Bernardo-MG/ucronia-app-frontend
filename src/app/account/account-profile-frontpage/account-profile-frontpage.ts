@@ -1,0 +1,35 @@
+
+import { Component, inject } from '@angular/core';
+import { AccountProfilePerson } from '@app/account/account-profile-person/account-profile-person';
+import { Account } from '@app/account/models/account';
+import { AccountService } from '@app/account/services/account-service';
+import { Person } from '@app/domain/person/person';
+import { CardModule } from 'primeng/card';
+import { SkeletonModule } from 'primeng/skeleton';
+import { finalize } from 'rxjs';
+
+@Component({
+  selector: 'account-profile-frontpage',
+  imports: [CardModule, SkeletonModule, AccountProfilePerson],
+  templateUrl: './account-profile-frontpage.html'
+})
+export class AccountProfileFrontpage {
+
+  public account = new Account();
+
+  public loading = false;
+
+  public get person() {
+    return this.account.person as Person;
+  }
+
+  constructor() {
+    const service = inject(AccountService);
+
+    this.loading = true;
+    service.getAccount()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.account = response);
+  }
+
+}

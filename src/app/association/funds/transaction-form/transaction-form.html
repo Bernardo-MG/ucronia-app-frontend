@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <!-- Description -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="descriptionInput" formControlName="description" class="w-100" />
+    <label for="descriptionInput">Descripción</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('description'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Date -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
+      dateFormat="yy-mm-dd" appendTo="body" />
+    <label for="dateInput">Fecha</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('date'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <!-- Amount -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="number" id="amountInput" formControlName="amount" class="w-100" />
+    <label for="amountInput">Importe</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('amount'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

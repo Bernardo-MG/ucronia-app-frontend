@@ -29,18 +29,16 @@ describe('AuthContainer', () => {
 
   it('should initialize with default security details', () => {
     const defaultDetails = new SecurityDetails(false);
-    service.securityDetails.subscribe(details => {
-      expect(details).toEqual(defaultDetails);
-    });
+    service.securityDetails
+      .subscribe(details => expect(details).toEqual(defaultDetails));
   });
 
   it('should log out and clear local storage', () => {
     spyOn(localStorage, 'removeItem');
     service.logout();
     expect(localStorage.removeItem).toHaveBeenCalledWith('securityDetails');
-    service.securityDetails.subscribe(details => {
-      expect(details.logged).toBeFalse();
-    });
+    service.securityDetails
+      .subscribe(details => expect(details.logged).toBeFalse());
   });
 
   it('should store security details and token when set to store', () => {

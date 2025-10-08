@@ -2,10 +2,11 @@
   "name": "@bernardo-mg/form",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^19.1.0",
-    "@angular/core": "^19.1.0",
-    "@bernardo-mg/icons": "0.0.1",
-    "@bernardo-mg/layout": "0.0.1"
+    "@angular/common": "^20.1.0",
+    "@angular/core": "^20.1.0",
+    "@bernardo-mg/ui": "0.0.1",
+    "@primeng/themes": "^20.0.0",
+    "primeng": "^20.0.0"
   },
   "dependencies": {
     "tslib": "^2.3.0"

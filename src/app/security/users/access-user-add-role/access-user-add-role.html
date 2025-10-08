@@ -1,0 +1,19 @@
+<p-table lazy="true" dataKey="number" [loading]="loading" [value]="selection.content" paginator="true"
+  [rows]="selection.size" [totalRecords]="selection.totalElements" [first]="first" (onPage)="onPageChange($event)"
+  showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
+  <ng-template #header>
+    <tr>
+      <th></th>
+      <th>Nombre</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-role>
+    <tr>
+      <td>
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onAdd(role)" aria-label="Añadir rol" rounded
+          text />
+      </td>
+      <td>{{role.name}}</td>
+    </tr>
+  </ng-template>
+</p-table>

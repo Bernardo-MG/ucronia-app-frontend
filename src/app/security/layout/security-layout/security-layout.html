@@ -1,0 +1,12 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <aside class="sidebar p-2 bg-white shadow-sm" style="width:240px; border-right:1px solid #ddd;">
+    <h5 class="px-2 py-3 fw-bold">Ucronía</h5>
+    <p-menu [model]="menus" [style]="{ border: 0 }"></p-menu>
+  </aside>
+
+  <!-- Main content -->
+  <main class="flex-grow-1 p-3">
+    <router-outlet></router-outlet>
+  </main>
+</div>

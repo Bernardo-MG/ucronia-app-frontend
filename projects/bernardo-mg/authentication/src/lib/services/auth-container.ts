@@ -61,7 +61,7 @@ export class AuthContainer {
   }
 
   constructor() {
-    this.detailsSubject.subscribe((s) => (this.details = s));
+    this.detailsSubject.subscribe(s => this.details = s);
     this.loadDetailsFromLocal();
     this.checkTokenExpiration();
   }
@@ -130,11 +130,11 @@ export class AuthContainer {
         securityDetails.token = parsedDetails.token || '';
         securityDetails.username = parsedDetails.username || '';
         securityDetails.permissions = new PermissionList();
-  
+
         if (parsedDetails.permissions && typeof parsedDetails.permissions === 'object') {
           Object.assign(securityDetails.permissions, parsedDetails.permissions);
         }
-  
+
         this.detailsSubject.next(securityDetails);
       } catch {
         this.detailsSubject.next(new SecurityDetails(false));
@@ -152,7 +152,7 @@ export class AuthContainer {
       this.logout();
     }
   }
-  
+
   /**
    * Checks if the current security details contain the given permission.
    *

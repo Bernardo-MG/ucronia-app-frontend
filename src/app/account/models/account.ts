@@ -1,4 +1,4 @@
-import { Person } from "@app/models/person/person";
+import { Person } from "@app/domain/person/person";
 
 
 /**

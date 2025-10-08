@@ -1,0 +1,96 @@
+<!-- Username -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Usuario</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().username}}
+    }
+  </div>
+</div>
+<!-- Name -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Nombre</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().name}}
+    }
+  </div>
+</div>
+<!-- Token -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Token</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().token}}
+    }
+  </div>
+</div>
+<!-- Scope -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Alcance</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().scope}}
+    }
+  </div>
+</div>
+<!-- Creation date -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Fecha de creación</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().creationDate | date:'yyyy-MM-dd hh:mm:ss'}}
+    }
+  </div>
+</div>
+<!-- Expiration date -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Fecha de
+  expiración</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{data().expirationDate | date:'yyyy-MM-dd hh:mm:ss'}}
+    }
+  </div>
+</div><!-- Consumed -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Consumido</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      @if (data().consumed) {
+        <span class="pi pi-check text-warning"></span>
+      } @else {
+        <span class="pi pi-times text-success"></span>
+      }
+    }
+  </div>
+</div>
+<!-- Revoked -->
+<div class="row mb-2">
+  <div class="col-sm-3 text-primary">Revocado</div>
+  <div class="col-sm-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      @if (data().revoked) {
+        <span class="pi pi-check text-warning"></span>
+      } @else {
+        <span class="pi pi-times text-success"></span>
+      }
+    }
+  </div>
+</div>

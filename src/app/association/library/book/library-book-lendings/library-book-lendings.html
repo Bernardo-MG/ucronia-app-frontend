@@ -1,0 +1,15 @@
+<p-timeline [value]="history">
+  <ng-template #opposite let-event>
+    <small>{{ event.borrower }}</small>
+  </ng-template>
+  <ng-template #marker let-event>
+    @if(event.lent) {
+      <i class="pi pi-upload text-danger"></i>
+    } @else {
+      <i class="pi pi-download text-success"></i>
+    }
+  </ng-template>
+  <ng-template #content let-event>
+    {{ event.date | date:'yyyy-MM-dd' }}
+  </ng-template>
+</p-timeline>

@@ -1,0 +1,16 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <!-- Name -->
+  <p-floatlabel variant="in" class="mb-2 d-flex">
+    <input pInputText type="text" id="nameInput" formControlName="name" class="w-100" />
+    <label for="nameInput">Nombre</label>
+  </p-floatlabel>
+  <div class="mb-2">
+    @for (failure of failures().getFailures('name'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

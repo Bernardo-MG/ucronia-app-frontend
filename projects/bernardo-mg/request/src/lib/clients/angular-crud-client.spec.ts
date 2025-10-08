@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AngularErrorRequestInterceptor } from '../interceptors/angular-error-request-interceptor';
@@ -72,41 +72,36 @@ describe('AngularCrudClient', () => {
   /** RECEIVE RESPONSES */
 
   it('should receive response from a POST request', () => {
-    client.create(testData).subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.create(testData)
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
 
   it('should receive response from a GET request', () => {
-    client.read().subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.read()
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
 
   it('should receive response from a PUT request', () => {
-    client.update(testData).subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.update(testData)
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
 
   it('should receive response from a DELETE request', () => {
-    client.delete().subscribe(data => {
-      expect(data).toBeNull();
-    });
+    client.delete()
+      .subscribe(data => expect(data).toBeNull());
     const req = httpMock.expectOne(rootUrl);
     req.flush(null);
   });
 
   it('should receive response from a PATCH request', () => {
-    client.patch(testData).subscribe(data => {
-      expect(data).toEqual(testData);
-    });
+    client.patch(testData)
+      .subscribe(data => expect(data).toEqual(testData));
     const req = httpMock.expectOne(rootUrl);
     req.flush(testData);
   });
@@ -137,7 +132,7 @@ describe('AngularCrudClient', () => {
         callback('key2', 'value2');
       },
     };
-    
+
     const newClient = client.loadParameters(paramLoader);
     expect(newClient['options'].params?.toString()).toBe('key1=value1&key2=value2');
   });
@@ -148,7 +143,7 @@ describe('AngularCrudClient', () => {
         callback('key1', undefined);
       },
     };
-    
+
     const newClient = client.loadParameters(paramLoader);
     expect(newClient['options'].params?.toString()).toBe('');
   });

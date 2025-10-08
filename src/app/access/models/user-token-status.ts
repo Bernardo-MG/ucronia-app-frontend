@@ -1,5 +1,7 @@
 
 export class UserTokenStatus {
-  valid = false;
-  username = '';
+  constructor(
+    public valid = false,
+    public username = ''
+  ) { }
 }
