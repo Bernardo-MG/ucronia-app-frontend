@@ -1,12 +1,13 @@
 import { Component, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
 import { PaginatedResponse } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, Observable } from 'rxjs';
 import { NameNumber } from '../model/name-number';
 
 @Component({
   selector: 'shared-selection-list',
-  imports: [TableModule],
+  imports: [TableModule, ButtonModule],
   templateUrl: './selection-list.html'
 })
 export class SelectionList implements OnInit, OnChanges {
@@ -46,12 +47,6 @@ export class SelectionList implements OnInit, OnChanges {
     const page = (event.first / this.selection.size) + 1;
     this.getSelection()(page)
       .subscribe(response => this.selection = response);
-  }
-
-  public onSelectRow() {
-    if (this.selectedData) {
-      this.choose.emit(this.selectedData);
-    }
   }
 
 }

@@ -1,15 +1,19 @@
 <p-table lazy="true" [dataKey]="dataKey()" [loading]="loading" [value]="selection.content" paginator="true"
   [rows]="selection.size" [totalRecords]="selection.totalElements" [first]="first"
-  (onPage)="onGoToSelectionPage($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
-  (onRowSelect)="onSelectRow()">
+  (onPage)="onGoToSelectionPage($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
   <ng-template #header>
     <tr>
+      <th></th>
       <th>{{heading()}}</th>
     </tr>
   </ng-template>
-  <ng-template #body let-row>
+  <ng-template #body let-name>
     <tr>
-      <td>{{nameRenderer()(row)}}</td>
+      <td>
+        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="this.choose.emit(name);"
+          aria-label="Nuevo libro" rounded text />
+      </td>
+      <td>{{nameRenderer()(name)}}</td>
     </tr>
   </ng-template>
 </p-table>

@@ -68,32 +68,6 @@ describe('SelectionList', () => {
 
   });
 
-  describe('choose', () => {
-
-    it('should emit choose event when a row is selected', () => {
-      const spy = jasmine.createSpy();
-      component.choose.subscribe(spy);
-
-      const row: NameNumber = { name: 'name', number: 3 };
-      component.selectedData = row;
-
-      component.onSelectRow();
-
-      expect(spy).toHaveBeenCalledWith(row);
-    });
-
-    it('should not emit choose event if no row selected', () => {
-      const spy = jasmine.createSpy();
-      component.choose.subscribe(spy);
-
-      component.selectedData = undefined;
-      component.onSelectRow();
-
-      expect(spy).not.toHaveBeenCalled();
-    });
-
-  });
-
   it('should use heading and nameRenderer inputs', () => {
     fixture.componentRef.setInput('heading', 'Test Heading');
     fixture.componentRef.setInput('nameRenderer', (row: any) => `Row: ${row.name}`);
