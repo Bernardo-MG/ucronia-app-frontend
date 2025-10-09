@@ -52,17 +52,12 @@ export class FeeCreationForm implements OnChanges {
   }
 
   public onMonthSelect(date: Date) {
+    // TODO: this is just a patch
     const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const formatted = `${year}-${month}`;
 
-    let dateValue;
-    if (month < 10) {
-      dateValue = `${year}-0${month}`;
-    } else {
-      dateValue = `${year}-${month}`;
-    }
-
-    this.form.get('month')?.setValue(dateValue, { emitEvent: false });
+    this.form.get('month')?.setValue(formatted, { emitEvent: false });
   }
 
   /**
