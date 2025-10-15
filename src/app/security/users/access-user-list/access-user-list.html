@@ -2,8 +2,8 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartCreating()" [disabled]="!createable"
-      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+    <p-button icon="pi pi-envelope" severity="secondary" (click)="onStartInvitation()" [disabled]="!createable"
+      aria-label="Invitar usuario" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <p-table lazy="true" dataKey="username" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
     [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
@@ -40,9 +40,9 @@
   </p-dialog>
 }
 @switch (view) {
-  @case ('creation') {
-    <p-dialog header="Crear usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-user-form [create]="true" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+  @case ('invite') {
+    <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-user-form [create]="true" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
     </p-dialog>
   }
   @case ('edition') {
