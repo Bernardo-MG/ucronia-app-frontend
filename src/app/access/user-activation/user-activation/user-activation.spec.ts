@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
-import { UserActivation } from './user-activation.container';
+import { UserActivation } from './user-activation';
 
 describe('UserActivation', () => {
   let component: UserActivation;

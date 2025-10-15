@@ -17,7 +17,7 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
 @Component({
   selector: 'access-user-activation',
   imports: [CardModule, UserActivationForm, BlockUIModule],
-  templateUrl: './user-activation.container.html'
+  templateUrl: './user-activation.html'
 })
 export class UserActivation {
 
