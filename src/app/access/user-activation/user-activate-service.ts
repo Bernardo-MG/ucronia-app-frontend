@@ -15,7 +15,7 @@ export class AccessUserActivateService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/security/user/activate');
+    this.client = clientProvider.url(environment.apiUrl + '/security/user/onboarding/activate');
   }
 
   public activateUser(token: string, reset: Password): Observable<SimpleResponse<void>> {
