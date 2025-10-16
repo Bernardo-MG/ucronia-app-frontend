@@ -124,7 +124,7 @@ export class AccessList implements OnInit {
     this.showingRoles = true;
   }
 
-  public onCreate(toCreate: UserChange): void {
+  public onInvite(toCreate: UserChange): void {
     const user: User = {
       ...toCreate,
       roles: [],
@@ -132,7 +132,7 @@ export class AccessList implements OnInit {
       notLocked: true
     };
     this.call(
-      () => this.service.create(user),
+      () => this.service.invite(user),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
     );
   }
@@ -266,8 +266,8 @@ export class AccessList implements OnInit {
     this.editionMenu.toggle(event);
   }
 
-  public onStartCreating(): void {
-    this.view = 'creation';
+  public onStartInvitation(): void {
+    this.view = 'invite';
     this.editing = true;
   }
 
