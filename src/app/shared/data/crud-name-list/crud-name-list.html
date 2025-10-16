@@ -1,6 +1,6 @@
 <p-panel>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!canCreate" aria-label="Nuevo libro"
+    <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!canCreate" aria-label="Nuevo"
       [attr.aria-disabled]="!canCreate" rounded text (click)="onStartCreating()" />
   </ng-template>
   <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"

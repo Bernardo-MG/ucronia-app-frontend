@@ -34,6 +34,8 @@ export class FeeEditionForm implements OnChanges {
 
   public fee = new Fee();
 
+  public today = new Date();
+
   constructor() {
     const fb = inject(FormBuilder);
 

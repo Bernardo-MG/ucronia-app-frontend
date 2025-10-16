@@ -11,12 +11,15 @@ import { UserChange } from './models/user-change';
 })
 export class AccessUserService {
 
+  private readonly inviteClient;
+
   private readonly client;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/security/user');
+    this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User>> {
@@ -31,8 +34,8 @@ export class AccessUserService {
       .read();
   }
 
-  public create(data: User): Observable<User> {
-    return this.client
+  public invite(data: User): Observable<User> {
+    return this.inviteClient
       .create<SimpleResponse<User>>(data)
       .pipe(map(r => r.content));
   }

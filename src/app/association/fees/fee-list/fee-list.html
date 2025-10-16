@@ -15,7 +15,7 @@
     <ng-template #icons>
       <assoc-member-status-select [disabled]="loadingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="feeCreationMenu.toggle($event);"
-        [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
+        [disabled]="!createable" aria-label="Nueva cuota" [attr.aria-disabled]="!createable" rounded text />
     </ng-template>
     <!-- Calendar -->
     <assoc-fee-calendar [year]="year" [range]="range" [loading]="loadingCalendar" [feeCalendar]="feeCalendar"
