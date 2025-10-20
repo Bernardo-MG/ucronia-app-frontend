@@ -3,7 +3,7 @@ import { Member } from '@app/domain/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import { UserChange } from './models/user-change';
 
 @Injectable({
@@ -15,11 +15,14 @@ export class AccessUserService {
 
   private readonly client;
 
+  private readonly rolesClient;
+
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/security/user');
     this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
+    this.rolesClient = clientProvider.url(environment.apiUrl + '/security/role');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User>> {
@@ -68,6 +71,29 @@ export class AccessUserService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('name')]))
       .appendRoute(`/${username}/role/available`)
+      .read<PaginatedResponse<Role>>();
+  }
+
+  public getAvailableRolesNew(username: string): Observable<Role[]> {
+    return combineLatest([
+      this.getOne(username),
+      this.getAllRoles()
+    ]).pipe(
+      map(([user, roleResponse]) => {
+        const userRoles = user.roles?.map(r => r.name) ?? [];
+        return roleResponse.content.filter(role => !userRoles.includes(role.name));
+      })
+    );
+  }
+
+  private getAllRoles(): Observable<PaginatedResponse<Role>> {
+    const sorting = new SortingParams(
+      [new SortingProperty('name')]
+    );
+
+    return this.rolesClient
+      .loadParameters(new PaginationParams(1, 100))
+      .loadParameters(sorting)
       .read<PaginatedResponse<Role>>();
   }
 
