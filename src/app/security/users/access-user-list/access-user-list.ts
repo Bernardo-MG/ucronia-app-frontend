@@ -276,7 +276,7 @@ export class AccessList implements OnInit {
   }
 
   private onStartEditingRoles(user: User): void {
-    this.service.getAvailableRolesNew(this.selectedData.username).subscribe(r => this.roleSelection = r);
+    this.service.getAvailableRoles(this.selectedData.username).subscribe(r => this.roleSelection = r);
     this.onStartEditing(user, 'roles')
   }
 

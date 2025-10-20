@@ -3,7 +3,7 @@ import { Member } from '@app/domain/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
-import { combineLatest, map, Observable } from 'rxjs';
+import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 import { UserChange } from './models/user-change';
 
 @Injectable({
@@ -66,35 +66,44 @@ export class AccessUserService {
 
   // ROLES
 
-  public getAvailableRoles(username: string, page: number): Observable<PaginatedResponse<Role>> {
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('name')]))
-      .appendRoute(`/${username}/role/available`)
-      .read<PaginatedResponse<Role>>();
-  }
-
-  public getAvailableRolesNew(username: string): Observable<Role[]> {
+  public getAvailableRoles(username: string): Observable<Role[]> {
     return combineLatest([
       this.getOne(username),
       this.getAllRoles()
     ]).pipe(
       map(([user, roleResponse]) => {
         const userRoles = user.roles?.map(r => r.name) ?? [];
-        return roleResponse.content.filter(role => !userRoles.includes(role.name));
+        return roleResponse.filter(role => !userRoles.includes(role.name));
       })
     );
   }
 
-  private getAllRoles(): Observable<PaginatedResponse<Role>> {
+  private getAllRoles(): Observable<Role[]> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
+    const pageSize = 100;
 
     return this.rolesClient
-      .loadParameters(new PaginationParams(1, 100))
+      .loadParameters(new PaginationParams(1, pageSize))
       .loadParameters(sorting)
-      .read<PaginatedResponse<Role>>();
+      .read<PaginatedResponse<Role>>()
+      .pipe(
+        expand(response => {
+          if (!response.last) {
+            const nextPage = response.page + 1;
+            return this.rolesClient
+              .loadParameters(new PaginationParams(nextPage, pageSize))
+              .loadParameters(sorting)
+              .read<PaginatedResponse<Role>>();
+          }
+          return of();
+        }),
+        // accumulate roles from all pages into one array
+        reduce((allRoles: Role[], res?: PaginatedResponse<Role>) => {
+          return res ? [...allRoles, ...res.content] : allRoles;
+        }, [])
+      );
   }
 
   // Members
