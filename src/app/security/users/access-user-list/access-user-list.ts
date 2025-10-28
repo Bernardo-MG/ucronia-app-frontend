@@ -62,6 +62,8 @@ export class AccessList implements OnInit {
 
   public failures = new FailureStore();
 
+  public roleSelection: Role[] = [];
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -96,15 +98,11 @@ export class AccessList implements OnInit {
     this.load(this.data.page);
   }
 
-  public onLoadRoles(page: number) {
-    return this.service.getAvailableRoles(this.selectedData.username, page);
-  }
-
-  public onLoadMembers(page: number) {
+  public onLoadMembers(page: number): Observable<PaginatedResponse<Member>> {
     return this.service.getAvailableMembers(this.selectedData.username, page);
   }
 
-  public onGetMember(username: string) {
+  public onGetMember(username: string): Observable<Member> {
     return this.service.getMember(username);
   }
 
@@ -249,7 +247,7 @@ export class AccessList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Roles',
-        command: () => this.onStartEditing(user, 'roles')
+        command: () => this.onStartEditingRoles(user)
       });
     this.editionMenuItems.push(
       {
@@ -271,10 +269,15 @@ export class AccessList implements OnInit {
     this.editing = true;
   }
 
-  public onStartEditing(item: User, view: string): void {
-    this.selectedData = item;
+  public onStartEditing(user: User, view: string): void {
+    this.selectedData = user;
     this.view = view;
     this.editing = true;
+  }
+
+  private onStartEditingRoles(user: User): void {
+    this.service.getAvailableRoles(this.selectedData.username).subscribe(r => this.roleSelection = r);
+    this.onStartEditing(user, 'roles')
   }
 
   private load(page: number) {
