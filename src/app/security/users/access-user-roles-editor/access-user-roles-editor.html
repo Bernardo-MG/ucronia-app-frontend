@@ -1,6 +1,6 @@
-<p-picklist [source]="selection()" [target]="selectedRoles" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
+<p-picklist [source]="selection()" [target]="selected" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
   <ng-template let-item #item>
     {{ item.name }}
   </ng-template>
 </p-picklist>
-<p-button type="submit" name="Guardar" (click)="save.emit(selectedRoles)">Guardar</p-button>
+<p-button type="submit" name="Guardar" (click)="save.emit(selected)">Guardar</p-button>

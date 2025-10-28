@@ -39,10 +39,9 @@
     </p-dialog>
   }
   @case ('permissions') {
-    <p-dialog header="Asignar permisos" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-role-change-permission [rolePermissions]="selectedData.permissions"
-        [getSelection]="getRolePermissionsSelection.bind(this)" (addPermission)="onAddRolePermission($event)"
-        (removePermission)="onRemoveRolePermission($event)" />
+    <p-dialog header="Asignar permisos" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-role-change-permission [selection]="permissions" [permissions]="selectedData.permissions"
+        (save)="onSetRolePermissions($event)" />
     </p-dialog>
   }
 }

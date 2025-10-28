@@ -52,6 +52,8 @@ export class AccessRoleList implements OnInit {
 
   public failures = new FailureStore();
 
+  public permissions: ResourcePermission[] = [];
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -63,7 +65,7 @@ export class AccessRoleList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Cambiar permisos',
-        command: () => this.onStartEditingView('permissions')
+        command: () => this.onChangePermissions()
       });
   }
 
@@ -79,10 +81,6 @@ export class AccessRoleList implements OnInit {
   public openEditionMenu(event: Event, role: Role) {
     this.selectedData = role;
     this.editionMenu.toggle(event);
-  }
-
-  public getRolePermissionsSelection(page: number, sorting: Sorting) {
-    return this.service.getAvailablePermissions(this.selectedData.name, page, sorting);
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
@@ -101,17 +99,8 @@ export class AccessRoleList implements OnInit {
     );
   }
 
-  public onAddRolePermission(permission: ResourcePermission) {
-    this.selectedData.permissions.push(permission);
-
-    this.call(
-      () => this.service.update(this.selectedData),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
-    );
-  }
-
-  public onRemoveRolePermission(permission: ResourcePermission) {
-    this.selectedData.permissions = this.selectedData.permissions.filter(r => r.name != permission.name);
+  public onSetRolePermissions(permissions: ResourcePermission[]) {
+    this.selectedData.permissions = permissions;
 
     this.call(
       () => this.service.update(this.selectedData),
@@ -144,6 +133,11 @@ export class AccessRoleList implements OnInit {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
+  }
+
+  private onChangePermissions() {
+    this.service.getAvailablePermissions(this.selectedData.name).subscribe(p => this.permissions = p);
+    this.onStartEditingView('permissions');
   }
 
   public onStartEditingView(view: string): void {

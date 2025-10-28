@@ -71,9 +71,9 @@ export class AccessUserService {
       this.getOne(username),
       this.getAllRoles()
     ]).pipe(
-      map(([user, roleResponse]) => {
+      map(([user, roles]) => {
         const userRoles = user.roles?.map(r => r.name) ?? [];
-        return roleResponse.filter(role => !userRoles.includes(role.name));
+        return roles.filter(role => !userRoles.includes(role.name));
       })
     );
   }
@@ -100,8 +100,8 @@ export class AccessUserService {
           return of();
         }),
         // accumulate roles from all pages into one array
-        reduce((allRoles: Role[], res?: PaginatedResponse<Role>) => {
-          return res ? [...allRoles, ...res.content] : allRoles;
+        reduce((roles: Role[], res?: PaginatedResponse<Role>) => {
+          return res ? [...roles, ...res.content] : roles;
         }, [])
       );
   }

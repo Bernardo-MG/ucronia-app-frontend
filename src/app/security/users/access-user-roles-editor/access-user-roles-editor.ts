@@ -16,11 +16,11 @@ export class AccessUserRolesEditor implements OnChanges {
 
   public readonly save = output<Role[]>();
 
-  public selectedRoles: Role[] = [];
+  public selected: Role[] = [];
 
   public ngOnChanges({ roles }: SimpleChanges): void {
     if (roles) {
-      this.selectedRoles = [...roles.currentValue];
+      this.selected = [...roles.currentValue];
     }
   }
 
