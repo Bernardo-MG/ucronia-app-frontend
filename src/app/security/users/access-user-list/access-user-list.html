@@ -52,7 +52,7 @@
     </p-dialog>
   }
   @case ('roles') {
-    <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
       <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
     </p-dialog>
   }
