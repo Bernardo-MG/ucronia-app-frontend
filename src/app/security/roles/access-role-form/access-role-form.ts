@@ -1,29 +1,33 @@
 
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Role } from '@bernardo-mg/authentication';
+import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { PickListModule } from 'primeng/picklist';
 
 @Component({
   selector: 'access-role-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule, PickListModule],
   templateUrl: './access-role-form.html'
 })
 export class AccessRoleForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly selection = input<ResourcePermission[]>([]);
 
   @Input() public set data(value: Role) {
     this.form.patchValue(value as any);
   }
 
   public readonly save = output<Role>();
+
+  public selected: ResourcePermission[] = [];
 
   public formStatus: FormStatus;
 

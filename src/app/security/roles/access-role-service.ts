@@ -44,7 +44,7 @@ export class AccessRoleService {
     );
   }
 
-  private getAllPermissions(): Observable<ResourcePermission[]> {
+  public getAllPermissions(): Observable<ResourcePermission[]> {
     const sorting = new SortingParams(
       [new SortingProperty('resource'), new SortingProperty('action')]
     );
