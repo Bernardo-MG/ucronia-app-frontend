@@ -41,8 +41,8 @@
 }
 @switch (view) {
   @case ('invite') {
-    <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-user-form [create]="true" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
+    <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
     </p-dialog>
   }
   @case ('edition') {

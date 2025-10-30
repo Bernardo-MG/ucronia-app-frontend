@@ -5,6 +5,7 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { environment } from 'environments/environment';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 import { UserChange } from './models/user-change';
+import { UserCreation } from './models/user-creation';
 
 @Injectable({
   providedIn: "root"
@@ -37,7 +38,7 @@ export class AccessUserService {
       .read();
   }
 
-  public invite(data: User): Observable<User> {
+  public invite(data: UserCreation): Observable<User> {
     return this.inviteClient
       .create<SimpleResponse<User>>(data)
       .pipe(map(r => r.content));
@@ -78,7 +79,7 @@ export class AccessUserService {
     );
   }
 
-  private getAllRoles(): Observable<Role[]> {
+  public getAllRoles(): Observable<Role[]> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );

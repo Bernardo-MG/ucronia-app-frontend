@@ -17,6 +17,7 @@ import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-r
 import { AccessUserRolesInfo } from '../access-user-roles-info/access-user-roles-info';
 import { AccessUserService } from '../access-user-service';
 import { UserChange } from '../models/user-change';
+import { UserCreation } from '../models/user-creation';
 
 @Component({
   selector: 'access-user-list',
@@ -122,15 +123,9 @@ export class AccessList implements OnInit {
     this.showingRoles = true;
   }
 
-  public onInvite(toCreate: UserChange): void {
-    const user: User = {
-      ...toCreate,
-      roles: [],
-      notExpired: true,
-      notLocked: true
-    };
+  public onInvite(toCreate: UserCreation): void {
     this.call(
-      () => this.service.invite(user),
+      () => this.service.invite(toCreate),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
     );
   }
@@ -265,6 +260,7 @@ export class AccessList implements OnInit {
   }
 
   public onStartInvitation(): void {
+    this.service.getAllRoles().subscribe(r => this.roleSelection = r);
     this.view = 'invite';
     this.editing = true;
   }
