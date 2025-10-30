@@ -140,7 +140,12 @@ export class AccessRoleList implements OnInit {
     this.onStartEditingView('permissions');
   }
 
-  public onStartEditingView(view: string): void {
+  public onStartCreation(): void {
+    this.service.getAllPermissions().subscribe(p => this.permissions = p);
+    this.onStartEditingView('creation');
+  }
+
+  private onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
   }
