@@ -12,7 +12,7 @@
     }
   </div>
   <div class="mb-2">
-    <p-picklist [source]="selection()" [target]="selected" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
+    <p-picklist [source]="selection()" [target]="permissions" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
       <ng-template let-item #item>
         {{ item.resource }}:{{ item.action }}
       </ng-template>

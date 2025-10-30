@@ -27,7 +27,7 @@ export class AccessRoleForm implements OnChanges {
 
   public readonly save = output<Role>();
 
-  public selected: ResourcePermission[] = [];
+  public permissions: ResourcePermission[] = [];
 
   public formStatus: FormStatus;
 
@@ -37,7 +37,8 @@ export class AccessRoleForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      name: ['', Validators.required]
+      name: ['', Validators.required],
+      permissions: [[]]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -53,6 +54,7 @@ export class AccessRoleForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave() {
+    this.form.get('permissions')?.setValue(this.permissions);
     if (this.form.valid) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
