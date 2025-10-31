@@ -41,8 +41,8 @@
 }
 @switch (view) {
   @case ('invite') {
-    <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-user-form [create]="true" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
+    <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
     </p-dialog>
   }
   @case ('edition') {
@@ -52,9 +52,8 @@
     </p-dialog>
   }
   @case ('roles') {
-    <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-user-roles-editor [roles]="selectedData.roles" [getSelection]="onLoadRoles.bind(this)"
-        (save)="onSetRoles($event)" />
+    <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
     </p-dialog>
   }
   @case ('member') {

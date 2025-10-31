@@ -1,20 +1,6 @@
-@switch (view) {
-  @case ('list') {
-    <access-user-roles [roles]="selection" [loading]="waiting()" (remove)="onRemoveRole($event)" />
-    <div class="d-grid">
-      <!-- Add button -->
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onShowAddRole()" aria-label="Añadir rol" rounded
-        text />
-    </div>
-    <p-button type="submit" name="Guardar" (click)="save.emit(selection)">Guardar</p-button>
-  }
-  @case ('add') {
-    <access-user-add-role [getSelection]="getSelection()" (addRole)="onAddRole($event)" />
-    <div class="d-grid">
-      <!-- Cancel button -->
-      <p-button type="button" class="secondary" aria-label="Añadir rol" (click)="onCancelAddRole()">
-        Cancelar
-      </p-button>
-    </div>
-  }
-}
+<p-picklist [source]="selection()" [target]="selected" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
+  <ng-template let-item #item>
+    {{ item.name }}
+  </ng-template>
+</p-picklist>
+<p-button type="submit" name="Guardar" (click)="save.emit(selected)">Guardar</p-button>

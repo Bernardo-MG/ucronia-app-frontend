@@ -2,7 +2,7 @@
 <p-panel>
   <ng-template #icons>
     <!-- Add transaction -->
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartCreation()"
       [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <!-- List -->
@@ -34,15 +34,14 @@
 </p-dialog>
 @switch (view) {
   @case ('creation') {
-    <p-dialog header="Crear rol" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-role-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    <p-dialog header="Crear rol" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-role-form [selection]="permissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
     </p-dialog>
   }
   @case ('permissions') {
-    <p-dialog header="Asignar permisos" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-role-change-permission [rolePermissions]="selectedData.permissions"
-        [getSelection]="getRolePermissionsSelection.bind(this)" (addPermission)="onAddRolePermission($event)"
-        (removePermission)="onRemoveRolePermission($event)" />
+    <p-dialog header="Asignar permisos" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-role-change-permission [selection]="permissions" [permissions]="selectedData.permissions"
+        (save)="onSetRolePermissions($event)" />
     </p-dialog>
   }
 }

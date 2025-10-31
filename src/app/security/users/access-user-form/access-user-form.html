@@ -39,6 +39,13 @@
       </p-message>
     }
   </div>
+  <div class="mb-2">
+    <p-picklist [source]="selection()" [target]="roles" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
+      <ng-template let-item #item>
+        {{ item.name }}
+      </ng-template>
+    </p-picklist>
+  </div>
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

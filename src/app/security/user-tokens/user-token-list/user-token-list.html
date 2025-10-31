@@ -34,7 +34,7 @@
         </td>
         <td>
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(token)" rounded text />
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable || token.revoked || token.consumed" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, token)" rounded text />
         </td>
       </tr>

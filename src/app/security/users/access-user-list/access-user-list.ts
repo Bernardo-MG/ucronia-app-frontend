@@ -17,6 +17,7 @@ import { AccessUserRolesEditor } from '../access-user-roles-editor/access-user-r
 import { AccessUserRolesInfo } from '../access-user-roles-info/access-user-roles-info';
 import { AccessUserService } from '../access-user-service';
 import { UserChange } from '../models/user-change';
+import { UserCreation } from '../models/user-creation';
 
 @Component({
   selector: 'access-user-list',
@@ -62,6 +63,8 @@ export class AccessList implements OnInit {
 
   public failures = new FailureStore();
 
+  public roleSelection: Role[] = [];
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -96,15 +99,11 @@ export class AccessList implements OnInit {
     this.load(this.data.page);
   }
 
-  public onLoadRoles(page: number) {
-    return this.service.getAvailableRoles(this.selectedData.username, page);
-  }
-
-  public onLoadMembers(page: number) {
+  public onLoadMembers(page: number): Observable<PaginatedResponse<Member>> {
     return this.service.getAvailableMembers(this.selectedData.username, page);
   }
 
-  public onGetMember(username: string) {
+  public onGetMember(username: string): Observable<Member> {
     return this.service.getMember(username);
   }
 
@@ -124,15 +123,9 @@ export class AccessList implements OnInit {
     this.showingRoles = true;
   }
 
-  public onInvite(toCreate: UserChange): void {
-    const user: User = {
-      ...toCreate,
-      roles: [],
-      notExpired: true,
-      notLocked: true
-    };
+  public onInvite(toCreate: UserCreation): void {
     this.call(
-      () => this.service.invite(user),
+      () => this.service.invite(toCreate),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
     );
   }
@@ -249,7 +242,7 @@ export class AccessList implements OnInit {
     this.editionMenuItems.push(
       {
         label: 'Roles',
-        command: () => this.onStartEditing(user, 'roles')
+        command: () => this.onStartEditingRoles(user)
       });
     this.editionMenuItems.push(
       {
@@ -267,14 +260,20 @@ export class AccessList implements OnInit {
   }
 
   public onStartInvitation(): void {
+    this.service.getAllRoles().subscribe(r => this.roleSelection = r);
     this.view = 'invite';
     this.editing = true;
   }
 
-  public onStartEditing(item: User, view: string): void {
-    this.selectedData = item;
+  public onStartEditing(user: User, view: string): void {
+    this.selectedData = user;
     this.view = view;
     this.editing = true;
+  }
+
+  private onStartEditingRoles(user: User): void {
+    this.service.getAvailableRoles(this.selectedData.username).subscribe(r => this.roleSelection = r);
+    this.onStartEditing(user, 'roles')
   }
 
   private load(page: number) {
