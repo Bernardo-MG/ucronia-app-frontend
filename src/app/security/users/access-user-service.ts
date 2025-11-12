@@ -111,21 +111,21 @@ export class AccessUserService {
 
   public getMember(username: string): Observable<Member> {
     return this.client
-      .appendRoute(`/${username}/person`)
+      .appendRoute(`/${username}/contact`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
   public assignMember(username: string, member: Member): Observable<Member> {
     return this.client
-      .appendRoute(`/${username}/person/${member.number}`)
+      .appendRoute(`/${username}/contact/${member.number}`)
       .create<SimpleResponse<Member>>(null)
       .pipe(map(r => r.content));
   }
 
   public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member>> {
     return this.client
-      .appendRoute(`/${username}/person/available`)
+      .appendRoute(`/${username}/contact/available`)
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .read<PaginatedResponse<Member>>();

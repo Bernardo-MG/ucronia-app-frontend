@@ -1,4 +1,4 @@
-import { Person } from "@app/domain/person/person";
+import { Contact } from "@app/domain/contact/contact";
 
 
 /**
@@ -18,7 +18,7 @@ export class Account {
    */
   email = '';
   /**
-   * User person.
+   * User contact.
    */
-  person: Person | undefined = undefined;
+  contact: Contact | undefined = undefined;
 }

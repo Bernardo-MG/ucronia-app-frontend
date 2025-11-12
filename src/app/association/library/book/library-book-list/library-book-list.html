@@ -16,7 +16,7 @@
       <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
     }
   </ng-template>
-  <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter person status"
+  <select [disabled]="loading" class="form-select form-select-sm" aria-label="Filter contact status"
     (change)="onChangeSource($event)">
     <option [selected]="source === 'game'" value="game">Juegos</option>
     <option [selected]="source === 'fiction'" value="fiction">Ficción</option>

@@ -1,6 +1,6 @@
 
 export class BookReturned {
   returnDate = new Date();
-  person = -1;
+  contact = -1;
   book = -1;
 }

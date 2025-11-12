@@ -1,6 +1,6 @@
-import { PublicPerson } from "../person/public-person";
+import { PublicMember } from "../contact/public-member";
 
 export class FeeCreation {
   month = new Date();
-  member = new PublicPerson();
+  member = new PublicMember();
 }

@@ -1,9 +1,9 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
-    <!-- Add transaction -->
+    <!-- Add role -->
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartCreation()"
-      [disabled]="!createable" aria-label="Nueva persona" [attr.aria-disabled]="!createable" rounded text />
+      [disabled]="!createable" aria-label="Nuevo rol" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <!-- List -->
   <p-table lazy="true" dataKey="name" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"

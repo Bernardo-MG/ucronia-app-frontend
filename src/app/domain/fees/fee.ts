@@ -1,10 +1,10 @@
-import { PublicPerson } from "../person/public-person";
+import { PublicMember } from "../contact/public-member";
 
 export class Fee {
   month = new Date();
   paid = false;
   transaction: FeeTransaction | undefined;
-  member = new PublicPerson();
+  member = new PublicMember();
 }
 
 export class FeeTransaction {

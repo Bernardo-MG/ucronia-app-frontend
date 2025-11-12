@@ -3,7 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { of } from 'rxjs';
 import { LibraryBookLending } from './library-book-lending';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/person/active';
+import { Active } from '@app/domain/contact/active';
 import { BookLent } from '@app/domain/library/book-lent';
 
 describe('LibraryBookLending', () => {

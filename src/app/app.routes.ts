@@ -162,9 +162,9 @@ export const routes: Routes = [
             loadComponent: () => import('./association/fees/fee-list/fee-list').then(m => m.FeeList)
           },
           {
-            path: 'people',
-            canActivate: [ResourceGuard("person", "view")],
-            loadComponent: () => import('./association/people/people-list/people-list').then(m => m.PeopleList)
+            path: 'contacts',
+            canActivate: [ResourceGuard("contact", "view")],
+            loadComponent: () => import('./association/contacts/contact-list/contact-list').then(m => m.ContactList)
           },
           {
             path: 'funds',

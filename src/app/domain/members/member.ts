@@ -1,6 +1,6 @@
-import { PersonName } from "../person/person-name";
+import { ContactName } from "../contact/contact-name";
 
 export class Member {
   number = -1;
-  name = new PersonName();
+  name = new ContactName();
 }
