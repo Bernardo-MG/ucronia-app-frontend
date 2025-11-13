@@ -1,6 +1,6 @@
 
 import { Component, input, OnInit, output } from '@angular/core';
-import { Member } from '@app/domain/members/member';
+import { PublicMember } from '@app/domain/members/public-member';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -13,11 +13,11 @@ import { EMPTY, finalize, Observable } from 'rxjs';
 })
 export class AccessUserSelectMember implements OnInit {
 
-  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Member>>>((page: number) => EMPTY);
+  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<PublicMember>>>((page: number) => EMPTY);
 
-  public readonly selectMember = output<Member>();
+  public readonly selectMember = output<PublicMember>();
 
-  public selection = new PaginatedResponse<Member>();
+  public selection = new PaginatedResponse<PublicMember>();
   public loading = false;
 
   public ngOnInit(): void {
@@ -33,7 +33,7 @@ export class AccessUserSelectMember implements OnInit {
     return (this.selection.page - 1) * this.selection.size;
   }
 
-  public onSelect(data: Member): void {
+  public onSelect(data: PublicMember): void {
     this.selectMember.emit(data);
   }
 

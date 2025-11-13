@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
-import { Member } from '@app/domain/members/member';
+import { PublicMember } from '@app/domain/members/public-member';
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -47,7 +47,7 @@ export class AccessList implements OnInit {
   public data = new PaginatedResponse<User>();
 
   public selectedData = new User();
-  public member = new Member();
+  public member = new PublicMember();
 
   /**
    * Loading flag.
@@ -99,11 +99,11 @@ export class AccessList implements OnInit {
     this.load(this.data.page);
   }
 
-  public onLoadMembers(page: number): Observable<PaginatedResponse<Member>> {
+  public onLoadMembers(page: number): Observable<PaginatedResponse<PublicMember>> {
     return this.service.getAvailableMembers(this.selectedData.username, page);
   }
 
-  public onGetMember(username: string): Observable<Member> {
+  public onGetMember(username: string): Observable<PublicMember> {
     return this.service.getMember(username);
   }
 
@@ -158,7 +158,7 @@ export class AccessList implements OnInit {
     );
   }
 
-  public onAssignMember(member: Member): void {
+  public onAssignMember(member: PublicMember): void {
     this.call(
       () => this.service.assignMember(this.selectedData.username, member),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })

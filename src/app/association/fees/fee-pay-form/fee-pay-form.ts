@@ -2,7 +2,7 @@
 import { Component, Input, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeePayment } from '@app/domain/fees/fee-payment';
-import { Member } from '@app/domain/members/member';
+import { PublicMember } from '@app/domain/members/public-member';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
@@ -21,7 +21,7 @@ export class FeePayForm {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set member(value: Member) {
+  @Input() public set member(value: PublicMember) {
     this.form.get('member')?.setValue(value.number);
     this.months.clear();
     this.addDate();

@@ -1,7 +1,7 @@
 
 import { Component, input, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Member } from '@app/domain/members/member';
+import { PublicMember } from '@app/domain/members/public-member';
 import { Active } from '@app/domain/contact/active';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
@@ -19,13 +19,13 @@ import { MemberStatusSelectComponent } from '../member-status-select/member-stat
 })
 export class MemberSelectStepper implements OnInit {
 
-  public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<Member>>>((page: number, active: Active) => EMPTY);
+  public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<PublicMember>>>((page: number, active: Active) => EMPTY);
 
   public readonly selectMember = output<NameNumber>();
 
-  public readonly nameRenderer = (data: Member): string => data.name.fullName;
+  public readonly nameRenderer = (data: PublicMember): string => data.name.fullName;
 
-  public getSelection: (page: number) => Observable<PaginatedResponse<Member>> = (page: number) => EMPTY;
+  public getSelection: (page: number) => Observable<PaginatedResponse<PublicMember>> = (page: number) => EMPTY;
 
   public currentStep = 1;
 
