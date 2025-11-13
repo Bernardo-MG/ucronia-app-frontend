@@ -1,7 +1,7 @@
 
 import { Component, OnDestroy, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MemberBalance } from '@app/domain/members/member-balance';
+import { MembershipEvolutionMonth } from '@app/domain/members/membership-evolution-month';
 import Chart from 'chart.js/auto';
 import { SelectModule } from 'primeng/select';
 import { finalize } from 'rxjs';
@@ -19,7 +19,7 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
   public readonly startMonthChange = output<string>();
   public readonly endMonthChange = output<string>();
 
-  public balance: MemberBalance[] = [];
+  public balance: MembershipEvolutionMonth[] = [];
 
   public months: Date[] = [];
 
@@ -98,7 +98,7 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
     this.endMonthChange.emit(event.target.value);
   }
 
-  private loadChart(balance: MemberBalance[]) {
+  private loadChart(balance: MembershipEvolutionMonth[]) {
     if (this.chart) {
       this.chart.destroy();
     }
