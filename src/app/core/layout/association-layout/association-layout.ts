@@ -98,7 +98,7 @@ export class AssociationLayout {
     if (authContainer.hasPermission('contact', 'view')) {
       items.push(
         {
-          label: 'Gente',
+          label: 'Contactos',
           routerLink: '/association/contacts',
           icon: 'pi pi-users'
         });
