@@ -1,30 +1,27 @@
 
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Contact } from '@app/domain/contact/contact';
+import { ContactCreation } from '@app/domain/contact/contact-creation';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
-  selector: 'assoc-contact-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
-  templateUrl: './contact-edition-form.html'
+  selector: 'assoc-member-contact-creation-form',
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule],
+  templateUrl: './member-contact-creation-form.html'
 })
-export class ContactEditionForm implements OnChanges {
+export class MemberContactCreationForm implements OnChanges {
 
   public readonly loading = input(false);
+
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: Contact) {
-    this.form.patchValue(value as any);
-  }
-
-  public readonly save = output<Contact>();
+  public readonly save = output<ContactCreation>();
 
   public formStatus: FormStatus;
 
@@ -34,14 +31,11 @@ export class ContactEditionForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      number: [-1],
       name: fb.group({
         firstName: [null],
         lastName: ['']
       }),
-      identifier: [''],
-      birthDate: [new Date()],
-      phone: ['']
+      member: [false]
     });
 
     this.formStatus = new FormStatus(this.form);

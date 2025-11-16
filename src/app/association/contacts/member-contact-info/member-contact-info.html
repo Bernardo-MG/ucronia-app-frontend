@@ -53,3 +53,25 @@
     }
   </div>
 </div>
+<!-- Membership -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Activo</div>
+  <div class="col-sm-9">
+    @if (isActive) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>
+<!-- Renewal -->
+<div class="row">
+  <div class="col-sm-3 text-primary">Renovación</div>
+  <div class="col-sm-9">
+    @if (isRenewed) {
+      <span class="pi pi-check text-success"></span>
+    } @else {
+      <span class="pi pi-times text-warning"></span>
+    }
+  </div>
+</div>

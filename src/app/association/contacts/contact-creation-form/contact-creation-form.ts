@@ -34,8 +34,7 @@ export class ContactCreationForm implements OnChanges {
       name: fb.group({
         firstName: [null],
         lastName: ['']
-      }),
-      member: [false]
+      })
     });
 
     this.formStatus = new FormStatus(this.form);

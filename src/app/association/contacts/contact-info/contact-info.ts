@@ -14,16 +14,4 @@ export class ContactInfo {
   public readonly data = input(new Contact());
   public readonly loading = input(false);
 
-  public get isMember() {
-    return this.data().membership !== null;
-  }
-
-  public get isActive() {
-    return this.data().membership?.active;
-  }
-
-  public get isRenewed() {
-    return this.data().membership?.renew;
-  }
-
 }

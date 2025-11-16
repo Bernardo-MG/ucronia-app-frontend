@@ -1,6 +1,6 @@
 <p-menu #contactEditionMenu [model]="contactEditionMenuItems" [popup]="true" />
 <header>
-  <h1 class="border-bottom">Contactos</h1>
+  <h1 class="border-bottom">Socios</h1>
 </header>
 <div class="row pb-2">
   <!-- Membership evolution -->
@@ -14,7 +14,7 @@
     <ng-template #icons>
       <!-- Add transaction -->
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-        [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text />
+        [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text />
     </ng-template>
     <ng-template #header>
       <p>
@@ -38,7 +38,11 @@
       </ng-template>
       <ng-template #body let-contact>
         <tr>
-          <td>{{ contact.name.fullName }}</td>
+          <td>{{ contact.name.fullName }}
+            @if (!contact.active) {
+              <p-badge value="Inactivo" severity="warn" badgeSize="small" />
+            }
+          </td>
           <td>
             <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(contact)" rounded
               text />
@@ -53,18 +57,18 @@
   </p-panel>
 </div>
 @if(showing) {
-  <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <assoc-contact-info [data]="selectedData" />
+  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+    <assoc-member-contact-info [data]="selectedData" />
   </p-dialog>
 }
 @switch (view) {
   @case ('creation') {
-    <p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     </p-dialog>
   }
   @case ('edition') {
-    <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <p-dialog header="Editar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
       <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
         (save)="onUpdate($event)" />
     </p-dialog>

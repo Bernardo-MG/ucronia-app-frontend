@@ -29,6 +29,15 @@
       }
     </div>
   </div>
+  <!-- Membership -->
+  <div class="row">
+    <div class="col-md-2">
+      <p-toggleswitch formControlName="member" />
+    </div>
+    <div class="col-md-10">
+      Socio
+    </div>
+  </div>
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

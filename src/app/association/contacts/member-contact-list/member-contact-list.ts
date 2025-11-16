@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Active } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { ContactCreation } from '@app/domain/contact/contact-creation';
+import { MemberContact } from '@app/domain/contact/member-contact';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { JustifyCenterDirective } from '@bernardo-mg/ui';
@@ -14,21 +15,21 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { debounceTime, finalize, Observable, Subject, throwError } from 'rxjs';
-import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
-import { ContactInfo } from '../contact-info/contact-info';
-import { ContactsService } from '../contacts-service';
+import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
+import { MemberContactInfo } from '../member-contact-info/member-contact-info';
 import { MemberStatusSelect } from '../member-status-select/member-status-select';
+import { MemberContacsService } from '../member-contacts-service';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
-  selector: 'assoc-contact-list',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, BadgeModule, MemberStatusSelect, ContactCreationForm, ContactEditionForm, ContactInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
-  templateUrl: './contact-list.html'
+  selector: 'assoc-member-contact-list',
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, BadgeModule, MemberStatusSelect, MemberContactCreationForm, ContactEditionForm, MemberContactInfo, MembershipEvolutionChartComponent, JustifyCenterDirective],
+  templateUrl: './member-contact-list.html'
 })
-export class ContactList implements OnInit {
+export class MemberContactList implements OnInit {
 
-  private readonly service = inject(ContactsService);
+  private readonly service = inject(MemberContacsService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
@@ -44,13 +45,13 @@ export class ContactList implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public data = new PaginatedResponse<Contact>();
+  public data = new PaginatedResponse<MemberContact>();
 
   public nameFilter = '';
 
   public nameFilterSubject = new Subject<string>();
 
-  public selectedData = new Contact();
+  public selectedData = new MemberContact();
 
   private sort = new Sorting();
 
@@ -81,19 +82,39 @@ export class ContactList implements OnInit {
     this.nameFilterSubject
       .pipe(debounceTime(300))
       .subscribe(() => this.load(0));
-      
-    this.contactEditionMenuItems.push({
-      label: 'Editar',
-      command: () => this.onStartEditingView('edition')
-    });
   }
 
   public ngOnInit(): void {
     this.load(0);
   }
 
-  public openEditionMenu(event: Event, contact: Contact) {
+  public openEditionMenu(event: Event, contact: MemberContact) {
     this.selectedData = contact;
+
+    // Rebuild menu items dynamically
+    this.contactEditionMenuItems = [];
+
+    // Edit option is always available
+    this.contactEditionMenuItems.push({
+      label: 'Editar',
+      command: () => this.onStartEditingView('edition')
+    });
+
+    // Determine current membership values (default to active=true, renew=true if undefined)
+    const isActive = !!this.selectedData.active;
+    const canRenew = !!this.selectedData.renew;
+
+    // Active/Deactivate toggle
+    this.contactEditionMenuItems.push({
+      label: isActive ? 'Desactivar' : 'Activar',
+      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, !isActive)
+    });
+
+    // Renewal toggle
+    this.contactEditionMenuItems.push({
+      label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
+      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, !canRenew)
+    });
 
     // Show menu
     this.contactEditionMenu.toggle(event);
@@ -144,6 +165,75 @@ export class ContactList implements OnInit {
     this.load(0);
   }
 
+  public onConfirmSetActive(event: Event, status: boolean) {
+    let message;
+    if (status) {
+      message = '¿Estás seguro de querer activar el usuario?';
+    } else {
+      message = '¿Estás seguro de querer desactivar el usuario?';
+    }
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message,
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.onSetActive(status);
+      }
+    });
+  }
+
+  public onConfirmSetRenewal(event: Event, status: boolean) {
+    let message;
+    if (status) {
+      message = '¿Estás seguro de querer activar la renovación del usuario?';
+    } else {
+      message = '¿Estás seguro de querer desactivar la renovación del usuario?';
+    }
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message,
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.onSetRenewal(status);
+      }
+    });
+  }
+
+  public onSetActive(status: boolean) {
+    this.selectedData.active = status;
+    this.selectedData.renew = status;
+    this.call(
+      () => this.service.patch(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
+  public onSetRenewal(status: boolean) {
+    this.selectedData.renew = status;
+    this.call(
+      () => this.service.patch(this.selectedData),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
+  }
+
   public onCreate(toCreate: ContactCreation): void {
     this.call(
       () => this.service.create(toCreate),
@@ -151,7 +241,7 @@ export class ContactList implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: Contact): void {
+  public onUpdate(toUpdate: MemberContact): void {
     this.call(
       () => this.service.patch(toUpdate),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
