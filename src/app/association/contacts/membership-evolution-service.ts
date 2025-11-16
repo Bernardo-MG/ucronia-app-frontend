@@ -14,7 +14,7 @@ export class MembershipEvolutionService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/member/monthly');
+    this.client = clientProvider.url(environment.apiUrl + '/member/evolution');
   }
 
   public monthly(from: Date | undefined, to: Date | undefined): Observable<MembershipEvolutionMonth[]> {
