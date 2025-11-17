@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { PublicMember } from '@app/domain/members/public-member';
 import { Active } from '@app/domain/contact/active';
+import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -8,7 +8,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PublicMemberService {
+export class MemberService {
 
   private readonly client;
 
@@ -18,7 +18,7 @@ export class PublicMemberService {
     this.client = clientProvider.url(environment.apiUrl + '/member');
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<PublicMember>> {
+  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
@@ -28,13 +28,13 @@ export class PublicMemberService {
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', Active.Active.toString().toUpperCase())
-      .read<PaginatedResponse<PublicMember>>();
+      .read<PaginatedResponse<Member>>();
   }
 
-  public getOne(number: number): Observable<PublicMember> {
+  public getOne(number: number): Observable<Member> {
     return this.client
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<PublicMember>>()
+      .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 

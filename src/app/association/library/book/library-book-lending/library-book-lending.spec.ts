@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { of } from 'rxjs';
 import { LibraryBookLending } from './library-book-lending';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/contact/active';
 import { BookLent } from '@app/domain/library/book-lent';
 
@@ -44,7 +44,7 @@ describe('LibraryBookLending', () => {
     });
 
     it('should go to step 2 when selecting a member', () => {
-      const member = new PublicMember();
+      const member = new Member();
       member.name.fullName = 'Test Member';
 
       component.onSelectMember(member);
@@ -66,7 +66,7 @@ describe('LibraryBookLending', () => {
     });
 
     it('should render member name using nameRenderer', () => {
-      const member = new PublicMember();
+      const member = new Member();
       member.name.fullName = 'Renderer Test';
 
       expect(component.nameRenderer(member)).toBe('Renderer Test');

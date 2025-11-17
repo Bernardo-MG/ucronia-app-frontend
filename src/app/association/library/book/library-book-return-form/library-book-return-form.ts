@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Fee } from '@app/domain/fees/fee';
 import { BookInfo } from '@app/domain/library/book-info';
 import { BookReturned } from '@app/domain/library/book-returned';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -23,7 +23,7 @@ export class LibraryBookReturnForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set borrower(value: PublicMember) {
+  @Input() public set borrower(value: Member) {
     this.form.get('borrower')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }

@@ -6,7 +6,7 @@ import { YearsRange } from '@app/domain/fees/years-range';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/contact/active';
 import { MemberSelectStepper } from '@app/shared/contact/components/contact-select-stepper/member-select-stepper';
 import { MemberStatusSelectComponent } from '@app/shared/contact/components/member-status-select/member-status-select.component';
@@ -62,7 +62,7 @@ export class FeeList implements OnInit {
   public showing = false;
 
   public selectedData = new Fee();
-  public selectedMember = new PublicMember();
+  public selectedMember = new Member();
 
   public failures = new FailureStore();
 
@@ -174,7 +174,7 @@ export class FeeList implements OnInit {
   }
 
   public onSelectMember(member: any) {
-    this.selectedMember = (member as PublicMember);
+    this.selectedMember = (member as Member);
   }
 
   public loadCalendar(year: number) {

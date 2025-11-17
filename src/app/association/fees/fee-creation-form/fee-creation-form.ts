@@ -2,7 +2,7 @@
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -21,7 +21,7 @@ export class FeeCreationForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set member(value: PublicMember) {
+  @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }

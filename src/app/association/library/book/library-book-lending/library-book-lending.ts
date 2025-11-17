@@ -2,7 +2,7 @@
 import { Component, input, output } from '@angular/core';
 import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/contact/active';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { MemberStatusSelectComponent } from '@app/shared/contact/components/member-status-select/member-status-select.component';
@@ -28,7 +28,7 @@ export class LibraryBookLending {
 
   public currentStep = 1;
 
-  public member = new PublicMember();
+  public member = new Member();
 
   public status = Active.Active;
 
@@ -37,7 +37,7 @@ export class LibraryBookLending {
   }
 
   public onSelectMember(member: any) {
-    this.member = (member as PublicMember);
+    this.member = (member as Member);
     this.currentStep = 2;
   }
 
@@ -45,6 +45,6 @@ export class LibraryBookLending {
     return this.getMemberSelection()(page, this.status);
   }
 
-  public readonly nameRenderer = (row: PublicMember): string => row.name.fullName;
+  public readonly nameRenderer = (row: Member): string => row.name.fullName;
 
 }

@@ -9,7 +9,7 @@ import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Publisher } from '@app/domain/library/publisher';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { Active } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
@@ -201,12 +201,12 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number, active: Active): Observable<PaginatedResponse<PublicMember>> {
+  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<PublicMember>>();
+      .read<PaginatedResponse<Member>>();
   }
 
 }

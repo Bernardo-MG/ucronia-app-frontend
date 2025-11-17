@@ -1,30 +1,30 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
-import { PublicMemberInfo } from '../public-member-info/public-member-info';
-import { PublicMemberService } from '../public-member-service';
+import { MemberInfo } from '../member-info/member-info';
+import { MemberService } from '../member-service';
 
 @Component({
-  selector: 'assoc-public-member-list',
-  imports: [CardModule, TableModule, DialogModule, ButtonModule, PublicMemberInfo],
-  templateUrl: './public-member-list.html'
+  selector: 'assoc-member-listing',
+  imports: [CardModule, TableModule, DialogModule, ButtonModule, MemberInfo],
+  templateUrl: './member-listing.html'
 })
-export class PublicMemberList implements OnInit {
+export class MemberListing implements OnInit {
 
-  private readonly service = inject(PublicMemberService);
+  private readonly service = inject(MemberService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<PublicMember>();
+  public data = new PaginatedResponse<Member>();
 
-  public selectedData = new PublicMember();
+  public selectedData = new Member();
 
   private sort = new Sorting();
 
@@ -55,7 +55,7 @@ export class PublicMemberList implements OnInit {
     this.load(page);
   }
 
-  public onShowInfo(member: PublicMember) {
+  public onShowInfo(member: Member) {
     this.loading = true;
     this.service.getOne(member.number)
       .pipe(finalize(() => this.loading = false))

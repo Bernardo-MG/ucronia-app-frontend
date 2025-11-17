@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PublicMember } from '@app/domain/members/public-member';
+import { Member } from '@app/domain/members/member';
 import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -109,26 +109,26 @@ export class AccessUserService {
 
   // Members
 
-  public getMember(username: string): Observable<PublicMember> {
+  public getMember(username: string): Observable<Member> {
     return this.client
       .appendRoute(`/${username}/contact`)
-      .read<SimpleResponse<PublicMember>>()
+      .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
-  public assignMember(username: string, member: PublicMember): Observable<PublicMember> {
+  public assignMember(username: string, member: Member): Observable<Member> {
     return this.client
       .appendRoute(`/${username}/contact/${member.number}`)
-      .create<SimpleResponse<PublicMember>>(null)
+      .create<SimpleResponse<Member>>(null)
       .pipe(map(r => r.content));
   }
 
-  public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<PublicMember>> {
+  public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member>> {
     return this.client
       .appendRoute(`/${username}/contact/available`)
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .read<PaginatedResponse<PublicMember>>();
+      .read<PaginatedResponse<Member>>();
   }
 
 }
