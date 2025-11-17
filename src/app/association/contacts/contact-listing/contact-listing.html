@@ -45,7 +45,11 @@
 </div>
 @if(showing) {
   <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <assoc-contact-info [data]="selectedData" />
+    @if(viewMembers) {
+      <assoc-member-contact-info [data]="selectedMemberData" />
+    } @else {
+      <assoc-contact-info [data]="selectedData" />
+    }
   </p-dialog>
 }
 @switch (view) {

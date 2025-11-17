@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Active } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { ContactCreation } from '@app/domain/contact/contact-creation';
+import { MemberContact } from '@app/domain/contact/member-contact';
 import { MemberContactCreation } from '@app/domain/contact/member-contact-creation';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -21,15 +22,15 @@ import { ContactInfo } from '../contact-info/contact-info';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactsService } from '../contacts-service';
 import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
+import { MemberContactInfo } from '../member-contact-info/member-contact-info';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
 import { MemberStatusSelect } from '../member-status-select/member-status-select';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
-import { MemberContact } from '@app/domain/contact/member-contact';
 
 @Component({
   selector: 'assoc-contact-listing',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, JustifyCenterDirective],
   templateUrl: './contact-listing.html'
 })
 export class ContactListing implements OnInit {
@@ -61,7 +62,11 @@ export class ContactListing implements OnInit {
 
   public nameFilterSubject = new Subject<string>();
 
-  public selectedData = new Contact();
+  public selectedData: Contact | MemberContact = new Contact();
+
+  public get selectedMemberData() {
+    return this.selectedData as MemberContact;
+  }
 
   private sort = new Sorting();
 
