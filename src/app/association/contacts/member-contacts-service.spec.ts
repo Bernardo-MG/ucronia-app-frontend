@@ -1,17 +1,17 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MemberContacsService } from './member-contacts-service';
+import { MemberContactsService } from './member-contacts-service';
 
-describe('MembersService', () => {
-  let service: MemberContacsService;
+describe('MemberContactsService', () => {
+  let service: MemberContactsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     });
-    service = TestBed.inject(MemberContacsService);
+    service = TestBed.inject(MemberContactsService);
   });
 
   it('should be created', () => {

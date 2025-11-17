@@ -35,7 +35,7 @@ export class MemberContactCreationForm implements OnChanges {
         firstName: [null],
         lastName: ['']
       }),
-      member: [false]
+      active: [true]
     });
 
     this.formStatus = new FormStatus(this.form);

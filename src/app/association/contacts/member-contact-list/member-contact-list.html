@@ -1,76 +1,30 @@
-<p-menu #contactEditionMenu [model]="contactEditionMenuItems" [popup]="true" />
-<header>
-  <h1 class="border-bottom">Socios</h1>
-</header>
-<div class="row pb-2">
-  <!-- Membership evolution -->
-  <div uiJustifyCenter>
-    <assoc-membership-evolution-chart />
-  </div>
-</div>
-<div class="row">
-  <!-- Member List -->
-  <p-panel>
-    <ng-template #icons>
-      <!-- Add transaction -->
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-        [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text />
-    </ng-template>
-    <ng-template #header>
-      <p>
-        <!-- Filter by membership -->
-        <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-        <!-- Filter by name -->
-        <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2">Nombre</label>
-        <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-          aria-describedby="nameFilterLabel" maxlength="50">
-      </p>
-    </ng-template>
-    <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
-      [totalRecords]="data.totalElements" [first]="first" showCurrentPageReport="true"
-      currentPageReportTemplate="Total: {totalRecords}" (onSort)="onChangeDirection($event)"
-      (onPage)="onPageChange($event)">
-      <ng-template #header>
-        <tr>
-          <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
-          <th></th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-contact>
-        <tr>
-          <td>{{ contact.name.fullName }}
-            @if (!contact.active) {
-              <p-badge value="Inactivo" severity="warn" badgeSize="small" />
-            }
-          </td>
-          <td>
-            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(contact)" rounded
-              text />
-            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, contact)" rounded text />
-            <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-              [attr.aria-disabled]="!deletable" (click)="onDelete($event, contact.number)" rounded text />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </p-panel>
-</div>
-@if(showing) {
-  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <assoc-member-contact-info [data]="selectedData" />
-  </p-dialog>
-}
-@switch (view) {
-  @case ('creation') {
-    <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-    </p-dialog>
-  }
-  @case ('edition') {
-    <p-dialog header="Editar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
-        (save)="onUpdate($event)" />
-    </p-dialog>
-  }
-}
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data().content" paginator="true"
+  [rows]="data().size" [totalRecords]="data().totalElements" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="changePage.emit($event.first)">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-contact>
+    <tr>
+      <td>{{ contact.name.fullName }}
+        @if(contact.active) {
+          <p-tag severity="success" value="Activo" />
+        } @else {
+          <p-tag severity="danger" value="Baja" />
+        }
+      </td>
+      <td>
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(contact)" rounded text />
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
+          [attr.aria-disabled]="!editable()" (click)="edit.emit({ event:$event, contact:contact })" rounded
+          text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
+          [attr.aria-disabled]="!deletable()" (click)="delete.emit(contact.number)" rounded text />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

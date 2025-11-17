@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Active } from '@app/domain/contact/active';
-import { ContactCreation } from '@app/domain/contact/contact-creation';
 import { MemberContact } from '@app/domain/contact/member-contact';
+import { MemberContactCreation } from '@app/domain/contact/member-contact-creation';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -9,7 +9,7 @@ import { Observable, map } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MemberContacsService {
+export class MemberContactsService {
 
   private readonly client;
 
@@ -39,7 +39,7 @@ export class MemberContacsService {
       .read<PaginatedResponse<MemberContact>>();
   }
 
-  public create(data: ContactCreation): Observable<MemberContact> {
+  public create(data: MemberContactCreation): Observable<MemberContact> {
     return this.client
       .create<SimpleResponse<MemberContact>>(data)
       .pipe(map(r => r.content));

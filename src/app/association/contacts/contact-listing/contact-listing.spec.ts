@@ -4,16 +4,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MemberContactList } from './member-contact-list';
+import { ContactListing } from './contact-listing';
 
-describe('MemberContactList', () => {
-  let component: MemberContactList;
-  let fixture: ComponentFixture<MemberContactList>;
+describe('ContactListing', () => {
+  let component: ContactListing;
+  let fixture: ComponentFixture<ContactListing>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberContactList
+        ContactListing
       ],
       providers: [
         ConfirmationService,
@@ -26,7 +26,7 @@ describe('MemberContactList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberContactList);
+    fixture = TestBed.createComponent(ContactListing);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

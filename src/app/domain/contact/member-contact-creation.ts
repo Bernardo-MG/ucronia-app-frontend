@@ -1,7 +1,8 @@
 import { ContactName } from "./contact-name";
 
-export class ContactCreation {
+export class MemberContactCreation {
   identifier = '';
   name = new ContactName();
   member = false;
+  active = false;
 }
