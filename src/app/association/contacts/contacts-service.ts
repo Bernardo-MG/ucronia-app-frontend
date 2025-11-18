@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Active } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
-import { ContactCreation } from '@app/domain/contact/contact-creation';
+import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

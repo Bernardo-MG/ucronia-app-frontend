@@ -9,19 +9,20 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { MemberCreation } from '../domain/member-creation';
 
 @Component({
-  selector: 'assoc-contact-creation-form',
+  selector: 'assoc-member-creation-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule],
-  templateUrl: './contact-creation-form.html'
+  templateUrl: './member-creation-form.html'
 })
-export class ContactCreationForm implements OnChanges {
+export class MemberContactCreationForm implements OnChanges {
 
   public readonly loading = input(false);
 
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ContactCreation>();
+  public readonly save = output<MemberCreation>();
 
   public formStatus: FormStatus;
 
@@ -33,8 +34,10 @@ export class ContactCreationForm implements OnChanges {
     this.form = fb.group({
       name: fb.group({
         firstName: [null],
-        lastName: ['']
-      })
+        lastName: [''],
+        identifier: ['']
+      }),
+      active: [true]
     });
 
     this.formStatus = new FormStatus(this.form);
