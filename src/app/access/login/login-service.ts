@@ -1,16 +1,16 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AuthContainer, LoginStatus, SecurityDetails } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
-import { UserLogin } from './models/user-login';
+import { LoginRequest } from './models/login-request';
 
 @Injectable({
   providedIn: "root"
 })
 export class LoginService {
-  private authContainer = inject(AuthContainer);
 
+  private authContainer = inject(AuthContainer);
 
   private readonly client;
 
@@ -29,7 +29,7 @@ export class LoginService {
    * @param request login request
    * @returns the user resulting from the login
    */
-  public login(request: UserLogin, rememberMe: boolean): Observable<SecurityDetails> {
+  public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
     return this.client
       // Login request
       .create<SimpleResponse<LoginStatus>>(request)

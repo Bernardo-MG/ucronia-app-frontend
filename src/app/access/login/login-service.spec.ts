@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { LoginService } from './login-service';
 import { AuthContainer, SecurityDetails } from '@bernardo-mg/authentication';
-import { UserLogin } from './models/user-login';
+import { LoginRequest } from './models/login-request';
 import { of } from 'rxjs';
 import { AngularCrudClientProvider } from '@bernardo-mg/request';
 
@@ -38,7 +38,7 @@ describe('LoginService', () => {
   });
 
   it('should login and store details', (done) => {
-    const loginRequest = new UserLogin('test', '1234');
+    const loginRequest = new LoginRequest('test', '1234');
     const rememberMe = true;
 
     const expectedSecurityDetails: SecurityDetails = {

@@ -3,17 +3,17 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { LoginService } from '../login-service';
-import { UserLogin } from '../models/user-login';
-import { Login } from './login';
+import { LoginRequest } from '../models/login-request';
+import { LoginView } from './login-view';
 
 describe('Login', () => {
-  let component: Login;
-  let fixture: ComponentFixture<Login>;
+  let component: LoginView;
+  let fixture: ComponentFixture<LoginView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        Login
+        LoginView
       ],
       providers: [
         LoginService,
@@ -26,7 +26,7 @@ describe('Login', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(Login);
+    fixture = TestBed.createComponent(LoginView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -41,7 +41,7 @@ describe('Login', () => {
       subscribe: (observer: any) => observer.next({ logged: true })
     } as any);
 
-    const login = new UserLogin('username', 'password');
+    const login = new LoginRequest('username', 'password');
     component.onLogin(login);
 
     expect(spy).toHaveBeenCalledWith(login, false);
@@ -57,7 +57,7 @@ describe('Login', () => {
       }
     } as any);
 
-    component.onLogin(new UserLogin('username', 'password'));
+    component.onLogin(new LoginRequest('username', 'password'));
     expect(component.waiting).toBeTrue();
 
     capturedObserver.next({ logged: true });
@@ -72,7 +72,7 @@ describe('Login', () => {
         subscribe: (observer: any) => observer.next({ logged: false })
       } as any);
 
-      component.onLogin(new UserLogin('username', 'password'));
+      component.onLogin(new LoginRequest('username', 'password'));
 
       expect(component.failedLogin).toBeTrue();
     });
@@ -85,7 +85,7 @@ describe('Login', () => {
         }
       } as any);
 
-      component.onLogin(new UserLogin('user', 'pass'));
+      component.onLogin(new LoginRequest('user', 'pass'));
 
       expect(component.failedLogin).toBeTrue();
     });
@@ -103,35 +103,35 @@ describe('Login', () => {
         subscribe: (observer: any) => observer.next({ logged: true })
       } as any);
 
-      component.onLogin(new UserLogin('user', 'pass'));
+      component.onLogin(new LoginRequest('user', 'pass'));
 
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
 
-//    it('should redirect after successful login', () => {
-//      const returnUrl = '/dashboard';
-//      TestBed.overrideProvider(ActivatedRoute, {
-//        useValue: {
-//          snapshot: {
-//            queryParams: {
-//              returnUrl: returnUrl
-//            }
-//          }
-//        }
-//      }).compileComponents().then(() => {
-//        const router = TestBed.inject(Router);
-//        const navigateSpy = spyOn(router, 'navigate');
-//
-//        const loginService = TestBed.inject(LoginService);
-//        spyOn(loginService, 'login').and.returnValue({
-//          subscribe: (observer: any) => observer.next({ logged: true })
-//        } as any);
-//
-//        component.onLogin(new UserLogin('user', 'pass'));
-//
-//        expect(navigateSpy).toHaveBeenCalledWith([returnUrl]);
-//      });
-//    });
+    //    it('should redirect after successful login', () => {
+    //      const returnUrl = '/dashboard';
+    //      TestBed.overrideProvider(ActivatedRoute, {
+    //        useValue: {
+    //          snapshot: {
+    //            queryParams: {
+    //              returnUrl: returnUrl
+    //            }
+    //          }
+    //        }
+    //      }).compileComponents().then(() => {
+    //        const router = TestBed.inject(Router);
+    //        const navigateSpy = spyOn(router, 'navigate');
+    //
+    //        const loginService = TestBed.inject(LoginService);
+    //        spyOn(loginService, 'login').and.returnValue({
+    //          subscribe: (observer: any) => observer.next({ logged: true })
+    //        } as any);
+    //
+    //        component.onLogin(new UserLogin('user', 'pass'));
+    //
+    //        expect(navigateSpy).toHaveBeenCalledWith([returnUrl]);
+    //      });
+    //    });
 
   });
 

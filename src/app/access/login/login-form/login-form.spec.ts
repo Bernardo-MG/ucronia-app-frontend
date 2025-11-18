@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { UserLogin } from '../models/user-login';
+import { LoginRequest } from '../models/login-request';
 import { LoginForm } from './login-form';
 
 describe('LoginForm', () => {
@@ -169,7 +169,7 @@ describe('LoginForm', () => {
       const formEl = fixture.debugElement.query(By.css('form'));
       formEl.triggerEventHandler('ngSubmit', {});
 
-      expect(component.login.emit).toHaveBeenCalledWith(new UserLogin('username', 'password'));
+      expect(component.login.emit).toHaveBeenCalledWith(new LoginRequest('username', 'password'));
     });
 
     it('should not emit login when submitting an invalid form', () => {
@@ -195,7 +195,7 @@ describe('LoginForm', () => {
       const button = fixture.nativeElement.querySelector('#login button');
       button.click();
 
-      expect(component.login.emit).toHaveBeenCalledWith(new UserLogin('username', 'password'));
+      expect(component.login.emit).toHaveBeenCalledWith(new LoginRequest('username', 'password'));
     });
 
     it('should not emit login when clicking the login button and the form is invalid', () => {

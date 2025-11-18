@@ -4,7 +4,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
 import { LoginForm } from '../login-form/login-form';
 import { LoginService } from '../login-service';
-import { UserLogin } from '../models/user-login';
+import { LoginRequest } from '../models/login-request';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.
@@ -23,11 +23,11 @@ import { UserLogin } from '../models/user-login';
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'login-card',
+  selector: 'login-view',
   imports: [RouterModule, CardModule, LoginForm],
-  templateUrl: './login.html'
+  templateUrl: './login-view.html'
 })
-export class Login {
+export class LoginView {
 
   private readonly service = inject(LoginService);
 
@@ -65,7 +65,7 @@ export class Login {
    * 
    * @param login user login info
    */
-  public onLogin(login: UserLogin) {
+  public onLogin(login: LoginRequest) {
     // Login request
 
     // Mark the form as loading

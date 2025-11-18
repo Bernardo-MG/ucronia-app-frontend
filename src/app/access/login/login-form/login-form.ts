@@ -6,7 +6,7 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { UserLogin } from '../models/user-login';
+import { LoginRequest } from '../models/login-request';
 
 /**
  * Login form component. Dumb component for just handling the form.
@@ -14,7 +14,7 @@ import { UserLogin } from '../models/user-login';
  * Includes checkbox for the 'remember me' functionality.
  */
 @Component({
-  selector: 'login-login-form',
+  selector: 'login-form',
   imports: [FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
   templateUrl: './login-form.html'
 })
@@ -46,7 +46,7 @@ export class LoginForm {
   /**
    * Login event. Sent when the user accepts the data in the form.
    */
-  public readonly login = output<UserLogin>();
+  public readonly login = output<LoginRequest>();
 
   /**
    * Remember me event. Sent when the user changes the remember me flag.
@@ -99,7 +99,7 @@ export class LoginForm {
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
-      const user = new UserLogin(this.form.value.username, this.form.value.password);
+      const user = new LoginRequest(this.form.value.username, this.form.value.password);
       this.login.emit(user);
     }
   }
