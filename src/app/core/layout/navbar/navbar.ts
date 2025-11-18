@@ -25,6 +25,10 @@ export class Navbar {
 
   public readonly showSecurity;
 
+  public get loggedIn() {
+    return this.authContainer.logged;
+  }
+
   public get loggedOut() {
     return !this.authContainer.logged;
   }
