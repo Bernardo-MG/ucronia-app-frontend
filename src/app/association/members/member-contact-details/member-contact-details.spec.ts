@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MemberService } from '../member-service';
-import { MemberInfo } from './member-info';
+import { MemberContactDetails } from './member-contact-details';
 
-describe('MemberInfo', () => {
-  let component: MemberInfo;
-  let fixture: ComponentFixture<MemberInfo>;
+describe('MemberContactDetails', () => {
+  let component: MemberContactDetails;
+  let fixture: ComponentFixture<MemberContactDetails>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberInfo
+        MemberContactDetails
       ],
       providers: [
         MemberService,
@@ -23,7 +23,7 @@ describe('MemberInfo', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberInfo);
+    fixture = TestBed.createComponent(MemberContactDetails);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

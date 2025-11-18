@@ -1,17 +1,19 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Member } from '@app/domain/members/member';
+import { AuthContainer } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
-import { MemberInfo } from '../member-info/member-info';
+import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberService } from '../member-service';
+import { MemberContact } from '@app/domain/contact/member-contact';
 
 @Component({
   selector: 'assoc-member-listing',
-  imports: [CardModule, TableModule, DialogModule, ButtonModule, MemberInfo],
+  imports: [CardModule, TableModule, DialogModule, ButtonModule, MemberContactDetails],
   templateUrl: './member-listing.html'
 })
 export class MemberListing implements OnInit {
@@ -26,13 +28,24 @@ export class MemberListing implements OnInit {
 
   public selectedData = new Member();
 
+  public memberContact = new MemberContact();
+
   private sort = new Sorting();
+
+  public readonly readContact;
 
   /**
    * Loading flag.
    */
   public loading = false;
   public showing = false;
+
+  constructor() {
+    const authContainer = inject(AuthContainer);
+    
+    // Check permissions
+    this.readContact = authContainer.hasPermission("member_contact", "read");
+  }
 
   public ngOnInit(): void {
     this.load(0);
@@ -55,11 +68,11 @@ export class MemberListing implements OnInit {
     this.load(page);
   }
 
-  public onShowInfo(member: Member) {
+  public onShowContact(member: Member) {
     this.loading = true;
-    this.service.getOne(member.number)
+    this.service.getContact(member.number)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.selectedData = response);
+      .subscribe(response => this.memberContact = response);
     this.showing = true;
   }
 

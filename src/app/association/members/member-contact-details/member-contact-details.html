@@ -1,0 +1,100 @@
+@if (loading()) {
+  <p-skeleton height="2rem" class="mb-2" />
+} @else {
+  <h2># {{data().number}}</h2>
+}
+@if (loading()) {
+  <!-- First name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+  <!-- Last name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Apellidos</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+  <!-- Identifier -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">DNI</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+  <!-- Birth date -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Fecha de nacimiento</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+  <!-- Active -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Activo</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+  <!-- Renewal -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Renovación</div>
+    <div class="col-sm-9">
+      <p-skeleton class="mb-2" />
+    </div>
+  </div>
+} @else {
+  <!-- First name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Nombre</div>
+    <div class="col-sm-9">
+      {{data().name.firstName}}
+    </div>
+  </div>
+  <!-- Last name -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Apellidos</div>
+    <div class="col-sm-9">
+      {{data().name.lastName}}
+    </div>
+  </div>
+  <!-- Identifier -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">DNI</div>
+    <div class="col-sm-9">
+      {{data().identifier}}
+    </div>
+  </div>
+  <!-- Birth date -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Fecha de nacimiento</div>
+    <div class="col-sm-9">
+      {{data().birthDate | date:'yyyy-MM-dd'}}
+    </div>
+  </div>
+  <!-- Active -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Activo</div>
+    <div class="col-sm-9">
+      @if (data().active) {
+        <span class="pi pi-check text-success"></span>
+      } @else {
+        <span class="pi pi-times text-warning"></span>
+      }
+    </div>
+  </div>
+  <!-- Renewal -->
+  <div class="row">
+    <div class="col-sm-3 text-primary">Renovación</div>
+    <div class="col-sm-9">
+      @if (data().renew) {
+        <span class="pi pi-check text-success"></span>
+      } @else {
+        <span class="pi pi-times text-warning"></span>
+      }
+    </div>
+  </div>
+}

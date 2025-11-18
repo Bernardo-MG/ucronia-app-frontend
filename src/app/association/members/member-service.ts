@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Active } from '@app/domain/contact/active';
+import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -11,11 +12,13 @@ import { Observable, map } from 'rxjs';
 export class MemberService {
 
   private readonly client;
+  private readonly contactClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/member');
+    this.contactClient = clientProvider.url(environment.apiUrl + '/contact/member');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
@@ -35,6 +38,13 @@ export class MemberService {
     return this.client
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Member>>()
+      .pipe(map(r => r.content));
+  }
+
+  public getContact(number: number): Observable<MemberContact> {
+    return this.contactClient
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<MemberContact>>()
       .pipe(map(r => r.content));
   }
 
