@@ -5,6 +5,8 @@ import { provideRouter, Router } from '@angular/router';
 import { LoginService } from '../login-service';
 import { LoginRequest } from '../models/login-request';
 import { LoginView } from './login-view';
+import { SecurityDetails } from '@bernardo-mg/authentication';
+import { Observable, Observer, of } from 'rxjs';
 
 describe('Login', () => {
   let component: LoginView;
@@ -37,9 +39,9 @@ describe('Login', () => {
 
   it('should call login service when onLogin is triggered', () => {
     const loginService = TestBed.inject(LoginService);
-    const spy = spyOn(loginService, 'login').and.returnValue({
-      subscribe: (observer: any) => observer.next({ logged: true })
-    } as any);
+    const spy = spyOn(loginService, 'login').and.returnValue(
+      of(new SecurityDetails(true))
+    );
 
     const login = new LoginRequest('username', 'password');
     component.onLogin(login);
@@ -50,17 +52,17 @@ describe('Login', () => {
   it('should set waiting to true while login is in progress and false after', () => {
     const loginService = TestBed.inject(LoginService);
 
-    let capturedObserver: any;
-    spyOn(loginService, 'login').and.returnValue({
-      subscribe: (observer: any) => {
-        capturedObserver = observer;
-      }
-    } as any);
+    let capturedObserver!: Observer<SecurityDetails>;
+    spyOn(loginService, 'login').and.returnValue(
+      new Observable<SecurityDetails>(observer => {
+        capturedObserver = observer; // fully typed Observer<SecurityDetails>
+      })
+    );
 
     component.onLogin(new LoginRequest('username', 'password'));
     expect(component.waiting).toBeTrue();
 
-    capturedObserver.next({ logged: true });
+    capturedObserver.next(new SecurityDetails(true));
     expect(component.waiting).toBeFalse();
   });
 
@@ -68,9 +70,9 @@ describe('Login', () => {
 
     it('should set failedLogin to true if login fails', () => {
       const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue({
-        subscribe: (observer: any) => observer.next({ logged: false })
-      } as any);
+      spyOn(loginService, 'login').and.returnValue(
+        of(new SecurityDetails(false))
+      );
 
       component.onLogin(new LoginRequest('username', 'password'));
 
@@ -99,39 +101,14 @@ describe('Login', () => {
       const navigateSpy = spyOn(router, 'navigate');
 
       const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue({
-        subscribe: (observer: any) => observer.next({ logged: true })
-      } as any);
+      spyOn(loginService, 'login').and.returnValue(
+        of(new SecurityDetails(true))
+      );
 
       component.onLogin(new LoginRequest('user', 'pass'));
 
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
-
-    //    it('should redirect after successful login', () => {
-    //      const returnUrl = '/dashboard';
-    //      TestBed.overrideProvider(ActivatedRoute, {
-    //        useValue: {
-    //          snapshot: {
-    //            queryParams: {
-    //              returnUrl: returnUrl
-    //            }
-    //          }
-    //        }
-    //      }).compileComponents().then(() => {
-    //        const router = TestBed.inject(Router);
-    //        const navigateSpy = spyOn(router, 'navigate');
-    //
-    //        const loginService = TestBed.inject(LoginService);
-    //        spyOn(loginService, 'login').and.returnValue({
-    //          subscribe: (observer: any) => observer.next({ logged: true })
-    //        } as any);
-    //
-    //        component.onLogin(new UserLogin('user', 'pass'));
-    //
-    //        expect(navigateSpy).toHaveBeenCalledWith([returnUrl]);
-    //      });
-    //    });
 
   });
 

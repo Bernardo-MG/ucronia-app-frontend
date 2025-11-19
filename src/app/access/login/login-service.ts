@@ -31,14 +31,9 @@ export class LoginService {
    */
   public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {
     return this.client
-      // Login request
       .create<SimpleResponse<LoginStatus>>(request)
-      // Get content
       .pipe(map(response => response.content))
       .pipe(map(loginStatus => {
-        // Succesful request
-
-        // Save token
         return this.authContainer.setDetails(loginStatus, rememberMe);
       }));
   }

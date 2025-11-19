@@ -1,11 +1,10 @@
-
 import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { LoginRequest } from '../models/login-request';
 
 /**
@@ -66,20 +65,6 @@ export class LoginForm {
   }
 
   /**
-   * Remember me enabled flag.
-   */
-  public get rememberMeEnabled(): boolean {
-    return (!this.waiting);
-  }
-
-  /**
-   * Lost password enabled flag.
-   */
-  public get lostPasswordEnabled(): boolean {
-    return (!this.waiting);
-  }
-
-  /**
    * Form structure.
    */
   public form: FormGroup;
@@ -107,11 +92,11 @@ export class LoginForm {
   /**
    * Handler for the remember me event.
    * 
-   * @param event checkbox selection param
+   * @param checked remember me flag
    */
-  public onRememberMe(event: any) {
-    if (this.rememberMeEnabled) {
-      this.rememberMe.emit(event.checked);
+  public onRememberMe(checked: boolean) {
+    if (!this.waiting) {
+      this.rememberMe.emit(checked);
     }
   }
 
@@ -119,7 +104,7 @@ export class LoginForm {
    * Handler for the lost password event.
    */
   public onLostPasword() {
-    if (this.lostPasswordEnabled) {
+    if (!this.waiting) {
       // TODO: The 'emit' function requires a mandatory void argument
       this.lostPassword.emit();
     }
