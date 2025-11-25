@@ -35,7 +35,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 })
 export class ContactListing implements OnInit {
 
-  private readonly contactsService = inject(ContactsService);
+  private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
@@ -148,7 +148,7 @@ export class ContactListing implements OnInit {
   }
 
   public onShowInfo(contact: Contact) {
-    this.contactsService.getOne(contact.number)
+    this.service.getOne(contact.number)
       .subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }
@@ -176,7 +176,7 @@ export class ContactListing implements OnInit {
 
   public onUpdate(toUpdate: Contact): void {
     this.call(
-      () => this.contactsService.patch(toUpdate),
+      () => this.service.patch(toUpdate),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
@@ -197,7 +197,7 @@ export class ContactListing implements OnInit {
       },
       accept: () =>
         this.call(
-          () => this.contactsService.delete(number),
+          () => this.service.delete(number),
           () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
         )
     });
@@ -233,7 +233,7 @@ export class ContactListing implements OnInit {
         .pipe(finalize(() => this.loading = false))
         .subscribe(response => this.data = response);
     } else {
-      this.contactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+      this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
         .pipe(finalize(() => this.loading = false))
         .subscribe(response => this.data = response);
     }
@@ -244,7 +244,7 @@ export class ContactListing implements OnInit {
     if (this.viewMembers) {
       service = this.memberContactsService;
     } else {
-      service = this.contactsService;
+      service = this.service;
     }
     return service;
   }

@@ -1,8 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
+import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
@@ -11,9 +14,6 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberService } from '../member-service';
-import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
-import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
-import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'assoc-member-listing',
@@ -24,6 +24,7 @@ export class MemberListing implements OnInit {
 
   private readonly service = inject(MemberService);
   private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -39,6 +40,7 @@ export class MemberListing implements OnInit {
 
   public readonly readContact;
   public readonly createable;
+  public readonly deletable;
 
   /**
    * Loading flag.
@@ -56,8 +58,9 @@ export class MemberListing implements OnInit {
     const authContainer = inject(AuthContainer);
     
     // Check permissions
-    this.readContact = authContainer.hasPermission("member_contact", "read");
     this.createable = authContainer.hasPermission("member", "create");
+    this.deletable = authContainer.hasPermission("member", "delete");
+    this.readContact = authContainer.hasPermission("member_contact", "read");
   }
 
   public ngOnInit(): void {
@@ -92,6 +95,28 @@ export class MemberListing implements OnInit {
   public onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
+  }
+
+  public onDelete(event: Event, number: number) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () =>
+        this.call(
+          () => this.service.delete(number),
+          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+        )
+    });
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {

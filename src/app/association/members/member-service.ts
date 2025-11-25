@@ -55,4 +55,11 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
+  public delete(number: number): Observable<Member> {
+    return this.client
+      .appendRoute(`/${number}`)
+      .delete<SimpleResponse<Member>>()
+      .pipe(map(r => r.content));
+  }
+
 }
