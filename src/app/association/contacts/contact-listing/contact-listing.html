@@ -8,41 +8,39 @@
     <assoc-membership-evolution-chart />
   </div>
 </div>
-<div class="row">
-  <!-- Member List -->
-  <p-panel>
-    <ng-template #icons>
-      <!-- Add transaction -->
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-        [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text />
-    </ng-template>
-    <ng-template #header>
-      <p>
-        <!-- Filter by membership -->
-        <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-        <!-- Filter by name -->
-        <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2">Nombre</label>
-        <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-          aria-describedby="nameFilterLabel" maxlength="50">
-      </p>
-      <p>
-        Socios
-        <p-toggleswitch (onChange)="onChangeView($event)" />
-      </p>
-    </ng-template>
-    @if(viewMembers) {
-      <assoc-member-contact-list [data]="memberData" [loading]="loading" [editable]="editable" [deletable]="deletable"
-        (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-        (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
-        (changePage)="onPageChange($event)" />
-    } @else {
-      <assoc-contact-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
-        (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-        (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
-        (changePage)="onPageChange($event)" />
-    }
-  </p-panel>
-</div>
+<!-- Contact List -->
+<p-panel>
+  <ng-template #icons>
+    <!-- Add contact -->
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
+  <ng-template #header>
+    <p>
+      <!-- Filter by membership -->
+      <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+      <!-- Filter by name -->
+      <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2">Nombre</label>
+      <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+        aria-describedby="nameFilterLabel" maxlength="50">
+    </p>
+    <p>
+      Socios
+      <p-toggleswitch (onChange)="onChangeView($event)" />
+    </p>
+  </ng-template>
+  @if(viewMembers) {
+    <assoc-member-contact-list [data]="memberData" [loading]="loading" [editable]="editable" [deletable]="deletable"
+      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+      (changePage)="onPageChange($event)" />
+  } @else {
+    <assoc-contact-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
+      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+      (changePage)="onPageChange($event)" />
+  }
+</p-panel>
 @if(showing) {
   <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
     @if(viewMembers) {

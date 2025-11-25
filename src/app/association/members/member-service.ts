@@ -5,6 +5,7 @@ import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
+import { MemberCreation } from './domain/member-creation';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,12 @@ export class MemberService {
     return this.contactClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<MemberContact>>()
+      .pipe(map(r => r.content));
+  }
+
+  public create(data: MemberCreation): Observable<Member> {
+    return this.client
+      .create<SimpleResponse<Member>>(data)
       .pipe(map(r => r.content));
   }
 

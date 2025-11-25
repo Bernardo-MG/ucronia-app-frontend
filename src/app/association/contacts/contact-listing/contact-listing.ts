@@ -80,7 +80,7 @@ export class ContactListing implements OnInit {
 
   public viewMembers = false;
 
-  public view: string = '';
+  public view = '';
 
   public failures = new FailureStore();
 

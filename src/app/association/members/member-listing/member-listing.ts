@@ -1,24 +1,29 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
+import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberService } from '../member-service';
-import { MemberContact } from '@app/domain/contact/member-contact';
+import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
+import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'assoc-member-listing',
-  imports: [CardModule, TableModule, DialogModule, ButtonModule, MemberContactDetails],
+  imports: [PanelModule, TableModule, DialogModule, ButtonModule, MemberContactDetails, MemberContactCreationForm],
   templateUrl: './member-listing.html'
 })
 export class MemberListing implements OnInit {
 
   private readonly service = inject(MemberService);
+  private readonly messageService = inject(MessageService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -33,18 +38,26 @@ export class MemberListing implements OnInit {
   private sort = new Sorting();
 
   public readonly readContact;
+  public readonly createable;
 
   /**
    * Loading flag.
    */
   public loading = false;
   public showing = false;
+  public editing = false;
+  public saving = false;
+
+  public view = '';
+
+  public failures = new FailureStore();
 
   constructor() {
     const authContainer = inject(AuthContainer);
     
     // Check permissions
     this.readContact = authContainer.hasPermission("member_contact", "read");
+    this.createable = authContainer.hasPermission("member", "create");
   }
 
   public ngOnInit(): void {
@@ -76,12 +89,46 @@ export class MemberListing implements OnInit {
     this.showing = true;
   }
 
+  public onStartEditingView(view: string): void {
+    this.view = view;
+    this.editing = true;
+  }
+
+  public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
+    this.call(
+      () => this.service.create(toCreate as any),
+      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+    );
+  }
+
   private load(page: number) {
     this.loading = true;
 
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          this.failures.clear();
+          this.view = 'none';
+          this.load(this.data.page);
+          onSuccess();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+          return throwError(() => error);
+        }
+      });
   }
 
 }

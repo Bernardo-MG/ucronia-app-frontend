@@ -1,4 +1,9 @@
-<p-card>
+<p-panel>
+  <ng-template #icons>
+    <!-- Add Member -->
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+      [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
   <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
     [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
     (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
@@ -19,7 +24,14 @@
       </tr>
     </ng-template>
   </p-table>
-</p-card>
+</p-panel>
 <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <assoc-member-contact-details [data]="memberContact" />
 </p-dialog>
+@switch (view) {
+  @case ('creation') {
+    <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+        <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
+  }
+}
