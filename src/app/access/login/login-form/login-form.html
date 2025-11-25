@@ -18,7 +18,7 @@
       <div class="p-field-checkbox mb-3 text-center">
         <div class="row">
           <div class="col-md-2">
-            <p-toggleswitch inputId="rememberMe" [disabled]="!rememberMeEnabled" (onChange)="onRememberMe($event)" />
+            <p-toggleswitch inputId="rememberMe" [disabled]="waiting" (onChange)="onRememberMe($event.checked)" />
           </div>
           <div class="col-md-10">
             Mantener sesión
@@ -27,8 +27,7 @@
       </div>
     </div>
     <div class="col-md-4 offset-md-4">
-      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="!lostPasswordEnabled"
-        (click)="onLostPasword()" />
+      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="waiting" (click)="onLostPasword()" />
     </div>
   </div>
 

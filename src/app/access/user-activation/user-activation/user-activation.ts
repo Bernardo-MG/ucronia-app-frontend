@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
-import { throwError } from 'rxjs';
+import { finalize, throwError } from 'rxjs';
 import { UserActivate } from '../models/user-activate';
 import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
@@ -102,21 +102,21 @@ export class UserActivation {
    */
   private validateToken(token: string): void {
     this.validating = true;
-    this.service.validateToken(token).subscribe({
-      next: response => {
-        if (!response.content.valid) {
+    this.service.validateToken(token)
+      .pipe(finalize(() => this.validating = false))
+      .subscribe({
+        next: response => {
+          if (!response.content.valid) {
+            this.status = 'invalid_token';
+          } else {
+            this.token = token;
+            this.username = response.content.username;
+          }
+        },
+        error: response => {
           this.status = 'invalid_token';
-        } else {
-          this.token = token;
-          this.username = response.content.username;
         }
-        this.validating = false;
-      },
-      error: response => {
-        this.status = 'invalid_token';
-        this.validating = false;
-      }
-    });
+      });
   }
 
 }
