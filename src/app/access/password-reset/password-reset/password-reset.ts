@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
-import { throwError } from 'rxjs';
+import { finalize, throwError } from 'rxjs';
 import { Password } from '../../models/password';
 import { PasswordResetForm } from '../password-reset-form/password-reset-form';
 import { PasswordResetService } from '../password-reset-service';
@@ -97,20 +97,20 @@ export class PasswordReset {
    */
   private validateToken(token: string): void {
     this.validating = true;
-    this.service.validateToken(token).subscribe({
-      next: response => {
-        if (!response.content.valid) {
+    this.service.validateToken(token)
+      .pipe(finalize(() => this.validating = false))
+      .subscribe({
+        next: response => {
+          if (!response.content.valid) {
+            this.status = 'invalid_token';
+          } else {
+            this.token = token;
+          }
+        },
+        error: response => {
           this.status = 'invalid_token';
-        } else {
-          this.token = token;
         }
-        this.validating = false;
-      },
-      error: response => {
-        this.status = 'invalid_token';
-        this.validating = false;
-      }
-    });
+      });
   }
 
 }
