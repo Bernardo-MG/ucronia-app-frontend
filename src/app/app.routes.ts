@@ -78,7 +78,7 @@ export const routes: Routes = [
           {
             path: 'members',
             canActivate: [ResourceGuard("member", "view")],
-            loadComponent: () => import('./association/members/member-list/member-list').then(m => m.MemberList)
+            loadComponent: () => import('./association/members/member-listing/member-listing').then(m => m.MemberListing)
           },
           {
             path: 'myFees',
