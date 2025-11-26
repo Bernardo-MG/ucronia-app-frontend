@@ -145,9 +145,9 @@ export class MemberListing implements OnInit {
       command: () => this.onStartEditingView('edition')
     });
 
-    // Determine current membership values (default to active=true, renew=true if undefined)
+    // Determine current membership values
     const isActive = !!this.selectedData.active;
-    const canRenew = !!this.selectedData.renewMembership;
+    const canRenew = !!this.selectedData.renew;
 
     // Active/Deactivate toggle
     this.editionMenuItems.push({
@@ -219,7 +219,7 @@ export class MemberListing implements OnInit {
 
   private setActive(status: boolean) {
     this.selectedData.active = status;
-    this.selectedData.renewMembership = status;
+    this.selectedData.renew = status;
     this.call(
       () => this.service.patch(this.selectedData),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
@@ -227,7 +227,7 @@ export class MemberListing implements OnInit {
   }
 
   private setRenewal(status: boolean) {
-    this.selectedData.renewMembership = status;
+    this.selectedData.renew = status;
     this.call(
       () => this.service.patch(this.selectedData),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })

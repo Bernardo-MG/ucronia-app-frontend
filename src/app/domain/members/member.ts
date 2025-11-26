@@ -4,5 +4,5 @@ export class Member {
   number = -1;
   name = new ContactName();
   active = false;
-  renewMembership = false;
+  renew = false;
 }
