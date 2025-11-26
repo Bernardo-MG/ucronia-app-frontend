@@ -40,7 +40,7 @@ export class ContactListing implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
-  @ViewChild('contactEditionMenu') contactEditionMenu!: Menu;
+  @ViewChild('editionMenu') editionMenu!: Menu;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -84,7 +84,7 @@ export class ContactListing implements OnInit {
 
   public failures = new FailureStore();
 
-  public contactEditionMenuItems: MenuItem[] = [];
+  public editionMenuItems: MenuItem[] = [];
 
   public modalTitle = '';
 
@@ -100,7 +100,7 @@ export class ContactListing implements OnInit {
       .pipe(debounceTime(300))
       .subscribe(() => this.load(0));
 
-    this.contactEditionMenuItems.push({
+    this.editionMenuItems.push({
       label: 'Editar',
       command: () => this.onStartEditingView('edition')
     });
@@ -114,7 +114,7 @@ export class ContactListing implements OnInit {
     this.selectedData = contact;
 
     // Show menu
-    this.contactEditionMenu.toggle(event);
+    this.editionMenu.toggle(event);
   }
 
   public onStartEditingView(view: string): void {

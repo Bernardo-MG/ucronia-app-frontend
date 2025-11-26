@@ -62,4 +62,11 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
+  public patch(data: Member): Observable<Member> {
+    return this.client
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Member>>(data)
+      .pipe(map(r => r.content));
+  }
+
 }

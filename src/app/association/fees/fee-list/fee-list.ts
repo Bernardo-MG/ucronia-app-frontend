@@ -170,7 +170,7 @@ export class FeeList implements OnInit {
   }
 
   public onGetSelection(page: number, active: Active) {
-    return this.service.getContacts(page, active);
+    return this.service.getMembers(page, active);
   }
 
   public onSelectMember(member: any) {

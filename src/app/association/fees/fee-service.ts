@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
+import { Active } from '@app/domain/contact/active';
+import { Contact } from '@app/domain/contact/contact';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { FeeUpdate } from '@app/domain/fees/fee-update';
-import { Active } from '@app/domain/contact/active';
-import { Contact } from '@app/domain/contact/contact';
+import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
@@ -22,7 +23,7 @@ export class FeeService {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public create(data: FeeCreation): Observable<FeePayment> {
@@ -61,12 +62,12 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public getContacts(page: number, active: Active): Observable<PaginatedResponse<Contact>> {
+  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Contact>>();
+      .read<PaginatedResponse<Member>>();
   }
 
   public getOneContact(id: number): Observable<Contact> {

@@ -1,3 +1,4 @@
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
     <!-- Add Member -->
@@ -21,6 +22,11 @@
             <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowContact(member)" rounded
               text />
           }
+          @if(editable) {
+            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, member)" rounded
+              text />
+          }
           @if(deletable) {
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
               [attr.aria-disabled]="!deletable" (click)="onDelete($event, member.number)" rounded text />
@@ -34,9 +40,9 @@
   <assoc-member-contact-details [data]="memberContact" />
 </p-dialog>
 @switch (view) {
-@case ('creation') {
-<p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-  <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-</p-dialog>
-}
+  @case ('creation') {
+    <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
+  }
 }
