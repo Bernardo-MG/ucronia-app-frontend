@@ -1,6 +1,8 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MemberService } from '../member-service';
 import { MemberListing } from './member-listing';
 
@@ -15,8 +17,11 @@ describe('MemberListing', () => {
       ],
       providers: [
         MemberService,
+        MessageService,
+        ConfirmationService,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        provideAnimationsAsync()
       ]
     })
       .compileComponents();
