@@ -6,6 +6,7 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { MemberCreation } from './domain/member-creation';
+import { MemberPatch } from './domain/member-patch';
 
 @Injectable({
   providedIn: 'root'
@@ -62,7 +63,7 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  public patch(data: Member): Observable<Member> {
+  public patch(data: MemberPatch): Observable<Member> {
     return this.client
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Member>>(data)

@@ -15,6 +15,7 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberService } from '../member-service';
+import { MemberPatch } from '../domain/member-patch';
 
 @Component({
   selector: 'assoc-member-listing',
@@ -228,9 +229,12 @@ export class MemberListing implements OnInit {
   }
 
   private setRenewal(status: boolean) {
-    this.selectedData.renew = status;
+    const patched: MemberPatch = {
+      number: this.selectedData.number,
+      renew: status
+    }
     this.call(
-      () => this.service.patch(this.selectedData),
+      () => this.service.patch(patched),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }

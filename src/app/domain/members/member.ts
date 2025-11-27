@@ -1,8 +1,8 @@
 import { ContactName } from "../contact/contact-name";
 
 export class Member {
-  number = -1;
-  name = new ContactName();
-  active = false;
-  renew = false;
+  public number = -1;
+  public name = new ContactName();
+  public active = false;
+  public renew = false;
 }
