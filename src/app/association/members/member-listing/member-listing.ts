@@ -92,6 +92,7 @@ export class MemberListing implements OnInit {
   }
 
   public onShowContact(member: Member) {
+    this.selectedData = member;
     this.loading = true;
     this.service.getContact(member.number)
       .pipe(finalize(() => this.loading = false))
