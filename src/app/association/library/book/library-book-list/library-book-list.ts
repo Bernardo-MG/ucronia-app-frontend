@@ -3,6 +3,7 @@ import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
 import { BookInfo } from '@app/domain/library/book-info';
+import { Borrower } from '@app/domain/library/book-lending';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
 import { BookType } from '@app/domain/library/book-type';
@@ -98,7 +99,7 @@ export class LibraryBookList implements OnInit {
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
-  public get borrower() {
+  public get borrower(): Borrower {
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
   }
 
