@@ -1,20 +1,17 @@
 @switch (view) {
   @case ('member') {
-    <form novalidate>
+    <form [formGroup]="form" novalidate>
       <!-- Name -->
       <div class="row mb-2">
         <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
         <div class="col-sm-10">
-          <input type="text" [value]="member().name.fullName" id="nameInput" [readonly]="true" class="form-control"
-            aria-describedby="nameLabel">
+          <input pInputText formControlName="fullName" id="nameInput" aria-describedby="nameLabel">
         </div>
       </div>
     </form>
-    <div class="d-grid">
-      <!-- Select button -->
-      <p-button icon="pi pi-search" severity="secondary" (click)="onShowSelectMember()" aria-label="Nueva transacción"
-        rounded text />
-    </div>
+    <!-- Select button -->
+    <p-button icon="pi pi-search" severity="secondary" (click)="onShowSelectMember()" aria-label="Buscar socio" rounded
+      text />
   }
   @case ('select') {
     <access-user-select-member [getSelection]="getSelection()" (selectMember)="onSelectMember($event)" />
