@@ -13,10 +13,9 @@ import { UserCreation } from './models/user-creation';
 export class AccessUserService {
 
   private readonly inviteClient;
-
   private readonly client;
-
   private readonly rolesClient;
+  private readonly membersClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
@@ -24,6 +23,7 @@ export class AccessUserService {
     this.client = clientProvider.url(environment.apiUrl + '/security/user');
     this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
     this.rolesClient = clientProvider.url(environment.apiUrl + '/security/role');
+    this.membersClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User>> {
@@ -123,12 +123,43 @@ export class AccessUserService {
       .pipe(map(r => r.content));
   }
 
-  public getAvailableMembers(username: string, page: number): Observable<PaginatedResponse<Member>> {
-    return this.client
-      .appendRoute(`/${username}/person/available`)
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .read<PaginatedResponse<Member>>();
+  public getAvailableMembers(username: string): Observable<Member[]> {
+    return combineLatest([
+      this.getMember(username),
+      this.getAllMembers()
+    ]).pipe(
+      map(([member, members]) => {
+        return members.filter(m => m.number !== member.number);
+      })
+    );
+  }
+
+  private getAllMembers(): Observable<Member[]> {
+    const sorting = new SortingParams(
+      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+    );
+    const pageSize = 100;
+
+    return this.membersClient
+      .loadParameters(new PaginationParams(1, pageSize))
+      .loadParameters(sorting)
+      .read<PaginatedResponse<Member>>()
+      .pipe(
+        expand(response => {
+          if (!response.last) {
+            const nextPage = response.page + 1;
+            return this.rolesClient
+              .loadParameters(new PaginationParams(nextPage, pageSize))
+              .loadParameters(sorting)
+              .read<PaginatedResponse<Member>>();
+          }
+          return of();
+        }),
+        // accumulate members from all pages into one array
+        reduce((members: Member[], res?: PaginatedResponse<Member>) => {
+          return res ? [...members, ...res.content] : members;
+        }, [])
+      );
   }
 
 }

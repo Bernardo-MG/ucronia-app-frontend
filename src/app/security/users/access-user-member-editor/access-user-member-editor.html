@@ -14,10 +14,24 @@
       text />
   }
   @case ('select') {
-    <access-user-select-member [getSelection]="getSelection()" (selectMember)="onSelectMember($event)" />
+  <p-table dataKey="number" [value]="selection()">
+    <ng-template #header>
+      <tr>
+        <th>Nombre</th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-member>
+      <tr>
+        <td>{{ member.name.fullName }}</td>
+        <td>
+          <p-button icon="pi pi-plus-circle" severity="danger" aria-label="Seleccionar" (click)="onSelectMember(member)" rounded text />
+        </td>
+    </ng-template>
+  </p-table>
     <div class="d-grid">
       <!-- Cancel button -->
-      <button type="button" class="btn btn-primary" aria-label="Add role" (click)="onCancelSelectMember()">
+      <button type="button" class="btn btn-primary" aria-label="Cancelar" (click)="onCancelSelectMember()">
         Cancelar
       </button>
     </div>

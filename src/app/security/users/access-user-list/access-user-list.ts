@@ -65,6 +65,8 @@ export class AccessList implements OnInit {
 
   public roleSelection: Role[] = [];
 
+  public availableMembers: Member[] = [];
+
   constructor() {
     const authContainer = inject(AuthContainer);
 
@@ -97,10 +99,6 @@ export class AccessList implements OnInit {
     this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.data.page);
-  }
-
-  public onLoadMembers(page: number): Observable<PaginatedResponse<Member>> {
-    return this.service.getAvailableMembers(this.selectedData.username, page);
   }
 
   public onGetMember(username: string): Observable<Member> {
@@ -230,6 +228,7 @@ export class AccessList implements OnInit {
   public openEditionMenu(event: Event, user: User) {
     this.selectedData = user;
     this.service.getMember(user.username).subscribe(member => this.member = member);
+    this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
 
     this.editionMenuItems = [];
 
