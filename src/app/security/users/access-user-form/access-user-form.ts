@@ -31,7 +31,6 @@ export class AccessUserForm implements OnChanges {
   public readonly save = output<UserChange>();
 
   public formStatus: FormStatus;
-
   public form: FormGroup;
 
   public username = '';

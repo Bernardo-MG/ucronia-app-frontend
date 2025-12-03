@@ -57,8 +57,8 @@
     </p-dialog>
   }
   @case ('member') {
-    <p-dialog header="Editar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <access-user-member-editor [username]="selectedData.username" [getSelection]="onLoadMembers.bind(this)"
+    <p-dialog header="Asignar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-user-member-editor [username]="selectedData.username" [selection]="availableMembers"
         [member]="member" (assignMember)="onAssignMember($event)" />
     </p-dialog>
   }
