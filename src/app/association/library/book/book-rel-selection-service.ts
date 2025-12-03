@@ -4,8 +4,8 @@ import { BookType } from '@app/domain/library/book-type';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Publisher } from '@app/domain/library/publisher';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/person/active';
-import { Person } from '@app/domain/person/person';
+import { Active } from '@app/domain/contact/active';
+import { Contact } from '@app/domain/contact/contact';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
@@ -32,10 +32,10 @@ export class BookRelationshipSelectionService {
 
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/person');
+    this.donorClient = clientProvider.url(environment.apiUrl + '/contact');
     this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
     this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/contact');
   }
 
   public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
@@ -82,7 +82,7 @@ export class BookRelationshipSelectionService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Person>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Contact>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

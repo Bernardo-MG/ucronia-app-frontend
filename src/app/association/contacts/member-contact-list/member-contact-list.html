@@ -1,0 +1,30 @@
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data().content" paginator="true"
+  [rows]="data().size" [totalRecords]="data().totalElements" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="changePage.emit($event.first)">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-contact>
+    <tr>
+      <td>{{ contact.name.fullName }}
+        @if(contact.active) {
+          <p-tag severity="success" value="Activo" />
+        } @else {
+          <p-tag severity="danger" value="Baja" />
+        }
+      </td>
+      <td>
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(contact)" rounded text />
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
+          [attr.aria-disabled]="!editable()" (click)="edit.emit({ event:$event, contact:contact })" rounded
+          text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
+          [attr.aria-disabled]="!deletable()" (click)="delete.emit(contact.number)" rounded text />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

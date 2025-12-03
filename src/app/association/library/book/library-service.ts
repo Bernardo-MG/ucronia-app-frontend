@@ -10,8 +10,8 @@ import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Publisher } from '@app/domain/library/publisher';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/person/active';
-import { Person } from '@app/domain/person/person';
+import { Active } from '@app/domain/contact/active';
+import { Contact } from '@app/domain/contact/contact';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
@@ -46,11 +46,11 @@ export class LibraryService {
     this.fictionBookClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/person');
+    this.donorClient = clientProvider.url(environment.apiUrl + '/contact');
     this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
     this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/contact');
   }
 
   public createGameBook(data: BookInfo): Observable<BookInfo> {
@@ -182,7 +182,7 @@ export class LibraryService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Person>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Contact>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

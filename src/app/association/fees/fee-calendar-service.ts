@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { MemberFees } from '@app/domain/fees/member-fees';
 import { YearsRange } from '@app/domain/fees/years-range';
-import { Active } from '@app/domain/person/active';
+import { Active } from '@app/domain/contact/active';
 import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';

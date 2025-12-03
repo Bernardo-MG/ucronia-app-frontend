@@ -95,11 +95,11 @@ export class AssociationLayout {
 
   private getAdminItems(authContainer: AuthContainer): MenuItem[] {
     const items = [];
-    if (authContainer.hasPermission('person', 'view')) {
+    if (authContainer.hasPermission('contact', 'view')) {
       items.push(
         {
-          label: 'Gente',
-          routerLink: '/association/people',
+          label: 'Contactos',
+          routerLink: '/association/contacts',
           icon: 'pi pi-users'
         });
     }

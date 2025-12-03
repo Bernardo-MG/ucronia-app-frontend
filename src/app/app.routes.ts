@@ -78,7 +78,7 @@ export const routes: Routes = [
           {
             path: 'members',
             canActivate: [ResourceGuard("member", "view")],
-            loadComponent: () => import('./association/members/member-list/member-list').then(m => m.MemberList)
+            loadComponent: () => import('./association/members/member-listing/member-listing').then(m => m.MemberListing)
           },
           {
             path: 'myFees',
@@ -162,9 +162,9 @@ export const routes: Routes = [
             loadComponent: () => import('./association/fees/fee-list/fee-list').then(m => m.FeeList)
           },
           {
-            path: 'people',
-            canActivate: [ResourceGuard("person", "view")],
-            loadComponent: () => import('./association/people/people-list/people-list').then(m => m.PeopleList)
+            path: 'contacts',
+            canActivate: [ResourceGuard("contact", "view")],
+            loadComponent: () => import('./association/contacts/contact-listing/contact-listing').then(m => m.ContactListing)
           },
           {
             path: 'funds',

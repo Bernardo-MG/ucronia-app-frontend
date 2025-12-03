@@ -1,8 +1,8 @@
-import { PersonName } from "@app/domain/person/person-name";
+import { ContactName } from "@app/domain/contact/contact-name";
 
 export class FeeCalendarSelection {
   number = -1;
-  name = new PersonName();
+  name = new ContactName();
   month = new Date();
   paid = false;
 }

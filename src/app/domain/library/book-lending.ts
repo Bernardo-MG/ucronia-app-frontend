@@ -1,4 +1,4 @@
-import { Borrower } from "./borrower";
+import { ContactName } from "../contact/contact-name";
 import { LentBook } from "./lent-book";
 
 
@@ -8,4 +8,9 @@ export class BookLending {
   lendingDate = new Date();
   returnDate = new Date();
   days = 0;
+}
+
+export class Borrower {
+  number = -1;
+  name = new ContactName();
 }

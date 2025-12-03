@@ -7,9 +7,9 @@ import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/person/active';
-import { MemberSelectStepper } from '@app/shared/person/components/member-select-stepper/member-select-stepper';
-import { MemberStatusSelectComponent } from '@app/shared/person/components/member-status-select/member-status-select.component';
+import { Active } from '@app/domain/contact/active';
+import { MemberSelectStepper } from '@app/shared/contact/components/contact-select-stepper/member-select-stepper';
+import { MemberStatusSelectComponent } from '@app/shared/contact/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -170,7 +170,7 @@ export class FeeList implements OnInit {
   }
 
   public onGetSelection(page: number, active: Active) {
-    return this.service.getPersons(page, active);
+    return this.service.getMembers(page, active);
   }
 
   public onSelectMember(member: any) {
