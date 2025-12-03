@@ -6,11 +6,10 @@ import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { EMPTY, Observable } from 'rxjs';
-import { AccessUserSelectMember } from '../access-user-select-member/access-user-select-member';
 
 @Component({
   selector: 'access-user-member-editor',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, AccessUserSelectMember, InputTextModule, TableModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, TableModule],
   templateUrl: './access-user-member-editor.html'
 })
 export class AccessUserMemberEditor implements OnChanges {
@@ -22,7 +21,7 @@ export class AccessUserMemberEditor implements OnChanges {
   public readonly waitingMembersSelection = input(false);
 
   public readonly assignMember = output<Member>();
-  
+
   public selected: Member[] = [];
 
   public view: 'member' | 'select' = 'member';
