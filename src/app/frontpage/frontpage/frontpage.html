@@ -1,35 +1,46 @@
-<div class="container pb-3">
+<div class="max-w-6xl mx-auto pb-3">
   <!-- Logo -->
-  <div class="row">
-    <div class="d-flex col-md-4 offset-md-4">
-      <img src='img/Ucronia_logo-01.png' alt='Instagram' class="img-fluid" height="300">
+  <div class="flex justify-center">
+    <div class="flex justify-center w-full md:w-1/3">
+      <img src="img/Ucronia_logo-01.png" alt="Instagram" class="max-w-full h-auto" height="300">
     </div>
   </div>
+
   <!-- Activities -->
   <div class="pb-5">
-    <header>
-      <h1 class="border-bottom">Actividades</h1>
+    <header class="pb-2">
+      <h1 class="border-b border-gray-300 text-4xl font-semibold">Actividades</h1>
     </header>
-    <ui-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
-      [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true" [disableSidePanel]="true" />
+
+    <div class="px-2">
+      <ui-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
+        [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true" [disableSidePanel]="true">
+      </ui-teamup-calendar>
+    </div>
   </div>
+
   <!-- Location -->
   <div class="pb-5">
-    <header>
-      <h1 class="border-bottom">Dónde estamos</h1>
+    <header class="pb-2">
+      <h1 class="border-b border-gray-300 text-4xl font-semibold">Dónde estamos</h1>
     </header>
-    <ui-google-maps [code]="locationCode" />
+
+    <div class="px-2">
+      <ui-google-maps [code]="locationCode"></ui-google-maps>
+    </div>
   </div>
+
   <!-- Contact -->
   <header>
-    <h1 class="border-bottom">Contacta con nosotros</h1>
+    <h1 class="border-b border-gray-300 text-4xl font-semibold">Contacta con nosotros</h1>
   </header>
-  <div class="container text-center">
-    <a [href]="instagramLink" class="me-3">
-      <img src='img/Instagram_Glyph_Black.svg' alt='Instagram' width="50" height="50">
+
+  <div class="flex justify-center space-x-6 pt-4">
+    <a [href]="instagramLink">
+      <img src="img/Instagram_Glyph_Black.svg" alt="Instagram" class="w-12 h-12">
     </a>
     <a [href]="emailLink">
-      <img src='img/email-icon.png' alt='Instagram' width="50" height="50">
+      <img src="img/email-icon.png" alt="Email" class="w-12 h-12">
     </a>
   </div>
 </div>
