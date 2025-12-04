@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -12,21 +12,19 @@ import { MenuModule } from 'primeng/menu';
 })
 export class AccountDropdown {
 
-  private readonly router = inject(Router);
-
   private readonly authContainer = inject(AuthContainer);
 
   public readonly accountItems: MenuItem[] = [];
 
-  public username = '';
+  public name = '';
 
   constructor() {
     this.authContainer.securityDetails
-      .subscribe(u => this.username = u.username);
+      .subscribe(u => this.name = u.username);
 
     this.accountItems.push(
       {
-        label: this.username,
+        label: this.name,
         items: [
           {
             label: 'Cuenta',
@@ -39,20 +37,10 @@ export class AccountDropdown {
           {
             label: 'Logout',
             icon: 'pi pi-sign-out',
-            command: () => this.onLogout()
+            command: () => this.authContainer.logout()
           }
         ]
       });
-  }
-
-  public onLogout() {
-    this.authContainer.logout();
-    // TODO: maybe this should be done by a service
-    if (this.router.url === '/') {
-      window.location.reload();
-    } else {
-      this.router.navigate(['/']);
-    }
   }
 
 }

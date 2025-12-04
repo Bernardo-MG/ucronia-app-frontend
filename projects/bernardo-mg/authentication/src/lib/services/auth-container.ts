@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, ReplaySubject } from 'rxjs';
 import { LoginStatus } from '../models/login-status';
@@ -13,6 +14,8 @@ import { TokenData } from '../models/token-data';
   providedIn: 'root',
 })
 export class AuthContainer {
+
+  private readonly router = inject(Router);
 
   /**
    * Key for storing security details in the local storage.
@@ -62,7 +65,7 @@ export class AuthContainer {
 
   constructor() {
     this.detailsSubject.subscribe(s => this.details = s);
-    this.loadDetailsFromLocal();
+    this.loadDetails();
     this.checkTokenExpiration();
   }
 
@@ -72,6 +75,7 @@ export class AuthContainer {
   public logout(): void {
     this.detailsSubject.next(new SecurityDetails(false));
     localStorage.removeItem(this.detailsKey);
+    this.router.navigate(['/']);
   }
 
   /**
@@ -120,7 +124,7 @@ export class AuthContainer {
   /**
    * Loads stored security details from local storage.
    */
-  private loadDetailsFromLocal(): void {
+  private loadDetails(): void {
     const localDetails = localStorage.getItem(this.detailsKey);
 
     if (localDetails) {
