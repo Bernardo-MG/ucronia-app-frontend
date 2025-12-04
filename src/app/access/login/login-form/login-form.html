@@ -1,46 +1,46 @@
-﻿<form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+﻿<form [formGroup]="form" (ngSubmit)="onLogin()" novalidate class="space-y-4">
 
   <!-- Username -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="usernameInput" formControlName="username" class="w-100" />
+  <p-floatlabel variant="in" class="flex mb-2">
+    <input pInputText type="text" id="usernameInput" formControlName="username" class="w-full" />
     <label for="usernameInput">Usuario/email</label>
   </p-floatlabel>
 
   <!-- Password -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="password" id="passwordInput" formControlName="password" class="w-100" />
+  <p-floatlabel variant="in" class="flex mb-2">
+    <input pInputText type="password" id="passwordInput" formControlName="password" class="w-full" />
     <label for="passwordInput">Contraseña</label>
   </p-floatlabel>
 
-  <!-- Remember me check -->
-  <div class="row">
-    <div class="col-md-4">
-      <div class="p-field-checkbox mb-3 text-center">
-        <div class="row">
-          <div class="col-md-2">
-            <p-toggleswitch inputId="rememberMe" [disabled]="waiting" (onChange)="onRememberMe($event.checked)" />
-          </div>
-          <div class="col-md-10">
-            Mantener sesión
-          </div>
-        </div>
-      </div>
+  <!-- Remember me check + Lost password -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+    <!-- Remember me -->
+    <div class="flex items-center justify-center md:justify-start space-x-2">
+      <p-toggleswitch inputId="rememberMe" [disabled]="waiting"
+        (onChange)="onRememberMe($event.checked)"></p-toggleswitch>
+      <label for="rememberMe" class="select-none">Mantener sesión</label>
     </div>
-    <div class="col-md-4 offset-md-4">
-      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="waiting" (click)="onLostPasword()" />
+
+    <!-- Lost password -->
+    <div class="flex justify-center md:justify-end">
+      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="waiting"
+        (click)="onLostPasword()"></p-button>
     </div>
   </div>
 
   <!-- Submit button -->
-  <div class="d-flex">
+  <div class="flex">
     <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="waiting" [disabled]="!loginEnabled"
-      [attr.aria-disabled]="!loginEnabled" class="w-100" />
+      [attr.aria-disabled]="!loginEnabled" class="w-full"></p-button>
   </div>
 
   <!-- Login failed warning -->
   @if (failedLogin) {
-    <div class="mt-1">
-      <p-message id="loginFailedWarning" severity="warn">Usuario inválido</p-message>
-    </div>
+    <ng-container>
+      <div class="mt-1">
+        <p-message id="loginFailedWarning" severity="warn">Usuario inválido</p-message>
+      </div>
+    </ng-container>
   }
+
 </form>

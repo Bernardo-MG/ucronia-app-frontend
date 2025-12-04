@@ -1,4 +1,6 @@
-<p-card>
-  <login-form [waiting]="waiting" [failedLogin]="failedLogin" (login)="onLogin($event)"
-    (rememberMe)="onRememberMe($event)" (lostPassword)="onLostPassword()" />
-</p-card>
+<div class="flex items-center justify-center p-4">
+  <p-card class="w-full max-w-md">
+    <login-form [waiting]="waiting" [failedLogin]="failedLogin" (login)="onLogin($event)"
+      (rememberMe)="onRememberMe($event)" (lostPassword)="onLostPassword()"></login-form>
+  </p-card>
+</div>
