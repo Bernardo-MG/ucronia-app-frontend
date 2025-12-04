@@ -16,15 +16,15 @@ export class AccountDropdown {
 
   public readonly accountItems: MenuItem[] = [];
 
-  public username = '';
+  public name = '';
 
   constructor() {
     this.authContainer.securityDetails
-      .subscribe(u => this.username = u.username);
+      .subscribe(u => this.name = u.username);
 
     this.accountItems.push(
       {
-        label: this.username,
+        label: this.name,
         items: [
           {
             label: 'Cuenta',
