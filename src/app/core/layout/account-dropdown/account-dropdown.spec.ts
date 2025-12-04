@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { AccountDropdown } from './account-dropdown';
 
 describe('AccountDropdown', () => {
@@ -10,9 +9,6 @@ describe('AccountDropdown', () => {
     await TestBed.configureTestingModule({
       imports: [
         AccountDropdown
-      ],
-      providers: [
-        provideRouter([])
       ]
     })
       .compileComponents();

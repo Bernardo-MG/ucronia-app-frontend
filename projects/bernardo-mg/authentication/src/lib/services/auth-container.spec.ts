@@ -1,6 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { LoginStatus } from '../models/login-status';
 import { PermissionList } from '../models/permission-list';
 import { SecurityDetails } from '../models/security-details';
@@ -16,7 +17,8 @@ describe('AuthContainer', () => {
       providers: [
         AuthContainer,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        provideRouter([])
       ]
     });
     service = TestBed.inject(AuthContainer);
@@ -112,7 +114,7 @@ describe('AuthContainer', () => {
     storedUser.token = token
     localStorage.setItem('securityDetails', JSON.stringify(storedUser));
 
-    service['loadDetailsFromLocal']();
+    service['loadDetails']();
     service.securityDetails.subscribe(details => {
       expect(details.logged).toBeTrue();
       expect(details.token).toBe(token);
