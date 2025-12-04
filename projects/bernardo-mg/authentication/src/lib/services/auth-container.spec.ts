@@ -114,7 +114,7 @@ describe('AuthContainer', () => {
     storedUser.token = token
     localStorage.setItem('securityDetails', JSON.stringify(storedUser));
 
-    service['loadDetailsFromLocal']();
+    service['loadDetails']();
     service.securityDetails.subscribe(details => {
       expect(details.logged).toBeTrue();
       expect(details.token).toBe(token);
