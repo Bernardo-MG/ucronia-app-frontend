@@ -65,7 +65,7 @@ export class AuthContainer {
 
   constructor() {
     this.detailsSubject.subscribe(s => this.details = s);
-    this.loadDetailsFromLocal();
+    this.loadDetails();
     this.checkTokenExpiration();
   }
 
@@ -124,7 +124,7 @@ export class AuthContainer {
   /**
    * Loads stored security details from local storage.
    */
-  private loadDetailsFromLocal(): void {
+  private loadDetails(): void {
     const localDetails = localStorage.getItem(this.detailsKey);
 
     if (localDetails) {
