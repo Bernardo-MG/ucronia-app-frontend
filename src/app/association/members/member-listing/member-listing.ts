@@ -141,12 +141,6 @@ export class MemberListing implements OnInit {
     // Rebuild menu items dynamically
     this.editionMenuItems = [];
 
-    // Edit option is always available
-    this.editionMenuItems.push({
-      label: 'Editar',
-      command: () => this.onStartEditingView('edition')
-    });
-
     // Determine current membership values
     const isActive = !!this.selectedData.active;
     const canRenew = !!this.selectedData.renew;
