@@ -1,48 +1,62 @@
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<p-panel>
-  <ng-template #icons>
-    <!-- Add Member -->
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-      [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text />
-  </ng-template>
-  <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
-    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
-    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
-    <ng-template #header>
-      <tr>
-        <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
-        <th></th>
-      </tr>
+<div class="p-4 space-y-4">
+
+  <!-- Popup Menu -->
+  <p-menu #editionMenu [model]="editionMenuItems" [popup]="true"></p-menu>
+
+  <!-- Table Panel -->
+  <p-panel class="p-4">
+    <ng-template #icons>
+      <!-- Add Member Button -->
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+        [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text></p-button>
     </ng-template>
-    <ng-template #body let-member>
-      <tr>
-        <td>{{ member.name.fullName }}</td>
-        <td>
-          @if(readContact) {
-            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowContact(member)" rounded
-              text />
-          }
-          @if(editable) {
-            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, member)" rounded
-              text />
-          }
-          @if(deletable) {
-            <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-              [attr.aria-disabled]="!deletable" (click)="onDelete($event, member.number)" rounded text />
-          }
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
-</p-panel>
-<p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-  <assoc-member-contact-details [contact]="memberContact" [member]="selectedData" />
-</p-dialog>
-@switch (view) {
-  @case ('creation') {
-    <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-    </p-dialog>
+
+    <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
+      [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
+      (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
+      class="min-w-full">
+      <ng-template #header>
+        <tr>
+          <th pSortableColumn="fullName" class="text-left">Nombre <p-sortIcon field="fullName"></p-sortIcon></th>
+          <th class="text-right"></th>
+        </tr>
+      </ng-template>
+
+      <ng-template #body let-member>
+        <tr class="hover:bg-gray-50">
+          <td>{{ member.name.fullName }}</td>
+          <td class="flex space-x-2 justify-end">
+            @if(readContact) {
+              <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowContact(member)" rounded
+                text></p-button>
+            }
+            @if(editable) {
+              <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+                [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, member)" rounded text></p-button>
+            }
+            @if(deletable) {
+              <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+                [attr.aria-disabled]="!deletable" (click)="onDelete($event, member.number)" rounded text></p-button>
+            }
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-panel>
+
+  <!-- View Member Dialog -->
+  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="p-4">
+    <assoc-member-contact-details [contact]="memberContact" [member]="selectedData"></assoc-member-contact-details>
+  </p-dialog>
+
+  <!-- Creation Dialog -->
+  @switch(view) {
+    @case('creation') {
+      <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="p-4">
+        <assoc-member-creation-form [loading]="saving" [failures]="failures"
+          (save)="onCreate($event)"></assoc-member-creation-form>
+      </p-dialog>
+    }
   }
-}
+
+</div>
