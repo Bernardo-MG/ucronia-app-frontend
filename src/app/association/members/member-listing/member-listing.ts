@@ -65,10 +65,10 @@ export class MemberListing implements OnInit {
     const authContainer = inject(AuthContainer);
     
     // Check permissions
-    this.createable = authContainer.hasPermission("member", "create");
-    this.deletable = authContainer.hasPermission("member", "delete");
+    this.createable = authContainer.hasPermission("contact", "create");
+    this.deletable = authContainer.hasPermission("contact", "delete");
     this.editable = authContainer.hasPermission("contact", "update");
-    this.readContact = authContainer.hasPermission("member_contact", "read");
+    this.readContact = authContainer.hasPermission("contact", "read");
   }
 
   public ngOnInit(): void {
