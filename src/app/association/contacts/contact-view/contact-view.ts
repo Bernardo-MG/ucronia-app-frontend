@@ -29,11 +29,11 @@ import { MemberStatusSelect } from '../member-status-select/member-status-select
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
-  selector: 'assoc-contact-listing',
+  selector: 'assoc-contact-view',
   imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, JustifyCenterDirective],
-  templateUrl: './contact-listing.html'
+  templateUrl: './contact-view.html'
 })
-export class ContactListing implements OnInit {
+export class ContactView implements OnInit {
 
   private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);

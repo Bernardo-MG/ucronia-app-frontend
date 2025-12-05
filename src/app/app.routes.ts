@@ -154,7 +154,7 @@ export const routes: Routes = [
           {
             path: 'contacts',
             canActivate: [ResourceGuard("contact", "view")],
-            loadComponent: () => import('./association/contacts/contact-listing/contact-listing').then(m => m.ContactListing)
+            loadComponent: () => import('./association/contacts/contact-view/contact-view').then(m => m.ContactView)
           },
           {
             path: 'funds',
