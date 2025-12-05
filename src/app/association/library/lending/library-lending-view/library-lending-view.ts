@@ -1,37 +1,22 @@
 
-import { DatePipe } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { BookLending } from '@app/domain/library/book-lending';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
+import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 
 @Component({
-  selector: 'app-library-lending-view',
-  imports: [CardModule, TableModule, DatePipe],
+  selector: 'assoc-library-lending-view',
+  imports: [CardModule, LibraryLendingList],
   templateUrl: './library-lending-view.html'
 })
 export class LibraryLendingView {
 
   private readonly service = inject(LibraryLendingService);
-
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
-
-  private _pageNumber = 0;
-
-  @Input() public set pageNumber(value: number) {
-    this._pageNumber = value;
-    this.load(value);
-  }
-
-  public get pageNumber() {
-    return this._pageNumber;
-  }
 
   public data = new PaginatedResponse<BookLending>();
 
@@ -53,11 +38,8 @@ export class LibraryLendingView {
     this.createPermission = authContainer.hasPermission("library_book", "create");
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
+  public onChangeDirection(sorting: SortingProperty) {
+    this.sort.addField(sorting);
 
     this.load(this.data.page);
   }
@@ -67,7 +49,7 @@ export class LibraryLendingView {
     this.load(page);
   }
 
-  private load(page: number) {
+  public load(page: number) {
     this.loading = true;
 
     this.service.getAll(page, this.sort)

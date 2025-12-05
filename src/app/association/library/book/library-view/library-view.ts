@@ -53,17 +53,6 @@ export class LibraryView implements OnInit {
 
   public failures = new FailureStore();
 
-  private _pageNumber = 0;
-
-  @Input() public set pageNumber(value: number) {
-    this._pageNumber = value;
-    this.load(value);
-  }
-
-  public get pageNumber() {
-    return this._pageNumber;
-  }
-
   public selectedData: FictionBook | GameBook = new GameBook();
 
   public data = new PaginatedResponse<FictionBook | GameBook>();

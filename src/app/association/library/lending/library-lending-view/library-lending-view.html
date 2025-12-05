@@ -1,22 +1,4 @@
 <p-card>
-  <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
-    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
-    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
-    <ng-template #header>
-      <tr>
-        <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
-        <th pSortableColumn="fullName">Socio <p-sortIcon field="fullName" /></th>
-        <th>Fecha de préstamo</th>
-        <th>Días prestado</th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-lending>
-      <tr>
-        <td>{{ lending.book.title.fullTitle }}</td>
-        <td>{{ lending.borrower.name.fullName }}</td>
-        <td>{{ lending.lendingDate | date:'yyyy-MM-dd' }}</td>
-        <td>{{ lending.days }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
+  <assoc-library-lending-list [loading]="loading" [lendings]="data.content" [rows]="data.size" [page]="data.page"
+    [totalRecords]="data.totalElements" (sort)="onChangeDirection($event)" (pageChange)="load($event)" />
 </p-card>
