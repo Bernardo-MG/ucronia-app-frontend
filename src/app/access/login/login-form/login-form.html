@@ -1,37 +1,44 @@
-﻿<form [formGroup]="form" (ngSubmit)="onLogin()" novalidate class="space-y-4">
+﻿<form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
 
   <!-- Username -->
   <p-floatlabel variant="in" class="flex mb-2">
-    <input pInputText type="text" id="usernameInput" formControlName="username" class="w-full" />
+    <p-icon-field>
+      <p-inputicon class="pi pi-envelope" />
+      <input pInputText type="text" id="usernameInput" formControlName="username" class="w-full" />
+    </p-icon-field>
     <label for="usernameInput">Usuario/email</label>
   </p-floatlabel>
 
   <!-- Password -->
   <p-floatlabel variant="in" class="flex mb-2">
-    <input pInputText type="password" id="passwordInput" formControlName="password" class="w-full" />
+    <p-icon-field>
+      <p-inputicon class="pi pi-lock" />
+      <input pInputText type="password" id="passwordInput" formControlName="password" class="w-full" />
+    </p-icon-field>
     <label for="passwordInput">Contraseña</label>
   </p-floatlabel>
 
-  <!-- Remember me check + Lost password -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+  <div class="flex flex-wrap mb-3 items-center w-full">
+
     <!-- Remember me -->
-    <div class="flex items-center justify-center md:justify-start space-x-2">
+    <div class="flex items-center space-x-2">
       <p-toggleswitch inputId="rememberMe" [disabled]="waiting"
         (onChange)="onRememberMe($event.checked)"></p-toggleswitch>
       <label for="rememberMe" class="select-none">Mantener sesión</label>
     </div>
 
     <!-- Lost password -->
-    <div class="flex justify-center md:justify-end">
-      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="waiting"
-        (click)="onLostPasword()"></p-button>
+    <div class="ml-auto">
+      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="waiting" (click)="onLostPasword()">
+      </p-button>
     </div>
+
   </div>
 
   <!-- Submit button -->
-  <div class="flex">
+  <div class="flex justify-center w-full mt-2">
     <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="waiting" [disabled]="!loginEnabled"
-      [attr.aria-disabled]="!loginEnabled" class="w-full"></p-button>
+      [attr.aria-disabled]="!loginEnabled" class="px-8"></p-button>
   </div>
 
   <!-- Login failed warning -->
