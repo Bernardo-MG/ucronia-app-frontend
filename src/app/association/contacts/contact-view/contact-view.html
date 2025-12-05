@@ -117,8 +117,7 @@
 
   <!-- Contact Dialog -->
   @if(showing) {
-  <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
-    contentStyleClass="p-0">
+  <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
     @if(viewMembers) {
     <assoc-member-contact-info [data]="selectedMemberData" />
     } @else {
@@ -131,8 +130,7 @@
   @switch (view) {
 
   @case ('creation') {
-  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="rounded-lg"
-    contentStyleClass="p-0">
+  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     @if(viewMembers) {
     <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     } @else {
@@ -142,8 +140,7 @@
   }
 
   @case ('edition') {
-  <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
-    class="rounded-lg" contentStyleClass="p-0">
+  <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
       (save)="onUpdate($event)" />
   </p-dialog>
