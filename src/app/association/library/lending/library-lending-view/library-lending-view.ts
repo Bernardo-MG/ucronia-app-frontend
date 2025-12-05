@@ -10,11 +10,11 @@ import { finalize } from 'rxjs';
 import { LibraryLendingService } from '../library-lending-service';
 
 @Component({
-  selector: 'app-library-admin-lending-list',
+  selector: 'app-library-lending-view',
   imports: [CardModule, TableModule, DatePipe],
-  templateUrl: './library-lending-list.html'
+  templateUrl: './library-lending-view.html'
 })
-export class LibraryLendingList {
+export class LibraryLendingView {
 
   private readonly service = inject(LibraryLendingService);
 

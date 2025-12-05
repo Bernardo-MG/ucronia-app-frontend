@@ -2,16 +2,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LibraryLendingService } from '../library-lending-service';
-import { LibraryLendingList } from './library-lending-list';
+import { LibraryLendingView } from './library-lending-view';
 
-describe('LibraryLendingList', () => {
-  let component: LibraryLendingList;
-  let fixture: ComponentFixture<LibraryLendingList>;
+describe('LibraryLendingView', () => {
+  let component: LibraryLendingView;
+  let fixture: ComponentFixture<LibraryLendingView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryLendingList
+        LibraryLendingView
       ],
       providers: [
         LibraryLendingService,
@@ -21,7 +21,7 @@ describe('LibraryLendingList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryLendingList);
+    fixture = TestBed.createComponent(LibraryLendingView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

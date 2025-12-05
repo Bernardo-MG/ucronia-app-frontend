@@ -149,7 +149,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/lending/library-lending-list/library-lending-list').then(m => m.LibraryLendingList),
+                    loadComponent: () => import('./association/library/lending/library-lending-view/library-lending-view').then(m => m.LibraryLendingView),
                     canActivate: [ResourceGuard("library_lending", "view")]
                   }
                 ]
