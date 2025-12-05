@@ -50,17 +50,17 @@
 
     @if(list === 'books') {
     <div class="ml-auto space-x-2">
-    @if (createable) {
-    <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
-      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
-    }
+      @if (createable) {
+      <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
+        aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
+      }
 
-    <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
-      [attr.aria-disabled]="loadingExcel" rounded />
+      <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+        [attr.aria-disabled]="loadingExcel" rounded />
 
-    @if (dataMenuItems) {
-    <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
-    }
+      @if (dataMenuItems) {
+      <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
+      }
     </div>
     }
   </div>
@@ -70,10 +70,10 @@
     @switch (list) {
     @case ('books') {
 
-    <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <ng-template #header>
       <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
         aria-labelledby="basic" (onChange)="onChangeSource($event)" />
-    </div>
+    </ng-template>
 
     <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"

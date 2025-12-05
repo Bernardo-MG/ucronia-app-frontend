@@ -89,8 +89,11 @@ export class ContactView implements OnInit {
 
   public modalTitle = '';
 
-  public stateOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'members' }, { label: 'Invitados', value: 'guests' }, { label: 'Esponsors', value: 'sponsors' }];
+  public statusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'members' }, { label: 'Invitados', value: 'guests' }, { label: 'Esponsors', value: 'sponsors' }];
   public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
+
+  public memberStatusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Activos', value: 'active' }, { label: 'Baja', value: 'inactive' }];
+  public selectedMemberStatus: 'all' | 'active' | 'inactive' = 'all';
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -209,6 +212,10 @@ export class ContactView implements OnInit {
 
   public onChangeStatusFilter(event: SelectButtonChangeEvent) {
     this.selectedStatus = event.value as 'all' | 'members' | 'guests' | 'sponsors';
+  }
+
+  public onChangeMemberStatus(event: SelectButtonChangeEvent) {
+    this.selectedMemberStatus = event.value as 'all' | 'active' | 'inactive';
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
