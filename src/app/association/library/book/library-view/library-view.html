@@ -49,6 +49,11 @@
     </div>
 
     @if(list === 'books') {
+    <div class="border border-gray-300 rounded-lg p-1 inline-block">
+      <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
+        aria-labelledby="basic" (onChange)="onChangeSource($event)" />
+    </div>
+
     <div class="ml-auto space-x-2">
       @if (createable) {
       <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
@@ -69,11 +74,6 @@
 
     @switch (list) {
     @case ('books') {
-
-    <ng-template #header>
-      <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
-        aria-labelledby="basic" (onChange)="onChangeSource($event)" />
-    </ng-template>
 
     <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
