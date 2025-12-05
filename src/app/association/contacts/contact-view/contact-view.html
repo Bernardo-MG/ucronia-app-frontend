@@ -1,103 +1,142 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 
-<header class="mb-4">
-  <h1 class="border-b pb-2 text-2xl font-semibold text-gray-800">Contactos</h1>
-</header>
+<div class="p-4 space-y-6">
+  <h1 class="text-4xl font-bold">Contactos</h1>
 
-<div class="pb-4 flex justify-center">
-  <p-card>
-    <assoc-membership-evolution-chart />
-  </p-card>
+  <div class="flex justify-center">
+    <p-card>
+      <assoc-membership-evolution-chart />
+    </p-card>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
+    <p-card class="w-45">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">1</p>
+          <p class="uppercase text-gray-500 text-sm">Socios</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="w-45">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">0</p>
+          <p class="uppercase text-gray-500 text-sm">Invitados</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="w-45">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">0</p>
+          <p class="uppercase text-gray-500 text-sm">Esponsors</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Contact List -->
+  <p-panel class="bg-white shadow rounded-lg">
+
+    <!-- Icons (Top-right action area) -->
+    <ng-template #icons>
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+        [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text
+        class="!p-2" />
+    </ng-template>
+
+    <!-- FILTER HEADER -->
+    <ng-template #header>
+
+      <div class="flex flex-col gap-4">
+
+        <!-- First filter row -->
+        <div class="flex flex-wrap items-center gap-4">
+
+          <!-- Filter by membership -->
+          <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+
+          <!-- Filter by name -->
+          <label for="nameFilterInput" id="nameFilterLabel" class="text-gray-700 font-medium">
+            Nombre
+          </label>
+
+          <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+            aria-describedby="nameFilterLabel" maxlength="50"
+            class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 w-60" />
+        </div>
+
+        <!-- Second filter row -->
+        <div class="flex items-center gap-3 text-gray-700">
+          <span class="font-medium">Socios</span>
+          <p-toggleswitch (onChange)="onChangeView($event)" />
+        </div>
+
+      </div>
+
+    </ng-template>
+
+    <!-- LIST CONTENT -->
+    @if(viewMembers) {
+    <assoc-member-contact-list [data]="memberData" [loading]="loading" [editable]="editable" [deletable]="deletable"
+      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+      (changePage)="onPageChange($event)" />
+    } @else {
+    <assoc-contact-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
+      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+      (changePage)="onPageChange($event)" />
+    }
+
+  </p-panel>
+
+  <!-- Contact Dialog -->
+  @if(showing) {
+  <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
+    contentStyleClass="p-0">
+    @if(viewMembers) {
+    <assoc-member-contact-info [data]="selectedMemberData" />
+    } @else {
+    <assoc-contact-info [data]="selectedData" />
+    }
+  </p-dialog>
+  }
+
+  <!-- Creation / Edition Dialogs -->
+  @switch (view) {
+
+  @case ('creation') {
+  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="rounded-lg"
+    contentStyleClass="p-0">
+    @if(viewMembers) {
+    <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    } @else {
+    <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    }
+  </p-dialog>
+  }
+
+  @case ('edition') {
+  <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+    class="rounded-lg" contentStyleClass="p-0">
+    <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
+      (save)="onUpdate($event)" />
+  </p-dialog>
+  }
+
+  }
 </div>
-
-<!-- Contact List -->
-<p-panel class="bg-white shadow rounded-lg">
-
-  <!-- Icons (Top-right action area) -->
-  <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-      [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text
-      class="!p-2" />
-  </ng-template>
-
-  <!-- FILTER HEADER -->
-  <ng-template #header>
-
-    <div class="flex flex-col gap-4">
-
-      <!-- First filter row -->
-      <div class="flex flex-wrap items-center gap-4">
-
-        <!-- Filter by membership -->
-        <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-
-        <!-- Filter by name -->
-        <label for="nameFilterInput" id="nameFilterLabel" class="text-gray-700 font-medium">
-          Nombre
-        </label>
-
-        <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-          aria-describedby="nameFilterLabel" maxlength="50"
-          class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 w-60" />
-      </div>
-
-      <!-- Second filter row -->
-      <div class="flex items-center gap-3 text-gray-700">
-        <span class="font-medium">Socios</span>
-        <p-toggleswitch (onChange)="onChangeView($event)" />
-      </div>
-
-    </div>
-
-  </ng-template>
-
-  <!-- LIST CONTENT -->
-  @if(viewMembers) {
-  <assoc-member-contact-list [data]="memberData" [loading]="loading" [editable]="editable" [deletable]="deletable"
-    (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-    (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
-    (changePage)="onPageChange($event)" />
-  } @else {
-  <assoc-contact-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
-    (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-    (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
-    (changePage)="onPageChange($event)" />
-  }
-
-</p-panel>
-
-<!-- Contact Dialog -->
-@if(showing) {
-<p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
-  contentStyleClass="p-0">
-  @if(viewMembers) {
-  <assoc-member-contact-info [data]="selectedMemberData" />
-  } @else {
-  <assoc-contact-info [data]="selectedData" />
-  }
-</p-dialog>
-}
-
-<!-- Creation / Edition Dialogs -->
-@switch (view) {
-
-@case ('creation') {
-<p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="rounded-lg"
-  contentStyleClass="p-0">
-  @if(viewMembers) {
-  <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-  } @else {
-  <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-  }
-</p-dialog>
-}
-
-@case ('edition') {
-<p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="rounded-lg"
-  contentStyleClass="p-0">
-  <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
-    (save)="onUpdate($event)" />
-</p-dialog>
-}
-
-}
