@@ -54,6 +54,13 @@
         aria-labelledby="basic" (onChange)="onChangeStatusFilter($event)" />
     </div>
 
+    @if(selectedStatus === 'members') {
+    <div class="border border-gray-300 rounded-lg p-1 inline-block">
+      <p-selectbutton [options]="memberStatusOptions" [(ngModel)]="selectedMemberStatus" optionLabel="label"
+        optionValue="value" aria-labelledby="basic" (onChange)="onChangeMemberStatus($event)" />
+    </div>
+    }
+
     @if (createable) {
     <div class="ml-auto space-x-2">
       <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
@@ -69,10 +76,6 @@
     <ng-template #header>
 
       <div class="flex flex-col gap-4">
-        @if(selectedStatus === 'members') {
-        <p-selectbutton [options]="memberStatusOptions" [(ngModel)]="selectedMemberStatus" optionLabel="label"
-          optionValue="value" aria-labelledby="basic" (onChange)="onChangeMemberStatus($event)" />
-        }
 
         <!-- First filter row -->
         <div class="flex flex-wrap items-center gap-4">
