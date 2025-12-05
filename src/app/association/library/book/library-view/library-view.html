@@ -1,8 +1,60 @@
-<div class="p-4">
+<p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
+<p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
+<p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
 
-  <p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
-  <p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
-  <p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
+<div class="p-4 space-y-6">
+  <h1 class="text-4xl font-bold">Library</h1>
+  <p class="text-gray-600">Manage game books and fiction</p>
+
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+    <div class="p-6 rounded-2xl shadow bg-white flex items-center space-x-4">
+      <i class="pi pi-book text-3xl"></i>
+      <div>
+        <p class="text-2xl font-semibold">1</p>
+        <p class="uppercase text-gray-500 text-sm">Juegos</p>
+      </div>
+    </div>
+
+
+    <div class="p-6 rounded-2xl shadow bg-white flex items-center space-x-4">
+      <i class="pi pi-book text-3xl"></i>
+      <div>
+        <p class="text-2xl font-semibold">0</p>
+        <p class="uppercase text-gray-500 text-sm">Ficción</p>
+      </div>
+    </div>
+
+
+    <div class="p-6 rounded-2xl shadow bg-white flex items-center space-x-4">
+      <i class="pi pi-bookmark text-3xl"></i>
+      <div>
+        <p class="text-2xl font-semibold">0</p>
+        <p class="uppercase text-gray-500 text-sm">Prestados</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <div class="border border-gray-300 rounded-lg p-1 inline-block">
+      <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTab" optionLabel="label" optionValue="value"
+        aria-labelledby="basic" />
+    </div>
+
+    @if (createable) {
+    <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
+      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded class="ml-auto" />
+    }
+
+    <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+      [attr.aria-disabled]="loadingExcel" rounded />
+
+    @if (dataMenuItems) {
+    <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
+    }
+  </div>
 
   <p-card header="Préstamos" class="mb-2">
     <a routerLink="/association/library/lendings" class="text-blue-600 underline">
@@ -13,63 +65,29 @@
   <p-panel>
     <ng-template #icons>
       @if (createable) {
-        <p-button
-          icon="pi pi-plus-circle"
-          severity="secondary"
-          (click)="onStartEditingView('creation')"
-          [disabled]="!createable"
-          aria-label="Nuevo libro"
-          [attr.aria-disabled]="!createable"
-          rounded text
-        />
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
+        [disabled]="!createable" aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded text />
       }
 
-      <p-button
-        icon="pi pi-file-excel"
-        [disabled]="loadingExcel"
-        (click)="downloadExcel()"
-        aria-label="Descargar excel"
-        [attr.aria-disabled]="loadingExcel"
-        severity="secondary"
-        rounded text
-      />
+      <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+        [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
 
       @if (dataMenuItems) {
-        <p-button
-          icon="pi pi-cog"
-          severity="secondary"
-          rounded text
-          (click)="dataMenu.toggle($event)"
-          aria-label="Editar datos"
-        />
+      <p-button icon="pi pi-cog" severity="secondary" rounded text (click)="dataMenu.toggle($event)"
+        aria-label="Editar datos" />
       }
     </ng-template>
 
     <!-- Tailwind select -->
-    <select
-      [disabled]="loading"
-      class="mt-2 mb-4 w-40 rounded border border-gray-300 text-sm p-1"
-      aria-label="Filter contact status"
-      (change)="onChangeSource($event)"
-    >
+    <select [disabled]="loading" class="mt-2 mb-4 w-40 rounded border border-gray-300 text-sm p-1"
+      aria-label="Filter contact status" (change)="onChangeSource($event)">
       <option [selected]="source === 'game'" value="game">Juegos</option>
       <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
     </select>
 
-    <p-table
-      lazy="true"
-      dataKey="number"
-      [loading]="loading"
-      [value]="data.content"
-      paginator="true"
-      [rows]="data.size"
-      [totalRecords]="data.totalElements"
-      [first]="first"
-      (onSort)="onChangeDirection($event)"
-      (onPage)="onPageChange($event)"
-      showCurrentPageReport="true"
-      currentPageReportTemplate="Total: {totalRecords}"
-    >
+    <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
+      [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
+      (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
 
       <!-- Header -->
       <ng-template #header>
@@ -88,43 +106,23 @@
             <sub>{{book.title.subtitle}}</sub>
 
             @if (book.lent) {
-              <p-badge value="Prestado" severity="danger" badgeSize="small" />
+            <p-badge value="Prestado" severity="danger" badgeSize="small" />
             }
           </td>
 
           <!-- ACTIONS: Tailwind small column -->
           <td class="w-24 text-right space-x-1 whitespace-nowrap">
-            <p-button
-              icon="pi pi-eye"
-              severity="secondary"
-              aria-label="Ver"
-              [attr.aria-disabled]="!editable"
-              (click)="onShowBook(book)"
-              rounded text
-            />
+            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
+              (click)="onShowBook(book)" rounded text />
 
             @if (editable) {
-              <p-button
-                icon="pi pi-pencil"
-                severity="secondary"
-                [disabled]="!editable"
-                aria-label="Editar"
-                [attr.aria-disabled]="!editable"
-                (click)="openEditionMenu($event, book)"
-                rounded text
-              />
+            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, book)" rounded text />
             }
 
             @if (deletable) {
-              <p-button
-                icon="pi pi-trash"
-                severity="danger"
-                [disabled]="!deletable"
-                aria-label="Borrar"
-                [attr.aria-disabled]="!deletable"
-                (click)="onDelete($event, book.number)"
-                rounded text
-              />
+            <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+              [attr.aria-disabled]="!deletable" (click)="onDelete($event, book.number)" rounded text />
             }
           </td>
         </tr>
@@ -140,111 +138,76 @@
 
   @switch (view) {
 
-    @case ('details') {
-      <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <ng-template #header>
-          <h2 class="text-xl font-semibold">
-            #{{ selectedData.number }}
-            @if (selectedData.title.supertitle) { <sup>{{selectedData.title.supertitle}}</sup> }
-            {{selectedData.title.title}}
-            @if (selectedData.title.subtitle) { <sub>{{selectedData.title.subtitle}}</sub> }
-          </h2>
-        </ng-template>
+  @case ('details') {
+  <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    <ng-template #header>
+      <h2 class="text-xl font-semibold">
+        #{{ selectedData.number }}
+        @if (selectedData.title.supertitle) { <sup>{{selectedData.title.supertitle}}</sup> }
+        {{selectedData.title.title}}
+        @if (selectedData.title.subtitle) { <sub>{{selectedData.title.subtitle}}</sub> }
+      </h2>
+    </ng-template>
 
-        <assoc-library-book-edition-form
-          [data]="selectedData"
-          [loading]="loading"
-          [failures]="failures"
-          (save)="onSaveBook($event)"
-        />
-      </p-dialog>
-    }
+    <assoc-library-book-edition-form [data]="selectedData" [loading]="loading" [failures]="failures"
+      (save)="onSaveBook($event)" />
+  </p-dialog>
+  }
 
-    @case ('creation') {
-      <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <assoc-library-book-creation-form
-          [loading]="loading"
-          [failures]="failures"
-          (save)="onCreate($event)"
-        />
-      </p-dialog>
-    }
+  @case ('creation') {
+  <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    <assoc-library-book-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+  </p-dialog>
+  }
 
-    @case ('donors') {
-      <p-dialog header="Donantes" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <assoc-library-book-donors-form
-          [data]="selectedData.donation"
-          [loading]="loading"
-          [failures]="failures"
-          [getSelection]="service.getDonors.bind(service)"
-          (save)="onSetDonation($event)"
-        />
-      </p-dialog>
-    }
+  @case ('donors') {
+  <p-dialog header="Donantes" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="loading" [failures]="failures"
+      [getSelection]="service.getDonors.bind(service)" (save)="onSetDonation($event)" />
+  </p-dialog>
+  }
 
-    @case ('authors') {
-      <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <shared-selection-list-form
-          [data]="selectedData.authors"
-          [getSelection]="service.getAuthors.bind(service)"
-          (save)="onSetAuthors($event)"
-        />
-      </p-dialog>
-    }
+  @case ('authors') {
+  <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
+      (save)="onSetAuthors($event)" />
+  </p-dialog>
+  }
 
-    @case ('gameSystem') {
-      <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <shared-form-with-selection
-          [data]="getGameSystem(selectedData)"
-          [getSelection]="service.getGameSystems.bind(service)"
-          (save)="onSetGameSystem($event)"
-        />
-      </p-dialog>
-    }
+  @case ('gameSystem') {
+  <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <shared-form-with-selection [data]="getGameSystem(selectedData)"
+      [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" />
+  </p-dialog>
+  }
 
-    @case ('bookType') {
-      <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <shared-form-with-selection
-          [data]="getBookType(selectedData)"
-          [getSelection]="service.getBookTypes.bind(service)"
-          (save)="onSetBookType($event)"
-        />
-      </p-dialog>
-    }
+  @case ('bookType') {
+  <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
+      (save)="onSetBookType($event)" />
+  </p-dialog>
+  }
 
-    @case ('publishers') {
-      <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <shared-selection-list-form
-          [data]="selectedData.publishers"
-          [getSelection]="service.getPublishers.bind(service)"
-          (save)="onSetPublishers($event)"
-        />
-      </p-dialog>
-    }
+  @case ('publishers') {
+  <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
+      (save)="onSetPublishers($event)" />
+  </p-dialog>
+  }
 
-    @case ('lendings') {
-      @if(selectedData.lent) {
-        <p-dialog header="Devolver libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-          <assoc-library-book-return-form
-            [loading]="loading"
-            [failures]="failures"
-            [borrower]="borrower"
-            [book]="selectedData"
-            (save)="onReturn($event)"
-          />
-        </p-dialog>
-      } @else {
-        <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-          <assoc-library-book-lending
-            [waiting]="loading"
-            [failures]="failures"
-            [book]="selectedData"
-            [getMemberSelection]="service.getMembers.bind(service)"
-            (save)="onLend($event)"
-          />
-        </p-dialog>
-      }
-    }
+  @case ('lendings') {
+  @if(selectedData.lent) {
+  <p-dialog header="Devolver libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    <assoc-library-book-return-form [loading]="loading" [failures]="failures" [borrower]="borrower"
+      [book]="selectedData" (save)="onReturn($event)" />
+  </p-dialog>
+  } @else {
+  <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    <assoc-library-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
+      [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
+  </p-dialog>
+  }
+  }
 
   }
 

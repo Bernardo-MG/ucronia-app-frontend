@@ -1,5 +1,6 @@
 
 import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
 import { BookInfo } from '@app/domain/library/book-info';
@@ -25,6 +26,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
@@ -38,7 +40,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -71,6 +73,9 @@ export class LibraryView implements OnInit {
   public data = new PaginatedResponse<FictionBook | GameBook>();
 
   public source: 'game' | 'fiction' = 'game';
+
+  public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
+  public selectedTab = 'books';
 
   /**
    * Loading flag.
