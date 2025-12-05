@@ -109,7 +109,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/book/library-book-list/library-book-list').then(m => m.LibraryBookList),
+                    loadComponent: () => import('./association/library/book/library-view/library-view').then(m => m.LibraryView),
                     canActivate: [ResourceGuard("library_book", "view")]
                   }
                 ]

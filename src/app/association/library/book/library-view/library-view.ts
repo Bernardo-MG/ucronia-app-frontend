@@ -37,11 +37,11 @@ import { LibraryBookReturnForm } from '../library-book-return-form/library-book-
 import { LibraryService } from '../library-service';
 
 @Component({
-  selector: 'assoc-library-book-list',
+  selector: 'assoc-library-view',
   imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm],
-  templateUrl: './library-book-list.html'
+  templateUrl: './library-view.html'
 })
-export class LibraryBookList implements OnInit {
+export class LibraryView implements OnInit {
 
   private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);

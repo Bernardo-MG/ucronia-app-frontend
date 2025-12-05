@@ -5,16 +5,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { LibraryService } from '../library-service';
-import { LibraryBookList } from './library-book-list';
+import { LibraryView } from './library-view';
 
-describe('LibraryBookList', () => {
-  let component: LibraryBookList;
-  let fixture: ComponentFixture<LibraryBookList>;
+describe('LibraryView', () => {
+  let component: LibraryView;
+  let fixture: ComponentFixture<LibraryView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        LibraryBookList
+        LibraryView
       ],
       providers: [
         LibraryService,
@@ -28,7 +28,7 @@ describe('LibraryBookList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryBookList);
+    fixture = TestBed.createComponent(LibraryView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
