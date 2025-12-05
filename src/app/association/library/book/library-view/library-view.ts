@@ -28,7 +28,7 @@ import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
-import { LibraryLendingList } from '../../lending/library-lending-list/library-lending-list';
+import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -38,7 +38,7 @@ import { LibraryBookLending } from '../library-book-lending/library-book-lending
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { LibraryService } from '../library-service';
-import { LibraryLendingService } from '../../lending/library-lending-service';
+import { LibraryLendingService } from '../library-lending-service';
 
 @Component({
   selector: 'assoc-library-view',

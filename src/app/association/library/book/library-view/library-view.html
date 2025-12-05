@@ -41,6 +41,7 @@
         aria-labelledby="basic" (onChange)="onChangeList($event)" />
     </div>
 
+    @if(list === 'books') {
     @if (createable) {
     <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
       aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded class="ml-auto" />
@@ -52,13 +53,8 @@
     @if (dataMenuItems) {
     <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
     }
+    }
   </div>
-
-  <p-card header="Préstamos" class="mb-2">
-    <a routerLink="/association/library/lendings" class="text-blue-600 underline">
-      Ver préstamos
-    </a>
-  </p-card>
 
   <p-panel>
 

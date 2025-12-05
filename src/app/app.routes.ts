@@ -143,16 +143,6 @@ export const routes: Routes = [
                     canActivate: [ResourceGuard("library_game_system", "view")]
                   }
                 ]
-              },
-              {
-                path: 'lendings',
-                children: [
-                  {
-                    path: '',
-                    loadComponent: () => import('./association/library/lending/library-lending-view/library-lending-view').then(m => m.LibraryLendingView),
-                    canActivate: [ResourceGuard("library_lending", "view")]
-                  }
-                ]
               }
             ]
           },
