@@ -12,17 +12,17 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
+import { MemberPatch } from '../domain/member-patch';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberService } from '../member-service';
-import { MemberPatch } from '../domain/member-patch';
 
 @Component({
-  selector: 'assoc-member-listing',
+  selector: 'assoc-member-view',
   imports: [PanelModule, TableModule, DialogModule, ButtonModule, MenuModule, MemberContactDetails, MemberContactCreationForm],
-  templateUrl: './member-listing.html'
+  templateUrl: './member-view.html'
 })
-export class MemberListing implements OnInit {
+export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
   private readonly messageService = inject(MessageService);

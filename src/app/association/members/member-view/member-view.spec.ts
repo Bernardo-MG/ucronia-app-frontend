@@ -4,16 +4,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { MemberService } from '../member-service';
-import { MemberListing } from './member-listing';
+import { MemberView } from './member-view';
 
-describe('MemberListing', () => {
-  let component: MemberListing;
-  let fixture: ComponentFixture<MemberListing>;
+describe('MemberView', () => {
+  let component: MemberView;
+  let fixture: ComponentFixture<MemberView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberListing
+        MemberView
       ],
       providers: [
         MemberService,
@@ -26,7 +26,7 @@ describe('MemberListing', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberListing);
+    fixture = TestBed.createComponent(MemberView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
