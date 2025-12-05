@@ -1,69 +1,103 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<header>
-  <h1 class="border-bottom">Contactos</h1>
+
+<header class="mb-4">
+  <h1 class="border-b pb-2 text-2xl font-semibold text-gray-800">Contactos</h1>
 </header>
-<div class="row pb-2">
-  <!-- Membership evolution -->
-  <div uiJustifyCenter>
+
+<div class="pb-4 flex justify-center">
+  <p-card>
     <assoc-membership-evolution-chart />
-  </div>
+  </p-card>
 </div>
+
 <!-- Contact List -->
-<p-panel>
+<p-panel class="bg-white shadow rounded-lg">
+
+  <!-- Icons (Top-right action area) -->
   <ng-template #icons>
-    <!-- Add contact -->
     <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-      [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text />
+      [disabled]="!createable" aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text
+      class="!p-2" />
   </ng-template>
+
+  <!-- FILTER HEADER -->
   <ng-template #header>
-    <p>
-      <!-- Filter by membership -->
-      <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
-      <!-- Filter by name -->
-      <label for="nameFilterInput" id="nameFilterLabel" class="col-sm-2">Nombre</label>
-      <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
-        aria-describedby="nameFilterLabel" maxlength="50">
-    </p>
-    <p>
-      Socios
-      <p-toggleswitch (onChange)="onChangeView($event)" />
-    </p>
+
+    <div class="flex flex-col gap-4">
+
+      <!-- First filter row -->
+      <div class="flex flex-wrap items-center gap-4">
+
+        <!-- Filter by membership -->
+        <assoc-member-status-select [disabled]="loading" (changeStatus)="onChangeActiveFilter($event)" />
+
+        <!-- Filter by name -->
+        <label for="nameFilterInput" id="nameFilterLabel" class="text-gray-700 font-medium">
+          Nombre
+        </label>
+
+        <input type="text" id="nameFilterInput" [(ngModel)]="nameFilter" (input)="nameFilterSubject.next(nameFilter)"
+          aria-describedby="nameFilterLabel" maxlength="50"
+          class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 w-60" />
+      </div>
+
+      <!-- Second filter row -->
+      <div class="flex items-center gap-3 text-gray-700">
+        <span class="font-medium">Socios</span>
+        <p-toggleswitch (onChange)="onChangeView($event)" />
+      </div>
+
+    </div>
+
   </ng-template>
+
+  <!-- LIST CONTENT -->
   @if(viewMembers) {
-    <assoc-member-contact-list [data]="memberData" [loading]="loading" [editable]="editable" [deletable]="deletable"
-      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
-      (changePage)="onPageChange($event)" />
+  <assoc-member-contact-list [data]="memberData" [loading]="loading" [editable]="editable" [deletable]="deletable"
+    (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+    (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+    (changePage)="onPageChange($event)" />
   } @else {
-    <assoc-contact-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
-      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
-      (changePage)="onPageChange($event)" />
+  <assoc-contact-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
+    (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+    (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+    (changePage)="onPageChange($event)" />
   }
+
 </p-panel>
+
+<!-- Contact Dialog -->
 @if(showing) {
-  <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    @if(viewMembers) {
-      <assoc-member-contact-info [data]="selectedMemberData" />
-    } @else {
-      <assoc-contact-info [data]="selectedData" />
-    }
-  </p-dialog>
+<p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
+  contentStyleClass="p-0">
+  @if(viewMembers) {
+  <assoc-member-contact-info [data]="selectedMemberData" />
+  } @else {
+  <assoc-contact-info [data]="selectedData" />
+  }
+</p-dialog>
 }
+
+<!-- Creation / Edition Dialogs -->
 @switch (view) {
-  @case ('creation') {
-    <p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      @if(viewMembers) {
-        <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-      } @else {
-        <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-      }
-    </p-dialog>
+
+@case ('creation') {
+<p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="rounded-lg"
+  contentStyleClass="p-0">
+  @if(viewMembers) {
+  <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+  } @else {
+  <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   }
-  @case ('edition') {
-    <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
-        (save)="onUpdate($event)" />
-    </p-dialog>
-  }
+</p-dialog>
+}
+
+@case ('edition') {
+<p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }" class="rounded-lg"
+  contentStyleClass="p-0">
+  <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
+    (save)="onUpdate($event)" />
+</p-dialog>
+}
+
 }

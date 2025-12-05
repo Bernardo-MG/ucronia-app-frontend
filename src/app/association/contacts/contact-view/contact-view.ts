@@ -1,15 +1,15 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
+import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { Active } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
-import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContact } from '@app/domain/contact/member-contact';
-import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
@@ -30,7 +30,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, JustifyCenterDirective],
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, CardModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
