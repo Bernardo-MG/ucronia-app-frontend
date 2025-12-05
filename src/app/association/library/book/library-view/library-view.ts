@@ -1,10 +1,10 @@
 
-import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Author } from '@app/domain/library/author';
 import { BookInfo } from '@app/domain/library/book-info';
-import { Borrower } from '@app/domain/library/book-lending';
+import { BookLending, Borrower } from '@app/domain/library/book-lending';
 import { BookLent } from '@app/domain/library/book-lent';
 import { BookReturned } from '@app/domain/library/book-returned';
 import { BookType } from '@app/domain/library/book-type';
@@ -17,8 +17,8 @@ import { Publisher } from '@app/domain/library/publisher';
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthContainer } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -28,6 +28,7 @@ import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
+import { LibraryLendingList } from '../../lending/library-lending-list/library-lending-list';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -37,27 +38,30 @@ import { LibraryBookLending } from '../library-book-lending/library-book-lending
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { LibraryService } from '../library-service';
+import { LibraryLendingService } from '../../lending/library-lending-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
 
   private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);
-  private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
   public readonly service = inject(LibraryService);
+    private readonly lendingsService = inject(LibraryLendingService);
 
   public failures = new FailureStore();
 
   public selectedData: FictionBook | GameBook = new GameBook();
 
   public data = new PaginatedResponse<FictionBook | GameBook>();
+  public lendings = new PaginatedResponse<BookLending>();
 
   public source: 'game' | 'fiction' = 'game';
+  public list: 'books' | 'lendings' = 'books';
 
   public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
   public selectedTab = 'books';
@@ -212,6 +216,15 @@ export class LibraryView implements OnInit {
     this.load(0);
   }
 
+  public onChangeList(event: SelectButtonChangeEvent) {
+    this.list = event.value as 'books' | 'lendings';
+    if (this.list === 'books') {
+      this.load(1);
+    } else {
+      this.loadLendings(1);
+    }
+  }
+
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / this.data.size) + 1;
     this.load(page);
@@ -358,6 +371,13 @@ export class LibraryView implements OnInit {
     this.read(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  public loadLendings(page: number) {
+    this.loading = true;
+    this.lendingsService.getAll(page, new Sorting([]))
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.lendings = response);
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {

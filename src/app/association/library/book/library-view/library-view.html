@@ -38,7 +38,7 @@
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <div class="border border-gray-300 rounded-lg p-1 inline-block">
       <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTab" optionLabel="label" optionValue="value"
-        aria-labelledby="basic" />
+        aria-labelledby="basic" (onChange)="onChangeList($event)" />
     </div>
 
     @if (createable) {
@@ -62,6 +62,9 @@
 
   <p-panel>
 
+    @switch (list) {
+    @case ('books') {
+
     <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
       <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
         aria-labelledby="basic" (onChange)="onChangeSource($event)" />
@@ -71,6 +74,13 @@
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
       (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (delete)="onDelete($event)"
       (show)="onStartEditingView($event)" />
+    }
+    @case ('lendings') {
+    <assoc-library-lending-list [loading]="loading" [lendings]="lendings.content" [rows]="lendings.size"
+      [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
+      (pageChange)="load($event)" />
+    }
+    }
 
   </p-panel>
 
