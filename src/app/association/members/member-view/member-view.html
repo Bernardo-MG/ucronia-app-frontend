@@ -4,59 +4,74 @@
   <p-menu #editionMenu [model]="editionMenuItems" [popup]="true"></p-menu>
 
   <!-- Table Panel -->
-  <p-panel>
+  <p-panel class="shadow bg-white rounded-lg">
+
     <ng-template #icons>
       <!-- Add Member Button -->
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-        [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text></p-button>
+        [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text
+        class="!p-2"></p-button>
     </ng-template>
 
     <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
       [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
       (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}"
-      >
+      class="w-full">
+
       <ng-template #header>
-        <tr>
-          <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName"></p-sortIcon></th>
-        <th class="w-40"></th>
+        <tr class="border-b bg-gray-100">
+          <th pSortableColumn="fullName" class="py-3 px-4 text-left font-medium text-gray-700">
+            Nombre
+            <p-sortIcon field="fullName"></p-sortIcon>
+          </th>
+          <th class="w-40"></th>
         </tr>
       </ng-template>
 
       <ng-template #body let-member>
-        <tr class="hover:bg-gray-50">
-          <td>{{ member.name.fullName }}</td>
-          <td class="flex space-x-2 justify-end w-40">
-            @if(readContact) {
-              <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowContact(member)" rounded
-                text></p-button>
+        <tr class="hover:bg-gray-50 transition-colors">
+          <td class="py-2 px-4">{{ member.name.fullName }}</td>
+
+          <td class="flex justify-end space-x-2 w-40 py-2 px-4">
+            @if (readContact) {
+            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowContact(member)" rounded
+              text class="!p-2"></p-button>
             }
-            @if(editable) {
-              <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-                [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, member)" rounded text></p-button>
+
+            @if (editable) {
+            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+              [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, member)" rounded text
+              class="!p-2"></p-button>
             }
-            @if(deletable) {
-              <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-                [attr.aria-disabled]="!deletable" (click)="onDelete($event, member.number)" rounded text></p-button>
+
+            @if (deletable) {
+            <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+              [attr.aria-disabled]="!deletable" (click)="onDelete($event, member.number)" rounded text
+              class="!p-2"></p-button>
             }
           </td>
         </tr>
       </ng-template>
+
     </p-table>
   </p-panel>
 
   <!-- View Member Dialog -->
-  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <assoc-member-contact-details [contact]="memberContact" [member]="selectedData"></assoc-member-contact-details>
+  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" contentStyleClass="p-0"
+    class="rounded-lg">
+    <assoc-member-contact-details [contact]="memberContact" [member]="selectedData">
+    </assoc-member-contact-details>
   </p-dialog>
 
   <!-- Creation Dialog -->
   @switch(view) {
-    @case('creation') {
-      <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <assoc-member-creation-form [loading]="saving" [failures]="failures"
-          (save)="onCreate($event)"></assoc-member-creation-form>
-      </p-dialog>
-    }
+  @case('creation') {
+  <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+    contentStyleClass="p-0" class="rounded-lg">
+    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
+    </assoc-member-creation-form>
+  </p-dialog>
+  }
   }
 
 </div>
