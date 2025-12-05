@@ -62,17 +62,15 @@
 
   <p-panel>
 
-    <!-- Tailwind select -->
-    <select [disabled]="loading" class="mt-2 mb-4 w-40 rounded border border-gray-300 text-sm p-1"
-      aria-label="Filter contact status" (change)="onChangeSource($event)">
-      <option [selected]="source === 'game'" value="game">Juegos</option>
-      <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
-    </select>
+    <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+      <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
+        aria-labelledby="basic" (onChange)="onChangeSource($event)" />
+    </div>
 
     <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
-    [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-    (pageChange)="load($event)" (sort)="onChangeDirection2($event)" (showBook)="onShowBook($event)" (delete)="onDelete2($event)"
-    (show)="onStartEditingView($event)" />
+      [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
+      (sort)="onChangeDirection2($event)" (showBook)="onShowBook($event)" (delete)="onDelete2($event)"
+      (show)="onStartEditingView($event)" />
 
   </p-panel>
 

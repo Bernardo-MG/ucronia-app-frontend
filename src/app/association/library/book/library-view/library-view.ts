@@ -25,7 +25,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
@@ -72,6 +72,9 @@ export class LibraryView implements OnInit {
 
   public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
   public selectedTab = 'books';
+
+  public bookOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Juegos', value: 'game' }, { label: 'Ficción', value: 'fiction' }];
+  public selectedBookView = 'game';
 
   /**
    * Loading flag.
@@ -238,8 +241,8 @@ export class LibraryView implements OnInit {
     this.load(this.data.page);
   }
 
-  public onChangeSource(event: any) {
-    this.source = event.target.value as 'game' | 'fiction';
+  public onChangeSource(event: SelectButtonChangeEvent) {
+    this.source = event.value as 'game' | 'fiction';
     if (this.source === 'game') {
       this.delete = this.service.deleteGameBook.bind(this.service);
       this.update = this.service.updateGameBook.bind(this.service);
