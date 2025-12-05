@@ -18,14 +18,14 @@
       <ng-template #header>
         <tr>
           <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName"></p-sortIcon></th>
-        <th style="width: 200px;"></th>
+        <th class="w-40"></th>
         </tr>
       </ng-template>
 
       <ng-template #body let-member>
         <tr class="hover:bg-gray-50">
           <td>{{ member.name.fullName }}</td>
-          <td class="flex space-x-2 justify-end" style="width: 200px;">
+          <td class="flex space-x-2 justify-end w-40">
             @if(readContact) {
               <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowContact(member)" rounded
                 text></p-button>
