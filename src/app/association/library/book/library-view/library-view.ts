@@ -19,7 +19,6 @@ import { FormWithSelection } from '@app/shared/data/form-with-selection/form-wit
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -27,7 +26,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
@@ -41,7 +40,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -53,10 +52,6 @@ export class LibraryView implements OnInit {
   public readonly service = inject(LibraryService);
 
   public failures = new FailureStore();
-
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
 
   private _pageNumber = 0;
 
@@ -90,8 +85,6 @@ export class LibraryView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public readonly fictionEditionMenuItems: MenuItem[] = [];
-  public readonly gameEditionMenuItems: MenuItem[] = [];
   public readonly dataMenuItems: MenuItem[] = [];
 
   public view: string = '';
@@ -151,71 +144,6 @@ export class LibraryView implements OnInit {
           command: () => this.router.navigate(['/association/library/systems'])
         });
     }
-
-    // Load edition menu
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.onStartEditingView('details')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Donantes',
-        command: () => this.onStartEditingView('donors')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Autores',
-        command: () => this.onStartEditingView('authors')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Editor',
-        command: () => this.onStartEditingView('publishers')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Préstamos',
-        command: () => this.onStartEditingView('lendings')
-      });
-
-
-    // Load edition menu
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.onStartEditingView('details')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Donantes',
-        command: () => this.onStartEditingView('donors')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Autores',
-        command: () => this.onStartEditingView('authors')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Editor',
-        command: () => this.onStartEditingView('publishers')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Sistema',
-        command: () => this.onStartEditingView('gameSystem')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Tipo',
-        command: () => this.onStartEditingView('bookType')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Préstamos',
-        command: () => this.onStartEditingView('lendings')
-      });
   }
 
   public ngOnInit(): void {
