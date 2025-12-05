@@ -29,85 +29,16 @@ export class LibraryBookList {
   public readonly showBook = output<FictionBook | GameBook>();
   public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
-  public readonly show = output<string>();
+  public readonly show = output<{ view: string, book: FictionBook | GameBook }>();
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
-  public readonly fictionEditionMenuItems: MenuItem[] = [];
-  public readonly gameEditionMenuItems: MenuItem[] = [];
-  
-  public selectedData: FictionBook | GameBook = new GameBook();
+  public fictionEditionMenuItems: MenuItem[] = [];
+  public gameEditionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.page() - 1) * this.rows();
-  }
-
-  constructor() {
-    // Load edition menu
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.show.emit('details')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Donantes',
-        command: () => this.show.emit('donors')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Autores',
-        command: () => this.show.emit('authors')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Editor',
-        command: () => this.show.emit('publishers')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Préstamos',
-        command: () => this.show.emit('lendings')
-      });
-
-
-    // Load edition menu
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.show.emit('details')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Donantes',
-        command: () => this.show.emit('donors')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Autores',
-        command: () => this.show.emit('authors')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Editor',
-        command: () => this.show.emit('publishers')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Sistema',
-        command: () => this.show.emit('gameSystem')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Tipo',
-        command: () => this.show.emit('bookType')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Préstamos',
-        command: () => this.show.emit('lendings')
-      });
   }
 
   public onDelete(event: Event, number: number) {
@@ -129,10 +60,73 @@ export class LibraryBookList {
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-    this.selectedData = book;
     if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
+      this.gameEditionMenuItems = [];
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Datos',
+          command: () => this.show.emit({ view: 'details', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Donantes',
+          command: () => this.show.emit({ view: 'donors', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Autores',
+          command: () => this.show.emit({ view: 'authors', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Editor',
+          command: () => this.show.emit({ view: 'publishers', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Sistema',
+          command: () => this.show.emit({ view: 'gameSystem', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Tipo',
+          command: () => this.show.emit({ view: 'bookType', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Préstamos',
+          command: () => this.show.emit({ view: 'lendings', book })
+        });
+
       this.gameEditionMenu.toggle(event);
     } else {
+      this.fictionEditionMenuItems = [];
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Datos',
+          command: () => this.show.emit({ view: 'details', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Donantes',
+          command: () => this.show.emit({ view: 'donors', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Autores',
+          command: () => this.show.emit({ view: 'authors', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Editor',
+          command: () => this.show.emit({ view: 'publishers', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Préstamos',
+          command: () => this.show.emit({ view: 'lendings', book })
+        });
+
       this.fictionEditionMenu.toggle(event);
     }
   }

@@ -42,7 +42,7 @@
     </div>
 
     @if (createable) {
-    <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
+    <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
       aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded class="ml-auto" />
     }
 
@@ -69,7 +69,7 @@
 
     <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
-      (sort)="onChangeDirection2($event)" (showBook)="onShowBook($event)" (delete)="onDelete2($event)"
+      (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (delete)="onDelete($event)"
       (show)="onStartEditingView($event)" />
 
   </p-panel>

@@ -196,46 +196,14 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onDelete(event: Event, number: number) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () =>
-        this.call(
-          () => this.delete(number),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
-        )
-    });
-  }
-
-  public onDelete2(number: number) {
+  public onDelete(number: number) {
     this.call(
       () => this.delete(number),
       () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
     );
   }
 
-
-  public onChangeDirection(sorting: { field: string, order: number }) {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
-
-    this.load(this.data.page);
-  }
-
-  public onChangeDirection2(sorting: SortingProperty) {
+  public onChangeDirection(sorting: SortingProperty) {
     this.sort.addField(sorting);
 
     this.load(this.data.page);
@@ -273,7 +241,13 @@ export class LibraryView implements OnInit {
       .subscribe();
   }
 
-  public onStartEditingView(view: string): void {
+  public onStartEditingView(event: { view: string, book: FictionBook | GameBook }): void {
+    this.selectedData = event.book;
+    this.view = event.view;
+    this.editing = true;
+  }
+
+  public onStartView(view: string): void {
     this.view = view;
     this.editing = true;
   }
