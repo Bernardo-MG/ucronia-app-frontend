@@ -35,12 +35,13 @@ import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
 import { LibraryBookLending } from '../library-book-lending/library-book-lending';
+import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -286,11 +287,25 @@ export class LibraryView implements OnInit {
     });
   }
 
+  public onDelete2(number: number) {
+    this.call(
+      () => this.delete(number),
+      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+    );
+  }
+
+
   public onChangeDirection(sorting: { field: string, order: number }) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
     this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.load(this.data.page);
+  }
+
+  public onChangeDirection2(sorting: SortingProperty) {
+    this.sort.addField(sorting);
 
     this.load(this.data.page);
   }
@@ -444,7 +459,7 @@ export class LibraryView implements OnInit {
     return (book as GameBook).bookType as BookType;
   }
 
-  private load(page: number) {
+  public load(page: number) {
     this.loading = true;
     this.read(page, this.sort)
       .pipe(finalize(() => this.loading = false))

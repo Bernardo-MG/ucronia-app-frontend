@@ -85,6 +85,10 @@
       <option [selected]="source === 'fiction'" value="fiction">Ficción</option>
     </select>
 
+    <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
+    [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
+    (pageChange)="load($event)" (sort)="onChangeDirection2($event)" (showBook)="onShowBook($event)" (delete)="onDelete2($event)" />
+
     <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
       [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
       (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
