@@ -51,7 +51,7 @@ export class LibraryView implements OnInit {
   private readonly reportService = inject(BookReportService);
   private readonly messageService = inject(MessageService);
   public readonly service = inject(LibraryService);
-    private readonly lendingsService = inject(LibraryLendingService);
+  private readonly lendingsService = inject(LibraryLendingService);
 
   public failures = new FailureStore();
 
@@ -64,10 +64,10 @@ export class LibraryView implements OnInit {
   public list: 'books' | 'lendings' = 'books';
 
   public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
-  public selectedTab = 'books';
+  public selectedTab: 'books' | 'lendings' = 'books';
 
   public bookOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Juegos', value: 'game' }, { label: 'Ficción', value: 'fiction' }];
-  public selectedBookView = 'game';
+  public selectedBookView: 'all' | 'game' | 'fiction' = 'game';
 
   /**
    * Loading flag.

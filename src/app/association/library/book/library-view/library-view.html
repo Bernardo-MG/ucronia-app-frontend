@@ -42,7 +42,6 @@
     </p-card>
   </div>
 
-  <!-- Tabs -->
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <div class="border border-gray-300 rounded-lg p-1 inline-block">
       <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTab" optionLabel="label" optionValue="value"
@@ -50,9 +49,10 @@
     </div>
 
     @if(list === 'books') {
+    <div class="ml-auto space-x-2">
     @if (createable) {
     <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
-      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded class="ml-auto" />
+      aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
     }
 
     <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
@@ -61,6 +61,7 @@
     @if (dataMenuItems) {
     <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
     }
+    </div>
     }
   </div>
 

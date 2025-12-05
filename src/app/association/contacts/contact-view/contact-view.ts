@@ -13,6 +13,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
+import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
 import { debounceTime, finalize, Observable, Subject, throwError } from 'rxjs';
@@ -30,7 +31,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, CardModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, CardModule, SelectButtonModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -87,6 +88,9 @@ export class ContactView implements OnInit {
   public editionMenuItems: MenuItem[] = [];
 
   public modalTitle = '';
+
+  public stateOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'members' }, { label: 'Invitados', value: 'guests' }, { label: 'Esponsors', value: 'sponsors' }];
+  public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -201,6 +205,10 @@ export class ContactView implements OnInit {
           () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
         )
     });
+  }
+
+  public onChangeStatusFilter(event: SelectButtonChangeEvent) {
+    this.selectedStatus = event.value as 'all' | 'members' | 'guests' | 'sponsors';
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
