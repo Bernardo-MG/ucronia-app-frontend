@@ -19,7 +19,6 @@ import { FormWithSelection } from '@app/shared/data/form-with-selection/form-wit
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -27,7 +26,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
@@ -41,7 +40,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {

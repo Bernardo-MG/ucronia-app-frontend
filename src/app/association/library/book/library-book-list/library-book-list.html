@@ -1,46 +1,45 @@
 <p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
 <p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="books()" paginator="true" [rows]="rows()"
-      [totalRecords]="totalRecords()" [first]="first" (onSort)="onChangeDirection($event)"
-      (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
+  [totalRecords]="totalRecords()" [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
+  showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
 
-      <!-- Header -->
-      <ng-template #header>
-        <tr>
-          <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
-          <th class="w-24"></th>
-        </tr>
-      </ng-template>
+  <!-- Header -->
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
+      <th class="w-24"></th>
+    </tr>
+  </ng-template>
 
-      <!-- Body rows -->
-      <ng-template #body let-book>
-        <tr>
-          <td class="align-top">
-            <sup>{{book.title.supertitle}}</sup>
-            {{book.title.title}}
-            <sub>{{book.title.subtitle}}</sub>
+  <!-- Body rows -->
+  <ng-template #body let-book>
+    <tr>
+      <td class="align-top">
+        <sup>{{book.title.supertitle}}</sup>
+        {{book.title.title}}
+        <sub>{{book.title.subtitle}}</sub>
 
-            @if (book.lent) {
-            <p-badge value="Prestado" severity="danger" badgeSize="small" />
-            }
-          </td>
+        @if (book.lent) {
+        <p-badge value="Prestado" severity="danger" badgeSize="small" />
+        }
+      </td>
 
-          <!-- ACTIONS: Tailwind small column -->
-          <td class="w-24 text-right space-x-1 whitespace-nowrap">
-            <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver"
-              (click)="showBook.emit(book)" rounded text />
+      <!-- ACTIONS: Tailwind small column -->
+      <td class="w-24 text-right space-x-1 whitespace-nowrap">
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="showBook.emit(book)" rounded text />
 
-            @if (editable()) {
-            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-              [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, book)" rounded text />
-            }
+        @if (editable()) {
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
+          [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, book)" rounded text />
+        }
 
-            @if (deletable()) {
-            <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-              [attr.aria-disabled]="!deletable()" (click)="onDelete($event, book.number)" rounded text />
-            }
-          </td>
-        </tr>
-      </ng-template>
+        @if (deletable()) {
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
+          [attr.aria-disabled]="!deletable()" (click)="onDelete($event, book.number)" rounded text />
+        }
+      </td>
+    </tr>
+  </ng-template>
 
-    </p-table>
+</p-table>

@@ -29,6 +29,7 @@ export class LibraryBookList {
   public readonly showBook = output<FictionBook | GameBook>();
   public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
+  public readonly show = output<string>();
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
@@ -40,6 +41,73 @@ export class LibraryBookList {
 
   public get first() {
     return (this.page() - 1) * this.rows();
+  }
+
+  constructor() {
+    // Load edition menu
+    this.fictionEditionMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.show.emit('details')
+      });
+    this.fictionEditionMenuItems.push(
+      {
+        label: 'Donantes',
+        command: () => this.show.emit('donors')
+      });
+    this.fictionEditionMenuItems.push(
+      {
+        label: 'Autores',
+        command: () => this.show.emit('authors')
+      });
+    this.fictionEditionMenuItems.push(
+      {
+        label: 'Editor',
+        command: () => this.show.emit('publishers')
+      });
+    this.fictionEditionMenuItems.push(
+      {
+        label: 'Préstamos',
+        command: () => this.show.emit('lendings')
+      });
+
+
+    // Load edition menu
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Datos',
+        command: () => this.show.emit('details')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Donantes',
+        command: () => this.show.emit('donors')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Autores',
+        command: () => this.show.emit('authors')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Editor',
+        command: () => this.show.emit('publishers')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Sistema',
+        command: () => this.show.emit('gameSystem')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Tipo',
+        command: () => this.show.emit('bookType')
+      });
+    this.gameEditionMenuItems.push(
+      {
+        label: 'Préstamos',
+        command: () => this.show.emit('lendings')
+      });
   }
 
   public onDelete(event: Event, number: number) {
