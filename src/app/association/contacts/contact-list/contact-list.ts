@@ -1,12 +1,13 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { Contact } from '@app/domain/contact/contact';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'assoc-contact-list',
-  imports: [ButtonModule, TableModule],
+  imports: [ButtonModule, TableModule, MenuModule],
   templateUrl: './contact-list.html'
 })
 export class ContactList {
@@ -22,13 +23,28 @@ export class ContactList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<Contact>();
-  public readonly edit = output<{ event: Event, contact: Contact }>();
+  public readonly edit = output<Contact>();
   public readonly delete = output<number>();
   public readonly changeDirection = output<{ field: string, order: number }>();
   public readonly changePage = output<number>();
 
+  @ViewChild('editionMenu') editionMenu!: Menu;
+
+  public editionMenuItems: MenuItem[] = [];
+
   public get first() {
     return (this.page() - 1) * this.rows();
+  }
+
+  public onEdit(event: Event, contact: Contact) {
+    this.editionMenuItems = [];
+    this.editionMenuItems.push({
+      label: 'Editar',
+      command: () => this.edit.emit(contact)
+    });
+    
+    // Show menu
+    this.editionMenu.toggle(event);
   }
 
   public onDelete(event: Event, contact: Contact) {

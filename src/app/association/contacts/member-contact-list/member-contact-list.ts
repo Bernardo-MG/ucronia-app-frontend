@@ -1,14 +1,15 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { Contact } from '@app/domain/contact/contact';
 import { MemberContact } from '@app/domain/contact/member-contact';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-member-contact-list',
-  imports: [ButtonModule, TableModule, TagModule],
+  imports: [ButtonModule, TableModule, TagModule, MenuModule],
   templateUrl: './member-contact-list.html'
 })
 export class MemberContactList {
@@ -24,13 +25,28 @@ export class MemberContactList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<MemberContact>();
-  public readonly edit = output<{ event: Event, contact: MemberContact }>();
+  public readonly edit = output<MemberContact>();
   public readonly delete = output<number>();
   public readonly changeDirection = output<{ field: string, order: number }>();
   public readonly changePage = output<number>();
 
+  @ViewChild('editionMenu') editionMenu!: Menu;
+
+  public editionMenuItems: MenuItem[] = [];
+
   public get first() {
     return (this.page() - 1) * this.rows();
+  }
+
+  public onEdit(event: Event, contact: MemberContact) {
+    this.editionMenuItems = [];
+    this.editionMenuItems.push({
+      label: 'Editar',
+      command: () => this.edit.emit(contact)
+    });
+    
+    // Show menu
+    this.editionMenu.toggle(event);
   }
 
   public onPageChange(first: number) {

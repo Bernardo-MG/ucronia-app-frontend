@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
@@ -8,14 +8,12 @@ import { MemberContact } from '@app/domain/contact/member-contact';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
-import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, throwError } from 'rxjs';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
@@ -31,7 +29,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, CardModule, SelectButtonModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, SelectButtonModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -39,8 +37,6 @@ export class ContactView implements OnInit {
   private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);
   private readonly messageService = inject(MessageService);
-
-  @ViewChild('editionMenu') editionMenu!: Menu;
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -80,8 +76,6 @@ export class ContactView implements OnInit {
 
   public failures = new FailureStore();
 
-  public editionMenuItems: MenuItem[] = [];
-
   public modalTitle = '';
 
   public statusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'members' }, { label: 'Invitados', value: 'guests' }, { label: 'Esponsors', value: 'sponsors' }];
@@ -97,22 +91,15 @@ export class ContactView implements OnInit {
     this.createable = authContainer.hasPermission("contact", "create");
     this.editable = authContainer.hasPermission("contact", "update");
     this.deletable = authContainer.hasPermission("contact", "delete");
-
-    this.editionMenuItems.push({
-      label: 'Editar',
-      command: () => this.onStartEditingView('edition')
-    });
   }
 
   public ngOnInit(): void {
     this.load(0);
   }
 
-  public openEditionMenu(event: Event, contact: Contact) {
+  public onEdit(contact: MemberContact | Contact) {
     this.selectedData = contact;
-
-    // Show menu
-    this.editionMenu.toggle(event);
+    this.onStartEditingView('edition');
   }
 
   public onStartEditingView(view: string): void {

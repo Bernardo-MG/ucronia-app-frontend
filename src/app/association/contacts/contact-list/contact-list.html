@@ -1,3 +1,4 @@
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="contacts()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
@@ -14,7 +15,7 @@
       <td class="w-40">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(contact)" rounded text />
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          [attr.aria-disabled]="!editable()" (click)="edit.emit({ event:$event, contact:contact })" rounded text />
+          [attr.aria-disabled]="!editable()" (click)="onEdit($event, contact)" rounded text />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
           [attr.aria-disabled]="!deletable()" (click)="onDelete($event, contact)" rounded text />
       </td>

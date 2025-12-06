@@ -1,5 +1,3 @@
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-
 <div class="p-4 space-y-6">
   <h1 class="text-4xl font-bold">Contactos</h1>
 
@@ -80,13 +78,13 @@
     @if(selectedStatus === 'members') {
     <assoc-member-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable"
       [contacts]="memberData.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-      (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
+      (show)="onShowInfo($event)" (edit)="onEdit($event)"
       (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
       (changePage)="load($event)" />
     } @else {
     <assoc-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-      (edit)="openEditionMenu($event.event, $event.contact)" (delete)="onDelete($event)"
+      (edit)="onEdit($event)" (delete)="onDelete($event)"
       (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     }
 
