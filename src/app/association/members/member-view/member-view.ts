@@ -1,17 +1,20 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
+import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable, Subject, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
@@ -19,7 +22,7 @@ import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [PanelModule, TableModule, DialogModule, ButtonModule, MenuModule, MemberContactDetails, MemberContactCreationForm],
+  imports: [FormsModule, PanelModule, TableModule, DialogModule, CardModule, ButtonModule, MenuModule, TextFilter, MemberContactDetails, MemberContactCreationForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -29,7 +32,7 @@ export class MemberView implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
 
   @ViewChild('editionMenu') editionMenu!: Menu;
-  
+
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {
@@ -61,9 +64,12 @@ export class MemberView implements OnInit {
 
   public failures = new FailureStore();
 
+  public nameFilterSubject = new Subject<string>();
+  public nameFilter = '';
+
   constructor() {
     const authContainer = inject(AuthContainer);
-    
+
     // Check permissions
     this.createable = authContainer.hasPermission("contact", "create");
     this.deletable = authContainer.hasPermission("contact", "delete");
@@ -77,9 +83,9 @@ export class MemberView implements OnInit {
 
   public onChangeDirection(sorting: { field: string, order: number }) {
     if (sorting.field === 'fullName') {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
+      const direction = sorting.order === 1
+        ? SortingDirection.Ascending
+        : SortingDirection.Descending;
       this.sort.addField(new SortingProperty('firstName', direction));
       this.sort.addField(new SortingProperty('lastName', direction));
     }
@@ -133,6 +139,11 @@ export class MemberView implements OnInit {
       () => this.service.create(toCreate as any),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
     );
+  }
+
+  public onFilter(filter: string) {
+    this.nameFilter = filter;
+    this.load(1);
   }
 
   public openEditionMenu(event: Event, member: Member) {

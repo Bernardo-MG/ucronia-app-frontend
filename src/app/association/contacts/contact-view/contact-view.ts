@@ -5,20 +5,19 @@ import { MemberContactCreation } from '@app/association/contacts/domain/member-c
 import { Active } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { MemberContact } from '@app/domain/contact/member-contact';
+import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { debounceTime, finalize, Observable, Subject, throwError } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactInfo } from '../contact-info/contact-info';
@@ -32,7 +31,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, InputTextModule, FloatLabelModule, ToggleSwitchModule, CardModule, SelectButtonModule, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, CardModule, SelectButtonModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -61,8 +60,6 @@ export class ContactView implements OnInit {
   }
 
   public nameFilter = '';
-
-  public nameFilterSubject = new Subject<string>();
 
   public selectedData: Contact | MemberContact = new Contact();
 
@@ -101,10 +98,6 @@ export class ContactView implements OnInit {
     this.createable = authContainer.hasPermission("contact", "create");
     this.editable = authContainer.hasPermission("contact", "update");
     this.deletable = authContainer.hasPermission("contact", "delete");
-
-    this.nameFilterSubject
-      .pipe(debounceTime(300))
-      .subscribe(() => this.load(0));
 
     this.editionMenuItems.push({
       label: 'Editar',
@@ -214,6 +207,11 @@ export class ContactView implements OnInit {
       this.activeFilter = Active.Inactive;
     }
     this.load(0);
+  }
+
+  public onFilter(filter: string) {
+    this.nameFilter = filter;
+    this.load(1);
   }
 
   public load(page: number) {

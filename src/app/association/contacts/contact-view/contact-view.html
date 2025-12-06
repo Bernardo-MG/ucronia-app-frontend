@@ -70,15 +70,7 @@
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <!-- Filter by name -->
-    <p-floatlabel variant="in" class="mb-2 d-flex">
-      <input pInputText type="text" id="nameFilterInput" [(ngModel)]="nameFilter"
-        (input)="nameFilterSubject.next(nameFilter)" aria-describedby="nameFilterLabel" maxlength="50"
-        class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 w-60" />
-      <label for="nameFilterInput" id="nameFilterLabel" class="text-gray-700 font-medium">
-        Nombre
-      </label>
-    </p-floatlabel>
+    <shared-text-filter (filter)="onFilter($event)" />
   </div>
 
   <!-- Contact List -->

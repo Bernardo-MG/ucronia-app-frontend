@@ -1,17 +1,49 @@
-<div class="p-4">
+<div class="p-4 space-y-6">
 
   <!-- Popup Menu -->
   <p-menu #editionMenu [model]="editionMenuItems" [popup]="true"></p-menu>
 
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center">
+    <p-card class="w-60">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">1</p>
+          <p class="uppercase text-gray-500 text-sm">Socios</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="w-60">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">0</p>
+          <p class="uppercase text-gray-500 text-sm">No renuevan</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <!-- Filter by name -->
+    <shared-text-filter (filter)="onFilter($event)" />
+    
+    @if (createable) {
+    <div class="ml-auto space-x-2">
+      <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
+        aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
+    </div>
+    }
+  </div>
+
   <!-- Table Panel -->
   <p-panel class="shadow bg-white rounded-lg">
-
-    <ng-template #icons>
-      <!-- Add Member Button -->
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-        [disabled]="!createable" aria-label="Nuevo socio" [attr.aria-disabled]="!createable" rounded text
-        class="!p-2"></p-button>
-    </ng-template>
 
     <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
       [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
