@@ -31,7 +31,7 @@ export class ContactList {
     return (this.page() - 1) * this.rows();
   }
 
-  public onDelete(event: Event, number: number) {
+  public onDelete(event: Event, contact: Contact) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -45,7 +45,7 @@ export class ContactList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit(number)
+      accept: () => this.delete.emit(contact.number)
     });
   }
 

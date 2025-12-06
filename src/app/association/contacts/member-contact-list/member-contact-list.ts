@@ -1,4 +1,5 @@
 import { Component, inject, input, output } from '@angular/core';
+import { Contact } from '@app/domain/contact/contact';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -37,7 +38,7 @@ export class MemberContactList {
     this.changePage.emit(page);
   }
 
-  public onDelete(event: Event, number: number) {
+  public onDelete(event: Event, contact: Contact) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -51,7 +52,7 @@ export class MemberContactList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit(number)
+      accept: () => this.delete.emit(contact.number)
     });
   }
 
