@@ -210,6 +210,13 @@ export class ContactView implements OnInit {
 
   public onChangeMemberStatus(event: SelectButtonChangeEvent) {
     this.selectedMemberStatus = event.value as 'all' | 'active' | 'inactive';
+    if (this.selectedMemberStatus === 'all') {
+      this.activeFilter = Active.All;
+    } else if (this.selectedMemberStatus === 'active') {
+      this.activeFilter = Active.Active;
+    } else if (this.selectedMemberStatus === 'inactive') {
+      this.activeFilter = Active.Inactive;
+    }
     this.load(0);
   }
 
