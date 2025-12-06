@@ -13,23 +13,24 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
-import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, throwError } from 'rxjs';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactInfo } from '../contact-info/contact-info';
 import { ContactList } from '../contact-list/contact-list';
+import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
 import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
 import { MemberContactInfo } from '../member-contact-info/member-contact-info';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
+import { MemberStatusSelector } from '../member-status-selector/member-status-selector';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, SelectButtonModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -78,10 +79,7 @@ export class ContactView implements OnInit {
 
   public modalTitle = '';
 
-  public statusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'members' }, { label: 'Invitados', value: 'guests' }, { label: 'Esponsors', value: 'sponsors' }];
   public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
-
-  public memberStatusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Activos', value: 'active' }, { label: 'Baja', value: 'inactive' }];
   public selectedMemberStatus: 'all' | 'active' | 'inactive' = 'all';
 
   constructor() {
@@ -163,13 +161,13 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onChangeStatusFilter(event: SelectButtonChangeEvent) {
-    this.selectedStatus = event.value as 'all' | 'members' | 'guests' | 'sponsors';
+  public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
+    this.selectedStatus = status;
     this.load(0);
   }
 
-  public onChangeMemberStatus(event: SelectButtonChangeEvent) {
-    this.selectedMemberStatus = event.value as 'all' | 'active' | 'inactive';
+  public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
+    this.selectedMemberStatus = status;
     if (this.selectedMemberStatus === 'all') {
       this.activeFilter = Active.All;
     } else if (this.selectedMemberStatus === 'active') {

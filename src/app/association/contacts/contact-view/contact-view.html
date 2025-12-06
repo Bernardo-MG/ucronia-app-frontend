@@ -47,16 +47,10 @@
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <div class="border border-gray-300 rounded-lg p-1 inline-block">
-      <p-selectbutton [options]="statusOptions" [(ngModel)]="selectedStatus" optionLabel="label" optionValue="value"
-        aria-labelledby="basic" (onChange)="onChangeStatusFilter($event)" />
-    </div>
+    <assoc-contact-status-selector (select)="onChangeStatusFilter($event)" />
 
     @if(selectedStatus === 'members') {
-    <div class="border border-gray-300 rounded-lg p-1 inline-block">
-      <p-selectbutton [options]="memberStatusOptions" [(ngModel)]="selectedMemberStatus" optionLabel="label"
-        optionValue="value" aria-labelledby="basic" (onChange)="onChangeMemberStatus($event)" />
-    </div>
+      <assoc-member-status-selector (select)="onChangeMemberStatus($event)" />
     }
 
     @if (createable) {
