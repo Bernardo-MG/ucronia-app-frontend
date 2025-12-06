@@ -29,4 +29,9 @@ export class MemberContactList {
     return (this.page() - 1) * this.rows();
   }
 
+  public onPageChange(first: number) {
+    const page = (first / this.rows()) + 1;
+    this.changePage.emit(page);
+  }
+
 }

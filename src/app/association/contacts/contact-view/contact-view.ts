@@ -159,11 +159,6 @@ export class ContactView implements OnInit {
     this.showing = true;
   }
 
-  public onPageChange(first: number) {
-    const page = (first / this.data.size) + 1;
-    this.load(page);
-  }
-
   public onNameFilterChange(): void {
     this.load(0);
   }
@@ -221,6 +216,20 @@ export class ContactView implements OnInit {
     this.load(0);
   }
 
+  public load(page: number) {
+    this.loading = true;
+
+    if (this.selectedStatus === 'members') {
+      this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(response => this.data = response);
+    } else {
+      this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(response => this.data = response);
+    }
+  }
+
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
@@ -241,20 +250,6 @@ export class ContactView implements OnInit {
           return throwError(() => error);
         }
       });
-  }
-
-  private load(page: number) {
-    this.loading = true;
-
-    if (this.selectedStatus === 'members') {
-      this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.data = response);
-    } else {
-      this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.data = response);
-    }
   }
 
   private getService() {

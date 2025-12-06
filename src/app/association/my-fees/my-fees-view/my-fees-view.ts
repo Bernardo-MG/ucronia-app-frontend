@@ -31,12 +31,7 @@ export class MyFeesView implements OnInit {
     this.load(0);
   }
 
-  public onPageChange(first: number) {
-    const page = (first / this.data.size) + 1;
-    this.load(page);
-  }
-
-  private load(page: number) {
+  public load(page: number) {
     this.loading = true;
 
     this.service.getAll(page)

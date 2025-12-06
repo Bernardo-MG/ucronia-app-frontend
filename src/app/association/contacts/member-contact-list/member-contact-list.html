@@ -1,7 +1,7 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="contacts()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
-  (onPage)="changePage.emit($event.first)">
+  (onPage)="onPageChange($event.first)">
   <ng-template #header>
     <tr>
       <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>

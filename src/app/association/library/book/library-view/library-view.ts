@@ -225,11 +225,6 @@ export class LibraryView implements OnInit {
     }
   }
 
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
-  }
-
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
     this.showing = true;

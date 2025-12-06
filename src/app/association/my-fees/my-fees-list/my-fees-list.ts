@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { Fee } from '@app/domain/fees/fee';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'app-my-fees-list',
@@ -16,10 +16,15 @@ export class MyFeesList {
   public readonly totalRecords = input(0);
   public readonly loading = input(false);
   
-  public readonly changePage = output<number>();
+  public readonly pageChange = output<number>();
 
   public get first() {
     return (this.page() - 1) * this.rows();
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / this.rows()) + 1;
+    this.pageChange.emit(page);
   }
 
 }
