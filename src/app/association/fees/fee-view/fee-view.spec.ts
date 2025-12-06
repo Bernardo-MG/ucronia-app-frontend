@@ -7,16 +7,16 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
-import { FeeList } from './fee-list';
+import { FeeView } from './fee-view';
 
-describe('FeeList', () => {
-  let component: FeeList;
-  let fixture: ComponentFixture<FeeList>;
+describe('FeeView', () => {
+  let component: FeeView;
+  let fixture: ComponentFixture<FeeView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FeeList
+        FeeView
       ],
       providers: [
         FeeCalendarService,
@@ -32,7 +32,7 @@ describe('FeeList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeList);
+    fixture = TestBed.createComponent(FeeView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

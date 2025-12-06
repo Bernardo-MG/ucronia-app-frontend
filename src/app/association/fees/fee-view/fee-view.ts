@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Active } from '@app/domain/contact/active';
 import { Fee } from '@app/domain/fees/fee';
-import { MemberFees } from '@app/domain/fees/member-fees';
-import { YearsRange } from '@app/domain/fees/years-range';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
 import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
+import { MemberFees } from '@app/domain/fees/member-fees';
+import { YearsRange } from '@app/domain/fees/years-range';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/contact/active';
 import { MemberSelectStepper } from '@app/shared/contact/components/contact-select-stepper/member-select-stepper';
 import { MemberStatusSelectComponent } from '@app/shared/contact/components/member-status-select/member-status-select.component';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -30,11 +30,11 @@ import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
 
 @Component({
-  selector: 'assoc-fee-list',
+  selector: 'assoc-fee-view',
   imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentBalanceChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
-  templateUrl: './fee-list.html'
+  templateUrl: './fee-view.html'
 })
-export class FeeList implements OnInit {
+export class FeeView implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
   private readonly reportService = inject(FeeReportService);
