@@ -81,12 +81,12 @@
     <assoc-member-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable"
       [contacts]="memberData.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
       (show)="onShowInfo($event)" (edit)="openEditionMenu($event.event, $event.contact)"
-      (delete)="onDelete($event.event, $event.contact)" (changeDirection)="onChangeDirection($event)"
+      (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
       (changePage)="load($event)" />
     } @else {
     <assoc-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-      (edit)="openEditionMenu($event.event, $event.contact)" (delete)="onDelete($event.event, $event.contact)"
+      (edit)="openEditionMenu($event.event, $event.contact)" (delete)="onDelete($event)"
       (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     }
 

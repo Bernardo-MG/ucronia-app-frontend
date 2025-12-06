@@ -38,7 +38,6 @@ export class ContactView implements OnInit {
 
   private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);
-  private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
 
   @ViewChild('editionMenu') editionMenu!: Menu;
@@ -170,26 +169,11 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onDelete(event: Event, number: number) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () =>
-        this.call(
-          () => this.service.delete(number),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
-        )
-    });
+  public onDelete(number: number) {
+    this.call(
+      () => this.service.delete(number),
+      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+    );
   }
 
   public onChangeStatusFilter(event: SelectButtonChangeEvent) {

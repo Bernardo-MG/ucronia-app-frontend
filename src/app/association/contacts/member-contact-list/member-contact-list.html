@@ -6,7 +6,7 @@
     <tr>
       <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
       <th class="w-40"></th>
-    </tr>
+    </trs>
   </ng-template>
   <ng-template #body let-contact>
     <tr>
@@ -22,7 +22,7 @@
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
           [attr.aria-disabled]="!editable()" (click)="edit.emit({ event:$event, contact:contact })" rounded text />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-          [attr.aria-disabled]="!deletable()" (click)="delete.emit(contact.number)" rounded text />
+          [attr.aria-disabled]="!deletable()" (click)="onDelete($event, contact)" rounded text />
       </td>
     </tr>
   </ng-template>

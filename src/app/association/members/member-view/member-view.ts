@@ -11,9 +11,9 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
-import { Menu, MenuModule } from 'primeng/menu';
+import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TablePageEvent } from 'primeng/table';
 import { finalize, Observable, Subject, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
@@ -23,14 +23,13 @@ import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, TableModule, DialogModule, CardModule, ButtonModule, MenuModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
   private readonly messageService = inject(MessageService);
-  private readonly confirmationService = inject(ConfirmationService);
 
   @ViewChild('editionMenu') editionMenu!: Menu;
 
@@ -113,26 +112,11 @@ export class MemberView implements OnInit {
     this.editing = true;
   }
 
-  public onDelete(event: Event, number: number) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () =>
-        this.call(
-          () => this.service.delete(number),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
-        )
-    });
+  public onDelete(number: number) {
+    this.call(
+      () => this.service.delete(number),
+      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+    );
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {

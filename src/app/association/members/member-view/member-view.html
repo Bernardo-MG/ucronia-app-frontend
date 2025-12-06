@@ -1,8 +1,5 @@
 <div class="p-4 space-y-6">
 
-  <!-- Popup Menu -->
-  <p-menu #editionMenu [model]="editionMenuItems" [popup]="true"></p-menu>
-
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center">
     <p-card class="w-60">
@@ -45,9 +42,9 @@
   <!-- Table Panel -->
   <p-panel class="shadow bg-white rounded-lg">
 
-    <assoc-member-list [loading]="loading" [editable]="editable"[readContact]="readContact" [deletable]="deletable" [members]="data.content"
-      [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowContact($event)"
-      (delete)="onDelete($event.event, $event.number)" (changeDirection)="onChangeDirection($event)"
+    <assoc-member-list [loading]="loading" [editable]="editable" [readContact]="readContact" [deletable]="deletable"
+      [members]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
+      (show)="onShowContact($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
       (changePage)="load($event)" (active)="setActive($event)" (renewal)="setRenewal($event)" />
   </p-panel>
 

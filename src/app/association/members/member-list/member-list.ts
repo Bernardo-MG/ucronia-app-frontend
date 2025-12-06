@@ -24,7 +24,7 @@ export class MemberList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<Member>();
-  public readonly delete = output<{ event: Event, number: number }>();
+  public readonly delete = output<number>();
   public readonly active = output<boolean>();
   public readonly renewal = output<boolean>();
   public readonly changeDirection = output<{ field: string, order: number }>();
@@ -52,7 +52,7 @@ export class MemberList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit({ event, number })
+      accept: () => this.delete.emit(number)
     });
   }
 
