@@ -83,7 +83,7 @@ export const routes: Routes = [
           {
             path: 'myFees',
             canActivate: [ResourceGuard("my_fees", "view")],
-            loadComponent: () => import('./association/my-fees/my-fees-list/my-fees-list').then(m => m.MyFeesList)
+            loadComponent: () => import('./association/my-fees/my-fees-view/my-fees-view').then(m => m.MyFeesView)
           },
           {
             path: 'library',

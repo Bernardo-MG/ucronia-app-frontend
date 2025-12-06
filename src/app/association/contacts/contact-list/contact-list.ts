@@ -1,6 +1,5 @@
 import { Component, input, output } from '@angular/core';
 import { Contact } from '@app/domain/contact/contact';
-import { PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 
