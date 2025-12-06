@@ -2,6 +2,7 @@
   <header>
     <h1 class="text-4xl font-bold">Configuración</h1>
   </header>
+  <div class="max-w-2xl mx-auto space-y-6">
   <p-card>
     <assoc-third-party-settings-form [loading]="loading" [googleMaps]="getSetting('social.googleMap.id')"
       [teamUp]="getSetting('social.teamup.id')" (save)="onSaveThirdPartySettings($event)" />
@@ -10,4 +11,5 @@
     <assoc-membership-settings-form [loading]="loading" [feeAmount]="getSetting('fee.amount')"
       (save)="onSaveMembershipSettings($event)" />
   </p-card>
+  
 </div>
