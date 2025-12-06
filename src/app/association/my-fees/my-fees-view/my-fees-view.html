@@ -3,7 +3,7 @@
   <p-card>
     <app-my-fees-list  [loading]="loading"
       [fees]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-      (pageChange)="load($event)" />
+      (changePage)="load($event)" />
   </p-card>
 
 </div>
