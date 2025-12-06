@@ -11,11 +11,13 @@ import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputTextModule } from 'primeng/inputtext';
 import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
-import { ToggleSwitchChangeEvent, ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { debounceTime, finalize, Observable, Subject, throwError } from 'rxjs';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
@@ -26,12 +28,11 @@ import { MemberContactCreationForm } from '../member-contact-creation-form/membe
 import { MemberContactInfo } from '../member-contact-info/member-contact-info';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
-import { MemberStatusSelect } from '../member-status-select/member-status-select';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, ToggleSwitchModule, CardModule, SelectButtonModule, MemberStatusSelect, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
+  imports: [FormsModule, PanelModule, MenuModule, ButtonModule, DialogModule, TableModule, InputTextModule, FloatLabelModule, ToggleSwitchModule, CardModule, SelectButtonModule, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
