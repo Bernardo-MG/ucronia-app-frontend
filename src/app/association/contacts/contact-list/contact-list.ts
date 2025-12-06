@@ -11,10 +11,13 @@ import { TableModule } from 'primeng/table';
 })
 export class ContactList {
 
-  public readonly data = input(new PaginatedResponse<Contact>());
   public readonly loading = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
+  public readonly contacts = input<Contact[]>([]);
+  public readonly rows = input(0);
+  public readonly page = input(0);
+  public readonly totalRecords = input(0);
 
   public readonly show = output<Contact>();
   public readonly edit = output<{ event: Event, contact: Contact }>();
@@ -23,7 +26,7 @@ export class ContactList {
   public readonly changePage = output<number>();
 
   public get first() {
-    return (this.data().page - 1) * this.data().size;
+    return (this.page() - 1) * this.rows();
   }
 
 }
