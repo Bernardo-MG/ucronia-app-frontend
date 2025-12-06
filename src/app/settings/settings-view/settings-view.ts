@@ -40,6 +40,10 @@ export class SettingsView implements OnInit {
     return this.service.update(config.code, config).subscribe();
   }
 
+  public getSetting(code: string) {
+    return this.settings.find(s => s.code === code)?.value ?? '';
+  }
+
   public onSaveThirdPartySettings(values: { googleMaps: string, teamUp: string }) {
     const googleMapsSetting = {
       value: values.googleMaps
