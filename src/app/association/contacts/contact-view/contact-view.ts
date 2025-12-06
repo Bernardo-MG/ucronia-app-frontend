@@ -79,8 +79,6 @@ export class ContactView implements OnInit {
   public saving = false;
   public showing = false;
 
-  public viewMembers = false;
-
   public view = '';
 
   public failures = new FailureStore();
@@ -169,11 +167,6 @@ export class ContactView implements OnInit {
     this.load(0);
   }
 
-  public onChangeView(event: ToggleSwitchChangeEvent): void {
-    this.viewMembers = event.checked;
-    this.load(0);
-  }
-
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
       () => this.getService().create(toCreate as any),
@@ -212,10 +205,12 @@ export class ContactView implements OnInit {
 
   public onChangeStatusFilter(event: SelectButtonChangeEvent) {
     this.selectedStatus = event.value as 'all' | 'members' | 'guests' | 'sponsors';
+    this.load(0);
   }
 
   public onChangeMemberStatus(event: SelectButtonChangeEvent) {
     this.selectedMemberStatus = event.value as 'all' | 'active' | 'inactive';
+    this.load(0);
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
@@ -243,7 +238,7 @@ export class ContactView implements OnInit {
   private load(page: number) {
     this.loading = true;
 
-    if (this.viewMembers) {
+    if (this.selectedStatus === 'members') {
       this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
         .pipe(finalize(() => this.loading = false))
         .subscribe(response => this.data = response);
@@ -256,7 +251,7 @@ export class ContactView implements OnInit {
 
   private getService() {
     let service;
-    if (this.viewMembers) {
+    if (this.selectedStatus === 'members') {
       service = this.memberContactsService;
     } else {
       service = this.service;
