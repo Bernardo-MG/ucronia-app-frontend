@@ -21,11 +21,11 @@ import { TransactionReportService } from '../transaction-report-service';
 import { TransactionService } from '../transaction-service';
 
 @Component({
-  selector: 'app-funds',
+  selector: 'app-funds-view',
   imports: [RouterModule, PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChart],
-  templateUrl: './funds.html'
+  templateUrl: './funds-view.html'
 })
-export class Funds implements OnInit {
+export class FundsView implements OnInit {
 
   private readonly service = inject(TransactionService);
   private readonly transactionCalendarService = inject(TransactionCalendarService);

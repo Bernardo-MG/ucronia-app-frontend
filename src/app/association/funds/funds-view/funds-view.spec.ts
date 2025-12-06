@@ -6,16 +6,16 @@ import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
-import { Funds } from './funds';
+import { FundsView } from './funds-view';
 
-describe('Funds', () => {
-  let component: Funds;
-  let fixture: ComponentFixture<Funds>;
+describe('FundsView', () => {
+  let component: FundsView;
+  let fixture: ComponentFixture<FundsView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        Funds
+        FundsView
       ],
       providers: [
         MessageService,
@@ -30,7 +30,7 @@ describe('Funds', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(Funds);
+    fixture = TestBed.createComponent(FundsView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
