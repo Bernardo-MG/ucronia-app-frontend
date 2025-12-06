@@ -18,11 +18,12 @@ import { finalize, Observable, Subject, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
+import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, TableModule, DialogModule, CardModule, ButtonModule, MenuModule, TextFilter, MemberContactDetails, MemberContactCreationForm],
+  imports: [FormsModule, PanelModule, TableModule, DialogModule, CardModule, ButtonModule, MenuModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -146,85 +147,7 @@ export class MemberView implements OnInit {
     this.load(1);
   }
 
-  public openEditionMenu(event: Event, member: Member) {
-    this.selectedData = member;
-
-    // Rebuild menu items dynamically
-    this.editionMenuItems = [];
-
-    // Determine current membership values
-    const isActive = !!this.selectedData.active;
-    const canRenew = !!this.selectedData.renew;
-
-    // Active/Deactivate toggle
-    this.editionMenuItems.push({
-      label: isActive ? 'Desactivar' : 'Activar',
-      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, !isActive)
-    });
-
-    // Renewal toggle
-    this.editionMenuItems.push({
-      label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
-      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, !canRenew)
-    });
-
-    // Show menu
-    this.editionMenu.toggle(event);
-  }
-
-  public onConfirmSetActive(event: Event, status: boolean) {
-    let message;
-    if (status) {
-      message = '¿Estás seguro de querer activar el usuario?';
-    } else {
-      message = '¿Estás seguro de querer desactivar el usuario?';
-    }
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message,
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => {
-        this.setActive(status);
-      }
-    });
-  }
-
-  public onConfirmSetRenewal(event: Event, status: boolean) {
-    let message;
-    if (status) {
-      message = '¿Estás seguro de querer activar la renovación del usuario?';
-    } else {
-      message = '¿Estás seguro de querer desactivar la renovación del usuario?';
-    }
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message,
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => {
-        this.setRenewal(status);
-      }
-    });
-  }
-
-  private setActive(status: boolean) {
+  public setActive(status: boolean) {
     this.selectedData.active = status;
     this.selectedData.renew = status;
     this.call(
@@ -233,7 +156,7 @@ export class MemberView implements OnInit {
     );
   }
 
-  private setRenewal(status: boolean) {
+  public setRenewal(status: boolean) {
     const patched: MemberPatch = {
       number: this.selectedData.number,
       renew: status
@@ -244,7 +167,7 @@ export class MemberView implements OnInit {
     );
   }
 
-  private load(page: number) {
+  public load(page: number) {
     this.loading = true;
 
     this.service.getAll(page, this.sort)
