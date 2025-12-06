@@ -205,7 +205,7 @@ export const routes: Routes = [
         // Settings
         path: 'settings',
         canActivate: [LoggedInGuard, ResourceGuard("association_settings", "view")],
-        loadComponent: () => import('./settings/settings-edition/settings-edition').then(m => m.SettingsInfoEditor)
+        loadComponent: () => import('./settings/settings-view/settings-view').then(m => m.SettingsView)
       }
     ]
   }

@@ -8,17 +8,17 @@ import { AssociationSettingsService } from '../association-settings-service';
 import { SettingValuesEditor } from '../settings-values-editor/settings-values-editor';
 
 @Component({
-  selector: 'assoc-settings-edition',
+  selector: 'assoc-settings-view',
   imports: [CardModule, ReactiveFormsModule, FormsModule, SettingValuesEditor],
-  templateUrl: './settings-edition.html'
+  templateUrl: './settings-view.html'
 })
-export class SettingsInfoEditor implements OnInit {
+export class SettingsView implements OnInit {
+
+  private readonly service = inject(AssociationSettingsService);
 
   public settings: Setting[] = [];
 
   public readonly editable;
-
-  private readonly service = inject(AssociationSettingsService);
 
   constructor() {
     const authContainer = inject(AuthContainer);

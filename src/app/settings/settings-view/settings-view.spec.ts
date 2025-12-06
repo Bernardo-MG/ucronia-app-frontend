@@ -2,15 +2,15 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AssociationSettingsService } from '../association-settings-service';
-import { SettingsInfoEditor } from './settings-edition';
+import { SettingsView } from './settings-view';
 
-describe('SettingsInfoEditor', () => {
-  let component: SettingsInfoEditor;
-  let fixture: ComponentFixture<SettingsInfoEditor>;
+describe('SettingsView', () => {
+  let component: SettingsView;
+  let fixture: ComponentFixture<SettingsView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SettingsInfoEditor],
+      imports: [SettingsView],
       providers: [
         AssociationSettingsService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -19,7 +19,7 @@ describe('SettingsInfoEditor', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(SettingsInfoEditor);
+    fixture = TestBed.createComponent(SettingsView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
