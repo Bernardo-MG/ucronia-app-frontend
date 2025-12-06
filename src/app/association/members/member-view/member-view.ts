@@ -2,12 +2,14 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
+import { Active } from '@app/domain/contact/active';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
+import { MemberStatusSelector } from '@app/shared/contact/components/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -23,7 +25,7 @@ import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm, MemberStatusSelector],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -64,6 +66,7 @@ export class MemberView implements OnInit {
 
   public failures = new FailureStore();
 
+  public activeFilter = Active.Active;
   public nameFilterSubject = new Subject<string>();
   public nameFilter = '';
 
@@ -105,6 +108,17 @@ export class MemberView implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.memberContact = response);
     this.showing = true;
+  }
+
+  public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
+    if (status === 'all') {
+      this.activeFilter = Active.All;
+    } else if (status === 'active') {
+      this.activeFilter = Active.Active;
+    } else if (status === 'inactive') {
+      this.activeFilter = Active.Inactive;
+    }
+    this.load(0);
   }
 
   public onStartEditingView(view: string): void {

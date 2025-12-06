@@ -15,6 +15,7 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, throwError } from 'rxjs';
+import { MemberStatusSelector } from '../../../shared/contact/components/member-status-selector/member-status-selector';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactInfo } from '../contact-info/contact-info';
@@ -25,7 +26,6 @@ import { MemberContactCreationForm } from '../member-contact-creation-form/membe
 import { MemberContactInfo } from '../member-contact-info/member-contact-info';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
-import { MemberStatusSelector } from '../member-status-selector/member-status-selector';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
@@ -80,7 +80,6 @@ export class ContactView implements OnInit {
   public modalTitle = '';
 
   public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
-  public selectedMemberStatus: 'all' | 'active' | 'inactive' = 'all';
 
   constructor() {
     const authContainer = inject(AuthContainer);
@@ -167,12 +166,11 @@ export class ContactView implements OnInit {
   }
 
   public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
-    this.selectedMemberStatus = status;
-    if (this.selectedMemberStatus === 'all') {
+    if (status === 'all') {
       this.activeFilter = Active.All;
-    } else if (this.selectedMemberStatus === 'active') {
+    } else if (status === 'active') {
       this.activeFilter = Active.Active;
-    } else if (this.selectedMemberStatus === 'inactive') {
+    } else if (status === 'inactive') {
       this.activeFilter = Active.Inactive;
     }
     this.load(0);
