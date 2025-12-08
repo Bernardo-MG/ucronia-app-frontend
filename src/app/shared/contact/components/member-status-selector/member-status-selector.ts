@@ -9,7 +9,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 })
 export class MemberStatusSelector {
 
-  public readonly select = output<'all' | 'active' | 'inactive'>();
+  public readonly filter = output<'all' | 'active' | 'inactive'>();
 
   public memberStatusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Activos', value: 'active' }, { label: 'Baja', value: 'inactive' }];
   public selectedMemberStatus: 'all' | 'active' | 'inactive' = 'all';

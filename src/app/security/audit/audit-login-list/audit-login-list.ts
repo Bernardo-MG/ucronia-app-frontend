@@ -4,7 +4,7 @@ import { TableModule } from 'primeng/table';
 import { LoginRegister } from '../models/login-register';
 
 @Component({
-  selector: 'assoc-audit-login-list',
+  selector: 'access-audit-login-list',
   imports: [TableModule, DatePipe],
   templateUrl: './audit-login-list.html'
 })

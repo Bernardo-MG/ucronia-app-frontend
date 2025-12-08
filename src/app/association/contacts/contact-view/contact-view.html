@@ -47,10 +47,10 @@
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <assoc-contact-status-selector (select)="onChangeStatusFilter($event)" />
+    <assoc-contact-status-selector (filter)="onChangeStatusFilter($event)" />
 
     @if(selectedStatus === 'members') {
-      <assoc-member-status-selector (select)="onChangeMemberStatus($event)" />
+      <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
     }
 
     @if (createable) {

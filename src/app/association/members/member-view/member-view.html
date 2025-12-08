@@ -31,7 +31,7 @@
     <!-- Filter by name -->
     <shared-text-filter (filter)="onFilter($event)" />
     @if(readContact) {
-      <assoc-member-status-selector (select)="onChangeMemberStatus($event)" />
+      <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
     }
 
     @if (createable) {

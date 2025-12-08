@@ -9,7 +9,7 @@ import { AuditLoginList } from '../audit-login-list/audit-login-list';
 import { LoginRegister } from '../models/login-register';
 
 @Component({
-  selector: 'audit-view',
+  selector: 'access-audit-view',
   imports: [CardModule, AuditLoginList],
   templateUrl: './audit-view.html'
 })

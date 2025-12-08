@@ -9,7 +9,7 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 })
 export class ContactStatusSelector {
   
-  public readonly select = output<'all' | 'members' | 'guests' | 'sponsors'>();
+  public readonly filter = output<'all' | 'members' | 'guests' | 'sponsors'>();
 
   public statusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'members' }, { label: 'Invitados', value: 'guests' }, { label: 'Esponsors', value: 'sponsors' }];
   public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
