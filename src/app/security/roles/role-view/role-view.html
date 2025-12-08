@@ -1,4 +1,3 @@
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
     <!-- Add role -->
@@ -10,28 +9,6 @@
     [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
     (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
     (edit)="onStartEditing($event.role, $event.view)" (changePermissions)="onChangePermissions($event)" />
-  <p-table lazy="true" dataKey="name" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
-    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
-    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
-    <ng-template #header>
-      <tr>
-        <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-role>
-      <tr>
-        <td>{{ role.name }}</td>
-        <td>
-          <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(role)" rounded text />
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-            [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, role)" rounded text />
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable" aria-label="Borrar"
-            [attr.aria-disabled]="!editable" rounded text />
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
 </p-panel>
 <p-dialog header="Rol" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
   <access-role-info [data]="selectedData" />

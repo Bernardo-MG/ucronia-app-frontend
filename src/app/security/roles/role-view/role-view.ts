@@ -1,10 +1,9 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
-import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
@@ -16,22 +15,17 @@ import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission, RoleList],
+  imports: [PanelModule, TableModule, ButtonModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
 export class AccessRoleList implements OnInit {
 
   private readonly service = inject(RoleService);
-  private readonly confirmationService = inject(ConfirmationService);
   private readonly messageService = inject(MessageService);
-
-  @ViewChild('editionMenu') editionMenu!: Menu;
 
   public readonly createable;
   public readonly editable;
   public readonly deletable;
-
-  public readonly editionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -72,11 +66,6 @@ export class AccessRoleList implements OnInit {
   public onShowInfo(role: Role) {
     this.selectedData = role;
     this.showing = true;
-  }
-
-  public openEditionMenu(event: Event, role: Role) {
-    this.selectedData = role;
-    this.editionMenu.toggle(event);
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
