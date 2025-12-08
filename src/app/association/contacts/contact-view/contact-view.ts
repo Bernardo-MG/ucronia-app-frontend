@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
@@ -43,7 +43,7 @@ export class ContactView implements OnInit {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public activeFilter = Active.Active;
+  public activeFilter = MemberStatus.Active;
 
   public readonly createable;
   public readonly editable;
@@ -104,7 +104,7 @@ export class ContactView implements OnInit {
     this.editing = true;
   }
 
-  public onChangeActiveFilter(active: Active) {
+  public onChangeActiveFilter(active: MemberStatus) {
     this.activeFilter = active;
     this.load(0);
   }
@@ -167,11 +167,11 @@ export class ContactView implements OnInit {
 
   public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
     if (status === 'all') {
-      this.activeFilter = Active.All;
+      this.activeFilter = MemberStatus.All;
     } else if (status === 'active') {
-      this.activeFilter = Active.Active;
+      this.activeFilter = MemberStatus.Active;
     } else if (status === 'inactive') {
-      this.activeFilter = Active.Inactive;
+      this.activeFilter = MemberStatus.Inactive;
     }
     this.load(0);
   }

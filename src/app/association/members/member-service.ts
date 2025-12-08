@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
@@ -23,16 +23,17 @@ export class MemberService {
     this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
+  public getAll(active: MemberStatus, page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
     return this.client
+      .parameter('status', active.toString().toUpperCase())
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
-      .parameter('status', Active.Active.toString().toUpperCase())
+      .parameter('status', MemberStatus.Active.toString().toUpperCase())
       .read<PaginatedResponse<Member>>();
   }
 

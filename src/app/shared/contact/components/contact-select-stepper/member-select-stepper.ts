@@ -2,7 +2,7 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { PaginatedResponse } from '@bernardo-mg/request';
@@ -19,7 +19,7 @@ import { MemberStatusSelectComponent } from '../member-status-select/member-stat
 })
 export class MemberSelectStepper implements OnInit {
 
-  public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<Member>>>((page: number, active: Active) => EMPTY);
+  public readonly getMemberSelection = input<(page: number, active: MemberStatus) => Observable<PaginatedResponse<Member>>>((page: number, active: MemberStatus) => EMPTY);
 
   public readonly selectMember = output<NameNumber>();
 
@@ -30,14 +30,14 @@ export class MemberSelectStepper implements OnInit {
   public currentStep = 1;
 
   public ngOnInit(): void {
-    this.getSelection = (page: number) => this.getMemberSelection()(page, Active.Active);
+    this.getSelection = (page: number) => this.getMemberSelection()(page, MemberStatus.Active);
   }
 
   public onReturnToMembers() {
     this.currentStep = 1;
   }
 
-  public onChangeActiveFilter(active: Active) {
+  public onChangeActiveFilter(active: MemberStatus) {
     this.getSelection = (page: number) => this.getMemberSelection()(page, active);
   }
 

@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FeePayment } from '@app/domain/fees/fee-payment';
@@ -48,7 +48,7 @@ export class FeeView implements OnInit {
 
   public editing = false;
 
-  public activeFilter = Active.Active;
+  public activeFilter = MemberStatus.Active;
 
   public range = new YearsRange();
 
@@ -154,7 +154,7 @@ export class FeeView implements OnInit {
     this.showing = true;
   }
 
-  public onChangeActiveFilter(active: Active) {
+  public onChangeActiveFilter(active: MemberStatus) {
     this.activeFilter = active;
     this.loadCalendar(this.year);
   }
@@ -169,7 +169,7 @@ export class FeeView implements OnInit {
     this.editing = true;
   }
 
-  public onGetSelection(page: number, active: Active) {
+  public onGetSelection(page: number, active: MemberStatus) {
     return this.service.getMembers(page, active);
   }
 

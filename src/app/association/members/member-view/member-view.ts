@@ -2,7 +2,7 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { MemberContact } from '@app/domain/contact/member-contact';
 import { Member } from '@app/domain/members/member';
 import { MemberStatusSelector } from '@app/shared/contact/components/member-status-selector/member-status-selector';
@@ -66,7 +66,7 @@ export class MemberView implements OnInit {
 
   public failures = new FailureStore();
 
-  public activeFilter = Active.Active;
+  public activeFilter = MemberStatus.Active;
   public nameFilterSubject = new Subject<string>();
   public nameFilter = '';
 
@@ -112,11 +112,11 @@ export class MemberView implements OnInit {
 
   public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
     if (status === 'all') {
-      this.activeFilter = Active.All;
+      this.activeFilter = MemberStatus.All;
     } else if (status === 'active') {
-      this.activeFilter = Active.Active;
+      this.activeFilter = MemberStatus.Active;
     } else if (status === 'inactive') {
-      this.activeFilter = Active.Inactive;
+      this.activeFilter = MemberStatus.Inactive;
     }
     this.load(0);
   }
@@ -168,7 +168,7 @@ export class MemberView implements OnInit {
   public load(page: number) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort)
+    this.service.getAll(this.activeFilter, page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }

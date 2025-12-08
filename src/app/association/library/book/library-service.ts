@@ -10,7 +10,7 @@ import { GameBook } from '@app/domain/library/game-book';
 import { GameSystem } from '@app/domain/library/game-system';
 import { Publisher } from '@app/domain/library/publisher';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
@@ -201,7 +201,7 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member>> {
+  public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
