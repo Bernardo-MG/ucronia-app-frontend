@@ -236,6 +236,10 @@ export class AccessList implements OnInit {
 
   public onStartEditing(user: User, view: string): void {
     this.selectedData = user;
+    if (view === 'member') {
+      this.service.getMember(user.username).subscribe(member => this.member = member);
+      this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
+    }
     this.view = view;
     this.editing = true;
   }

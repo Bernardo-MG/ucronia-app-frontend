@@ -129,6 +129,9 @@ export class UserService {
       this.getAllMembers()
     ]).pipe(
       map(([member, members]) => {
+        if (!member) {
+          return members;
+        }
         return members.filter(m => m.number !== member.number);
       })
     );
