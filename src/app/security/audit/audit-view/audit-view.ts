@@ -2,24 +2,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
 import { AccessAuditLoginService } from '../access-audit-login-service';
+import { AuditLoginList } from '../audit-login-list/audit-login-list';
 import { LoginRegister } from '../models/login-register';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'audit-view',
-  imports: [CardModule, TableModule, DatePipe],
+  imports: [CardModule, AuditLoginList],
   templateUrl: './audit-view.html'
 })
 export class AccessAuditLogin implements OnInit {
 
   private readonly service = inject(AccessAuditLoginService);
-
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
 
   public data = new PaginatedResponse<LoginRegister>();
 

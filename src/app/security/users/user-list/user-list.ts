@@ -1,5 +1,4 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
-import { Member } from '@app/domain/members/member';
 import { User } from '@bernardo-mg/authentication';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
