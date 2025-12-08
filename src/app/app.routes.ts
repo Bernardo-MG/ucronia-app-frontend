@@ -191,7 +191,7 @@ export const routes: Routes = [
             // User tokens
             path: 'user-tokens',
             canActivate: [ResourceGuard("user_token", "view")],
-            loadComponent: () => import('./security/user-tokens/user-token-view/user-token-view').then(m => m.UserTokenList)
+            loadComponent: () => import('./security/user-tokens/user-token-view/user-token-view').then(m => m.UserTokenView)
           },
           {
             // Security audit

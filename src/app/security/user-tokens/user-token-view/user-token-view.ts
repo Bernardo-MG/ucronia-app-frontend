@@ -12,13 +12,14 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
+import { UserTokenList } from '../user-token-list/user-token-list';
 
 @Component({
   selector: 'access-user-token-view',
-  imports: [CardModule, TableModule, DialogModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, DatePipe],
+  imports: [CardModule, TableModule, DialogModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, UserTokenList, DatePipe],
   templateUrl: './user-token-view.html'
 })
-export class UserTokenList implements OnInit {
+export class UserTokenView implements OnInit {
 
   private readonly service = inject(UserTokenService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -91,6 +92,11 @@ export class UserTokenList implements OnInit {
     );
   }
 
+  public onStartExtend(): void {
+    this.view = 'extend';
+    this.editing = true;
+  }
+
   public openEditionMenu(event: Event, token: UserToken) {
 
     this.editionMenuItems = [];
@@ -138,6 +144,13 @@ export class UserTokenList implements OnInit {
     this.load(page);
   }
 
+  public load(page: number) {
+    this.loading = true;
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
+  }
+
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
     action()
@@ -158,13 +171,6 @@ export class UserTokenList implements OnInit {
           return throwError(() => error);
         }
       });
-  }
-
-  private load(page: number) {
-    this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
   }
 
 }

@@ -1,5 +1,10 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-card>
+  <access-user-token-list [loading]="loading" [editable]="editable" [tokens]="data.content"
+    [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
+    (extend)="onStartExtend()"
+    (changeDirection)="onChangeDirection($event)"
+    (changePage)="load($event)" />
   <p-table lazy="true" dataKey="number" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
     [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
     (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
