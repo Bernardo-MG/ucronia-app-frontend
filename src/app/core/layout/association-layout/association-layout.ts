@@ -58,14 +58,6 @@ export class AssociationLayout {
 
   private getAssociationItems(authContainer: AuthContainer): MenuItem[] {
     const items = [];
-    if (authContainer.hasPermission('activity_calendar', 'view')) {
-      items.push(
-        {
-          label: 'Actividades',
-          routerLink: '/association/activity',
-          icon: 'pi pi-calendar'
-        });
-    }
     if (authContainer.hasPermission('member', 'view')) {
       items.push(
         {

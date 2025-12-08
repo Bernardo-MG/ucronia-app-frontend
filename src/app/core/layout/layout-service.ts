@@ -15,8 +15,6 @@ export class LayoutService {
 
   private showSecurityLinkFlag = false;
 
-  private showAssociationLinkFlag = false;
-
   constructor() {
     const authContainer = this.authContainer;
 

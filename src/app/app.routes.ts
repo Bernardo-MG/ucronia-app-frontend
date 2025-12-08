@@ -71,11 +71,6 @@ export const routes: Routes = [
             pathMatch: 'prefix'
           },
           {
-            path: 'activity',
-            canActivate: [ResourceGuard("activity_calendar", "view")],
-            loadComponent: () => import('./association/activity-calendar/activity-calendar/activity-calendar').then(m => m.ActivityCalendar)
-          },
-          {
             path: 'members',
             canActivate: [ResourceGuard("member", "view")],
             loadComponent: () => import('./association/members/member-view/member-view').then(m => m.MemberView)
