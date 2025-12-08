@@ -1,5 +1,3 @@
-<p-menu #infoMenu [model]="infoMenuItems" [popup]="true" />
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-panel>
   <ng-template #icons>
     <p-button icon="pi pi-envelope" severity="secondary" (click)="onStartInvitation()" [disabled]="!createable"
@@ -9,29 +7,6 @@
     [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
     (showRoles)="onShowRolesInfo($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
     (changePage)="load($event)" (active)="onSetActive($event)" (edit)="onStartEditing($event.user, $event.view)" />
-  <p-table lazy="true" dataKey="username" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
-    [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
-    (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
-    <ng-template #header>
-      <tr>
-        <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-user>
-      <tr>
-        <td>{{ user.name }}</td>
-        <td>
-          <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable"
-            (click)="openInfoMenu($event, user)" rounded text />
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-            [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, user)" rounded text />
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-            [attr.aria-disabled]="!deletable" rounded text />
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
 </p-panel>
 @if (showing) {
 <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
