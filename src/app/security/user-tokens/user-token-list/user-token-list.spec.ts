@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserTokenList } from './user-token-list';
 
 describe('UserTokenList', () => {
@@ -8,7 +8,11 @@ describe('UserTokenList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UserTokenList]
+      imports: [UserTokenList],
+      providers: [
+        ConfirmationService,
+        MessageService
+      ]
     })
     .compileComponents();
 
