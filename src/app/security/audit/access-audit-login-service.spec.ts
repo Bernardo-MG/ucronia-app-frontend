@@ -1,6 +1,6 @@
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AccessAuditLoginService } from './access-audit-login-service';
+import { AccessAuditLoginService } from './audit-login-service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('AccessAuditLoginService', () => {

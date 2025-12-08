@@ -179,13 +179,13 @@ export const routes: Routes = [
             // Roles
             path: 'roles',
             canActivate: [ResourceGuard("role", "view")],
-            loadComponent: () => import('./security/roles/access-role-view/access-role-view').then(m => m.AccessRoleList)
+            loadComponent: () => import('./security/roles/role-view/role-view').then(m => m.AccessRoleList)
           },
           {
             // Users
             path: 'users',
             canActivate: [ResourceGuard("user", "view")],
-            loadComponent: () => import('./security/users/access-user-view/access-user-view').then(m => m.AccessList)
+            loadComponent: () => import('./security/users/user-view/user-view').then(m => m.AccessList)
           },
           {
             // User tokens
@@ -197,7 +197,7 @@ export const routes: Routes = [
             // Security audit
             path: 'audit',
             canActivate: [ResourceGuard("user", "view")],
-            loadComponent: () => import('./security/audit/access-audit-view/access-audit-view').then(m => m.AccessAuditLogin)
+            loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AccessAuditLogin)
           }
         ]
       },
