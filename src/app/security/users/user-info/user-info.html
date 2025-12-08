@@ -1,0 +1,97 @@
+<!-- Username -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">Usuario</div>
+  <div class="col-span-8">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{ user().username }}
+    }
+  </div>
+</div>
+
+<!-- Name -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">Nombre</div>
+  <div class="col-span-8">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{ user().name }}
+    }
+  </div>
+</div>
+
+<!-- Email -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">E-mail</div>
+  <div class="col-span-8">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{ user().email }}
+    }
+  </div>
+</div>
+
+@if (member()) {
+  <!-- Member -->
+  <div class="grid grid-cols-12 py-1">
+    <div class="col-span-4 text-blue-600 font-medium">Socio</div>
+    <div class="col-span-8">
+      @if (loading()) {
+        <p-skeleton class="mb-2" />
+      } @else {
+        {{ member().name.fullName }}
+      }
+    </div>
+  </div>
+}
+
+<!-- Enabled -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">Activo</div>
+  <div class="col-span-8">
+    @if (user().enabled) {
+      <span class="pi pi-check text-green-600"></span>
+    } @else {
+      <span class="pi pi-times text-yellow-600"></span>
+    }
+  </div>
+</div>
+
+<!-- Expired -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">No expirado</div>
+  <div class="col-span-8">
+    @if (user().notExpired) {
+      <span class="pi pi-check text-green-600"></span>
+    } @else {
+      <span class="pi pi-times text-yellow-600"></span>
+    }
+  </div>
+</div>
+
+<!-- Password expired -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">Clave no expirada</div>
+  <div class="col-span-8">
+    @if (user().passwordNotExpired) {
+      <span class="pi pi-check text-green-600"></span>
+    } @else {
+      <span class="pi pi-times text-yellow-600"></span>
+    }
+  </div>
+</div>
+
+<!-- Locked -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-4 text-blue-600 font-medium">Desbloqueado</div>
+  <div class="col-span-8">
+    @if (user().notLocked) {
+      <span class="pi pi-check text-green-600"></span>
+    } @else {
+      <span class="pi pi-times text-yellow-600"></span>
+    }
+  </div>
+</div>

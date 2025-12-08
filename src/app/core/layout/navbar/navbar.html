@@ -2,11 +2,11 @@
   <ng-template pTemplate="start">
     <a class="navbar-brand flex items-center" routerLink="/">
       <img src="img/brand-icon.png" alt="Ucronía" width="20" height="24" class="mr-2" />
-      @if (loggedIn) {
-        <p-button class="ms-1" icon="pi pi-bars" (click)="toggleMenu.emit(true)" severity="secondary" rounded text />
-      }
-      {{ title }}
     </a>
+    @if (loggedIn) {
+      <p-button class="ms-1" icon="pi pi-bars" (click)="toggleMenu.emit(true)" severity="secondary" rounded text />
+    }
+    {{ title }}
   </ng-template>
 
   <ng-template pTemplate="end">

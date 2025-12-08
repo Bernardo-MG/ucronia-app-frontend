@@ -1,0 +1,18 @@
+<p-card>
+  <access-user-token-list [loading]="loading" [editable]="editable" [tokens]="data.content"
+    [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
+    (extend)="onStartExtend()"
+    (changeDirection)="onChangeDirection($event)"
+    (changePage)="load($event)" />
+</p-card>
+<p-dialog header="Token" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
+  <access-user-token-info [data]="selectedData" [loading]="loading" />
+</p-dialog>
+@switch (view) {
+  @case ('extend') {
+    <p-dialog header="Extender token" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <p>Selecciona una nueva fecha:</p>
+      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
+    </p-dialog>
+  }
+}

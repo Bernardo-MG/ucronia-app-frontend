@@ -1,0 +1,8 @@
+<p-floatlabel variant="in" class="mb-2 d-flex">
+  <input pInputText type="text" id="filterInput" [(ngModel)]="filterValue" (input)="filterSubject.next(filterValue)"
+    aria-describedby="filterLabel" maxlength="50"
+    class="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 w-60" />
+  <label for="filterInput" id="filterLabel" class="text-gray-700 font-medium">
+    Filtrar
+  </label>
+</p-floatlabel>

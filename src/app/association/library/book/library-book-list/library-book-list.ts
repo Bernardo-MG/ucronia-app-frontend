@@ -1,262 +1,44 @@
-
-import { Component, inject, Input, OnInit, ViewChild } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { Author } from '@app/domain/library/author';
-import { BookInfo } from '@app/domain/library/book-info';
-import { Borrower } from '@app/domain/library/book-lending';
-import { BookLent } from '@app/domain/library/book-lent';
-import { BookReturned } from '@app/domain/library/book-returned';
-import { BookType } from '@app/domain/library/book-type';
-import { BookUpdate } from '@app/domain/library/book-update';
-import { Donation } from '@app/domain/library/donation';
+import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { FictionBook } from '@app/domain/library/fiction-book';
 import { GameBook } from '@app/domain/library/game-book';
-import { GameSystem } from '@app/domain/library/game-system';
-import { Publisher } from '@app/domain/library/publisher';
-import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
-import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
-import { AuthContainer } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
-import { OverlayBadgeModule } from 'primeng/overlaybadge';
-import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { EMPTY, finalize, Observable, throwError } from 'rxjs';
-import { BookReportService } from '../book-report-service';
-import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
-import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
-import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
-import { LibraryBookInfo } from '../library-book-info/library-book-info';
-import { LibraryBookLending } from '../library-book-lending/library-book-lending';
-import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
-import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-list',
-  imports: [RouterModule, TableModule, PanelModule, ButtonModule, BadgeModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm],
+  imports: [TableModule, ButtonModule, BadgeModule, MenuModule],
   templateUrl: './library-book-list.html'
 })
-export class LibraryBookList implements OnInit {
+export class LibraryBookList {
 
-  private readonly router = inject(Router);
-  private readonly reportService = inject(BookReportService);
   private readonly confirmationService = inject(ConfirmationService);
-  private readonly messageService = inject(MessageService);
-  public readonly service = inject(LibraryService);
 
-  public failures = new FailureStore();
+  public readonly editable = input(false);
+  public readonly deletable = input(false);
+  public readonly loading = input(false);
+  public readonly books = input<FictionBook[] | GameBook[]>([]);
+  public readonly rows = input(0);
+  public readonly page = input(0);
+  public readonly totalRecords = input(0);
 
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
-
-  private _pageNumber = 0;
-
-  @Input() public set pageNumber(value: number) {
-    this._pageNumber = value;
-    this.load(value);
-  }
-
-  public get pageNumber() {
-    return this._pageNumber;
-  }
-
-  public selectedData: FictionBook | GameBook = new GameBook();
-
-  public data = new PaginatedResponse<FictionBook | GameBook>();
-
-  public source: 'game' | 'fiction' = 'game';
-
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-  public loadingExcel = false;
-  public editing = false;
-  public showing = false;
-
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
-
-  public readonly fictionEditionMenuItems: MenuItem[] = [];
-  public readonly gameEditionMenuItems: MenuItem[] = [];
-  public readonly dataMenuItems: MenuItem[] = [];
-
-  public view: string = '';
-
-  private sort = new Sorting();
-
-  private delete: (number: number) => Observable<BookInfo> = (number) => EMPTY;
-  private update: (data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
-  private read: (page: number, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
+  public readonly delete = output<number>();
+  public readonly showBook = output<FictionBook | GameBook>();
+  public readonly sort = output<SortingProperty>();
+  public readonly pageChange = output<number>();
+  public readonly show = output<{ view: string, book: FictionBook | GameBook }>();
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
-  public get borrower(): Borrower {
-    return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
-  }
+  public fictionEditionMenuItems: MenuItem[] = [];
+  public gameEditionMenuItems: MenuItem[] = [];
 
-  constructor() {
-    const authContainer = inject(AuthContainer);
-
-    // Check permissions
-    this.createable = authContainer.hasPermission("library_book", "create");
-    this.editable = authContainer.hasPermission("library_book", "update");
-    this.deletable = authContainer.hasPermission("library_book", "delete");
-
-    // Initial operations
-    this.delete = this.service.deleteGameBook.bind(this.service);
-    this.update = this.service.updateGameBook.bind(this.service);
-    this.read = this.service.getAllGameBooks.bind(this.service);
-
-    // Load data menu
-    if (authContainer.hasPermission('library_author', 'view')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Autores',
-          command: () => this.router.navigate(['/association/library/authors'])
-        });
-    }
-    if (authContainer.hasPermission('library_publisher', 'view')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Editores',
-          command: () => this.router.navigate(['/association/library/publishers'])
-        });
-    }
-    if (authContainer.hasPermission('library_book_type', 'view')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Tipos',
-          command: () => this.router.navigate(['/association/library/types'])
-        });
-    }
-    if (authContainer.hasPermission('library_game_system', 'view')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Sistemas',
-          command: () => this.router.navigate(['/association/library/systems'])
-        });
-    }
-
-    // Load edition menu
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.onStartEditingView('details')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Donantes',
-        command: () => this.onStartEditingView('donors')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Autores',
-        command: () => this.onStartEditingView('authors')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Editor',
-        command: () => this.onStartEditingView('publishers')
-      });
-    this.fictionEditionMenuItems.push(
-      {
-        label: 'Préstamos',
-        command: () => this.onStartEditingView('lendings')
-      });
-
-
-    // Load edition menu
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.onStartEditingView('details')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Donantes',
-        command: () => this.onStartEditingView('donors')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Autores',
-        command: () => this.onStartEditingView('authors')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Editor',
-        command: () => this.onStartEditingView('publishers')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Sistema',
-        command: () => this.onStartEditingView('gameSystem')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Tipo',
-        command: () => this.onStartEditingView('bookType')
-      });
-    this.gameEditionMenuItems.push(
-      {
-        label: 'Préstamos',
-        command: () => this.onStartEditingView('lendings')
-      });
-  }
-
-  public ngOnInit(): void {
-    this.load(0);
-  }
-
-  public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-    this.selectedData = book;
-    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
-      this.gameEditionMenu.toggle(event);
-    } else {
-      this.fictionEditionMenu.toggle(event);
-    }
-  }
-
-  public onCreate(toCreate: { book: BookInfo, kind: 'fiction' | 'game' }): void {
-    this.call(
-      () => {
-        if (toCreate.kind === 'game') {
-          return this.service.createGameBook(toCreate.book);
-        } else {
-          return this.service.createFictionBook(toCreate.book);
-        }
-      },
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
-    );
-  }
-
-  private onUpdate(toSave: BookUpdate) {
-    this.call(
-      () => this.update(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
-    );
-  }
-
-  public onLend(toSave: BookLent) {
-    this.call(
-      () => this.service.lend(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 })
-    );
-  }
-
-  public onReturn(toSave: BookReturned) {
-    this.call(
-      () => this.service.return(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 })
-    );
+  public get first() {
+    return (this.page() - 1) * this.rows();
   }
 
   public onDelete(event: Event, number: number) {
@@ -273,199 +55,93 @@ export class LibraryBookList implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () =>
-        this.call(
-          () => this.delete(number),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
-        )
+      accept: () => this.delete.emit(number)
     });
+  }
+
+  public openEditionMenu(event: Event, book: FictionBook | GameBook) {
+    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
+      this.gameEditionMenuItems = [];
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Datos',
+          command: () => this.show.emit({ view: 'details', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Donantes',
+          command: () => this.show.emit({ view: 'donors', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Autores',
+          command: () => this.show.emit({ view: 'authors', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Editor',
+          command: () => this.show.emit({ view: 'publishers', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Sistema',
+          command: () => this.show.emit({ view: 'gameSystem', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Tipo',
+          command: () => this.show.emit({ view: 'bookType', book })
+        });
+      this.gameEditionMenuItems.push(
+        {
+          label: 'Préstamos',
+          command: () => this.show.emit({ view: 'lendings', book })
+        });
+
+      this.gameEditionMenu.toggle(event);
+    } else {
+      this.fictionEditionMenuItems = [];
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Datos',
+          command: () => this.show.emit({ view: 'details', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Donantes',
+          command: () => this.show.emit({ view: 'donors', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Autores',
+          command: () => this.show.emit({ view: 'authors', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Editor',
+          command: () => this.show.emit({ view: 'publishers', book })
+        });
+      this.fictionEditionMenuItems.push(
+        {
+          label: 'Préstamos',
+          command: () => this.show.emit({ view: 'lendings', book })
+        });
+
+      this.fictionEditionMenu.toggle(event);
+    }
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
 
-    this.load(this.data.page);
-  }
-
-  public onChangeSource(event: any) {
-    this.source = event.target.value as 'game' | 'fiction';
-    if (this.source === 'game') {
-      this.delete = this.service.deleteGameBook.bind(this.service);
-      this.update = this.service.updateGameBook.bind(this.service);
-      this.read = this.service.getAllGameBooks.bind(this.service);
-    } else {
-      this.delete = this.service.deleteFictionBook.bind(this.service);
-      this.update = this.service.updateFictionBook.bind(this.service);
-      this.read = this.service.getAllFictionBooks.bind(this.service);
-    }
-    this.load(0);
+    this.sort.emit(new SortingProperty(sorting.field, direction));
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
-  }
-
-  public onShowBook(book: FictionBook | GameBook) {
-    this.selectedData = book;
-    this.showing = true;
-  }
-
-  public downloadExcel() {
-    this.loadingExcel = true;
-    this.reportService.downloadExcelReport()
-      .pipe(
-        finalize(() => this.loadingExcel = false))
-      .subscribe();
-  }
-
-  public onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
-  }
-
-  public onSetAuthors(authors: Author[]) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: authors.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        authors: authors.map(a => a.number)
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public onSetPublishers(publishers: Publisher[]) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: this.selectedData.authors.map(a => a.number),
-        publishers: publishers.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        authors: this.selectedData.authors.map(a => a.number),
-        publishers: publishers.map(a => a.number)
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public onSetGameSystem(gameSystem: GameSystem) {
-    const updateDate = {
-      ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      bookType: (this.selectedData as GameBook).bookType?.number,
-      authors: this.selectedData.authors.map(a => a.number),
-      gameSystem: gameSystem.number
-    };
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public onSetBookType(bookType: BookType) {
-    const updateDate = {
-      ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      gameSystem: (this.selectedData as GameBook).gameSystem?.number,
-      authors: this.selectedData.authors.map(a => a.number),
-      bookType: bookType.number
-    };
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public onSetDonation(donation: Donation | undefined) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: this.selectedData.authors.map(a => a.number),
-        donation: donation
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        authors: this.selectedData.authors.map(a => a.number),
-        donation: donation
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public onSaveBook(book: FictionBook | GameBook) {
-    let updateDate;
-    if (book instanceof GameBook) {
-      updateDate = {
-        ...book,
-        publishers: book.publishers.map(p => p.number),
-        bookType: book.bookType?.number,
-        gameSystem: book.gameSystem?.number,
-        authors: book.authors.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...book,
-        publishers: book.publishers.map(p => p.number),
-        authors: book.authors.map(a => a.number)
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public getGameSystem(book: FictionBook | GameBook): GameSystem {
-    return (book as GameBook).gameSystem as GameSystem;
-  }
-
-  public getBookType(book: FictionBook | GameBook): BookType {
-    return (book as GameBook).bookType as BookType;
-  }
-
-  private load(page: number) {
-    this.loading = true;
-    this.read(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
-  }
-
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
-    action()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: () => {
-          this.failures.clear();
-          this.view = 'none';
-          this.load(this.data.page);
-          onSuccess();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
-      });
+    const page = (event.first / this.rows()) + 1;
+    this.pageChange.emit(page);
   }
 
 }

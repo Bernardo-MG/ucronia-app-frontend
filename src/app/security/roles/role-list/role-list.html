@@ -1,0 +1,24 @@
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="roles()" paginator="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="changePage.emit($event.first)">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-role>
+    <tr>
+      <td>{{ role.name }}</td>
+      <td>
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(role)" rounded text />
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
+          [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, role)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable()" aria-label="Borrar"
+          [attr.aria-disabled]="!editable()" (click)="onDelete($event, role)" rounded text />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

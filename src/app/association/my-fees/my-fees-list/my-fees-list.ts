@@ -1,47 +1,30 @@
-import { CommonModule, DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, input, output } from '@angular/core';
 import { Fee } from '@app/domain/fees/fee';
-import { PaginatedResponse } from '@bernardo-mg/request';
-import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize } from 'rxjs';
-import { MyFeesService } from '../my-fees-service';
 
 @Component({
   selector: 'app-my-fees-list',
-  imports: [CommonModule, CardModule, TableModule, DatePipe],
+  imports: [CommonModule, TableModule],
   templateUrl: './my-fees-list.html'
 })
-export class MyFeesList implements OnInit {
+export class MyFeesList {
 
-  private readonly service = inject(MyFeesService);
+  public readonly fees = input<Fee[]>([]);
+  public readonly rows = input(0);
+  public readonly page = input(0);
+  public readonly totalRecords = input(0);
+  public readonly loading = input(false);
+  
+  public readonly changePage = output<number>();
 
   public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
-
-  public data = new PaginatedResponse<Fee>();
-
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-
-  public ngOnInit(): void {
-    this.load(0);
+    return (this.page() - 1) * this.rows();
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
-  }
-
-  private load(page: number) {
-    this.loading = true;
-
-    this.service.getAll(page)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
+    const page = (event.first / this.rows()) + 1;
+    this.changePage.emit(page);
   }
 
 }

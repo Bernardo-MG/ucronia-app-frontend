@@ -1,0 +1,28 @@
+<p-panel>
+  <ng-template #icons>
+    <!-- Add role -->
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartCreation()" [disabled]="!createable"
+      aria-label="Nuevo rol" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
+  <!-- List -->
+  <access-role-list [loading]="loading" [editable]="editable" [deletable]="deletable" [roles]="data.content"
+    [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
+    (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
+    (edit)="onStartEditing($event.role, $event.view)" (changePermissions)="onChangePermissions($event)" />
+</p-panel>
+<p-dialog header="Rol" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+  <access-role-info [data]="selectedData" />
+</p-dialog>
+@switch (view) {
+@case ('creation') {
+<p-dialog header="Crear rol" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+  <access-role-form [selection]="permissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+</p-dialog>
+}
+@case ('permissions') {
+<p-dialog header="Asignar permisos" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+  <access-role-change-permission [selection]="permissions" [permissions]="selectedData.permissions"
+    (save)="onSetRolePermissions($event)" />
+</p-dialog>
+}
+}

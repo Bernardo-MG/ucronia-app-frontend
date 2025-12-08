@@ -1,66 +1,71 @@
 <!-- First name -->
-<div class="row">
-  <div class="col-sm-3 text-primary">Nombre</div>
-  <div class="col-sm-9">
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">Nombre</div>
+  <div class="col-span-9">
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().name.firstName}}
+      {{ data().name.firstName }}
     }
   </div>
 </div>
+
 <!-- Last name -->
-<div class="row">
-  <div class="col-sm-3 text-primary">Apellidos</div>
-  <div class="col-sm-9">
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">Apellidos</div>
+  <div class="col-span-9">
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().name.lastName}}
+      {{ data().name.lastName }}
     }
   </div>
 </div>
+
 <!-- Identifier -->
-<div class="row">
-  <div class="col-sm-3 text-primary">DNI</div>
-  <div class="col-sm-9">
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">DNI</div>
+  <div class="col-span-9">
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().identifier}}
+      {{ data().identifier }}
     }
   </div>
 </div>
+
 <!-- Birth date -->
-<div class="row">
-  <div class="col-sm-3 text-primary">Fecha de nacimiento</div>
-  <div class="col-sm-9">
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">Fecha de nacimiento</div>
+  <div class="col-span-9">
     @if (loading()) {
       <p-skeleton class="mb-2" />
     } @else {
-      {{data().birthDate | date:'yyyy-MM-dd'}}
+      {{ data().birthDate | date:'yyyy-MM-dd' }}
     }
   </div>
 </div>
+
 <!-- Active -->
-<div class="row">
-  <div class="col-sm-3 text-primary">Activo</div>
-  <div class="col-sm-9">
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">Activo</div>
+  <div class="col-span-9">
     @if (isActive) {
-      <span class="pi pi-check text-success"></span>
+      <span class="pi pi-check text-green-600"></span>
     } @else {
-      <span class="pi pi-times text-warning"></span>
+      <span class="pi pi-times text-amber-500"></span>
     }
   </div>
 </div>
+
 <!-- Renewal -->
-<div class="row">
-  <div class="col-sm-3 text-primary">Renovación</div>
-  <div class="col-sm-9">
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">Renovación</div>
+  <div class="col-span-9">
     @if (isRenewed) {
-      <span class="pi pi-check text-success"></span>
+      <span class="pi pi-check text-green-600"></span>
     } @else {
-      <span class="pi pi-times text-warning"></span>
+      <span class="pi pi-times text-amber-500"></span>
     }
   </div>
 </div>

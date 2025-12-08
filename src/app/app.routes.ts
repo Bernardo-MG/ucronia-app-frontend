@@ -78,12 +78,12 @@ export const routes: Routes = [
           {
             path: 'members',
             canActivate: [ResourceGuard("member", "view")],
-            loadComponent: () => import('./association/members/member-listing/member-listing').then(m => m.MemberListing)
+            loadComponent: () => import('./association/members/member-view/member-view').then(m => m.MemberView)
           },
           {
             path: 'myFees',
             canActivate: [ResourceGuard("my_fees", "view")],
-            loadComponent: () => import('./association/my-fees/my-fees-list/my-fees-list').then(m => m.MyFeesList)
+            loadComponent: () => import('./association/my-fees/my-fees-view/my-fees-view').then(m => m.MyFeesView)
           },
           {
             path: 'library',
@@ -109,7 +109,7 @@ export const routes: Routes = [
                 children: [
                   {
                     path: '',
-                    loadComponent: () => import('./association/library/book/library-book-list/library-book-list').then(m => m.LibraryBookList),
+                    loadComponent: () => import('./association/library/book/library-view/library-view').then(m => m.LibraryView),
                     canActivate: [ResourceGuard("library_book", "view")]
                   }
                 ]
@@ -143,33 +143,23 @@ export const routes: Routes = [
                     canActivate: [ResourceGuard("library_game_system", "view")]
                   }
                 ]
-              },
-              {
-                path: 'lendings',
-                children: [
-                  {
-                    path: '',
-                    loadComponent: () => import('./association/library/lending/library-lending-list/library-lending-list').then(m => m.LibraryLendingList),
-                    canActivate: [ResourceGuard("library_lending", "view")]
-                  }
-                ]
               }
             ]
           },
           {
             path: 'fees',
             canActivate: [ResourceGuard("fee", "view")],
-            loadComponent: () => import('./association/fees/fee-list/fee-list').then(m => m.FeeList)
+            loadComponent: () => import('./association/fees/fee-view/fee-view').then(m => m.FeeView)
           },
           {
             path: 'contacts',
             canActivate: [ResourceGuard("contact", "view")],
-            loadComponent: () => import('./association/contacts/contact-listing/contact-listing').then(m => m.ContactListing)
+            loadComponent: () => import('./association/contacts/contact-view/contact-view').then(m => m.ContactView)
           },
           {
             path: 'funds',
             canActivate: [ResourceGuard("funds", "view")],
-            loadComponent: () => import('./association/funds/funds/funds').then(m => m.Funds)
+            loadComponent: () => import('./association/funds/funds-view/funds-view').then(m => m.FundsView)
           }
         ]
       },
@@ -189,25 +179,25 @@ export const routes: Routes = [
             // Roles
             path: 'roles',
             canActivate: [ResourceGuard("role", "view")],
-            loadComponent: () => import('./security/roles/access-role-list/access-role-list').then(m => m.AccessRoleList)
+            loadComponent: () => import('./security/roles/role-view/role-view').then(m => m.AccessRoleList)
           },
           {
             // Users
             path: 'users',
             canActivate: [ResourceGuard("user", "view")],
-            loadComponent: () => import('./security/users/access-user-list/access-user-list').then(m => m.AccessList)
+            loadComponent: () => import('./security/users/user-view/user-view').then(m => m.UserView)
           },
           {
             // User tokens
             path: 'user-tokens',
             canActivate: [ResourceGuard("user_token", "view")],
-            loadComponent: () => import('./security/user-tokens/user-token-list/user-token-list').then(m => m.UserTokenList)
+            loadComponent: () => import('./security/user-tokens/user-token-view/user-token-view').then(m => m.UserTokenView)
           },
           {
             // Security audit
             path: 'audit',
             canActivate: [ResourceGuard("user", "view")],
-            loadComponent: () => import('./security/audit/access-audit-login/access-audit-login').then(m => m.AccessAuditLogin)
+            loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AccessAuditLogin)
           }
         ]
       },
@@ -215,7 +205,7 @@ export const routes: Routes = [
         // Settings
         path: 'settings',
         canActivate: [LoggedInGuard, ResourceGuard("association_settings", "view")],
-        loadComponent: () => import('./settings/settings-edition/settings-edition').then(m => m.SettingsInfoEditor)
+        loadComponent: () => import('./settings/settings-view/settings-view').then(m => m.SettingsView)
       }
     ]
   }
