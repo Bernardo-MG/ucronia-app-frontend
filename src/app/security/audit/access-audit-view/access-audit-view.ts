@@ -9,9 +9,9 @@ import { LoginRegister } from '../models/login-register';
 import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'access-audit-login',
+  selector: 'access-audit-view',
   imports: [CardModule, TableModule, DatePipe],
-  templateUrl: './access-audit-login.html'
+  templateUrl: './access-audit-view.html'
 })
 export class AccessAuditLogin implements OnInit {
 

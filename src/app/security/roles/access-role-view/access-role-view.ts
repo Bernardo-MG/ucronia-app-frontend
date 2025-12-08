@@ -14,9 +14,9 @@ import { AccessRoleInfo } from '../access-role-info/access-role-info';
 import { AccessRoleService } from '../access-role-service';
 
 @Component({
-  selector: 'access-role-list',
+  selector: 'access-role-view',
   imports: [PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
-  templateUrl: './access-role-list.html'
+  templateUrl: './access-role-view.html'
 })
 export class AccessRoleList implements OnInit {
 

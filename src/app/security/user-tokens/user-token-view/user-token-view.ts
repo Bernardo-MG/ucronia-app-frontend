@@ -14,9 +14,9 @@ import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend
 import { UserTokenInfo } from '../user-token-info/user-token-info';
 
 @Component({
-  selector: 'access-user-token-list',
+  selector: 'access-user-token-view',
   imports: [CardModule, TableModule, DialogModule, ButtonModule, MenuModule, UserTokenInfo, UserTokenExtendForm, DatePipe],
-  templateUrl: './user-token-list.html'
+  templateUrl: './user-token-view.html'
 })
 export class UserTokenList implements OnInit {
 

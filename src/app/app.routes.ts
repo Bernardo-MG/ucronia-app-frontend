@@ -179,25 +179,25 @@ export const routes: Routes = [
             // Roles
             path: 'roles',
             canActivate: [ResourceGuard("role", "view")],
-            loadComponent: () => import('./security/roles/access-role-list/access-role-list').then(m => m.AccessRoleList)
+            loadComponent: () => import('./security/roles/access-role-view/access-role-view').then(m => m.AccessRoleList)
           },
           {
             // Users
             path: 'users',
             canActivate: [ResourceGuard("user", "view")],
-            loadComponent: () => import('./security/users/access-user-list/access-user-list').then(m => m.AccessList)
+            loadComponent: () => import('./security/users/access-user-view/access-user-view').then(m => m.AccessList)
           },
           {
             // User tokens
             path: 'user-tokens',
             canActivate: [ResourceGuard("user_token", "view")],
-            loadComponent: () => import('./security/user-tokens/user-token-list/user-token-list').then(m => m.UserTokenList)
+            loadComponent: () => import('./security/user-tokens/user-token-view/user-token-view').then(m => m.UserTokenList)
           },
           {
             // Security audit
             path: 'audit',
             canActivate: [ResourceGuard("user", "view")],
-            loadComponent: () => import('./security/audit/access-audit-login/access-audit-login').then(m => m.AccessAuditLogin)
+            loadComponent: () => import('./security/audit/access-audit-view/access-audit-view').then(m => m.AccessAuditLogin)
           }
         ]
       },

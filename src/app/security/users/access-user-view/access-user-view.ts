@@ -20,9 +20,9 @@ import { UserChange } from '../models/user-change';
 import { UserCreation } from '../models/user-creation';
 
 @Component({
-  selector: 'access-user-list',
+  selector: 'access-user-view',
   imports: [CardModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, AccessUserRolesEditor, AccessUserMemberEditor, AccessUserRolesInfo],
-  templateUrl: './access-user-list.html'
+  templateUrl: './access-user-view.html'
 })
 export class AccessList implements OnInit {
 

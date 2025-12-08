@@ -1,34 +1,28 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { AccessUserService } from '../access-user-service';
-import { AccessList } from './access-user-list';
+import { UserTokenList } from './user-token-view';
 
-describe('AccessList', () => {
-  let component: AccessList;
-  let fixture: ComponentFixture<AccessList>;
+describe('UserTokenList', () => {
+  let component: UserTokenList;
+  let fixture: ComponentFixture<UserTokenList>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
+  beforeEach(() => {
+    TestBed.configureTestingModule({
       imports: [
-        AccessList
+        UserTokenList
       ],
       providers: [
-        AccessUserService,
-        MessageService,
         ConfirmationService,
-        provideAnimationsAsync(),
+        MessageService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
       ]
-    })
-      .compileComponents();
-
-    fixture = TestBed.createComponent(AccessList);
+    });
+    fixture = TestBed.createComponent(UserTokenList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
