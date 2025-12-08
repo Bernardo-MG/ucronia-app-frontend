@@ -24,7 +24,7 @@ import { UserService } from '../user-service';
   imports: [CardModule, ButtonModule, PanelModule, DialogModule, AccessUserForm, AccessUserInfo, UserRolesEditor, AccessUserMemberEditor, UserRolesInfo, UserList],
   templateUrl: './user-view.html'
 })
-export class AccessList implements OnInit {
+export class UserView implements OnInit {
 
   private readonly service = inject(UserService);
   private readonly messageService = inject(MessageService);

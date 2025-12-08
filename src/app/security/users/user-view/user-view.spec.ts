@@ -5,16 +5,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { UserService } from '../user-service';
-import { AccessList } from './user-view';
+import { UserView } from './user-view';
 
 describe('AccessList', () => {
-  let component: AccessList;
-  let fixture: ComponentFixture<AccessList>;
+  let component: UserView;
+  let fixture: ComponentFixture<UserView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessList
+        UserView
       ],
       providers: [
         UserService,
@@ -28,7 +28,7 @@ describe('AccessList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessList);
+    fixture = TestBed.createComponent(UserView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
