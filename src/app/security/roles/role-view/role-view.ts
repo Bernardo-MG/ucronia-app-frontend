@@ -11,11 +11,12 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { AccessRoleChangePermission } from '../role-change-permission/role-change-permission';
 import { AccessRoleForm } from '../role-form/role-form';
 import { AccessRoleInfo } from '../role-info/role-info';
+import { RoleList } from '../role-list/role-list';
 import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission],
+  imports: [PanelModule, TableModule, ButtonModule, MenuModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
 export class AccessRoleList implements OnInit {
@@ -28,6 +29,7 @@ export class AccessRoleList implements OnInit {
 
   public readonly createable;
   public readonly editable;
+  public readonly deletable;
 
   public readonly editionMenuItems: MenuItem[] = [];
 
@@ -60,13 +62,7 @@ export class AccessRoleList implements OnInit {
     // Check permissions
     this.createable = authContainer.hasPermission("role", "create");
     this.editable = authContainer.hasPermission("role", "update");
-
-    // Load edition menu
-    this.editionMenuItems.push(
-      {
-        label: 'Cambiar permisos',
-        command: () => this.onChangePermissions()
-      });
+    this.deletable = authContainer.hasPermission("role", "delete");
   }
 
   public ngOnInit(): void {
@@ -108,26 +104,11 @@ export class AccessRoleList implements OnInit {
     );
   }
 
-  public onDelete(event: Event, role: Role) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () =>
-        this.call(
-          () => this.service.delete(role.name),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
-        )
-    });
+  public onDelete(role: Role) {
+    this.call(
+      () => this.service.delete(role.name),
+      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+    );
   }
 
   public onPageChange(event: TablePageEvent) {
@@ -135,8 +116,22 @@ export class AccessRoleList implements OnInit {
     this.load(page);
   }
 
-  private onChangePermissions() {
-    this.service.getAvailablePermissions(this.selectedData.name).subscribe(p => this.permissions = p);
+  public load(page: number) {
+    this.loading = true;
+    this.service.getAll(page, this.sort)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
+  }
+
+  public onStartEditing(role: Role, view: string): void {
+    this.selectedData = role;
+    this.view = view;
+    this.editing = true;
+  }
+
+  public onChangePermissions(role: Role) {
+    this.selectedData = role;
+    this.service.getAvailablePermissions(role.name).subscribe(p => this.permissions = p);
     this.onStartEditingView('permissions');
   }
 
@@ -148,13 +143,6 @@ export class AccessRoleList implements OnInit {
   private onStartEditingView(view: string): void {
     this.view = view;
     this.editing = true;
-  }
-
-  private load(page: number) {
-    this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
