@@ -5,6 +5,10 @@
     <p-button icon="pi pi-envelope" severity="secondary" (click)="onStartInvitation()" [disabled]="!createable"
       aria-label="Invitar usuario" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
+  <access-user-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+      [users]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
+      (show)="onShowUser($event)" (showRoles)="onShowRolesInfo($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+      (changePage)="load($event)" (active)="onSetActive($event)" (edit)="onStartEditing($event.user, $event.view)" />
   <p-table lazy="true" dataKey="username" [loading]="loading" [value]="data.content" paginator="true" [rows]="data.size"
     [totalRecords]="data.totalElements" [first]="first" (onSort)="onChangeDirection($event)"
     (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
@@ -23,7 +27,7 @@
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
             [attr.aria-disabled]="!editable" (click)="openEditionMenu($event, user)" rounded text />
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-            [attr.aria-disabled]="!deletable" (click)="onDelete($event, user.username)" rounded text />
+            [attr.aria-disabled]="!deletable" rounded text />
         </td>
       </tr>
     </ng-template>

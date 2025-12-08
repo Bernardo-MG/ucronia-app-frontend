@@ -10,18 +10,19 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
+import { UserChange } from '../models/user-change';
+import { UserCreation } from '../models/user-creation';
 import { AccessUserForm } from '../user-form/user-form';
 import { AccessUserInfo } from '../user-info/user-info';
+import { UserList } from '../user-list/user-list';
 import { AccessUserMemberEditor } from '../user-member-editor/user-member-editor';
 import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
 import { UserRolesInfo } from '../user-roles-info/user-roles-info';
 import { UserService } from '../user-service';
-import { UserChange } from '../models/user-change';
-import { UserCreation } from '../models/user-creation';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, UserRolesEditor, AccessUserMemberEditor, UserRolesInfo],
+  imports: [CardModule, TableModule, ButtonModule, PanelModule, DialogModule, MenuModule, AccessUserForm, AccessUserInfo, UserRolesEditor, AccessUserMemberEditor, UserRolesInfo, UserList],
   templateUrl: './user-view.html'
 })
 export class AccessList implements OnInit {
@@ -163,62 +164,31 @@ export class AccessList implements OnInit {
     );
   }
 
-  public onSetActive(event: Event, status: boolean) {
-    let message;
-    if (status) {
-      message = '¿Estás seguro de querer activar el usuario?';
-    } else {
-      message = '¿Estás seguro de querer desactivar el usuario?';
-    }
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message,
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => {
-        const userUpdate: UserChange = {
-          ...this.selectedData,
-          roles: this.selectedData.roles.map(r => r.name),
-          enabled: status
-        };
-        this.call(
-          () => this.service.update(userUpdate),
-          () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
-        );
-      }
-    });
+  public onShowUser(user: User) {
+    this.selectedData = user;
+    this.service.getMember(user.username).subscribe(member => this.member = member);
+    this.showing = true;
   }
 
-  public onDelete(event: Event, id: string) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Quieres borrar estos datos?',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancel',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Delete',
-        severity: 'danger'
-      },
-      accept: () =>
-        this.call(
-          () => this.service.delete(id),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
-        )
-    });
+  public onSetActive(status: boolean) {
+    const userUpdate: UserChange = {
+      ...this.selectedData,
+      roles: this.selectedData.roles.map(r => r.name),
+      enabled: status
+    };
+    this.call(
+      () => this.service.update(userUpdate),
+      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+    );
   }
-  
+
+  public onDelete(id: string) {
+    this.call(
+      () => this.service.delete(id),
+      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+    );
+  }
+
   public openInfoMenu(event: Event, user: User) {
     this.selectedData = user;
 
@@ -252,7 +222,7 @@ export class AccessList implements OnInit {
     const isActive = user.enabled;
     this.editionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: (method) => this.onSetActive(method.originalEvent as Event, !isActive)
+      command: (method) => this.onSetActive(!isActive)
     });
 
     this.editionMenu.toggle(event);
@@ -270,16 +240,16 @@ export class AccessList implements OnInit {
     this.editing = true;
   }
 
-  private onStartEditingRoles(user: User): void {
-    this.service.getAvailableRoles(this.selectedData.username).subscribe(r => this.roleSelection = r);
-    this.onStartEditing(user, 'roles')
-  }
-
-  private load(page: number) {
+  public load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  private onStartEditingRoles(user: User): void {
+    this.service.getAvailableRoles(this.selectedData.username).subscribe(r => this.roleSelection = r);
+    this.onStartEditing(user, 'roles')
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
