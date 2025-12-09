@@ -54,7 +54,7 @@
   <!-- View Member Dialog -->
   <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing" [style]="{ width: '35rem' }" contentStyleClass="p-0"
     class="rounded-lg">
-    <assoc-member-contact-details [contact]="memberContact" [member]="selectedData">
+    <assoc-member-contact-details [loading]="loading" [contact]="memberContact" [member]="selectedData">
     </assoc-member-contact-details>
   </p-dialog>
 
