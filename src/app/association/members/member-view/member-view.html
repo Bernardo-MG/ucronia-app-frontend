@@ -52,7 +52,7 @@
   </p-panel>
 
   <!-- View Member Dialog -->
-  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" contentStyleClass="p-0"
+  <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing" [style]="{ width: '35rem' }" contentStyleClass="p-0"
     class="rounded-lg">
     <assoc-member-contact-details [contact]="memberContact" [member]="selectedData">
     </assoc-member-contact-details>
