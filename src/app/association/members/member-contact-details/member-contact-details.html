@@ -1,133 +1,103 @@
-@if (loading()) {
-
-  <!-- First name -->
-  <div class="flex flex-wrap mb-2">
-    <div class="w-full sm:w-3/12 text-blue-600">Nombre</div>
-    <div class="w-full sm:w-9/12">
-      <p-skeleton />
-    </div>
-  </div>
-
-  <!-- Last name -->
-  <div class="flex flex-wrap mb-2">
-    <div class="w-full sm:w-3/12 text-blue-600">Apellidos</div>
-    <div class="w-full sm:w-9/12">
-      <p-skeleton />
-    </div>
-  </div>
-
-  <!-- Identifier -->
-  <div class="flex flex-wrap mb-2">
-    <div class="w-full sm:w-3/12 text-blue-600">DNI</div>
-    <div class="w-full sm:w-9/12">
-      <p-skeleton />
-    </div>
-  </div>
-
-  <!-- Birth date -->
-  <div class="flex flex-wrap mb-2">
-    <div class="w-full sm:w-3/12 text-blue-600">Fecha de nacimiento</div>
-    <div class="w-full sm:w-9/12">
-      <p-skeleton />
-    </div>
-  </div>
-
-  <!-- Active -->
-  <div class="flex flex-wrap mb-2">
-    <div class="w-full sm:w-3/12 text-blue-600">Activo</div>
-    <div class="w-full sm:w-9/12">
-      <p-skeleton />
-    </div>
-  </div>
-
-  <!-- Renewal -->
-  <div class="flex flex-wrap mb-2">
-    <div class="w-full sm:w-3/12 text-blue-600">Renovación</div>
-    <div class="w-full sm:w-9/12">
-      <p-skeleton />
-    </div>
-  </div>
-
-} @else {
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center pb-4">
-    <p-card class="w-60">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
-          <span class="pi pi-check text-green-600 text-sm"></span>
-        </div>
-
-        <span class="font-medium">Estado</span>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center pb-4">
+  <p-card class="w-60">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
+        <span class="pi pi-check text-green-600 text-sm"></span>
       </div>
 
-      <div class="mt-2">
+      <span class="font-medium">Estado</span>
+    </div>
+
+    <div class="mt-2">
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
         @if (member().active) {
           <span class="text-green-700 font-semibold">Activo</span>
         } @else {
           <span class="text-red-600 font-semibold">Baja</span>
         }
-      </div>
-    </p-card>
+      }
+    </div>
+  </p-card>
 
-    <p-card class="w-60">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
-          <span class="pi pi-replay text-green-600 text-sm"></span>
-        </div>
-
-        <span class="font-medium">Renovación</span>
+  <p-card class="w-60">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
+        <span class="pi pi-replay text-green-600 text-sm"></span>
       </div>
 
-      <div class="mt-2">
+      <span class="font-medium">Renovación</span>
+    </div>
+
+    <div class="mt-2">
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
         @if (member().renew) {
           <span class="text-green-700 font-semibold">Renueva</span>
         } @else {
           <span class="text-red-600 font-semibold">Baja</span>
         }
-      </div>
-    </p-card>
-  </div>
+      }
+    </div>
+  </p-card>
+</div>
 
-  <h3 class="text-sm font-semibold text-gray-600 mb-3">Datos personales</h3>
+<h3 class="text-sm font-semibold text-gray-600 mb-3">Datos personales</h3>
 
-  <div class="ms-3 space-y-5">
+<div class="ms-3 space-y-5">
 
-    <!-- First name -->
-    <div class="flex gap-3 items-center">
-      <i class="pi pi-user text-gray-400"></i>
-      <div>
-        <p class="text-gray-500 text-sm">Nombre</p>
+  <!-- First name -->
+  <div class="flex gap-3 items-center">
+    <i class="pi pi-user text-gray-400"></i>
+    <div>
+      <p class="text-gray-500 text-sm">Nombre</p>
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
         <p class="font-medium">{{contact().name.firstName}}</p>
-      </div>
+      }
     </div>
-
-    <!-- Last name -->
-    <div class="flex gap-3 items-center">
-      <i class="pi pi-users text-gray-400"></i>
-      <div>
-        <p class="text-gray-500 text-sm">Apellidos</p>
-        <p class="font-medium">{{contact().name.lastName}}</p>
-      </div>
-    </div>
-
-    <!-- Identifier -->
-    <div class="flex gap-3 items-center">
-      <i class="pi pi-id-card text-gray-400"></i>
-      <div>
-        <p class="text-gray-500 text-sm">DNI</p>
-        <p class="font-medium">{{contact().identifier}}</p>
-      </div>
-    </div>
-
-    <!-- Birth date -->
-    <div class="flex gap-3 items-center">
-      <i class="pi pi-calendar-clock text-gray-400"></i>
-      <div>
-        <p class="text-gray-500 text-sm">Fecha de nacimiento</p>
-        <p class="font-medium">{{contact().birthDate | date:'yyyy-MM-dd'}}</p>
-      </div>
-    </div>
-
   </div>
 
-}
+  <!-- Last name -->
+  <div class="flex gap-3 items-center">
+    <i class="pi pi-users text-gray-400"></i>
+    <div>
+      <p class="text-gray-500 text-sm">Apellidos</p>
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
+        <p class="font-medium">{{contact().name.lastName}}</p>
+      }
+    </div>
+  </div>
+
+  <!-- Identifier -->
+  <div class="flex gap-3 items-center">
+    <i class="pi pi-id-card text-gray-400"></i>
+    <div>
+      <p class="text-gray-500 text-sm">DNI</p>
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
+        <p class="font-medium">{{contact().identifier}}</p>
+      }
+    </div>
+  </div>
+
+  <!-- Birth date -->
+  <div class="flex gap-3 items-center">
+    <i class="pi pi-calendar-clock text-gray-400"></i>
+    <div>
+      <p class="text-gray-500 text-sm">Fecha de nacimiento</p>
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
+        <p class="font-medium">{{contact().birthDate | date:'yyyy-MM-dd'}}</p>
+      }
+    </div>
+  </div>
+
+</div>
