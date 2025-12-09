@@ -39,7 +39,7 @@ export class ContactView implements OnInit {
   private readonly memberContactsService = inject(MemberContactsService);
   private readonly messageService = inject(MessageService);
 
-  public activeFilter = MemberStatus.Active;
+  public activeFilter = MemberStatus.All;
 
   public readonly createable;
   public readonly editable;
