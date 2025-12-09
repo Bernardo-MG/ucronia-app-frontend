@@ -58,59 +58,85 @@
 
   } @else {
 
-    <!-- First name -->
-    <div class="flex flex-wrap mb-2">
-      <div class="w-full sm:w-3/12 text-blue-600">Nombre</div>
-      <div class="w-full sm:w-9/12">
-        {{contact().name.firstName}}
+    <div class="ms-3">
+      <h3 class="text-sm font-semibold text-gray-600 mb-3">Datos personales</h3>
+
+      <div class="space-y-5">
+
+        <!-- First name -->
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-user text-gray-400"></i>
+          <div>
+            <p class="text-gray-500 text-sm">Nombre</p>
+            <p class="font-medium">{{contact().name.firstName}}</p>
+          </div>
+        </div>
+
+        <!-- Last name -->
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-users text-gray-400"></i>
+          <div>
+            <p class="text-gray-500 text-sm">Apellidos</p>
+            <p class="font-medium">{{contact().name.lastName}}</p>
+          </div>
+        </div>
+
+        <!-- Identifier -->
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-id-card text-gray-400"></i>
+          <div>
+            <p class="text-gray-500 text-sm">DNI</p>
+            <p class="font-medium">{{contact().identifier}}</p>
+          </div>
+        </div>
+
+        <!-- Birth date -->
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-calendar-clock text-gray-400"></i>
+          <div>
+            <p class="text-gray-500 text-sm">Fecha de nacimiento</p>
+            <p class="font-medium">{{contact().birthDate | date:'yyyy-MM-dd'}}</p>
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <!-- Last name -->
-    <div class="flex flex-wrap mb-2">
-      <div class="w-full sm:w-3/12 text-blue-600">Apellidos</div>
-      <div class="w-full sm:w-9/12">
-        {{contact().name.lastName}}
-      </div>
-    </div>
+    <div class="ms-3">
+      <h3 class="text-sm font-semibold text-gray-600 mb-3">Estado</h3>
+    
+      <div class="space-y-5">
 
-    <!-- Identifier -->
-    <div class="flex flex-wrap mb-2">
-      <div class="w-full sm:w-3/12 text-blue-600">DNI</div>
-      <div class="w-full sm:w-9/12">
-        {{contact().identifier}}
-      </div>
-    </div>
+        <!-- Active -->
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-calendar-clock text-gray-400"></i>
+          <div>
+            <p class="text-gray-500 text-sm">Activo</p>
+            <p class="font-medium">
+              @if (member().active) {
+                <span class="pi pi-check text-green-600"></span>
+              } @else {
+                <span class="pi pi-times text-yellow-500"></span>
+              }
+            </p>
+          </div>
+        </div>
 
-    <!-- Birth date -->
-    <div class="flex flex-wrap mb-2">
-      <div class="w-full sm:w-3/12 text-blue-600">Fecha de nacimiento</div>
-      <div class="w-full sm:w-9/12">
-        {{contact().birthDate | date:'yyyy-MM-dd'}}
-      </div>
-    </div>
+        <!-- Renewal -->
+        <div class="flex gap-3 items-center">
+          <i class="pi pi-calendar-clock text-gray-400"></i>
+          <div>
+            <p class="text-gray-500 text-sm">Renovación</p>
+            <p class="font-medium">
+              @if (member().renew) {
+                <span class="pi pi-check text-green-600"></span>
+              } @else {
+                <span class="pi pi-times text-yellow-500"></span>
+              }
+            </p>
+          </div>
+        </div>
 
-    <!-- Active -->
-    <div class="flex flex-wrap mb-2">
-      <div class="w-full sm:w-3/12 text-blue-600">Activo</div>
-      <div class="w-full sm:w-9/12">
-        @if (member().active) {
-          <span class="pi pi-check text-green-600"></span>
-        } @else {
-          <span class="pi pi-times text-yellow-500"></span>
-        }
-      </div>
-    </div>
-
-    <!-- Renewal -->
-    <div class="flex flex-wrap mb-2">
-      <div class="w-full sm:w-3/12 text-blue-600">Renovación</div>
-      <div class="w-full sm:w-9/12">
-        @if (member().renew) {
-          <span class="pi pi-check text-green-600"></span>
-        } @else {
-          <span class="pi pi-times text-yellow-500"></span>
-        }
       </div>
     </div>
 
