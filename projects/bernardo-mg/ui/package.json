@@ -4,7 +4,6 @@
   "peerDependencies": {
     "@angular/common": "^20.1.0",
     "@angular/core": "^20.1.0",
-    "@angular/router": "^20.1.0",
     "@primeng/themes": "^20.0.0",
     "primeng": "^20.0.0"
   },
