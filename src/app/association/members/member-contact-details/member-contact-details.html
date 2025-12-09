@@ -49,55 +49,24 @@
 <div class="ms-3 space-y-5">
 
   <!-- First name -->
-  <div class="flex gap-3 items-center">
-    <i class="pi pi-user text-gray-400"></i>
-    <div>
-      <p class="text-gray-500 text-sm">Nombre</p>
-      @if (loading()) {
-        <p-skeleton />
-      } @else {
-        <p class="font-medium">{{contact().name.firstName}}</p>
-      }
-    </div>
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Apellidos" [value]="contact().name.firstName" />
   </div>
 
   <!-- Last name -->
-  <div class="flex gap-3 items-center">
-    <i class="pi pi-users text-gray-400"></i>
-    <div>
-      <p class="text-gray-500 text-sm">Apellidos</p>
-      @if (loading()) {
-        <p-skeleton />
-      } @else {
-        <p class="font-medium">{{contact().name.lastName}}</p>
-      }
-    </div>
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Apellidos" [value]="contact().name.lastName" />
   </div>
 
   <!-- Identifier -->
-  <div class="flex gap-3 items-center">
-    <i class="pi pi-id-card text-gray-400"></i>
-    <div>
-      <p class="text-gray-500 text-sm">DNI</p>
-      @if (loading()) {
-        <p-skeleton />
-      } @else {
-        <p class="font-medium">{{contact().identifier}}</p>
-      }
-    </div>
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-id-card" name="DNI" [value]="contact().identifier" />
   </div>
 
   <!-- Birth date -->
-  <div class="flex gap-3 items-center">
-    <i class="pi pi-calendar-clock text-gray-400"></i>
-    <div>
-      <p class="text-gray-500 text-sm">Fecha de nacimiento</p>
-      @if (loading()) {
-        <p-skeleton />
-      } @else {
-        <p class="font-medium">{{contact().birthDate | date:'yyyy-MM-dd'}}</p>
-      }
-    </div>
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de nacimiento"
+      [value]="contact().birthDate | date:'yyyy-MM-dd'" />
   </div>
 
 </div>
