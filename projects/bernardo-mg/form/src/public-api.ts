@@ -2,7 +2,7 @@
  * Public API Surface of form
  */
 
-export * from './lib/confirm-password-validator/confirm-password-validator';
-export * from './lib/isbn-validator/isbn-validator';
-export * from './lib/not-empty-string-validator/not-empty-string-validator';
-export * from './lib/form-status';
+export * from './lib/validators/confirm-password-validator';
+export * from './lib/validators/isbn-validator';
+export * from './lib/validators/not-empty-string-validator';
+export * from './lib/status/form-status';
