@@ -168,7 +168,7 @@ export class MemberView implements OnInit {
   public load(page: number) {
     this.loading = true;
 
-    this.service.getAll(this.activeFilter, page, this.sort)
+    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }

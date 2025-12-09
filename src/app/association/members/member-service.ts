@@ -23,17 +23,23 @@ export class MemberService {
     this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
   }
 
-  public getAll(active: MemberStatus, page: number, sort: Sorting): Observable<PaginatedResponse<Member>> {
+  public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
+    let status;
+    if (active) {
+      status = active.toString().toUpperCase();
+    } else {
+      status = '';
+    }
     return this.client
-      .parameter('status', active.toString().toUpperCase())
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
-      .parameter('status', MemberStatus.Active.toString().toUpperCase())
+      .parameter('status', status)
+      .parameter('name', name)
       .read<PaginatedResponse<Member>>();
   }
 
