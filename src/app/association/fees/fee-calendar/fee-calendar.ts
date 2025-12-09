@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Fee, MemberFees } from '@app/domain/fees/member-fees';
 import { YearsRange } from '@app/domain/fees/years-range';
-import { JustifyCenterDirective } from '@bernardo-mg/ui';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
@@ -12,7 +11,7 @@ import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, BadgeModule, JustifyCenterDirective],
+  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, BadgeModule],
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
