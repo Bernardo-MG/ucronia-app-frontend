@@ -36,7 +36,7 @@
 
     @if (createable) {
       <div class="ml-auto space-x-2">
-        <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
+        <p-button icon="pi pi-plus-circle" (click)="onStartCreating()" [disabled]="!createable"
           aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
       </div>
     }
@@ -61,14 +61,10 @@
   </p-dialog>
 
   <!-- Creation Dialog -->
-  @switch(view) {
-    @case('creation') {
-      <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
-        contentStyleClass="p-0" class="rounded-lg">
-        <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
-        </assoc-member-creation-form>
-      </p-dialog>
-    }
-  }
+  <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '25rem' }"
+    contentStyleClass="p-0" class="rounded-lg">
+    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
+    </assoc-member-creation-form>
+  </p-dialog>
 
 </div>

@@ -59,10 +59,8 @@ export class MemberView implements OnInit {
    */
   public loading = false;
   public showing = false;
-  public editing = false;
+  public creating = false;
   public saving = false;
-
-  public view = '';
 
   public failures = new FailureStore();
 
@@ -127,9 +125,8 @@ export class MemberView implements OnInit {
     this.load(0);
   }
 
-  public onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
+  public onStartCreating(): void {
+    this.creating = true;
   }
 
   public onDelete(number: number) {
@@ -189,7 +186,7 @@ export class MemberView implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.view = 'none';
+          this.creating = false;
           this.load(this.data.page);
           onSuccess();
         },
