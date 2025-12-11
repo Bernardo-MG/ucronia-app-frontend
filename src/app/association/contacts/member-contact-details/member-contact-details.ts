@@ -2,9 +2,10 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { MemberContact } from '@app/association/members/domain/member-contact';
+import { Contact } from '@app/domain/contact/contact';
+import { DetailField } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { DetailField } from '../../../../../projects/bernardo-mg/ui/src/public-api';
 
 @Component({
   selector: 'assoc-member-contact-details',
@@ -13,7 +14,11 @@ import { DetailField } from '../../../../../projects/bernardo-mg/ui/src/public-a
 })
 export class MemberContactDetails {
 
-  public data = input(new MemberContact());
+  public data = input<Contact | MemberContact>(new MemberContact());
   public loading = input(false);
+
+  public get member() {
+    return this.data() as MemberContact;
+  }
 
 }

@@ -85,11 +85,7 @@
 
   <!-- Contact Dialog -->
   <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
-    @if(selectedStatus === 'members') {
-      <assoc-member-contact-details [data]="selectedMemberData" />
-    } @else {
-      <assoc-contact-info [data]="selectedData" />
-    }
+    <assoc-member-contact-details [data]="selectedData" />
   </p-dialog>
 
   <!-- Creation / Edition Dialogs -->
