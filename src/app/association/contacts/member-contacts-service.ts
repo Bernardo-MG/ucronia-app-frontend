@@ -12,11 +12,13 @@ import { Observable, map } from 'rxjs';
 export class MemberContactsService {
 
   private readonly client;
+  private readonly contactClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/contact/member');
+    this.client = clientProvider.url(environment.apiUrl + '/member');
+    this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
   }
 
   public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<MemberContact>> {
@@ -61,6 +63,13 @@ export class MemberContactsService {
 
   public getOne(number: number): Observable<MemberContact> {
     return this.client
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<MemberContact>>()
+      .pipe(map(r => r.content));
+  }
+
+  public getContact(number: number): Observable<MemberContact> {
+    return this.contactClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<MemberContact>>()
       .pipe(map(r => r.content));

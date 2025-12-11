@@ -180,15 +180,9 @@ export class ContactView implements OnInit {
   public load(page: number) {
     this.loading = true;
 
-    if (this.selectedStatus === 'members') {
-      this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.data = response);
-    } else {
-      this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.data = response);
-    }
+    this.getService().getAll(page, this.sort, this.activeFilter, this.nameFilter)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
