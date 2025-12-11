@@ -13,7 +13,7 @@ import { DetailField } from '../../../../../projects/bernardo-mg/ui/src/public-a
 })
 export class MemberContactDetails {
 
-  public contact = input(new MemberContact());
+  public data = input(new MemberContact());
   public loading = input(false);
 
 }

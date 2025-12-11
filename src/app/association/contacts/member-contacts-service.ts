@@ -4,7 +4,7 @@ import { MemberContact } from '@app/association/members/domain/member-contact';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
+import { Observable, finalize, forkJoin, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -62,13 +62,25 @@ export class MemberContactsService {
   }
 
   public getOne(number: number): Observable<MemberContact> {
+    return forkJoin({
+      member: this.getMember(number),
+      contact: this.getContact(number)
+    }).pipe(
+      map(({ member, contact }) => ({
+        ...contact,
+        ...member
+      }))
+    );
+  }
+
+  private getMember(number: number): Observable<MemberContact> {
     return this.client
       .appendRoute(`/${number}`)
       .read<SimpleResponse<MemberContact>>()
       .pipe(map(r => r.content));
   }
 
-  public getContact(number: number): Observable<MemberContact> {
+  private getContact(number: number): Observable<MemberContact> {
     return this.contactClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<MemberContact>>()

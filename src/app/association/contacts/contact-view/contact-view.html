@@ -84,22 +84,20 @@
   </p-panel>
 
   <!-- Contact Dialog -->
-  @if(showing) {
   <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
     @if(selectedStatus === 'members') {
-    <assoc-member-contact-info [data]="selectedMemberData" />
+      <assoc-member-contact-details [data]="selectedMemberData" />
     } @else {
-    <assoc-contact-info [data]="selectedData" />
+      <assoc-contact-info [data]="selectedData" />
     }
   </p-dialog>
-  }
 
   <!-- Creation / Edition Dialogs -->
   <p-dialog header="Crear contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
     @if(selectedStatus === 'members') {
-    <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+      <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     } @else {
-    <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+      <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     }
   </p-dialog>
 

@@ -12,7 +12,7 @@
       @if (loading()) {
         <p-skeleton />
       } @else {
-        @if (contact().active) {
+        @if (data().active) {
           <span class="text-green-700 font-semibold">Activo</span>
         } @else {
           <span class="text-red-600 font-semibold">Baja</span>
@@ -34,7 +34,7 @@
       @if (loading()) {
         <p-skeleton />
       } @else {
-        @if (contact().renew) {
+        @if (data().renew) {
           <span class="text-green-700 font-semibold">Renueva</span>
         } @else {
           <span class="text-red-600 font-semibold">Baja</span>
@@ -50,23 +50,23 @@
 
   <!-- First name -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Apellidos" [value]="contact().name.firstName" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Apellidos" [value]="data().name.firstName" />
   </div>
 
   <!-- Last name -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Apellidos" [value]="contact().name.lastName" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Apellidos" [value]="data().name.lastName" />
   </div>
 
   <!-- Identifier -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-id-card" name="DNI" [value]="contact().identifier" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-id-card" name="DNI" [value]="data().identifier" />
   </div>
 
   <!-- Birth date -->
   <div>
     <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de nacimiento"
-      [value]="contact().birthDate | date:'yyyy-MM-dd'" />
+      [value]="data().birthDate | date:'yyyy-MM-dd'" />
   </div>
 
 </div>

@@ -56,15 +56,13 @@
   <!-- View Member Dialog -->
   <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing"
     [style]="{ width: '35rem' }" contentStyleClass="p-0" class="rounded-lg">
-    <assoc-member-contact-details [loading]="loading" [contact]="memberContact">
-    </assoc-member-contact-details>
+    <assoc-member-contact-details [loading]="loading" [data]="memberContact" />
   </p-dialog>
 
   <!-- Creation Dialog -->
   <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '25rem' }"
     contentStyleClass="p-0" class="rounded-lg">
-    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
-    </assoc-member-creation-form>
+    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
 
 </div>

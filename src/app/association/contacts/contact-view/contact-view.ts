@@ -2,9 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
+import { MemberContact } from '@app/association/members/domain/member-contact';
+import { MemberContactDetails } from '@app/association/members/member-contact-details/member-contact-details';
 import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
-import { MemberContact } from '@app/association/members/domain/member-contact';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -23,14 +24,13 @@ import { ContactList } from '../contact-list/contact-list';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
 import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
-import { MemberContactInfo } from '../member-contact-info/member-contact-info';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -120,8 +120,8 @@ export class ContactView implements OnInit {
   }
 
   public onShowInfo(contact: Contact) {
-    this.service.getOne(contact.number)
-      .subscribe(fee => this.selectedData = fee);
+    this.getService().getOne(contact.number)
+      .subscribe(contact => this.selectedData = contact);
     this.showing = true;
   }
 
