@@ -35,16 +35,16 @@
     }
 
     @if (createable) {
-    <div class="ml-auto space-x-2">
-      <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
-        aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
-    </div>
+      <div class="ml-auto space-x-2">
+        <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
+          aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
+      </div>
     }
   </div>
 
   <!-- Table Panel -->
   <p-panel class="shadow bg-white rounded-lg">
-  
+
     <assoc-member-list [loading]="loading" [editable]="editable" [readContact]="readContact" [deletable]="deletable"
       [members]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
       (show)="onShowContact($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
@@ -54,21 +54,21 @@
   </p-panel>
 
   <!-- View Member Dialog -->
-  <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing" [style]="{ width: '35rem' }" contentStyleClass="p-0"
-    class="rounded-lg">
-    <assoc-member-contact-details [loading]="loading" [contact]="memberContact" [member]="selectedData">
+  <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing"
+    [style]="{ width: '35rem' }" contentStyleClass="p-0" class="rounded-lg">
+    <assoc-member-contact-details [loading]="loading" [contact]="memberContact">
     </assoc-member-contact-details>
   </p-dialog>
 
   <!-- Creation Dialog -->
   @switch(view) {
-  @case('creation') {
-  <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
-    contentStyleClass="p-0" class="rounded-lg">
-    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
-    </assoc-member-creation-form>
-  </p-dialog>
-  }
+    @case('creation') {
+      <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+        contentStyleClass="p-0" class="rounded-lg">
+        <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
+        </assoc-member-creation-form>
+      </p-dialog>
+    }
   }
 
 </div>

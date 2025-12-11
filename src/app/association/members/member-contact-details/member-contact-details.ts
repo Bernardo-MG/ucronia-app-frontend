@@ -1,8 +1,7 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { MemberContact } from '@app/domain/contact/member-contact';
-import { Member } from '@app/domain/members/member';
+import { MemberContact } from '@app/association/members/domain/member-contact';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { DetailField } from '../../../../../projects/bernardo-mg/ui/src/public-api';
@@ -15,7 +14,6 @@ import { DetailField } from '../../../../../projects/bernardo-mg/ui/src/public-a
 export class MemberContactDetails {
 
   public contact = input(new MemberContact());
-  public member = input(new Member());
   public loading = input(false);
 
 }

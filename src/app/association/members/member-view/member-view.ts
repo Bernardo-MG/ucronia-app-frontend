@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { MemberStatus } from '@app/domain/contact/active';
-import { MemberContact } from '@app/domain/contact/member-contact';
+import { MemberContact } from '@app/association/members/domain/member-contact';
 import { Member } from '@app/domain/members/member';
 import { MemberStatusSelector } from '@app/shared/contact/components/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
@@ -106,7 +106,13 @@ export class MemberView implements OnInit {
     this.loading = true;
     this.service.getContact(member.number)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.memberContact = response);
+      .subscribe(response => {
+        this.memberContact = {
+          ...response,
+          active: member.active,
+          renew: member.renew
+        };
+      });
     this.showing = true;
   }
 

@@ -1,12 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { MemberStatus } from '@app/domain/contact/active';
-import { MemberContact } from '@app/domain/contact/member-contact';
+import { MemberContact } from '@app/association/members/domain/member-contact';
 import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { MemberCreation } from './domain/member-creation';
 import { MemberPatch } from './domain/member-patch';
+import { Contact } from '@app/domain/contact/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -50,10 +51,10 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  public getContact(number: number): Observable<MemberContact> {
+  public getContact(number: number): Observable<Contact> {
     return this.contactClient
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<MemberContact>>()
+      .read<SimpleResponse<Contact>>()
       .pipe(map(r => r.content));
   }
 

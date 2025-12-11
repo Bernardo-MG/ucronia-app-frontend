@@ -4,7 +4,7 @@ import { ContactCreation } from '@app/association/contacts/domain/contact-creati
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
-import { MemberContact } from '@app/domain/contact/member-contact';
+import { MemberContact } from '@app/association/members/domain/member-contact';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';

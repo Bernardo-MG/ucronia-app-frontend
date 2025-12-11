@@ -1,7 +1,7 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { MemberContact } from '@app/domain/contact/member-contact';
+import { MemberContact } from '@app/association/members/domain/member-contact';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
