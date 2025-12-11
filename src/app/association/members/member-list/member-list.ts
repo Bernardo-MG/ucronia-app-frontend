@@ -1,13 +1,15 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { Member } from '@app/domain/members/member';
 import { ConfirmationService, MenuItem } from 'primeng/api';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
+import { MemberStatusTag } from '../member-status-tag/member-status-tag';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [TableModule, ButtonModule, MenuModule],
+  imports: [TableModule, ButtonModule, MenuModule, BadgeModule, MemberStatusTag],
   templateUrl: './member-list.html'
 })
 export class MemberList {
