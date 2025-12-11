@@ -66,10 +66,9 @@ export class ContactView implements OnInit {
    */
   public loading = false;
   public editing = false;
+  public creating = false;
   public saving = false;
   public showing = false;
-
-  public view = '';
 
   public failures = new FailureStore();
 
@@ -92,11 +91,6 @@ export class ContactView implements OnInit {
 
   public onEdit(contact: MemberContact | Contact) {
     this.selectedData = contact;
-    this.onStartEditingView('edition');
-  }
-
-  public onStartEditingView(view: string): void {
-    this.view = view;
     this.editing = true;
   }
 
@@ -192,7 +186,8 @@ export class ContactView implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.view = 'none';
+          this.editing = false;
+          this.creating = false;
           this.load(this.data.page);
           onSuccess();
         },
