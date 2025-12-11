@@ -104,13 +104,7 @@ export class MemberView implements OnInit {
     this.loading = true;
     this.service.getContact(member.number)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => {
-        this.memberContact = {
-          ...response,
-          active: member.active,
-          renew: member.renew
-        };
-      });
+      .subscribe(response => this.memberContact = response);
     this.showing = true;
   }
 

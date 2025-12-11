@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core';
-import { MemberStatus } from '@app/domain/contact/active';
 import { MemberContact } from '@app/association/members/domain/member-contact';
+import { MemberStatus } from '@app/domain/contact/active';
+import { Contact } from '@app/domain/contact/contact';
 import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
+import { Observable, forkJoin, map } from 'rxjs';
 import { MemberCreation } from './domain/member-creation';
 import { MemberPatch } from './domain/member-patch';
-import { Contact } from '@app/domain/contact/contact';
 
 @Injectable({
   providedIn: 'root'
@@ -44,18 +44,16 @@ export class MemberService {
       .read<PaginatedResponse<Member>>();
   }
 
-  public getOne(number: number): Observable<Member> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<Member>>()
-      .pipe(map(r => r.content));
-  }
-
-  public getContact(number: number): Observable<Contact> {
-    return this.contactClient
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<Contact>>()
-      .pipe(map(r => r.content));
+  public getContact(number: number): Observable<MemberContact> {
+    return forkJoin({
+      member: this.getOne(number),
+      contact: this.getMemberContact(number)
+    }).pipe(
+      map(({ member, contact }) => ({
+        ...contact,
+        ...member
+      }))
+    );
   }
 
   public create(data: MemberCreation): Observable<Member> {
@@ -75,6 +73,20 @@ export class MemberService {
     return this.client
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Member>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  private getMemberContact(number: number): Observable<Contact> {
+    return this.contactClient
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<Contact>>()
+      .pipe(map(r => r.content));
+  }
+
+  private getOne(number: number): Observable<Member> {
+    return this.client
+      .appendRoute(`/${number}`)
+      .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
