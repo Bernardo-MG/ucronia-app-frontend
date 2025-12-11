@@ -145,18 +145,21 @@ export class MemberView implements OnInit {
     this.load(1);
   }
 
-  public setActive(status: boolean) {
-    this.selectedData.active = status;
-    this.selectedData.renew = status;
+  public setActive(number: number, status: boolean) {
+    const patched: MemberPatch = {
+      number,
+      active: status,
+      renew: status
+    }
     this.call(
-      () => this.service.patch(this.selectedData),
+      () => this.service.patch(patched),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
-  public setRenewal(status: boolean) {
+  public setRenewal(number: number, status: boolean) {
     const patched: MemberPatch = {
-      number: this.selectedData.number,
+      number,
       renew: status
     }
     this.call(

@@ -25,8 +25,8 @@ export class MemberList {
 
   public readonly show = output<Member>();
   public readonly delete = output<number>();
-  public readonly active = output<boolean>();
-  public readonly renewal = output<boolean>();
+  public readonly active = output<{ number: number, status: boolean }>();
+  public readonly renewal = output<{ number: number, status: boolean }>();
   public readonly changeDirection = output<{ field: string, order: number }>();
   public readonly changePage = output<number>();
 
@@ -66,20 +66,20 @@ export class MemberList {
     // Active/Deactivate toggle
     this.editionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, !isActive)
+      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, member, !isActive)
     });
 
     // Renewal toggle
     this.editionMenuItems.push({
       label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
-      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, !canRenew)
+      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, member, !canRenew)
     });
 
     // Show menu
     this.editionMenu.toggle(event);
   }
 
-  private onConfirmSetActive(event: Event, status: boolean) {
+  private onConfirmSetActive(event: Event, member: Member, status: boolean) {
     let message;
     if (status) {
       message = '¿Estás seguro de querer activar el socio?';
@@ -100,12 +100,12 @@ export class MemberList {
         severity: 'danger'
       },
       accept: () => {
-        this.active.emit(status);
+        this.active.emit({ number: member.number, status });
       }
     });
   }
 
-  public onConfirmSetRenewal(event: Event, status: boolean) {
+  public onConfirmSetRenewal(event: Event, member: Member, status: boolean) {
     let message;
     if (status) {
       message = '¿Estás seguro de querer activar la renovación del socio?';
@@ -126,7 +126,7 @@ export class MemberList {
         severity: 'danger'
       },
       accept: () => {
-        this.renewal.emit(status);
+        this.renewal.emit({ number: member.number, status });
       }
     });
   }
