@@ -5,7 +5,7 @@ import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
 import { MemberStatus } from '@app/domain/contact/active';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
-import { MemberStatusSelectComponent } from '@app/shared/contact/components/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/shared/contact/member-status-select/member-status-select.component';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';

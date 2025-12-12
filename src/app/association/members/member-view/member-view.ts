@@ -6,7 +6,7 @@ import { MemberContactDetails } from '@app/association/contacts/member-contact-d
 import { MemberContact } from '@app/association/members/domain/member-contact';
 import { MemberStatus } from '@app/domain/contact/active';
 import { Member } from '@app/domain/members/member';
-import { MemberStatusSelector } from '@app/shared/contact/components/member-status-selector/member-status-selector';
+import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
