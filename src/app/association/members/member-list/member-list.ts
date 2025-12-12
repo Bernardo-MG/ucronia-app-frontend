@@ -5,7 +5,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
-import { MemberStatusTag } from '../member-status-tag/member-status-tag';
+import { MemberStatusTag } from '../../../shared/contact/member-status-tag/member-status-tag';
 
 @Component({
   selector: 'assoc-member-list',
