@@ -14,7 +14,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable, tap, throwError } from 'rxjs';
 import { MemberStatusSelector } from '../../../shared/contact/components/member-status-selector/member-status-selector';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
@@ -126,22 +126,37 @@ export class ContactView implements OnInit {
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
-      () => this.getService().create(toCreate as any),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.getService().create(toCreate as any)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
   public onUpdate(toUpdate: Contact): void {
     this.call(
-      () => this.service.patch(toUpdate),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.service.patch(toUpdate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
   public onDelete(number: number) {
     this.call(
-      () => this.service.delete(number),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => this.service.delete(number)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
@@ -174,7 +189,7 @@ export class ContactView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -183,8 +198,6 @@ export class ContactView implements OnInit {
           this.failures.clear();
           this.editing = false;
           this.creating = false;
-          this.load(this.data.page);
-          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

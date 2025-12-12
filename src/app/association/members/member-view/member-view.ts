@@ -17,7 +17,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, Observable, Subject, throwError } from 'rxjs';
+import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberList } from '../member-list/member-list';
@@ -125,15 +125,25 @@ export class MemberView implements OnInit {
 
   public onDelete(number: number) {
     this.call(
-      () => this.service.delete(number),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => this.service.delete(number)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
-      () => this.service.create(toCreate as any),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.service.create(toCreate as any)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
@@ -147,10 +157,15 @@ export class MemberView implements OnInit {
       number,
       active: status,
       renew: status
-    }
+    };
     this.call(
-      () => this.service.patch(patched),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.service.patch(patched)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
@@ -158,10 +173,15 @@ export class MemberView implements OnInit {
     const patched: MemberPatch = {
       number,
       renew: status
-    }
+    };
     this.call(
-      () => this.service.patch(patched),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.service.patch(patched)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
@@ -173,7 +193,7 @@ export class MemberView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -181,8 +201,6 @@ export class MemberView implements OnInit {
         next: () => {
           this.failures.clear();
           this.creating = false;
-          this.load(this.data.page);
-          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {
