@@ -2,9 +2,9 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
-import { Active } from '@app/domain/contact/active';
+import { MemberContact } from '@app/association/members/domain/member-contact';
+import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
-import { MemberContact } from '@app/domain/contact/member-contact';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -14,23 +14,22 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { finalize, Observable, throwError } from 'rxjs';
-import { MemberStatusSelector } from '../../../shared/contact/components/member-status-selector/member-status-selector';
+import { finalize, Observable, tap, throwError } from 'rxjs';
+import { MemberStatusSelector } from '../../../shared/contact/member-status-selector/member-status-selector';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
-import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
-import { ContactInfo } from '../contact-info/contact-info';
+import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
 import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
-import { MemberContactInfo } from '../member-contact-info/member-contact-info';
+import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, ContactInfo, MemberContactInfo, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -39,11 +38,7 @@ export class ContactView implements OnInit {
   private readonly memberContactsService = inject(MemberContactsService);
   private readonly messageService = inject(MessageService);
 
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
-
-  public activeFilter = Active.Active;
+  public activeFilter = MemberStatus.All;
 
   public readonly createable;
   public readonly editable;
@@ -59,10 +54,6 @@ export class ContactView implements OnInit {
 
   public selectedData: Contact | MemberContact = new Contact();
 
-  public get selectedMemberData() {
-    return this.selectedData as MemberContact;
-  }
-
   private sort = new Sorting();
 
   /**
@@ -70,10 +61,9 @@ export class ContactView implements OnInit {
    */
   public loading = false;
   public editing = false;
+  public creating = false;
   public saving = false;
   public showing = false;
-
-  public view = '';
 
   public failures = new FailureStore();
 
@@ -96,15 +86,10 @@ export class ContactView implements OnInit {
 
   public onEdit(contact: MemberContact | Contact) {
     this.selectedData = contact;
-    this.onStartEditingView('edition');
-  }
-
-  public onStartEditingView(view: string): void {
-    this.view = view;
     this.editing = true;
   }
 
-  public onChangeActiveFilter(active: Active) {
+  public onChangeActiveFilter(active: MemberStatus) {
     this.activeFilter = active;
     this.load(0);
   }
@@ -130,8 +115,8 @@ export class ContactView implements OnInit {
   }
 
   public onShowInfo(contact: Contact) {
-    this.service.getOne(contact.number)
-      .subscribe(fee => this.selectedData = fee);
+    this.getService().getOne(contact.number)
+      .subscribe(contact => this.selectedData = contact);
     this.showing = true;
   }
 
@@ -141,22 +126,37 @@ export class ContactView implements OnInit {
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
-      () => this.getService().create(toCreate as any),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.getService().create(toCreate as any)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
   public onUpdate(toUpdate: Contact): void {
     this.call(
-      () => this.service.patch(toUpdate),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.service.patch(toUpdate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
   public onDelete(number: number) {
     this.call(
-      () => this.service.delete(number),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => this.service.delete(number)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
@@ -167,11 +167,11 @@ export class ContactView implements OnInit {
 
   public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
     if (status === 'all') {
-      this.activeFilter = Active.All;
+      this.activeFilter = MemberStatus.All;
     } else if (status === 'active') {
-      this.activeFilter = Active.Active;
+      this.activeFilter = MemberStatus.Active;
     } else if (status === 'inactive') {
-      this.activeFilter = Active.Inactive;
+      this.activeFilter = MemberStatus.Inactive;
     }
     this.load(0);
   }
@@ -184,27 +184,20 @@ export class ContactView implements OnInit {
   public load(page: number) {
     this.loading = true;
 
-    if (this.selectedStatus === 'members') {
-      this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.data = response);
-    } else {
-      this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.data = response);
-    }
+    this.getService().getAll(page, this.sort, this.activeFilter, this.nameFilter)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.load(this.data.page);
-          onSuccess();
+          this.editing = false;
+          this.creating = false;
         },
         error: error => {
           if (error instanceof FailureResponse) {

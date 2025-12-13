@@ -35,10 +35,10 @@
     }
 
     @if (createable) {
-    <div class="ml-auto space-x-2">
-      <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
-        aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
-    </div>
+      <div class="ml-auto space-x-2">
+        <p-button icon="pi pi-plus-circle" (click)="onStartCreating()" [disabled]="!createable"
+          aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
+      </div>
     }
   </div>
 
@@ -48,25 +48,27 @@
     <assoc-member-list [loading]="loading" [editable]="editable" [readContact]="readContact" [deletable]="deletable"
       [members]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
       (show)="onShowContact($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
-      (changePage)="load($event)" (active)="setActive($event)" (renewal)="setRenewal($event)" />
+      (changePage)="load($event)" (active)="setActive($event.number, $event.status)"
+      (renewal)="setRenewal($event.number, $event.status)" (edit)="onStartEditing($event)" />
+
   </p-panel>
 
-  <!-- View Member Dialog -->
-  <p-dialog header="Socio" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" contentStyleClass="p-0"
-    class="rounded-lg">
-    <assoc-member-contact-details [contact]="memberContact" [member]="selectedData">
-    </assoc-member-contact-details>
+  <!-- View member dialog -->
+  <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing"
+    [style]="{ width: '35rem' }" contentStyleClass="p-0" class="rounded-lg">
+    <assoc-member-contact-details [loading]="loading" [data]="memberContact" />
   </p-dialog>
 
-  <!-- Creation Dialog -->
-  @switch(view) {
-  @case('creation') {
-  <p-dialog header="Crear socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+  <!-- Creation dialog -->
+  <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '25rem' }"
     contentStyleClass="p-0" class="rounded-lg">
-    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)">
-    </assoc-member-creation-form>
+    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
-  }
-  }
+
+  <!-- Edition dialog -->
+  <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    <assoc-contact-edition-form [loading]="loading" [data]="memberContact" [failures]="failures"
+      (save)="onUpdate($event)" />
+  </p-dialog>
 
 </div>

@@ -3,9 +3,9 @@ import { Component, input, output } from '@angular/core';
 import { BookInfo } from '@app/domain/library/book-info';
 import { BookLent } from '@app/domain/library/book-lent';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
-import { MemberStatusSelectComponent } from '@app/shared/contact/components/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/shared/contact/member-status-select/member-status-select.component';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
@@ -19,7 +19,7 @@ import { LibraryBookLendingForm } from '../library-book-lending-form/library-boo
 })
 export class LibraryBookLending {
 
-  public readonly getMemberSelection = input<(page: number, active: Active) => Observable<PaginatedResponse<any>>>((page: number, active: Active) => EMPTY);
+  public readonly getMemberSelection = input<(page: number, active: MemberStatus) => Observable<PaginatedResponse<any>>>((page: number, active: MemberStatus) => EMPTY);
   public readonly waiting = input(false);
   public readonly failures = input(new FailureStore());
   public readonly book = input(new BookInfo());
@@ -30,7 +30,7 @@ export class LibraryBookLending {
 
   public member = new Member();
 
-  public status = Active.Active;
+  public status = MemberStatus.Active;
 
   public onReturnToMembers() {
     this.currentStep = 1;

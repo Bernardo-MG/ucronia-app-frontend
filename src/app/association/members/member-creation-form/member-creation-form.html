@@ -31,12 +31,6 @@
 
   </div>
 
-  <!-- Active -->
-  <div class="row pb-2">
-    <p-toggleswitch formControlName="active" />
-    Socio
-  </div>
-
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">
     Guardar

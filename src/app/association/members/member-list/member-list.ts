@@ -1,13 +1,15 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { Member } from '@app/domain/members/member';
 import { ConfirmationService, MenuItem } from 'primeng/api';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
+import { MemberStatusTag } from '../../../shared/contact/member-status-tag/member-status-tag';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [TableModule, ButtonModule, MenuModule],
+  imports: [TableModule, ButtonModule, MenuModule, BadgeModule, MemberStatusTag],
   templateUrl: './member-list.html'
 })
 export class MemberList {
@@ -25,8 +27,9 @@ export class MemberList {
 
   public readonly show = output<Member>();
   public readonly delete = output<number>();
-  public readonly active = output<boolean>();
-  public readonly renewal = output<boolean>();
+  public readonly edit = output<Member>();
+  public readonly active = output<{ number: number, status: boolean }>();
+  public readonly renewal = output<{ number: number, status: boolean }>();
   public readonly changeDirection = output<{ field: string, order: number }>();
   public readonly changePage = output<number>();
 
@@ -63,23 +66,29 @@ export class MemberList {
     const isActive = !!member.active;
     const canRenew = !!member.renew;
 
-    // Active/Deactivate toggle
+    // Edit contact
+    this.editionMenuItems.push({
+      label: 'Editar',
+      command: () => this.edit.emit(member)
+    });
+
+    // Active/deactivate toggle
     this.editionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
-      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, !isActive)
+      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, member, !isActive)
     });
 
     // Renewal toggle
     this.editionMenuItems.push({
       label: canRenew ? 'Desactivar renovación' : 'Activar renovación',
-      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, !canRenew)
+      command: (method) => this.onConfirmSetRenewal(method.originalEvent as Event, member, !canRenew)
     });
 
     // Show menu
     this.editionMenu.toggle(event);
   }
 
-  private onConfirmSetActive(event: Event, status: boolean) {
+  private onConfirmSetActive(event: Event, member: Member, status: boolean) {
     let message;
     if (status) {
       message = '¿Estás seguro de querer activar el socio?';
@@ -100,12 +109,12 @@ export class MemberList {
         severity: 'danger'
       },
       accept: () => {
-        this.active.emit(status);
+        this.active.emit({ number: member.number, status });
       }
     });
   }
 
-  public onConfirmSetRenewal(event: Event, status: boolean) {
+  public onConfirmSetRenewal(event: Event, member: Member, status: boolean) {
     let message;
     if (status) {
       message = '¿Estás seguro de querer activar la renovación del socio?';
@@ -126,7 +135,7 @@ export class MemberList {
         severity: 'danger'
       },
       accept: () => {
-        this.renewal.emit(status);
+        this.renewal.emit({ number: member.number, status });
       }
     });
   }

@@ -11,12 +11,9 @@
   </ng-template>
   <ng-template #body let-contact>
     <tr>
-      <td>{{ contact.name.fullName }}
-        @if(contact.active) {
-          <p-tag severity="success" value="Activo" />
-        } @else {
-          <p-tag severity="danger" value="Baja" />
-        }
+      <td>
+        {{ contact.name.fullName }}
+        <assoc-member-status-tag [member]="contact" />
       </td>
       <td class="w-40">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(contact)" rounded text />

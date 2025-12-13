@@ -1,15 +1,15 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { MemberContact } from '@app/association/members/domain/member-contact';
+import { MemberStatusTag } from '@app/shared/contact/member-status-tag/member-status-tag';
 import { Contact } from '@app/domain/contact/contact';
-import { MemberContact } from '@app/domain/contact/member-contact';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-member-contact-list',
-  imports: [ButtonModule, TableModule, TagModule, MenuModule],
+  imports: [ButtonModule, TableModule, MenuModule, MemberStatusTag],
   templateUrl: './member-contact-list.html'
 })
 export class MemberContactList {

@@ -2,10 +2,12 @@ import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
-import { Active } from '@app/domain/contact/active';
-import { MemberContact } from '@app/domain/contact/member-contact';
+import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
+import { MemberContact } from '@app/association/members/domain/member-contact';
+import { MemberStatus } from '@app/domain/contact/active';
 import { Member } from '@app/domain/members/member';
-import { MemberStatusSelector } from '@app/shared/contact/components/member-status-selector/member-status-selector';
+import { ContactEditionForm } from '@app/shared/contact/contact-edition-form/contact-edition-form';
+import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -16,16 +18,16 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, Observable, Subject, throwError } from 'rxjs';
+import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
-import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
+import { Contact } from '@app/domain/contact/contact';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm, MemberStatusSelector],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm, MemberStatusSelector, ContactEditionForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -44,7 +46,6 @@ export class MemberView implements OnInit {
   public data = new PaginatedResponse<Member>();
 
   public selectedData = new Member();
-
   public memberContact = new MemberContact();
 
   private sort = new Sorting();
@@ -59,14 +60,13 @@ export class MemberView implements OnInit {
    */
   public loading = false;
   public showing = false;
+  public creating = false;
   public editing = false;
   public saving = false;
 
-  public view = '';
-
   public failures = new FailureStore();
 
-  public activeFilter = Active.Active;
+  public activeFilter = MemberStatus.Active;
   public nameFilterSubject = new Subject<string>();
   public nameFilter = '';
 
@@ -112,31 +112,59 @@ export class MemberView implements OnInit {
 
   public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
     if (status === 'all') {
-      this.activeFilter = Active.All;
+      this.activeFilter = MemberStatus.All;
     } else if (status === 'active') {
-      this.activeFilter = Active.Active;
+      this.activeFilter = MemberStatus.Active;
     } else if (status === 'inactive') {
-      this.activeFilter = Active.Inactive;
+      this.activeFilter = MemberStatus.Inactive;
     }
     this.load(0);
   }
 
-  public onStartEditingView(view: string): void {
-    this.view = view;
+  public onStartCreating(): void {
+    this.creating = true;
+  }
+
+  public onStartEditing(member: Member) {
+    this.service.getContact(member.number)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.memberContact = response);
     this.editing = true;
   }
 
   public onDelete(number: number) {
     this.call(
-      () => this.service.delete(number),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => this.service.delete(number)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.load(0);
+          })
+        )
     );
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
-      () => this.service.create(toCreate as any),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.service.create(toCreate as any)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+            this.load(0);
+          })
+        )
+    );
+  }
+
+  public onUpdate(toUpdate: Contact): void {
+    this.call(
+      () => this.service.patchContact(toUpdate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
@@ -145,44 +173,56 @@ export class MemberView implements OnInit {
     this.load(1);
   }
 
-  public setActive(status: boolean) {
-    this.selectedData.active = status;
-    this.selectedData.renew = status;
+  public setActive(number: number, status: boolean) {
+    const patched: MemberPatch = {
+      number,
+      active: status,
+      renew: status
+    };
     this.call(
-      () => this.service.patch(this.selectedData),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.service.patch(patched)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
-  public setRenewal(status: boolean) {
+  public setRenewal(number: number, status: boolean) {
     const patched: MemberPatch = {
-      number: this.selectedData.number,
+      number,
       renew: status
-    }
+    };
     this.call(
-      () => this.service.patch(patched),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.service.patch(patched)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
   public load(page: number) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort)
+    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.load(this.data.page);
-          onSuccess();
+          this.creating = false;
+          this.editing = false;
         },
         error: error => {
           if (error instanceof FailureResponse) {

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { Fee } from '@app/domain/fees/fee';
 import { FeeCreation } from '@app/domain/fees/fee-creation';
@@ -62,7 +62,7 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member>> {
+  public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

@@ -1,0 +1,11 @@
+<div class="flex gap-3 items-center">
+  <i class="{{icon()}} text-gray-400"></i>
+  <div>
+    <p class="text-gray-500 text-sm">{{name()}}</p>
+    @if (loading()) {
+      <p-skeleton />
+    } @else {
+      <p class="font-medium">{{value()}}</p>
+    }
+  </div>
+</div>

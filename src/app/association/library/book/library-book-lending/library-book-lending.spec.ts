@@ -3,7 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { of } from 'rxjs';
 import { LibraryBookLending } from './library-book-lending';
 import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { BookLent } from '@app/domain/library/book-lent';
 
 describe('LibraryBookLending', () => {
@@ -29,7 +29,7 @@ describe('LibraryBookLending', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
     expect(component.currentStep).toBe(1);
-    expect(component.status).toBe(Active.Active);
+    expect(component.status).toBe(MemberStatus.Active);
     expect(component.member).toBeDefined();
   });
 
@@ -78,8 +78,8 @@ describe('LibraryBookLending', () => {
 
     it('should update status when the select changes', () => {
       // simulate external change
-      component.status = Active.Inactive;
-      expect(component.status).toBe(Active.Inactive);
+      component.status = MemberStatus.Inactive;
+      expect(component.status).toBe(MemberStatus.Inactive);
     });
 
   });

@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Active } from '@app/domain/contact/active';
+import { MemberStatus } from '@app/domain/contact/active';
 import { SelectModule } from 'primeng/select';
 
 @Component({
@@ -12,14 +12,14 @@ export class MemberStatusSelectComponent {
 
   public readonly disabled = input(false);
 
-  public readonly changeStatus = output<Active>();
+  public readonly changeStatus = output<MemberStatus>();
 
   public readonly options = [{ name: 'Activo', value: 'Active' }, { name: 'Inactivo', value: 'Inactive' }, { name: 'Todos', value: 'All' }];
 
   public status: 'Active' | 'Inactive' | 'All' = 'Active';
 
   public onChangeStatus() {
-    this.changeStatus.emit(Active[this.status]);
+    this.changeStatus.emit(MemberStatus[this.status]);
   }
 
 }

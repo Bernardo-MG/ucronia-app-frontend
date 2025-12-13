@@ -50,12 +50,12 @@
     <assoc-contact-status-selector (filter)="onChangeStatusFilter($event)" />
 
     @if(selectedStatus === 'members') {
-      <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
+    <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
     }
 
     @if (createable) {
     <div class="ml-auto space-x-2">
-      <p-button icon="pi pi-plus-circle" (click)="onStartEditingView('creation')" [disabled]="!createable"
+      <p-button icon="pi pi-plus-circle" (click)="creating = true" [disabled]="!createable"
         aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
     </div>
     }
@@ -72,48 +72,35 @@
     @if(selectedStatus === 'members') {
     <assoc-member-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable"
       [contacts]="memberData.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-      (show)="onShowInfo($event)" (edit)="onEdit($event)"
-      (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
-      (changePage)="load($event)" />
+      (show)="onShowInfo($event)" (edit)="onEdit($event)" (delete)="onDelete($event)"
+      (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     } @else {
     <assoc-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-      (edit)="onEdit($event)" (delete)="onDelete($event)"
-      (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+      (edit)="onEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+      (changePage)="load($event)" />
     }
 
   </p-panel>
 
   <!-- Contact Dialog -->
-  @if(showing) {
   <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
+    <assoc-member-contact-details [data]="selectedData" />
+  </p-dialog>
+
+  <!-- Creation dialog -->
+  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
     @if(selectedStatus === 'members') {
-    <assoc-member-contact-info [data]="selectedMemberData" />
+      <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     } @else {
-    <assoc-contact-info [data]="selectedData" />
+      <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
     }
   </p-dialog>
-  }
 
-  <!-- Creation / Edition Dialogs -->
-  @switch (view) {
-
-  @case ('creation') {
-  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-    @if(selectedStatus === 'members') {
-    <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-    } @else {
-    <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-    }
-  </p-dialog>
-  }
-
-  @case ('edition') {
+  <!-- Edition dialog -->
   <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
       (save)="onUpdate($event)" />
   </p-dialog>
-  }
 
-  }
 </div>
