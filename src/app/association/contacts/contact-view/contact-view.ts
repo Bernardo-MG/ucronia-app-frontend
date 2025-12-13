@@ -15,10 +15,11 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
+import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
 import { MemberStatusSelector } from '../../../shared/contact/member-status-selector/member-status-selector';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
-import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
+import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
 import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
@@ -29,7 +30,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
