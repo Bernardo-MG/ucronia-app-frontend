@@ -1,5 +1,5 @@
 import { FormControl } from '@angular/forms';
-import { isbnValidator } from '../isbn-validator/isbn-validator';
+import { isbnValidator } from './isbn-validator';
 
 describe('isbnValidator', () => {
 
