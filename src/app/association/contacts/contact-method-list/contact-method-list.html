@@ -1,11 +1,10 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="contacts()" paginator="true" [rows]="rows()"
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
-  (onPage)="changePage.emit($event.first)">
+  currentPageReportTemplate="Total: {totalRecords}" (onPage)="changePage.emit($event.first)">
   <ng-template #body let-contact>
     <tr>
-      <td>{{ contact.name.fullName }}</td>
+      <td>{{ contact.name }}</td>
       <td class="w-40">
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
           [attr.aria-disabled]="!editable()" (click)="onEdit($event, contact)" rounded text />

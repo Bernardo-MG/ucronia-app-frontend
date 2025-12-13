@@ -84,6 +84,7 @@
 
   </p-panel>
 
+  <!-- Contact methods -->
   <p-panel [toggleable]="true" [collapsed]="true">
     <ng-template #header>
       <div class="flex items-center gap-2 px-2">
@@ -92,11 +93,15 @@
       </div>
     </ng-template>
     <ng-template #icons>
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creating = true" [disabled]="!createable"
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingMethod = true" [disabled]="!createable"
         aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text />
     </ng-template>
     <p class="m-0">
-      <assoc-contact-method-list />
+      <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+        [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
+        [totalRecords]="contactMethodData.totalElements" (edit)="onUpdateContactMethod($event)"
+        (delete)="onDeleteContactMethod($event)"
+        (changePage)="loadContactMethods($event)" />
     </p>
   </p-panel>
 
@@ -118,6 +123,11 @@
   <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
       (save)="onUpdate($event)" />
+  </p-dialog>
+
+  <!-- Contact method creation dialog -->
+  <p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
+    <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
   </p-dialog>
 
 </div>

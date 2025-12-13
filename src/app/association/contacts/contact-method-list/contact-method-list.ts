@@ -17,14 +17,13 @@ export class ContactMethodList {
   public readonly loading = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
-  public readonly contacts = input<ContactMethod[]>([]);
+  public readonly data = input<ContactMethod[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
   
   public readonly edit = output<ContactMethod>();
   public readonly delete = output<number>();
-  public readonly changeDirection = output<{ field: string, order: number }>();
   public readonly changePage = output<number>();
 
   @ViewChild('editionMenu') editionMenu!: Menu;
