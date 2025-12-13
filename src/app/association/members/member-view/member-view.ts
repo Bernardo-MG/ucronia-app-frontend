@@ -6,6 +6,7 @@ import { MemberContactDetails } from '@app/association/contacts/member-contact-d
 import { MemberContact } from '@app/association/members/domain/member-contact';
 import { MemberStatus } from '@app/domain/contact/active';
 import { Member } from '@app/domain/members/member';
+import { ContactEditionForm } from '@app/shared/contact/contact-edition-form/contact-edition-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -22,10 +23,11 @@ import { MemberPatch } from '../domain/member-patch';
 import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
+import { Contact } from '@app/domain/contact/contact';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm, MemberStatusSelector],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm, MemberStatusSelector, ContactEditionForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -44,7 +46,6 @@ export class MemberView implements OnInit {
   public data = new PaginatedResponse<Member>();
 
   public selectedData = new Member();
-
   public memberContact = new MemberContact();
 
   private sort = new Sorting();
@@ -60,6 +61,7 @@ export class MemberView implements OnInit {
   public loading = false;
   public showing = false;
   public creating = false;
+  public editing = false;
   public saving = false;
 
   public failures = new FailureStore();
@@ -123,6 +125,13 @@ export class MemberView implements OnInit {
     this.creating = true;
   }
 
+  public onStartEditing(member: Member) {
+    this.service.getContact(member.number)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.memberContact = response);
+    this.editing = true;
+  }
+
   public onDelete(number: number) {
     this.call(
       () => this.service.delete(number)
@@ -142,6 +151,18 @@ export class MemberView implements OnInit {
           tap(() => {
             this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
             this.load(0);
+          })
+        )
+    );
+  }
+
+  public onUpdate(toUpdate: Contact): void {
+    this.call(
+      () => this.service.patchContact(toUpdate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
           })
         )
     );
@@ -201,6 +222,7 @@ export class MemberView implements OnInit {
         next: () => {
           this.failures.clear();
           this.creating = false;
+          this.editing = false;
         },
         error: error => {
           if (error instanceof FailureResponse) {

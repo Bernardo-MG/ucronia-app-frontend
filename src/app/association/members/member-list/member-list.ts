@@ -27,6 +27,7 @@ export class MemberList {
 
   public readonly show = output<Member>();
   public readonly delete = output<number>();
+  public readonly edit = output<Member>();
   public readonly active = output<{ number: number, status: boolean }>();
   public readonly renewal = output<{ number: number, status: boolean }>();
   public readonly changeDirection = output<{ field: string, order: number }>();
@@ -65,7 +66,13 @@ export class MemberList {
     const isActive = !!member.active;
     const canRenew = !!member.renew;
 
-    // Active/Deactivate toggle
+    // Edit contact
+    this.editionMenuItems.push({
+      label: 'Editar',
+      command: () => this.edit.emit(member)
+    });
+
+    // Active/deactivate toggle
     this.editionMenuItems.push({
       label: isActive ? 'Desactivar' : 'Activar',
       command: (method) => this.onConfirmSetActive(method.originalEvent as Event, member, !isActive)

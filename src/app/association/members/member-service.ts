@@ -76,6 +76,13 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
+  public patchContact(data: Contact): Observable<Contact> {
+    return this.contactClient
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Contact>>(data)
+      .pipe(map(r => r.content));
+  }
+
   private getMemberContact(number: number): Observable<Contact> {
     return this.contactClient
       .appendRoute(`/${number}`)

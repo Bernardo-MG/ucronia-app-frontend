@@ -88,7 +88,7 @@
     <assoc-member-contact-details [data]="selectedData" />
   </p-dialog>
 
-  <!-- Creation / Edition Dialogs -->
+  <!-- Creation dialog -->
   <p-dialog header="Crear contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
     @if(selectedStatus === 'members') {
       <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
@@ -97,6 +97,7 @@
     }
   </p-dialog>
 
+  <!-- Edition dialog -->
   <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
       (save)="onUpdate($event)" />
