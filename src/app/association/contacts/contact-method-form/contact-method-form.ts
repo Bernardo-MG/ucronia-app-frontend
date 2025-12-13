@@ -1,4 +1,4 @@
-import { Component, inject, input, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactMethod } from '@app/domain/contact/contact-method';
 import { FormStatus } from '@bernardo-mg/form';
@@ -18,6 +18,10 @@ export class ContactMethodForm {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
+  @Input() public set data(value: ContactMethod) {
+    this.form.patchValue(value as any);
+  }
+
   public readonly save = output<ContactMethod>();
 
   public formStatus: FormStatus;
@@ -27,6 +31,7 @@ export class ContactMethodForm {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
+      number: [null],
       name: [null, Validators.required]
     });
 

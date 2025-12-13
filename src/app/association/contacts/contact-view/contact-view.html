@@ -69,16 +69,15 @@
   <!-- Contact List -->
   <p-panel class="bg-white shadow rounded-lg">
 
-    <!-- LIST CONTENT -->
     @if(selectedStatus === 'members') {
       <assoc-member-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable"
         [contacts]="memberData.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-        (show)="onShowInfo($event)" (edit)="onEdit($event)" (delete)="onDelete($event)"
+        (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     } @else {
       <assoc-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="data.content"
         [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-        (edit)="onEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+        (edit)="onShowEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
         (changePage)="load($event)" />
     }
 
@@ -99,7 +98,7 @@
     <p class="m-0">
       <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
         [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
-        [totalRecords]="contactMethodData.totalElements" (edit)="onUpdateContactMethod($event)"
+        [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
         (delete)="onDeleteContactMethod($event)"
         (changePage)="loadContactMethods($event)" />
     </p>
@@ -128,6 +127,12 @@
   <!-- Contact method creation dialog -->
   <p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
     <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
+  </p-dialog>
+
+  <!-- Contact method edition dialog -->
+  <p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
+    <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
+      (save)="onUpdateContactMethod($event)" />
   </p-dialog>
 
 </div>

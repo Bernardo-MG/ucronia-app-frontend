@@ -60,6 +60,7 @@ export class ContactView implements OnInit {
   public nameFilter = '';
 
   public selectedData: Contact | MemberContact = new Contact();
+  public selectedContactMethodData: ContactMethod = new ContactMethod();
 
   private sort = new Sorting();
 
@@ -68,6 +69,7 @@ export class ContactView implements OnInit {
    */
   public loading = false;
   public editing = false;
+  public editingMethod = false;
   public creating = false;
   public creatingMethod = false;
   public saving = false;
@@ -93,7 +95,7 @@ export class ContactView implements OnInit {
     this.loadContactMethods(0);
   }
 
-  public onEdit(contact: MemberContact | Contact) {
+  public onShowEdit(contact: MemberContact | Contact) {
     this.selectedData = contact;
     this.editing = true;
   }
@@ -167,6 +169,11 @@ export class ContactView implements OnInit {
           })
         )
     );
+  }
+
+  public onShowEditContactMethod(contactMethod: ContactMethod) {
+    this.selectedContactMethodData = contactMethod;
+    this.editingMethod = true;
   }
 
   public onCreateContactMethod(toCreate: ContactMethod): void {
@@ -252,6 +259,7 @@ export class ContactView implements OnInit {
           this.editing = false;
           this.creating = false;
           this.creatingMethod = false;
+          this.editingMethod = false;
         },
         error: error => {
           if (error instanceof FailureResponse) {

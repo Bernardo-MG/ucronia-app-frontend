@@ -33,17 +33,6 @@ export class ContactMethodList {
     return (this.page() - 1) * this.rows();
   }
 
-  public onEdit(event: Event, contact: ContactMethod) {
-    this.editionMenuItems = [];
-    this.editionMenuItems.push({
-      label: 'Editar',
-      command: () => this.edit.emit(contact)
-    });
-    
-    // Show menu
-    this.editionMenu.toggle(event);
-  }
-
   public onDelete(event: Event, contact: ContactMethod) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
