@@ -1,4 +1,4 @@
-import { ContactName } from "@ucronia/domain";
+import { ContactName } from "../contacts/contact-name";
 
 export class MemberContact {
   number = -1;

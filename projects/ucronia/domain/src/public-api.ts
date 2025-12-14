@@ -30,6 +30,7 @@ export * from './lib/library/lent-book';
 export * from './lib/library/publisher';
 export * from './lib/library/title';
 export * from './lib/members/member';
+export * from './lib/members/member-contact';
 export * from './lib/members/membership-evolution-month';
 export * from './lib/transactions/transaction-calendar-month';
 export * from './lib/transactions/transaction-calendar-months-range';
