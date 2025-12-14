@@ -1,8 +1,9 @@
 import { ContactName } from "./contact-name";
 
 export class Contact {
-  number = -1;
-  identifier = '';
-  birthDate = new Date();
-  name = new ContactName();
+  public number = -1;
+  public identifier = '';
+  public birthDate = new Date();
+  public name = new ContactName();
+  public comments = '';
 }

@@ -3,6 +3,7 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { ContactCreation } from '@ucronia/api';
 import { Contact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
+import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -44,7 +45,7 @@ export class ContactsService {
       .pipe(map(r => r.content));
   }
 
-  public patch(data: Contact): Observable<Contact> {
+  public patch(data: ContactPatch): Observable<Contact> {
     return this.client
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Contact>>(data)

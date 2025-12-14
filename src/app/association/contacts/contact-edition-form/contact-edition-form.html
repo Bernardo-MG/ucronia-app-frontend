@@ -55,6 +55,24 @@
     }
   </div>
 
+  <!-- Comments -->
+  <p-inputgroup class="mb-2">
+    <p-inputgroup-addon>
+      <i class="pi pi-comment"></i>
+    </p-inputgroup-addon>
+    <textarea pTextarea formControlName="comments" rows="4" autoResize="true" placeholder="Comentarios" class="w-100"
+      [invalid]="isFieldInvalid('comments')">
+    </textarea>
+  </p-inputgroup>
+  
+  <div class="mb-2">
+    @for (failure of failures().getFailures('comments'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

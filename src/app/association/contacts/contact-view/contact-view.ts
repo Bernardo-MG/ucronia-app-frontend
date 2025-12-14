@@ -13,6 +13,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
@@ -142,7 +143,7 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: Contact): void {
+  public onUpdate(toUpdate: ContactPatch): void {
     this.call(
       () => this.service.patch(toUpdate)
         .pipe(
