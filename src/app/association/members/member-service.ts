@@ -4,6 +4,7 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { MemberCreation, MemberPatch } from '@ucronia/api';
 import { Contact, ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
+import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
 import { Observable, expand, forkJoin, map, of, reduce } from 'rxjs';
 
 @Injectable({
@@ -69,9 +70,19 @@ export class MemberService {
   }
 
   public patch(data: MemberContact): Observable<MemberContact> {
+    const contactPatch: ContactPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
     return forkJoin({
       member: this.patchMember(data),
-      contact: this.patchContact(data)
+      contact: this.patchContact(contactPatch)
     }).pipe(
       map(({ member, contact }) => ({
         ...contact,
@@ -129,7 +140,7 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  private patchContact(data: Contact): Observable<Contact> {
+  private patchContact(data: ContactPatch): Observable<Contact> {
     return this.contactClient
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Contact>>(data)
