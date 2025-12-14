@@ -1,5 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
+import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -12,8 +14,6 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
-import { ContactCreationForm } from '../../../shared/contact/contact-creation-form/contact-creation-form';
-import { MemberStatusSelector } from '../../../shared/contact/member-status-selector/member-status-selector';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
