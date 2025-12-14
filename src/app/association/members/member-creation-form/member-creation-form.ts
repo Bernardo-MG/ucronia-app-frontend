@@ -4,7 +4,8 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -12,7 +13,7 @@ import { MemberCreation } from '../domain/member-creation';
 
 @Component({
   selector: 'assoc-member-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule, ToggleSwitchModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './member-creation-form.html'
 })
 export class MemberContactCreationForm implements OnChanges {

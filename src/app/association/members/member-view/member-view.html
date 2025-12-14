@@ -60,7 +60,7 @@
   </p-dialog>
 
   <!-- Creation dialog -->
-  <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '25rem' }"
+  <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }"
     contentStyleClass="p-0" class="rounded-lg">
     <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
