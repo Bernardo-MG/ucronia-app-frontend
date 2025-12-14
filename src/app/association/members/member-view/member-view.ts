@@ -19,7 +19,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
@@ -158,13 +158,15 @@ export class MemberView implements OnInit {
 
   public onUpdate(toUpdate: MemberContact): void {
     this.call(
-      () => this.service.patchContact(toUpdate)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.load(this.data.page);
-          })
-        )
+      () => forkJoin({
+        member: this.service.patch(toUpdate),
+        contact: this.service.patchContact(toUpdate)
+      }).pipe(
+        tap(() => {
+          this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+          this.load(this.data.page);
+        })
+      )
     );
   }
 
