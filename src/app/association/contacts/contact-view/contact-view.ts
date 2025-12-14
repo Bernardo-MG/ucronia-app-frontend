@@ -136,7 +136,7 @@ export class ContactView implements OnInit {
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
-      () => this.getService().create(toCreate as any)
+      () => this.service.create(toCreate as any)
         .pipe(
           tap(() => {
             this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
