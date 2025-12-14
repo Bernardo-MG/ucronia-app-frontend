@@ -5,7 +5,6 @@ import { MemberContactCreation } from '@app/association/contacts/domain/member-c
 import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
 import { MemberContact } from '@app/association/members/domain/member-contact';
 import { MemberStatus } from '@app/domain/contact/active';
-import { Contact } from '@app/domain/contact/contact';
 import { Member } from '@app/domain/members/member';
 import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
@@ -19,8 +18,7 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, forkJoin, Observable, Subject, tap, throwError } from 'rxjs';
-import { MemberPatch } from '../domain/member-patch';
+import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';

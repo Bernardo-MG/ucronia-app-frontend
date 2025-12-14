@@ -1,4 +1,4 @@
-import { ContactName } from "../../../domain/contact/contact-name";
+import { ContactName } from "@app/domain/contact/contact-name";
 
 export class MemberContactCreation {
   identifier = '';
