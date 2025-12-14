@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ContactMethod } from '@app/domain/contact/contact-method';
+import { ContactMethod } from '@ucronia/domain';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';

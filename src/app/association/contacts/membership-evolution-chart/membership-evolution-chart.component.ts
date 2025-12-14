@@ -1,7 +1,7 @@
 
 import { Component, OnDestroy, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MembershipEvolutionMonth } from '@app/domain/members/membership-evolution-month';
+import { MembershipEvolutionMonth } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { SelectModule } from 'primeng/select';
 import { finalize } from 'rxjs';

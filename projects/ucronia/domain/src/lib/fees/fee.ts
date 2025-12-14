@@ -1,10 +1,10 @@
-import { ContactName } from "../contact/contact-name";
+import { ContactName } from "../contacts/contact-name";
 
 export class Fee {
   month = new Date();
   paid = false;
   transaction: FeeTransaction | undefined;
-  member = new Member();
+  member = new FeeMember();
 }
 
 export class FeeTransaction {
@@ -12,7 +12,7 @@ export class FeeTransaction {
   index = -1;
 }
 
-export class Member {
+export class FeeMember {
   number = -1;
   name = new ContactName();
 }

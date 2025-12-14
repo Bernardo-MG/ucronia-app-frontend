@@ -1,11 +1,11 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { BookType } from '@app/domain/library/book-type';
-import { FictionBook } from '@app/domain/library/fiction-book';
-import { GameBook } from '@app/domain/library/game-book';
-import { GameSystem } from '@app/domain/library/game-system';
-import { Language } from '@app/domain/library/language';
+import { BookType } from '@ucronia/domain';
+import { FictionBook } from '@ucronia/domain';
+import { GameBook } from '@ucronia/domain';
+import { GameSystem } from '@ucronia/domain';
+import { Language } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
 

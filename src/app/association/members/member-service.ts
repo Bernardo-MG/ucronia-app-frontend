@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { MemberContact } from '@app/association/members/domain/member-contact';
-import { MemberStatus } from '@app/domain/contact/active';
-import { Contact } from '@app/domain/contact/contact';
-import { Member } from '@app/domain/members/member';
+import { MemberStatus } from '@ucronia/domain';
+import { Contact } from '@ucronia/domain';
+import { Member } from '@ucronia/domain';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable, forkJoin, map } from 'rxjs';

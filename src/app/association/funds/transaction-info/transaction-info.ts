@@ -1,7 +1,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { Transaction } from '@app/domain/transactions/transaction';
+import { Transaction } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({

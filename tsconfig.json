@@ -2,10 +2,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "src",
+    "baseUrl": "./",
     "paths": {
       "@app/*": [
-        "app/*"
+        "./src/app/*"
+      ],
+      "environments/*": [
+        "./src/environments/*"
       ],
       "@bernardo-mg/authentication": [
         "./dist/bernardo-mg/authentication"
@@ -18,6 +21,9 @@
       ],
       "@bernardo-mg/request": [
         "./dist/bernardo-mg/request"
+      ],
+      "@ucronia/domain": [
+        "./dist/ucronia/domain"
       ]
     },
     "outDir": "./dist/out-tsc",
@@ -47,5 +53,13 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "references": [
+    {
+      "path": "./projects/ucronia/domain/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ucronia/domain/tsconfig.spec.json"
+    }
+  ]
 }

@@ -1,8 +1,8 @@
 
 import { Component, input, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Member } from '@app/domain/members/member';
-import { MemberStatus } from '@app/domain/contact/active';
+import { Member } from '@ucronia/domain';
+import { MemberStatus } from '@ucronia/domain';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { PaginatedResponse } from '@bernardo-mg/request';

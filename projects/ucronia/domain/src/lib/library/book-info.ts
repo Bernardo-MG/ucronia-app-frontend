@@ -1,8 +1,8 @@
-import { Title } from "@app/domain/library/title";
 import { Author } from "./author";
 import { BookLending } from "./book-lending";
 import { Donation } from "./donation";
 import { Publisher } from "./publisher";
+import { Title } from "./title";
 
 export class BookInfo {
   number = -1;

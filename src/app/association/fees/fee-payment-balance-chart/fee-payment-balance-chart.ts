@@ -1,6 +1,6 @@
 
 import { Component, input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
-import { FeePaymentReport } from '@app/domain/fees/fee-payment-report';
+import { FeePaymentReport } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 
 @Component({

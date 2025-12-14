@@ -1,6 +1,6 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { MemberContact } from '@app/association/members/domain/member-contact';
-import { Contact } from '@app/domain/contact/contact';
+import { Contact } from '@ucronia/domain';
 import { MemberStatusTag } from '@app/shared/contact/member-status-tag/member-status-tag';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';

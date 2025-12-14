@@ -1,4 +1,4 @@
-import { ContactName } from "../../../domain/contact/contact-name";
+import { ContactName } from "@ucronia/domain";
 
 export class MemberCreation {
   identifier = '';

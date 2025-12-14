@@ -4,8 +4,8 @@ import { ContactCreation } from '@app/association/contacts/domain/contact-creati
 import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
 import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
 import { MemberContact } from '@app/association/members/domain/member-contact';
-import { MemberStatus } from '@app/domain/contact/active';
-import { Member } from '@app/domain/members/member';
+import { MemberStatus } from '@ucronia/domain';
+import { Member } from '@ucronia/domain';
 import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
