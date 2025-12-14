@@ -1,14 +1,14 @@
 
 export class FeePayment {
-  contact = new FeePaymentContact();
-  paymentDate = new FeePaymentTransaction();
-  months: Date[] = [];
+  public contact = new FeePaymentContact();
+  public paymentDate = new FeePaymentTransaction();
+  public months: Date[] = [];
 }
 
 export class FeePaymentTransaction {
-  date = new Date();
+  public date = new Date();
 }
 
 export class FeePaymentContact {
-  number = -1;
+  public number = -1;
 }

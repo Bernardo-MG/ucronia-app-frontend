@@ -57,12 +57,12 @@
     [style]="{ width: '35rem' }">
     <assoc-member-contact-details [loading]="loading" [data]="memberContact" />
   </p-dialog>
-  
+
   <!-- Creation dialog -->
   <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
     <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
-  
+
   <!-- Edition dialog -->
   <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-member-edition-form [loading]="loading" [data]="memberContact" [failures]="failures"

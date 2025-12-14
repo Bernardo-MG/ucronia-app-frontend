@@ -12,10 +12,11 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-contact-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule],
   templateUrl: './contact-edition-form.html'
 })
 export class ContactEditionForm implements OnChanges {
@@ -43,7 +44,8 @@ export class ContactEditionForm implements OnChanges {
         lastName: ['']
       }),
       identifier: [''],
-      birthDate: [new Date()]
+      birthDate: [new Date()],
+      comments: ['']
     });
 
     this.formStatus = new FormStatus(this.form);

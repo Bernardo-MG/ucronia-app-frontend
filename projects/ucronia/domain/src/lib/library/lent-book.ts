@@ -1,6 +1,6 @@
 import { Title } from "./title";
 
 export class LentBook {
-  number = -1;
-  title = new Title();
+  public number = -1;
+  public title = new Title();
 }

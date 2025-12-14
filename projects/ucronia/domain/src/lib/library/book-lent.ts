@@ -1,6 +1,6 @@
 
 export class BookLent {
-  lendingDate = new Date();
-  borrower = -1;
-  book = -1;
+  public lendingDate = new Date();
+  public borrower = -1;
+  public book = -1;
 }

@@ -1,7 +1,7 @@
 
 export class Title {
-  supertitle = '';
-  title = '';
-  subtitle = '';
-  fullTitle = '';
+  public supertitle = '';
+  public title = '';
+  public subtitle = '';
+  public fullTitle = '';
 }

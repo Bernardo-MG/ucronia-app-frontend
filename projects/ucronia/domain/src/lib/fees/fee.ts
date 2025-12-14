@@ -1,18 +1,18 @@
 import { ContactName } from "../contacts/contact-name";
 
 export class Fee {
-  month = new Date();
-  paid = false;
-  transaction: FeeTransaction | undefined;
-  member = new FeeMember();
+  public month = new Date();
+  public paid = false;
+  public transaction: FeeTransaction | undefined;
+  public member = new FeeMember();
 }
 
 export class FeeTransaction {
-  date: Date | undefined;
-  index = -1;
+  public date: Date | undefined;
+  public index = -1;
 }
 
 export class FeeMember {
-  number = -1;
-  name = new ContactName();
+  public number = -1;
+  public name = new ContactName();
 }

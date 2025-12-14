@@ -1,6 +1,6 @@
 export class Transaction {
-  index = 0;
-  description = '';
-  date = new Date();
-  amount = 0;
+  public index = 0;
+  public description = '';
+  public date = new Date();
+  public amount = 0;
 }

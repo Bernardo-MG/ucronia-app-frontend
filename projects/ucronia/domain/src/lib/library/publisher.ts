@@ -1,5 +1,5 @@
 
 export class Publisher {
-  number = -1;
-  name = '';
+  public number = -1;
+  public name = '';
 }

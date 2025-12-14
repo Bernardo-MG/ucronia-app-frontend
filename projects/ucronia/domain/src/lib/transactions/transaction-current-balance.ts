@@ -1,4 +1,4 @@
 export class TransactionCurrentBalance {
-  total = -1;
-  results = -1;
+  public total = -1;
+  public results = -1;
 }

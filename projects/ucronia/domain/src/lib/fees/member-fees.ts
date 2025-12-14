@@ -1,17 +1,17 @@
 import { ContactName } from "../contacts/contact-name";
 
 export class MemberFees {
-  member = new MemberFeesMember();
-  fees: MemberFeesFee[] = [];
+  public member = new MemberFeesMember();
+  public fees: MemberFeesFee[] = [];
 }
 
 export class MemberFeesFee {
-  month = new Date();
-  paid = false;
+  public month = new Date();
+  public paid = false;
 }
 
 export class MemberFeesMember {
-  number = -1;
-  name = new ContactName();
-  active = false;
+  public number = -1;
+  public name = new ContactName();
+  public active = false;
 }

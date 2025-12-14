@@ -1,5 +1,5 @@
 
 export class ContactMethod {
-  number = -1;
-  name = '';
+  public number = -1;
+  public name = '';
 }

@@ -1,3 +1,3 @@
 export class YearsRange {
-  years: number[] = []
+  public years: number[] = []
 }

@@ -11,11 +11,12 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-member-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule],
   templateUrl: './member-edition-form.html'
 })
 export class MemberEditionForm implements OnChanges {
@@ -45,7 +46,8 @@ export class MemberEditionForm implements OnChanges {
       identifier: [''],
       birthDate: [new Date()],
       active: [false],
-      renew: [false]
+      renew: [false],
+      comments: ['']
     });
 
     this.formStatus = new FormStatus(this.form);

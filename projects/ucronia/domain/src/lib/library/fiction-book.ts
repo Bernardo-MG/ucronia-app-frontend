@@ -5,14 +5,14 @@ import { Publisher } from "./publisher";
 import { Title } from "./title";
 
 export class FictionBook {
-  number = -1;
-  title = new Title();
-  lent = false;
-  isbn = '';
-  language = '';
-  publishDate = new Date();
-  authors: Author[] = [];
-  lendings: BookLending[] = [];
-  publishers: Publisher[] = [];
-  donation: Donation | undefined;
+  public number = -1;
+  public title = new Title();
+  public lent = false;
+  public isbn = '';
+  public language = '';
+  public publishDate = new Date();
+  public authors: Author[] = [];
+  public lendings: BookLending[] = [];
+  public publishers: Publisher[] = [];
+  public donation: Donation | undefined;
 }

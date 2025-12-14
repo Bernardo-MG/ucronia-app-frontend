@@ -1,5 +1,5 @@
 
 export class FeePaymentReport {
-  paid = 0;
-  unpaid = 0;
+  public paid = 0;
+  public unpaid = 0;
 }

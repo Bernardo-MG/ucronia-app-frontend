@@ -1,8 +1,8 @@
 import { ContactName } from "@ucronia/domain";
 
 export class FeeCalendarSelection {
-  number = -1;
-  name = new ContactName();
-  month = new Date();
-  paid = false;
+  public number = -1;
+  public name = new ContactName();
+  public month = new Date();
+  public paid = false;
 }
