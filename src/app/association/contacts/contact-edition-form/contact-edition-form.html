@@ -90,7 +90,9 @@
         <p-inputgroup-addon>
           <i class="pi pi-phone"></i>
         </p-inputgroup-addon>
-        <input pInputText placeholder="Tipo (Email, Teléfono, etc.)" formControlName="method">
+        <p-select formControlName="method" [options]="contactMethods()" optionLabel="name" placeholder="Método" class="w-full"
+          appendTo="body">
+        </p-select>
       </p-inputgroup>
   
       <!-- Detail -->
