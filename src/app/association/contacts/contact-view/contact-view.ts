@@ -25,7 +25,6 @@ import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
-import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
@@ -33,7 +32,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
