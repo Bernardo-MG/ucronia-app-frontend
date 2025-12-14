@@ -1,5 +1,5 @@
 export class TransactionMonthlyBalance {
-  month = new Date();
-  total = -1;
-  results = -1;
+  public month = new Date();
+  public total = -1;
+  public results = -1;
 }

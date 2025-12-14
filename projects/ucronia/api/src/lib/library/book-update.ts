@@ -3,16 +3,16 @@ import { Donation } from "@ucronia/domain";
 import { Title } from "@ucronia/domain";
 
 export class BookUpdate {
-  number = -1;
-  title = new Title();
-  lent = false;
-  isbn = '';
-  language = '';
-  publishDate = new Date();
-  authors: number[] = [];
-  lendings: BookLending[] = [];
-  publishers: number[] = [];
-  donation: Donation | undefined;
-  bookType: number | undefined;
-  gameSystem: number | undefined;
+  public number = -1;
+  public title = new Title();
+  public lent = false;
+  public isbn = '';
+  public language = '';
+  public publishDate = new Date();
+  public authors: number[] = [];
+  public lendings: BookLending[] = [];
+  public publishers: number[] = [];
+  public donation: Donation | undefined;
+  public bookType: number | undefined;
+  public gameSystem: number | undefined;
 }

@@ -3,14 +3,14 @@ import { LentBook } from "./lent-book";
 
 
 export class BookLending {
-  book = new LentBook();
-  borrower = new Borrower();
-  lendingDate = new Date();
-  returnDate = new Date();
-  days = 0;
+  public book = new LentBook();
+  public borrower = new Borrower();
+  public lendingDate = new Date();
+  public returnDate = new Date();
+  public days = 0;
 }
 
 export class Borrower {
-  number = -1;
-  name = new ContactName();
+  public number = -1;
+  public name = new ContactName();
 }

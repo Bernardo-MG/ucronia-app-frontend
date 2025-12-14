@@ -1,6 +1,6 @@
 import { Donor } from "./donor";
 
 export class Donation {
-  date = '';
-  donors: Donor[] = [];
+  public date = '';
+  public donors: Donor[] = [];
 }

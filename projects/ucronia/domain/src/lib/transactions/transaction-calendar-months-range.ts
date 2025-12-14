@@ -1,3 +1,3 @@
 export class TransactionCalendarMonthsRange {
-  months: string[] = [];
+  public months: string[] = [];
 }

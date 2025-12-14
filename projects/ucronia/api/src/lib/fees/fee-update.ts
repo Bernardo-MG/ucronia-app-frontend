@@ -1,11 +1,11 @@
 export class FeeUpdate {
-  month = new Date();
-  paid = false;
-  transaction: FeeUpdateTransaction | undefined;
-  member = -1;
+  public month = new Date();
+  public paid = false;
+  public transaction: FeeUpdateTransaction | undefined;
+  public member = -1;
 }
 
 export class FeeUpdateTransaction {
-  date: Date | undefined;
-  index = -1;
+  public date: Date | undefined;
+  public index = -1;
 }

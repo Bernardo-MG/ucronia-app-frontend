@@ -1,4 +1,4 @@
 export class FeeCreation {
-  month = new Date();
-  member = -1;
+  public month = new Date();
+  public member = -1;
 }

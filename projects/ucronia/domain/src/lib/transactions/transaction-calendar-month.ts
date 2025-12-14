@@ -2,6 +2,6 @@ import { Transaction } from "./transaction";
 
 
 export class TransactionCalendarMonth {
-  month = new Date();
-  transactions: Transaction[] = [];
+  public month = new Date();
+  public transactions: Transaction[] = [];
 }

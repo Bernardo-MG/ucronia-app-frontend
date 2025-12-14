@@ -1,6 +1,6 @@
 export class Language {
-  code = '';
-  name = '';
+  public code = '';
+  public name = '';
   
   constructor(code: string, name: string) {
     this.code = code;

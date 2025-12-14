@@ -1,4 +1,4 @@
 export class MembershipEvolutionMonth {
-  month = new Date();
-  total = -1;
+  public month = new Date();
+  public total = -1;
 }

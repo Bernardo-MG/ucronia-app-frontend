@@ -1,5 +1,5 @@
 export class ContactName {
-  fullName = '';
-  firstName = '';
-  lastName = '';
+  public fullName = '';
+  public firstName = '';
+  public lastName = '';
 }
