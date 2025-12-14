@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ContactStatusSelector } from './contact-status-selector';
+import { ContactMethodForm } from './contact-method-form';
 
-describe('ContactStatusSelector', () => {
-  let component: ContactStatusSelector;
-  let fixture: ComponentFixture<ContactStatusSelector>;
+describe('ContactMethodForm', () => {
+  let component: ContactMethodForm;
+  let fixture: ComponentFixture<ContactMethodForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactStatusSelector]
+      imports: [ContactMethodForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ContactStatusSelector);
+    fixture = TestBed.createComponent(ContactMethodForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

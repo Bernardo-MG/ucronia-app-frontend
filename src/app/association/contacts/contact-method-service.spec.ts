@@ -1,10 +1,10 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ContactsService } from './contacts-service';
+import { ContactMethodService } from './contact-method-service';
 
-describe('ContactsService', () => {
-  let service: ContactsService;
+describe('ContactMethodService', () => {
+  let service: ContactMethodService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -13,7 +13,7 @@ describe('ContactsService', () => {
         provideHttpClientTesting()
       ]
     });
-    service = TestBed.inject(ContactsService);
+    service = TestBed.inject(ContactMethodService);
   });
 
   it('should be created', () => {

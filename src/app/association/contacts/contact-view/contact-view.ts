@@ -5,6 +5,7 @@ import { MemberContactCreation } from '@app/association/contacts/domain/member-c
 import { MemberContact } from '@app/association/members/domain/member-contact';
 import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
+import { ContactMethod } from '@app/domain/contact/contact-method';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -15,10 +16,13 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
+import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
 import { MemberStatusSelector } from '../../../shared/contact/member-status-selector/member-status-selector';
 import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
-import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
+import { ContactMethodForm } from '../contact-method-form/contact-method-form';
+import { ContactMethodList } from '../contact-method-list/contact-method-list';
+import { ContactMethodService } from '../contact-method-service';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
 import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
@@ -29,13 +33,14 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
 
   private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);
+  private readonly contactMethodService = inject(ContactMethodService);
   private readonly messageService = inject(MessageService);
 
   public activeFilter = MemberStatus.All;
@@ -50,9 +55,12 @@ export class ContactView implements OnInit {
     return this.data as PaginatedResponse<MemberContact>;
   }
 
+  public contactMethodData = new PaginatedResponse<ContactMethod>();
+
   public nameFilter = '';
 
   public selectedData: Contact | MemberContact = new Contact();
+  public selectedContactMethodData: ContactMethod = new ContactMethod();
 
   private sort = new Sorting();
 
@@ -61,7 +69,9 @@ export class ContactView implements OnInit {
    */
   public loading = false;
   public editing = false;
+  public editingMethod = false;
   public creating = false;
+  public creatingMethod = false;
   public saving = false;
   public showing = false;
 
@@ -82,9 +92,10 @@ export class ContactView implements OnInit {
 
   public ngOnInit(): void {
     this.load(0);
+    this.loadContactMethods(0);
   }
 
-  public onEdit(contact: MemberContact | Contact) {
+  public onShowEdit(contact: MemberContact | Contact) {
     this.selectedData = contact;
     this.editing = true;
   }
@@ -160,6 +171,55 @@ export class ContactView implements OnInit {
     );
   }
 
+  public onShowEditContactMethod(contactMethod: ContactMethod) {
+    this.selectedContactMethodData = contactMethod;
+    this.editingMethod = true;
+  }
+
+  public onCreateContactMethod(toCreate: ContactMethod): void {
+    this.call(
+      () => this.contactMethodService.create(toCreate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+            this.loadContactMethods(0);
+          })
+        )
+    );
+  }
+
+  public onUpdateContactMethod(toUpdate: ContactMethod): void {
+    this.call(
+      () => this.contactMethodService.update(toUpdate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.loadContactMethods(this.data.page);
+          })
+        )
+    );
+  }
+
+  public onDeleteContactMethod(number: number): void {
+    this.call(
+      () => this.contactMethodService.delete(number)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+            this.loadContactMethods(0);
+          })
+        )
+    );
+  }
+
+  public loadContactMethods(page: number): void {
+    this.loading = true;
+
+    this.contactMethodService.getAll(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodData = response);
+  }
+
   public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
     this.selectedStatus = status;
     this.load(0);
@@ -198,6 +258,8 @@ export class ContactView implements OnInit {
           this.failures.clear();
           this.editing = false;
           this.creating = false;
+          this.creatingMethod = false;
+          this.editingMethod = false;
         },
         error: error => {
           if (error instanceof FailureResponse) {

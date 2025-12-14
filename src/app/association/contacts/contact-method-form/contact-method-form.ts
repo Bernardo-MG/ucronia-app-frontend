@@ -1,7 +1,6 @@
-
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
+import { ContactMethod } from '@app/domain/contact/contact-method';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -10,16 +9,20 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-contact-creation-form',
+  selector: 'assoc-contact-method-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
-  templateUrl: './contact-creation-form.html'
+  templateUrl: './contact-method-form.html'
 })
-export class ContactCreationForm implements OnChanges {
+export class ContactMethodForm {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ContactCreation>();
+  @Input() public set data(value: ContactMethod) {
+    this.form.patchValue(value as any);
+  }
+
+  public readonly save = output<ContactMethod>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
@@ -28,10 +31,8 @@ export class ContactCreationForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      name: fb.group({
-        firstName: [null, Validators.required],
-        lastName: ['']
-      })
+      number: [null],
+      name: [null, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
