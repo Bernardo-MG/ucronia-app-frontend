@@ -61,7 +61,7 @@
   
   <!-- Creation dialog -->
   <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
-    <assoc-member-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
   
   <!-- Edition dialog -->
