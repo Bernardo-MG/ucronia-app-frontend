@@ -1,4 +1,3 @@
-
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { DetailField } from '@bernardo-mg/ui';
