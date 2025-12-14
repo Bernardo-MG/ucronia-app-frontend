@@ -42,6 +42,10 @@ export class ContactEditionForm implements OnChanges {
     });
   }
 
+  public get contactChannels(): FormArray {
+    return this.form.get('contactChannels') as FormArray;
+  }
+
   public readonly save = output<Contact>();
 
   public formStatus: FormStatus;
@@ -64,8 +68,10 @@ export class ContactEditionForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public get contactChannels(): FormArray {
-    return this.form.get('contactChannels') as FormArray;
+  public ngOnChanges({ loading }: SimpleChanges): void {
+    if (loading) {
+      this.formStatus.loading = this.loading();
+    }
   }
 
   public addContactChannel(): void {
@@ -79,12 +85,6 @@ export class ContactEditionForm implements OnChanges {
 
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   /**

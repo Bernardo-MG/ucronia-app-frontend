@@ -51,6 +51,7 @@ export class ContactView implements OnInit {
   }
 
   public contactMethodData = new PaginatedResponse<ContactMethod>();
+  public contactMethodSelection: ContactMethod[] = [];
 
   public nameFilter = '';
 
@@ -88,6 +89,7 @@ export class ContactView implements OnInit {
   public ngOnInit(): void {
     this.load(0);
     this.loadContactMethods(0);
+    this.loadContactMethodSelection();
   }
 
   public onShowEdit(contact: MemberContact | Contact) {
@@ -213,6 +215,14 @@ export class ContactView implements OnInit {
     this.contactMethodService.getAll(page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodData = response);
+  }
+
+  public loadContactMethodSelection(): void {
+    this.loading = true;
+
+    this.contactMethodService.getAllContactMethods()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodSelection = response);
   }
 
   public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
