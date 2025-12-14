@@ -1,27 +1,34 @@
 
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Contact } from '@app/domain/contact/contact';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { MemberCreation } from '../domain/member-creation';
+import { MemberContact } from '../domain/member-contact';
 
 @Component({
-  selector: 'assoc-member-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule, ToggleSwitchModule],
-  templateUrl: './member-creation-form.html'
+  selector: 'assoc-member-edition-form',
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule],
+  templateUrl: './member-edition-form.html'
 })
-export class MemberContactCreationForm implements OnChanges {
+export class MemberEditionForm implements OnChanges {
 
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<MemberCreation>();
+  @Input() public set data(value: MemberContact) {
+    this.form.patchValue(value as any);
+  }
+
+  public readonly save = output<MemberContact>();
 
   public formStatus: FormStatus;
 
@@ -31,12 +38,15 @@ export class MemberContactCreationForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
+      number: [-1],
       name: fb.group({
-        firstName: [null, Validators.required],
-        lastName: [''],
-        identifier: ['']
+        firstName: [null],
+        lastName: ['']
       }),
-      active: [true]
+      identifier: [''],
+      birthDate: [new Date()],
+      active: [false],
+      renew: [false]
     });
 
     this.formStatus = new FormStatus(this.form);

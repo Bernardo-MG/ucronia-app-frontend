@@ -110,12 +110,8 @@
   </p-dialog>
 
   <!-- Creation dialog -->
-  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
-    @if(selectedStatus === 'members') {
-      <assoc-member-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-    } @else {
-      <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
-    }
+  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
+    <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
 
   <!-- Edition dialog -->

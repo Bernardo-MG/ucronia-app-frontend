@@ -1,47 +1,38 @@
 
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Contact } from '@app/domain/contact/contact';
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-contact-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
-  templateUrl: './contact-edition-form.html'
+  selector: 'assoc-contact-creation-form',
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule, InputGroupModule, InputGroupAddonModule],
+  templateUrl: './contact-creation-form.html'
 })
-export class ContactEditionForm implements OnChanges {
+export class ContactCreationForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: Contact) {
-    this.form.patchValue(value as any);
-  }
-
-  public readonly save = output<Contact>();
+  public readonly save = output<ContactCreation>();
 
   public formStatus: FormStatus;
-
   public form: FormGroup;
 
   constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      number: [-1],
       name: fb.group({
-        firstName: [null],
+        firstName: [null, Validators.required],
         lastName: ['']
-      }),
-      identifier: [''],
-      birthDate: [new Date()],
-      phone: ['']
+      })
     });
 
     this.formStatus = new FormStatus(this.form);

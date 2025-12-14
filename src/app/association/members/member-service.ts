@@ -69,18 +69,16 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  public patch(data: MemberPatch): Observable<Member> {
-    return this.client
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Member>>(data)
-      .pipe(map(r => r.content));
-  }
-
-  public patchContact(data: Contact): Observable<Contact> {
-    return this.contactClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Contact>>(data)
-      .pipe(map(r => r.content));
+  public patch(data: MemberContact): Observable<MemberContact> {
+    return forkJoin({
+      member: this.patchMember(data),
+      contact: this.patchContact(data)
+    }).pipe(
+      map(({ member, contact }) => ({
+        ...contact,
+        ...member
+      }))
+    );
   }
 
   private getMemberContact(number: number): Observable<Contact> {
@@ -94,6 +92,20 @@ export class MemberService {
     return this.client
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Member>>()
+      .pipe(map(r => r.content));
+  }
+
+  private patchMember(data: MemberPatch): Observable<Member> {
+    return this.client
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Member>>(data)
+      .pipe(map(r => r.content));
+  }
+
+  private patchContact(data: Contact): Observable<Contact> {
+    return this.contactClient
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Contact>>(data)
       .pipe(map(r => r.content));
   }
 

@@ -5,8 +5,9 @@ import { MemberContactCreation } from '@app/association/contacts/domain/member-c
 import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
 import { MemberContact } from '@app/association/members/domain/member-contact';
 import { MemberStatus } from '@app/domain/contact/active';
+import { Contact } from '@app/domain/contact/contact';
 import { Member } from '@app/domain/members/member';
-import { ContactEditionForm } from '@app/shared/contact/contact-edition-form/contact-edition-form';
+import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -18,16 +19,15 @@ import { DialogModule } from 'primeng/dialog';
 import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
-import { MemberContactCreationForm } from '../member-creation-form/member-creation-form';
+import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
-import { Contact } from '@app/domain/contact/contact';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, MemberContactCreationForm, MemberStatusSelector, ContactEditionForm],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, ContactCreationForm, MemberStatusSelector, MemberEditionForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -156,9 +156,9 @@ export class MemberView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: Contact): void {
+  public onUpdate(toUpdate: MemberContact): void {
     this.call(
-      () => this.service.patchContact(toUpdate)
+      () => this.service.patch(toUpdate)
         .pipe(
           tap(() => {
             this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
@@ -171,39 +171,6 @@ export class MemberView implements OnInit {
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load(1);
-  }
-
-  public setActive(number: number, status: boolean) {
-    const patched: MemberPatch = {
-      number,
-      active: status,
-      renew: status
-    };
-    this.call(
-      () => this.service.patch(patched)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.load(this.data.page);
-          })
-        )
-    );
-  }
-
-  public setRenewal(number: number, status: boolean) {
-    const patched: MemberPatch = {
-      number,
-      renew: status
-    };
-    this.call(
-      () => this.service.patch(patched)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.load(this.data.page);
-          })
-        )
-    );
   }
 
   public load(page: number) {

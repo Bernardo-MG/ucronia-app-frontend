@@ -1,37 +1,49 @@
 
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Contact } from '@app/domain/contact/contact';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
+import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
-  selector: 'assoc-contact-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
-  templateUrl: './contact-creation-form.html'
+  selector: 'assoc-contact-edition-form',
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule],
+  templateUrl: './contact-edition-form.html'
 })
-export class ContactCreationForm implements OnChanges {
+export class ContactEditionForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ContactCreation>();
+  @Input() public set data(value: Contact) {
+    this.form.patchValue(value as any);
+  }
+
+  public readonly save = output<Contact>();
 
   public formStatus: FormStatus;
+
   public form: FormGroup;
 
   constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
+      number: [-1],
       name: fb.group({
-        firstName: [null, Validators.required],
+        firstName: [null],
         lastName: ['']
-      })
+      }),
+      identifier: [''],
+      birthDate: [new Date()]
     });
 
     this.formStatus = new FormStatus(this.form);

@@ -16,16 +16,15 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
-import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
+import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { MemberStatusSelector } from '../../../shared/contact/member-status-selector/member-status-selector';
-import { ContactCreationForm } from '../contact-creation-form/contact-creation-form';
+import { ContactCreationForm } from '../../../shared/contact/contact-creation-form/contact-creation-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
-import { MemberContactCreationForm } from '../member-contact-creation-form/member-contact-creation-form';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
@@ -33,7 +32,7 @@ import { MembershipEvolutionChartComponent } from '../membership-evolution-chart
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, MemberContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
@@ -137,7 +136,7 @@ export class ContactView implements OnInit {
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.call(
-      () => this.getService().create(toCreate as any)
+      () => this.service.create(toCreate as any)
         .pipe(
           tap(() => {
             this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
