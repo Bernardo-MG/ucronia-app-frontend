@@ -1,13 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { MemberContact } from '@app/association/members/domain/member-contact';
-import { MemberStatus } from '@ucronia/domain';
-import { Contact } from '@ucronia/domain';
-import { Member } from '@ucronia/domain';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { MemberContact, MemberCreation, MemberPatch } from '@ucronia/api';
+import { Contact, Member, MemberStatus } from '@ucronia/domain';
 import { environment } from 'environments/environment';
 import { Observable, forkJoin, map } from 'rxjs';
-import { MemberCreation } from './domain/member-creation';
-import { MemberPatch } from './domain/member-patch';
 
 @Injectable({
   providedIn: 'root'

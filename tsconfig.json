@@ -19,6 +19,9 @@
       "@bernardo-mg/ui": [
         "./dist/bernardo-mg/ui"
       ],
+      "@ucronia/api": [
+        "./dist/ucronia/api"
+      ],
       "@bernardo-mg/request": [
         "./dist/bernardo-mg/request"
       ],
@@ -60,6 +63,12 @@
     },
     {
       "path": "./projects/ucronia/domain/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ucronia/api/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ucronia/api/tsconfig.spec.json"
     }
   ]
 }

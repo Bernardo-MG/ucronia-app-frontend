@@ -362,6 +362,45 @@
           }
         }
       }
+    },
+    "@ucronia/api": {
+      "projectType": "library",
+      "root": "projects/ucronia/api",
+      "sourceRoot": "projects/ucronia/api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ucronia/api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ucronia/api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/ucronia/api/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ucronia/api/**/*.ts",
+              "projects/ucronia/api/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

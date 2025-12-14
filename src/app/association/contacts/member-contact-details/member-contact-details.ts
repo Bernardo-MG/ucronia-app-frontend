@@ -1,11 +1,11 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { MemberContact } from '@app/association/members/domain/member-contact';
-import { Contact } from '@ucronia/domain';
 import { DetailField } from '@bernardo-mg/ui';
+import { Contact } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
+import { MemberContact } from '@ucronia/api';
 
 @Component({
   selector: 'assoc-member-contact-details',
