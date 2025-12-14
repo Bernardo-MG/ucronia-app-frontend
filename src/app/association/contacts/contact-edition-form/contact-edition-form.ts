@@ -1,6 +1,6 @@
 
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Contact } from "@ucronia/domain";
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -21,11 +21,23 @@ import { TextareaModule } from 'primeng/textarea';
 })
 export class ContactEditionForm implements OnChanges {
 
+  private readonly fb = inject(FormBuilder);
+
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: Contact) {
     this.form.patchValue(value as any);
+
+    this.contactChannels.clear();
+    value.contactChannels?.forEach(channel => {
+      this.contactChannels.push(
+        inject(FormBuilder).group({
+          method: [channel.method],
+          detail: [channel.detail]
+        })
+      );
+    });
   }
 
   public readonly save = output<Contact>();
@@ -35,20 +47,36 @@ export class ContactEditionForm implements OnChanges {
   public form: FormGroup;
 
   constructor() {
-    const fb = inject(FormBuilder);
-
-    this.form = fb.group({
+    this.form = this.fb.group({
       number: [-1],
-      name: fb.group({
+      name: this.fb.group({
         firstName: [null],
         lastName: ['']
       }),
       identifier: [''],
       birthDate: [new Date()],
+      contactChannels: this.fb.array([]),
       comments: ['']
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
+
+  public get contactChannels(): FormArray {
+    return this.form.get('contactChannels') as FormArray;
+  }
+
+  public addContactChannel(): void {
+    this.contactChannels.push(
+      this.fb.group({
+        method: [null],
+        detail: ['']
+      })
+    );
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
   }
 
   public ngOnChanges({ loading }: SimpleChanges): void {
