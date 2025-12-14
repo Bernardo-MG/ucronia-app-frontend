@@ -16,7 +16,6 @@ export * from './lib/library/book-lending';
 export * from './lib/library/book-lent';
 export * from './lib/library/book-returned';
 export * from './lib/library/book-type';
-export * from './lib/library/book-update';
 export * from './lib/library/donation';
 export * from './lib/library/donor';
 export * from './lib/library/fiction-book';

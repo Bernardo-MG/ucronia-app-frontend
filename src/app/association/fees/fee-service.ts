@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { FeeUpdate } from "@ucronia/api";
-import { Contact, Fee, FeeCreation, FeePayment, Member, MemberStatus } from "@ucronia/domain";
+import { FeeCreation, FeeUpdate } from "@ucronia/api";
+import { Contact, Fee, FeePayment, Member, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
