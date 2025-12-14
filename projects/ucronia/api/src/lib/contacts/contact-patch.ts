@@ -5,6 +5,11 @@ export class ContactPatch {
   public identifier?: string;
   public birthDate?: Date;
   public name?: ContactName;
-  public contactChannels: ContactChannel[] = [];
+  public contactChannels: ContactPatchChannel[] = [];
   public comments?: string;
+}
+
+export class ContactPatchChannel {
+  public method = -1;
+  public detail = '';
 }

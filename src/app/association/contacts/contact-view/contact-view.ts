@@ -143,7 +143,7 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: ContactPatch): void {
+  public onUpdate(toUpdate: Contact): void {
     this.call(
       () => this.service.patch(toUpdate)
         .pipe(
