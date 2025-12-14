@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { Member } from '@app/domain/members/member';
+import { Member } from "@ucronia/domain";
 import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';

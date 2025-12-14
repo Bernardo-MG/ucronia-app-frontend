@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
-import { Author } from '@app/domain/library/author';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { Author } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 

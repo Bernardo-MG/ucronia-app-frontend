@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { BookLending } from '@app/domain/library/book-lending';
+import { BookLending } from "@ucronia/domain";
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TableModule, TablePageEvent } from 'primeng/table';
 

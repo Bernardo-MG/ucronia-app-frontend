@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Member } from '@app/domain/members/member';
+import { Member } from "@ucronia/domain";
 import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';

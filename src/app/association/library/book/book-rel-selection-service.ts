@@ -1,12 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Author } from '@app/domain/library/author';
-import { BookType } from '@app/domain/library/book-type';
-import { GameSystem } from '@app/domain/library/game-system';
-import { Publisher } from '@app/domain/library/publisher';
-import { Member } from '@app/domain/members/member';
-import { MemberStatus } from '@app/domain/contact/active';
-import { Contact } from '@app/domain/contact/contact';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { Author, BookType, Contact, GameSystem, Member, MemberStatus, Publisher } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 

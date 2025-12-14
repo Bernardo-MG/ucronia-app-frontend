@@ -1,12 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { MemberStatus } from '@app/domain/contact/active';
-import { Contact } from '@app/domain/contact/contact';
-import { Fee } from '@app/domain/fees/fee';
-import { FeeCreation } from '@app/domain/fees/fee-creation';
-import { FeePayment } from '@app/domain/fees/fee-payment';
-import { FeeUpdate } from '@app/domain/fees/fee-update';
-import { Member } from '@app/domain/members/member';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { FeeCreation, FeeUpdate } from "@ucronia/api";
+import { Contact, Fee, FeePayment, Member, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 

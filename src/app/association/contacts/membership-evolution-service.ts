@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { MembershipEvolutionMonth } from '@app/domain/members/membership-evolution-month';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { MembershipEvolutionMonth } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 

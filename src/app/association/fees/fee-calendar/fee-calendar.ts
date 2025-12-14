@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { Fee, MemberFees } from '@app/domain/fees/member-fees';
-import { YearsRange } from '@app/domain/fees/years-range';
+import { MemberFeesFee, MemberFees } from "@ucronia/domain";
+import { YearsRange } from "@ucronia/domain";
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
@@ -83,25 +83,25 @@ export class FeeCalendar implements OnChanges {
     this.goToYear.emit(this.currentYear);
   }
 
-  public hasMonth(months: Fee[], month: number): boolean {
+  public hasMonth(months: MemberFeesFee[], month: number): boolean {
     return months.find(m => (m.month.getMonth() + 1) === month) !== undefined;
   }
 
-  public onSelectFee(member: number, months: Fee[], month: number) {
+  public onSelectFee(member: number, months: MemberFeesFee[], month: number) {
     const calendarMonth = this.getCalendarMonth(months, month);
     this.selectFee.emit({ member: member, date: calendarMonth.month })
   }
 
-  public isPaid(months: Fee[], month: number): boolean {
+  public isPaid(months: MemberFeesFee[], month: number): boolean {
     return this.getCalendarMonth(months, month).paid;
   }
 
-  public getMonth(months: Fee[], month: number): Date {
+  public getMonth(months: MemberFeesFee[], month: number): Date {
     return this.getCalendarMonth(months, month).month;
   }
 
-  private getCalendarMonth(months: Fee[], month: number): Fee {
-    return months.find(m => (m.month.getMonth() + 1) === month) as Fee;
+  private getCalendarMonth(months: MemberFeesFee[], month: number): MemberFeesFee {
+    return months.find(m => (m.month.getMonth() + 1) === month) as MemberFeesFee;
   }
 
 }

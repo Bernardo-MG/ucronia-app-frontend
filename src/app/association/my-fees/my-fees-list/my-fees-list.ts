@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { Fee } from '@app/domain/fees/fee';
+import { Fee } from "@ucronia/domain";
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({

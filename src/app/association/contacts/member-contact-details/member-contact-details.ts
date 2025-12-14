@@ -1,9 +1,8 @@
 
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { MemberContact } from '@app/association/members/domain/member-contact';
-import { Contact } from '@app/domain/contact/contact';
 import { DetailField } from '@bernardo-mg/ui';
+import { Contact, MemberContact } from "@ucronia/domain";
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 

@@ -1,4 +1,4 @@
-import { ContactName } from "../../../domain/contact/contact-name";
+import { ContactName } from "../contacts/contact-name";
 
 export class MemberContact {
   number = -1;

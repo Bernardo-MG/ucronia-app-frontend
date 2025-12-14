@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Member } from '@app/domain/members/member';
+import { Member } from "@ucronia/domain";
 import { TagModule } from 'primeng/tag';
 
 @Component({

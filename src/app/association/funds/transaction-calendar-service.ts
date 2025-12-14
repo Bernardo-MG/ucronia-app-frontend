@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Transaction } from '@app/domain/transactions/transaction';
-import { TransactionCalendarMonthsRange } from '@app/domain/transactions/transaction-calendar-months-range';
 import { AngularCrudClientProvider, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
+import { Transaction, TransactionCalendarMonthsRange } from "@ucronia/domain";
 import { addDays, addMinutes, format, lastDayOfMonth, startOfMonth } from 'date-fns';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

@@ -1,4 +1,4 @@
-import { Contact } from "@app/domain/contact/contact";
+import { Contact } from "@ucronia/domain";
 
 
 /**

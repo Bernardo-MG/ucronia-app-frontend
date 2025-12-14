@@ -1,4 +1,4 @@
-import { ContactName } from "../contact/contact-name";
+import { ContactName } from "../contacts/contact-name";
 import { LentBook } from "./lent-book";
 
 

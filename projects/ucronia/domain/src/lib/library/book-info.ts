@@ -1,18 +1,18 @@
+import { Author } from "./author";
 import { BookLending } from "./book-lending";
 import { Donation } from "./donation";
+import { Publisher } from "./publisher";
 import { Title } from "./title";
 
-export class BookUpdate {
+export class BookInfo {
   number = -1;
   title = new Title();
   lent = false;
   isbn = '';
   language = '';
   publishDate = new Date();
-  authors: number[] = [];
+  authors: Author[] = [];
   lendings: BookLending[] = [];
-  publishers: number[] = [];
+  publishers: Publisher[] = [];
   donation: Donation | undefined;
-  bookType: number | undefined;
-  gameSystem: number | undefined;
 }

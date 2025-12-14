@@ -1,14 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ContactCreation } from '@app/association/contacts/domain/contact-creation';
-import { MemberContactCreation } from '@app/association/contacts/domain/member-contact-creation';
-import { MemberContact } from '@app/association/members/domain/member-contact';
-import { MemberStatus } from '@app/domain/contact/active';
-import { Contact } from '@app/domain/contact/contact';
-import { ContactMethod } from '@app/domain/contact/contact-method';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ContactCreation, MemberContactCreation } from '@ucronia/api';
+import { Contact, ContactMethod, MemberContact, MemberStatus } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
