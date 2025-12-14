@@ -1,10 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
-import { Transaction } from "@ucronia/domain";
-import { TransactionCurrentBalance } from "@ucronia/domain";
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { Transaction, TransactionCurrentBalance } from "@ucronia/domain";
 import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';

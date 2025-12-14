@@ -1,18 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Author } from "@ucronia/domain";
-import { BookInfo } from "@ucronia/domain";
-import { BookLent } from "@ucronia/domain";
-import { BookReturned } from "@ucronia/domain";
-import { BookType } from "@ucronia/domain";
-import { BookUpdate } from "@ucronia/domain";
-import { FictionBook } from "@ucronia/domain";
-import { GameBook } from "@ucronia/domain";
-import { GameSystem } from "@ucronia/domain";
-import { Publisher } from "@ucronia/domain";
-import { Member } from "@ucronia/domain";
-import { MemberStatus } from "@ucronia/domain";
-import { Contact } from "@ucronia/domain";
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { BookUpdate } from "@ucronia/api";
+import { Author, BookInfo, BookLent, BookReturned, BookType, Contact, FictionBook, GameBook, GameSystem, Member, MemberStatus, Publisher } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 

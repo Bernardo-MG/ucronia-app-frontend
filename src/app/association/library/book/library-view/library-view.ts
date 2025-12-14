@@ -2,22 +2,12 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Author } from "@ucronia/domain";
-import { BookInfo } from "@ucronia/domain";
-import { BookLending, Borrower } from "@ucronia/domain";
-import { BookLent } from "@ucronia/domain";
-import { BookReturned } from "@ucronia/domain";
-import { BookType } from "@ucronia/domain";
-import { BookUpdate } from "@ucronia/domain";
-import { Donation } from "@ucronia/domain";
-import { FictionBook } from "@ucronia/domain";
-import { GameBook } from "@ucronia/domain";
-import { GameSystem } from "@ucronia/domain";
-import { Publisher } from "@ucronia/domain";
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { BookUpdate } from '@ucronia/api';
+import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from "@ucronia/domain";
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -26,9 +16,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { TablePageEvent } from 'primeng/table';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
-import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -37,8 +25,9 @@ import { LibraryBookInfo } from '../library-book-info/library-book-info';
 import { LibraryBookLending } from '../library-book-lending/library-book-lending';
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
-import { LibraryService } from '../library-service';
+import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
+import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
