@@ -1,10 +1,10 @@
 
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Fee } from '@ucronia/domain';
-import { BookInfo } from '@ucronia/domain';
-import { Borrower } from '@ucronia/domain';
-import { BookReturned } from '@ucronia/domain';
+import { Fee } from "@ucronia/domain";
+import { BookInfo } from "@ucronia/domain";
+import { Borrower } from "@ucronia/domain";
+import { BookReturned } from "@ucronia/domain";
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';

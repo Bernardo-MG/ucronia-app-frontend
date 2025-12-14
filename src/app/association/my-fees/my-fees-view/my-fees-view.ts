@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { Fee } from '@ucronia/domain';
+import { Fee } from "@ucronia/domain";
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { finalize } from 'rxjs';

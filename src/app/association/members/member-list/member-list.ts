@@ -1,5 +1,5 @@
 import { Component, inject, input, output } from '@angular/core';
-import { Member } from '@ucronia/domain';
+import { Member } from "@ucronia/domain";
 import { MemberStatusTag } from '@app/shared/contact/member-status-tag/member-status-tag';
 import { ConfirmationService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';

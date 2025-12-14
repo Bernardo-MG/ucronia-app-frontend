@@ -1,7 +1,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { BookLending } from '@ucronia/domain';
+import { BookLending } from "@ucronia/domain";
 import { TableModule } from 'primeng/table';
 import { TimelineModule } from 'primeng/timeline';
 

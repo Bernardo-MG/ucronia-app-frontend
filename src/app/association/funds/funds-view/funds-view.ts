@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
-import { Transaction } from '@ucronia/domain';
-import { TransactionCurrentBalance } from '@ucronia/domain';
+import { Transaction } from "@ucronia/domain";
+import { TransactionCurrentBalance } from "@ucronia/domain";
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { CalendarEvent } from 'angular-calendar';

@@ -1,7 +1,7 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { Fee } from '@ucronia/domain';
+import { Fee } from "@ucronia/domain";
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 

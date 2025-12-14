@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Fee } from '@ucronia/domain';
+import { Fee } from "@ucronia/domain";
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';

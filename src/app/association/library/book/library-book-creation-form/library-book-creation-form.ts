@@ -1,8 +1,8 @@
 
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { BookInfo } from '@ucronia/domain';
-import { Language } from '@ucronia/domain';
+import { BookInfo } from "@ucronia/domain";
+import { Language } from "@ucronia/domain";
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';

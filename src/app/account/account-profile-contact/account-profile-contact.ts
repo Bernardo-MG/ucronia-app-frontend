@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Contact } from '@ucronia/domain';
+import { Contact } from "@ucronia/domain";
 
 @Component({
   selector: 'account-profile-contact',

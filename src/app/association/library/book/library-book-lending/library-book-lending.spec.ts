@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { of } from 'rxjs';
 import { LibraryBookLending } from './library-book-lending';
-import { Member } from '@ucronia/domain';
-import { MemberStatus } from '@ucronia/domain';
-import { BookLent } from '@ucronia/domain';
+import { Member } from "@ucronia/domain";
+import { MemberStatus } from "@ucronia/domain";
+import { BookLent } from "@ucronia/domain";
 
 describe('LibraryBookLending', () => {
   let component: LibraryBookLending;

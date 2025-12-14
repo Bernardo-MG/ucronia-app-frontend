@@ -7,7 +7,7 @@ import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ContactCreation, MemberContactCreation } from '@ucronia/api';
-import { Member, MemberContact, MemberStatus } from '@ucronia/domain';
+import { Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';

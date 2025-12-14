@@ -2,7 +2,6 @@
  * Public API Surface of domain
  */
 
-export * from './lib/contacts/active';
 export * from './lib/contacts/contact';
 export * from './lib/contacts/contact-method';
 export * from './lib/contacts/contact-name';
@@ -31,6 +30,7 @@ export * from './lib/library/publisher';
 export * from './lib/library/title';
 export * from './lib/members/member';
 export * from './lib/members/member-contact';
+export * from './lib/members/member-status';
 export * from './lib/members/membership-evolution-month';
 export * from './lib/transactions/transaction-calendar-month';
 export * from './lib/transactions/transaction-calendar-months-range';
