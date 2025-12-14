@@ -34,7 +34,7 @@ export class ContactEditionForm implements OnChanges {
     this.contactChannels.clear();
     value.contactChannels?.forEach(channel => {
       this.contactChannels.push(
-        inject(FormBuilder).group({
+        this.fb.group({
           method: [channel.method],
           detail: [channel.detail]
         })
