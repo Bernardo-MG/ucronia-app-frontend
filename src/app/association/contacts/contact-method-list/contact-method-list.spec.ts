@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ConfirmationService } from 'primeng/api';
 import { ContactMethodList } from './contact-method-list';
 
 describe('ContactMethodList', () => {
@@ -7,7 +8,12 @@ describe('ContactMethodList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactMethodList]
+      imports: [
+        ContactMethodList
+      ],
+      providers: [
+        ConfirmationService
+      ]
     })
     .compileComponents();
 
