@@ -16,7 +16,7 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
-import { ContactEditionForm } from '../../../shared/contact/contact-edition-form/contact-edition-form';
+import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { MemberStatusSelector } from '../../../shared/contact/member-status-selector/member-status-selector';
 import { ContactCreationForm } from '../../../shared/contact/contact-creation-form/contact-creation-form';
 import { ContactList } from '../contact-list/contact-list';

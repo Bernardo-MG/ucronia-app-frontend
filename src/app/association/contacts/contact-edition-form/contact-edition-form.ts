@@ -43,9 +43,7 @@ export class ContactEditionForm implements OnChanges {
         lastName: ['']
       }),
       identifier: [''],
-      birthDate: [new Date()],
-      active: [false],
-      renew: [false]
+      birthDate: [new Date()]
     });
 
     this.formStatus = new FormStatus(this.form);

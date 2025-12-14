@@ -8,7 +8,6 @@ import { MemberStatus } from '@app/domain/contact/active';
 import { Contact } from '@app/domain/contact/contact';
 import { Member } from '@app/domain/members/member';
 import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
-import { ContactEditionForm } from '@app/shared/contact/contact-edition-form/contact-edition-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthContainer } from '@bernardo-mg/authentication';
@@ -22,12 +21,13 @@ import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
 import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberPatch } from '../domain/member-patch';
+import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, ContactCreationForm, MemberStatusSelector, ContactEditionForm],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, ContactCreationForm, MemberStatusSelector, MemberEditionForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
@@ -156,7 +156,7 @@ export class MemberView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: Contact): void {
+  public onUpdate(toUpdate: MemberContact): void {
     this.call(
       () => this.service.patchContact(toUpdate)
         .pipe(
