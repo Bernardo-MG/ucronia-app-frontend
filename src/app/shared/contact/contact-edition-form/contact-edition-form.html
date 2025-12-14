@@ -54,6 +54,38 @@
       </p-message>
     }
   </div>
+
+  <!-- Status toggles -->
+  <div class="flex flex-col gap-4 mb-4">
+  
+    <!-- Active toggle -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center space-x-2">
+        <p-toggleswitch inputId="activeToggle" formControlName="active"></p-toggleswitch>
+        <label for="activeToggle" class="select-none font-medium">
+          Activo
+        </label>
+      </div>
+      <span class="text-sm text-gray-500 ml-8">
+        Indica si el socio puede participar en las actividades de la asociación.
+      </span>
+    </div>
+  
+    <!-- Renew toggle -->
+    <div class="flex flex-col gap-1">
+      <div class="flex items-center space-x-2">
+        <p-toggleswitch inputId="renewToggle" formControlName="renew"></p-toggleswitch>
+        <label for="renewToggle" class="select-none font-medium">
+          Renovación
+        </label>
+      </div>
+      <span class="text-sm text-gray-500 ml-8">
+        Si está activo, se renovará mensualmente al socio.
+      </span>
+    </div>
+  
+  </div>
+
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>
