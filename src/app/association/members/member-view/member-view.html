@@ -48,8 +48,7 @@
     <assoc-member-list [loading]="loading" [editable]="editable" [readContact]="readContact" [deletable]="deletable"
       [members]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
       (show)="onShowContact($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
-      (changePage)="load($event)" (active)="setActive($event.number, $event.status)"
-      (renewal)="setRenewal($event.number, $event.status)" (edit)="onStartEditing($event)" />
+      (changePage)="load($event)" (edit)="onStartEditing($event)" />
 
   </p-panel>
 

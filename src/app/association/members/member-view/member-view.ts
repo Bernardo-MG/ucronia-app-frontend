@@ -158,54 +158,19 @@ export class MemberView implements OnInit {
 
   public onUpdate(toUpdate: MemberContact): void {
     this.call(
-      () => forkJoin({
-        member: this.service.patch(toUpdate),
-        contact: this.service.patchContact(toUpdate)
-      }).pipe(
-        tap(() => {
-          this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-          this.load(this.data.page);
-        })
-      )
+      () => this.service.patch(toUpdate)
+        .pipe(
+          tap(() => {
+            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+            this.load(this.data.page);
+          })
+        )
     );
   }
 
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load(1);
-  }
-
-  public setActive(number: number, status: boolean) {
-    const patched: MemberPatch = {
-      number,
-      active: status,
-      renew: status
-    };
-    this.call(
-      () => this.service.patch(patched)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.load(this.data.page);
-          })
-        )
-    );
-  }
-
-  public setRenewal(number: number, status: boolean) {
-    const patched: MemberPatch = {
-      number,
-      renew: status
-    };
-    this.call(
-      () => this.service.patch(patched)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.load(this.data.page);
-          })
-        )
-    );
   }
 
   public load(page: number) {
