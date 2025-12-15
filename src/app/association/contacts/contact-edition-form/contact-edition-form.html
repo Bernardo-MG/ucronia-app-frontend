@@ -85,7 +85,7 @@
     @for (channel of contactChannels.controls; track channel; let i = $index) {
     <div [formGroupName]="i" class="flex gap-2 items-start">
   
-      <!-- Method -->
+      <!-- Contact channel -->
       <p-inputgroup class="flex-1">
         <p-inputgroup-addon>
           <i class="pi pi-phone"></i>
@@ -93,13 +93,6 @@
         <p-select formControlName="method" [options]="contactMethods()" optionLabel="name" placeholder="Método" class="w-full"
           appendTo="body">
         </p-select>
-      </p-inputgroup>
-  
-      <!-- Detail -->
-      <p-inputgroup class="flex-1">
-        <p-inputgroup-addon>
-          <i class="pi pi-info-circle"></i>
-        </p-inputgroup-addon>
         <input pInputText placeholder="Detalle" formControlName="detail">
       </p-inputgroup>
   
