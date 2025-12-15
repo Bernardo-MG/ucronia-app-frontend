@@ -66,7 +66,7 @@
   <!-- Edition dialog -->
   <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-member-edition-form [loading]="loading" [data]="memberContact" [failures]="failures"
-      (save)="onUpdate($event)" />
+      [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
   </p-dialog>
 
 </div>

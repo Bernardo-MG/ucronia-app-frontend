@@ -1,9 +1,9 @@
 
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Contact } from "@ucronia/domain";
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { Contact, ContactMethod } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -11,21 +11,39 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-contact-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule],
   templateUrl: './contact-edition-form.html'
 })
 export class ContactEditionForm implements OnChanges {
 
+  private readonly fb = inject(FormBuilder);
+
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly contactMethods = input<ContactMethod[]>([]);
 
   @Input() public set data(value: Contact) {
     this.form.patchValue(value as any);
+
+    this.contactChannels.clear();
+    value.contactChannels?.forEach(channel => {
+      this.contactChannels.push(
+        this.fb.group({
+          method: [channel.method],
+          detail: [channel.detail]
+        })
+      );
+    });
+  }
+
+  public get contactChannels(): FormArray {
+    return this.form.get('contactChannels') as FormArray;
   }
 
   public readonly save = output<Contact>();
@@ -35,16 +53,15 @@ export class ContactEditionForm implements OnChanges {
   public form: FormGroup;
 
   constructor() {
-    const fb = inject(FormBuilder);
-
-    this.form = fb.group({
+    this.form = this.fb.group({
       number: [-1],
-      name: fb.group({
+      name: this.fb.group({
         firstName: [null],
         lastName: ['']
       }),
       identifier: [''],
       birthDate: [new Date()],
+      contactChannels: this.fb.array([]),
       comments: ['']
     });
 
@@ -55,6 +72,19 @@ export class ContactEditionForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
+  }
+
+  public addContactChannel(): void {
+    this.contactChannels.push(
+      this.fb.group({
+        method: [null],
+        detail: ['']
+      })
+    );
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
   }
 
   /**

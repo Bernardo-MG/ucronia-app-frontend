@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
 import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
@@ -7,12 +7,11 @@ import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ContactCreation, MemberContactCreation } from '@ucronia/api';
-import { Member, MemberContact, MemberStatus } from "@ucronia/domain";
-import { MenuItem, MessageService } from 'primeng/api';
+import { ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
-import { Menu } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
 import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
@@ -30,15 +29,12 @@ export class MemberView implements OnInit {
   private readonly service = inject(MemberService);
   private readonly messageService = inject(MessageService);
 
-  @ViewChild('editionMenu') editionMenu!: Menu;
-
-  public editionMenuItems: MenuItem[] = [];
-
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
 
   public data = new PaginatedResponse<Member>();
+  public contactMethodSelection: ContactMethod[] = [];
 
   public selectedData = new Member();
   public memberContact = new MemberContact();
@@ -77,6 +73,15 @@ export class MemberView implements OnInit {
 
   public ngOnInit(): void {
     this.load(0);
+    this.loadContactMethodSelection();
+  }
+
+  public loadContactMethodSelection(): void {
+    this.loading = true;
+
+    this.service.getAllContactMethods()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodSelection = response);
   }
 
   public onChangeDirection(sorting: { field: string, order: number }) {

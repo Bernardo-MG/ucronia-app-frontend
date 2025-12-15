@@ -45,10 +45,20 @@ export class ContactsService {
       .pipe(map(r => r.content));
   }
 
-  public patch(data: ContactPatch): Observable<Contact> {
+  public patch(data: Contact): Observable<Contact> {
+    const patch: ContactPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
     return this.client
       .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Contact>>(data)
+      .patch<SimpleResponse<Contact>>(patch)
       .pipe(map(r => r.content));
   }
 

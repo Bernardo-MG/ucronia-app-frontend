@@ -1,9 +1,11 @@
 import { Injectable, inject } from '@angular/core';
+import { ResourcePermission } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { MemberCreation, MemberPatch } from '@ucronia/api';
-import { Contact, Member, MemberContact, MemberStatus } from "@ucronia/domain";
+import { Contact, ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
-import { Observable, forkJoin, map } from 'rxjs';
+import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
+import { Observable, expand, forkJoin, map, of, reduce } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +14,14 @@ export class MemberService {
 
   private readonly client;
   private readonly contactClient;
+  private readonly contactMethodClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/member');
     this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.contactMethodClient = clientProvider.url(environment.apiUrl + '/contact/contactMethod');
   }
 
   public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
@@ -66,15 +70,53 @@ export class MemberService {
   }
 
   public patch(data: MemberContact): Observable<MemberContact> {
+    const contactPatch: ContactPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
     return forkJoin({
       member: this.patchMember(data),
-      contact: this.patchContact(data)
+      contact: this.patchContact(contactPatch)
     }).pipe(
       map(({ member, contact }) => ({
         ...contact,
         ...member
       }))
     );
+  }
+
+  public getAllContactMethods(): Observable<ContactMethod[]> {
+    const sorting = new SortingParams(
+      [new SortingProperty('name')]
+    );
+    const pageSize = 100;
+
+    return this.contactMethodClient
+      .loadParameters(new PaginationParams(1, pageSize))
+      .loadParameters(sorting)
+      .read<PaginatedResponse<ContactMethod>>()
+      .pipe(
+        expand(response => {
+          if (!response.last) {
+            const nextPage = response.page + 1;
+            return this.contactMethodClient
+              .loadParameters(new PaginationParams(nextPage, pageSize))
+              .loadParameters(sorting)
+              .read<PaginatedResponse<ContactMethod>>();
+          }
+          return of();
+        }),
+        // accumulate from all pages into one array
+        reduce((methods: ContactMethod[], res?: PaginatedResponse<ContactMethod>) => {
+          return res ? [...methods, ...res.content] : methods;
+        }, [])
+      );
   }
 
   private getMemberContact(number: number): Observable<Contact> {
@@ -98,7 +140,7 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  private patchContact(data: Contact): Observable<Contact> {
+  private patchContact(data: ContactPatch): Observable<Contact> {
     return this.contactClient
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Contact>>(data)

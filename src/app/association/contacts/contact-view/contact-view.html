@@ -117,7 +117,7 @@
   <!-- Edition dialog -->
   <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-contact-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
-      (save)="onUpdate($event)" />
+      [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
   </p-dialog>
 
   <!-- Contact method creation dialog -->

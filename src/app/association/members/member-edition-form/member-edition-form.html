@@ -55,6 +55,45 @@
     }
   </div>
 
+  <!-- Contact channels -->
+  <div class="mb-2 space-y-3" formArrayName="contactChannels">
+  
+    <div class="flex items-center justify-between">
+      <h3 class="text-sm font-semibold text-gray-600">Canales de contacto</h3>
+      <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addContactChannel()">
+      </p-button>
+    </div>
+
+  @for (channel of contactChannels.controls; track channel; let i = $index) {
+    <div [formGroupName]="i" class="flex gap-2 items-start">
+  
+      <!-- Method -->
+      <p-inputgroup class="flex-1">
+        <p-inputgroup-addon>
+          <i class="pi pi-phone"></i>
+        </p-inputgroup-addon>
+        <p-select formControlName="method" [options]="contactMethods()" optionLabel="name" placeholder="Método" class="w-full"
+          appendTo="body">
+        </p-select>
+      </p-inputgroup>
+  
+      <!-- Detail -->
+      <p-inputgroup class="flex-1">
+        <p-inputgroup-addon>
+          <i class="pi pi-info-circle"></i>
+        </p-inputgroup-addon>
+        <input pInputText placeholder="Detalle" formControlName="detail">
+      </p-inputgroup>
+  
+      <!-- Remove -->
+      <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeContactChannel(i)">
+      </p-button>
+  
+    </div>
+    }
+
+  </div>
+
   <!-- Comments -->
   <p-inputgroup class="mb-2">
     <p-inputgroup-addon>

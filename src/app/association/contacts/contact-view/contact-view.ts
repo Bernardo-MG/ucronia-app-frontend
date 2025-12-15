@@ -13,7 +13,6 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
 import { finalize, Observable, tap, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
@@ -52,6 +51,7 @@ export class ContactView implements OnInit {
   }
 
   public contactMethodData = new PaginatedResponse<ContactMethod>();
+  public contactMethodSelection: ContactMethod[] = [];
 
   public nameFilter = '';
 
@@ -89,6 +89,7 @@ export class ContactView implements OnInit {
   public ngOnInit(): void {
     this.load(0);
     this.loadContactMethods(0);
+    this.loadContactMethodSelection();
   }
 
   public onShowEdit(contact: MemberContact | Contact) {
@@ -143,7 +144,7 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: ContactPatch): void {
+  public onUpdate(toUpdate: Contact): void {
     this.call(
       () => this.service.patch(toUpdate)
         .pipe(
@@ -214,6 +215,14 @@ export class ContactView implements OnInit {
     this.contactMethodService.getAll(page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodData = response);
+  }
+
+  public loadContactMethodSelection(): void {
+    this.loading = true;
+
+    this.contactMethodService.getAllContactMethods()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodSelection = response);
   }
 
   public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
