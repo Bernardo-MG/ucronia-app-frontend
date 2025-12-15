@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { RedirectCommand, Router } from '@angular/router';
 import { AuthContainer } from '../services/auth-container';
 
 /**
@@ -10,19 +10,18 @@ export const ResourceGuard = (resource: string, action: string) => {
   return () => {
     const router = inject(Router);
     const authContainer = inject(AuthContainer)
-    const rootRoute = '/';
-    let active;
+    let response;
 
     if (authContainer.hasPermission(resource, action)) {
       // Logged in
-      active = true;
+      response = true;
     } else {
       // No permission
       // Redirect to root
-      router.navigate([rootRoute], {});
-      active = false;
+      const rootPath = router.parseUrl('/');
+      response = new RedirectCommand(rootPath);
     }
 
-    return active;
+    return response;
   }
 }
