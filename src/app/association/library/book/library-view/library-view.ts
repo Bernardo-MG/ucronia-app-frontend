@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from "@ucronia/domain";
@@ -88,12 +88,12 @@ export class LibraryView implements OnInit {
   }
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authContainer.hasPermission("library_book", "create");
-    this.editable = authContainer.hasPermission("library_book", "update");
-    this.deletable = authContainer.hasPermission("library_book", "delete");
+    this.createable = authService.hasPermission("library_book", "create");
+    this.editable = authService.hasPermission("library_book", "update");
+    this.deletable = authService.hasPermission("library_book", "delete");
 
     // Initial operations
     this.delete = this.service.deleteGameBook.bind(this.service);
@@ -101,28 +101,28 @@ export class LibraryView implements OnInit {
     this.read = this.service.getAllGameBooks.bind(this.service);
 
     // Load data menu
-    if (authContainer.hasPermission('library_author', 'view')) {
+    if (authService.hasPermission('library_author', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Autores',
           command: () => this.router.navigate(['/association/library/authors'])
         });
     }
-    if (authContainer.hasPermission('library_publisher', 'view')) {
+    if (authService.hasPermission('library_publisher', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Editores',
           command: () => this.router.navigate(['/association/library/publishers'])
         });
     }
-    if (authContainer.hasPermission('library_book_type', 'view')) {
+    if (authService.hasPermission('library_book_type', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Tipos',
           command: () => this.router.navigate(['/association/library/types'])
         });
     }
-    if (authContainer.hasPermission('library_game_system', 'view')) {
+    if (authService.hasPermission('library_game_system', 'view')) {
       this.dataMenuItems.push(
         {
           label: 'Sistemas',

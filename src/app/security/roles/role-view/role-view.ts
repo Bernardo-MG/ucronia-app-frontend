@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { AuthContainer, ResourcePermission, Role } from '@bernardo-mg/authentication';
+import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -51,12 +51,12 @@ export class AccessRoleList implements OnInit {
   public permissions: ResourcePermission[] = [];
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authContainer.hasPermission("role", "create");
-    this.editable = authContainer.hasPermission("role", "update");
-    this.deletable = authContainer.hasPermission("role", "delete");
+    this.createable = authService.hasPermission("role", "create");
+    this.editable = authService.hasPermission("role", "update");
+    this.deletable = authService.hasPermission("role", "delete");
   }
 
   public ngOnInit(): void {

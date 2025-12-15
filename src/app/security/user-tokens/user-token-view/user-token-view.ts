@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
-import { AuthContainer, UserToken } from '@bernardo-mg/authentication';
+import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -42,9 +42,9 @@ export class UserTokenView implements OnInit {
   public failures = new FailureStore();
 
   public constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
-    this.editable = authContainer.hasPermission("user_token", "update");
+    this.editable = authService.hasPermission("user_token", "update");
   }
 
   public ngOnInit(): void {

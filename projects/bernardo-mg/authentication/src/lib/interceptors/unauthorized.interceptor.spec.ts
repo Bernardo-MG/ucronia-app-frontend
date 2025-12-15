@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
-import { AuthContainer } from '../services/auth-container';
+import { AuthService } from '../services/auth-service';
 import { unauthorizedInterceptor } from './unauthorized.interceptor';
 
 describe('unauthorizedInterceptor', () => {
@@ -10,16 +10,16 @@ describe('unauthorizedInterceptor', () => {
   const apiRequest = new HttpRequest('GET', apiUrl);
   const externalRequest = new HttpRequest('GET', externalUrl);
   let interceptor: HttpInterceptorFn;
-  let mockAuthContainer: jasmine.SpyObj<AuthContainer>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
 
   beforeEach(() => {
-    mockAuthContainer = jasmine.createSpyObj<AuthContainer>('AuthContainer', ['logout']);
+    mockAuthService = jasmine.createSpyObj<AuthService>('AuthService', ['logout']);
 
     const builtInterceptor = unauthorizedInterceptor(apiUrl);
     interceptor = (req, next) => TestBed.runInInjectionContext(() => builtInterceptor(req, next));
 
     TestBed.configureTestingModule({
-      providers: [{ provide: AuthContainer, useValue: mockAuthContainer }],
+      providers: [{ provide: AuthService, useValue: mockAuthService }],
     });
   });
 
@@ -54,7 +54,7 @@ describe('unauthorizedInterceptor', () => {
 
     interceptor(apiRequest, next).subscribe({
       error: (err) => {
-        expect(mockAuthContainer.logout).not.toHaveBeenCalled();
+        expect(mockAuthService.logout).not.toHaveBeenCalled();
         expect(err instanceof HttpErrorResponse && err.status).toBe(500);
         done();
       },
@@ -66,7 +66,7 @@ describe('unauthorizedInterceptor', () => {
 
     interceptor(externalRequest, next).subscribe({
       error: (err) => {
-        expect(mockAuthContainer.logout).not.toHaveBeenCalled();
+        expect(mockAuthService.logout).not.toHaveBeenCalled();
         expect(err instanceof HttpErrorResponse && err.status).toBe(403);
         done();
       },

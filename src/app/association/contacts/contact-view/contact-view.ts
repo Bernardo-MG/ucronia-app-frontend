@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ContactCreation, MemberContactCreation } from '@ucronia/api';
 import { Contact, ContactMethod, MemberContact, MemberStatus } from "@ucronia/domain";
@@ -78,12 +78,12 @@ export class ContactView implements OnInit {
   public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authContainer.hasPermission("contact", "create");
-    this.editable = authContainer.hasPermission("contact", "update");
-    this.deletable = authContainer.hasPermission("contact", "delete");
+    this.createable = authService.hasPermission("contact", "create");
+    this.editable = authService.hasPermission("contact", "update");
+    this.deletable = authService.hasPermission("contact", "delete");
   }
 
   public ngOnInit(): void {

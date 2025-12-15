@@ -5,23 +5,23 @@ import { provideRouter } from '@angular/router';
 import { LoginStatus } from '../models/login-status';
 import { PermissionList } from '../models/permission-list';
 import { SecurityDetails } from '../models/security-details';
-import { AuthContainer } from './auth-container';
+import { AuthService } from './auth-service';
 
-describe('AuthContainer', () => {
-  let service: AuthContainer;
+describe('AuthService', () => {
+  let service: AuthService;
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJ0ZXN0VXNlciIsImlhdCI6MTUxNjIzOTAyMiwicGVybWlzc2lvbnMiOnsicmVzb3VyY2UiOlsiYWN0aW9uIl19fQ.4mVqVsV7_v-TMGCKnObvoD55pLWwRSqv600RAZxqtVs';
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        AuthContainer,
+        AuthService,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
       ]
     });
-    service = TestBed.inject(AuthContainer);
+    service = TestBed.inject(AuthService);
     service.logout();
   });
 

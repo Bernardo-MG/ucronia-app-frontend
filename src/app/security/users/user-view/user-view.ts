@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Member } from "@ucronia/domain";
-import { AuthContainer, Role, User } from '@bernardo-mg/authentication';
+import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -57,12 +57,12 @@ export class UserView implements OnInit {
   public availableMembers: Member[] = [];
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authContainer.hasPermission("user", "create");
-    this.editable = authContainer.hasPermission("user", "update");
-    this.deletable = authContainer.hasPermission("user", "delete");
+    this.createable = authService.hasPermission("user", "create");
+    this.editable = authService.hasPermission("user", "update");
+    this.deletable = authService.hasPermission("user", "delete");
   }
 
   public ngOnInit(): void {

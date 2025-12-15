@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AuthContainer, LoginStatus, SecurityDetails } from '@bernardo-mg/authentication';
+import { AuthService, LoginStatus, SecurityDetails } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { LoginRequest } from './models/login-request';
 })
 export class LoginService {
 
-  private authContainer = inject(AuthContainer);
+  private authService = inject(AuthService);
 
   private readonly client;
 
@@ -34,7 +34,7 @@ export class LoginService {
       .create<SimpleResponse<LoginStatus>>(request)
       .pipe(map(response => response.content))
       .pipe(map(loginStatus => {
-        return this.authContainer.setDetails(loginStatus, rememberMe);
+        return this.authService.setDetails(loginStatus, rememberMe);
       }));
   }
 
