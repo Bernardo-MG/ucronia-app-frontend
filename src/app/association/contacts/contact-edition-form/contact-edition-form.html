@@ -1,5 +1,16 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
 
+  <div class="flex flex-col gap-2">
+    <p class="font-medium">Type</p>
+  
+    <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de contacto">
+      <ng-template let-option pTemplate="item">
+        <i class="pi" [ngClass]="option.icon"></i>
+        <span>{{ option.label }}</span>
+      </ng-template>
+    </p-selectButton>
+  </div>
+
   <!-- Name -->
   <div formGroupName="name" class="flex flex-col gap-2">
   
