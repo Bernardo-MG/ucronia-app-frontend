@@ -1,6 +1,6 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -19,7 +19,7 @@ import { NameForm } from '../name-form/name-form';
 })
 export class CrudNameList implements OnInit {
 
-  private readonly auth = inject(AuthContainer);
+  private readonly auth = inject(AuthService);
 
   private readonly messageService = inject(MessageService);
 

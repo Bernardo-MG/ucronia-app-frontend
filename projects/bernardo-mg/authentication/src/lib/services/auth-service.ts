@@ -13,7 +13,7 @@ import { TokenData } from '../models/token-data';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthContainer {
+export class AuthService {
 
   private readonly router = inject(Router);
 

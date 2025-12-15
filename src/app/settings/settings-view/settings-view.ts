@@ -2,7 +2,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Setting } from '@app/settings/models/setting';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
@@ -25,10 +25,10 @@ export class SettingsView implements OnInit {
   public loading = false;
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.editable = authContainer.hasPermission("association_settings", "update");
+    this.editable = authService.hasPermission("association_settings", "update");
   }
 
   public ngOnInit(): void {

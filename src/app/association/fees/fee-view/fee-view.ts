@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MemberSelectStepper } from '@app/shared/contact/contact-select-stepper/member-select-stepper';
 import { MemberStatusSelectComponent } from '@app/shared/contact/member-status-select/member-status-select.component';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from "@ucronia/api";
 import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from "@ucronia/domain";
@@ -69,12 +69,12 @@ export class FeeView implements OnInit {
   public report = new FeePaymentReport();
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authContainer.hasPermission("fee", "create");
-    this.editable = authContainer.hasPermission("fee", "update");
-    this.deletable = authContainer.hasPermission("fee", "delete");
+    this.createable = authService.hasPermission("fee", "create");
+    this.editable = authService.hasPermission("fee", "update");
+    this.deletable = authService.hasPermission("fee", "delete");
   }
 
   public ngOnInit(): void {

@@ -16,4 +16,4 @@ export * from './lib/models/user-token';
 export * from './lib/models/user';
 export * from './lib/interceptors/jwt-authentication.interceptor';
 export * from './lib/interceptors/unauthorized.interceptor';
-export * from './lib/services/auth-container';
+export * from './lib/services/auth-service';

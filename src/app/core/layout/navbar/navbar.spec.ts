@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { AuthContainer, SecurityDetails } from '@bernardo-mg/authentication';
+import { AuthService, SecurityDetails } from '@bernardo-mg/authentication';
 import { of } from 'rxjs';
 import { LayoutService } from '../layout-service';
 import { Navbar } from './navbar';
@@ -9,14 +9,14 @@ describe('Navbar', () => {
   let component: Navbar;
   let fixture: ComponentFixture<Navbar>;
 
-  let mockAuthContainer: jasmine.SpyObj<AuthContainer>;
+  let mockAuthService: jasmine.SpyObj<AuthService>;
   let mockLayoutService: jasmine.SpyObj<LayoutService>;
 
   let isLogged = false;
 
   beforeEach(async () => {
-    mockAuthContainer = jasmine.createSpyObj<AuthContainer>(
-      'AuthContainer',
+    mockAuthService = jasmine.createSpyObj<AuthService>(
+      'AuthService',
       [
         'logout',
         'hasPermission'
@@ -26,7 +26,7 @@ describe('Navbar', () => {
       }
     );
 
-    Object.defineProperty(mockAuthContainer, 'logged', {
+    Object.defineProperty(mockAuthService, 'logged', {
       get: () => isLogged
     });
 
@@ -43,7 +43,7 @@ describe('Navbar', () => {
       imports: [Navbar],
       providers: [
         provideRouter([]),
-        { provide: AuthContainer, useValue: mockAuthContainer },
+        { provide: AuthService, useValue: mockAuthService },
         { provide: LayoutService, useValue: mockLayoutService }
       ]
     }).compileComponents();
@@ -74,7 +74,7 @@ describe('Navbar', () => {
       mockLayoutService.showSettingsLink.and.returnValue(true);
       mockLayoutService.showSecurityLink.and.returnValue(true);
 
-      mockAuthContainer.hasPermission.and.callFake((resource: string, action: string) => {
+      mockAuthService.hasPermission.and.callFake((resource: string, action: string) => {
         return ['contact', 'funds', 'library'].includes(resource) && action === 'view';
       });
 

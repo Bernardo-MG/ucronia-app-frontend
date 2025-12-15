@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Transaction, TransactionCurrentBalance } from "@ucronia/domain";
 import { CalendarEvent } from 'angular-calendar';
@@ -56,12 +56,12 @@ export class FundsView implements OnInit {
   public failures = new FailureStore();
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authContainer.hasPermission("transaction", "create");
-    this.editable = authContainer.hasPermission("transaction", "update");
-    this.deletable = authContainer.hasPermission("transaction", "delete");
+    this.createable = authService.hasPermission("transaction", "create");
+    this.editable = authService.hasPermission("transaction", "update");
+    this.deletable = authService.hasPermission("transaction", "delete");
   }
 
   public ngOnInit(): void {

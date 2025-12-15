@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
-import { AuthContainer } from '../services/auth-container';
+import { AuthService } from '../services/auth-service';
 
 /**
  * Logged out guard. Allows access only if the user in session is logged out.
  */
 export const LoggedOutGuard = () => {
-  const authContainer = inject(AuthContainer)
-  return !authContainer.logged;
+  const authService = inject(AuthService)
+  return !authService.logged;
 }

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
@@ -12,14 +12,14 @@ import { MenuModule } from 'primeng/menu';
 })
 export class AccountDropdown {
 
-  private readonly authContainer = inject(AuthContainer);
+  private readonly authService = inject(AuthService);
 
   public readonly accountItems: MenuItem[] = [];
 
   public name = '';
 
   constructor() {
-    this.authContainer.securityDetails
+    this.authService.securityDetails
       .subscribe(u => this.name = u.username);
 
     this.accountItems.push(
@@ -37,7 +37,7 @@ export class AccountDropdown {
           {
             label: 'Logout',
             icon: 'pi pi-sign-out',
-            command: () => this.authContainer.logout()
+            command: () => this.authService.logout()
           }
         ]
       });

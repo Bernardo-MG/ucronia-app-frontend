@@ -15,7 +15,7 @@ export const unauthorizedInterceptor = (apiUrl: string): HttpInterceptorFn => {
         if (error.status === 401) {
           // Unauthenticated
           // Logs out
-          // this.authContainer.logout();
+          // this.authService.logout();
           // location.reload();
         }
 

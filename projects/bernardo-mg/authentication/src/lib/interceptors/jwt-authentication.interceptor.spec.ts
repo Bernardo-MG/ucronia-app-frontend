@@ -1,25 +1,25 @@
 import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { AuthContainer } from '../services/auth-container';
+import { AuthService } from '../services/auth-service';
 import { jwtAuthenticationInterceptor } from './jwt-authentication.interceptor';
 
 describe('jwtAuthenticationInterceptor', () => {
   let httpMock: HttpTestingController;
   let httpClient: HttpClient;
-  let authContainer: jasmine.SpyObj<AuthContainer>;
+  let authService: jasmine.SpyObj<AuthService>;
   const apiUrl = "apiUrl";
   const builtInterceptor = jwtAuthenticationInterceptor(apiUrl);
 
   beforeEach(() => {
     const interceptor: HttpInterceptorFn = (req, next) =>
       TestBed.runInInjectionContext(() => builtInterceptor(req, next));
-    const authContainerSpy = jasmine.createSpyObj('AuthContainer', ['isLogged'], { token: 'test-token' });
+    const authServiceSpy = jasmine.createSpyObj('AuthService', ['isLogged'], { token: 'test-token' });
 
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        { provide: AuthContainer, useValue: authContainerSpy },
+        { provide: AuthService, useValue: authServiceSpy },
         provideHttpClient(withInterceptors([interceptor])),
         provideHttpClientTesting()
       ]
@@ -27,7 +27,7 @@ describe('jwtAuthenticationInterceptor', () => {
 
     httpMock = TestBed.inject(HttpTestingController);
     httpClient = TestBed.inject(HttpClient);
-    authContainer = TestBed.inject(AuthContainer) as jasmine.SpyObj<AuthContainer>;
+    authService = TestBed.inject(AuthService) as jasmine.SpyObj<AuthService>;
   });
 
   afterEach(() => {
@@ -35,8 +35,8 @@ describe('jwtAuthenticationInterceptor', () => {
   });
 
   it('should add Authorization header for API requests when logged in', () => {
-    Object.defineProperty(authContainer, 'logged', { get: () => true });
-    Object.defineProperty(authContainer, 'token', { get: () => 'test-token' });
+    Object.defineProperty(authService, 'logged', { get: () => true });
+    Object.defineProperty(authService, 'token', { get: () => 'test-token' });
 
     httpClient.get(`${apiUrl}/test`).subscribe();
 
@@ -46,8 +46,8 @@ describe('jwtAuthenticationInterceptor', () => {
   });
 
   it('should not add Authorization header for API requests when not logged in', () => {
-    Object.defineProperty(authContainer, 'logged', { get: () => false });
-    Object.defineProperty(authContainer, 'token', { get: () => undefined });
+    Object.defineProperty(authService, 'logged', { get: () => false });
+    Object.defineProperty(authService, 'token', { get: () => undefined });
 
     httpClient.get(`${apiUrl}/test`).subscribe();
 
@@ -56,8 +56,8 @@ describe('jwtAuthenticationInterceptor', () => {
   });
 
   it('should not add Authorization header for non-API requests', () => {
-    Object.defineProperty(authContainer, 'logged', { get: () => true });
-    Object.defineProperty(authContainer, 'token', { get: () => 'test-token' });
+    Object.defineProperty(authService, 'logged', { get: () => true });
+    Object.defineProperty(authService, 'token', { get: () => 'test-token' });
 
     httpClient.get('https://external-api.com/test').subscribe();
 

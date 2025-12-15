@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthContainer } from '../services/auth-container';
+import { AuthService } from '../services/auth-service';
 
 /**
  * Logged in guard. Allows access only if the user in session is logged in. Otherwise redirects
@@ -8,11 +8,11 @@ import { AuthContainer } from '../services/auth-container';
  */
 export const LoggedInGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router = inject(Router);
-  const authContainer = inject(AuthContainer)
+  const authService = inject(AuthService)
   const loginRoute = '/login';
   let active;
 
-  if (authContainer.logged) {
+  if (authService.logged) {
     // Logged in
     active = true;
   } else {

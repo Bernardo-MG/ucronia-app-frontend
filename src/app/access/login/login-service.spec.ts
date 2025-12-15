@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthContainer, SecurityDetails } from '@bernardo-mg/authentication';
+import { AuthService, SecurityDetails } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider } from '@bernardo-mg/request';
 import { of } from 'rxjs';
 import { LoginService } from './login-service';
@@ -7,10 +7,10 @@ import { LoginRequest } from './models/login-request';
 
 describe('LoginService', () => {
   let service: LoginService;
-  let authContainerSpy: jasmine.SpyObj<AuthContainer>;
+  let authServiceSpy: jasmine.SpyObj<AuthService>;
 
   beforeEach(() => {
-    authContainerSpy = jasmine.createSpyObj('AuthContainer', ['setDetails']);
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['setDetails']);
 
     const mockClient = {
       create: jasmine.createSpy('create').and.returnValue(
@@ -25,7 +25,7 @@ describe('LoginService', () => {
     TestBed.configureTestingModule({
       providers: [
         LoginService,
-        { provide: AuthContainer, useValue: authContainerSpy },
+        { provide: AuthService, useValue: authServiceSpy },
         { provide: AngularCrudClientProvider, useValue: angularCrudClientProviderMock }
       ]
     });
@@ -47,10 +47,10 @@ describe('LoginService', () => {
       logged: true
     } as any;
 
-    authContainerSpy.setDetails.and.returnValue(expectedSecurityDetails);
+    authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
 
     service.login(loginRequest, rememberMe).subscribe(result => {
-      expect(authContainerSpy.setDetails).toHaveBeenCalledWith(
+      expect(authServiceSpy.setDetails).toHaveBeenCalledWith(
         expectedSecurityDetails,
         rememberMe
       );
