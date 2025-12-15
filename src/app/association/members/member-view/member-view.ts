@@ -8,7 +8,6 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ContactCreation, MemberContactCreation } from '@ucronia/api';
 import { ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -27,7 +26,6 @@ import { MemberService } from '../member-service';
 export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
-  private readonly messageService = inject(MessageService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -133,11 +131,10 @@ export class MemberView implements OnInit {
   }
 
   public onDelete(number: number) {
-    this.call(
+    this.mutation(
       () => this.service.delete(number)
         .pipe(
           tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
             this.load(0);
           })
         )
@@ -145,11 +142,10 @@ export class MemberView implements OnInit {
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
-    this.call(
+    this.mutation(
       () => this.service.create(toCreate as any)
         .pipe(
           tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
             this.load(0);
           })
         )
@@ -157,11 +153,10 @@ export class MemberView implements OnInit {
   }
 
   public onUpdate(toUpdate: MemberContact): void {
-    this.call(
+    this.mutation(
       () => this.service.patch(toUpdate)
         .pipe(
           tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
             this.load(this.data.page);
           })
         )
@@ -181,7 +176,7 @@ export class MemberView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>) {
+  private mutation(action: () => Observable<any>) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))

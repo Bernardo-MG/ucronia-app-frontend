@@ -4,13 +4,16 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { MemberCreation, MemberPatch } from '@ucronia/api';
 import { Contact, ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
+import { MessageService } from 'primeng/api';
 import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
-import { Observable, expand, forkJoin, map, of, reduce } from 'rxjs';
+import { Observable, expand, forkJoin, map, of, reduce, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
   private readonly contactClient;
@@ -59,14 +62,23 @@ export class MemberService {
   public create(data: MemberCreation): Observable<Member> {
     return this.client
       .create<SimpleResponse<Member>>(data)
-      .pipe(map(r => r.content));
+      .pipe(map(r => r.content)).pipe(
+        tap(() => {
+          this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        })
+      );
   }
 
   public delete(number: number): Observable<Member> {
     return this.client
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<Member>>()
-      .pipe(map(r => r.content));
+      .pipe(map(r => r.content))
+      .pipe(
+        tap(() => {
+          this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        })
+      );
   }
 
   public patch(data: MemberContact): Observable<MemberContact> {
@@ -88,6 +100,10 @@ export class MemberService {
         ...contact,
         ...member
       }))
+    ).pipe(
+      tap(() => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+      })
     );
   }
 
