@@ -3,10 +3,13 @@
   <div class="flex flex-col gap-2">
     <p class="font-medium">Type</p>
   
-    <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de contacto">
+    <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de contacto"
+      styleClass="type-selector">
       <ng-template let-option pTemplate="item">
-        <i class="pi" [ngClass]="option.icon"></i>
-        <span>{{ option.label }}</span>
+        <div class="type-card">
+          <i class="pi" [ngClass]="option.icon"></i>
+          <span>{{ option.label }}</span>
+        </div>
       </ng-template>
     </p-selectButton>
   </div>

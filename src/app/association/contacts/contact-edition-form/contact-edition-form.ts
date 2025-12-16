@@ -20,7 +20,8 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 @Component({
   selector: 'assoc-contact-edition-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule],
-  templateUrl: './contact-edition-form.html'
+  templateUrl: './contact-edition-form.html',
+  styleUrl: './contact-edition-form.sass'
 })
 export class ContactEditionForm implements OnChanges {
 
@@ -35,8 +36,7 @@ export class ContactEditionForm implements OnChanges {
   public options = [
     { label: 'Member', value: 'member', icon: 'pi-users' },
     { label: 'Guest', value: 'guest', icon: 'pi-user' },
-    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' },
-    { label: 'Other', value: 'other', icon: 'pi-question-circle' }
+    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' }
   ];
 
   @Input() public set data(value: Contact) {
