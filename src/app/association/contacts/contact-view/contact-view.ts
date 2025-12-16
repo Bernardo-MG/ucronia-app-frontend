@@ -198,6 +198,12 @@ export class ContactView implements OnInit {
     this.load(1);
   }
 
+  public onTypeSelected(type: string) {
+    if(type === 'member') {
+      this.service.convertToMember(this.selectedData.identifier);
+    }
+  }
+
   // DATA LOADING
 
   public load(page: number) {
