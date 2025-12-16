@@ -74,33 +74,7 @@ export class MemberService {
       );
   }
 
-  public delete(number: number): Observable<Member> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<Member>>()
-      .pipe(
-        map(r => r.content),
-        tap(() => {
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Borrado',
-            detail: 'Datos borrados',
-            life: 3000
-          });
-        }),
-        catchError(error => {
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'No se pudo borrar el registro',
-            life: 5000
-          });
-          return throwError(() => error);
-        })
-      );
-  }
-
-  public patch(data: MemberContact): Observable<MemberContact> {
+  public update(data: MemberContact): Observable<MemberContact> {
     const contactPatch: ContactPatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
@@ -130,31 +104,29 @@ export class MemberService {
     );
   }
 
-  public getAllContactMethods(): Observable<ContactMethod[]> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
-    const pageSize = 100;
-
-    return this.contactMethodClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<ContactMethod>>()
+  public delete(number: number): Observable<Member> {
+    return this.client
+      .appendRoute(`/${number}`)
+      .delete<SimpleResponse<Member>>()
       .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.contactMethodClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<ContactMethod>>();
-          }
-          return of();
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
         }),
-        // accumulate from all pages into one array
-        reduce((methods: ContactMethod[], res?: PaginatedResponse<ContactMethod>) => {
-          return res ? [...methods, ...res.content] : methods;
-        }, [])
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
       );
   }
 

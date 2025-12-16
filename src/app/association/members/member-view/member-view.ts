@@ -17,6 +17,7 @@ import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
+import { MemberContactMethodService } from '../member-contact-method-service';
 
 @Component({
   selector: 'assoc-member-view',
@@ -26,6 +27,7 @@ import { MemberService } from '../member-service';
 export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
+  private readonly contactMethodService = inject(MemberContactMethodService);
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
@@ -77,7 +79,7 @@ export class MemberView implements OnInit {
   public loadContactMethodSelection(): void {
     this.loading = true;
 
-    this.service.getAllContactMethods()
+    this.contactMethodService.getAll()
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodSelection = response);
   }
@@ -146,7 +148,7 @@ export class MemberView implements OnInit {
 
   public onUpdate(toUpdate: MemberContact): void {
     this.mutation(
-      () => this.service.patch(toUpdate),
+      () => this.service.update(toUpdate),
       () => this.load(this.data.page)
     );
   }
