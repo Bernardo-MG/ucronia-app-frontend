@@ -1,19 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
+import { ContactCreationEvent, ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ContactCreation, MemberContactCreation } from '@ucronia/api';
 import { Contact, ContactMethod, MemberContact, MemberStatus } from "@ucronia/domain";
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { finalize, Observable, tap, throwError } from 'rxjs';
+import { finalize, Observable, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
@@ -131,7 +129,7 @@ export class ContactView implements OnInit {
     this.load(0);
   }
 
-  public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
+  public onCreate(toCreate: ContactCreationEvent): void {
     this.mutation(
       () => this.service.create(toCreate as any),
       () => this.load(0)
