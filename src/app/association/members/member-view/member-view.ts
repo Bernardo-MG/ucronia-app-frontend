@@ -1,23 +1,22 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
-import { ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
+import { ContactCreationEvent, ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ContactCreation, MemberContactCreation } from '@ucronia/api';
 import { ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, Observable, Subject, tap, throwError } from 'rxjs';
+import { finalize, Observable, Subject, throwError } from 'rxjs';
+import { MemberContactMethodService } from '../member-contact-method-service';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
-import { MemberContactMethodService } from '../member-contact-method-service';
 
 @Component({
   selector: 'assoc-member-view',
@@ -139,9 +138,9 @@ export class MemberView implements OnInit {
     );
   }
 
-  public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
+  public onCreate(toCreate: ContactCreationEvent): void {
     this.mutation(
-      () => this.service.create(toCreate as any),
+      () => this.service.create(toCreate),
       () => this.load(0)
     );
   }

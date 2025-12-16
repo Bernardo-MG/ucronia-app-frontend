@@ -55,12 +55,12 @@ export class ContactEditionForm implements OnChanges {
   constructor() {
     this.form = this.fb.group({
       number: [-1],
+      identifier: [''],
+      birthDate: [new Date()],
       name: this.fb.group({
         firstName: [null],
         lastName: ['']
       }),
-      identifier: [''],
-      birthDate: [new Date()],
       contactChannels: this.fb.array([]),
       comments: ['']
     });
