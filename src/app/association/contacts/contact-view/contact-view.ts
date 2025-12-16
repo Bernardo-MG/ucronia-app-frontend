@@ -35,8 +35,6 @@ export class ContactView implements OnInit {
   private readonly memberContactsService = inject(MemberContactsService);
   private readonly contactMethodService = inject(ContactMethodService);
 
-  public activeFilter = MemberStatus.All;
-
   public readonly createable;
   public readonly editable;
   public readonly deletable;
@@ -50,6 +48,7 @@ export class ContactView implements OnInit {
   public contactMethodData = new PaginatedResponse<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
 
+  public activeFilter = MemberStatus.All;
   public nameFilter = '';
 
   public selectedData: Contact | MemberContact = new Contact();
@@ -88,6 +87,8 @@ export class ContactView implements OnInit {
     this.loadContactMethods(0);
     this.loadContactMethodSelection();
   }
+
+  // EVENT HANDLERS
 
   public onShowEdit(contact: MemberContact | Contact) {
     this.selectedData = contact;
@@ -176,22 +177,6 @@ export class ContactView implements OnInit {
     );
   }
 
-  public loadContactMethods(page: number): void {
-    this.loading = true;
-
-    this.contactMethodService.getAll(page)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodData = response);
-  }
-
-  public loadContactMethodSelection(): void {
-    this.loading = true;
-
-    this.contactMethodService.getAllContactMethods()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodSelection = response);
-  }
-
   public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
     this.selectedStatus = status;
     this.load(0);
@@ -213,12 +198,32 @@ export class ContactView implements OnInit {
     this.load(1);
   }
 
+  // DATA LOADING
+
   public load(page: number) {
     this.loading = true;
 
     this.getService().getAll(page, this.sort, this.activeFilter, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  public loadContactMethods(page: number): void {
+    this.loading = true;
+
+    this.contactMethodService.getAll(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodData = response);
+  }
+
+  // PRIVATE METHODS
+
+  private loadContactMethodSelection(): void {
+    this.loading = true;
+
+    this.contactMethodService.getAllContactMethods()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodSelection = response);
   }
 
   private mutation(

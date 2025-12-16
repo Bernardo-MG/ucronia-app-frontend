@@ -42,11 +42,11 @@ export class MemberEditionForm implements OnChanges {
     });
   }
 
+  public readonly save = output<MemberContact>();
+
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
   }
-
-  public readonly save = output<MemberContact>();
 
   public formStatus: FormStatus;
 
@@ -89,10 +89,7 @@ export class MemberEditionForm implements OnChanges {
     this.contactChannels.removeAt(index);
   }
 
-  /**
-   * Handler for the save event.
-   */
-  public onSave() {
+  public submit() {
     if (this.formStatus.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);

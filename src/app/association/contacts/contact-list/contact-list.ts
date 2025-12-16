@@ -2,7 +2,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { Contact } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-contact-list',
@@ -31,7 +31,12 @@ export class ContactList {
     return (this.page() - 1) * this.rows();
   }
 
-  public onDelete(event: Event, contact: Contact) {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
+  }
+
+  public confirmDelete(event: Event, contact: Contact) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',

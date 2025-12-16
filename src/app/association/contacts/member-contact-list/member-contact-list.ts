@@ -4,7 +4,7 @@ import { Contact, MemberContact } from "@ucronia/domain";
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-member-contact-list',
@@ -30,14 +30,18 @@ export class MemberContactList {
   public readonly changePage = output<number>();
 
   @ViewChild('editionMenu') editionMenu!: Menu;
-
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.page() - 1) * this.rows();
   }
 
-  public onEdit(event: Event, contact: MemberContact) {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
+  }
+
+  public showEdit(event: Event, contact: MemberContact) {
     this.editionMenuItems = [];
     this.editionMenuItems.push({
       label: 'Editar',
@@ -48,12 +52,7 @@ export class MemberContactList {
     this.editionMenu.toggle(event);
   }
 
-  public onPageChange(first: number) {
-    const page = (first / this.rows()) + 1;
-    this.changePage.emit(page);
-  }
-
-  public onDelete(event: Event, contact: Contact) {
+  public confirmDelete(event: Event, contact: Contact) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',

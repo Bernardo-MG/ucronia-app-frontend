@@ -1,7 +1,7 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="members()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
-  (onPage)="changePage.emit($event.first)">
+  (onPage)="onPageChange($event)">
 
   <ng-template #header>
     <tr class="border-b bg-gray-100">
@@ -35,7 +35,7 @@
 
         @if (deletable()) {
           <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-            [attr.aria-disabled]="!deletable()" (click)="onDelete($event, member.number)" rounded text
+            [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, member.number)" rounded text
             class="!p-2"></p-button>
         }
       </td>
