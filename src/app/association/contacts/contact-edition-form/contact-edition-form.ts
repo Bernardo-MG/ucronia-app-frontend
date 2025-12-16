@@ -31,13 +31,8 @@ export class ContactEditionForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
 
-  public selected = 'member';
-
-  public options = [
-    { label: 'Member', value: 'member', icon: 'pi-users' },
-    { label: 'Guest', value: 'guest', icon: 'pi-user' },
-    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' }
-  ];
+  public readonly typeSelected = output<string>();
+  public readonly save = output<Contact>();
 
   @Input() public set data(value: Contact) {
     this.form.patchValue(value as any);
@@ -57,7 +52,13 @@ export class ContactEditionForm implements OnChanges {
     return this.form.get('contactChannels') as FormArray;
   }
 
-  public readonly save = output<Contact>();
+  public selected = 'member';
+
+  public options = [
+    { label: 'Member', value: 'member', icon: 'pi-users' },
+    { label: 'Guest', value: 'guest', icon: 'pi-user' },
+    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' }
+  ];
 
   public formStatus: FormStatus;
 

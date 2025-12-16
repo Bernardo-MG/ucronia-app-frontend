@@ -4,7 +4,7 @@
     <p class="font-medium">Type</p>
   
     <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de contacto"
-      styleClass="type-selector">
+      styleClass="type-selector" (onChange)="typeSelected.emit($event.value)">
       <ng-template let-option pTemplate="item">
         <div class="type-card">
           <i class="pi" [ngClass]="option.icon"></i>
