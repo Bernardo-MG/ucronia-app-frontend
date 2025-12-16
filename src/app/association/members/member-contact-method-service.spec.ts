@@ -1,21 +1,17 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MessageService } from 'primeng/api';
-import { ContactsService } from './contacts-service';
+import { MemberContactMethodService } from './member-contact-method-service';
 
-describe('ContactsService', () => {
-  let service: ContactsService;
+describe('MemberContactMethodService', () => {
+  let service: MemberContactMethodService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [
-        MessageService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
-      ]
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
     });
-    service = TestBed.inject(ContactsService);
+    service = TestBed.inject(MemberContactMethodService);
   });
 
   it('should be created', () => {

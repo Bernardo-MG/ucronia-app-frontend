@@ -55,16 +55,16 @@ export class MemberEditionForm implements OnChanges {
   constructor() {
     this.form = this.fb.group({
       number: [-1],
+      identifier: [''],
+      birthDate: [new Date()],
       name: this.fb.group({
         firstName: [null],
         lastName: ['']
       }),
-      identifier: [''],
-      birthDate: [new Date()],
-      active: [false],
-      renew: [false],
       contactChannels: this.fb.array([]),
-      comments: ['']
+      comments: [''],
+      active: [false],
+      renew: [false]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -93,7 +93,7 @@ export class MemberEditionForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave() {
-    if (this.form.valid) {
+    if (this.formStatus.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }

@@ -3,7 +3,6 @@ import { Component, inject, input, OnChanges, output, SimpleChanges } from '@ang
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactCreation } from '@ucronia/api';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -20,7 +19,7 @@ export class ContactCreationForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ContactCreation>();
+  public readonly save = output<ContactCreationEvent>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
@@ -48,7 +47,7 @@ export class ContactCreationForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave() {
-    if (this.form.valid) {
+    if (this.formStatus.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }
@@ -58,4 +57,10 @@ export class ContactCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class ContactCreationEvent {
+  constructor(
+    public name: { firstName: string, lastName: string }
+  ) { }
 }
