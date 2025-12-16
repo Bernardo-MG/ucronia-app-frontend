@@ -47,7 +47,7 @@ export class ContactCreationForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave() {
-    if (this.form.valid) {
+    if (this.formStatus.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }
