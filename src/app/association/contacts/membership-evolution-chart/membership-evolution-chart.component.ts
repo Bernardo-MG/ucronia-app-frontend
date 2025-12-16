@@ -74,28 +74,10 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
       });
   }
 
-  private loadBalance() {
-    this.readingBalance = true;
-    this.service.monthly(this.startMonth, this.endMonth)
-      .pipe(finalize(() => this.readingBalance = false))
-      .subscribe(response => {
-        this.balance = response;
-        this.loadChart(response);
-      });
-  }
-
   public ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
     }
-  }
-
-  public onSelectStartMonth(event: any) {
-    this.startMonthChange.emit(event.target.value);
-  }
-
-  public onSelectEndMonth(event: any) {
-    this.endMonthChange.emit(event.target.value);
   }
 
   private loadChart(balance: MembershipEvolutionMonth[]) {
@@ -124,6 +106,16 @@ export class MembershipEvolutionChartComponent implements OnDestroy {
         responsive: true,
       }
     });
+  }
+
+  private loadBalance() {
+    this.readingBalance = true;
+    this.service.monthly(this.startMonth, this.endMonth)
+      .pipe(finalize(() => this.readingBalance = false))
+      .subscribe(response => {
+        this.balance = response;
+        this.loadChart(response);
+      });
   }
 
 }

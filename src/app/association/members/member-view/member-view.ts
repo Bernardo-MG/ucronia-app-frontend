@@ -28,10 +28,6 @@ export class MemberView implements OnInit {
   private readonly service = inject(MemberService);
   private readonly contactMethodService = inject(MemberContactMethodService);
 
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
-
   public data = new PaginatedResponse<Member>();
   public contactMethodSelection: ContactMethod[] = [];
 
@@ -45,9 +41,6 @@ export class MemberView implements OnInit {
   public readonly deletable;
   public readonly editable;
 
-  /**
-   * Loading flag.
-   */
   public loading = false;
   public showing = false;
   public creating = false;
@@ -75,13 +68,7 @@ export class MemberView implements OnInit {
     this.loadContactMethodSelection();
   }
 
-  public loadContactMethodSelection(): void {
-    this.loading = true;
-
-    this.contactMethodService.getAll()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodSelection = response);
-  }
+  // EVENT HANDLERS
 
   public onChangeDirection(sorting: { field: string, order: number }) {
     if (sorting.field === 'fullName') {
@@ -157,6 +144,8 @@ export class MemberView implements OnInit {
     this.load(1);
   }
 
+  // DATA LOADING
+
   public load(page: number) {
     this.loading = true;
 
@@ -164,6 +153,8 @@ export class MemberView implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
+
+  // PRIVATE METHODS
 
   private mutation(
     action: () => Observable<any>,
@@ -189,6 +180,14 @@ export class MemberView implements OnInit {
           return throwError(() => error);
         }
       });
+  }
+
+  private loadContactMethodSelection(): void {
+    this.loading = true;
+
+    this.contactMethodService.getAll()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.contactMethodSelection = response);
   }
 
 }

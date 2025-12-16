@@ -4,7 +4,7 @@ import { Member } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-member-list',
@@ -34,7 +34,12 @@ export class MemberList {
     return (this.page() - 1) * this.rows();
   }
 
-  public onDelete(event: Event, number: number) {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
+  }
+
+  public confirmDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
