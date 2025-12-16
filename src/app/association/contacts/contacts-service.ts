@@ -117,9 +117,9 @@ export class ContactsService {
       .pipe(map(r => r.content));
   }
 
-  public convertToMember(identifier: string) {
+  public convertToMember(number: number) {
         return this.client
-      .appendRoute(`/${identifier}`)
+      .appendRoute(`/${number}/member`)
       .update<SimpleResponse<void>>(undefined)
       .pipe(
         map(r => r.content),
