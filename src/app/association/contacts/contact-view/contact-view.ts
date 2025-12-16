@@ -36,7 +36,6 @@ export class ContactView implements OnInit {
   private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);
   private readonly contactMethodService = inject(ContactMethodService);
-  private readonly messageService = inject(MessageService);
 
   public activeFilter = MemberStatus.All;
 
@@ -133,38 +132,23 @@ export class ContactView implements OnInit {
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
-    this.call(
-      () => this.service.create(toCreate as any)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
-            this.load(0);
-          })
-        )
+    this.mutation(
+      () => this.service.create(toCreate as any),
+      () => this.load(0)
     );
   }
 
   public onUpdate(toUpdate: Contact): void {
-    this.call(
-      () => this.service.patch(toUpdate)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.load(this.data.page);
-          })
-        )
+    this.mutation(
+      () => this.service.patch(toUpdate),
+      () => this.load(this.data.page)
     );
   }
 
   public onDelete(number: number) {
-    this.call(
-      () => this.service.delete(number)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-            this.load(0);
-          })
-        )
+    this.mutation(
+      () => this.service.delete(number),
+      () => this.load(0)
     );
   }
 
@@ -174,38 +158,23 @@ export class ContactView implements OnInit {
   }
 
   public onCreateContactMethod(toCreate: ContactMethod): void {
-    this.call(
-      () => this.contactMethodService.create(toCreate)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
-            this.loadContactMethods(0);
-          })
-        )
+    this.mutation(
+      () => this.contactMethodService.create(toCreate),
+      () => this.loadContactMethods(0)
     );
   }
 
   public onUpdateContactMethod(toUpdate: ContactMethod): void {
-    this.call(
-      () => this.contactMethodService.update(toUpdate)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-            this.loadContactMethods(this.data.page);
-          })
-        )
+    this.mutation(
+      () => this.contactMethodService.update(toUpdate),
+      () => this.loadContactMethods(this.data.page)
     );
   }
 
   public onDeleteContactMethod(number: number): void {
-    this.call(
-      () => this.contactMethodService.delete(number)
-        .pipe(
-          tap(() => {
-            this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-            this.loadContactMethods(0);
-          })
-        )
+    this.mutation(
+      () => this.contactMethodService.delete(number),
+      () => this.loadContactMethods(0)
     );
   }
 
@@ -254,7 +223,10 @@ export class ContactView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>) {
+  private mutation(
+    action: () => Observable<any>,
+    onSuccess: () => void = () => { }
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -265,6 +237,8 @@ export class ContactView implements OnInit {
           this.creating = false;
           this.creatingMethod = false;
           this.editingMethod = false;
+
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {

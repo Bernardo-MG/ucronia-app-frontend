@@ -2,12 +2,15 @@ import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { ContactMethod } from "@ucronia/domain";
 import { environment } from 'environments/environment';
-import { expand, map, Observable, of, reduce } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { catchError, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactMethodService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
 
@@ -59,21 +62,60 @@ export class ContactMethodService {
   public create(data: ContactMethod): Observable<ContactMethod> {
     return this.client
       .create<SimpleResponse<ContactMethod>>(data)
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public update(data: ContactMethod): Observable<ContactMethod> {
     return this.client
       .appendRoute(`/${data.number}`)
       .update<SimpleResponse<ContactMethod>>(data)
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public delete(number: number): Observable<ContactMethod> {
     return this.client
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<ContactMethod>>()
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
 }

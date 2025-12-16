@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { ResourcePermission } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { MemberCreation, MemberPatch } from '@ucronia/api';
 import { Contact, ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
-import { Observable, expand, forkJoin, map, of, reduce, tap } from 'rxjs';
+import { Observable, catchError, expand, forkJoin, map, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -62,9 +61,15 @@ export class MemberService {
   public create(data: MemberCreation): Observable<Member> {
     return this.client
       .create<SimpleResponse<Member>>(data)
-      .pipe(map(r => r.content)).pipe(
+      .pipe(
+        map(r => r.content),
         tap(() => {
-          this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
         })
       );
   }
@@ -73,10 +78,24 @@ export class MemberService {
     return this.client
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<Member>>()
-      .pipe(map(r => r.content))
       .pipe(
+        map(r => r.content),
         tap(() => {
-          this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
         })
       );
   }
@@ -99,10 +118,14 @@ export class MemberService {
       map(({ member, contact }) => ({
         ...contact,
         ...member
-      }))
-    ).pipe(
+      })),
       tap(() => {
-        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Datos actualizados',
+          life: 3000
+        });
       })
     );
   }

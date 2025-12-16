@@ -132,34 +132,22 @@ export class MemberView implements OnInit {
 
   public onDelete(number: number) {
     this.mutation(
-      () => this.service.delete(number)
-        .pipe(
-          tap(() => {
-            this.load(0);
-          })
-        )
+      () => this.service.delete(number),
+      () => this.load(0)
     );
   }
 
   public onCreate(toCreate: ContactCreation | MemberContactCreation): void {
     this.mutation(
-      () => this.service.create(toCreate as any)
-        .pipe(
-          tap(() => {
-            this.load(0);
-          })
-        )
+      () => this.service.create(toCreate as any),
+      () => this.load(0)
     );
   }
 
   public onUpdate(toUpdate: MemberContact): void {
     this.mutation(
-      () => this.service.patch(toUpdate)
-        .pipe(
-          tap(() => {
-            this.load(this.data.page);
-          })
-        )
+      () => this.service.patch(toUpdate),
+      () => this.load(this.data.page)
     );
   }
 
@@ -176,7 +164,10 @@ export class MemberView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private mutation(action: () => Observable<any>) {
+  private mutation(
+    action: () => Observable<any>,
+    onSuccess: () => void = () => { }
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -185,6 +176,8 @@ export class MemberView implements OnInit {
           this.failures.clear();
           this.creating = false;
           this.editing = false;
+
+          onSuccess();
         },
         error: error => {
           if (error instanceof FailureResponse) {
