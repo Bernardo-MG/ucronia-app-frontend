@@ -140,7 +140,7 @@ export class ContactView implements OnInit {
 
   public onUpdate(toUpdate: Contact): void {
     this.mutation(
-      () => this.service.patch(toUpdate),
+      () => this.service.update(toUpdate),
       () => this.load(this.data.page)
     );
   }

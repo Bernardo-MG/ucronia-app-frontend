@@ -58,7 +58,7 @@ export class ContactsService {
       );
   }
 
-  public patch(data: Contact): Observable<Contact> {
+  public update(data: Contact): Observable<Contact> {
     const patch: ContactPatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
