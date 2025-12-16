@@ -1,6 +1,6 @@
-import { ContactName } from "@ucronia/domain";
 
 export class ContactCreation {
-  public identifier = '';
-  public name = new ContactName();
+  constructor(
+    public name: { firstName: string, lastName: string }
+  ) { }
 }

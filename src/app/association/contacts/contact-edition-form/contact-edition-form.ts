@@ -66,12 +66,12 @@ export class ContactEditionForm implements OnChanges {
   constructor() {
     this.form = this.fb.group({
       number: [-1],
+      identifier: [''],
+      birthDate: [new Date()],
       name: this.fb.group({
         firstName: [null],
         lastName: ['']
       }),
-      identifier: [''],
-      birthDate: [new Date()],
       contactChannels: this.fb.array([]),
       comments: ['']
     });
@@ -102,7 +102,7 @@ export class ContactEditionForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave() {
-    if (this.form.valid) {
+    if (this.formStatus.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }

@@ -3,13 +3,16 @@ import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleR
 import { ContactCreation } from '@ucronia/api';
 import { Contact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
+import { MessageService } from 'primeng/api';
 import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
 
@@ -42,10 +45,20 @@ export class ContactsService {
   public create(data: ContactCreation): Observable<Contact> {
     return this.client
       .create<SimpleResponse<Contact>>(data)
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
-  public patch(data: Contact): Observable<Contact> {
+  public update(data: Contact): Observable<Contact> {
     const patch: ContactPatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
@@ -59,14 +72,43 @@ export class ContactsService {
     return this.client
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Contact>>(patch)
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public delete(number: number): Observable<Contact> {
     return this.client
       .appendRoute(`/${number}`)
       .delete<SimpleResponse<Contact>>()
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
   public getOne(number: number): Observable<Contact> {

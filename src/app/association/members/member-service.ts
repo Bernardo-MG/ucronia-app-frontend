@@ -1,16 +1,18 @@
 import { Injectable, inject } from '@angular/core';
-import { ResourcePermission } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { MemberCreation, MemberPatch } from '@ucronia/api';
 import { Contact, ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
+import { MessageService } from 'primeng/api';
 import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
-import { Observable, expand, forkJoin, map, of, reduce } from 'rxjs';
+import { Observable, catchError, expand, forkJoin, map, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
   private readonly contactClient;
@@ -59,17 +61,20 @@ export class MemberService {
   public create(data: MemberCreation): Observable<Member> {
     return this.client
       .create<SimpleResponse<Member>>(data)
-      .pipe(map(r => r.content));
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
-  public delete(number: number): Observable<Member> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<Member>>()
-      .pipe(map(r => r.content));
-  }
-
-  public patch(data: MemberContact): Observable<MemberContact> {
+  public update(data: MemberContact): Observable<MemberContact> {
     const contactPatch: ContactPatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
@@ -87,35 +92,41 @@ export class MemberService {
       map(({ member, contact }) => ({
         ...contact,
         ...member
-      }))
+      })),
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Datos actualizados',
+          life: 3000
+        });
+      })
     );
   }
 
-  public getAllContactMethods(): Observable<ContactMethod[]> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
-    const pageSize = 100;
-
-    return this.contactMethodClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<ContactMethod>>()
+  public delete(number: number): Observable<Member> {
+    return this.client
+      .appendRoute(`/${number}`)
+      .delete<SimpleResponse<Member>>()
       .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.contactMethodClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<ContactMethod>>();
-          }
-          return of();
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
         }),
-        // accumulate from all pages into one array
-        reduce((methods: ContactMethod[], res?: PaginatedResponse<ContactMethod>) => {
-          return res ? [...methods, ...res.content] : methods;
-        }, [])
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
       );
   }
 
