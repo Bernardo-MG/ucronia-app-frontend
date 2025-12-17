@@ -11,7 +11,6 @@ import { Observable, catchError, map, tap, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class ContactsService {
-
   private readonly messageService = inject(MessageService);
 
   private readonly client;
@@ -116,6 +115,23 @@ export class ContactsService {
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Contact>>()
       .pipe(map(r => r.content));
+  }
+
+  public convertToMember(number: number) {
+        return this.client
+      .appendRoute(`/${number}/member`)
+      .update<SimpleResponse<void>>(undefined)
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
 }
