@@ -12,7 +12,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
@@ -84,9 +84,18 @@ export class ContactView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load(0);
-    this.loadContactMethods(0);
-    this.loadContactMethodSelection();
+    this.loading = true;
+    forkJoin({
+      data: this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter),
+      contactMethodSelection: this.contactMethodService.getAllAvailable(),
+      contactMethods: this.contactMethodService.getAll(1)
+    })
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(({ data, contactMethodSelection, contactMethods }) => {
+        this.data = data;
+        this.contactMethodSelection = contactMethodSelection;
+        this.contactMethodData = contactMethods;
+      });
   }
 
   // EVENT HANDLERS
@@ -231,7 +240,7 @@ export class ContactView implements OnInit {
   private loadContactMethodSelection(): void {
     this.loading = true;
 
-    this.contactMethodService.getAllContactMethods()
+    this.contactMethodService.getAllAvailable()
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodSelection = response);
   }

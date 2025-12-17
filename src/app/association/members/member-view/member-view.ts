@@ -13,7 +13,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, Observable, Subject, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable, Subject, throwError } from 'rxjs';
 import { MemberContactMethodService } from '../member-contact-method-service';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
@@ -65,8 +65,16 @@ export class MemberView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load(0);
-    this.loadContactMethodSelection();
+    this.loading = true;
+    forkJoin({
+      data: this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter),
+      contactMethods: this.contactMethodService.getAll()
+    })
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(({ data, contactMethods }) => {
+        this.data = data;
+        this.contactMethodSelection = contactMethods;
+      });
   }
 
   // EVENT HANDLERS

@@ -20,7 +20,7 @@ export class ContactMethodService {
     this.client = clientProvider.url(environment.apiUrl + '/contact/contactMethod');
   }
 
-  public getAll(page: number): Observable<PaginatedResponse<ContactMethod>> {
+  public getAll(page: number | undefined): Observable<PaginatedResponse<ContactMethod>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -31,7 +31,7 @@ export class ContactMethodService {
       .read<PaginatedResponse<ContactMethod>>();
   }
 
-  public getAllContactMethods(): Observable<ContactMethod[]> {
+  public getAllAvailable(): Observable<ContactMethod[]> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
