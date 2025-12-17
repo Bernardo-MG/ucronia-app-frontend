@@ -1,4 +1,5 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Role } from '@bernardo-mg/authentication';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -27,7 +28,7 @@ export class RoleList {
   public readonly delete = output<Role>();
   public readonly edit = output<{ view: string, role: Role }>();
   public readonly changePermissions = output<Role>();
-  public readonly changeDirection = output<{ field: string, order: number }>();
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   @ViewChild('infoMenu') private infoMenu!: Menu;

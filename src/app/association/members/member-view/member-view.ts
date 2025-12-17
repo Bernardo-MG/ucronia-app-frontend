@@ -4,6 +4,7 @@ import { MemberContactDetails } from '@app/association/contacts/member-contact-d
 import { ContactCreationEvent, ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
@@ -70,7 +71,7 @@ export class MemberView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     if (sorting.field === 'fullName') {
       const direction = sorting.order === 1
         ? SortingDirection.Ascending

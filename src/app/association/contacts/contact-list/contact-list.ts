@@ -1,4 +1,5 @@
 import { Component, inject, input, output } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Contact } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -24,7 +25,7 @@ export class ContactList {
   public readonly show = output<Contact>();
   public readonly edit = output<Contact>();
   public readonly delete = output<number>();
-  public readonly changeDirection = output<{ field: string, order: number }>();
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   public get first() {

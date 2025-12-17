@@ -1,7 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { BookLending } from "@ucronia/domain";
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { BookLending } from "@ucronia/domain";
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
@@ -24,7 +25,7 @@ export class LibraryLendingList {
     return (this.page() - 1) * this.rows();
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;

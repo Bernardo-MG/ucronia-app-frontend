@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { ContactCreationEvent, ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { TextFilter } from '@app/shared/data/text-filter/text-filter';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { Contact, ContactMethod, MemberContact, MemberStatus } from "@ucronia/domain";
@@ -100,7 +101,7 @@ export class ContactView implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     let direction;
     if (sorting.field === 'fullName') {
       const direction = sorting.order === 1

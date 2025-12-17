@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { UserToken } from '@bernardo-mg/authentication';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -27,7 +28,7 @@ export class UserTokenList {
   public readonly show = output<UserToken>();
   public readonly extend = output<UserToken>();
   public readonly revoke = output<UserToken>();
-  public readonly changeDirection = output<{ field: string, order: number }>();
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   @ViewChild('editionMenu') editionMenu!: Menu;

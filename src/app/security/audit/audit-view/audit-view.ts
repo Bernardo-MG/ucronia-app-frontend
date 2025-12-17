@@ -1,5 +1,6 @@
 
 import { Component, inject, OnInit } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { TablePageEvent } from 'primeng/table';
@@ -30,7 +31,7 @@ export class AccessAuditLogin implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;

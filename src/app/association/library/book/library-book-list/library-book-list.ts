@@ -1,7 +1,7 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
-import { FictionBook } from "@ucronia/domain";
-import { GameBook } from "@ucronia/domain";
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FictionBook, GameBook } from "@ucronia/domain";
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
@@ -131,7 +131,7 @@ export class LibraryBookList {
     }
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;

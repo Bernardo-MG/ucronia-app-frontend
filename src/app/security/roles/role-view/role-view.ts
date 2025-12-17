@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
@@ -68,7 +69,7 @@ export class AccessRoleList implements OnInit {
     this.showing = true;
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;

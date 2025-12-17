@@ -1,5 +1,6 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { MemberStatusTag } from '@app/shared/contact/member-status-tag/member-status-tag';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Contact, MemberContact } from "@ucronia/domain";
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -26,7 +27,7 @@ export class MemberContactList {
   public readonly show = output<MemberContact>();
   public readonly edit = output<MemberContact>();
   public readonly delete = output<number>();
-  public readonly changeDirection = output<{ field: string, order: number }>();
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   @ViewChild('editionMenu') editionMenu!: Menu;

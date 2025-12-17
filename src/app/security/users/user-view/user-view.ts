@@ -1,7 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Member } from "@ucronia/domain";
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { Member } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -69,7 +70,7 @@ export class UserView implements OnInit {
     this.load(0);
   }
 
-  public onChangeDirection(sorting: { field: string, order: number }) {
+  public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;

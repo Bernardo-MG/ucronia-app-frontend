@@ -1,5 +1,6 @@
 import { Component, inject, input, output } from '@angular/core';
 import { MemberStatusTag } from '@app/shared/contact/member-status-tag/member-status-tag';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Member } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
@@ -27,7 +28,7 @@ export class MemberList {
   public readonly show = output<Member>();
   public readonly delete = output<number>();
   public readonly edit = output<Member>();
-  public readonly changeDirection = output<{ field: string, order: number }>();
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   public get first() {

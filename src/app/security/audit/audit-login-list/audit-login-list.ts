@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { TableModule } from 'primeng/table';
 import { LoginRegister } from '../models/login-register';
 
@@ -16,7 +17,7 @@ export class AuditLoginList {
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly changeDirection = output<{ field: string, order: number }>();
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   public get first() {
