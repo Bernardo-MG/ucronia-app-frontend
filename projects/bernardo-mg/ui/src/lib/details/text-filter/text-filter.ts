@@ -5,7 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { debounceTime, Subject } from 'rxjs';
 
 @Component({
-  selector: 'shared-text-filter',
+  selector: 'ui-text-filter',
   imports: [FormsModule, InputTextModule, FloatLabelModule],
   templateUrl: './text-filter.html'
 })
