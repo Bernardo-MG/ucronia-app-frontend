@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } f
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Contact, ContactMethod } from "@ucronia/domain";
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -13,7 +14,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
@@ -25,6 +26,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class ContactEditionForm implements OnChanges {
 
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly fb = inject(FormBuilder);
 
   public readonly loading = input(false);
@@ -55,8 +57,8 @@ export class ContactEditionForm implements OnChanges {
   public selected = 'member';
 
   public options = [
-    { label: 'Member', value: 'member', icon: 'pi-users' },
     { label: 'Guest', value: 'guest', icon: 'pi-user' },
+    { label: 'Member', value: 'member', icon: 'pi-users' },
     { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' }
   ];
 
@@ -96,6 +98,24 @@ export class ContactEditionForm implements OnChanges {
 
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
+  }
+
+  public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
+    this.confirmationService.confirm({
+      target,
+      message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Asignar',
+        severity: 'danger'
+      },
+      accept: () => this.typeSelected.emit(event.value)
+    });
   }
 
   public submit() {
