@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ConfirmationService } from 'primeng/api';
 import { ContactEditionForm } from './contact-edition-form';
 
 describe('ContactEditionForm', () => {
@@ -7,7 +8,12 @@ describe('ContactEditionForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactEditionForm]
+      imports: [
+        ContactEditionForm
+      ],
+      providers: [
+        ConfirmationService
+      ]
     })
       .compileComponents();
 
