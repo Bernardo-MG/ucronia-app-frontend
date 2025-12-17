@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { ContactCreation } from '@ucronia/api';
+import { ContactCreation, ContactPatch } from '@ucronia/api';
 import { Contact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 
 @Injectable({

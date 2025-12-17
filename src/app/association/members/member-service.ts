@@ -1,11 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { MemberCreation, MemberPatch } from '@ucronia/api';
-import { Contact, ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
+import { ContactPatch, MemberCreation, MemberPatch } from '@ucronia/api';
+import { Contact, Member, MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { ContactPatch } from 'projects/ucronia/api/src/lib/contacts/contact-patch';
-import { Observable, catchError, expand, forkJoin, map, of, reduce, tap, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +15,12 @@ export class MemberService {
 
   private readonly client;
   private readonly contactClient;
-  private readonly contactMethodClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/member');
     this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
-    this.contactMethodClient = clientProvider.url(environment.apiUrl + '/contact/contactMethod');
   }
 
   public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
