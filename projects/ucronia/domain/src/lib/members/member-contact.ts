@@ -8,6 +8,7 @@ export class MemberContact {
   public name = new ContactName();
   public contactChannels: ContactChannel[] = [];
   public comments = '';
+  public types: string[] = [];
   public active = false;
   public renew = false;
 }

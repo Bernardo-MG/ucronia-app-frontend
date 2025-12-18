@@ -4,10 +4,11 @@ import { Contact } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { ContactTypeTag } from '../contact-type-tag/contact-type-tag';
 
 @Component({
   selector: 'assoc-contact-list',
-  imports: [ButtonModule, TableModule],
+  imports: [ButtonModule, TableModule, ContactTypeTag],
   templateUrl: './contact-list.html'
 })
 export class ContactList {

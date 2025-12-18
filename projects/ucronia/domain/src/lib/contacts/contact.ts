@@ -8,6 +8,7 @@ export class Contact {
   public name = new ContactName();
   public contactChannels: ContactChannel[] = [];
   public comments = '';
+  public types: string[] = [];
 }
 
 export class ContactChannel {
