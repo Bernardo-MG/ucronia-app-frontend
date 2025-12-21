@@ -55,7 +55,6 @@ export class ContactEditionForm implements OnChanges {
     value.types?.forEach(type => {
       const option = this.options.find(o => o.value === type);
       if (option) {
-        option.disabled = true;
         this.selected.push(type);
       }
     });
@@ -112,25 +111,34 @@ export class ContactEditionForm implements OnChanges {
   }
 
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
-    this.confirmationService.confirm({
-      target,
-      message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Asignar',
-        severity: 'danger'
-      },
-      accept: () => {
-        if (event.value.length) {
-          this.typeSelected.emit(event.value[event.value.length - 1]);
-        }
+    let latestAdded = undefined;
+    if (event.value.length) {
+      latestAdded = event.value[event.value.length - 1];
+    }
+    if (latestAdded) {
+      const option = this.options.find(o => o.value === latestAdded);
+      if (!option?.disabled) {
+        this.confirmationService.confirm({
+          target,
+          message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
+          icon: 'pi pi-info-circle',
+          rejectButtonProps: {
+            label: 'Cancelar',
+            severity: 'secondary',
+            outlined: true
+          },
+          acceptButtonProps: {
+            label: 'Asignar',
+            severity: 'danger'
+          },
+          accept: () => {
+            if (event.value.length) {
+              this.typeSelected.emit(latestAdded);
+            }
+          }
+        });
       }
-    });
+    }
   }
 
   public submit() {

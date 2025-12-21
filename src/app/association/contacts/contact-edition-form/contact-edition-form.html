@@ -6,7 +6,8 @@
     <!-- Types -->
     <div #typeSelector>
       <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de contacto"
-        styleClass="type-selector" [multiple]="true" [(ngModel)]="selected" [ngModelOptions]="{standalone: true}" (onChange)="confirmTypeTransformation($event, typeSelector)">
+        styleClass="type-selector" [multiple]="true" [ngModel]="selected" [ngModelOptions]="{standalone: true}"
+        (onChange)="confirmTypeTransformation($event, typeSelector)">
         <ng-template let-option pTemplate="item">
           <div class="flex flex-col items-center justify-center gap-2 py-2">
             <i class="pi text-xl" [ngClass]="option.icon"></i>
