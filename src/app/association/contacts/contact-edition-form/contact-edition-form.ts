@@ -21,8 +21,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 @Component({
   selector: 'assoc-contact-edition-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule],
-  templateUrl: './contact-edition-form.html',
-  styleUrl: './contact-edition-form.sass'
+  templateUrl: './contact-edition-form.html'
 })
 export class ContactEditionForm implements OnChanges {
 
