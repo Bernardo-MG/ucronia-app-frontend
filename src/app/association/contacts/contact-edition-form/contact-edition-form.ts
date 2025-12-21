@@ -48,13 +48,15 @@ export class ContactEditionForm implements OnChanges {
         })
       );
     });
+
+    this.selected = value.types;
   }
 
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
   }
 
-  public selected = 'member';
+  public selected: string[] = [];
 
   public options = [
     { label: 'Guest', value: 'guest', icon: 'pi-user' },
@@ -114,13 +116,16 @@ export class ContactEditionForm implements OnChanges {
         label: 'Asignar',
         severity: 'danger'
       },
-      accept: () => this.typeSelected.emit(event.value)
+      accept: () => {
+        if (event.value.length) {
+          this.typeSelected.emit(event.value[event.value.length - 1]);
+        }
+      }
     });
   }
 
   public submit() {
     if (this.formStatus.saveEnabled) {
-      // Valid form, can emit data
       this.save.emit(this.form.value);
     }
   }
