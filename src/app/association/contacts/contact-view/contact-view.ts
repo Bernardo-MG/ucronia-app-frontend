@@ -214,6 +214,16 @@ export class ContactView implements OnInit {
       this.service.convertToMember(this.selectedData.number)
         .pipe(finalize(() => this.loading = false))
         .subscribe();
+    } else if (type === 'sponsor') {
+      this.loading = true;
+      this.service.convertToSponsor(this.selectedData.number)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe();
+    } else if (type === 'guest') {
+      this.loading = true;
+      this.service.convertToGuest(this.selectedData.number)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe();
     }
   }
 

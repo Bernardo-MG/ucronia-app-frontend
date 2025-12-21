@@ -133,4 +133,38 @@ export class ContactsService {
       );
   }
 
+  public convertToSponsor(number: number) {
+        return this.client
+      .appendRoute(`/${number}/sponsor`)
+      .update<SimpleResponse<void>>(undefined)
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
+  }
+
+  public convertToGuest(number: number) {
+        return this.client
+      .appendRoute(`/${number}/guest`)
+      .update<SimpleResponse<void>>(undefined)
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
+  }
+
 }
