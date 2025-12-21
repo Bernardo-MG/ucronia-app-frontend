@@ -86,9 +86,9 @@ export class ContactView implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
-      data: this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter),
+      data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter),
       contactMethodSelection: this.contactMethodService.getAllAvailable(),
-      contactMethods: this.contactMethodService.getAll(1)
+      contactMethods: this.contactMethodService.getAll()
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe(({ data, contactMethodSelection, contactMethods }) => {
@@ -107,7 +107,7 @@ export class ContactView implements OnInit {
 
   public onChangeActiveFilter(active: MemberStatus) {
     this.activeFilter = active;
-    this.load(0);
+    this.load();
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -137,13 +137,13 @@ export class ContactView implements OnInit {
   }
 
   public onNameFilterChange(): void {
-    this.load(0);
+    this.load();
   }
 
   public onCreate(toCreate: ContactCreationEvent): void {
     this.mutation(
       () => this.service.create(toCreate as any),
-      () => this.load(0)
+      () => this.load()
     );
   }
 
@@ -157,7 +157,7 @@ export class ContactView implements OnInit {
   public onDelete(number: number) {
     this.mutation(
       () => this.service.delete(number),
-      () => this.load(0)
+      () => this.load()
     );
   }
 
@@ -189,7 +189,7 @@ export class ContactView implements OnInit {
 
   public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
     this.selectedStatus = status;
-    this.load(0);
+    this.load();
   }
 
   public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
@@ -200,36 +200,39 @@ export class ContactView implements OnInit {
     } else if (status === 'inactive') {
       this.activeFilter = MemberStatus.Inactive;
     }
-    this.load(0);
+    this.load();
   }
 
   public onFilter(filter: string) {
     this.nameFilter = filter;
-    this.load(1);
+    this.load();
   }
 
   public onTypeSelected(type: string) {
+    let observable: Observable<any> | undefined = undefined;
     if (type === 'member') {
       this.loading = true;
-      this.service.convertToMember(this.selectedData.number)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe();
+      observable = this.service.convertToMember(this.selectedData.number);
     } else if (type === 'sponsor') {
       this.loading = true;
-      this.service.convertToSponsor(this.selectedData.number)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe();
+      observable = this.service.convertToSponsor(this.selectedData.number);
     } else if (type === 'guest') {
       this.loading = true;
-      this.service.convertToGuest(this.selectedData.number)
+      observable = this.service.convertToGuest(this.selectedData.number);
+    }
+
+    if (observable !== undefined) {
+      this.loading = true;
+      observable.pipe(finalize(() => this.loading = false))
+        .pipe(finalize(() => this.editing = false))
         .pipe(finalize(() => this.loading = false))
-        .subscribe();
+        .subscribe(() => this.load());
     }
   }
 
   // DATA LOADING
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
 
     this.getService().getAll(page, this.sort, this.activeFilter, this.nameFilter)
@@ -246,14 +249,6 @@ export class ContactView implements OnInit {
   }
 
   // PRIVATE METHODS
-
-  private loadContactMethodSelection(): void {
-    this.loading = true;
-
-    this.contactMethodService.getAllAvailable()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodSelection = response);
-  }
 
   private mutation(
     action: () => Observable<any>,

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { ContactCreation, ContactPatch } from '@ucronia/api';
-import { Contact, MemberStatus } from "@ucronia/domain";
+import { Contact, Guest, Member, MemberStatus, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
@@ -20,7 +20,7 @@ export class ContactsService {
     this.client = clientProvider.url(environment.apiUrl + '/contact');
   }
 
-  public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Contact>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Contact>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
@@ -116,10 +116,10 @@ export class ContactsService {
       .pipe(map(r => r.content));
   }
 
-  public convertToMember(number: number) {
-        return this.client
+  public convertToMember(number: number): Observable<Member> {
+    return this.client
       .appendRoute(`/${number}/member`)
-      .update<SimpleResponse<void>>(undefined)
+      .update<SimpleResponse<Member>>(undefined)
       .pipe(
         map(r => r.content),
         tap(() => {
@@ -133,10 +133,10 @@ export class ContactsService {
       );
   }
 
-  public convertToSponsor(number: number) {
-        return this.client
+  public convertToSponsor(number: number): Observable<Sponsor> {
+    return this.client
       .appendRoute(`/${number}/sponsor`)
-      .update<SimpleResponse<void>>(undefined)
+      .update<SimpleResponse<Sponsor>>(undefined)
       .pipe(
         map(r => r.content),
         tap(() => {
@@ -150,10 +150,10 @@ export class ContactsService {
       );
   }
 
-  public convertToGuest(number: number) {
-        return this.client
+  public convertToGuest(number: number): Observable<Guest> {
+    return this.client
       .appendRoute(`/${number}/guest`)
-      .update<SimpleResponse<void>>(undefined)
+      .update<SimpleResponse<Guest>>(undefined)
       .pipe(
         map(r => r.content),
         tap(() => {
