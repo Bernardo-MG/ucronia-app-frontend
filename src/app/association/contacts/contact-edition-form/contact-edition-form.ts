@@ -35,6 +35,8 @@ export class ContactEditionForm implements OnChanges {
   public readonly typeSelected = output<string>();
   public readonly save = output<Contact>();
 
+  public lockedTypes: string[] = [];
+
   @Input() public set data(value: Contact) {
     this.form.patchValue(value as any);
 
@@ -49,14 +51,11 @@ export class ContactEditionForm implements OnChanges {
     });
 
     this.selected = [];
-    this.options.forEach(o => o.disabled = false);
+    this.lockedTypes = [];
 
-    // Select + disable received types
     value.types?.forEach(type => {
-      const option = this.options.find(o => o.value === type);
-      if (option) {
-        this.selected.push(type);
-      }
+      this.selected.push(type);
+      this.lockedTypes.push(type); // lock preassigned types
     });
   }
 
@@ -111,33 +110,26 @@ export class ContactEditionForm implements OnChanges {
   }
 
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
-    let latestAdded = undefined;
-    if (event.value.length) {
-      latestAdded = event.value[event.value.length - 1];
-    }
-    if (latestAdded) {
-      const option = this.options.find(o => o.value === latestAdded);
-      if (!option?.disabled) {
-        this.confirmationService.confirm({
-          target,
-          message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
-          icon: 'pi pi-info-circle',
-          rejectButtonProps: {
-            label: 'Cancelar',
-            severity: 'secondary',
-            outlined: true
-          },
-          acceptButtonProps: {
-            label: 'Asignar',
-            severity: 'danger'
-          },
-          accept: () => {
-            if (event.value.length) {
-              this.typeSelected.emit(latestAdded);
-            }
-          }
-        });
-      }
+    const attemptedSelection: string[] = event.value;
+
+    // Revert any locked type removal
+    this.selected = [...this.lockedTypes, ...attemptedSelection.filter(v => !this.lockedTypes.includes(v))];
+
+    // Detect newly added type
+    const newlyAdded = attemptedSelection.find(v => !this.lockedTypes.includes(v));
+    if (newlyAdded) {
+      this.confirmationService.confirm({
+        target,
+        message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
+        icon: 'pi pi-info-circle',
+        rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+        acceptButtonProps: { label: 'Asignar', severity: 'danger' },
+        accept: () => {
+          this.lockedTypes.push(newlyAdded);
+          this.selected.push(newlyAdded);
+          this.typeSelected.emit(newlyAdded);
+        }
+      });
     }
   }
 
