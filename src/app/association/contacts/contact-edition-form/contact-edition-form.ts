@@ -49,7 +49,17 @@ export class ContactEditionForm implements OnChanges {
       );
     });
 
-    this.selected = value.types;
+    this.selected = [];
+    this.options.forEach(o => o.disabled = false);
+
+    // Select + disable received types
+    value.types?.forEach(type => {
+      const option = this.options.find(o => o.value === type);
+      if (option) {
+        option.disabled = true;
+        this.selected.push(type);
+      }
+    });
   }
 
   public get contactChannels(): FormArray {
@@ -59,9 +69,9 @@ export class ContactEditionForm implements OnChanges {
   public selected: string[] = [];
 
   public options = [
-    { label: 'Guest', value: 'guest', icon: 'pi-user' },
-    { label: 'Member', value: 'member', icon: 'pi-users' },
-    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' }
+    { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
+    { label: 'Member', value: 'member', icon: 'pi-users', disabled: false },
+    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
 
   public formStatus: FormStatus;
