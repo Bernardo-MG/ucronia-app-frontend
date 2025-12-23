@@ -55,7 +55,7 @@ export class ContactEditionForm implements OnChanges {
 
     value.types?.forEach(type => {
       this.selected.push(type);
-      this.lockedTypes.push(type); // lock preassigned types
+      this.lockedTypes.push(type);
     });
   }
 
@@ -112,10 +112,8 @@ export class ContactEditionForm implements OnChanges {
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
     const attemptedSelection: string[] = event.value;
 
-    // Revert any locked type removal
     this.selected = [...this.lockedTypes, ...attemptedSelection.filter(v => !this.lockedTypes.includes(v))];
 
-    // Detect newly added type
     const newlyAdded = attemptedSelection.find(v => !this.lockedTypes.includes(v));
     if (newlyAdded) {
       this.confirmationService.confirm({
