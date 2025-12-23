@@ -19,7 +19,7 @@ export class MemberContactsService {
     this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
   }
 
-  public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<MemberContact>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<MemberContact>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]

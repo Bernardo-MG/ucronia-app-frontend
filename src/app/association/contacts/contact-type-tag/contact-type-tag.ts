@@ -14,6 +14,10 @@ export class ContactTypeTag {
     switch (type) {
       case 'member':
         return 'Socio';
+      case 'sponsor':
+        return 'Esponsor';
+      case 'guest':
+        return 'Invitado';
       default:
         return type;
     }

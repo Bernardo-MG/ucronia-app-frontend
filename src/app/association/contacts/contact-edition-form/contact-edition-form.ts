@@ -21,8 +21,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 @Component({
   selector: 'assoc-contact-edition-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule],
-  templateUrl: './contact-edition-form.html',
-  styleUrl: './contact-edition-form.sass'
+  templateUrl: './contact-edition-form.html'
 })
 export class ContactEditionForm implements OnChanges {
 
@@ -36,6 +35,8 @@ export class ContactEditionForm implements OnChanges {
   public readonly typeSelected = output<string>();
   public readonly save = output<Contact>();
 
+  public lockedTypes: string[] = [];
+
   @Input() public set data(value: Contact) {
     this.form.patchValue(value as any);
 
@@ -48,18 +49,26 @@ export class ContactEditionForm implements OnChanges {
         })
       );
     });
+
+    this.selected = [];
+    this.lockedTypes = [];
+
+    value.types?.forEach(type => {
+      this.selected.push(type);
+      this.lockedTypes.push(type); // lock preassigned types
+    });
   }
 
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
   }
 
-  public selected = 'member';
+  public selected: string[] = [];
 
   public options = [
-    { label: 'Guest', value: 'guest', icon: 'pi-user' },
-    { label: 'Member', value: 'member', icon: 'pi-users' },
-    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart' }
+    { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
+    { label: 'Member', value: 'member', icon: 'pi-users', disabled: false },
+    { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
 
   public formStatus: FormStatus;
@@ -101,26 +110,31 @@ export class ContactEditionForm implements OnChanges {
   }
 
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
-    this.confirmationService.confirm({
-      target,
-      message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Asignar',
-        severity: 'danger'
-      },
-      accept: () => this.typeSelected.emit(event.value)
-    });
+    const attemptedSelection: string[] = event.value;
+
+    // Revert any locked type removal
+    this.selected = [...this.lockedTypes, ...attemptedSelection.filter(v => !this.lockedTypes.includes(v))];
+
+    // Detect newly added type
+    const newlyAdded = attemptedSelection.find(v => !this.lockedTypes.includes(v));
+    if (newlyAdded) {
+      this.confirmationService.confirm({
+        target,
+        message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
+        icon: 'pi pi-info-circle',
+        rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+        acceptButtonProps: { label: 'Asignar', severity: 'danger' },
+        accept: () => {
+          this.lockedTypes.push(newlyAdded);
+          this.selected.push(newlyAdded);
+          this.typeSelected.emit(newlyAdded);
+        }
+      });
+    }
   }
 
   public submit() {
     if (this.formStatus.saveEnabled) {
-      // Valid form, can emit data
       this.save.emit(this.form.value);
     }
   }
