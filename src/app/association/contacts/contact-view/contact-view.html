@@ -74,6 +74,16 @@
         [contacts]="members.content" [rows]="members.size" [page]="members.page" [totalRecords]="members.totalElements"
         (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+    } @else if(selectedStatus === 'sponsors') {
+      <assoc-sponsor-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="sponsors.content"
+        [rows]="sponsors.size" [page]="sponsors.page" [totalRecords]="sponsors.totalElements" (show)="onShowInfo($event)"
+        (edit)="onShowEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
+    } @else if(selectedStatus === 'guests') {
+      <assoc-guest-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="guests.content"
+        [rows]="guests.size" [page]="guests.page" [totalRecords]="guests.totalElements" (show)="onShowInfo($event)"
+        (edit)="onShowEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
     } @else {
       <assoc-contact-list [loading]="loading" [editable]="editable" [deletable]="deletable" [contacts]="contacts.content"
         [rows]="contacts.size" [page]="contacts.page" [totalRecords]="contacts.totalElements" (show)="onShowInfo($event)"

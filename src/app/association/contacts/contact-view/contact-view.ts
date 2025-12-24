@@ -27,18 +27,20 @@ import { MemberContactsService } from '../member-contacts-service';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 import { SponsorsService } from '../sponsors-service';
 import { ContactInfo } from '../model/contact-info';
+import { GuestList } from '../guest-list/guest-list';
+import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-contact-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ContactCreationForm, ContactEditionForm, MemberContactDetails, MembershipEvolutionChartComponent, ContactList, MemberContactList, SponsorList, GuestList, ContactStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-view.html'
 })
 export class ContactView implements OnInit {
 
   private readonly service = inject(ContactsService);
   private readonly memberContactsService = inject(MemberContactsService);
-  private readonly sponsorContactsService = inject(SponsorsService);
-  private readonly guestContactsService = inject(GuestsService);
+  private readonly sponsorsService = inject(SponsorsService);
+  private readonly guestsService = inject(GuestsService);
   private readonly contactMethodService = inject(ContactMethodService);
 
   public readonly createable;
@@ -47,6 +49,8 @@ export class ContactView implements OnInit {
 
   public contacts = new PaginatedResponse<Contact>();
   public members = new PaginatedResponse<MemberContact>();
+  public sponsors = new PaginatedResponse<Sponsor>();
+  public guests = new PaginatedResponse<Guest>();
 
   public contactMethodData = new PaginatedResponse<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
@@ -102,7 +106,7 @@ export class ContactView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(contact: MemberContact | Contact) {
+  public onShowEdit(contact: ContactInfo) {
     this.selectedData = contact;
     this.editing = true;
   }
@@ -132,15 +136,23 @@ export class ContactView implements OnInit {
     this.load(this.currentPage());
   }
 
-  public onShowInfo(contact: Contact) {
+  public onShowInfo(contact: ContactInfo) {
     if (this.selectedStatus === 'all') {
       this.service.getOne(contact.number)
         .pipe(finalize(() => this.showing = true))
-        .subscribe((contact: ContactInfo) => this.selectedData = contact);
+        .subscribe(contact => this.selectedData = contact);
     } else if (this.selectedStatus === 'members') {
       this.memberContactsService.getOne(contact.number)
         .pipe(finalize(() => this.showing = true))
-        .subscribe((contact: ContactInfo) => this.selectedData = contact);
+        .subscribe(member => this.selectedData = member);
+    } else if (this.selectedStatus === 'sponsors') {
+      this.sponsorsService.getOne(contact.number)
+        .pipe(finalize(() => this.showing = true))
+        .subscribe(member => this.selectedData = member);
+    } else if (this.selectedStatus === 'guests') {
+      this.guestsService.getOne(contact.number)
+        .pipe(finalize(() => this.showing = true))
+        .subscribe(member => this.selectedData = member);
     }
   }
 
@@ -251,6 +263,14 @@ export class ContactView implements OnInit {
       this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
         .pipe(finalize(() => this.loading = false))
         .subscribe(response => this.members = response);
+    } else if (this.selectedStatus === 'sponsors') {
+      this.sponsorsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(response => this.sponsors = response);
+    } else if (this.selectedStatus === 'guests') {
+      this.guestsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(response => this.guests = response);
     }
   }
 
