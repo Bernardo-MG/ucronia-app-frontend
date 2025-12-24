@@ -14,7 +14,7 @@ export class SponsorsService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/sponsor');
+    this.client = clientProvider.url(environment.apiUrl + '/contact/sponsor');
   }
 
   public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Sponsor>> {

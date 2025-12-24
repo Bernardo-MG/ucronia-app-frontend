@@ -14,7 +14,7 @@ export class GuestsService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/guest');
+    this.client = clientProvider.url(environment.apiUrl + '/contact/guest');
   }
 
   public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Guest>> {
