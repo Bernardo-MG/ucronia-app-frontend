@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ConfirmationService } from 'primeng/api';
 import { GuestList } from './guest-list';
 
 describe('GuestList', () => {
@@ -8,7 +9,11 @@ describe('GuestList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [GuestList]
+      imports: [GuestList],
+      providers: [
+        ConfirmationService,
+        provideAnimationsAsync()
+      ]
     })
     .compileComponents();
 
