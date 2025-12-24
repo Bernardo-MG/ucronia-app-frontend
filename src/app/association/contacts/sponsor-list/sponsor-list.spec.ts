@@ -1,25 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ConfirmationService } from 'primeng/api';
-import { ContactList } from './contact-list';
+import { SponsorList } from './sponsor-list';
 
-describe('ContactList', () => {
-  let component: ContactList;
-  let fixture: ComponentFixture<ContactList>;
+describe('SponsorList', () => {
+  let component: SponsorList;
+  let fixture: ComponentFixture<SponsorList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        ContactList
-      ],
+      imports: [SponsorList],
       providers: [
         ConfirmationService,
         provideAnimationsAsync()
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(ContactList);
+    fixture = TestBed.createComponent(SponsorList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

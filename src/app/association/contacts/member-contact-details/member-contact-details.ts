@@ -1,9 +1,9 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { DetailField } from '@bernardo-mg/ui';
-import { Contact, MemberContact } from "@ucronia/domain";
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ContactInfo } from '../model/contact-info';
 
 @Component({
   selector: 'assoc-member-contact-details',
@@ -12,11 +12,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class MemberContactDetails {
 
-  public data = input<Contact | MemberContact>(new MemberContact());
+  public data = input(new ContactInfo());
   public loading = input(false);
-
-  public get member() {
-    return this.data() as MemberContact;
-  }
 
 }

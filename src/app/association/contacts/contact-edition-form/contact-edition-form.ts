@@ -17,6 +17,7 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ContactInfo } from '../model/contact-info';
 
 @Component({
   selector: 'assoc-contact-edition-form',
@@ -37,7 +38,7 @@ export class ContactEditionForm implements OnChanges {
 
   public lockedTypes: string[] = [];
 
-  @Input() public set data(value: Contact) {
+  @Input() public set data(value: ContactInfo) {
     this.form.patchValue(value as any);
 
     this.contactChannels.clear();
@@ -55,7 +56,7 @@ export class ContactEditionForm implements OnChanges {
 
     value.types?.forEach(type => {
       this.selected.push(type);
-      this.lockedTypes.push(type); // lock preassigned types
+      this.lockedTypes.push(type);
     });
   }
 
@@ -112,10 +113,8 @@ export class ContactEditionForm implements OnChanges {
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
     const attemptedSelection: string[] = event.value;
 
-    // Revert any locked type removal
     this.selected = [...this.lockedTypes, ...attemptedSelection.filter(v => !this.lockedTypes.includes(v))];
 
-    // Detect newly added type
     const newlyAdded = attemptedSelection.find(v => !this.lockedTypes.includes(v));
     if (newlyAdded) {
       this.confirmationService.confirm({
