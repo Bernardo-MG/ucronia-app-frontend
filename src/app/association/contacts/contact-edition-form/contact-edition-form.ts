@@ -17,6 +17,7 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ContactInfo } from '../model/contact-info';
 
 @Component({
   selector: 'assoc-contact-edition-form',
@@ -37,7 +38,7 @@ export class ContactEditionForm implements OnChanges {
 
   public lockedTypes: string[] = [];
 
-  @Input() public set data(value: Contact) {
+  @Input() public set data(value: ContactInfo) {
     this.form.patchValue(value as any);
 
     this.contactChannels.clear();

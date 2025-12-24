@@ -13,7 +13,7 @@
         @if (loading()) {
           <p-skeleton />
         } @else {
-          @if (member.active) {
+          @if (data().active) {
             <span class="text-green-700 font-semibold">Activo</span>
           } @else {
             <span class="text-red-600 font-semibold">Baja</span>
@@ -35,7 +35,7 @@
         @if (loading()) {
           <p-skeleton />
         } @else {
-          @if (member.renew) {
+          @if (data().renew) {
             <span class="text-green-700 font-semibold">Renueva</span>
           } @else {
             <span class="text-red-600 font-semibold">Baja</span>
