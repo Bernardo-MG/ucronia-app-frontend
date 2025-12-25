@@ -42,17 +42,6 @@ export class GuestList {
     this.changePage.emit(page);
   }
 
-  public showEdit(event: Event, contact: Guest) {
-    this.editionMenuItems = [];
-    this.editionMenuItems.push({
-      label: 'Editar',
-      command: () => this.edit.emit(contact)
-    });
-
-    // Show menu
-    this.editionMenu.toggle(event);
-  }
-
   public confirmDelete(event: Event, contact: Contact) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
