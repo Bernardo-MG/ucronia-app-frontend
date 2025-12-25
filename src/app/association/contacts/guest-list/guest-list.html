@@ -6,6 +6,7 @@
   <ng-template #header>
     <tr>
       <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
+      <th>Partidas</th>
       <th class="w-40"></th>
     </tr>
   </ng-template>
@@ -13,6 +14,15 @@
     <tr>
       <td>
         {{ contact.name.fullName }}
+      </td>
+      <td>
+        <ul class="m-0 p-0 list-none">
+          @for (game of contact.games; track game) {
+            <li>
+              {{ game | date:'dd/MM/yyyy' }}
+            </li>
+          }
+        </ul>
       </td>
       <td class="w-40">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(contact)" rounded text />

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Contact, Guest } from '@ucronia/domain';
@@ -8,7 +9,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-guest-list',
-  imports: [ButtonModule, TableModule, MenuModule],
+  imports: [ButtonModule, TableModule, MenuModule, DatePipe],
   templateUrl: './guest-list.html'
 })
 export class GuestList {
@@ -47,7 +48,7 @@ export class GuestList {
       label: 'Editar',
       command: () => this.edit.emit(contact)
     });
-    
+
     // Show menu
     this.editionMenu.toggle(event);
   }
