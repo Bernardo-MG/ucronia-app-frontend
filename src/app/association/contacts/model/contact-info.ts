@@ -6,7 +6,7 @@ export class ContactInfo {
   public contactChannels: ContactInfoChannel[] = [];
   public games?: Date[] = [];
   public years?: number[] = [];
-  public types?: string[] = [];
+  public types: string[] = [];
   public comments = '';
   public active? = false;
   public renew? = false;

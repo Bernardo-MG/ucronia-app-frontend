@@ -167,7 +167,7 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: Contact): void {
+  public onUpdate(toUpdate: ContactInfo): void {
     this.mutation(
       () => this.service.update(toUpdate),
       () => this.load(this.currentPage())

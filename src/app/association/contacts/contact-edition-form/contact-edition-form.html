@@ -123,6 +123,30 @@
 
   </div>
 
+  @if (isGuest) {
+    <div class="mb-2 space-y-3" formArrayName="games">
+
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-gray-600">Partidas</h3>
+        <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addGame()">
+        </p-button>
+      </div>
+
+      @for (game of games.controls; track game; let i = $index) {
+        <div [formGroupName]="i" class="flex gap-2 items-start">
+
+          <p-datepicker formControlName="date" dateFormat="yy-mm-dd" appendTo="body" placeholder="Fecha"
+            [invalid]="game.get('date')?.invalid && game.get('date')?.touched" />
+
+          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)">
+          </p-button>
+
+        </div>
+      }
+
+    </div>
+  }
+
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

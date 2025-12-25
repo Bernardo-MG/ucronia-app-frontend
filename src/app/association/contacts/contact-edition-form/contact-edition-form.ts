@@ -33,11 +33,6 @@ export class ContactEditionForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
 
-  public readonly typeSelected = output<string>();
-  public readonly save = output<Contact>();
-
-  public lockedTypes: string[] = [];
-
   @Input() public set data(value: ContactInfo) {
     this.form.patchValue(value as any);
 
@@ -51,6 +46,11 @@ export class ContactEditionForm implements OnChanges {
       );
     });
 
+    this.games.clear();
+    value.games?.forEach(game => {
+      this.games.push(game);
+    });
+
     this.selected = [];
     this.lockedTypes = [];
 
@@ -60,8 +60,21 @@ export class ContactEditionForm implements OnChanges {
     });
   }
 
+  public readonly typeSelected = output<string>();
+  public readonly save = output<ContactInfo>();
+
+  public lockedTypes: string[] = [];
+
+  public get isGuest(): boolean {
+    return this.selected.includes('guest');
+  }
+
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
+  }
+
+  public get games(): FormArray {
+    return this.form.get('games') as FormArray;
   }
 
   public selected: string[] = [];
@@ -85,6 +98,7 @@ export class ContactEditionForm implements OnChanges {
         lastName: ['']
       }),
       contactChannels: this.fb.array([]),
+      games: this.fb.array([]),
       comments: ['']
     });
 
@@ -108,6 +122,19 @@ export class ContactEditionForm implements OnChanges {
 
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
+  }
+
+  public addGame(): void {
+    this.games.push(
+      this.fb.group({
+        name: [''],
+        platform: ['']
+      })
+    );
+  }
+
+  public removeGame(index: number): void {
+    this.games.removeAt(index);
   }
 
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
