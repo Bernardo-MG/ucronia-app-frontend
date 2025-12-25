@@ -1,10 +1,10 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Contact, ContactMethod } from "@ucronia/domain";
+import { ContactMethod } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -48,7 +48,9 @@ export class ContactEditionForm implements OnChanges {
 
     this.games.clear();
     value.games?.forEach(game => {
-      this.games.push(game);
+      this.games.push(
+        this.fb.control(game)
+      );
     });
 
     this.selected = [];
@@ -62,6 +64,8 @@ export class ContactEditionForm implements OnChanges {
 
   public readonly typeSelected = output<string>();
   public readonly save = output<ContactInfo>();
+
+  public today = new Date();
 
   public lockedTypes: string[] = [];
 
@@ -94,7 +98,7 @@ export class ContactEditionForm implements OnChanges {
       identifier: [''],
       birthDate: [new Date()],
       name: this.fb.group({
-        firstName: [null],
+        firstName: [null, Validators.required],
         lastName: ['']
       }),
       contactChannels: this.fb.array([]),
@@ -126,10 +130,7 @@ export class ContactEditionForm implements OnChanges {
 
   public addGame(): void {
     this.games.push(
-      this.fb.group({
-        name: [''],
-        platform: ['']
-      })
+      this.fb.control(null)
     );
   }
 

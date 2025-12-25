@@ -45,7 +45,7 @@
       <i class="pi pi-calendar"></i>
     </p-inputgroup-addon>
     <p-datepicker id="birthDateInput" formControlName="birthDate" [invalid]="isFieldInvalid('birthDate')"
-      dateFormat="yy-mm-dd" appendTo="body" placeholder="Fecha de nacimiento" />
+      dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha de nacimiento" />
   </p-inputgroup>
 
   <div class="mb-2">
@@ -125,25 +125,24 @@
 
   @if (isGuest) {
     <div class="mb-2 space-y-3" formArrayName="games">
-
+    
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-semibold text-gray-600">Partidas</h3>
         <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addGame()">
         </p-button>
       </div>
-
+    
       @for (game of games.controls; track game; let i = $index) {
-        <div [formGroupName]="i" class="flex gap-2 items-start">
-
-          <p-datepicker formControlName="date" dateFormat="yy-mm-dd" appendTo="body" placeholder="Fecha"
-            [invalid]="game.get('date')?.invalid && game.get('date')?.touched" />
-
+        <div class="flex gap-2 items-start">
+      
+          <p-datepicker [formControlName]="i" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha" />
+      
           <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)">
           </p-button>
-
+      
         </div>
       }
-
+    
     </div>
   }
 
