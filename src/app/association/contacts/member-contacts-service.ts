@@ -10,13 +10,11 @@ import { Observable, forkJoin, map } from 'rxjs';
 export class MemberContactsService {
 
   private readonly client;
-  private readonly contactClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/member');
-    this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.client = clientProvider.url(environment.apiUrl + '/contact/member');
   }
 
   public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<MemberContact>> {
@@ -40,26 +38,7 @@ export class MemberContactsService {
   }
 
   public getOne(number: number): Observable<MemberContact> {
-    return forkJoin({
-      member: this.getMember(number),
-      contact: this.getContact(number)
-    }).pipe(
-      map(({ member, contact }) => ({
-        ...contact,
-        ...member
-      }))
-    );
-  }
-
-  private getMember(number: number): Observable<MemberContact> {
     return this.client
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<MemberContact>>()
-      .pipe(map(r => r.content));
-  }
-
-  private getContact(number: number): Observable<MemberContact> {
-    return this.contactClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<MemberContact>>()
       .pipe(map(r => r.content));
