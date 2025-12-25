@@ -29,7 +29,7 @@ export class SponsorList {
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  @ViewChild('editionMenu') editionMenu!: Menu;
+  @ViewChild('editionMenu') private editionMenu!: Menu;
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {

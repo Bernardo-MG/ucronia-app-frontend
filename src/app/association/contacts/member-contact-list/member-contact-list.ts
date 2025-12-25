@@ -30,7 +30,7 @@ export class MemberContactList {
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  @ViewChild('editionMenu') editionMenu!: Menu;
+  @ViewChild('editionMenu') private editionMenu!: Menu;
   public editionMenuItems: MenuItem[] = [];
 
   public get first() {
@@ -48,7 +48,7 @@ export class MemberContactList {
       label: 'Editar',
       command: () => this.edit.emit(contact)
     });
-    
+
     // Show menu
     this.editionMenu.toggle(event);
   }
