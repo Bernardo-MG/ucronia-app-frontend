@@ -107,8 +107,11 @@ export class ContactView implements OnInit {
   // EVENT HANDLERS
 
   public onShowEdit(contact: ContactInfo) {
-    this.selectedData = contact;
+    this.loading = true;
     this.editing = true;
+    this.service.getOne(contact.number)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(contact => this.selectedData = contact);
   }
 
   public onChangeActiveFilter(active: MemberStatus) {
