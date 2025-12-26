@@ -6,13 +6,13 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
-import { Contact, ContactMethod, Guest, MemberContact, MemberStatus, Sponsor } from "@ucronia/domain";
+import { ContactMethod, Guest, MemberContact, MemberStatus, Sponsor } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { concat, finalize, forkJoin, merge, Observable, throwError } from 'rxjs';
+import { concat, finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
@@ -47,10 +47,7 @@ export class ContactView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public contacts = new PaginatedResponse<Contact>();
-  public members = new PaginatedResponse<MemberContact>();
-  public sponsors = new PaginatedResponse<Sponsor>();
-  public guests = new PaginatedResponse<Guest>();
+  public contacts = new PaginatedResponse<ContactInfo>();
 
   public contactMethodData = new PaginatedResponse<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
@@ -78,7 +75,7 @@ export class ContactView implements OnInit {
 
   public modalTitle = '';
 
-  public selectedStatus: 'all' | 'members' | 'guests' | 'sponsors' = 'all';
+  public selectedStatus: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
 
   constructor() {
     const authService = inject(AuthService);
@@ -92,7 +89,7 @@ export class ContactView implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
-      data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter),
+      data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus),
       contactMethodSelection: this.contactMethodService.getAllAvailable(),
       contactMethods: this.contactMethodService.getAll()
     })
@@ -229,7 +226,7 @@ export class ContactView implements OnInit {
     );
   }
 
-  public onChangeStatusFilter(status: 'all' | 'members' | 'guests' | 'sponsors') {
+  public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
     this.selectedStatus = status;
     this.load();
   }
@@ -277,23 +274,11 @@ export class ContactView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.loading = true;
 
-    if (this.selectedStatus === 'all') {
-      this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.contacts = response);
-    } else if (this.selectedStatus === 'members') {
-      this.memberContactsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.members = response);
-    } else if (this.selectedStatus === 'sponsors') {
-      this.sponsorsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.sponsors = response);
-    } else if (this.selectedStatus === 'guests') {
-      this.guestsService.getAll(page, this.sort, this.activeFilter, this.nameFilter)
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(response => this.guests = response);
-    }
+    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => {
+        this.contacts = response;
+      });
   }
 
   public loadContactMethods(page: number): void {
@@ -335,14 +320,7 @@ export class ContactView implements OnInit {
   }
 
   private currentPage(): number {
-    let page = 0;
-    if (this.selectedStatus === 'all') {
-      page = this.contacts.page;
-    } else if (this.selectedStatus === 'members') {
-      page = this.members.page;
-    }
-
-    return page;
+    return this.contacts.page;
   }
 
 }

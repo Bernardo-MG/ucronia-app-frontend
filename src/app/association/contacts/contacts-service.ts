@@ -27,25 +27,86 @@ export class ContactsService {
     this.sponsorClient = clientProvider.url(environment.apiUrl + '/contact/sponsor');
   }
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Contact>> {
+  public getAll(
+    page: number | undefined = undefined,
+    sort: Sorting,
+    active: MemberStatus,
+    name: string,
+    filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
+  ): Observable<PaginatedResponse<ContactInfo>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    let status;
-    if (active) {
-      status = active.toString().toUpperCase();
-    } else {
-      status = '';
+    const status = active ? active.toString().toUpperCase() : '';
+
+    let clientToUse = this.client;
+    if (filterType === 'guest') {
+      clientToUse = this.guestClient;
+    } else if (filterType === 'member') {
+      clientToUse = this.memberClient;
+    } else if (filterType === 'sponsor') {
+      clientToUse = this.sponsorClient;
     }
-    return this.client
+
+    return clientToUse
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', status)
       .parameter('name', name)
-      .read<PaginatedResponse<Contact>>();
+      .read<PaginatedResponse<ContactInfo>>()
+      .pipe(
+        switchMap(pageResp => {
+          if (!pageResp.content || pageResp.content.length === 0) {
+            return of(pageResp);
+          }
+
+          const mergedRequests: Observable<ContactInfo>[] = pageResp.content.map(contact => {
+            const requests: Observable<any>[] = [];
+
+            if ((filterType === 'all' || filterType === 'guest') && (contact.types?.includes('guest'))) {
+              requests.push(
+                this.guestClient
+                  .appendRoute(`/${contact.number}`)
+                  .read<SimpleResponse<Guest>>()
+                  .pipe(map(resp => resp.content))
+              );
+            }
+
+            if ((filterType === 'all' || filterType === 'member') && (contact.types?.includes('member'))) {
+              requests.push(
+                this.memberClient
+                  .appendRoute(`/${contact.number}`)
+                  .read<SimpleResponse<Member>>()
+                  .pipe(map(resp => resp.content))
+              );
+            }
+
+            if ((filterType === 'all' || filterType === 'sponsor') && (contact.types?.includes('sponsor'))) {
+              requests.push(
+                this.sponsorClient
+                  .appendRoute(`/${contact.number}`)
+                  .read<SimpleResponse<Sponsor>>()
+                  .pipe(map(resp => resp.content))
+              );
+            }
+
+            return forkJoin(requests).pipe(
+              map(results => Object.assign({}, contact, ...results))
+            );
+          });
+
+          return forkJoin(mergedRequests).pipe(
+            map(mergedContacts => ({
+              ...pageResp,
+              content: mergedContacts
+            }))
+          );
+        })
+      );
   }
+
 
   public create(data: ContactCreation): Observable<Contact> {
     return this.client
@@ -137,7 +198,7 @@ export class ContactsService {
           if (contact.types?.includes('member')) {
             requests.push(
               this.memberClient
-                .appendRoute(`/${number}/member`)
+                .appendRoute(`/${number}`)
                 .read<SimpleResponse<Member>>()
                 .pipe(map(resp => resp.content))
             );
@@ -146,7 +207,7 @@ export class ContactsService {
           if (contact.types?.includes('sponsor')) {
             requests.push(
               this.sponsorClient
-                .appendRoute(`/${number}/sponsor`)
+                .appendRoute(`/${number}`)
                 .read<SimpleResponse<Sponsor>>()
                 .pipe(map(resp => resp.content))
             );

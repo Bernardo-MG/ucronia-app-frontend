@@ -1,4 +1,3 @@
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="contacts()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
