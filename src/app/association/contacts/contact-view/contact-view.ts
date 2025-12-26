@@ -170,20 +170,35 @@ export class ContactView implements OnInit {
   public onUpdate(toUpdate: ContactInfo): void {
     const update = this.service.update(toUpdate);
     const observables = [update];
+
     if (this.selectedData.types.includes("guest")) {
-      let games: Date[];
-      if (toUpdate.games === undefined) {
-        games = [];
-      } else {
-        games = toUpdate.games as Date[];
-      }
       const guest: Guest = {
         ...toUpdate,
-        games
+        games: toUpdate.games ? toUpdate.games as Date[] : []
       };
       const updateGuest = this.guestsService.update(guest);
       observables.push(updateGuest);
     }
+
+    if (this.selectedData.types.includes("member")) {
+      const member: MemberContact = {
+        ...toUpdate,
+        active: toUpdate.active ? true : false,
+        renew: toUpdate.renew ? true : false
+      };
+      const updateGuest = this.memberContactsService.update(member);
+      observables.push(updateGuest);
+    }
+
+    if (this.selectedData.types.includes("sponsor")) {
+      const sponsor: Sponsor = {
+        ...toUpdate,
+        years: toUpdate.years ? toUpdate.years as number[] : []
+      };
+      const updateGuest = this.sponsorsService.update(sponsor);
+      observables.push(updateGuest);
+    }
+
     this.mutation(
       concat(...observables),
       () => this.load(this.currentPage())
