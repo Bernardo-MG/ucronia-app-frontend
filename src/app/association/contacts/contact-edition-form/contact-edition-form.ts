@@ -53,6 +53,11 @@ export class ContactEditionForm implements OnChanges {
       );
     });
 
+    this.years.clear();
+    value.years?.forEach(year => {
+      this.years.push(this.fb.control(year));
+    });
+
     this.selected = [];
     this.lockedTypes = [];
 
@@ -73,12 +78,20 @@ export class ContactEditionForm implements OnChanges {
     return this.selected.includes('guest');
   }
 
+  public get isSponsor(): boolean {
+    return this.selected.includes('sponsor');
+  }
+
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
   }
 
   public get games(): FormArray {
     return this.form.get('games') as FormArray;
+  }
+
+  public get years(): FormArray {
+    return this.form.get('years') as FormArray;
   }
 
   public selected: string[] = [];
@@ -103,6 +116,7 @@ export class ContactEditionForm implements OnChanges {
       }),
       contactChannels: this.fb.array([]),
       games: this.fb.array([]),
+      years: this.fb.array([]),
       comments: ['']
     });
 
@@ -136,6 +150,14 @@ export class ContactEditionForm implements OnChanges {
 
   public removeGame(index: number): void {
     this.games.removeAt(index);
+  }
+
+  public addYear(): void {
+    this.years.push(this.fb.control<number | null>(null, Validators.required));
+  }
+
+  public removeYear(index: number): void {
+    this.years.removeAt(index);
   }
 
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {

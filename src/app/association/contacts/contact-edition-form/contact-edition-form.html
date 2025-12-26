@@ -123,6 +123,7 @@
 
   </div>
 
+  <!-- Games -->
   @if (isGuest) {
     <div class="mb-2 space-y-3" formArrayName="games">
     
@@ -143,6 +144,27 @@
         </div>
       }
     
+    </div>
+  }
+
+  @if (isSponsor) {
+    <div class="mb-2 space-y-3" formArrayName="years">
+
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-gray-600">Años de patrocinio</h3>
+        <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addYear()">
+        </p-button>
+      </div>
+
+      @for (year of years.controls; track year; let i = $index) {
+        <div class="flex gap-2 items-start">
+          <input pInputText type="number" [formControlName]="i" placeholder="Año" class="w-24" />
+
+          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeYear(i)">
+          </p-button>
+        </div>
+      }
+
     </div>
   }
 
