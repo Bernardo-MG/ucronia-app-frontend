@@ -2,12 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { MemberStatus, Sponsor } from '@ucronia/domain';
 import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { SponsorPatch } from 'projects/ucronia/api/src/lib/sponsor/sponsor-patch';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SponsorsService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
 
@@ -42,6 +46,33 @@ export class SponsorsService {
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Sponsor>>()
       .pipe(map(r => r.content));
+  }
+
+  public update(data: Sponsor): Observable<Sponsor> {
+    const patch: SponsorPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.client
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Sponsor>>(patch)
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
 }

@@ -2,12 +2,16 @@ import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { Guest, MemberStatus } from '@ucronia/domain';
 import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { GuestPatch } from 'projects/ucronia/api/src/lib/guest/guest-patch';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GuestsService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
 
@@ -42,6 +46,33 @@ export class GuestsService {
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Guest>>()
       .pipe(map(r => r.content));
+  }
+
+  public update(data: Guest): Observable<Guest> {
+    const patch: GuestPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.client
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Guest>>(patch)
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
 }

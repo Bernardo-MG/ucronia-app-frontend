@@ -2,12 +2,16 @@ import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { MemberContact, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
-import { Observable, forkJoin, map } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { MemberContactPatch } from 'projects/ucronia/api/src/lib/members/member-contact-patch';
+import { Observable, map, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MemberContactsService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly client;
 
@@ -42,6 +46,33 @@ export class MemberContactsService {
       .appendRoute(`/${number}`)
       .read<SimpleResponse<MemberContact>>()
       .pipe(map(r => r.content));
+  }
+
+  public update(data: MemberContact): Observable<MemberContact> {
+    const patch: MemberContactPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.client
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<MemberContact>>(patch)
+      .pipe(
+        map(r => r.content),
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
 }

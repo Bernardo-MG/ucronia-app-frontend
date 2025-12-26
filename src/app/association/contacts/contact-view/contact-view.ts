@@ -6,13 +6,13 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
-import { Contact, ContactMethod, Guest, Member, MemberContact, MemberStatus, Sponsor } from "@ucronia/domain";
+import { Contact, ContactMethod, Guest, MemberContact, MemberStatus, Sponsor } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { finalize, forkJoin, Observable, throwError } from 'rxjs';
+import { concat, finalize, forkJoin, merge, Observable, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
@@ -20,15 +20,15 @@ import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
+import { GuestList } from '../guest-list/guest-list';
 import { GuestsService } from '../guests-service';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
 import { MemberContactsService } from '../member-contacts-service';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
-import { SponsorsService } from '../sponsors-service';
 import { ContactInfo } from '../model/contact-info';
-import { GuestList } from '../guest-list/guest-list';
 import { SponsorList } from '../sponsor-list/sponsor-list';
+import { SponsorsService } from '../sponsors-service';
 
 @Component({
   selector: 'assoc-contact-view',
@@ -162,21 +162,37 @@ export class ContactView implements OnInit {
 
   public onCreate(toCreate: ContactCreationEvent): void {
     this.mutation(
-      () => this.service.create(toCreate as any),
+      this.service.create(toCreate as any),
       () => this.load()
     );
   }
 
   public onUpdate(toUpdate: ContactInfo): void {
+    const update = this.service.update(toUpdate);
+    const observables = [update];
+    if (this.selectedData.types.includes("guest")) {
+      let games: Date[];
+      if (toUpdate.games === undefined) {
+        games = [];
+      } else {
+        games = toUpdate.games as Date[];
+      }
+      const guest: Guest = {
+        ...toUpdate,
+        games
+      };
+      const updateGuest = this.guestsService.update(guest);
+      observables.push(updateGuest);
+    }
     this.mutation(
-      () => this.service.update(toUpdate),
+      concat(...observables),
       () => this.load(this.currentPage())
     );
   }
 
   public onDelete(number: number) {
     this.mutation(
-      () => this.service.delete(number),
+      this.service.delete(number),
       () => this.load()
     );
   }
@@ -188,21 +204,21 @@ export class ContactView implements OnInit {
 
   public onCreateContactMethod(toCreate: ContactMethod): void {
     this.mutation(
-      () => this.contactMethodService.create(toCreate),
+      this.contactMethodService.create(toCreate),
       () => this.loadContactMethods(0)
     );
   }
 
   public onUpdateContactMethod(toUpdate: ContactMethod): void {
     this.mutation(
-      () => this.contactMethodService.update(toUpdate),
+      this.contactMethodService.update(toUpdate),
       () => this.loadContactMethods(this.currentPage())
     );
   }
 
   public onDeleteContactMethod(number: number): void {
     this.mutation(
-      () => this.contactMethodService.delete(number),
+      this.contactMethodService.delete(number),
       () => this.loadContactMethods(0)
     );
   }
@@ -285,11 +301,11 @@ export class ContactView implements OnInit {
   // PRIVATE METHODS
 
   private mutation(
-    action: () => Observable<any>,
+    observable: Observable<any>,
     onSuccess: () => void = () => { }
   ) {
     this.loading = true;
-    action()
+    observable
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
