@@ -45,7 +45,7 @@
       <i class="pi pi-calendar"></i>
     </p-inputgroup-addon>
     <p-datepicker id="birthDateInput" formControlName="birthDate" [invalid]="isFieldInvalid('birthDate')"
-      dateFormat="yy-mm-dd" appendTo="body" placeholder="Fecha de nacimiento" />
+      dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha de nacimiento" />
   </p-inputgroup>
 
   <div class="mb-2">
@@ -122,6 +122,52 @@
     }
 
   </div>
+
+  <!-- Games -->
+  @if (isGuest) {
+    <div class="mb-2 space-y-3" formArrayName="games">
+    
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-gray-600">Partidas</h3>
+        <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addGame()">
+        </p-button>
+      </div>
+    
+      @for (game of games.controls; track game; let i = $index) {
+        <div class="flex gap-2 items-start">
+      
+          <p-datepicker [formControlName]="i" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha" />
+      
+          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)">
+          </p-button>
+      
+        </div>
+      }
+    
+    </div>
+  }
+
+  <!-- Years -->
+  @if (isSponsor) {
+    <div class="mb-2 space-y-3" formArrayName="years">
+
+      <div class="flex items-center justify-between">
+        <h3 class="text-sm font-semibold text-gray-600">Años de patrocinio</h3>
+        <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addYear()">
+        </p-button>
+      </div>
+
+      @for (year of years.controls; track year; let i = $index) {
+        <div class="flex gap-2 items-start">
+          <input pInputText type="number" [formControlName]="i" placeholder="Año" class="w-24" />
+
+          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeYear(i)">
+          </p-button>
+        </div>
+      }
+
+    </div>
+  }
 
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>

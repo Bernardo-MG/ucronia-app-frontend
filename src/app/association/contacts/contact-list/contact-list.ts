@@ -1,10 +1,10 @@
 import { Component, inject, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { Contact } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ContactTypeTag } from '../contact-type-tag/contact-type-tag';
+import { ContactInfo } from '../model/contact-info';
 
 @Component({
   selector: 'assoc-contact-list',
@@ -18,13 +18,13 @@ export class ContactList {
   public readonly loading = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
-  public readonly contacts = input<Contact[]>([]);
+  public readonly contacts = input<ContactInfo[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly show = output<Contact>();
-  public readonly edit = output<Contact>();
+  public readonly show = output<ContactInfo>();
+  public readonly edit = output<ContactInfo>();
   public readonly delete = output<number>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
@@ -38,7 +38,7 @@ export class ContactList {
     this.changePage.emit(page);
   }
 
-  public confirmDelete(event: Event, contact: Contact) {
+  public confirmDelete(event: Event, contact: ContactInfo) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',

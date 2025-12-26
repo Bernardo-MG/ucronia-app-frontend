@@ -9,4 +9,5 @@ export class Sponsor {
   public contactChannels: ContactChannel[] = [];
   public years: number[] = [];
   public comments = '';
+  public types: string[] = [];
 }

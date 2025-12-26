@@ -1,10 +1,14 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { ContactCreation, ContactPatch } from '@ucronia/api';
-import { Contact, Guest, Member, MemberStatus, Sponsor } from "@ucronia/domain";
+import { Contact, Guest, Member, MemberContact, MemberStatus, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { GuestPatch } from 'projects/ucronia/api/src/lib/guest/guest-patch';
+import { MemberContactPatch } from 'projects/ucronia/api/src/lib/members/member-contact-patch';
+import { SponsorPatch } from 'projects/ucronia/api/src/lib/sponsor/sponsor-patch';
+import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
+import { ContactInfo } from './model/contact-info';
 
 @Injectable({
   providedIn: 'root'
@@ -13,32 +17,52 @@ export class ContactsService {
   private readonly messageService = inject(MessageService);
 
   private readonly client;
+  private readonly guestClient;
+  private readonly memberClient;
+  private readonly sponsorClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/contact');
+    this.guestClient = clientProvider.url(environment.apiUrl + '/contact/guest');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/contact/member');
+    this.sponsorClient = clientProvider.url(environment.apiUrl + '/contact/sponsor');
   }
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Contact>> {
+  public getAll(
+    page: number | undefined = undefined,
+    sort: Sorting,
+    active: MemberStatus,
+    name: string,
+    filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
+  ): Observable<PaginatedResponse<ContactInfo>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    let status;
-    if (active) {
-      status = active.toString().toUpperCase();
+    const status = active ? active.toString().toUpperCase() : '';
+
+    let clientToUse;
+    if (filterType === 'guest') {
+      clientToUse = this.guestClient;
+    } else if (filterType === 'member') {
+      clientToUse = this.memberClient;
+    } else if (filterType === 'sponsor') {
+      clientToUse = this.sponsorClient;
     } else {
-      status = '';
+      clientToUse = this.client;
     }
-    return this.client
+
+    return clientToUse
       .loadParameters(new PaginationParams(page))
       .loadParameters(sorting)
       .parameter('status', status)
       .parameter('name', name)
-      .read<PaginatedResponse<Contact>>();
+      .read<PaginatedResponse<ContactInfo>>();
   }
+
 
   public create(data: ContactCreation): Observable<Contact> {
     return this.client
@@ -56,21 +80,38 @@ export class ContactsService {
       );
   }
 
-  public update(data: Contact): Observable<Contact> {
-    const patch: ContactPatch = {
-      ...data,
-      contactChannels: data.contactChannels.map(c => {
-        return {
-          method: c.method.number,
-          detail: c.detail
-        }
-      })
-    };
+  public update(data: ContactInfo): Observable<Contact> {
+    const update = this.updateContact(data);
+    const observables: Observable<any>[] = [update];
 
-    return this.client
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Contact>>(patch)
+    if (data.types.includes("guest")) {
+      const guest: Guest = {
+        ...data,
+        games: data.games ? data.games as Date[] : []
+      };
+      observables.push(this.updateGuest(guest));
+    }
+
+    if (data.types.includes("member")) {
+      const member: MemberContact = {
+        ...data,
+        active: data.active ? true : false,
+        renew: data.renew ? true : false
+      };
+      observables.push(this.updateMember(member));
+    }
+
+    if (data.types.includes("sponsor")) {
+      const sponsor: Sponsor = {
+        ...data,
+        years: data.years ? data.years as number[] : []
+      };
+      observables.push(this.updateSponsor(sponsor));
+    }
+
+    return concat(...observables)
       .pipe(
+        last(),
         map(r => r.content),
         tap(() => {
           this.messageService.add({
@@ -109,11 +150,54 @@ export class ContactsService {
       );
   }
 
-  public getOne(number: number): Observable<Contact> {
+  public getOne(number: number): Observable<ContactInfo> {
     return this.client
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Contact>>()
-      .pipe(map(r => r.content));
+      .read<SimpleResponse<ContactInfo>>()
+      .pipe(
+        map(r => r.content),
+        switchMap(contact => {
+          const requests: Observable<any>[] = [];
+
+          if (contact.types?.includes('guest')) {
+            requests.push(
+              this.guestClient
+                .appendRoute(`/${number}`)
+                .read<SimpleResponse<Guest>>()
+                .pipe(map(resp => resp.content))
+            );
+          }
+
+          if (contact.types?.includes('member')) {
+            requests.push(
+              this.memberClient
+                .appendRoute(`/${number}`)
+                .read<SimpleResponse<Member>>()
+                .pipe(map(resp => resp.content))
+            );
+          }
+
+          if (contact.types?.includes('sponsor')) {
+            requests.push(
+              this.sponsorClient
+                .appendRoute(`/${number}`)
+                .read<SimpleResponse<Sponsor>>()
+                .pipe(map(resp => resp.content))
+            );
+          }
+
+          if (requests.length === 0) {
+            return of(contact);
+          }
+
+          return forkJoin(requests).pipe(
+            map(results => {
+              // Merge all fetched data into the original contact
+              return Object.assign({}, contact, ...results);
+            })
+          );
+        })
+      );
   }
 
   public convertToMember(number: number): Observable<Member> {
@@ -165,6 +249,74 @@ export class ContactsService {
           });
         })
       );
+  }
+
+  private updateContact(data: Contact): Observable<Contact> {
+    const patch: ContactPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.client
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Contact>>(patch)
+      .pipe(map(r => r.content));
+  }
+
+  private updateGuest(data: Guest): Observable<Guest> {
+    const patch: GuestPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.guestClient
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Guest>>(patch)
+      .pipe(map(r => r.content));
+  }
+
+  private updateSponsor(data: Sponsor): Observable<Sponsor> {
+    const patch: SponsorPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.sponsorClient
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<Sponsor>>(patch)
+      .pipe(map(r => r.content));
+  }
+
+  private updateMember(data: MemberContact): Observable<MemberContact> {
+    const patch: MemberContactPatch = {
+      ...data,
+      contactChannels: data.contactChannels.map(c => {
+        return {
+          method: c.method.number,
+          detail: c.detail
+        }
+      })
+    };
+
+    return this.memberClient
+      .appendRoute(`/${data.number}`)
+      .patch<SimpleResponse<MemberContact>>(patch)
+      .pipe(map(r => r.content));
   }
 
 }

@@ -9,4 +9,5 @@ export class Guest {
   public contactChannels: ContactChannel[] = [];
   public games: Date[] = [];
   public comments = '';
+  public types: string[] = [];
 }

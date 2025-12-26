@@ -1,10 +1,10 @@
 
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Contact, ContactMethod } from "@ucronia/domain";
+import { ContactMethod } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -33,11 +33,6 @@ export class ContactEditionForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
 
-  public readonly typeSelected = output<string>();
-  public readonly save = output<Contact>();
-
-  public lockedTypes: string[] = [];
-
   @Input() public set data(value: ContactInfo) {
     this.form.patchValue(value as any);
 
@@ -51,6 +46,18 @@ export class ContactEditionForm implements OnChanges {
       );
     });
 
+    this.games.clear();
+    value.games?.forEach(game => {
+      this.games.push(
+        this.fb.control(game)
+      );
+    });
+
+    this.years.clear();
+    value.years?.forEach(year => {
+      this.years.push(this.fb.control(year));
+    });
+
     this.selected = [];
     this.lockedTypes = [];
 
@@ -60,8 +67,31 @@ export class ContactEditionForm implements OnChanges {
     });
   }
 
+  public readonly typeSelected = output<string>();
+  public readonly save = output<ContactInfo>();
+
+  public today = new Date();
+
+  public lockedTypes: string[] = [];
+
+  public get isGuest(): boolean {
+    return this.selected.includes('guest');
+  }
+
+  public get isSponsor(): boolean {
+    return this.selected.includes('sponsor');
+  }
+
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
+  }
+
+  public get games(): FormArray {
+    return this.form.get('games') as FormArray;
+  }
+
+  public get years(): FormArray {
+    return this.form.get('years') as FormArray;
   }
 
   public selected: string[] = [];
@@ -81,10 +111,12 @@ export class ContactEditionForm implements OnChanges {
       identifier: [''],
       birthDate: [new Date()],
       name: this.fb.group({
-        firstName: [null],
+        firstName: [null, Validators.required],
         lastName: ['']
       }),
       contactChannels: this.fb.array([]),
+      games: this.fb.array([]),
+      years: this.fb.array([]),
       comments: ['']
     });
 
@@ -108,6 +140,24 @@ export class ContactEditionForm implements OnChanges {
 
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
+  }
+
+  public addGame(): void {
+    this.games.push(
+      this.fb.control(null)
+    );
+  }
+
+  public removeGame(index: number): void {
+    this.games.removeAt(index);
+  }
+
+  public addYear(): void {
+    this.years.push(this.fb.control<number | null>(null, Validators.required));
+  }
+
+  public removeYear(index: number): void {
+    this.years.removeAt(index);
   }
 
   public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
