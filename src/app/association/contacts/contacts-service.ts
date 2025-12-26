@@ -44,13 +44,15 @@ export class ContactsService {
 
     const status = active ? active.toString().toUpperCase() : '';
 
-    let clientToUse = this.client;
+    let clientToUse;
     if (filterType === 'guest') {
       clientToUse = this.guestClient;
     } else if (filterType === 'member') {
       clientToUse = this.memberClient;
     } else if (filterType === 'sponsor') {
       clientToUse = this.sponsorClient;
+    } else {
+      clientToUse = this.client;
     }
 
     return clientToUse
@@ -58,56 +60,7 @@ export class ContactsService {
       .loadParameters(sorting)
       .parameter('status', status)
       .parameter('name', name)
-      .read<PaginatedResponse<ContactInfo>>()
-      .pipe(
-        switchMap(pageResp => {
-          if (!pageResp.content || pageResp.content.length === 0) {
-            return of(pageResp);
-          }
-
-          const mergedRequests: Observable<ContactInfo>[] = pageResp.content.map(contact => {
-            const requests: Observable<any>[] = [];
-
-            if ((filterType === 'all' || filterType === 'guest') && (contact.types?.includes('guest'))) {
-              requests.push(
-                this.guestClient
-                  .appendRoute(`/${contact.number}`)
-                  .read<SimpleResponse<Guest>>()
-                  .pipe(map(resp => resp.content))
-              );
-            }
-
-            if ((filterType === 'all' || filterType === 'member') && (contact.types?.includes('member'))) {
-              requests.push(
-                this.memberClient
-                  .appendRoute(`/${contact.number}`)
-                  .read<SimpleResponse<Member>>()
-                  .pipe(map(resp => resp.content))
-              );
-            }
-
-            if ((filterType === 'all' || filterType === 'sponsor') && (contact.types?.includes('sponsor'))) {
-              requests.push(
-                this.sponsorClient
-                  .appendRoute(`/${contact.number}`)
-                  .read<SimpleResponse<Sponsor>>()
-                  .pipe(map(resp => resp.content))
-              );
-            }
-
-            return forkJoin(requests).pipe(
-              map(results => Object.assign({}, contact, ...results))
-            );
-          });
-
-          return forkJoin(mergedRequests).pipe(
-            map(mergedContacts => ({
-              ...pageResp,
-              content: mergedContacts
-            }))
-          );
-        })
-      );
+      .read<PaginatedResponse<ContactInfo>>();
   }
 
 
