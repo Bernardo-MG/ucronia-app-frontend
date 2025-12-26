@@ -15,4 +15,8 @@ export class MemberContactDetails {
   public data = input(new ContactInfo());
   public loading = input(false);
 
+  public get isMember(): boolean {
+    return this.data().types.includes('member');
+  }
+
 }
