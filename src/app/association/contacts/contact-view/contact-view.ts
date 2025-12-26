@@ -21,14 +21,11 @@ import { ContactMethodService } from '../contact-method-service';
 import { ContactStatusSelector } from '../contact-status-selector/contact-status-selector';
 import { ContactsService } from '../contacts-service';
 import { GuestList } from '../guest-list/guest-list';
-import { GuestsService } from '../guests-service';
 import { MemberContactDetails } from '../member-contact-details/member-contact-details';
 import { MemberContactList } from '../member-contact-list/member-contact-list';
-import { MemberContactsService } from '../member-contacts-service';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 import { ContactInfo } from '../model/contact-info';
 import { SponsorList } from '../sponsor-list/sponsor-list';
-import { SponsorsService } from '../sponsors-service';
 
 @Component({
   selector: 'assoc-contact-view',
@@ -38,9 +35,6 @@ import { SponsorsService } from '../sponsors-service';
 export class ContactView implements OnInit {
 
   private readonly service = inject(ContactsService);
-  private readonly memberContactsService = inject(MemberContactsService);
-  private readonly sponsorsService = inject(SponsorsService);
-  private readonly guestsService = inject(GuestsService);
   private readonly contactMethodService = inject(ContactMethodService);
 
   public readonly createable;
