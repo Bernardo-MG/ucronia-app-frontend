@@ -4,7 +4,8 @@ import { ContactCreation, ContactPatch } from '@ucronia/api';
 import { Contact, Guest, Member, MemberStatus, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, of, switchMap, tap, throwError } from 'rxjs';
+import { ContactInfo } from './model/contact-info';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,17 @@ export class ContactsService {
   private readonly messageService = inject(MessageService);
 
   private readonly client;
+  private readonly guestClient;
+  private readonly memberClient;
+  private readonly sponsorClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/contact');
+    this.guestClient = clientProvider.url(environment.apiUrl + '/contact/guest');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/contact/member');
+    this.sponsorClient = clientProvider.url(environment.apiUrl + '/contact/sponsor');
   }
 
   public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Contact>> {
@@ -109,11 +116,54 @@ export class ContactsService {
       );
   }
 
-  public getOne(number: number): Observable<Contact> {
+  public getOne(number: number): Observable<ContactInfo> {
     return this.client
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Contact>>()
-      .pipe(map(r => r.content));
+      .read<SimpleResponse<ContactInfo>>()
+      .pipe(
+        map(r => r.content),
+        switchMap(contact => {
+          const requests: Observable<any>[] = [];
+
+          if (contact.types?.includes('guest')) {
+            requests.push(
+              this.guestClient
+                .appendRoute(`/${number}`)
+                .read<SimpleResponse<Guest>>()
+                .pipe(map(resp => resp.content))
+            );
+          }
+
+          if (contact.types?.includes('member')) {
+            requests.push(
+              this.memberClient
+                .appendRoute(`/${number}/member`)
+                .read<SimpleResponse<Member>>()
+                .pipe(map(resp => resp.content))
+            );
+          }
+
+          if (contact.types?.includes('sponsor')) {
+            requests.push(
+              this.sponsorClient
+                .appendRoute(`/${number}/sponsor`)
+                .read<SimpleResponse<Sponsor>>()
+                .pipe(map(resp => resp.content))
+            );
+          }
+
+          if (requests.length === 0) {
+            return of(contact);
+          }
+
+          return forkJoin(requests).pipe(
+            map(results => {
+              // Merge all fetched data into the original contact
+              return Object.assign({}, contact, ...results);
+            })
+          );
+        })
+      );
   }
 
   public convertToMember(number: number): Observable<Member> {
