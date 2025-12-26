@@ -7,7 +7,7 @@ import { MessageService } from 'primeng/api';
 import { GuestPatch } from 'projects/ucronia/api/src/lib/guest/guest-patch';
 import { MemberContactPatch } from 'projects/ucronia/api/src/lib/members/member-contact-patch';
 import { SponsorPatch } from 'projects/ucronia/api/src/lib/sponsor/sponsor-patch';
-import { Observable, catchError, concat, forkJoin, map, of, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ContactInfo } from './model/contact-info';
 
 @Injectable({
@@ -158,6 +158,7 @@ export class ContactsService {
 
     return concat(...observables)
       .pipe(
+        last(),
         map(r => r.content),
         tap(() => {
           this.messageService.add({
