@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { MemberStatus, Sponsor } from '@ucronia/domain';
+import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { Sponsor } from '@ucronia/domain';
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { SponsorPatch } from 'projects/ucronia/api/src/lib/sponsor/sponsor-patch';
@@ -19,33 +19,6 @@ export class SponsorsService {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/contact/sponsor');
-  }
-
-  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Sponsor>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
-    );
-
-    let status;
-    if (active) {
-      status = active.toString().toUpperCase();
-    } else {
-      status = '';
-    }
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .parameter('status', status)
-      .parameter('name', name)
-      .read<PaginatedResponse<Sponsor>>();
-  }
-
-  public getOne(number: number): Observable<Sponsor> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<Sponsor>>()
-      .pipe(map(r => r.content));
   }
 
   public update(data: Sponsor): Observable<Sponsor> {
