@@ -6,13 +6,13 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
-import { ContactMethod, Guest, MemberContact, MemberStatus, Sponsor } from "@ucronia/domain";
+import { ContactMethod, MemberStatus } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { concat, finalize, forkJoin, Observable, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactEditionForm } from '../contact-edition-form/contact-edition-form';
 import { ContactList } from '../contact-list/contact-list';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
@@ -156,39 +156,12 @@ export class ContactView implements OnInit {
   }
 
   public onUpdate(toUpdate: ContactInfo): void {
-    const update = this.service.update(toUpdate);
-    const observables = [update];
-
-    if (this.selectedData.types.includes("guest")) {
-      const guest: Guest = {
-        ...toUpdate,
-        games: toUpdate.games ? toUpdate.games as Date[] : []
-      };
-      const updateGuest = this.guestsService.update(guest);
-      observables.push(updateGuest);
+    const data: ContactInfo = {
+      ...this.selectedData,
+      ...toUpdate
     }
-
-    if (this.selectedData.types.includes("member")) {
-      const member: MemberContact = {
-        ...toUpdate,
-        active: toUpdate.active ? true : false,
-        renew: toUpdate.renew ? true : false
-      };
-      const updateGuest = this.memberContactsService.update(member);
-      observables.push(updateGuest);
-    }
-
-    if (this.selectedData.types.includes("sponsor")) {
-      const sponsor: Sponsor = {
-        ...toUpdate,
-        years: toUpdate.years ? toUpdate.years as number[] : []
-      };
-      const updateGuest = this.sponsorsService.update(sponsor);
-      observables.push(updateGuest);
-    }
-
     this.mutation(
-      concat(...observables),
+      this.service.update(data),
       () => this.load(this.currentPage())
     );
   }
