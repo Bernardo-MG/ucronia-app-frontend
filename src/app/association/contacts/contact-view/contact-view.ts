@@ -140,23 +140,11 @@ export class ContactView implements OnInit {
   }
 
   public onShowInfo(contact: ContactInfo) {
-    if (this.selectedStatus === 'all') {
-      this.service.getOne(contact.number)
-        .pipe(finalize(() => this.showing = true))
-        .subscribe(contact => this.selectedData = contact);
-    } else if (this.selectedStatus === 'members') {
-      this.memberContactsService.getOne(contact.number)
-        .pipe(finalize(() => this.showing = true))
-        .subscribe(member => this.selectedData = member);
-    } else if (this.selectedStatus === 'sponsors') {
-      this.sponsorsService.getOne(contact.number)
-        .pipe(finalize(() => this.showing = true))
-        .subscribe(member => this.selectedData = member);
-    } else if (this.selectedStatus === 'guests') {
-      this.guestsService.getOne(contact.number)
-        .pipe(finalize(() => this.showing = true))
-        .subscribe(member => this.selectedData = member);
-    }
+    this.loading = true;
+    this.showing = true;
+    this.service.getOne(contact.number)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(contact => this.selectedData = contact);
   }
 
   public onNameFilterChange(): void {
