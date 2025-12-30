@@ -1,12 +1,9 @@
 
 import { Component, input, output } from '@angular/core';
-import { BookInfo } from "@ucronia/domain";
-import { BookLent } from "@ucronia/domain";
-import { Member } from "@ucronia/domain";
-import { MemberStatus } from "@ucronia/domain";
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
-import { MemberStatusSelectComponent } from '@app/shared/contact/member-status-select/member-status-select.component';
+import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
+import { BookInfo, BookLent, Member, MemberStatus } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';

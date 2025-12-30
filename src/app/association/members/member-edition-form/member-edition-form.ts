@@ -3,7 +3,7 @@ import { Component, inject, Input, input, OnChanges, output, SimpleChanges } fro
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Contact, ContactMethod, MemberContact } from "@ucronia/domain";
+import { ContactMethod, MemberProfile, Profile } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -28,7 +28,7 @@ export class MemberEditionForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
 
-  @Input() public set data(value: Contact) {
+  @Input() public set data(value: Profile) {
     this.form.patchValue(value as any);
 
     this.contactChannels.clear();
@@ -42,7 +42,7 @@ export class MemberEditionForm implements OnChanges {
     });
   }
 
-  public readonly save = output<MemberContact>();
+  public readonly save = output<MemberProfile>();
 
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;

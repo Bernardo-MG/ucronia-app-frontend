@@ -1,6 +1,6 @@
 
 export class FeePayment {
-  public contact = new FeePaymentContact();
+  public member = 0;
   public paymentDate = new FeePaymentTransaction();
   public months: Date[] = [];
 }

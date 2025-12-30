@@ -34,7 +34,7 @@ export class FrontpageService {
   }
 
   public getEmailUrl(): string {
-    return "mailto:contacto@arucronia.com";
+    return "mailto:perfil@arucronia.com";
   }
 
 }

@@ -2,9 +2,9 @@
  * Public API Surface of domain
  */
 
-export * from './lib/contacts/contact';
-export * from './lib/contacts/contact-method';
-export * from './lib/contacts/contact-name';
+export * from './lib/profiles/contact-method';
+export * from './lib/profiles/profile';
+export * from './lib/profiles/profile-name';
 export * from './lib/fees/fee';
 export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
@@ -27,7 +27,7 @@ export * from './lib/library/lent-book';
 export * from './lib/library/publisher';
 export * from './lib/library/title';
 export * from './lib/members/member';
-export * from './lib/members/member-contact';
+export * from './lib/members/member-profile';
 export * from './lib/members/member-status';
 export * from './lib/members/membership-evolution-month';
 export * from './lib/sponsors/sponsor';

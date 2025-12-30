@@ -1,4 +1,4 @@
-import { ContactName } from "../contacts/contact-name";
+import { ProfileName } from "../profiles/profile-name";
 
 export class MemberFees {
   public member = new MemberFeesMember();
@@ -12,6 +12,6 @@ export class MemberFeesFee {
 
 export class MemberFeesMember {
   public number = -1;
-  public name = new ContactName();
+  public name = new ProfileName();
   public active = false;
 }

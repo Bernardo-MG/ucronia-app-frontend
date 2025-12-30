@@ -1,5 +1,5 @@
 import { Component, inject, input, output } from '@angular/core';
-import { MemberStatusTag } from '@app/shared/contact/member-status-tag/member-status-tag';
+import { MemberStatusTag } from '@app/shared/profile/member-status-tag/member-status-tag';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Member } from "@ucronia/domain";
 import { ConfirmationService } from 'primeng/api';
@@ -17,7 +17,7 @@ export class MemberList {
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly loading = input(false);
-  public readonly readContact = input(false);
+  public readonly readProfile = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
   public readonly members = input<Member[]>([]);

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { ContactPatch, MemberCreation, MemberPatch } from '@ucronia/api';
-import { Contact, Member, MemberContact, MemberStatus } from "@ucronia/domain";
+import { MemberCreation, MemberPatch, ProfilePatch } from '@ucronia/api';
+import { Member, MemberProfile, MemberStatus, Profile } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, forkJoin, map, tap, throwError } from 'rxjs';
@@ -14,13 +14,13 @@ export class MemberService {
   private readonly messageService = inject(MessageService);
 
   private readonly client;
-  private readonly contactClient;
+  private readonly profileClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/member');
-    this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.profileClient = clientProvider.url(environment.apiUrl + '/profile');
   }
 
   public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
@@ -43,13 +43,13 @@ export class MemberService {
       .read<PaginatedResponse<Member>>();
   }
 
-  public getContact(number: number): Observable<MemberContact> {
+  public getContact(number: number): Observable<MemberProfile> {
     return forkJoin({
       member: this.getOne(number),
-      contact: this.getMemberContact(number)
+      profile: this.getMemberProfile(number)
     }).pipe(
-      map(({ member, contact }) => ({
-        ...contact,
+      map(({ member, profile }) => ({
+        ...profile,
         ...member
       }))
     );
@@ -71,8 +71,8 @@ export class MemberService {
       );
   }
 
-  public update(data: MemberContact): Observable<MemberContact> {
-    const contactPatch: ContactPatch = {
+  public update(data: MemberProfile): Observable<MemberProfile> {
+    const profilePatch: ProfilePatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
         return {
@@ -84,10 +84,10 @@ export class MemberService {
 
     return forkJoin({
       member: this.patchMember(data),
-      contact: this.patchContact(contactPatch)
+      profile: this.patchContact(profilePatch)
     }).pipe(
-      map(({ member, contact }) => ({
-        ...contact,
+      map(({ member, profile }) => ({
+        ...profile,
         ...member
       })),
       tap(() => {
@@ -127,10 +127,10 @@ export class MemberService {
       );
   }
 
-  private getMemberContact(number: number): Observable<Contact> {
-    return this.contactClient
+  private getMemberProfile(number: number): Observable<Profile> {
+    return this.profileClient
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Contact>>()
+      .read<SimpleResponse<Profile>>()
       .pipe(map(r => r.content));
   }
 
@@ -148,10 +148,10 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  private patchContact(data: ContactPatch): Observable<Contact> {
-    return this.contactClient
+  private patchContact(data: ProfilePatch): Observable<Profile> {
+    return this.profileClient
       .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Contact>>(data)
+      .patch<SimpleResponse<Profile>>(data)
       .pipe(map(r => r.content));
   }
 

@@ -1,0 +1,144 @@
+<div class="p-4 space-y-6">
+  <h1 class="text-4xl font-bold">Directorio</h1>
+
+  <div class="flex justify-center">
+    <p-card>
+      <assoc-membership-evolution-chart />
+    </p-card>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
+    <p-card class="w-45">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">1</p>
+          <p class="uppercase text-gray-500 text-sm">Socios</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="w-45">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">0</p>
+          <p class="uppercase text-gray-500 text-sm">Invitados</p>
+        </div>
+      </div>
+    </p-card>
+
+    <p-card class="w-45">
+      <div class="flex items-center space-x-4">
+        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+          <i class="pi pi-user text-xl"></i>
+        </div>
+        <div>
+          <p class="text-2xl font-semibold">0</p>
+          <p class="uppercase text-gray-500 text-sm">Esponsors</p>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <!-- Buttons -->
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <assoc-profile-status-selector (filter)="onChangeStatusFilter($event)" />
+
+    @if(selectedStatus === 'member') {
+      <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
+    }
+
+    @if (createable) {
+      <div class="ml-auto space-x-2">
+        <p-button icon="pi pi-plus-circle" (click)="creating = true" [disabled]="!createable"
+          aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded />
+      </div>
+    }
+  </div>
+
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <ui-text-filter (filter)="onFilter($event)" />
+  </div>
+
+  <!-- Contact List -->
+  <p-panel class="bg-white shadow rounded-lg">
+
+    @if(selectedStatus === 'member') {
+      <assoc-member-profile-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+        [profiles]="profiles.content" [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements"
+        (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
+        (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+    } @else if(selectedStatus === 'sponsor') {
+      <assoc-sponsor-list [loading]="loading" [editable]="editable" [deletable]="deletable" [profiles]="profiles.content"
+        [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)"
+        (edit)="onShowEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
+    } @else if(selectedStatus === 'guest') {
+      <assoc-guest-list [loading]="loading" [editable]="editable" [deletable]="deletable" [profiles]="profiles.content"
+        [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)"
+        (edit)="onShowEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
+    } @else {
+      <assoc-profile-list [loading]="loading" [editable]="editable" [deletable]="deletable" [profiles]="profiles.content"
+        [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)"
+        (edit)="onShowEdit($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
+    }
+
+  </p-panel>
+
+  <!-- Contact methods -->
+  <p-panel [toggleable]="true" [collapsed]="true">
+    <ng-template #header>
+      <div class="flex items-center gap-2 px-2">
+        <span class="pi pi-phone"></span>
+        <span class="font-bold">Métodos de contacto</span>
+      </div>
+    </ng-template>
+    <ng-template #icons>
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingMethod = true" [disabled]="!createable"
+        aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
+    </ng-template>
+    <p class="m-0">
+      <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+        [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
+        [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
+        (delete)="onDeleteContactMethod($event)"
+        (changePage)="loadContactMethods($event)" />
+    </p>
+  </p-panel>
+
+  <!-- Contact Dialog -->
+  <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
+    <assoc-member-profile-details [data]="selectedData" />
+  </p-dialog>
+
+  <!-- Creation dialog -->
+  <p-dialog header="Crear perfil" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
+    <assoc-profile-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+  </p-dialog>
+
+  <!-- Edition dialog -->
+  <p-dialog header="Editar perfil" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    <assoc-profile-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
+      [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" (typeSelected)="onTypeSelected($event)" />
+  </p-dialog>
+
+  <!-- Contact method creation dialog -->
+  <p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
+    <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
+  </p-dialog>
+
+  <!-- Contact method edition dialog -->
+  <p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
+    <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
+      (save)="onUpdateContactMethod($event)" />
+  </p-dialog>
+
+</div>

@@ -1,4 +1,4 @@
-import { Contact } from "@ucronia/domain";
+import { Profile } from "@ucronia/domain";
 
 
 /**
@@ -18,7 +18,7 @@ export class Account {
    */
   email = '';
   /**
-   * User contact.
+   * User profile.
    */
-  contact: Contact | undefined = undefined;
+  profile: Profile | undefined = undefined;
 }

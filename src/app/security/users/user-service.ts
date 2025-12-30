@@ -111,14 +111,14 @@ export class UserService {
 
   public getMember(username: string): Observable<Member> {
     return this.client
-      .appendRoute(`/${username}/contact`)
+      .appendRoute(`/${username}/profile`)
       .read<SimpleResponse<Member>>()
       .pipe(map(r => r.content));
   }
 
   public assignMember(username: string, member: Member): Observable<Member> {
     return this.client
-      .appendRoute(`/${username}/contact/${member.number}`)
+      .appendRoute(`/${username}/profile/${member.number}`)
       .create<SimpleResponse<Member>>(null)
       .pipe(map(r => r.content));
   }

@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MemberContactDetails } from '@app/association/contacts/member-contact-details/member-contact-details';
-import { ContactCreationEvent, ContactCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
-import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
+import { MemberProfileDetails } from '@app/association/profiles/member-profile-details/member-profile-details';
+import { MemberStatusSelector } from '@app/shared/profile/member-status-selector/member-status-selector';
+import { ProfileCreationEvent, ProfileCreationForm } from '@app/shared/profile/profile-creation-form/profile-creation-form';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
-import { ContactMethod, Member, MemberContact, MemberStatus } from "@ucronia/domain";
+import { ContactMethod, Member, MemberProfile, MemberStatus } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -21,23 +21,23 @@ import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberContactDetails, ContactCreationForm, MemberStatusSelector, MemberEditionForm],
+  imports: [FormsModule, PanelModule, DialogModule, CardModule, ButtonModule, MemberList, TextFilter, MemberProfileDetails, ProfileCreationForm, MemberStatusSelector, MemberEditionForm],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
-  private readonly contactMethodService = inject(MemberContactMethodService);
+  private readonly memberContactMethodService = inject(MemberContactMethodService);
 
   public data = new PaginatedResponse<Member>();
   public contactMethodSelection: ContactMethod[] = [];
 
   public selectedData = new Member();
-  public memberContact = new MemberContact();
+  public memberContact = new MemberProfile();
 
   private sort = new Sorting();
 
-  public readonly readContact;
+  public readonly readProfile;
   public readonly createable;
   public readonly deletable;
   public readonly editable;
@@ -58,17 +58,17 @@ export class MemberView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("contact", "create");
-    this.deletable = authService.hasPermission("contact", "delete");
-    this.editable = authService.hasPermission("contact", "update");
-    this.readContact = authService.hasPermission("contact", "read");
+    this.createable = authService.hasPermission("profile", "create");
+    this.deletable = authService.hasPermission("profile", "delete");
+    this.editable = authService.hasPermission("profile", "update");
+    this.readProfile = authService.hasPermission("profile", "read");
   }
 
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
       data: this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter),
-      contactMethods: this.contactMethodService.getAll()
+      contactMethods: this.memberContactMethodService.getAll()
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe(({ data, contactMethods }) => {
@@ -134,14 +134,14 @@ export class MemberView implements OnInit {
     );
   }
 
-  public onCreate(toCreate: ContactCreationEvent): void {
+  public onCreate(toCreate: ProfileCreationEvent): void {
     this.mutation(
       () => this.service.create(toCreate),
       () => this.load(0)
     );
   }
 
-  public onUpdate(toUpdate: MemberContact): void {
+  public onUpdate(toUpdate: MemberProfile): void {
     this.mutation(
       () => this.service.update(toUpdate),
       () => this.load(this.data.page)
@@ -194,7 +194,7 @@ export class MemberView implements OnInit {
   private loadContactMethodSelection(): void {
     this.loading = true;
 
-    this.contactMethodService.getAll()
+    this.memberContactMethodService.getAll()
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodSelection = response);
   }

@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { Author, BookType, Contact, GameSystem, Member, MemberStatus, Publisher } from "@ucronia/domain";
+import { Author, BookType, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
@@ -26,10 +26,10 @@ export class BookRelationshipSelectionService {
 
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.donorClient = clientProvider.url(environment.apiUrl + '/profile');
     this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
     this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
   }
 
   public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
@@ -76,7 +76,7 @@ export class BookRelationshipSelectionService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Contact>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Profile>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
