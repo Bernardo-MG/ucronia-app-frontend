@@ -171,7 +171,44 @@ export const routes: Routes = [
               }
             ]
           },
-
+          {
+            // Security
+            path: 'security',
+            canActivate: [LoggedInGuard],
+            loadComponent: () => import('./security/layout/security-layout/security-layout').then(m => m.SecurityLayout),
+            children: [
+              {
+                // Root
+                path: '',
+                redirectTo: 'users',
+                pathMatch: 'full'
+              },
+              {
+                // Roles
+                path: 'roles',
+                canActivate: [ResourceGuard("role", "view")],
+                loadComponent: () => import('./security/roles/role-view/role-view').then(m => m.RoleView)
+              },
+              {
+                // Users
+                path: 'users',
+                canActivate: [ResourceGuard("user", "view")],
+                loadComponent: () => import('./security/users/user-view/user-view').then(m => m.UserView)
+              },
+              {
+                // User tokens
+                path: 'user-tokens',
+                canActivate: [ResourceGuard("user_token", "view")],
+                loadComponent: () => import('./security/user-tokens/user-token-view/user-token-view').then(m => m.UserTokenView)
+              },
+              {
+                // Security audit
+                path: 'audit',
+                canActivate: [ResourceGuard("user", "view")],
+                loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AccessAuditLogin)
+              }
+            ]
+          },
           {
             path: 'settings',
             canActivate: [ResourceGuard('association_settings', 'view')],

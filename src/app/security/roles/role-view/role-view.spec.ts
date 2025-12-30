@@ -5,16 +5,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { RoleService } from '../role-service';
-import { AccessRoleList } from './role-view';
+import { RoleView } from './role-view';
 
-describe('AccessRoleList', () => {
-  let component: AccessRoleList;
-  let fixture: ComponentFixture<AccessRoleList>;
+describe('RoleView', () => {
+  let component: RoleView;
+  let fixture: ComponentFixture<RoleView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessRoleList
+        RoleView
       ],
       providers: [
         RoleService,
@@ -28,7 +28,7 @@ describe('AccessRoleList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleList);
+    fixture = TestBed.createComponent(RoleView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
