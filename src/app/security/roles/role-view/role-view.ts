@@ -19,7 +19,7 @@ import { RoleService } from '../role-service';
   imports: [PanelModule, TableModule, ButtonModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
-export class AccessRoleList implements OnInit {
+export class RoleView implements OnInit {
 
   private readonly service = inject(RoleService);
   private readonly messageService = inject(MessageService);
