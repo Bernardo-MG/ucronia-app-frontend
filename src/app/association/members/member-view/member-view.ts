@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MemberProfileDetails } from '@app/association/contacts/member-profile-details/member-profile-details';
+import { MemberProfileDetails } from '@app/association/profiles/member-profile-details/member-profile-details';
 import { ProfileCreationEvent, ProfileCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
 import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';

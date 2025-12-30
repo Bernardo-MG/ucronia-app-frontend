@@ -90,8 +90,8 @@ export class AssociationLayout {
     if (authService.hasPermission('profile', 'view')) {
       items.push(
         {
-          label: 'Contactos',
-          routerLink: '/association/contacts',
+          label: 'Directorio',
+          routerLink: '/association/directory',
           icon: 'pi pi-users'
         });
     }
