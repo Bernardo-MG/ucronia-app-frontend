@@ -14,13 +14,13 @@ export class MemberService {
   private readonly messageService = inject(MessageService);
 
   private readonly client;
-  private readonly contactClient;
+  private readonly profileClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/member');
-    this.contactClient = clientProvider.url(environment.apiUrl + '/profile');
+    this.profileClient = clientProvider.url(environment.apiUrl + '/profile');
   }
 
   public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
@@ -46,10 +46,10 @@ export class MemberService {
   public getContact(number: number): Observable<MemberProfile> {
     return forkJoin({
       member: this.getOne(number),
-      contact: this.getMemberProfile(number)
+      profile: this.getMemberProfile(number)
     }).pipe(
-      map(({ member, contact }) => ({
-        ...contact,
+      map(({ member, profile }) => ({
+        ...profile,
         ...member
       }))
     );
@@ -72,7 +72,7 @@ export class MemberService {
   }
 
   public update(data: MemberProfile): Observable<MemberProfile> {
-    const contactPatch: ProfilePatch = {
+    const profilePatch: ProfilePatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
         return {
@@ -84,10 +84,10 @@ export class MemberService {
 
     return forkJoin({
       member: this.patchMember(data),
-      contact: this.patchContact(contactPatch)
+      profile: this.patchContact(profilePatch)
     }).pipe(
-      map(({ member, contact }) => ({
-        ...contact,
+      map(({ member, profile }) => ({
+        ...profile,
         ...member
       })),
       tap(() => {
@@ -128,7 +128,7 @@ export class MemberService {
   }
 
   private getMemberProfile(number: number): Observable<Profile> {
-    return this.contactClient
+    return this.profileClient
       .appendRoute(`/${number}`)
       .read<SimpleResponse<Profile>>()
       .pipe(map(r => r.content));
@@ -149,7 +149,7 @@ export class MemberService {
   }
 
   private patchContact(data: ProfilePatch): Observable<Profile> {
-    return this.contactClient
+    return this.profileClient
       .appendRoute(`/${data.number}`)
       .patch<SimpleResponse<Profile>>(data)
       .pipe(map(r => r.content));

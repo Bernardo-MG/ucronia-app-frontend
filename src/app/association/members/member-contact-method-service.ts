@@ -14,7 +14,7 @@ export class MemberProfileMethodService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.contactMethodClient = clientProvider.url(environment.apiUrl + '/contact/contactMethod');
+    this.contactMethodClient = clientProvider.url(environment.apiUrl + '/profile/contactMethod');
   }
 
   public getAll(): Observable<ContactMethod[]> {

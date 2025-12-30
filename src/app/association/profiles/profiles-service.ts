@@ -22,10 +22,10 @@ export class ProfilesService {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/profile');
-    this.guestClient = clientProvider.url(environment.apiUrl + '/contact/guest');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/contact/member');
-    this.sponsorClient = clientProvider.url(environment.apiUrl + '/contact/sponsor');
-  }
+    this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
+    this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
+  }profile
 
   public getAll(
     page: number | undefined = undefined,
@@ -189,7 +189,6 @@ export class ProfilesService {
 
           return forkJoin(requests).pipe(
             map(results => {
-              // Merge all fetched data into the original contact
               return Object.assign({}, profile, ...results);
             })
           );

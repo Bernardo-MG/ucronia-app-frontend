@@ -17,7 +17,7 @@ export class ContactMethodService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/contact/contactMethod');
+    this.client = clientProvider.url(environment.apiUrl + '/profile/contactMethod');
   }
 
   public getAll(page: number | undefined = undefined): Observable<PaginatedResponse<ContactMethod>> {
