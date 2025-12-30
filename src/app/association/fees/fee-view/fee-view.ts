@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberSelectStepper } from '@app/shared/contact/contact-select-stepper/member-select-stepper';
-import { MemberStatusSelectComponent } from '@app/shared/contact/member-status-select/member-status-select.component';
+import { MemberSelectStepper } from '@app/shared/profile/member-select-stepper/member-select-stepper';
+import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';

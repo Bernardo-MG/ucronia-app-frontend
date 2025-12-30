@@ -12,7 +12,7 @@ import { MessageModule } from 'primeng/message';
 @Component({
   selector: 'assoc-profile-creation-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule, InputGroupModule, InputGroupAddonModule],
-  templateUrl: './contact-creation-form.html'
+  templateUrl: './profile-creation-form.html'
 })
 export class ProfileCreationForm implements OnChanges {
 

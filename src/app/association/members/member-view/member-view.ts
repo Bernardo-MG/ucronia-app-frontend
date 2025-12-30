@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberProfileDetails } from '@app/association/profiles/member-profile-details/member-profile-details';
-import { ProfileCreationEvent, ProfileCreationForm } from '@app/shared/contact/contact-creation-form/contact-creation-form';
-import { MemberStatusSelector } from '@app/shared/contact/member-status-selector/member-status-selector';
+import { MemberStatusSelector } from '@app/shared/profile/member-status-selector/member-status-selector';
+import { ProfileCreationEvent, ProfileCreationForm } from '@app/shared/profile/profile-creation-form/profile-creation-form';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';

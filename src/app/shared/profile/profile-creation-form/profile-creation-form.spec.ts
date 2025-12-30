@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProfileCreationForm } from './contact-creation-form';
+import { ProfileCreationForm } from './profile-creation-form';
 
 describe('ProfileCreationForm', () => {
   let component: ProfileCreationForm;
