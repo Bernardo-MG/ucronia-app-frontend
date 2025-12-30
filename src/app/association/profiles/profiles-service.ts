@@ -25,7 +25,7 @@ export class ProfilesService {
     this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
     this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
     this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
-  }profile
+  }
 
   public getAll(
     page: number | undefined = undefined,
