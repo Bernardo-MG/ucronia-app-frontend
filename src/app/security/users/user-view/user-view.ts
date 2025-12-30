@@ -157,16 +157,27 @@ export class UserView implements OnInit {
   }
 
   public onStartInvitation(): void {
-    this.service.getAllRoles().subscribe(r => this.roleSelection = r);
+    this.loading = true;
+    this.service.getAllRoles()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(r => this.roleSelection = r);
     this.view = 'invite';
     this.editing = true;
   }
 
   public onStartEditing(user: User, view: string): void {
     this.selectedData = user;
-    if (view === 'member') {
-      this.service.getMember(user.username).subscribe(member => this.member = member);
-      this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
+    switch (view) {
+      case 'member':
+        this.service.getMember(user.username).subscribe(member => this.member = member);
+        this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
+        break;
+      case 'roles':
+        this.loading = true;
+        this.service.getAllRoles()
+          .pipe(finalize(() => this.loading = false))
+          .subscribe(r => this.roleSelection = r);
+        break;
     }
     this.view = view;
     this.editing = true;
