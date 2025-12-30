@@ -1,5 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Person -->
+  <!-- Contact -->
   <h2>{{fullname}}</h2>
   <!-- Payment date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
@@ -34,7 +34,7 @@
   }
   <!-- Add fee button -->
   <div class="row">
-    <div uiJustifyCenter>
+    <div>
       <p-button icon="pi pi-plus-circle" (click)="addDate()"
         [disabled]="!formStatus.formEnabled" aria-label="Añadir mes" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
     </div>

@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 
 /**
  * Service responsible for managing layout-related functionality, such as retrieving menu options.
@@ -9,20 +9,18 @@ import { AuthContainer } from '@bernardo-mg/authentication';
 })
 export class LayoutService {
 
-  private authContainer = inject(AuthContainer);
+  private authService = inject(AuthService);
 
   private showSettingsLinkFlag = false;
 
   private showSecurityLinkFlag = false;
 
-  private showAssociationLinkFlag = false;
-
   constructor() {
-    const authContainer = this.authContainer;
+    const authService = this.authService;
 
     this.loadPermissions();
     // If the user changes, reload permissions
-    authContainer.securityDetails
+    authService.securityDetails
       .subscribe(u => this.loadPermissions());
   }
 
@@ -44,8 +42,8 @@ export class LayoutService {
   }
 
   private loadPermissions() {
-    this.showSettingsLinkFlag = this.authContainer.hasPermission('association_settings', 'view');
-    this.showSecurityLinkFlag = this.authContainer.hasPermission('security', 'view');
+    this.showSettingsLinkFlag = this.authService.hasPermission('association_settings', 'view');
+    this.showSecurityLinkFlag = this.authService.hasPermission('security', 'view');
   }
 
 }

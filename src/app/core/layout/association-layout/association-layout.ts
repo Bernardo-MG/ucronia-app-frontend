@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
@@ -21,11 +21,11 @@ export class AssociationLayout {
   public menuActive = false;
 
   constructor() {
-    const authContainer = inject(AuthContainer);
-    authContainer.securityDetails
+    const authService = inject(AuthService);
+    authService.securityDetails
       .subscribe(details => {
-        const items = this.getAssociationItems(authContainer);
-        const adminItems = this.getAdminItems(authContainer);
+        const items = this.getAssociationItems(authService);
+        const adminItems = this.getAdminItems(authService);
         this.menus = [];
         if (items.length) {
           this.menus.push(
@@ -56,17 +56,9 @@ export class AssociationLayout {
     this.menuActive = status;
   }
 
-  private getAssociationItems(authContainer: AuthContainer): MenuItem[] {
+  private getAssociationItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authContainer.hasPermission('activity_calendar', 'view')) {
-      items.push(
-        {
-          label: 'Actividades',
-          routerLink: '/association/activity',
-          icon: 'pi pi-calendar'
-        });
-    }
-    if (authContainer.hasPermission('member', 'view')) {
+    if (authService.hasPermission('member', 'view')) {
       items.push(
         {
           label: 'Socios',
@@ -74,7 +66,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('my_fees', 'view')) {
+    if (authService.hasPermission('my_fees', 'view')) {
       items.push(
         {
           label: 'Mis cuotas',
@@ -82,7 +74,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authContainer.hasPermission('library', 'view')) {
+    if (authService.hasPermission('library', 'view')) {
       items.push(
         {
           label: 'Biblioteca',
@@ -93,17 +85,17 @@ export class AssociationLayout {
     return items;
   }
 
-  private getAdminItems(authContainer: AuthContainer): MenuItem[] {
+  private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authContainer.hasPermission('person', 'view')) {
+    if (authService.hasPermission('profile', 'view')) {
       items.push(
         {
-          label: 'Gente',
-          routerLink: '/association/people',
+          label: 'Directorio',
+          routerLink: '/association/directory',
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('member', 'view')) {
+    if (authService.hasPermission('member', 'view')) {
       items.push(
         {
           label: 'Cuotas',
@@ -111,7 +103,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authContainer.hasPermission('my_fees', 'view')) {
+    if (authService.hasPermission('my_fees', 'view')) {
       items.push(
         {
           label: 'Fondos',

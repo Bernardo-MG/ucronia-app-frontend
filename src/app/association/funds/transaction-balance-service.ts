@@ -1,7 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { TransactionCurrentBalance } from '@app/domain/transactions/transaction-current-balance';
-import { TransactionMonthlyBalance } from '@app/domain/transactions/transaction-monthly-balance';
 import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { TransactionCurrentBalance, TransactionMonthlyBalance } from "@ucronia/domain";
 import { addMinutes } from 'date-fns';
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';

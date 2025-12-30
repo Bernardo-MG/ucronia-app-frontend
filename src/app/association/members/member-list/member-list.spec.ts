@@ -1,7 +1,5 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberService } from '@app/association/members/member-service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { MemberList } from './member-list';
 
 describe('MemberList', () => {
@@ -10,16 +8,13 @@ describe('MemberList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        MemberList
-      ],
+      imports: [MemberList],
       providers: [
-        MemberService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        MessageService,
+        ConfirmationService
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(MemberList);
     component = fixture.componentInstance;

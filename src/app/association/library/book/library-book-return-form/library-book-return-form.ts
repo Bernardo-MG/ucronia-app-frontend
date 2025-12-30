@@ -1,10 +1,10 @@
 
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Fee } from '@app/domain/fees/fee';
-import { BookInfo } from '@app/domain/library/book-info';
-import { BookReturned } from '@app/domain/library/book-returned';
-import { Member } from '@app/domain/members/member';
+import { Fee } from "@ucronia/domain";
+import { BookInfo } from "@ucronia/domain";
+import { Borrower } from "@ucronia/domain";
+import { BookReturned } from "@ucronia/domain";
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -23,7 +23,7 @@ export class LibraryBookReturnForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set borrower(value: Member) {
+  @Input() public set borrower(value: Borrower) {
     this.form.get('borrower')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }

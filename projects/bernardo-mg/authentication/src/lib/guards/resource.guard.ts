@@ -1,28 +1,25 @@
 import { inject } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthContainer } from '../services/auth-container';
+import { Router, UrlTree } from '@angular/router';
+import { AuthService } from '../services/auth-service';
 
 /**
  * Resource guard. Allows access only if the user has the received resource permission.
- * Otherwise it redirects to the root.
+ * Otherwise redirects to the root.
  */
 export const ResourceGuard = (resource: string, action: string) => {
-  return () => {
+  return (): boolean | UrlTree => {
     const router = inject(Router);
-    const authContainer = inject(AuthContainer)
+    const authService = inject(AuthService);
     const rootRoute = '/';
-    let active;
+    let response: boolean | UrlTree;
 
-    if (authContainer.hasPermission(resource, action)) {
-      // Logged in
-      active = true;
+    if (authService.hasPermission(resource, action)) {
+      response = true;
     } else {
-      // No permission
       // Redirect to root
-      router.navigate([rootRoute], {});
-      active = false;
+      response = router.createUrlTree([rootRoute]);
     }
 
-    return active;
-  }
-}
+    return response;
+  };
+};

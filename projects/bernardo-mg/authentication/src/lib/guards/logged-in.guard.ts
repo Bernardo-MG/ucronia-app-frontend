@@ -1,35 +1,26 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
-import { AuthContainer } from '../services/auth-container';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { AuthService } from '../services/auth-service';
 
 /**
  * Logged in guard. Allows access only if the user in session is logged in. Otherwise redirects
  * to the login form.
  */
-export const LoggedInGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+export const LoggedInGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree => {
   const router = inject(Router);
-  const authContainer = inject(AuthContainer)
+  const authService = inject(AuthService)
   const loginRoute = '/login';
-  let active;
+  let response: boolean | UrlTree;
 
-  if (authContainer.logged) {
+  if (authService.logged || state.url === loginRoute) {
     // Logged in
-    active = true;
+    response = true;
   } else {
     // Not logged in
     // Redirect to login
-
-    // Prepare URL redirection for successful login
-    let params;
-    if ((state.url) && (state.url.length) && (state.url.split('?')[0] !== loginRoute)) {
-      params = { queryParams: { returnUrl: state.url } };
-    } else {
-      params = {};
-    }
-
-    router.navigate([loginRoute], params);
-    active = false;
+    const params = { queryParams: state.url !== loginRoute ? { returnUrl: state.url } : {} };
+    response = router.createUrlTree([loginRoute], params);
   }
 
-  return active;
+  return response;
 }

@@ -1,11 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Fee } from '@app/domain/fees/fee';
-import { FeeCreation } from '@app/domain/fees/fee-creation';
-import { FeePayment } from '@app/domain/fees/fee-payment';
-import { FeeUpdate } from '@app/domain/fees/fee-update';
-import { Active } from '@app/domain/person/active';
-import { Person } from '@app/domain/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { FeeCreation, FeeUpdate } from '@ucronia/api';
+import { Fee, FeePayment, Member, MemberStatus, Profile } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -22,7 +18,7 @@ export class FeeService {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public create(data: FeeCreation): Observable<FeePayment> {
@@ -61,18 +57,18 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public getPersons(page: number, active: Active): Observable<PaginatedResponse<Person>> {
+  public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Person>>();
+      .read<PaginatedResponse<Member>>();
   }
 
-  public getOnePerson(id: number): Observable<Person> {
+  public getOneContact(id: number): Observable<Profile> {
     return this.memberClient
       .appendRoute(`/${id}`)
-      .read<SimpleResponse<Person>>()
+      .read<SimpleResponse<Profile>>()
       .pipe(map(r => r.content));
   }
 

@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BookLending } from '@app/domain/library/book-lending';
-import { LentBook } from '@app/domain/library/lent-book';
+import { BookLending } from "@ucronia/domain";
+import { LentBook } from "@ucronia/domain";
 import { LibraryBookLendings } from './library-book-lendings';
 
 describe('LibraryBookLendings', () => {

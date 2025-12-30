@@ -1,9 +1,9 @@
 
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { FeeCreation } from '@app/domain/fees/fee-creation';
 import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { FeeCreation } from '@ucronia/api';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';

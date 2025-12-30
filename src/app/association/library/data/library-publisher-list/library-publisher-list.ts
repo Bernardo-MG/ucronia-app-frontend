@@ -1,6 +1,6 @@
 
 import { Component, inject } from '@angular/core';
-import { CrudNameList } from '../../../../shared/data/crud-name-list/crud-name-list';
+import { CrudNameList } from '@app/shared/data/crud-name-list/crud-name-list';
 import { PublisherCrudService } from '../publisher-crud-service';
 
 @Component({

@@ -1,18 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Author } from '@app/domain/library/author';
-import { BookInfo } from '@app/domain/library/book-info';
-import { BookLent } from '@app/domain/library/book-lent';
-import { BookReturned } from '@app/domain/library/book-returned';
-import { BookType } from '@app/domain/library/book-type';
-import { BookUpdate } from '@app/domain/library/book-update';
-import { FictionBook } from '@app/domain/library/fiction-book';
-import { GameBook } from '@app/domain/library/game-book';
-import { GameSystem } from '@app/domain/library/game-system';
-import { Publisher } from '@app/domain/library/publisher';
-import { Member } from '@app/domain/members/member';
-import { Active } from '@app/domain/person/active';
-import { Person } from '@app/domain/person/person';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { BookUpdate } from '@ucronia/api';
+import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -46,11 +35,11 @@ export class LibraryService {
     this.fictionBookClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/person');
+    this.donorClient = clientProvider.url(environment.apiUrl + '/profile');
     this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
     this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/person');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/profile');
   }
 
   public createGameBook(data: BookInfo): Observable<BookInfo> {
@@ -182,26 +171,26 @@ export class LibraryService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Person>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Profile>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
       .read();
   }
 
-  public lend(data: BookLent): Observable<BookLent> {
+  public lend(data: BookLent): Observable<BookLending> {
     return this.lendingClient
-      .create<SimpleResponse<BookLent>>(data)
+      .create<SimpleResponse<BookLending>>(data)
       .pipe(map(r => r.content));
   }
 
-  public return(data: BookReturned): Observable<BookReturned> {
+  public return(data: BookReturned): Observable<BookLending> {
     return this.lendingClient
-      .update<SimpleResponse<BookReturned>>(data)
+      .update<SimpleResponse<BookLending>>(data)
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number, active: Active): Observable<PaginatedResponse<Member>> {
+  public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

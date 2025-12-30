@@ -1,0 +1,38 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  
+  <!-- Name -->
+  <div formGroupName="name" class="flex flex-col gap-2">
+  
+    <label for="firstNameInput" class="font-medium">
+      Nombre
+    </label>
+  
+    <div class="flex flex-col md:items-end md:flex-row gap-4">
+      <p-inputgroup class="mb-2 d-flex">
+        <p-inputgroup-addon>
+          <i class="pi pi-user"></i>
+        </p-inputgroup-addon>
+        <input pInputText type="text" id="firstNameInput" formControlName="firstName"
+          [invalid]="isFieldInvalid('name.firstName')" placeholder="Nombre" />
+        <input pInputText type="text" id="lastNameInput" formControlName="lastName"
+          [invalid]="isFieldInvalid('name.lastName')" placeholder="Apellidos" />
+      </p-inputgroup>
+    </div>
+  
+  </div>
+
+  @for (failure of failures().getFailures('name.firstName'); track failure) {
+    <p-message severity="error" size="small" variant="simple">
+      {{ failure.message }}
+    </p-message>
+  }
+
+  @for (failure of failures().getFailures('name.lastName'); track failure) {
+    <p-message severity="error" size="small" variant="simple">
+      {{ failure.message }}
+    </p-message>
+  }
+
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

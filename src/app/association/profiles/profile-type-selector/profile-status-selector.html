@@ -1,0 +1,4 @@
+<div class="border border-gray-300 rounded-lg p-1 inline-block">
+  <p-selectbutton [options]="statusOptions" [(ngModel)]="selectedStatus" optionLabel="label" optionValue="value"
+    aria-labelledby="basic" (onChange)="filter.emit($event.value)" />
+</div>

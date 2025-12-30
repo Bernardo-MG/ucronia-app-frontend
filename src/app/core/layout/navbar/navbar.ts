@@ -1,7 +1,7 @@
 
 import { Component, inject, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { MenubarModule } from 'primeng/menubar';
@@ -17,7 +17,7 @@ export class Navbar {
 
   public readonly toggleMenu = output<boolean>();
 
-  private readonly authContainer = inject(AuthContainer);
+  private readonly authService = inject(AuthService);
 
   public readonly title;
 
@@ -25,8 +25,12 @@ export class Navbar {
 
   public readonly showSecurity;
 
+  public get loggedIn() {
+    return this.authService.logged;
+  }
+
   public get loggedOut() {
-    return !this.authContainer.logged;
+    return !this.authService.logged;
   }
 
   constructor() {

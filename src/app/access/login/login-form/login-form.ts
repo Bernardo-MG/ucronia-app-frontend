@@ -1,12 +1,13 @@
-
 import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { UserLogin } from '../models/user-login';
+import { LoginRequest } from '../models/login-request';
 
 /**
  * Login form component. Dumb component for just handling the form.
@@ -14,8 +15,8 @@ import { UserLogin } from '../models/user-login';
  * Includes checkbox for the 'remember me' functionality.
  */
 @Component({
-  selector: 'login-login-form',
-  imports: [FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
+  selector: 'login-form',
+  imports: [FormsModule, ReactiveFormsModule, ToggleSwitchModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, IconFieldModule, InputIconModule],
   templateUrl: './login-form.html'
 })
 export class LoginForm {
@@ -46,7 +47,7 @@ export class LoginForm {
   /**
    * Login event. Sent when the user accepts the data in the form.
    */
-  public readonly login = output<UserLogin>();
+  public readonly login = output<LoginRequest>();
 
   /**
    * Remember me event. Sent when the user changes the remember me flag.
@@ -63,20 +64,6 @@ export class LoginForm {
    */
   public get loginEnabled(): boolean {
     return ((this.form.valid) && (!this.waiting));
-  }
-
-  /**
-   * Remember me enabled flag.
-   */
-  public get rememberMeEnabled(): boolean {
-    return (!this.waiting);
-  }
-
-  /**
-   * Lost password enabled flag.
-   */
-  public get lostPasswordEnabled(): boolean {
-    return (!this.waiting);
   }
 
   /**
@@ -99,7 +86,7 @@ export class LoginForm {
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
-      const user = new UserLogin(this.form.value.username, this.form.value.password);
+      const user = new LoginRequest(this.form.value.username, this.form.value.password);
       this.login.emit(user);
     }
   }
@@ -107,11 +94,11 @@ export class LoginForm {
   /**
    * Handler for the remember me event.
    * 
-   * @param event checkbox selection param
+   * @param checked remember me flag
    */
-  public onRememberMe(event: any) {
-    if (this.rememberMeEnabled) {
-      this.rememberMe.emit(event.checked);
+  public onRememberMe(checked: boolean) {
+    if (!this.waiting) {
+      this.rememberMe.emit(checked);
     }
   }
 
@@ -119,7 +106,7 @@ export class LoginForm {
    * Handler for the lost password event.
    */
   public onLostPasword() {
-    if (this.lostPasswordEnabled) {
+    if (!this.waiting) {
       // TODO: The 'emit' function requires a mandatory void argument
       this.lostPassword.emit();
     }

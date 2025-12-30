@@ -1,0 +1,9 @@
+<div class="flex items-center justify-center p-4">
+  <p-card class="w-full md:w-1/2 lg:w-1/3">
+    <ng-template #title>
+      <h2>Acceder a Ucronía</h2>
+    </ng-template>
+    <login-form [waiting]="waiting" [failedLogin]="failedLogin" (login)="onLogin($event)"
+      (rememberMe)="onRememberMe($event)" (lostPassword)="onLostPassword()"></login-form>
+  </p-card>
+</div>

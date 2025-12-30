@@ -1,74 +1,61 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { MemberService } from '@app/association/members/member-service';
-import { Member } from '@app/domain/members/member';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { Component, inject, input, output } from '@angular/core';
+import { MemberStatusTag } from '@app/shared/profile/member-status-tag/member-status-tag';
+import { SortingEvent } from '@app/shared/request/sorting-event';
+import { Member } from "@ucronia/domain";
+import { ConfirmationService } from 'primeng/api';
+import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize } from 'rxjs';
-import { MemberInfo } from '../member-info/member-info';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [CardModule, TableModule, DialogModule, ButtonModule, MemberInfo],
+  imports: [TableModule, ButtonModule, BadgeModule, MemberStatusTag],
   templateUrl: './member-list.html'
 })
-export class MemberList implements OnInit {
+export class MemberList {
 
-  private readonly service = inject(MemberService);
+  private readonly confirmationService = inject(ConfirmationService);
+
+  public readonly loading = input(false);
+  public readonly readProfile = input(false);
+  public readonly editable = input(false);
+  public readonly deletable = input(false);
+  public readonly members = input<Member[]>([]);
+  public readonly rows = input(0);
+  public readonly page = input(0);
+  public readonly totalRecords = input(0);
+
+  public readonly show = output<Member>();
+  public readonly delete = output<number>();
+  public readonly edit = output<Member>();
+  public readonly changeDirection = output<SortingEvent>();
+  public readonly changePage = output<number>();
 
   public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
-
-  public data = new PaginatedResponse<Member>();
-
-  public selectedData = new Member();
-
-  private sort = new Sorting();
-
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-  public showing = false;
-
-  public ngOnInit(): void {
-    this.load(0);
-  }
-
-  public onChangeDirection(sorting: { field: string, order: number }) {
-    if (sorting.field === 'fullName') {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-      this.sort.addField(new SortingProperty('firstName', direction));
-      this.sort.addField(new SortingProperty('lastName', direction));
-    }
-
-    this.load(this.data.page);
+    return (this.page() - 1) * this.rows();
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
   }
 
-  public onShowInfo(member: Member) {
-    this.loading = true;
-    this.service.getOne(member.number)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.selectedData = response);
-    this.showing = true;
-  }
-
-  private load(page: number) {
-    this.loading = true;
-
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
+  public confirmDelete(event: Event, number: number) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.delete.emit(number)
+    });
   }
 
 }

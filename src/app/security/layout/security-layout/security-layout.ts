@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { AuthContainer } from '@bernardo-mg/authentication';
+import { AuthService } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 
@@ -14,9 +14,9 @@ export class SecurityLayout {
   public readonly menus: MenuItem[];
 
   constructor() {
-    const authContainer = inject(AuthContainer);
+    const authService = inject(AuthService);
     const items = [];
-    if (authContainer.hasPermission('user', 'view')) {
+    if (authService.hasPermission('user', 'view')) {
       items.push(
         {
           label: 'Usuarios',
@@ -24,7 +24,7 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('role', 'view')) {
+    if (authService.hasPermission('role', 'view')) {
       items.push(
         {
           label: 'Roles',
@@ -32,7 +32,7 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('user_token', 'view')) {
+    if (authService.hasPermission('user_token', 'view')) {
       items.push(
         {
           label: 'Tokens de usuario',
@@ -40,7 +40,7 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authContainer.hasPermission('user', 'view')) {
+    if (authService.hasPermission('user', 'view')) {
       items.push(
         {
           label: 'Auditoría',

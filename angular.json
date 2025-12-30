@@ -37,12 +37,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/angular-calendar/css/angular-calendar.css",
-              "./node_modules/bootswatch/dist/yeti/bootstrap.min.css"
-            ],
-            "scripts": [
-              "./node_modules/@popperjs/core/dist/umd/popper.min.js",
-              "./node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "./node_modules/angular-calendar/css/angular-calendar.css"
             ]
           },
           "configurations": {
@@ -317,6 +312,98 @@
             "lintFilePatterns": [
               "projects/bernardo-mg/form/**/*.ts",
               "projects/bernardo-mg/form/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@ucronia/domain": {
+      "projectType": "library",
+      "root": "projects/ucronia/domain",
+      "sourceRoot": "projects/ucronia/domain/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ucronia/domain/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ucronia/domain/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
+          "options": {
+            "tsConfig": "projects/ucronia/domain/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ucronia/domain/**/*.ts",
+              "projects/ucronia/domain/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@ucronia/api": {
+      "projectType": "library",
+      "root": "projects/ucronia/api",
+      "sourceRoot": "projects/ucronia/api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ucronia/api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ucronia/api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
+          "options": {
+            "tsConfig": "projects/ucronia/api/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ucronia/api/**/*.ts",
+              "projects/ucronia/api/**/*.html"
             ]
           }
         }

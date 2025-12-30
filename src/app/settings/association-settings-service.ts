@@ -3,6 +3,7 @@ import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request'
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 import { Setting } from './models/setting';
+import { SettingChange } from './models/setting-change';
 
 @Injectable({
   providedIn: "root"
@@ -23,7 +24,7 @@ export class AssociationSettingsService {
       .pipe(map(r => r.content));
   }
 
-  public update(code: string, setting: Setting): Observable<Setting> {
+  public update(code: string, setting: SettingChange): Observable<Setting> {
     return this.client
       .appendRoute(`/${code}`)
       .update<SimpleResponse<Setting>>(setting)

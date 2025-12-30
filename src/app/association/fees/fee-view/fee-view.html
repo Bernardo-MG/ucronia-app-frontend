@@ -1,0 +1,85 @@
+<div class="p-4 space-y-6">
+  <p-menu #feeCreationMenu [model]="creationItems" [popup]="true" />
+
+  <!-- Centered Chart Card -->
+  <div class="pb-2 flex justify-center">
+    <div class="w-full md:w-2/5 pb-2">
+      <p-card>
+        <ng-template #title>
+          Pagos de cuotas
+        </ng-template>
+        <assoc-fee-payment-balance-chart [report]="report" />
+      </p-card>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    @if (createable) {
+    <div class="ml-auto space-x-2">
+      <p-button icon="pi pi-plus-circle" (click)="feeCreationMenu.toggle($event)" [disabled]="!createable"
+        aria-label="Nueva cuota" [attr.aria-disabled]="!createable" rounded />
+    </div>
+    }
+  </div>
+
+  <!-- Fee Calendar Panel -->
+  <div class="w-full">
+    <p-panel class="shadow rounded-lg">
+
+      <ng-template #icons>
+        <assoc-member-status-select [disabled]="loadingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
+
+      </ng-template>
+
+      <!-- Calendar -->
+      <assoc-fee-calendar [year]="year" [range]="range" [loading]="loadingCalendar" [feeCalendar]="feeCalendar"
+        (goToYear)="loadCalendar($event)" (selectFee)="onSelectFee($event)" />
+
+    </p-panel>
+  </div>
+
+  <!-- Fee Info Dialog -->
+  <p-dialog header="Cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }" class="rounded-lg"
+    contentStyleClass="p-4 space-y-4">
+    <assoc-fee-info [data]="selectedData" [loading]="loading" />
+
+    <div class="flex space-x-2">
+      <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
+        [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text class="!p-2" />
+
+      <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
+        [attr.aria-disabled]="!deletable" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
+    </div>
+  </p-dialog>
+
+  <!-- Dialogs for Creation / Payment / Edition -->
+  @switch (view) {
+
+  @case('create') {
+  <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }"
+    class="rounded-lg">
+    <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)"
+      (selectMember)="onSelectMember($event)">
+      <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
+        (save)="onCreateUnpaid($event)" />
+    </assoc-member-select-stepper>
+  </p-dialog>
+  }
+
+  @case('pay') {
+  <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
+    <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)"
+      (selectMember)="onSelectMember($event)">
+      <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
+    </assoc-member-select-stepper>
+  </p-dialog>
+  }
+
+  @case('edition') {
+  <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
+    <assoc-fee-edition-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+  </p-dialog>
+  }
+
+  }
+</div>

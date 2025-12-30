@@ -1,16 +1,16 @@
 
 import { Component, inject } from '@angular/core';
-import { AccountProfilePerson } from '@app/account/account-profile-person/account-profile-person';
+import { AccountProfileProfile } from '@app/account/account-profile-profile/account-profile-profile';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account-service';
-import { Person } from '@app/domain/person/person';
+import { Profile } from "@ucronia/domain";
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';
 
 @Component({
   selector: 'account-profile-frontpage',
-  imports: [CardModule, SkeletonModule, AccountProfilePerson],
+  imports: [CardModule, SkeletonModule, AccountProfileProfile],
   templateUrl: './account-profile-frontpage.html'
 })
 export class AccountProfileFrontpage {
@@ -19,8 +19,8 @@ export class AccountProfileFrontpage {
 
   public loading = false;
 
-  public get person() {
-    return this.account.person as Person;
+  public get profile() {
+    return this.account.profile as Profile;
   }
 
   constructor() {

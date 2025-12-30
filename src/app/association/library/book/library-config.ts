@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Language } from '@app/domain/library/language';
+import { Language } from "@ucronia/domain";
 
 @Injectable({
   providedIn: "root"

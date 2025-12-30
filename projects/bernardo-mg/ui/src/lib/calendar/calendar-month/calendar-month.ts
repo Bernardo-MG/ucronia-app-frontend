@@ -6,13 +6,12 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { format, isSameDay, isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
-import { JustifyCenterDirective } from '../../directives/justify-center.directive';
 
 
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, JustifyCenterDirective, CalendarMonthViewComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,

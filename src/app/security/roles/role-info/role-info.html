@@ -1,0 +1,29 @@
+<!-- Name -->
+<div class="grid grid-cols-12 py-1">
+  <div class="col-span-3 text-blue-600 font-medium">Nombre</div>
+  <div class="col-span-9">
+    @if (loading()) {
+      <p-skeleton class="mb-2" />
+    } @else {
+      {{ data().name }}
+    }
+  </div>
+</div>
+<!-- Permissions -->
+<p-table lazy="true" dataKey="name" [loading]="loading()" [value]="rolePermissions.content" paginator="true"
+  [rows]="rolePermissions.size" [totalRecords]="rolePermissions.totalElements" [first]="firstRolePermission"
+  (onPage)="onPermissionsPageChange($event)" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}">
+  <ng-template #header>
+    <tr>
+      <th>Recurso</th>
+      <th>Acción</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-permission>
+    <tr>
+      <td>{{permission.resource}}</td>
+      <td>{{permission.action}}</td>
+    </tr>
+  </ng-template>
+</p-table>
