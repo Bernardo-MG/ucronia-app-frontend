@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookInfo, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
+import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -178,15 +178,15 @@ export class LibraryService {
       .read();
   }
 
-  public lend(data: BookLent): Observable<BookLent> {
+  public lend(data: BookLent): Observable<BookLending> {
     return this.lendingClient
-      .create<SimpleResponse<BookLent>>(data)
+      .create<SimpleResponse<BookLending>>(data)
       .pipe(map(r => r.content));
   }
 
-  public return(data: BookReturned): Observable<BookReturned> {
+  public return(data: BookReturned): Observable<BookLending> {
     return this.lendingClient
-      .update<SimpleResponse<BookReturned>>(data)
+      .update<SimpleResponse<BookLending>>(data)
       .pipe(map(r => r.content));
   }
 
