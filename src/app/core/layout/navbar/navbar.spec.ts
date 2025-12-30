@@ -75,7 +75,7 @@ describe('Navbar', () => {
       mockLayoutService.showSecurityLink.and.returnValue(true);
 
       mockAuthService.hasPermission.and.callFake((resource: string, action: string) => {
-        return ['contact', 'funds', 'library'].includes(resource) && action === 'view';
+        return ['profile', 'funds', 'library'].includes(resource) && action === 'view';
       });
 
       createComponent();

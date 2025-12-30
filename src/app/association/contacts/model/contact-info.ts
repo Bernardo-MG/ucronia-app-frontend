@@ -1,9 +1,9 @@
-export class ContactInfo {
+export class ProfileInfo {
   public number = -1;
   public identifier = '';
   public birthDate = new Date();
-  public name = new ContactInfoName();
-  public contactChannels: ContactInfoChannel[] = [];
+  public name = new ProfileInfoName();
+  public contactChannels: ProfileInfoChannel[] = [];
   public games?: Date[] = [];
   public years?: number[] = [];
   public types: string[] = [];
@@ -12,18 +12,18 @@ export class ContactInfo {
   public renew? = false;
 }
 
-export class ContactInfoChannel {
-  public method = new ContactInfoMethod();
+export class ProfileInfoChannel {
+  public method = new ProfileInfoMethod();
   public detail = '';
 }
 
-export class ContactInfoName {
+export class ProfileInfoName {
   public fullName = '';
   public firstName = '';
   public lastName = '';
 }
 
-export class ContactInfoMethod {
+export class ProfileInfoMethod {
   public number = -1;
   public name = '';
 }

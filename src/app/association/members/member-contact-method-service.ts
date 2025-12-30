@@ -7,7 +7,7 @@ import { Observable, expand, of, reduce } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MemberContactMethodService {
+export class MemberProfileMethodService {
 
   private readonly contactMethodClient;
 

@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
-  selector: 'assoc-contact-method-list',
+  selector: 'assoc-profile-method-list',
   imports: [ButtonModule, TableModule],
   templateUrl: './contact-method-list.html'
 })
@@ -34,7 +34,7 @@ export class ContactMethodList {
     this.changePage.emit(page);
   }
 
-  public confirmDelete(event: Event, contact: ContactMethod) {
+  public confirmDelete(event: Event, contactMethod: ContactMethod) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -48,7 +48,7 @@ export class ContactMethodList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit(contact.number)
+      accept: () => this.delete.emit(contactMethod.number)
     });
   }
 

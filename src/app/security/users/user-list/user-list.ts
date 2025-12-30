@@ -16,7 +16,7 @@ export class UserList {
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly loading = input(false);
-  public readonly readContact = input(false);
+  public readonly readProfile = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
   public readonly users = input<User[]>([]);

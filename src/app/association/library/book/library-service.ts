@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { BookUpdate } from "@ucronia/api";
-import { Author, BookInfo, BookLent, BookReturned, BookType, Contact, FictionBook, GameBook, GameSystem, Member, MemberStatus, Publisher } from "@ucronia/domain";
+import { BookUpdate } from '@ucronia/api';
+import { Author, BookInfo, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { Observable, map } from 'rxjs';
 
@@ -171,7 +171,7 @@ export class LibraryService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Contact>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Profile>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

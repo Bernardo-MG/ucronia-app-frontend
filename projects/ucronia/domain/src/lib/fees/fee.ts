@@ -1,4 +1,4 @@
-import { ContactName } from "../contacts/contact-name";
+import { ProfileName } from "../profiles/profile-name";
 
 export class Fee {
   public month = new Date();
@@ -14,5 +14,5 @@ export class FeeTransaction {
 
 export class FeeMember {
   public number = -1;
-  public name = new ContactName();
+  public name = new ProfileName();
 }

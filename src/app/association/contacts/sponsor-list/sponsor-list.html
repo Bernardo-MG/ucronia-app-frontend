@@ -1,4 +1,4 @@
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="contacts()" paginator="true" [rows]="rows()"
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="profiles()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)">
@@ -8,17 +8,17 @@
       <th class="w-40"></th>
     </tr>
   </ng-template>
-  <ng-template #body let-contact>
+  <ng-template #body let-profile>
     <tr>
       <td>
-        {{ contact.name.fullName }}
+        {{ profile.name.fullName }}
       </td>
       <td class="w-40">
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(contact)" rounded text />
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(profile)" rounded text />
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          [attr.aria-disabled]="!editable()" (click)="edit.emit(contact)" rounded text />
+          [attr.aria-disabled]="!editable()" (click)="edit.emit(profile)" rounded text />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-          [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, contact)" rounded text />
+          [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, profile)" rounded text />
       </td>
     </tr>
   </ng-template>

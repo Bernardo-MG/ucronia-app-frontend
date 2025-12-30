@@ -76,7 +76,7 @@ export class BookRelationshipSelectionService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Contact>> {
+  public getDonors(page: number): Observable<PaginatedResponse<Profile>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { ContactPatch, MemberCreation, MemberPatch } from '@ucronia/api';
-import { Contact, Member, MemberContact, MemberStatus } from "@ucronia/domain";
+import { MemberCreation, MemberPatch, ProfilePatch } from '@ucronia/api';
+import { Member, MemberProfile, MemberStatus, Profile } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, forkJoin, map, tap, throwError } from 'rxjs';
@@ -43,10 +43,10 @@ export class MemberService {
       .read<PaginatedResponse<Member>>();
   }
 
-  public getContact(number: number): Observable<MemberContact> {
+  public getContact(number: number): Observable<MemberProfile> {
     return forkJoin({
       member: this.getOne(number),
-      contact: this.getMemberContact(number)
+      contact: this.getMemberProfile(number)
     }).pipe(
       map(({ member, contact }) => ({
         ...contact,
@@ -71,8 +71,8 @@ export class MemberService {
       );
   }
 
-  public update(data: MemberContact): Observable<MemberContact> {
-    const contactPatch: ContactPatch = {
+  public update(data: MemberProfile): Observable<MemberProfile> {
+    const contactPatch: ProfilePatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
         return {
@@ -127,10 +127,10 @@ export class MemberService {
       );
   }
 
-  private getMemberContact(number: number): Observable<Contact> {
+  private getMemberProfile(number: number): Observable<Profile> {
     return this.contactClient
       .appendRoute(`/${number}`)
-      .read<SimpleResponse<Contact>>()
+      .read<SimpleResponse<Profile>>()
       .pipe(map(r => r.content));
   }
 
@@ -148,10 +148,10 @@ export class MemberService {
       .pipe(map(r => r.content));
   }
 
-  private patchContact(data: ContactPatch): Observable<Contact> {
+  private patchContact(data: ProfilePatch): Observable<Profile> {
     return this.contactClient
       .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Contact>>(data)
+      .patch<SimpleResponse<Profile>>(data)
       .pipe(map(r => r.content));
   }
 

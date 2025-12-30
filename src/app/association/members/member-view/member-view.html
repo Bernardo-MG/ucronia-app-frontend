@@ -30,7 +30,7 @@
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <!-- Filter by name -->
     <ui-text-filter (filter)="onFilter($event)" />
-    @if(readContact) {
+    @if(readProfile) {
       <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
     }
 
@@ -45,7 +45,7 @@
   <!-- Table Panel -->
   <p-panel class="shadow bg-white rounded-lg">
 
-    <assoc-member-list [loading]="loading" [editable]="editable" [readContact]="readContact" [deletable]="deletable"
+    <assoc-member-list [loading]="loading" [editable]="editable" [readProfile]="readProfile" [deletable]="deletable"
       [members]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
       (show)="onShowContact($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
       (changePage)="load($event)" (edit)="onStartEditing($event)" />
@@ -55,12 +55,12 @@
   <!-- View member dialog -->
   <p-dialog [header]="'#' + selectedData.number + ' ' + selectedData.name.fullName" [modal]="true" [(visible)]="showing"
     [style]="{ width: '35rem' }">
-    <assoc-member-contact-details [loading]="loading" [data]="memberContact" />
+    <assoc-member-profile-details [loading]="loading" [data]="memberContact" />
   </p-dialog>
 
   <!-- Creation dialog -->
   <p-dialog header="Crear socio" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
-    <assoc-contact-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    <assoc-profile-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
 
   <!-- Edition dialog -->

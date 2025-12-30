@@ -87,7 +87,7 @@ export class AssociationLayout {
 
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('contact', 'view')) {
+    if (authService.hasPermission('profile', 'view')) {
       items.push(
         {
           label: 'Contactos',

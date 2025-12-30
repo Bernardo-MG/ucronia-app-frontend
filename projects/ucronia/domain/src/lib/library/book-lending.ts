@@ -1,4 +1,4 @@
-import { ContactName } from "../contacts/contact-name";
+import { ProfileName } from "../profiles/profile-name";
 import { LentBook } from "./lent-book";
 
 
@@ -12,5 +12,5 @@ export class BookLending {
 
 export class Borrower {
   public number = -1;
-  public name = new ContactName();
+  public name = new ProfileName();
 }

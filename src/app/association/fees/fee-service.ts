@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { FeeCreation, FeeUpdate } from "@ucronia/api";
-import { Contact, Fee, FeePayment, Member, MemberStatus } from "@ucronia/domain";
+import { FeeCreation, FeeUpdate } from '@ucronia/api';
+import { Fee, FeePayment, Member, MemberStatus, Profile } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -65,10 +65,10 @@ export class FeeService {
       .read<PaginatedResponse<Member>>();
   }
 
-  public getOneContact(id: number): Observable<Contact> {
+  public getOneContact(id: number): Observable<Profile> {
     return this.memberClient
       .appendRoute(`/${id}`)
-      .read<SimpleResponse<Contact>>()
+      .read<SimpleResponse<Profile>>()
       .pipe(map(r => r.content));
   }
 

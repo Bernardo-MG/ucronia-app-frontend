@@ -9,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-contact-method-form',
+  selector: 'assoc-profile-method-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
   templateUrl: './contact-method-form.html'
 })

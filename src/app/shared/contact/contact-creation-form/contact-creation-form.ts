@@ -10,16 +10,16 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-contact-creation-form',
+  selector: 'assoc-profile-creation-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './contact-creation-form.html'
 })
-export class ContactCreationForm implements OnChanges {
+export class ProfileCreationForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ContactCreationEvent>();
+  public readonly save = output<ProfileCreationEvent>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
@@ -59,7 +59,7 @@ export class ContactCreationForm implements OnChanges {
 
 }
 
-export class ContactCreationEvent {
+export class ProfileCreationEvent {
   constructor(
     public name: { firstName: string, lastName: string }
   ) { }

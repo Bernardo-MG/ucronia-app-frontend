@@ -33,13 +33,13 @@
     </div>
   </div>
 </p-card>
-@if (account.contact) {
+@if (account.profile) {
 <article class="p-4">
   <header>
     <h2 class="border-bottom">Socio</h2>
   </header>
   <p-card>
-    <account-profile-contact [data]="contact" />
+    <account-profile-profile [data]="profile" />
   </p-card>
 </article>
 }
