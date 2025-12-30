@@ -5,7 +5,7 @@
 
     <!-- Types -->
     <div #typeSelector>
-      <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de contacto"
+      <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de perfil"
         styleClass="type-selector" [multiple]="true" [ngModel]="selected" [ngModelOptions]="{standalone: true}"
         (onChange)="confirmTypeTransformation($event, typeSelector)">
         <ng-template let-option pTemplate="item">
@@ -95,7 +95,7 @@
   <div class="mb-2 space-y-3" formArrayName="contactChannels">
 
     <div class="flex items-center justify-between">
-      <h3 class="text-sm font-semibold text-gray-600">Canales de contacto</h3>
+      <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
       <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addContactChannel()">
       </p-button>
     </div>

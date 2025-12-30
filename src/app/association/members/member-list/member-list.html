@@ -23,7 +23,7 @@
       <td class="flex justify-end space-x-2 w-50 py-2 px-4">
         @if (readProfile()) {
           <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [disabled]="!readProfile()"
-            [attr.aria-disabled]="!readProfile()" aria-label="Mostrar contacto" (click)="show.emit(member)" rounded text
+            [attr.aria-disabled]="!readProfile()" aria-label="Mostrar perfil" (click)="show.emit(member)" rounded text
             class="!p-2"></p-button>
         }
 

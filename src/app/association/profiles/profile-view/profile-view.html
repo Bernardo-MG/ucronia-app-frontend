@@ -57,7 +57,7 @@
     @if (createable) {
       <div class="ml-auto space-x-2">
         <p-button icon="pi pi-plus-circle" (click)="creating = true" [disabled]="!createable"
-          aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded />
+          aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded />
       </div>
     }
   </div>
@@ -103,7 +103,7 @@
     </ng-template>
     <ng-template #icons>
       <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingMethod = true" [disabled]="!createable"
-        aria-label="Nuevo contacto" [attr.aria-disabled]="!createable" rounded text />
+        aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
     </ng-template>
     <p class="m-0">
       <assoc-profile-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
@@ -120,12 +120,12 @@
   </p-dialog>
 
   <!-- Creation dialog -->
-  <p-dialog header="Crear contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
+  <p-dialog header="Crear perfil" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
     <assoc-profile-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
   </p-dialog>
 
   <!-- Edition dialog -->
-  <p-dialog header="Editar contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+  <p-dialog header="Editar perfil" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-profile-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
       [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" (typeSelected)="onTypeSelected($event)" />
   </p-dialog>
