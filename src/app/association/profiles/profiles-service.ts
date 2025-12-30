@@ -21,7 +21,7 @@ export class ProfilesService {
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/contact');
+    this.client = clientProvider.url(environment.apiUrl + '/profile');
     this.guestClient = clientProvider.url(environment.apiUrl + '/contact/guest');
     this.memberClient = clientProvider.url(environment.apiUrl + '/contact/member');
     this.sponsorClient = clientProvider.url(environment.apiUrl + '/contact/sponsor');

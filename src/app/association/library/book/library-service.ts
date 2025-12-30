@@ -35,11 +35,11 @@ export class LibraryService {
     this.fictionBookClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
     this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
     this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.donorClient = clientProvider.url(environment.apiUrl + '/profile');
     this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
     this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/profile');
   }
 
   public createGameBook(data: BookInfo): Observable<BookInfo> {

@@ -20,7 +20,7 @@ export class MemberService {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/member');
-    this.contactClient = clientProvider.url(environment.apiUrl + '/contact');
+    this.contactClient = clientProvider.url(environment.apiUrl + '/profile');
   }
 
   public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
