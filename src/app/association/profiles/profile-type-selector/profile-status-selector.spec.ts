@@ -2,16 +2,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileStatusSelector } from './profile-status-selector';
 
 describe('ProfileStatusSelector', () => {
-  let component: ContactStatusSelector;
-  let fixture: ComponentFixture<ContactStatusSelector>;
+  let component: ProfileStatusSelector;
+  let fixture: ComponentFixture<ProfileStatusSelector>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ContactStatusSelector]
+      imports: [ProfileStatusSelector]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ContactStatusSelector);
+    fixture = TestBed.createComponent(ProfileStatusSelector);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

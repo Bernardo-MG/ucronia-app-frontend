@@ -32,7 +32,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
   imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
   templateUrl: './profile-view.html'
 })
-export class ContactView implements OnInit {
+export class ProfileView implements OnInit {
 
   private readonly service = inject(ProfilesService);
   private readonly contactMethodService = inject(ContactMethodService);

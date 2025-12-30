@@ -3,13 +3,13 @@ import { ConfirmationService } from 'primeng/api';
 import { ProfileEditionForm } from './profile-edition-form';
 
 describe('ProfileEditionForm', () => {
-  let component: ContactEditionForm;
-  let fixture: ComponentFixture<ContactEditionForm>;
+  let component: ProfileEditionForm;
+  let fixture: ComponentFixture<ProfileEditionForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ContactEditionForm
+        ProfileEditionForm
       ],
       providers: [
         ConfirmationService
@@ -17,7 +17,7 @@ describe('ProfileEditionForm', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ContactEditionForm);
+    fixture = TestBed.createComponent(ProfileEditionForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

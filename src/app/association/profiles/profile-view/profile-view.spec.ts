@@ -7,13 +7,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProfileView } from './profile-view';
 
 describe('ProfileView', () => {
-  let component: ContactView;
-  let fixture: ComponentFixture<ContactView>;
+  let component: ProfileView;
+  let fixture: ComponentFixture<ProfileView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ContactView
+        ProfileView
       ],
       providers: [
         ConfirmationService,
@@ -26,7 +26,7 @@ describe('ProfileView', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ContactView);
+    fixture = TestBed.createComponent(ProfileView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

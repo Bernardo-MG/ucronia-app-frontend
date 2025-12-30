@@ -4,13 +4,13 @@ import { ConfirmationService } from 'primeng/api';
 import { ProfileList } from './profile-list';
 
 describe('ProfileList', () => {
-  let component: ContactList;
-  let fixture: ComponentFixture<ContactList>;
+  let component: ProfileList;
+  let fixture: ComponentFixture<ProfileList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ContactList
+        ProfileList
       ],
       providers: [
         ConfirmationService,
@@ -19,7 +19,7 @@ describe('ProfileList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ContactList);
+    fixture = TestBed.createComponent(ProfileList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
