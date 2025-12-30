@@ -106,7 +106,7 @@
         aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
     </ng-template>
     <p class="m-0">
-      <assoc-profile-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+      <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
         [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
         [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
         (delete)="onDeleteContactMethod($event)"
@@ -132,12 +132,12 @@
 
   <!-- Contact method creation dialog -->
   <p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
-    <assoc-profile-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
+    <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
   </p-dialog>
 
   <!-- Contact method edition dialog -->
   <p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
-    <assoc-profile-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
+    <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
       (save)="onUpdateContactMethod($event)" />
   </p-dialog>
 

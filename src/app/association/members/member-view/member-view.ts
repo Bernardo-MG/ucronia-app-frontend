@@ -14,7 +14,7 @@ import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
 import { finalize, forkJoin, Observable, Subject, throwError } from 'rxjs';
-import { MemberProfileMethodService } from '../member-contact-method-service';
+import { MemberContactMethodService } from '../member-contact-method-service';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
@@ -27,7 +27,7 @@ import { MemberService } from '../member-service';
 export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
-  private readonly memberProfileMethodService = inject(MemberProfileMethodService);
+  private readonly memberContactMethodService = inject(MemberContactMethodService);
 
   public data = new PaginatedResponse<Member>();
   public contactMethodSelection: ContactMethod[] = [];
@@ -68,7 +68,7 @@ export class MemberView implements OnInit {
     this.loading = true;
     forkJoin({
       data: this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter),
-      contactMethods: this.memberProfileMethodService.getAll()
+      contactMethods: this.memberContactMethodService.getAll()
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe(({ data, contactMethods }) => {
@@ -194,7 +194,7 @@ export class MemberView implements OnInit {
   private loadContactMethodSelection(): void {
     this.loading = true;
 
-    this.memberProfileMethodService.getAll()
+    this.memberContactMethodService.getAll()
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodSelection = response);
   }

@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { MemberContactMethodService } from './member-profile-method-service';
+import { MemberContactMethodService } from './member-contact-method-service';
 
 describe('MemberContactMethodService', () => {
   let service: MemberContactMethodService;

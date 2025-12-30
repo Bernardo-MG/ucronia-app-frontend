@@ -5,7 +5,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
-  selector: 'assoc-profile-method-list',
+  selector: 'assoc-contact-method-list',
   imports: [ButtonModule, TableModule],
   templateUrl: './contact-method-list.html'
 })
