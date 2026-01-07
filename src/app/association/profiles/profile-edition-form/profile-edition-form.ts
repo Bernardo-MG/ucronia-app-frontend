@@ -16,13 +16,12 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { FeeType } from 'projects/ucronia/domain/src/lib/fees/fee-type';
 import { ProfileInfo } from '../model/contact-info';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [
-    CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule
-  ],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm implements OnChanges {
@@ -32,6 +31,7 @@ export class ProfileEditionForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
+  public readonly feeTypes = input<FeeType[]>([]);
 
   @Input() public set data(value: ProfileInfo) {
     this.form.patchValue(value as any);
@@ -74,6 +74,10 @@ export class ProfileEditionForm implements OnChanges {
     return this.selected.includes('sponsor');
   }
 
+  public get isMember(): boolean {
+    return this.selected.includes('member');
+  }
+
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
   }
@@ -109,7 +113,8 @@ export class ProfileEditionForm implements OnChanges {
       contactChannels: this.fb.array([]),
       games: this.fb.array([]),
       years: this.fb.array([]),
-      comments: ['']
+      comments: [''],
+      feeType: [null]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -128,6 +133,8 @@ export class ProfileEditionForm implements OnChanges {
       ...this.lockedTypes,
       ...attempted.filter(v => !this.lockedTypes.includes(v))
     ];
+
+    this.updateFeeTypeValidator();
   }
 
   public addContactChannel(): void {
@@ -174,5 +181,19 @@ export class ProfileEditionForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property)
       || this.failures().hasFailures(property);
   }
+
+  private updateFeeTypeValidator() {
+    const feeTypeControl = this.form.get('feeType');
+    if (!feeTypeControl) return;
+
+    if (this.isMember) {
+      feeTypeControl.setValidators([Validators.required]);
+    } else {
+      feeTypeControl.clearValidators();
+      feeTypeControl.setValue(null); // optional: reset if not member
+    }
+    feeTypeControl.updateValueAndValidity();
+  }
+
 }
 

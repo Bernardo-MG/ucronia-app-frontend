@@ -12,6 +12,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { FeeType } from 'projects/ucronia/domain/src/lib/fees/fee-type';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
@@ -51,6 +52,7 @@ export class ProfileView implements OnInit {
 
   public selectedData = new ProfileInfo();
   public selectedContactMethodData: ContactMethod = new ContactMethod();
+  public feeTypes: FeeType[] = [];
 
   private sort = new Sorting();
 
@@ -100,9 +102,15 @@ export class ProfileView implements OnInit {
   public onShowEdit(profile: ProfileInfo) {
     this.loading = true;
     this.editing = true;
-    this.service.getOne(profile.number)
+    forkJoin({
+      profile: this.service.getOne(profile.number),
+      feeTypes: this.service.getAllFeeTypes()
+    })
       .pipe(finalize(() => this.loading = false))
-      .subscribe(profile => this.selectedData = profile);
+      .subscribe(({ profile, feeTypes }) => {
+        this.selectedData = profile;
+        this.feeTypes = feeTypes;
+      });
   }
 
   public onChangeActiveFilter(active: MemberStatus) {

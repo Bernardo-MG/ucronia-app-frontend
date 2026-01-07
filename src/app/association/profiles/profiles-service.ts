@@ -4,8 +4,9 @@ import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorP
 import { Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/contact-info';
+import { FeeType } from 'projects/ucronia/domain/src/lib/fees/fee-type';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class ProfilesService {
   private readonly guestClient;
   private readonly memberClient;
   private readonly sponsorClient;
+  private readonly feeTypeClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
@@ -25,6 +27,7 @@ export class ProfilesService {
     this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
     this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
     this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
+    this.feeTypeClient = clientProvider.url(environment.apiUrl + '/fee/type');
   }
 
   public getAll(
@@ -246,6 +249,35 @@ export class ProfilesService {
         })
       );
   }
+
+  public getAllFeeTypes(): Observable<FeeType[]> {
+    const sorting = new SortingParams(
+      [new SortingProperty('name')]
+    );
+    const pageSize = 100;
+
+    return this.feeTypeClient
+      .loadParameters(new PaginationParams(1, pageSize))
+      .loadParameters(sorting)
+      .read<PaginatedResponse<FeeType>>()
+      .pipe(
+        expand(response => {
+          if (!response.last) {
+            const nextPage = response.page + 1;
+            return this.feeTypeClient
+              .loadParameters(new PaginationParams(nextPage, pageSize))
+              .loadParameters(sorting)
+              .read<PaginatedResponse<FeeType>>();
+          }
+          return of();
+        }),
+        // accumulate types from all pages into one array
+        reduce((permissions: FeeType[], res?: PaginatedResponse<FeeType>) => {
+          return res ? [...permissions, ...res.content] : permissions;
+        }, [])
+      );
+  }
+
 
   private updateContact(data: Profile): Observable<Profile> {
     const patch: ProfilePatch = {

@@ -1,8 +1,8 @@
 import { Component, inject, Input, input, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ContactMethod } from "@ucronia/domain";
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { ContactMethod } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
