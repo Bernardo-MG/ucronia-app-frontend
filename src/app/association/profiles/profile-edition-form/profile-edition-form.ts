@@ -56,6 +56,7 @@ export class ProfileEditionForm implements OnChanges {
       this.years.push(this.fb.control(year));
     });
 
+    this.lockedTypes = [...value.types];
     this.selected = [...value.types];
   }
 
@@ -121,7 +122,13 @@ export class ProfileEditionForm implements OnChanges {
   }
 
   public onTypeChange(event: SelectButtonChangeEvent) {
-    this.selected = event.value ?? [];
+    const attempted: string[] = event.value ?? [];
+
+    // Keep locked types always selected
+    this.selected = [
+      ...this.lockedTypes,
+      ...attempted.filter(v => !this.lockedTypes.includes(v))
+    ];
   }
 
   public addContactChannel(): void {
