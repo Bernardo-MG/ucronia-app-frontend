@@ -150,14 +150,57 @@ export class ProfileView implements OnInit {
   }
 
   public onUpdate(toUpdate: ProfileInfo): void {
-    const data: ProfileInfo = {
+    const updated: ProfileInfo = {
       ...this.selectedData,
       ...toUpdate
+    };
+
+    const previousTypes = this.selectedData.types ?? [];
+    const newTypes = updated.types ?? [];
+
+    // Find added types
+    const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
+
+    let conversions: Observable<any>[] = [];
+
+    // Create conversion calls for new types
+    for (const type of addedTypes) {
+      switch (type) {
+        case 'member':
+          conversions.push(this.service.convertToMember(updated.number));
+          break;
+
+        case 'guest':
+          conversions.push(this.service.convertToGuest(updated.number));
+          break;
+
+        case 'sponsor':
+          conversions.push(this.service.convertToSponsor(updated.number));
+          break;
+      }
     }
-    this.mutation(
-      this.service.update(data),
-      () => this.load(this.currentPage())
-    );
+
+    if (conversions.length === 0) {
+      return this.mutation(
+        this.service.update(updated),
+        () => this.load(this.currentPage())
+      );
+    }
+
+    this.loading = true;
+
+    forkJoin(conversions)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        next: () => {
+          // Then perform regular update
+          this.mutation(
+            this.service.update(updated),
+            () => this.load(this.currentPage())
+          );
+        },
+        error: err => console.error(err)
+      });
   }
 
   public onDelete(number: number) {

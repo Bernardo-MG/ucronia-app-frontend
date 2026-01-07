@@ -5,7 +5,6 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod } from "@ucronia/domain";
-import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -21,12 +20,13 @@ import { ProfileInfo } from '../model/contact-info';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule],
+  imports: [
+    CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule
+  ],
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm implements OnChanges {
 
-  private readonly confirmationService = inject(ConfirmationService);
   private readonly fb = inject(FormBuilder);
 
   public readonly loading = input(false);
@@ -48,9 +48,7 @@ export class ProfileEditionForm implements OnChanges {
 
     this.games.clear();
     value.games?.forEach(game => {
-      this.games.push(
-        this.fb.control(game)
-      );
+      this.games.push(this.fb.control(game));
     });
 
     this.years.clear();
@@ -58,16 +56,9 @@ export class ProfileEditionForm implements OnChanges {
       this.years.push(this.fb.control(year));
     });
 
-    this.selected = [];
-    this.lockedTypes = [];
-
-    value.types?.forEach(type => {
-      this.selected.push(type);
-      this.lockedTypes.push(type);
-    });
+    this.selected = [...value.types];
   }
 
-  public readonly typeSelected = output<string>();
   public readonly save = output<ProfileInfo>();
 
   public today = new Date();
@@ -129,6 +120,10 @@ export class ProfileEditionForm implements OnChanges {
     }
   }
 
+  public onTypeChange(event: SelectButtonChangeEvent) {
+    this.selected = event.value ?? [];
+  }
+
   public addContactChannel(): void {
     this.contactChannels.push(
       this.fb.group({
@@ -143,9 +138,7 @@ export class ProfileEditionForm implements OnChanges {
   }
 
   public addGame(): void {
-    this.games.push(
-      this.fb.control(null)
-    );
+    this.games.push(this.fb.control(null));
   }
 
   public removeGame(index: number): void {
@@ -160,36 +153,20 @@ export class ProfileEditionForm implements OnChanges {
     this.years.removeAt(index);
   }
 
-  public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
-    const attemptedSelection: string[] = event.value;
-
-    this.selected = [...this.lockedTypes, ...attemptedSelection.filter(v => !this.lockedTypes.includes(v))];
-
-    const newlyAdded = attemptedSelection.find(v => !this.lockedTypes.includes(v));
-    if (newlyAdded) {
-      this.confirmationService.confirm({
-        target,
-        message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
-        icon: 'pi pi-info-circle',
-        rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
-        acceptButtonProps: { label: 'Asignar', severity: 'danger' },
-        accept: () => {
-          this.lockedTypes.push(newlyAdded);
-          this.selected.push(newlyAdded);
-          this.typeSelected.emit(newlyAdded);
-        }
-      });
-    }
-  }
-
   public submit() {
     if (this.formStatus.saveEnabled) {
-      this.save.emit(this.form.value);
+      const value: ProfileInfo = {
+        ...this.form.value,
+        types: [...this.selected]
+      };
+
+      this.save.emit(value);
     }
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
-
 }
+

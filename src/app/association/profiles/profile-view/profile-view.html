@@ -127,7 +127,7 @@
   <!-- Edition dialog -->
   <p-dialog header="Editar perfil" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-profile-edition-form [loading]="loading" [data]="selectedData" [failures]="failures"
-      [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" (typeSelected)="onTypeSelected($event)" />
+      [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
   </p-dialog>
 
   <!-- Contact method creation dialog -->
