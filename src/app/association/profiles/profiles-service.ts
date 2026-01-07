@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch } from '@ucronia/api';
-import { Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
+import { FeeType, Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/contact-info';
-import { FeeType } from 'projects/ucronia/domain/src/lib/fees/fee-type';
 
 @Injectable({
   providedIn: 'root'
@@ -249,35 +248,6 @@ export class ProfilesService {
         })
       );
   }
-
-  public getAllFeeTypes(): Observable<FeeType[]> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
-    const pageSize = 100;
-
-    return this.feeTypeClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<FeeType>>()
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.feeTypeClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<FeeType>>();
-          }
-          return of();
-        }),
-        // accumulate types from all pages into one array
-        reduce((permissions: FeeType[], res?: PaginatedResponse<FeeType>) => {
-          return res ? [...permissions, ...res.content] : permissions;
-        }, [])
-      );
-  }
-
 
   private updateContact(data: Profile): Observable<Profile> {
     const patch: ProfilePatch = {

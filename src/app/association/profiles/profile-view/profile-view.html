@@ -114,6 +114,27 @@
     </p>
   </p-panel>
 
+  <!-- Fee types -->
+  <p-panel [toggleable]="true" [collapsed]="true">
+    <ng-template #header>
+      <div class="flex items-center gap-2 px-2">
+        <span class="pi pi-phone"></span>
+        <span class="font-bold">Tipos de cuota</span>
+      </div>
+    </ng-template>
+    <ng-template #icons>
+      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingMethod = true" [disabled]="!createable"
+        aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
+    </ng-template>
+    <p class="m-0">
+      <assoc-fee-type-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+        [data]="feeTypeData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
+        [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditFeeType($event)"
+        (delete)="onDeleteFeeType($event)"
+        (changePage)="loadFeeTypes($event)" />
+    </p>
+  </p-panel>
+
   <!-- Contact Dialog -->
   <p-dialog header="Contacto" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
     <assoc-member-profile-details [data]="selectedData" />
@@ -139,6 +160,17 @@
   <p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
     <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
       (save)="onUpdateContactMethod($event)" />
+  </p-dialog>
+
+  <!-- Fee type creation dialog -->
+  <p-dialog header="Crear tipo de cuota" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
+    <assoc-fee-type-form [loading]="saving" [failures]="failures" (save)="onCreateFeeType($event)" />
+  </p-dialog>
+
+  <!-- Fee type edition dialog -->
+  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
+    <assoc-fee-type-form [loading]="loading" [data]="selectedFeeTypeData" [failures]="failures"
+      (save)="onUpdateFeeType($event)" />
   </p-dialog>
 
 </div>

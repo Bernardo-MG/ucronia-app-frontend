@@ -4,7 +4,7 @@ import { Component, inject, Input, input, OnChanges, output, SimpleChanges } fro
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod } from "@ucronia/domain";
+import { ContactMethod, FeeType } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -16,7 +16,6 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { FeeType } from 'projects/ucronia/domain/src/lib/fees/fee-type';
 import { ProfileInfo } from '../model/contact-info';
 
 @Component({

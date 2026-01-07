@@ -6,17 +6,19 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
-import { ContactMethod, MemberStatus } from "@ucronia/domain";
+import { ContactMethod, FeeType, MemberStatus } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { FeeType } from 'projects/ucronia/domain/src/lib/fees/fee-type';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
+import { FeeTypeForm } from '../fee-type-form/fee-type-form';
+import { FeeTypeList } from '../fee-type-list/fee-type-list';
+import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileDetails } from '../member-profile-details/member-profile-details';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
@@ -30,13 +32,14 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-profile-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm, FeeTypeList, FeeTypeForm],
   templateUrl: './profile-view.html'
 })
 export class ProfileView implements OnInit {
 
   private readonly service = inject(ProfilesService);
   private readonly contactMethodService = inject(ContactMethodService);
+  private readonly feeTypeService = inject(FeeTypeService);
 
   public readonly createable;
   public readonly editable;
@@ -44,15 +47,16 @@ export class ProfileView implements OnInit {
 
   public profiles = new PaginatedResponse<ProfileInfo>();
 
-  public contactMethodData = new PaginatedResponse<ContactMethod>();
-  public contactMethodSelection: ContactMethod[] = [];
-
   public activeFilter = MemberStatus.All;
   public nameFilter = '';
 
   public selectedData = new ProfileInfo();
-  public selectedContactMethodData: ContactMethod = new ContactMethod();
+  public selectedContactMethodData = new ContactMethod();
+  public contactMethodData = new PaginatedResponse<ContactMethod>();
+  public contactMethodSelection: ContactMethod[] = [];
+  public selectedFeeTypeData = new FeeType();
   public feeTypes: FeeType[] = [];
+  public feeTypeData = new PaginatedResponse<FeeType>();
 
   private sort = new Sorting();
 
@@ -62,6 +66,7 @@ export class ProfileView implements OnInit {
   public loading = false;
   public editing = false;
   public editingMethod = false;
+  public editingFeeType = false;
   public creating = false;
   public creatingMethod = false;
   public saving = false;
@@ -104,7 +109,7 @@ export class ProfileView implements OnInit {
     this.editing = true;
     forkJoin({
       profile: this.service.getOne(profile.number),
-      feeTypes: this.service.getAllFeeTypes()
+      feeTypes: this.feeTypeService.getAllAvailable()
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe(({ profile, feeTypes }) => {
@@ -244,6 +249,32 @@ export class ProfileView implements OnInit {
     );
   }
 
+  public onShowEditFeeType(contactMethod: FeeType) {
+    this.selectedFeeTypeData = contactMethod;
+    this.editingFeeType = true;
+  }
+
+  public onCreateFeeType(toCreate: FeeType): void {
+    this.mutation(
+      this.feeTypeService.create(toCreate),
+      () => this.loadContactMethods(0)
+    );
+  }
+
+  public onUpdateFeeType(toUpdate: FeeType): void {
+    this.mutation(
+      this.feeTypeService.update(toUpdate),
+      () => this.loadContactMethods(this.currentPage())
+    );
+  }
+
+  public onDeleteFeeType(number: number): void {
+    this.mutation(
+      this.feeTypeService.delete(number),
+      () => this.loadContactMethods(0)
+    );
+  }
+
   public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
     this.selectedStatus = status;
     this.load();
@@ -305,6 +336,14 @@ export class ProfileView implements OnInit {
     this.contactMethodService.getAll(page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodData = response);
+  }
+
+  public loadFeeTypes(page: number): void {
+    this.loading = true;
+
+    this.feeTypeService.getAll(page)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(response => this.feeTypeData = response);
   }
 
   // PRIVATE METHODS

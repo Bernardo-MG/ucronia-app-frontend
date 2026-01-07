@@ -1,0 +1,15 @@
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
+  <ng-template #body let-profile>
+    <tr>
+      <td>{{ profile.name }}</td>
+      <td class="w-40">
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
+          [attr.aria-disabled]="!editable()" (click)="edit.emit(profile)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
+          [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, profile)" rounded text />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
