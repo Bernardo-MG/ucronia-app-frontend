@@ -91,14 +91,12 @@ export class ProfileView implements OnInit {
     this.loading = true;
     forkJoin({
       data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus),
-      contactMethodSelection: this.contactMethodService.getAllAvailable(),
       contactMethods: this.contactMethodService.getAll(),
       feeTypes: this.feeTypeService.getAll()
     })
       .pipe(finalize(() => this.loading = false))
-      .subscribe(({ data, contactMethodSelection, contactMethods, feeTypes }) => {
+      .subscribe(({ data, contactMethods, feeTypes }) => {
         this.profiles = data;
-        this.contactMethodSelection = contactMethodSelection;
         this.contactMethodData = contactMethods;
         this.feeTypeData = feeTypes;
       });
@@ -111,11 +109,13 @@ export class ProfileView implements OnInit {
     this.editing = true;
     forkJoin({
       profile: this.service.getOne(profile.number),
+      contactMethodSelection: this.contactMethodService.getAllAvailable(),
       feeTypes: this.feeTypeService.getAllAvailable()
     })
       .pipe(finalize(() => this.loading = false))
-      .subscribe(({ profile, feeTypes }) => {
+      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
         this.selectedData = profile;
+        this.contactMethodSelection = contactMethodSelection;
         this.feeTypes = feeTypes;
       });
   }
