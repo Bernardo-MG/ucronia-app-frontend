@@ -5,7 +5,7 @@ import { FeeType, Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor }
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
-import { ProfileInfo } from './model/contact-info';
+import { ProfileInfo } from './model/profile-info';
 
 @Injectable({
   providedIn: 'root'
@@ -198,10 +198,12 @@ export class ProfilesService {
       );
   }
 
-  public convertToMember(number: number): Observable<Member> {
+  public convertToMember(number: number, feeType: number): Observable<Member> {
     return this.client
       .appendRoute(`/${number}/member`)
-      .update<SimpleResponse<Member>>(undefined)
+      .update<SimpleResponse<Member>>({
+        feeType
+      })
       .pipe(
         map(r => r.content),
         tap(() => {

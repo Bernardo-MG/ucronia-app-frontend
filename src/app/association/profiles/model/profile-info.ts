@@ -8,6 +8,7 @@ export class ProfileInfo {
   public years?: number[] = [];
   public types: string[] = [];
   public comments = '';
+  public feeType? = new ProfileInfoFeeType();
   public active? = false;
   public renew? = false;
 }
@@ -26,4 +27,8 @@ export class ProfileInfoName {
 export class ProfileInfoMethod {
   public number = -1;
   public name = '';
+}
+
+export class ProfileInfoFeeType {
+  public number = -1;
 }

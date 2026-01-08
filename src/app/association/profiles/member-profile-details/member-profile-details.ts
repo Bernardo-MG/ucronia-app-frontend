@@ -3,7 +3,7 @@ import { Component, input } from '@angular/core';
 import { DetailField } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ProfileInfo } from '../model/contact-info';
+import { ProfileInfo } from '../model/profile-info';
 
 @Component({
   selector: 'assoc-member-profile-details',

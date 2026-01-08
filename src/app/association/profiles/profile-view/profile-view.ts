@@ -23,7 +23,7 @@ import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileDetails } from '../member-profile-details/member-profile-details';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
-import { ProfileInfo } from '../model/contact-info';
+import { ProfileInfo } from '../model/profile-info';
 import { ProfileEditionForm } from '../profile-edition-form/profile-edition-form';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
@@ -182,7 +182,7 @@ export class ProfileView implements OnInit {
     for (const type of addedTypes) {
       switch (type) {
         case 'member':
-          conversions.push(this.service.convertToMember(updated.number));
+          conversions.push(this.service.convertToMember(updated.number, updated.feeType?.number as number));
           break;
 
         case 'guest':
@@ -296,28 +296,6 @@ export class ProfileView implements OnInit {
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
-  }
-
-  public onTypeSelected(type: string) {
-    let observable: Observable<any> | undefined = undefined;
-    if (type === 'member') {
-      this.loading = true;
-      observable = this.service.convertToMember(this.selectedData.number);
-    } else if (type === 'sponsor') {
-      this.loading = true;
-      observable = this.service.convertToSponsor(this.selectedData.number);
-    } else if (type === 'guest') {
-      this.loading = true;
-      observable = this.service.convertToGuest(this.selectedData.number);
-    }
-
-    if (observable !== undefined) {
-      this.loading = true;
-      observable.pipe(finalize(() => this.loading = false))
-        .pipe(finalize(() => this.editing = false))
-        .pipe(finalize(() => this.loading = false))
-        .subscribe(() => this.load());
-    }
   }
 
   // DATA LOADING

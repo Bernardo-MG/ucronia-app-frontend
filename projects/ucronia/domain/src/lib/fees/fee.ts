@@ -2,9 +2,10 @@ import { ProfileName } from "../profiles/profile-name";
 
 export class Fee {
   public month = new Date();
+  public member = new FeeMember();
+  public feeType = new FeeFeeType();
   public paid = false;
   public transaction: FeeTransaction | undefined;
-  public member = new FeeMember();
 }
 
 export class FeeTransaction {
@@ -15,4 +16,8 @@ export class FeeTransaction {
 export class FeeMember {
   public number = -1;
   public name = new ProfileName();
+}
+
+export class FeeFeeType {
+  public number = -1;
 }

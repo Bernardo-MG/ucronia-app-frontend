@@ -3,7 +3,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ProfileInfo } from '../model/contact-info';
+import { ProfileInfo } from '../model/profile-info';
 import { ProfileTypeTag } from '../profile-type-tag/profile-type-tag';
 
 @Component({
