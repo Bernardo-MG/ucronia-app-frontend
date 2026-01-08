@@ -32,7 +32,8 @@ export class FeeTypeForm {
 
     this.form = fb.group({
       number: [null],
-      name: [null, Validators.required]
+      name: [null, Validators.required],
+      amount: [null, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
