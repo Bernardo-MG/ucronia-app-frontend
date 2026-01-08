@@ -4,6 +4,7 @@
   <ng-template #body let-profile>
     <tr>
       <td>{{ profile.name }}</td>
+      <td>{{ profile.amount }}</td>
       <td class="w-40">
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
           [attr.aria-disabled]="!editable()" (click)="edit.emit(profile)" rounded text />

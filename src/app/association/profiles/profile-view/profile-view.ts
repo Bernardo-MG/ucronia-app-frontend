@@ -92,13 +92,15 @@ export class ProfileView implements OnInit {
     forkJoin({
       data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus),
       contactMethodSelection: this.contactMethodService.getAllAvailable(),
-      contactMethods: this.contactMethodService.getAll()
+      contactMethods: this.contactMethodService.getAll(),
+      feeTypes: this.feeTypeService.getAll()
     })
       .pipe(finalize(() => this.loading = false))
-      .subscribe(({ data, contactMethodSelection, contactMethods }) => {
+      .subscribe(({ data, contactMethodSelection, contactMethods, feeTypes }) => {
         this.profiles = data;
         this.contactMethodSelection = contactMethodSelection;
         this.contactMethodData = contactMethods;
+        this.feeTypeData = feeTypes;
       });
   }
 
