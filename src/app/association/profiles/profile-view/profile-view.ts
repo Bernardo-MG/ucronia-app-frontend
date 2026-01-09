@@ -142,7 +142,7 @@ export class ProfileView implements OnInit {
       this.sort.addField(new SortingProperty(sorting.field, direction));
     }
 
-    this.load(this.currentPage());
+    this.load(this.profiles.page);
   }
 
   public onShowInfo(profile: ProfileInfo) {
@@ -198,7 +198,7 @@ export class ProfileView implements OnInit {
     if (conversions.length === 0) {
       return this.mutation(
         this.service.update(updated),
-        () => this.load(this.currentPage())
+        () => this.load(this.profiles.page)
       );
     }
 
@@ -211,7 +211,7 @@ export class ProfileView implements OnInit {
           // Then perform regular update
           this.mutation(
             this.service.update(updated),
-            () => this.load(this.currentPage())
+            () => this.load(this.profiles.page)
           );
         },
         error: err => console.error(err)
@@ -240,7 +240,7 @@ export class ProfileView implements OnInit {
   public onUpdateContactMethod(toUpdate: ContactMethod): void {
     this.mutation(
       this.contactMethodService.update(toUpdate),
-      () => this.loadContactMethods(this.currentPage())
+      () => this.loadContactMethods(this.contactMethodData.page)
     );
   }
 
@@ -259,21 +259,21 @@ export class ProfileView implements OnInit {
   public onCreateFeeType(toCreate: FeeType): void {
     this.mutation(
       this.feeTypeService.create(toCreate),
-      () => this.loadContactMethods(0)
+      () => this.loadFeeTypes(0)
     );
   }
 
   public onUpdateFeeType(toUpdate: FeeType): void {
     this.mutation(
       this.feeTypeService.update(toUpdate),
-      () => this.loadContactMethods(this.currentPage())
+      () => this.loadFeeTypes(this.feeTypeData.page)
     );
   }
 
   public onDeleteFeeType(number: number): void {
     this.mutation(
       this.feeTypeService.delete(number),
-      () => this.loadContactMethods(0)
+      () => this.loadFeeTypes(0)
     );
   }
 
@@ -354,10 +354,6 @@ export class ProfileView implements OnInit {
           return throwError(() => error);
         }
       });
-  }
-
-  private currentPage(): number {
-    return this.profiles.page;
   }
 
 }
