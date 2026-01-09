@@ -1,31 +1,28 @@
 import { Component, inject, input, output } from '@angular/core';
-import { SortingEvent } from '@app/shared/request/sorting-event';
+import { FeeType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ProfileInfo } from '../model/profile-info';
 
 @Component({
-  selector: 'assoc-sponsor-list',
+  selector: 'assoc-fee-type-list',
   imports: [ButtonModule, TableModule],
-  templateUrl: './sponsor-list.html'
+  templateUrl: './fee-type-list.html'
 })
-export class SponsorList {
+export class FeeTypeList {
 
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly loading = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
-  public readonly profiles = input<ProfileInfo[]>([]);
+  public readonly data = input<FeeType[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
-
-  public readonly show = output<ProfileInfo>();
-  public readonly edit = output<ProfileInfo>();
+  
+  public readonly edit = output<FeeType>();
   public readonly delete = output<number>();
-  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
   public get first() {
@@ -37,7 +34,7 @@ export class SponsorList {
     this.changePage.emit(page);
   }
 
-  public confirmDelete(event: Event, profile: ProfileInfo) {
+  public confirmDelete(event: Event, FeeType: FeeType) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -51,7 +48,7 @@ export class SponsorList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit(profile.number)
+      accept: () => this.delete.emit(FeeType.number)
     });
   }
 

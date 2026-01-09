@@ -4,8 +4,7 @@ import { Component, inject, Input, input, OnChanges, output, SimpleChanges } fro
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod } from "@ucronia/domain";
-import { ConfirmationService } from 'primeng/api';
+import { ContactMethod, FeeType } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -17,21 +16,21 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { ProfileInfo } from '../model/contact-info';
+import { ProfileInfo } from '../model/profile-info';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm implements OnChanges {
 
-  private readonly confirmationService = inject(ConfirmationService);
   private readonly fb = inject(FormBuilder);
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
+  public readonly feeTypes = input<FeeType[]>([]);
 
   @Input() public set data(value: ProfileInfo) {
     this.form.patchValue(value as any);
@@ -48,9 +47,7 @@ export class ProfileEditionForm implements OnChanges {
 
     this.games.clear();
     value.games?.forEach(game => {
-      this.games.push(
-        this.fb.control(game)
-      );
+      this.games.push(this.fb.control(game));
     });
 
     this.years.clear();
@@ -58,16 +55,10 @@ export class ProfileEditionForm implements OnChanges {
       this.years.push(this.fb.control(year));
     });
 
-    this.selected = [];
-    this.lockedTypes = [];
-
-    value.types?.forEach(type => {
-      this.selected.push(type);
-      this.lockedTypes.push(type);
-    });
+    this.lockedTypes = [...value.types];
+    this.selected = [...value.types];
   }
 
-  public readonly typeSelected = output<string>();
   public readonly save = output<ProfileInfo>();
 
   public today = new Date();
@@ -80,6 +71,10 @@ export class ProfileEditionForm implements OnChanges {
 
   public get isSponsor(): boolean {
     return this.selected.includes('sponsor');
+  }
+
+  public get isMember(): boolean {
+    return this.selected.includes('member');
   }
 
   public get contactChannels(): FormArray {
@@ -117,7 +112,10 @@ export class ProfileEditionForm implements OnChanges {
       contactChannels: this.fb.array([]),
       games: this.fb.array([]),
       years: this.fb.array([]),
-      comments: ['']
+      comments: [''],
+      feeType: this.fb.group({
+        number: [null]
+      })
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -127,6 +125,17 @@ export class ProfileEditionForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
+  }
+
+  public onTypeChange(event: SelectButtonChangeEvent) {
+    const attempted: string[] = event.value ?? [];
+
+    this.selected = [
+      ...this.lockedTypes,
+      ...attempted.filter(v => !this.lockedTypes.includes(v))
+    ];
+
+    this.updateFeeTypeValidator();
   }
 
   public addContactChannel(): void {
@@ -143,9 +152,7 @@ export class ProfileEditionForm implements OnChanges {
   }
 
   public addGame(): void {
-    this.games.push(
-      this.fb.control(null)
-    );
+    this.games.push(this.fb.control(null));
   }
 
   public removeGame(index: number): void {
@@ -160,36 +167,33 @@ export class ProfileEditionForm implements OnChanges {
     this.years.removeAt(index);
   }
 
-  public confirmTypeTransformation(event: SelectButtonChangeEvent, target: HTMLElement) {
-    const attemptedSelection: string[] = event.value;
-
-    this.selected = [...this.lockedTypes, ...attemptedSelection.filter(v => !this.lockedTypes.includes(v))];
-
-    const newlyAdded = attemptedSelection.find(v => !this.lockedTypes.includes(v));
-    if (newlyAdded) {
-      this.confirmationService.confirm({
-        target,
-        message: '¿Estás seguro de querer asignar este rol? Esta acción no es revertible',
-        icon: 'pi pi-info-circle',
-        rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
-        acceptButtonProps: { label: 'Asignar', severity: 'danger' },
-        accept: () => {
-          this.lockedTypes.push(newlyAdded);
-          this.selected.push(newlyAdded);
-          this.typeSelected.emit(newlyAdded);
-        }
-      });
-    }
-  }
-
   public submit() {
     if (this.formStatus.saveEnabled) {
-      this.save.emit(this.form.value);
+      const value: ProfileInfo = {
+        ...this.form.value,
+        types: [...this.selected]
+      };
+
+      this.save.emit(value);
     }
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
+  }
+
+  private updateFeeTypeValidator() {
+    const feeTypeControl = this.form.get('feeType.number');
+    if (!feeTypeControl) return;
+
+    if (this.isMember) {
+      feeTypeControl.setValidators([Validators.required]);
+    } else {
+      feeTypeControl.clearValidators();
+    }
+    feeTypeControl.updateValueAndValidity();
   }
 
 }
+

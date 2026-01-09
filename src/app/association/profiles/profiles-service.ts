@@ -1,11 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch } from '@ucronia/api';
-import { Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch } from '@ucronia/api';
+import { FeeType, Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
-import { ProfileInfo } from './model/contact-info';
+import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
+import { ProfileInfo } from './model/profile-info';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +17,7 @@ export class ProfilesService {
   private readonly guestClient;
   private readonly memberClient;
   private readonly sponsorClient;
+  private readonly feeTypeClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
@@ -25,6 +26,7 @@ export class ProfilesService {
     this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
     this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
     this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
+    this.feeTypeClient = clientProvider.url(environment.apiUrl + '/fee/type');
   }
 
   public getAll(
@@ -92,6 +94,7 @@ export class ProfilesService {
     if (data.types.includes("member")) {
       const member: MemberProfile = {
         ...data,
+        feeType: data.feeType ? data.feeType : -1,
         active: data.active ? true : false,
         renew: data.renew ? true : false
       };
@@ -196,10 +199,16 @@ export class ProfilesService {
       );
   }
 
-  public convertToMember(number: number): Observable<Member> {
+  public convertToMember(number: number, feeType: number): Observable<Member> {
+    const conversion: ProfileMembershipConversion = {
+      feeType
+    };
+
     return this.client
       .appendRoute(`/${number}/member`)
-      .update<SimpleResponse<Member>>(undefined)
+      .update<SimpleResponse<Member>>(
+        conversion
+      )
       .pipe(
         map(r => r.content),
         tap(() => {
@@ -301,6 +310,7 @@ export class ProfilesService {
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
     const patch: MemberProfilePatch = {
       ...data,
+      feeType: data.feeType,
       contactChannels: data.contactChannels.map(c => {
         return {
           method: c.method.number,

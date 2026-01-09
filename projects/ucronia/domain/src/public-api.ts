@@ -6,6 +6,7 @@ export * from './lib/profiles/contact-method';
 export * from './lib/profiles/profile';
 export * from './lib/profiles/profile-name';
 export * from './lib/fees/fee';
+export * from './lib/fees/fee-type';
 export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
 export * from './lib/fees/member-fees';

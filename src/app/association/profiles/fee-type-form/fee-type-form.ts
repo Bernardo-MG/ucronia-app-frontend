@@ -1,28 +1,28 @@
-import { Component, inject, Input, input, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod } from "@ucronia/domain";
+import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-contact-method-form',
+  selector: 'assoc-fee-type-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
-  templateUrl: './contact-method-form.html'
+  templateUrl: './fee-type-form.html'
 })
-export class ContactMethodForm {
+export class FeeTypeForm {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: ContactMethod) {
+  @Input() public set data(value: FeeType) {
     this.form.patchValue(value as any);
   }
 
-  public readonly save = output<ContactMethod>();
+  public readonly save = output<FeeType>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
@@ -32,7 +32,8 @@ export class ContactMethodForm {
 
     this.form = fb.group({
       number: [null],
-      name: [null, Validators.required]
+      name: [null, Validators.required],
+      amount: [null, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);

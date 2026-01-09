@@ -1,10 +1,10 @@
 import { Component, inject, input, output } from '@angular/core';
-import { MemberStatusTag } from '@app/shared/profile/member-status-tag/member-status-tag';
+import { MemberStatusTag } from '@app/association/profiles/member-status-tag/member-status-tag';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ProfileInfo } from '../model/contact-info';
+import { ProfileInfo } from '../model/profile-info';
 
 @Component({
   selector: 'assoc-member-profile-list',

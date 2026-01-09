@@ -3,13 +3,13 @@ import { Component, input, OnInit, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
+import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { Member, MemberStatus } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';
-import { MemberStatusSelectComponent } from '../member-status-select/member-status-select.component';
 
 @Component({
   selector: 'assoc-member-select-stepper',
