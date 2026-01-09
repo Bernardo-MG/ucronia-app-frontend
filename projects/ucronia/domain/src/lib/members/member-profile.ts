@@ -9,11 +9,7 @@ export class MemberProfile {
   public contactChannels: ContactChannel[] = [];
   public comments = '';
   public types: string[] = [];
-  public feeType = new MemberProfileFeeType();
+  public feeType = -1;
   public active = false;
   public renew = false;
-}
-
-export class MemberProfileFeeType {
-  public number = 0;
 }

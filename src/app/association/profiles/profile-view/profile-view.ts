@@ -182,7 +182,7 @@ export class ProfileView implements OnInit {
     for (const type of addedTypes) {
       switch (type) {
         case 'member':
-          conversions.push(this.service.convertToMember(updated.number, updated.feeType?.number as number));
+          conversions.push(this.service.convertToMember(updated.number, updated.feeType as number));
           break;
 
         case 'guest':

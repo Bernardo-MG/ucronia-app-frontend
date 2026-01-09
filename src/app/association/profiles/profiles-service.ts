@@ -94,7 +94,7 @@ export class ProfilesService {
     if (data.types.includes("member")) {
       const member: MemberProfile = {
         ...data,
-        feeType: data.feeType ? data.feeType : { number: 0 },
+        feeType: data.feeType ? data.feeType : -1,
         active: data.active ? true : false,
         renew: data.renew ? true : false
       };
@@ -310,7 +310,7 @@ export class ProfilesService {
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
     const patch: MemberProfilePatch = {
       ...data,
-      feeType: data.feeType.number,
+      feeType: data.feeType,
       contactChannels: data.contactChannels.map(c => {
         return {
           method: c.method.number,
