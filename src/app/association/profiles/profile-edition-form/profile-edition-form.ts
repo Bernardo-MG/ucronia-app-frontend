@@ -113,7 +113,9 @@ export class ProfileEditionForm implements OnChanges {
       games: this.fb.array([]),
       years: this.fb.array([]),
       comments: [''],
-      feeType: [null]
+      feeType: this.fb.group({
+        number: [null]
+      })
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -182,14 +184,13 @@ export class ProfileEditionForm implements OnChanges {
   }
 
   private updateFeeTypeValidator() {
-    const feeTypeControl = this.form.get('feeType');
+    const feeTypeControl = this.form.get('feeType.number');
     if (!feeTypeControl) return;
 
     if (this.isMember) {
       feeTypeControl.setValidators([Validators.required]);
     } else {
       feeTypeControl.clearValidators();
-      feeTypeControl.setValue(null); // optional: reset if not member
     }
     feeTypeControl.updateValueAndValidity();
   }

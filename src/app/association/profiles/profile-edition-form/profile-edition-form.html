@@ -112,10 +112,10 @@
 
   <!-- Fee type -->
   @if (isMember) {
-    <div class="mb-2 flex flex-col gap-2">
+    <div formGroupName="feeType" class="mb-2 flex flex-col gap-2">
       <label for="feeTypeInput" class="font-medium">Tipo de cuota</label>
     
-      <p-select id="feeTypeInput" [options]="feeTypes()" optionLabel="name" optionValue="number" formControlName="feeType"
+      <p-select id="feeTypeInput" [options]="feeTypes()" optionLabel="name" optionValue="number" formControlName="number"
         placeholder="Tipo de cuota" class="w-64">
       </p-select>
     </div>
