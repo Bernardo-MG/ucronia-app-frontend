@@ -176,7 +176,7 @@ export class ProfileView implements OnInit {
     // Find added types
     const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
 
-    let conversions: Observable<any>[] = [];
+    const conversions: Observable<any>[] = [];
 
     // Create conversion calls for new types
     for (const type of addedTypes) {
