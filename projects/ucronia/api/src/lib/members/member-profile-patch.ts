@@ -7,6 +7,7 @@ export class MemberProfilePatch {
   public birthDate?: Date;
   public name?: ProfileName;
   public contactChannels?: ProfilePatchChannel[] = [];
+  public feeType = 0;
   public active? = false;
   public renew? = false;
   public comments?: string;

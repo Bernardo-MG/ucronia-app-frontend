@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch } from '@ucronia/api';
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch } from '@ucronia/api';
 import { FeeType, Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
@@ -94,6 +94,7 @@ export class ProfilesService {
     if (data.types.includes("member")) {
       const member: MemberProfile = {
         ...data,
+        feeType: data.feeType ? data.feeType : { number: 0 },
         active: data.active ? true : false,
         renew: data.renew ? true : false
       };
@@ -199,11 +200,15 @@ export class ProfilesService {
   }
 
   public convertToMember(number: number, feeType: number): Observable<Member> {
+    const conversion: ProfileMembershipConversion = {
+      feeType
+    };
+
     return this.client
       .appendRoute(`/${number}/member`)
-      .update<SimpleResponse<Member>>({
-        feeType
-      })
+      .update<SimpleResponse<Member>>(
+        conversion
+      )
       .pipe(
         map(r => r.content),
         tap(() => {
@@ -305,6 +310,7 @@ export class ProfilesService {
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
     const patch: MemberProfilePatch = {
       ...data,
+      feeType: data.feeType.number,
       contactChannels: data.contactChannels.map(c => {
         return {
           method: c.method.number,
