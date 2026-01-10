@@ -71,6 +71,12 @@
       [value]="data().birthDate | date:'yyyy-MM-dd'" />
   </div>
 
+  @if (data().address) {
+    <div>
+      <ui-detail-field [loading]="loading()" icon="pi pi-home" name="Dirección" [value]="data().address" />
+    </div>
+  }
+
 </div>
 
 @if (isGuest && data().games?.length) {

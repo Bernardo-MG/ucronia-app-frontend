@@ -112,6 +112,7 @@ export class ProfileEditionForm implements OnChanges {
       contactChannels: this.fb.array([]),
       games: this.fb.array([]),
       years: this.fb.array([]),
+      address: [''],
       comments: [''],
       feeType: this.fb.group({
         number: [null]

@@ -77,6 +77,22 @@
     }
   </div>
 
+  <!-- Address -->
+  <p-inputgroup class="mb-2">
+    <p-inputgroup-addon><i class="pi pi-home"></i></p-inputgroup-addon>
+
+    <input pInputText type="text" id="addressInput" formControlName="address"
+      [invalid]="isFieldInvalid('address')" placeholder="Dirección" class="w-100" />
+  </p-inputgroup>
+
+  <div class="mb-2">
+    @for (failure of failures().getFailures('address'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
   <!-- Comments -->
   <p-inputgroup class="mb-2">
     <p-inputgroup-addon><i class="pi pi-comment"></i></p-inputgroup-addon>

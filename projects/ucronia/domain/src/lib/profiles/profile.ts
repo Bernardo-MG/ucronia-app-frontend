@@ -7,6 +7,7 @@ export class Profile {
   public birthDate = new Date();
   public name = new ProfileName();
   public contactChannels: ContactChannel[] = [];
+  public address = '';
   public comments = '';
   public types: string[] = [];
 }
