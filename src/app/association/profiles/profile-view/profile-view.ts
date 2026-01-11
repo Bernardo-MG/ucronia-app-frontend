@@ -69,6 +69,7 @@ export class ProfileView implements OnInit {
   public editingFeeType = false;
   public creating = false;
   public creatingMethod = false;
+  public creatingFeeType = false;
   public saving = false;
   public showing = false;
 
