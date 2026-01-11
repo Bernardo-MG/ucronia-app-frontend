@@ -165,9 +165,11 @@ export class ProfileView implements OnInit {
   }
 
   public onUpdate(toUpdate: ProfileInfo): void {
+    const number = this.selectedData.number;
     const updated: ProfileInfo = {
       ...this.selectedData,
-      ...toUpdate
+      ...toUpdate,
+      number
     };
 
     const previousTypes = this.selectedData.types ?? [];

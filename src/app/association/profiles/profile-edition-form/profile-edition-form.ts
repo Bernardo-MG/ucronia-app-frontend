@@ -114,9 +114,7 @@ export class ProfileEditionForm implements OnChanges {
       years: this.fb.array([]),
       address: [''],
       comments: [''],
-      feeType: this.fb.group({
-        number: [null]
-      })
+      feeType: [null]
     });
 
     this.formStatus = new FormStatus(this.form);
