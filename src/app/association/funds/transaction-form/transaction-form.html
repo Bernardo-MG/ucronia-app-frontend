@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <!-- Description -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="descriptionInput" formControlName="description" class="w-100" />
+    <input pInputText type="text" id="descriptionInput" formControlName="description" maxlength="200" class="w-100" />
     <label for="descriptionInput">Descripción</label>
   </p-floatlabel>
   <div class="mb-2">

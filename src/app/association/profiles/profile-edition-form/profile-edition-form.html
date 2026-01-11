@@ -37,10 +37,10 @@
         <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
 
         <input pInputText type="text" id="firstNameInput" formControlName="firstName"
-          [invalid]="isFieldInvalid('name.firstName')" placeholder="Nombre" />
+          [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
 
         <input pInputText type="text" id="lastNameInput" formControlName="lastName"
-          [invalid]="isFieldInvalid('name.lastName')" placeholder="Apellidos" />
+          [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
       </p-inputgroup>
     </div>
   </div>
@@ -66,7 +66,7 @@
     <p-inputgroup-addon><i class="pi pi-id-card"></i></p-inputgroup-addon>
 
     <input pInputText type="text" id="identifierInput" formControlName="identifier"
-      [invalid]="isFieldInvalid('identifier')" placeholder="DNI" class="w-100" />
+      [invalid]="isFieldInvalid('identifier')" maxlength="15" placeholder="DNI" class="w-100" />
   </p-inputgroup>
 
   <div class="mb-2">
@@ -82,7 +82,7 @@
     <p-inputgroup-addon><i class="pi pi-home"></i></p-inputgroup-addon>
 
     <input pInputText type="text" id="addressInput" formControlName="address"
-      [invalid]="isFieldInvalid('address')" placeholder="Dirección" class="w-100" />
+      [invalid]="isFieldInvalid('address')" maxlength="250" placeholder="Dirección" class="w-100" />
   </p-inputgroup>
 
   <div class="mb-2">
@@ -98,7 +98,7 @@
     <p-inputgroup-addon><i class="pi pi-comment"></i></p-inputgroup-addon>
 
     <textarea pTextarea formControlName="comments" rows="4" autoResize="true" placeholder="Comentarios" class="w-100"
-      [invalid]="isFieldInvalid('comments')"></textarea>
+      [invalid]="isFieldInvalid('comments')" maxlength="250"></textarea>
   </p-inputgroup>
 
   <div class="mb-2">
@@ -128,7 +128,7 @@
           <p-select formControlName="method" [options]="contactMethods()" optionLabel="name" placeholder="Método"
             class="w-full" appendTo="body"></p-select>
 
-          <input pInputText placeholder="Detalle" formControlName="detail" />
+          <input pInputText placeholder="Detalle" formControlName="detail" maxlength="50" />
         </p-inputgroup>
 
         <!-- Remove -->

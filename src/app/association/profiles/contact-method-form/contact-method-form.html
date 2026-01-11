@@ -1,8 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <!-- First name -->
+  <!-- Name -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <input pInputText type="text" id="nameInput" formControlName="name"
-      [invalid]="isFieldInvalid('name')" class="w-100" />
+      [invalid]="isFieldInvalid('name')" maxlength="50" class="w-100" />
     <label for="nameInput">Nombre</label>
   </p-floatlabel>
   <div class="mb-2">

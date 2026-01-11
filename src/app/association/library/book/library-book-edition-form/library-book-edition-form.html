@@ -3,7 +3,7 @@
   <div class="row mb-2">
     <div formGroupName="title" class="col-sm-4">
       <p-floatlabel variant="in">
-        <input pInputText [invalid]="isFieldInvalid('supertitle')" id="supertitleInput" formControlName="supertitle"
+        <input pInputText [invalid]="isFieldInvalid('supertitle')" maxlength="100" id="supertitleInput" formControlName="supertitle"
           class="w-100" />
         <label for="supertitleInput">Supertítulo</label>
       </p-floatlabel>
@@ -17,7 +17,7 @@
     </div>
     <div formGroupName="title" class="col-sm-4">
       <p-floatlabel variant="in">
-        <input pInputText [invalid]="isFieldInvalid('title')" id="titleInput" formControlName="title" class="w-100" />
+        <input pInputText [invalid]="isFieldInvalid('title')" maxlength="100" id="titleInput" formControlName="title" class="w-100" />
         <label for="titleInput">Título</label>
       </p-floatlabel>
       <div class="mb-2">
@@ -30,7 +30,7 @@
     </div>
     <div formGroupName="title" class="col-sm-4">
       <p-floatlabel variant="in">
-        <input pInputText [invalid]="isFieldInvalid('subtitle')" id="subtitleInput" formControlName="subtitle"
+        <input pInputText [invalid]="isFieldInvalid('subtitle')" maxlength="100" id="subtitleInput" formControlName="subtitle"
           class="w-100" />
         <label for="subtitleInput">Subtítulo</label>
       </p-floatlabel>
@@ -45,7 +45,7 @@
   </div>
   <!-- ISBN -->
   <p-floatlabel variant="in">
-    <input pInputText [invalid]="isFieldInvalid('isbn')" id="isbnInput" formControlName="isbn" class="w-100" />
+    <input pInputText [invalid]="isFieldInvalid('isbn')" maxlength="17" id="isbnInput" formControlName="isbn" class="w-100" />
     <label for="isbnInput">ISBN</label>
   </p-floatlabel>
   <div class="mb-2">

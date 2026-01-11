@@ -13,9 +13,9 @@
           <i class="pi pi-user"></i>
         </p-inputgroup-addon>
         <input pInputText type="text" id="firstNameInput" formControlName="firstName"
-          [invalid]="isFieldInvalid('name.firstName')" placeholder="Nombre" />
+          [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
         <input pInputText type="text" id="lastNameInput" formControlName="lastName"
-          [invalid]="isFieldInvalid('name.lastName')" placeholder="Apellidos" />
+          [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
       </p-inputgroup>
     </div>
   
