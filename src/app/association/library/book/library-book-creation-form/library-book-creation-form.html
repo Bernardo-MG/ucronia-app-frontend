@@ -11,7 +11,7 @@
     <!-- Supertitle -->
     <div formGroupName="title" class="flex-1">
       <p-floatlabel variant="in">
-        <input pInputText formControlName="supertitle" [invalid]="isFieldInvalid('supertitle')" id="supertitleInput"
+        <input pInputText formControlName="supertitle" [invalid]="isFieldInvalid('supertitle')" maxlength="100" id="supertitleInput"
           class="w-full" />
         <label for="supertitleInput">Supertítulo</label>
       </p-floatlabel>
@@ -26,7 +26,7 @@
     <!-- Title -->
     <div formGroupName="title" class="flex-1">
       <p-floatlabel variant="in">
-        <input pInputText formControlName="title" [invalid]="isFieldInvalid('title')" id="titleInput" class="w-full" />
+        <input pInputText formControlName="title" [invalid]="isFieldInvalid('title')" maxlength="100" id="titleInput" class="w-full" />
         <label for="titleInput">Título</label>
       </p-floatlabel>
 
@@ -40,7 +40,7 @@
     <!-- Subtitle -->
     <div formGroupName="title" class="flex-1">
       <p-floatlabel variant="in">
-        <input pInputText formControlName="subtitle" [invalid]="isFieldInvalid('subtitle')" id="subtitleInput"
+        <input pInputText formControlName="subtitle" [invalid]="isFieldInvalid('subtitle')" maxlength="100" id="subtitleInput"
           class="w-full" />
         <label for="subtitleInput">Subtítulo</label>
       </p-floatlabel>
@@ -57,7 +57,7 @@
   <!-- ISBN -->
   <div>
     <p-floatlabel variant="in">
-      <input pInputText formControlName="isbn" [invalid]="isFieldInvalid('isbn')" id="isbnInput" class="w-full" />
+      <input pInputText formControlName="isbn" [invalid]="isFieldInvalid('isbn')" maxlength="17" id="isbnInput" class="w-full" />
       <label for="isbnInput">ISBN</label>
       </p-floatlabel>
 

@@ -9,7 +9,6 @@
         Nombre
         <p-sortIcon field="fullName"></p-sortIcon>
       </th>
-      <th class="w-50"></th>
     </tr>
   </ng-template>
 
@@ -17,27 +16,6 @@
     <tr class="hover:bg-gray-50 transition-colors">
       <td class="py-2 px-4">
         {{ member.name.fullName }}
-        <assoc-member-status-tag [member]="member" />
-      </td>
-
-      <td class="flex justify-end space-x-2 w-50 py-2 px-4">
-        @if (readProfile()) {
-          <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [disabled]="!readProfile()"
-            [attr.aria-disabled]="!readProfile()" aria-label="Mostrar perfil" (click)="show.emit(member)" rounded text
-            class="!p-2"></p-button>
-        }
-
-        @if (editable()) {
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-            [attr.aria-disabled]="!editable()" (click)="edit.emit(member)" rounded text
-            class="!p-2"></p-button>
-        }
-
-        @if (deletable()) {
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-            [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, member.number)" rounded text
-            class="!p-2"></p-button>
-        }
       </td>
     </tr>
   </ng-template>

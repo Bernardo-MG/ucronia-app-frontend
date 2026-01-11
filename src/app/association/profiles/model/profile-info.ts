@@ -7,7 +7,9 @@ export class ProfileInfo {
   public games?: Date[] = [];
   public years?: number[] = [];
   public types: string[] = [];
+  public address = '';
   public comments = '';
+  public feeType? = -1;
   public active? = false;
   public renew? = false;
 }

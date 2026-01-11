@@ -8,6 +8,7 @@ export class Sponsor {
   public name = new ProfileName();
   public contactChannels: ContactChannel[] = [];
   public years: number[] = [];
+  public address = '';
   public comments = '';
   public types: string[] = [];
 }

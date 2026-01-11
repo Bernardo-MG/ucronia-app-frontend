@@ -18,7 +18,7 @@ export class FeeService {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/member');
+    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
   }
 
   public create(data: FeeCreation): Observable<FeePayment> {

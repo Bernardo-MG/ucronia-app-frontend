@@ -1,6 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { MemberSelectStepper } from '@app/shared/profile/member-select-stepper/member-select-stepper';
 import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -22,6 +21,7 @@ import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeePaymentBalanceChart } from '../fee-payment-balance-chart/fee-payment-balance-chart';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
+import { MemberSelectStepper } from '../member-select-stepper/member-select-stepper';
 
 @Component({
   selector: 'assoc-fee-view',

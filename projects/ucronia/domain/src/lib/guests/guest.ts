@@ -8,6 +8,7 @@ export class Guest {
   public name = new ProfileName();
   public contactChannels: ContactChannel[] = [];
   public games: Date[] = [];
+  public address = '';
   public comments = '';
   public types: string[] = [];
 }

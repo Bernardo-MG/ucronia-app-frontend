@@ -5,9 +5,8 @@
 
     <!-- Types -->
     <div #typeSelector>
-      <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de perfil"
-        styleClass="type-selector" [multiple]="true" [ngModel]="selected" [ngModelOptions]="{standalone: true}"
-        (onChange)="confirmTypeTransformation($event, typeSelector)">
+      <p-selectButton [options]="options" optionLabel="label" optionValue="value" ariaLabel="Tipo de perfil" [multiple]="true" [ngModel]="selected"
+        [ngModelOptions]="{standalone: true}" (onChange)="onTypeChange($event)">
         <ng-template let-option pTemplate="item">
           <div class="flex flex-col items-center justify-center gap-2 py-2">
             <i class="pi text-xl" [ngClass]="option.icon"></i>
@@ -18,69 +17,119 @@
     </div>
   </div>
 
+  <!-- Fee type -->
+  @if (isMember) {
+    <div class="mb-2 flex flex-col gap-2">
+      <label for="feeTypeInput" class="font-medium">Tipo de cuota</label>
+    
+      <p-select id="feeTypeInput" [options]="feeTypes()" optionLabel="name" optionValue="number" formControlName="feeType"
+        placeholder="Tipo de cuota" class="w-64">
+      </p-select>
+    </div>
+    
+    <!-- Status toggles -->
+    <div class="flex flex-col gap-4 mb-4">
+    
+      <!-- Active toggle -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center space-x-2">
+          <p-toggleswitch inputId="activeToggle" formControlName="active"></p-toggleswitch>
+          <label for="activeToggle" class="select-none font-medium">
+            Activo
+          </label>
+        </div>
+        <span class="text-sm text-gray-500 ml-8">
+          Indica si el socio puede participar en las actividades de la asociación.
+        </span>
+      </div>
+    
+      <!-- Renew toggle -->
+      <div class="flex flex-col gap-1">
+        <div class="flex items-center space-x-2">
+          <p-toggleswitch inputId="renewToggle" formControlName="renew"></p-toggleswitch>
+          <label for="renewToggle" class="select-none font-medium">
+            Renovación
+          </label>
+        </div>
+        <span class="text-sm text-gray-500 ml-8">
+          Si está activo, se renovará mensualmente al socio.
+        </span>
+      </div>
+    
+    </div>
+  }
+
   <!-- Name -->
   <div formGroupName="name" class="flex flex-col gap-2">
-
-    <label for="firstNameInput" class="font-medium">
-      Nombre
-    </label>
+    <label for="firstNameInput" class="font-medium">Nombre</label>
 
     <div class="flex flex-col md:items-end md:flex-row gap-4">
       <p-inputgroup class="mb-2 d-flex">
-        <p-inputgroup-addon>
-          <i class="pi pi-user"></i>
-        </p-inputgroup-addon>
+        <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
+
         <input pInputText type="text" id="firstNameInput" formControlName="firstName"
-          [invalid]="isFieldInvalid('name.firstName')" placeholder="Nombre" />
+          [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
+
         <input pInputText type="text" id="lastNameInput" formControlName="lastName"
-          [invalid]="isFieldInvalid('name.lastName')" placeholder="Apellidos" />
+          [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
       </p-inputgroup>
     </div>
-
   </div>
 
   <!-- Birth date -->
   <p-inputgroup class="mb-2">
-    <p-inputgroup-addon>
-      <i class="pi pi-calendar"></i>
-    </p-inputgroup-addon>
+    <p-inputgroup-addon><i class="pi pi-calendar"></i></p-inputgroup-addon>
+
     <p-datepicker id="birthDateInput" formControlName="birthDate" [invalid]="isFieldInvalid('birthDate')"
-      dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha de nacimiento" />
+      dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha de nacimiento"></p-datepicker>
   </p-inputgroup>
 
   <div class="mb-2">
     @for (failure of failures().getFailures('birthDate'); track failure) {
       <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
+        {{ failure.message }}
       </p-message>
     }
   </div>
 
   <!-- Identifier -->
   <p-inputgroup class="mb-2">
-    <p-inputgroup-addon>
-      <i class="pi pi-id-card"></i>
-    </p-inputgroup-addon>
+    <p-inputgroup-addon><i class="pi pi-id-card"></i></p-inputgroup-addon>
+
     <input pInputText type="text" id="identifierInput" formControlName="identifier"
-      [invalid]="isFieldInvalid('identifier')" placeholder="DNI" class="w-100" />
+      [invalid]="isFieldInvalid('identifier')" maxlength="15" placeholder="DNI" class="w-100" />
   </p-inputgroup>
 
   <div class="mb-2">
     @for (failure of failures().getFailures('identifier'); track failure) {
       <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <!-- Address -->
+  <p-inputgroup class="mb-2">
+    <p-inputgroup-addon><i class="pi pi-home"></i></p-inputgroup-addon>
+
+    <input pInputText type="text" id="addressInput" formControlName="address"
+      [invalid]="isFieldInvalid('address')" maxlength="250" placeholder="Dirección" class="w-100" />
+  </p-inputgroup>
+
+  <div class="mb-2">
+    @for (failure of failures().getFailures('address'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
       </p-message>
     }
   </div>
 
   <!-- Comments -->
   <p-inputgroup class="mb-2">
-    <p-inputgroup-addon>
-      <i class="pi pi-comment"></i>
-    </p-inputgroup-addon>
+    <p-inputgroup-addon><i class="pi pi-comment"></i></p-inputgroup-addon>
+
     <textarea pTextarea formControlName="comments" rows="4" autoResize="true" placeholder="Comentarios" class="w-100"
-      [invalid]="isFieldInvalid('comments')">
-    </textarea>
+      [invalid]="isFieldInvalid('comments')" maxlength="250"></textarea>
   </p-inputgroup>
 
   <div class="mb-2">
@@ -101,49 +150,42 @@
     </div>
 
     @for (channel of contactChannels.controls; track channel; let i = $index) {
+
       <div [formGroupName]="i" class="flex gap-2 items-start">
 
-        <!-- Contact channel -->
         <p-inputgroup class="flex-1">
-          <p-inputgroup-addon>
-            <i class="pi pi-phone"></i>
-          </p-inputgroup-addon>
+          <p-inputgroup-addon><i class="pi pi-phone"></i></p-inputgroup-addon>
+
           <p-select formControlName="method" [options]="contactMethods()" optionLabel="name" placeholder="Método"
-            class="w-full" appendTo="body">
-          </p-select>
-          <input pInputText placeholder="Detalle" formControlName="detail">
+            class="w-full" appendTo="body"></p-select>
+
+          <input pInputText placeholder="Detalle" formControlName="detail" maxlength="50" />
         </p-inputgroup>
 
         <!-- Remove -->
-        <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeContactChannel(i)">
-        </p-button>
-
+        <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeContactChannel(i)"></p-button>
       </div>
     }
-
   </div>
 
   <!-- Games -->
   @if (isGuest) {
     <div class="mb-2 space-y-3" formArrayName="games">
-    
+
       <div class="flex items-center justify-between">
         <h3 class="text-sm font-semibold text-gray-600">Partidas</h3>
         <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addGame()">
         </p-button>
       </div>
-    
+
       @for (game of games.controls; track game; let i = $index) {
         <div class="flex gap-2 items-start">
-      
-          <p-datepicker [formControlName]="i" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha" />
-      
-          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)">
-          </p-button>
-      
+          <p-datepicker [formControlName]="i" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today"
+            placeholder="Fecha"></p-datepicker>
+
+          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)"></p-button>
         </div>
       }
-    
     </div>
   }
 
@@ -161,14 +203,15 @@
         <div class="flex gap-2 items-start">
           <input pInputText type="number" [formControlName]="i" placeholder="Año" class="w-24" />
 
-          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeYear(i)">
-          </p-button>
+          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeYear(i)"></p-button>
         </div>
       }
-
     </div>
   }
 
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+    [attr.aria-disabled]="!formStatus.saveEnabled">
+    Guardar
+  </p-button>
+
 </form>
