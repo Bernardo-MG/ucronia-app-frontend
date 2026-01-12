@@ -20,7 +20,7 @@ export class MyFeesService {
   public getAll(page: number): Observable<PaginatedResponse<Fee>> {
     return this.client
       .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('date', SortingDirection.Descending)]))
+      .loadParameters(new SortingParams([new SortingProperty('month', SortingDirection.Descending)]))
       .read<PaginatedResponse<Fee>>();
   }
 
