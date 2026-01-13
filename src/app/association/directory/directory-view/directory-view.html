@@ -135,14 +135,16 @@
     </p>
   </p-panel>
 
-  <!-- Contact Dialog -->
+  <!-- Profile details dialog -->
   <p-dialog header="Perfil" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
     <assoc-member-profile-details [data]="selectedData" />
   </p-dialog>
 
   <!-- Creation dialog -->
   <p-dialog header="Crear perfil" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
-    <assoc-profile-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    @if(creating) {
+      <assoc-profile-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+    }
   </p-dialog>
 
   <!-- Edition dialog -->
@@ -153,7 +155,9 @@
 
   <!-- Contact method creation dialog -->
   <p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
-    <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
+    @if(creatingMethod) {
+      <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
+    }
   </p-dialog>
 
   <!-- Contact method edition dialog -->
@@ -164,7 +168,9 @@
 
   <!-- Fee type creation dialog -->
   <p-dialog header="Crear tipo de cuota" [modal]="true" [(visible)]="creatingFeeType" [style]="{ width: '50rem' }">
-    <assoc-fee-type-form [loading]="saving" [failures]="failures" (save)="onCreateFeeType($event)" />
+    @if(creatingFeeType) {
+      <assoc-fee-type-form [loading]="saving" [failures]="failures" (save)="onCreateFeeType($event)" />
+    }
   </p-dialog>
 
   <!-- Fee type edition dialog -->
