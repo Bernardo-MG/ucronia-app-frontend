@@ -174,7 +174,7 @@
   </p-dialog>
 
   <!-- Fee type edition dialog -->
-  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
+  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editingFeeType" [style]="{ width: '50rem' }">
     <assoc-fee-type-form [loading]="loading" [data]="selectedFeeTypeData" [failures]="failures"
       (save)="onUpdateFeeType($event)" />
   </p-dialog>
