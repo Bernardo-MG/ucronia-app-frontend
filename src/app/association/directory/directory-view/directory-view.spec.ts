@@ -4,16 +4,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { ProfileView } from './profile-view';
+import { DirectoryView } from './directory-view';
 
-describe('ProfileView', () => {
-  let component: ProfileView;
-  let fixture: ComponentFixture<ProfileView>;
+describe('DirectoryView', () => {
+  let component: DirectoryView;
+  let fixture: ComponentFixture<DirectoryView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ProfileView
+        DirectoryView
       ],
       providers: [
         ConfirmationService,
@@ -26,7 +26,7 @@ describe('ProfileView', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ProfileView);
+    fixture = TestBed.createComponent(DirectoryView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

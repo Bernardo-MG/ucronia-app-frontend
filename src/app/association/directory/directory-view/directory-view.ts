@@ -31,11 +31,11 @@ import { ProfilesService } from '../profiles-service';
 import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
-  selector: 'assoc-profile-view',
+  selector: 'assoc-directory-view',
   imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm, FeeTypeList, FeeTypeForm],
-  templateUrl: './profile-view.html'
+  templateUrl: './directory-view.html'
 })
-export class ProfileView implements OnInit {
+export class DirectoryView implements OnInit {
 
   private readonly service = inject(ProfilesService);
   private readonly contactMethodService = inject(ContactMethodService);

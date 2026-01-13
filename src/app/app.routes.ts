@@ -162,7 +162,7 @@ export const routes: Routes = [
               {
                 path: 'directory',
                 canActivate: [ResourceGuard("profile", "view")],
-                loadComponent: () => import('./association/profiles/profile-view/profile-view').then(m => m.ProfileView)
+                loadComponent: () => import('./association/directory/directory-view/directory-view').then(m => m.DirectoryView)
               },
               {
                 path: 'funds',
