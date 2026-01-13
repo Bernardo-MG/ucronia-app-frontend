@@ -40,9 +40,9 @@ export class FeeTypeListInnerView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("profile", "create");
-    this.editable = authService.hasPermission("profile", "update");
-    this.deletable = authService.hasPermission("profile", "delete");
+    this.createable = authService.hasPermission("fee_type", "create");
+    this.editable = authService.hasPermission("fee_type", "update");
+    this.deletable = authService.hasPermission("fee_type", "delete");
   }
 
   public ngOnInit(): void {

@@ -40,9 +40,9 @@ export class ContactMethodListInnerView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("profile", "create");
-    this.editable = authService.hasPermission("profile", "update");
-    this.deletable = authService.hasPermission("profile", "delete");
+    this.createable = authService.hasPermission("contact_method", "create");
+    this.editable = authService.hasPermission("contact_method", "update");
+    this.deletable = authService.hasPermission("contact_method", "delete");
   }
 
   public ngOnInit(): void {
