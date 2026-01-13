@@ -94,25 +94,7 @@
   </p-panel>
 
   <!-- Contact methods -->
-  <p-panel [toggleable]="true" [collapsed]="true">
-    <ng-template #header>
-      <div class="flex items-center gap-2 px-2">
-        <span class="pi pi-phone"></span>
-        <span class="font-bold">Métodos de contacto</span>
-      </div>
-    </ng-template>
-    <ng-template #icons>
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingMethod = true" [disabled]="!createable"
-        aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
-    </ng-template>
-    <p class="m-0">
-      <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
-        [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
-        [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
-        (delete)="onDeleteContactMethod($event)"
-        (changePage)="loadContactMethods($event)" />
-    </p>
-  </p-panel>
+  <assoc-contact-method-list-inner-view />
 
   <!-- Fee types -->
   <assoc-fee-type-list-inner-view />
@@ -133,19 +115,6 @@
   <p-dialog header="Editar perfil" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
     <assoc-profile-edition-form [loading]="loading" [data]="selectedData" [feeTypes]="feeTypes" [failures]="failures"
       [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
-  </p-dialog>
-
-  <!-- Contact method creation dialog -->
-  <p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
-    @if(creatingMethod) {
-      <assoc-contact-method-form [loading]="saving" [failures]="failures" (save)="onCreateContactMethod($event)" />
-    }
-  </p-dialog>
-
-  <!-- Contact method edition dialog -->
-  <p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
-    <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
-      (save)="onUpdateContactMethod($event)" />
   </p-dialog>
 
 </div>

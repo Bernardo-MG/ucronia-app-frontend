@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { MemberStatusSelector } from '@app/association/directory/member-status-selector/member-status-selector';
 import { ProfileCreationEvent, ProfileCreationForm } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -11,10 +10,8 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
-import { ContactMethodForm } from '../contact-method-form/contact-method-form';
-import { ContactMethodList } from '../contact-method-list/contact-method-list';
+import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
 import { ContactMethodService } from '../contact-method-service';
 import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
@@ -31,7 +28,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -50,8 +47,6 @@ export class DirectoryView implements OnInit {
   public nameFilter = '';
 
   public selectedData = new ProfileInfo();
-  public selectedContactMethodData = new ContactMethod();
-  public contactMethodData = new PaginatedResponse<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
 
@@ -62,9 +57,7 @@ export class DirectoryView implements OnInit {
    */
   public loading = false;
   public editing = false;
-  public editingMethod = false;
   public creating = false;
-  public creatingMethod = false;
   public saving = false;
   public showing = false;
 
@@ -86,13 +79,11 @@ export class DirectoryView implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
-      data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus),
-      contactMethods: this.contactMethodService.getAll()
+      data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
     })
       .pipe(finalize(() => this.loading = false))
-      .subscribe(({ data, contactMethods }) => {
+      .subscribe(({ data }) => {
         this.profiles = data;
-        this.contactMethodData = contactMethods;
       });
   }
 
@@ -221,32 +212,6 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onShowEditContactMethod(contactMethod: ContactMethod) {
-    this.selectedContactMethodData = contactMethod;
-    this.editingMethod = true;
-  }
-
-  public onCreateContactMethod(toCreate: ContactMethod): void {
-    this.mutation(
-      this.contactMethodService.create(toCreate),
-      () => this.loadContactMethods(0)
-    );
-  }
-
-  public onUpdateContactMethod(toUpdate: ContactMethod): void {
-    this.mutation(
-      this.contactMethodService.update(toUpdate),
-      () => this.loadContactMethods(this.contactMethodData.page)
-    );
-  }
-
-  public onDeleteContactMethod(number: number): void {
-    this.mutation(
-      this.contactMethodService.delete(number),
-      () => this.loadContactMethods(0)
-    );
-  }
-
   public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
     this.selectedStatus = status;
     this.load();
@@ -280,14 +245,6 @@ export class DirectoryView implements OnInit {
       });
   }
 
-  public loadContactMethods(page: number): void {
-    this.loading = true;
-
-    this.contactMethodService.getAll(page)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodData = response);
-  }
-
   // PRIVATE METHODS
 
   private mutation(
@@ -302,8 +259,6 @@ export class DirectoryView implements OnInit {
           this.failures.clear();
           this.editing = false;
           this.creating = false;
-          this.creatingMethod = false;
-          this.editingMethod = false;
 
           onSuccess();
         },
