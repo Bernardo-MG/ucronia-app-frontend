@@ -18,14 +18,13 @@ import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
-import { FeePaymentBalanceChart } from '../fee-payment-balance-chart/fee-payment-balance-chart';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
 import { MemberSelectStepper } from '../member-select-stepper/member-select-stepper';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentBalanceChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
