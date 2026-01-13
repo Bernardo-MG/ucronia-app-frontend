@@ -23,7 +23,7 @@ export class FeeTypeListInnerView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public selectedFeeTypeData = new FeeType();
+  public selectedData = new FeeType();
   public feeTypes: FeeType[] = [];
   public feeTypeData = new PaginatedResponse<FeeType>();
 
@@ -31,12 +31,10 @@ export class FeeTypeListInnerView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public editingFeeType = false;
-  public creatingFeeType = false;
+  public editing = false;
+  public creating = false;
 
   public failures = new FailureStore();
-
-  public selectedStatus: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
 
   constructor() {
     const authService = inject(AuthService);
@@ -54,8 +52,8 @@ export class FeeTypeListInnerView implements OnInit {
   // EVENT HANDLERS
 
   public onShowEditFeeType(contactMethod: FeeType) {
-    this.selectedFeeTypeData = contactMethod;
-    this.editingFeeType = true;
+    this.selectedData = contactMethod;
+    this.editing = true;
   }
 
   public onCreateFeeType(toCreate: FeeType): void {
@@ -101,8 +99,8 @@ export class FeeTypeListInnerView implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.creatingFeeType = false;
-          this.editingFeeType = false;
+          this.creating = false;
+          this.editing = false;
 
           onSuccess();
         },

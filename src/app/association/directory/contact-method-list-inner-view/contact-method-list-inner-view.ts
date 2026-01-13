@@ -31,8 +31,8 @@ export class ContactMethodListInnerView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public editingMethod = false;
-  public creatingMethod = false;
+  public editing = false;
+  public creating = false;
 
   public failures = new FailureStore();
 
@@ -53,7 +53,7 @@ export class ContactMethodListInnerView implements OnInit {
 
   public onShowEditContactMethod(contactMethod: ContactMethod) {
     this.selectedContactMethodData = contactMethod;
-    this.editingMethod = true;
+    this.editing = true;
   }
 
   public onCreateContactMethod(toCreate: ContactMethod): void {
@@ -99,8 +99,8 @@ export class ContactMethodListInnerView implements OnInit {
       .subscribe({
         next: () => {
           this.failures.clear();
-          this.creatingMethod = false;
-          this.editingMethod = false;
+          this.creating = false;
+          this.editing = false;
 
           onSuccess();
         },

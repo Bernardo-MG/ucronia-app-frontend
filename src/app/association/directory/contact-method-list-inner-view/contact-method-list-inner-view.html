@@ -7,7 +7,7 @@
     </div>
   </ng-template>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingMethod = true" [disabled]="!createable"
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creating = true" [disabled]="!createable"
       aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <p class="m-0">
@@ -19,14 +19,14 @@
 </p-panel>
 
 <!-- Contact method creation dialog -->
-<p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creatingMethod" [style]="{ width: '50rem' }">
-  @if(creatingMethod) {
+<p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
+  @if(creating) {
     <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreateContactMethod($event)" />
   }
 </p-dialog>
 
 <!-- Contact method edition dialog -->
-<p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editingMethod" [style]="{ width: '50rem' }">
+<p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
   <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
     (save)="onUpdateContactMethod($event)" />
 </p-dialog>

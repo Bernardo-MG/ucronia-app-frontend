@@ -6,7 +6,7 @@
     </div>
   </ng-template>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingFeeType = true" [disabled]="!createable"
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creating = true" [disabled]="!createable"
       aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
   </ng-template>
   <p class="m-0">
@@ -16,14 +16,14 @@
   </p>
 
   <!-- Fee type creation dialog -->
-  <p-dialog header="Crear tipo de cuota" [modal]="true" [(visible)]="creatingFeeType" [style]="{ width: '50rem' }">
-    @if(creatingFeeType) {
+  <p-dialog header="Crear tipo de cuota" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
+    @if(creating) {
       <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreateFeeType($event)" />
     }
   </p-dialog>
 
   <!-- Fee type edition dialog -->
-  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editingFeeType" [style]="{ width: '50rem' }">
-    <assoc-fee-type-form [loading]="loading" [data]="selectedFeeTypeData" [failures]="failures"
+  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
       (save)="onUpdateFeeType($event)" />
   </p-dialog>
