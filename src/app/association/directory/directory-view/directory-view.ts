@@ -16,8 +16,7 @@ import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
-import { FeeTypeForm } from '../fee-type-form/fee-type-form';
-import { FeeTypeList } from '../fee-type-list/fee-type-list';
+import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileDetails } from '../member-profile-details/member-profile-details';
@@ -32,7 +31,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm, FeeTypeList, FeeTypeForm],
+  imports: [FormsModule, PanelModule, ButtonModule, DialogModule, ToggleSwitchModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodList, ContactMethodForm, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -54,9 +53,7 @@ export class DirectoryView implements OnInit {
   public selectedContactMethodData = new ContactMethod();
   public contactMethodData = new PaginatedResponse<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
-  public selectedFeeTypeData = new FeeType();
   public feeTypes: FeeType[] = [];
-  public feeTypeData = new PaginatedResponse<FeeType>();
 
   private sort = new Sorting();
 
@@ -66,10 +63,8 @@ export class DirectoryView implements OnInit {
   public loading = false;
   public editing = false;
   public editingMethod = false;
-  public editingFeeType = false;
   public creating = false;
   public creatingMethod = false;
-  public creatingFeeType = false;
   public saving = false;
   public showing = false;
 
@@ -92,14 +87,12 @@ export class DirectoryView implements OnInit {
     this.loading = true;
     forkJoin({
       data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus),
-      contactMethods: this.contactMethodService.getAll(),
-      feeTypes: this.feeTypeService.getAll()
+      contactMethods: this.contactMethodService.getAll()
     })
       .pipe(finalize(() => this.loading = false))
-      .subscribe(({ data, contactMethods, feeTypes }) => {
+      .subscribe(({ data, contactMethods }) => {
         this.profiles = data;
         this.contactMethodData = contactMethods;
-        this.feeTypeData = feeTypes;
       });
   }
 
@@ -254,32 +247,6 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onShowEditFeeType(contactMethod: FeeType) {
-    this.selectedFeeTypeData = contactMethod;
-    this.editingFeeType = true;
-  }
-
-  public onCreateFeeType(toCreate: FeeType): void {
-    this.mutation(
-      this.feeTypeService.create(toCreate),
-      () => this.loadFeeTypes(0)
-    );
-  }
-
-  public onUpdateFeeType(toUpdate: FeeType): void {
-    this.mutation(
-      this.feeTypeService.update(toUpdate),
-      () => this.loadFeeTypes(this.feeTypeData.page)
-    );
-  }
-
-  public onDeleteFeeType(number: number): void {
-    this.mutation(
-      this.feeTypeService.delete(number),
-      () => this.loadFeeTypes(0)
-    );
-  }
-
   public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
     this.selectedStatus = status;
     this.load();
@@ -319,14 +286,6 @@ export class DirectoryView implements OnInit {
     this.contactMethodService.getAll(page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.contactMethodData = response);
-  }
-
-  public loadFeeTypes(page: number): void {
-    this.loading = true;
-
-    this.feeTypeService.getAll(page)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.feeTypeData = response);
   }
 
   // PRIVATE METHODS

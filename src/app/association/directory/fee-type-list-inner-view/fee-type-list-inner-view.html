@@ -1,0 +1,29 @@
+<p-panel [toggleable]="true" [collapsed]="true">
+  <ng-template #header>
+    <div class="flex items-center gap-2 px-2">
+      <span class="pi pi-history"></span>
+      <span class="font-bold">Tipos de cuota</span>
+    </div>
+  </ng-template>
+  <ng-template #icons>
+    <p-button icon="pi pi-plus-circle" severity="secondary" (click)="creatingFeeType = true" [disabled]="!createable"
+      aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
+  </ng-template>
+  <p class="m-0">
+    <assoc-fee-type-list [loading]="loading" [editable]="editable" [deletable]="deletable" [data]="feeTypeData.content"
+      [rows]="feeTypeData.size" [page]="feeTypeData.page" [totalRecords]="feeTypeData.totalElements"
+      (edit)="onShowEditFeeType($event)" (delete)="onDeleteFeeType($event)" (changePage)="loadFeeTypes($event)" />
+  </p>
+
+  <!-- Fee type creation dialog -->
+  <p-dialog header="Crear tipo de cuota" [modal]="true" [(visible)]="creatingFeeType" [style]="{ width: '50rem' }">
+    @if(creatingFeeType) {
+      <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreateFeeType($event)" />
+    }
+  </p-dialog>
+
+  <!-- Fee type edition dialog -->
+  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editingFeeType" [style]="{ width: '50rem' }">
+    <assoc-fee-type-form [loading]="loading" [data]="selectedFeeTypeData" [failures]="failures"
+      (save)="onUpdateFeeType($event)" />
+  </p-dialog>
