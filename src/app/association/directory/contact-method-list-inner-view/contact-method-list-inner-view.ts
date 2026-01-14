@@ -46,7 +46,7 @@ export class ContactMethodListInnerView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loadContactMethods(0);
+    this.load();
   }
 
   // EVENT HANDLERS
@@ -59,27 +59,27 @@ export class ContactMethodListInnerView implements OnInit {
   public onCreateContactMethod(toCreate: ContactMethod): void {
     this.mutation(
       this.contactMethodService.create(toCreate),
-      () => this.loadContactMethods(0)
+      () => this.load()
     );
   }
 
   public onUpdateContactMethod(toUpdate: ContactMethod): void {
     this.mutation(
       this.contactMethodService.update(toUpdate),
-      () => this.loadContactMethods(this.contactMethodData.page)
+      () => this.load(this.contactMethodData.page)
     );
   }
 
   public onDeleteContactMethod(number: number): void {
     this.mutation(
       this.contactMethodService.delete(number),
-      () => this.loadContactMethods(0)
+      () => this.load()
     );
   }
 
   // DATA LOADING
 
-  public loadContactMethods(page: number): void {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
 
     this.contactMethodService.getAll(page)

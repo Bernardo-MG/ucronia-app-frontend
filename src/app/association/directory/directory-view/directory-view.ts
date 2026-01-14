@@ -77,13 +77,7 @@ export class DirectoryView implements OnInit {
 
   public ngOnInit(): void {
     this.loading = true;
-    forkJoin({
-      data: this.service.getAll(undefined, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
-    })
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(({ data }) => {
-        this.profiles = data;
-      });
+    this.load();
   }
 
   // EVENT HANDLERS

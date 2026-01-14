@@ -46,7 +46,7 @@ export class FeeTypeListInnerView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loadFeeTypes(0);
+    this.load();
   }
 
   // EVENT HANDLERS
@@ -59,27 +59,27 @@ export class FeeTypeListInnerView implements OnInit {
   public onCreateFeeType(toCreate: FeeType): void {
     this.mutation(
       this.feeTypeService.create(toCreate),
-      () => this.loadFeeTypes(0)
+      () => this.load()
     );
   }
 
   public onUpdateFeeType(toUpdate: FeeType): void {
     this.mutation(
       this.feeTypeService.update(toUpdate),
-      () => this.loadFeeTypes(this.feeTypeData.page)
+      () => this.load(this.feeTypeData.page)
     );
   }
 
   public onDeleteFeeType(number: number): void {
     this.mutation(
       this.feeTypeService.delete(number),
-      () => this.loadFeeTypes(0)
+      () => this.load()
     );
   }
 
   // DATA LOADING
 
-  public loadFeeTypes(page: number): void {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
 
     this.feeTypeService.getAll(page)
