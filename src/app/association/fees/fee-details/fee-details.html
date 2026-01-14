@@ -5,6 +5,11 @@
     <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Socio" [value]="data().member.name.fullName" />
   </div>
 
+  <!-- Fee type -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Tipo de cuota" [value]="data().feeType.name + ' (' + data().feeType.amount + '€)'" />
+  </div>
+
   @if (loading()) {
     <p-skeleton />
   } @else if (data().paid) {  
