@@ -58,7 +58,6 @@ export class DirectoryView implements OnInit {
   public loading = false;
   public editing = false;
   public creating = false;
-  public saving = false;
   public showing = false;
 
   public failures = new FailureStore();

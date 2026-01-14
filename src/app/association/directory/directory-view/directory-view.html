@@ -107,7 +107,7 @@
   <!-- Creation dialog -->
   <p-dialog header="Crear perfil" [modal]="true" [(visible)]="creating" [style]="{ width: '40rem' }">
     @if(creating) {
-      <assoc-profile-creation-form [loading]="saving" [failures]="failures" (save)="onCreate($event)" />
+      <assoc-profile-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
     }
   </p-dialog>
 
