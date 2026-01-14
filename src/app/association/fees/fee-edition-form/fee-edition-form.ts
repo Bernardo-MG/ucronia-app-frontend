@@ -68,7 +68,9 @@ export class FeeEditionForm implements OnChanges {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const formatted = `${year}-${month}`;
 
-    this.form.get('month')?.setValue(formatted, { emitEvent: false });
+    if (this.form.get('month')?.value !== formatted) {
+      this.form.get('month')?.setValue(formatted, { emitEvent: false });
+    }
   }
 
   /**

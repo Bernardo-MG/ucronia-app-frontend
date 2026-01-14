@@ -74,7 +74,9 @@ export class FeePayForm {
       dateValue = `${year}-${month}`;
     }
 
-    this.months.at(index).setValue(dateValue, { emitEvent: false });
+    if(this.months.at(index).value !== dateValue) {
+      this.months.at(index).setValue(dateValue, { emitEvent: false });
+    }
   }
 
   /**
