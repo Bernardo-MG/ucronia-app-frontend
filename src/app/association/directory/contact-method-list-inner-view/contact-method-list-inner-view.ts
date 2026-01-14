@@ -23,7 +23,7 @@ export class ContactMethodListInnerView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public selectedContactMethodData = new ContactMethod();
+  public selectedData = new ContactMethod();
   public contactMethodData = new PaginatedResponse<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
 
@@ -52,7 +52,7 @@ export class ContactMethodListInnerView implements OnInit {
   // EVENT HANDLERS
 
   public onShowEditContactMethod(contactMethod: ContactMethod) {
-    this.selectedContactMethodData = contactMethod;
+    this.selectedData = contactMethod;
     this.editing = true;
   }
 
