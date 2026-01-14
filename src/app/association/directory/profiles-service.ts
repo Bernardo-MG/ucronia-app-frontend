@@ -11,13 +11,13 @@ import { ProfileInfo } from './model/profile-info';
   providedIn: 'root'
 })
 export class ProfilesService {
+
   private readonly messageService = inject(MessageService);
 
   private readonly client;
   private readonly guestClient;
   private readonly memberClient;
   private readonly sponsorClient;
-  private readonly feeTypeClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
@@ -26,7 +26,6 @@ export class ProfilesService {
     this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
     this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
     this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
-    this.feeTypeClient = clientProvider.url(environment.apiUrl + '/fee/type');
   }
 
   public getAll(
@@ -80,7 +79,7 @@ export class ProfilesService {
   }
 
   public update(data: ProfileInfo): Observable<Profile> {
-    const update = this.updateContact(data);
+    const update = this.updateProfile(data);
     const observables: Observable<any>[] = [update];
 
     if (data.types.includes("guest")) {
@@ -256,7 +255,7 @@ export class ProfilesService {
       );
   }
 
-  private updateContact(data: Profile): Observable<Profile> {
+  private updateProfile(data: Profile): Observable<Profile> {
     const patch: ProfilePatch = {
       ...data,
       contactChannels: data.contactChannels.map(c => {
