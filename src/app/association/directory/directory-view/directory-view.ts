@@ -43,7 +43,7 @@ export class DirectoryView implements OnInit {
 
   public profiles = new PaginatedResponse<ProfileInfo>();
 
-  public activeFilter = MemberStatus.All;
+  public activeFilter = MemberStatus.Active;
   public nameFilter = '';
 
   public selectedData = new ProfileInfo();
@@ -217,14 +217,8 @@ export class DirectoryView implements OnInit {
     this.load();
   }
 
-  public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
-    if (status === 'all') {
-      this.activeFilter = MemberStatus.All;
-    } else if (status === 'active') {
-      this.activeFilter = MemberStatus.Active;
-    } else if (status === 'inactive') {
-      this.activeFilter = MemberStatus.Inactive;
-    }
+  public onChangeMemberStatus(status: MemberStatus) {
+    this.activeFilter = status;
     this.load();
   }
 

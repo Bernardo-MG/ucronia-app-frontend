@@ -51,7 +51,7 @@
     <assoc-profile-status-selector (filter)="onChangeStatusFilter($event)" />
 
     @if(selectedStatus === 'member') {
-      <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
+      <assoc-member-status-selector [status]="activeFilter" (filter)="onChangeMemberStatus($event)" />
     }
 
     @if (createable) {
