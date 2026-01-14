@@ -195,7 +195,6 @@ export class DirectoryView implements OnInit {
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: () => {
-          // Then perform regular update
           this.mutation(
             this.service.update(updated),
             () => this.load(this.profiles.page)
