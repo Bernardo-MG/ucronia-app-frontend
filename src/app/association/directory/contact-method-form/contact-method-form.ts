@@ -4,13 +4,14 @@ import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-contact-method-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputGroupModule, InputGroupAddonModule, MessageModule],
   templateUrl: './contact-method-form.html'
 })
 export class ContactMethodForm {

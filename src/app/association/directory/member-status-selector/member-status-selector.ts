@@ -1,5 +1,6 @@
-import { Component, output } from '@angular/core';
+import { Component, Input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { MemberStatus } from '@ucronia/domain';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
 @Component({
@@ -9,9 +10,13 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 })
 export class MemberStatusSelector {
 
-  public readonly filter = output<'all' | 'active' | 'inactive'>();
+  @Input() public set status(value: MemberStatus) {
+    this.selectedMemberStatus = value;
+  }
 
-  public memberStatusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Activos', value: 'active' }, { label: 'Baja', value: 'inactive' }];
-  public selectedMemberStatus: 'all' | 'active' | 'inactive' = 'all';
+  public readonly filter = output<MemberStatus>();
+
+  public memberStatusOptions: any[] = [{ label: 'Todos', value: MemberStatus.All }, { label: 'Activos', value: MemberStatus.Active }, { label: 'Baja', value: MemberStatus.Inactive }];
+  public selectedMemberStatus: MemberStatus = MemberStatus.All;
 
 }
