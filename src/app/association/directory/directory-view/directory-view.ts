@@ -16,10 +16,10 @@ import { ContactMethodService } from '../contact-method-service';
 import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
-import { MemberProfileDetails } from '../member-profile-details/member-profile-details';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
 import { ProfileInfo } from '../model/profile-info';
+import { ProfileDetails } from '../profile-details/profile-details';
 import { ProfileEditionForm } from '../profile-edition-form/profile-edition-form';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
@@ -28,7 +28,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, MemberProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {

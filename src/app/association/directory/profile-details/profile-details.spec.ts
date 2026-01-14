@@ -2,16 +2,16 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { MemberProfileDetails } from './member-profile-details';
+import { ProfileDetails } from './profile-details';
 
-describe('MemberProfileDetails', () => {
-  let component: MemberProfileDetails;
-  let fixture: ComponentFixture<MemberProfileDetails>;
+describe('ProfileDetails', () => {
+  let component: ProfileDetails;
+  let fixture: ComponentFixture<ProfileDetails>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberProfileDetails
+        ProfileDetails
       ],
       providers: [
         provideHttpClient(withInterceptorsFromDi()),
@@ -21,7 +21,7 @@ describe('MemberProfileDetails', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberProfileDetails);
+    fixture = TestBed.createComponent(ProfileDetails);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

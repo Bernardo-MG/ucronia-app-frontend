@@ -6,11 +6,11 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { ProfileInfo } from '../model/profile-info';
 
 @Component({
-  selector: 'assoc-member-profile-details',
+  selector: 'assoc-profile-details',
   imports: [CommonModule, SkeletonModule, CardModule, DetailField, DatePipe],
-  templateUrl: './member-profile-details.html'
+  templateUrl: './profile-details.html'
 })
-export class MemberProfileDetails {
+export class ProfileDetails {
 
   public data = input(new ProfileInfo());
   public loading = input(false);
