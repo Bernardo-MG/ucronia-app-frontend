@@ -143,7 +143,7 @@
   <!-- Contact channels -->
   <div class="mb-2 space-y-3" formArrayName="contactChannels">
 
-    <div class="flex items-center justify-between">
+    <div class="flex items-center">
       <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
       <p-button icon="pi pi-plus-circle" (click)="addContactChannel()" aria-label="Añadir medio de contacto" rounded text />
     </div>
@@ -171,7 +171,7 @@
   @if (isGuest) {
     <div class="mb-2 space-y-3" formArrayName="games">
 
-      <div class="flex items-center justify-between">
+      <div class="flex items-center">
         <h3 class="text-sm font-semibold text-gray-600">Partidas</h3>
         <p-button icon="pi pi-plus-circle" (click)="addGame()" aria-label="Añadir partida" rounded text />
       </div>
@@ -191,7 +191,7 @@
   @if (isSponsor) {
     <div class="mb-2 space-y-3" formArrayName="years">
 
-      <div class="flex items-center justify-between">
+      <div class="flex items-center">
         <h3 class="text-sm font-semibold text-gray-600">Años de patrocinio</h3>
         <p-button icon="pi pi-plus-circle" (click)="addYear()" aria-label="Añadir año de patrocinio" rounded text />
       </div>
