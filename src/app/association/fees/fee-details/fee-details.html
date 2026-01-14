@@ -5,7 +5,9 @@
     <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Socio" [value]="data().member.name.fullName" />
   </div>
 
-  @if (data().paid) {  
+  @if (loading()) {
+    <p-skeleton />
+  } @else if (data().paid) {  
     <div class="flex items-center gap-3">
       <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
         <span class="pi pi-check text-green-600 text-sm"></span>
@@ -13,14 +15,7 @@
 
       <div class="flex flex-col">
         <span class="font-medium leading-tight">Pagado</span>
-
-        <div>
-          @if (loading()) {
-            <p-skeleton />
-          } @else {
-            {{ data().month | date:'yyyy-MM' }}
-          }
-        </div>
+        <div>{{ data().month | date:'yyyy-MM' }}</div>
       </div>
     </div>
   }@else {
