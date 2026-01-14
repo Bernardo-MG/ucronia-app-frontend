@@ -145,8 +145,7 @@
 
     <div class="flex items-center justify-between">
       <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
-      <p-button icon="pi pi-plus" label="Añadir" size="small" type="button" (onClick)="addContactChannel()">
-      </p-button>
+      <p-button icon="pi pi-plus-circle" (click)="addContactChannel()" aria-label="Añadir medio de contacto" rounded text />
     </div>
 
     @for (channel of contactChannels.controls; track channel; let i = $index) {
