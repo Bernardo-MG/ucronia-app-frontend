@@ -14,7 +14,7 @@
     <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
       [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
       [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
-      (delete)="onDeleteContactMethod($event)" (changePage)="loadContactMethods($event)" />
+      (delete)="onDeleteContactMethod($event)" (changePage)="load($event)" />
   </p>
 </p-panel>
 
@@ -27,6 +27,6 @@
 
 <!-- Contact method edition dialog -->
 <p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-  <assoc-contact-method-form [loading]="loading" [data]="selectedContactMethodData" [failures]="failures"
+  <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
     (save)="onUpdateContactMethod($event)" />
 </p-dialog>

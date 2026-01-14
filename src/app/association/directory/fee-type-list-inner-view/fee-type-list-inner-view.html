@@ -12,7 +12,7 @@
   <p class="m-0">
     <assoc-fee-type-list [loading]="loading" [editable]="editable" [deletable]="deletable" [data]="feeTypeData.content"
       [rows]="feeTypeData.size" [page]="feeTypeData.page" [totalRecords]="feeTypeData.totalElements"
-      (edit)="onShowEditFeeType($event)" (delete)="onDeleteFeeType($event)" (changePage)="loadFeeTypes($event)" />
+      (edit)="onShowEditFeeType($event)" (delete)="onDeleteFeeType($event)" (changePage)="load($event)" />
   </p>
 
   <!-- Fee type creation dialog -->
