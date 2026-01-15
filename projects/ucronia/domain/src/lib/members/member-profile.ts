@@ -10,7 +10,13 @@ export class MemberProfile {
   public address = '';
   public comments = '';
   public types: string[] = [];
-  public feeType = -1;
+  public feeType = new MemberProfileFeeType();
   public active = false;
   public renew = false;
+}
+
+export class MemberProfileFeeType {
+  public number = 0;
+  public name = '';
+  public amount = 0;
 }

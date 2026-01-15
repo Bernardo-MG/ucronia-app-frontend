@@ -1,18 +1,22 @@
 
+import { DatePipe } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Fee } from "@ucronia/domain";
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { DetailField } from '@bernardo-mg/ui';
+import { Fee } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, DetailField, DatePipe],
   templateUrl: './fee-edition-form.html'
 })
 export class FeeEditionForm implements OnChanges {
@@ -40,12 +44,7 @@ export class FeeEditionForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      member: fb.group({
-        number: [null, Validators.required]
-      }),
-      month: ['', Validators.required],
       transaction: fb.group({
-        index: [null],
         date: ['', Validators.required]
       })
     });
@@ -65,7 +64,9 @@ export class FeeEditionForm implements OnChanges {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const formatted = `${year}-${month}`;
 
-    this.form.get('month')?.setValue(formatted, { emitEvent: false });
+    if (this.form.get('month')?.value !== formatted) {
+      this.form.get('month')?.setValue(formatted, { emitEvent: false });
+    }
   }
 
   /**

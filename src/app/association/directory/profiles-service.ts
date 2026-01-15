@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch } from '@ucronia/api';
-import { FeeType, Guest, Member, MemberProfile, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
+import { FeeType, Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
@@ -93,7 +93,7 @@ export class ProfilesService {
     if (data.types.includes("member")) {
       const member: MemberProfile = {
         ...data,
-        feeType: data.feeType ? data.feeType : -1,
+        feeType: data.feeType ? data.feeType : new MemberProfileFeeType(),
         active: data.active ? true : false,
         renew: data.renew ? true : false
       };
@@ -309,7 +309,7 @@ export class ProfilesService {
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
     const patch: MemberProfilePatch = {
       ...data,
-      feeType: data.feeType,
+      feeType: data.feeType.number,
       contactChannels: data.contactChannels.map(c => {
         return {
           method: c.method.number,

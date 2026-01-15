@@ -9,7 +9,7 @@ export class ProfileInfo {
   public types: string[] = [];
   public address = '';
   public comments = '';
-  public feeType? = -1;
+  public feeType? = new ProfileInfoFeeType();
   public active? = false;
   public renew? = false;
 }
@@ -28,4 +28,10 @@ export class ProfileInfoName {
 export class ProfileInfoMethod {
   public number = -1;
   public name = '';
+}
+
+export class ProfileInfoFeeType {
+  public number = 0;
+  public name = '';
+  public amount = 0;
 }
