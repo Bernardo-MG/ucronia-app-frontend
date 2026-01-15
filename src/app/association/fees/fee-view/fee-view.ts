@@ -4,7 +4,7 @@ import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-s
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from "@ucronia/domain";
+import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, Transaction, YearsRange } from "@ucronia/domain";
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -96,11 +96,10 @@ export class FeeView implements OnInit {
 
   public onUpdate(toUpdate: Fee): void {
     const update = {
-      ...toUpdate,
-      member: toUpdate.member.number
+      transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
     }
     this.call(
-      () => this.service.update(update),
+      () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }

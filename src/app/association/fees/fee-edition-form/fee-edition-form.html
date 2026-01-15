@@ -1,11 +1,18 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center pb-4">
+    
+  <!-- Month -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Mes"
+      [value]="fee.month | date:'yyyy-MM'" />
+  </div>
+
     <!-- Member -->
     <div>
       <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Socio" [value]="fee.member.name.fullName" />
     </div>
-
+    
     @if (fee.paid) {  
       <div class="flex items-center gap-3">
         <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
@@ -28,22 +35,7 @@
       </div>
     }
   </div>
-  
-  <!-- Month -->
-  <p-inputgroup class="mb-2">
-    <p-inputgroup-addon><i class="pi pi-calendar"></i></p-inputgroup-addon>
 
-    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')"
-      view="month" dateFormat="yy-mm" appendTo="body" placeholder="Mes" (onSelect)="onMonthSelect($event)"></p-datepicker>
-  </p-inputgroup>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('month'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
-  </div>
-  
   <!-- Payment date -->
   <div formGroupName="transaction">
     <p-inputgroup class="mb-2">
