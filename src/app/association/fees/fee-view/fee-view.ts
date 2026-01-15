@@ -4,19 +4,20 @@ import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-s
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, Transaction, YearsRange } from "@ucronia/domain";
+import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from "@ucronia/domain";
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
+import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
-import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeDetails } from '../fee-details/fee-details';
+import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
@@ -24,7 +25,7 @@ import { MemberSelectStepper } from '../member-select-stepper/member-select-step
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
