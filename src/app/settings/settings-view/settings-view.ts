@@ -6,12 +6,11 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
-import { MembershipSettingsForm } from '../membership-settings-form/membership-settings-form';
 import { ThirdPartySettingsForm } from '../third-party-settings-form/third-party-settings-form';
 
 @Component({
   selector: 'assoc-settings-view',
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ThirdPartySettingsForm, MembershipSettingsForm],
+  imports: [CardModule, ReactiveFormsModule, FormsModule, ThirdPartySettingsForm],
   templateUrl: './settings-view.html'
 })
 export class SettingsView implements OnInit {

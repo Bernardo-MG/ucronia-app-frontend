@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
 import { FeeCreation, FeeUpdate } from '@ucronia/api';
 import { Fee, FeePayment, Member, MemberStatus, Profile } from "@ucronia/domain";
+import { format } from 'date-fns';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -34,9 +35,10 @@ export class FeeService {
       .pipe(map(r => r.content));
   }
 
-  public update(data: FeeUpdate): Observable<Fee> {
+  public update(member: number, month: Date, data: FeeUpdate): Observable<Fee> {
+    const formattedMonth = format(month, 'yyyy-MM')
     return this.feeClient
-      .appendRoute(`/${data.month}/${data.member}`)
+      .appendRoute(`/${formattedMonth}/${member}`)
       .update<SimpleResponse<Fee>>(data)
       .pipe(map(r => r.content));
   }

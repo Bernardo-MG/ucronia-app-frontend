@@ -4,7 +4,7 @@ import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-s
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from "@ucronia/domain";
+import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, Transaction, YearsRange } from "@ucronia/domain";
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -16,16 +16,15 @@ import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
-import { FeeInfo } from '../fee-info/fee-info';
+import { FeeDetails } from '../fee-details/fee-details';
 import { FeePayForm } from '../fee-pay-form/fee-pay-form';
-import { FeePaymentBalanceChart } from '../fee-payment-balance-chart/fee-payment-balance-chart';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
 import { MemberSelectStepper } from '../member-select-stepper/member-select-stepper';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeInfo, FeePaymentBalanceChart, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -97,11 +96,10 @@ export class FeeView implements OnInit {
 
   public onUpdate(toUpdate: Fee): void {
     const update = {
-      ...toUpdate,
-      member: toUpdate.member.number
+      transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
     }
     this.call(
-      () => this.service.update(update),
+      () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }

@@ -1,36 +1,49 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Member -->
-  <h2>{{fee.member.name.fullName}}</h2>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center pb-4">
+    
   <!-- Month -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month" dateFormat="yy-mm"
-      (onSelect)="onMonthSelect($event)" appendTo="body" />
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('month'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Mes"
+      [value]="fee.month | date:'yyyy-MM'" />
+  </div>
+
+    <!-- Member -->
+    <div>
+      <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Socio" [value]="fee.member.name.fullName" />
+    </div>
+    
+    @if (fee.paid) {  
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
+          <span class="pi pi-check text-green-600 text-sm"></span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="font-medium leading-tight">Pagado</span>
+        </div>
+      </div>
+    }@else {
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full border-2 border-red-600 flex items-center justify-center">
+          <span class="pi pi-times text-red-600 text-sm"></span>
+        </div>
+
+        <div class="flex flex-col">
+          <span class="font-medium leading-tight">Sin pagar</span>
+        </div>
+      </div>
     }
   </div>
-  <!-- Paid -->
-  <div class="row mb-2">
-    <label id="activeLabel" class="col-sm-2 col-form-label">Pagado</label>
-    <div class="col-sm-10">
-      @if (fee.paid) {
-        <span class="pi pi-check text-success"></span>
-      } @else {
-        <span class="pi pi-times text-warning"></span>
-      }
-    </div>
-  </div>
+
   <!-- Payment date -->
   <div formGroupName="transaction">
-    <p-floatlabel variant="in" class="mb-2 d-flex">
+    <p-inputgroup class="mb-2">
+      <p-inputgroup-addon><i class="pi pi-euro"></i></p-inputgroup-addon>
+
       <p-datepicker id="transaction.dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('transaction.date')"
-        dateFormat="yy-mm-dd" appendTo="body" />
-      <label for="transaction.dateInput">Pago</label>
-    </p-floatlabel>
+        dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Pago"></p-datepicker>
+    </p-inputgroup>
   </div>
   <div class="mb-2">
     @for (failure of failures().getFailures('transaction.date'); track failure) {
