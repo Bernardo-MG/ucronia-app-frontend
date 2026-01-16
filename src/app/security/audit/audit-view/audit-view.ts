@@ -40,12 +40,7 @@ export class AccessAuditLogin implements OnInit {
     this.load(this.data.page);
   }
 
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
-    this.load(page);
-  }
-
-  private load(page: number) {
+  public load(page: number) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))

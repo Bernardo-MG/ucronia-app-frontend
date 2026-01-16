@@ -15,7 +15,7 @@ export class MyFeesList {
   public readonly page = input(0);
   public readonly totalRecords = input(0);
   public readonly loading = input(false);
-  
+
   public readonly changePage = output<number>();
 
   public get first() {
@@ -23,7 +23,7 @@ export class MyFeesList {
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.rows()) + 1;
+    const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 

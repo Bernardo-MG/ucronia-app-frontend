@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { LoginRegister } from '../models/login-register';
 
 @Component({
@@ -22,6 +22,11 @@ export class AuditLoginList {
 
   public get first() {
     return (this.page() - 1) * this.rows();
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
   }
 
 }

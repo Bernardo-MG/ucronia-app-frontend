@@ -4,7 +4,7 @@ import { Role } from '@bernardo-mg/authentication';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-role-list',
@@ -41,7 +41,9 @@ export class RoleList {
     return (this.page() - 1) * this.rows();
   }
 
-  constructor() {
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
   }
 
   public onDelete(event: Event, role: Role) {

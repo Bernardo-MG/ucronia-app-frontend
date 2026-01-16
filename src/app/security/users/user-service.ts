@@ -26,7 +26,7 @@ export class UserService {
     this.membersClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<User>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<User>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('name')]
