@@ -34,7 +34,7 @@ export class LibraryLendingList {
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.rows()) + 1;
+    const page = (event.first / event.rows) + 1;
     this.pageChange.emit(page);
   }
 

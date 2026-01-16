@@ -29,7 +29,7 @@ export class UserRolesInfo implements OnChanges {
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.roles.size) + 1;
+    const page = (event.first / event.rows) + 1;
     this.roles = this.buildPage(page);
   }
 

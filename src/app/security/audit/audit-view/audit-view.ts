@@ -41,7 +41,7 @@ export class AccessAuditLogin implements OnInit {
   }
 
   public onPageChange(event: TablePageEvent) {
-    const page = (event.first / this.data.size) + 1;
+    const page = (event.first / event.rows) + 1;
     this.load(page);
   }
 
