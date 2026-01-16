@@ -84,7 +84,7 @@ describe('CrudNameList', () => {
       spyOn(component as any, 'load');
       component.data.size = 10;
 
-      component.onPageChange({ first: 20 } as any);
+      component.onPageChange({ first: 20, rows: 10 } as any);
 
       expect((component as any).load).toHaveBeenCalledWith(3);
     });
