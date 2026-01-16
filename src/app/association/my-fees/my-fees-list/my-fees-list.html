@@ -1,6 +1,6 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="fees()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onPage)="changePage.emit($event.first)">
+  currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr>
       <th>Cuota</th>

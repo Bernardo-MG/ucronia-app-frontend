@@ -78,11 +78,6 @@ export class UserTokenView implements OnInit {
     this.load(this.data.page);
   }
 
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / event.rows) + 1;
-    this.load(page);
-  }
-
   public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)

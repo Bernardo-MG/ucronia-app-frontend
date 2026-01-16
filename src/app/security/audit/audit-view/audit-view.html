@@ -1,4 +1,4 @@
 <p-card>
   <access-audit-login-list [loading]="loading" [logins]="data.content" [rows]="data.size" [page]="data.page"
-    [totalRecords]="data.totalElements" />
+    [totalRecords]="data.totalElements" (changePage)="this.load($event)" />
 </p-card>

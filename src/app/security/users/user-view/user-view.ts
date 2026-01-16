@@ -79,11 +79,6 @@ export class UserView implements OnInit {
     this.load(this.data.page);
   }
 
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / event.rows) + 1;
-    this.load(page);
-  }
-
   public onShowRolesInfo(user: User) {
     this.selectedData = user;
     this.showingRoles = true;
