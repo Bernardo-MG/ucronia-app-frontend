@@ -12,9 +12,9 @@
       <td>{{ fee.month | date:'yyyy-MM' }}</td>
       <td>
         @if (fee.paid) {
-        {{fee.transaction?.date | date:'yyyy-MM-dd'}}
+          {{fee.transaction?.date | date:'yyyy-MM-dd'}}
         } @else {
-        <span class="pi pi-times text-danger"></span>
+          <span class="pi pi-times text-red-600"></span>
         }
       </td>
     </tr>

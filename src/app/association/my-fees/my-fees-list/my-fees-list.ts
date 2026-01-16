@@ -15,7 +15,7 @@ export class MyFeesList {
   public readonly page = input(0);
   public readonly totalRecords = input(0);
   public readonly loading = input(false);
-  
+
   public readonly changePage = output<number>();
 
   public get first() {
