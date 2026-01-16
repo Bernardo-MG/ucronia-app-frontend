@@ -85,17 +85,17 @@ export class MemberView implements OnInit {
     } else if (status === 'inactive') {
       this.activeFilter = MemberStatus.Inactive;
     }
-    this.load(0);
+    this.load();
   }
 
   public onFilter(filter: string) {
     this.nameFilter = filter;
-    this.load(1);
+    this.load();
   }
 
   // DATA LOADING
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
 
     this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)

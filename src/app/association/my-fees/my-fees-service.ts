@@ -17,7 +17,7 @@ export class MyFeesService {
     this.client = clientProvider.url(environment.apiUrl + '/user/fee');
   }
 
-  public getAll(page: number): Observable<PaginatedResponse<Fee>> {
+  public getAll(page: number | undefined = undefined): Observable<PaginatedResponse<Fee>> {
     return this.client
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('month', SortingDirection.Descending)]))

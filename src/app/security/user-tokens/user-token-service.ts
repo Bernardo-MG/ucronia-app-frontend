@@ -17,7 +17,7 @@ export class UserTokenService {
     this.client = clientProvider.url(environment.apiUrl + '/security/user/token');
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('creationDate', SortingDirection.Descending), new SortingProperty('username')]

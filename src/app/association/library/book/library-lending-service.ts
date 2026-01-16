@@ -17,7 +17,7 @@ export class LibraryLendingService {
     this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<BookLending>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<BookLending>> {
     const sorting = new SortingParams(
       sort.properties
     );

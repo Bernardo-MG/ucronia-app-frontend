@@ -28,10 +28,10 @@ export class MyFeesView implements OnInit {
   public loading = false;
 
   public ngOnInit(): void {
-    this.load(0);
+    this.load();
   }
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
 
     this.service.getAll(page)

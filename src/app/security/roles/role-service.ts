@@ -20,7 +20,7 @@ export class RoleService {
     this.permissionsClient = clientProvider.url(environment.apiUrl + '/security/permission');
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Role>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<Role>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('name')]

@@ -49,7 +49,7 @@ export class UserTokenView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load(0);
+    this.load();
   }
 
   public onExtendExpiration(date: Date): void {
@@ -83,7 +83,7 @@ export class UserTokenView implements OnInit {
     this.load(page);
   }
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
@@ -98,7 +98,7 @@ export class UserTokenView implements OnInit {
         next: () => {
           this.failures.clear();
           this.view = 'none';
-          this.load(0);
+          this.load();
           onSuccess();
         },
         error: error => {

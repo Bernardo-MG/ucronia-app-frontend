@@ -17,7 +17,7 @@ export class MemberService {
     this.client = clientProvider.url(environment.apiUrl + '/member');
   }
 
-  public getAll(page: number, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]

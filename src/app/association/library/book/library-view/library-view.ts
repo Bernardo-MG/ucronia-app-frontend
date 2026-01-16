@@ -78,7 +78,7 @@ export class LibraryView implements OnInit {
 
   private delete: (number: number) => Observable<BookInfo> = (number) => EMPTY;
   private update: (data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
-  private read: (page: number, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
+  private read: (page: number | undefined, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
@@ -132,7 +132,7 @@ export class LibraryView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load(0);
+    this.load();
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
@@ -202,15 +202,15 @@ export class LibraryView implements OnInit {
       this.update = this.service.updateFictionBook.bind(this.service);
       this.read = this.service.getAllFictionBooks.bind(this.service);
     }
-    this.load(0);
+    this.load();
   }
 
   public onChangeList(event: SelectButtonChangeEvent) {
     this.list = event.value as 'books' | 'lendings';
     if (this.list === 'books') {
-      this.load(1);
+      this.load();
     } else {
-      this.loadLendings(1);
+      this.loadLendings();
     }
   }
 
@@ -350,14 +350,14 @@ export class LibraryView implements OnInit {
     return (book as GameBook).bookType as BookType;
   }
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
     this.read(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
 
-  public loadLendings(page: number) {
+  public loadLendings(page: number | undefined = undefined) {
     this.loading = true;
     this.lendingsService.getAll(page, new Sorting([]))
       .pipe(finalize(() => this.loading = false))

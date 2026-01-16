@@ -61,7 +61,7 @@ export class RoleView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load(0);
+    this.load();
   }
 
   public onShowInfo(role: Role) {
@@ -106,7 +106,7 @@ export class RoleView implements OnInit {
     this.load(page);
   }
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
@@ -145,7 +145,7 @@ export class RoleView implements OnInit {
           this.view = 'none';
           this.showing = false;
           this.editing = false;
-          this.load(0);
+          this.load();
           onSuccess();
         },
         error: error => {

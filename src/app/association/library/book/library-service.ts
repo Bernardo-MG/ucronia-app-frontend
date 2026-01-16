@@ -76,7 +76,7 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public getAllGameBooks(page: number, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
+  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
@@ -115,7 +115,7 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public getAllFictionBooks(page: number, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
+  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
     const sorting = new SortingParams(
       sort.properties,
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
@@ -127,7 +127,7 @@ export class LibraryService {
       .read();
   }
 
-  public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
+  public getBookTypes(page: number | undefined = undefined): Observable<PaginatedResponse<BookType>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -138,7 +138,7 @@ export class LibraryService {
       .read();
   }
 
-  public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem>> {
+  public getGameSystems(page: number | undefined = undefined): Observable<PaginatedResponse<GameSystem>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -149,7 +149,7 @@ export class LibraryService {
       .read();
   }
 
-  public getAuthors(page: number): Observable<PaginatedResponse<Author>> {
+  public getAuthors(page: number | undefined = undefined): Observable<PaginatedResponse<Author>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -160,7 +160,7 @@ export class LibraryService {
       .read();
   }
 
-  public getPublishers(page: number): Observable<PaginatedResponse<Publisher>> {
+  public getPublishers(page: number | undefined = undefined): Observable<PaginatedResponse<Publisher>> {
     const sorting = new SortingParams(
       [new SortingProperty('name')]
     );
@@ -171,7 +171,7 @@ export class LibraryService {
       .read();
   }
 
-  public getDonors(page: number): Observable<PaginatedResponse<Profile>> {
+  public getDonors(page: number | undefined = undefined): Observable<PaginatedResponse<Profile>> {
     return this.donorClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
@@ -190,7 +190,7 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
+  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<PaginatedResponse<Member>> {
     return this.memberClient
       .loadParameters(new PaginationParams(page))
       .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))

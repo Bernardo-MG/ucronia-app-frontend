@@ -67,7 +67,7 @@ export class UserView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load(0);
+    this.load();
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -183,7 +183,7 @@ export class UserView implements OnInit {
     this.editing = true;
   }
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
@@ -201,7 +201,7 @@ export class UserView implements OnInit {
           this.editing = false;
           this.showing = false;
           this.showingRoles = false;
-          this.load(0);
+          this.load();
           onSuccess();
         },
         error: error => {
