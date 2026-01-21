@@ -34,7 +34,6 @@ export class MemberView implements OnInit {
 
   public failures = new FailureStore();
 
-  public activeFilter = MemberStatus.Active;
   public nameFilterSubject = new Subject<string>();
   public nameFilter = '';
 
@@ -44,7 +43,7 @@ export class MemberView implements OnInit {
 
   public ngOnInit(): void {
     this.loading = true;
-    this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter)
+    this.service.getAll(1, this.sort, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
       .subscribe((data) => this.data = data);
   }
@@ -68,17 +67,6 @@ export class MemberView implements OnInit {
     this.load(page);
   }
 
-  public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
-    if (status === 'all') {
-      this.activeFilter = MemberStatus.All;
-    } else if (status === 'active') {
-      this.activeFilter = MemberStatus.Active;
-    } else if (status === 'inactive') {
-      this.activeFilter = MemberStatus.Inactive;
-    }
-    this.load();
-  }
-
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
@@ -89,7 +77,7 @@ export class MemberView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+    this.service.getAll(page, this.sort, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }

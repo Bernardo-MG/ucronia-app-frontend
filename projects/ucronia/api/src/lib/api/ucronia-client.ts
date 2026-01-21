@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, InjectionToken } from '@angular/core';
+import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { MemberEndpoint } from './endpoint/member-endpoint';
 
 export const UCRONIA_API_BASE_URL = new InjectionToken<string>('UCRONIA_API_BASE_URL');
@@ -14,6 +15,10 @@ export class UcroniaClient {
 
   public get member() {
     return new MemberEndpoint(this.http, this.base_url);
+  }
+
+  public get fee() {
+    return new FeeEndpoint(this.http, this.base_url);
   }
 
 }

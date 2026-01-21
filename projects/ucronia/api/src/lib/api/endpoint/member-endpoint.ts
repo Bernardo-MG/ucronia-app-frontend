@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, Sorting, SortingDirection, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { Member, MemberStatus } from '@ucronia/domain';
+import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { Member } from '@ucronia/domain';
 import { catchError, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
@@ -13,30 +13,18 @@ export class MemberEndpoint {
     private apiUrl: string
   ) { }
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
-    );
+  public page(page: number | undefined = undefined, sort: Sorting, name: string): Observable<PaginatedResponse<Member>> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
 
-    let status;
-    if (active) {
-      status = active.toString().toUpperCase();
-    } else {
-      status = '';
-    }
-
-    const params = new HttpParams();
+    let params = new HttpParams();
     if (page) {
-      params.append('page', page);
+      params = params.append('page', page);
     }
 
     this.getFinalProperties(sort.properties, defaultProperties)
-      .forEach((property) => params.append('sort', `${String(property.property)}|${property.direction}`));
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    params.append('status', status);
-    params.append('name', name);
+    params = params.append('name', name);
 
     return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/member`, { params })
       .pipe(

@@ -187,17 +187,17 @@ export class FeeView implements OnInit {
   private loadRange() {
     this.feeCalendarService.getRange().subscribe(d => {
       this.range = d;
-      this.loadYear();
+      this.loadYear(this.range);
 
       // Load initial year
       this.loadCalendar(this.year);
     });
   }
 
-  private loadYear() {
-    if (this.range.years.length) {
-      const firstYear = Number(this.range.years[0]);
-      const lastYear = Number(this.range.years[this.range.years.length - 1]);
+  private loadYear(range: YearsRange) {
+    if (range.years.length) {
+      const firstYear = Number(range.years[0]);
+      const lastYear = Number(range.years[range.years.length - 1]);
       // If the current year is outside the range, set it back
       if (this.year < firstYear) {
         this.year = firstYear;
