@@ -1,26 +1,17 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
+import { UcroniaClient } from '@ucronia/api';
 import { FeePaymentReport } from "@ucronia/domain";
-import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class FeeReportService {
 
-  private readonly client;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/fee/balance');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public getPaymentReport(): Observable<FeePaymentReport> {
-    return this.client
-      .read<SimpleResponse<FeePaymentReport>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.fee.balance();
   }
 
 }

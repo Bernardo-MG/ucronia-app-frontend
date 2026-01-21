@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SimpleResponse, SortingProperty } from '@bernardo-mg/request';
-import { Fee, FeePayment, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePayment, FeePaymentReport, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { format } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
-import { format } from 'date-fns';
+import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class FeeEndpoint {
 
@@ -83,6 +83,14 @@ export class FeeEndpoint {
   public one(member: number, month: Date): Observable<Fee> {
     const formattedMonth = format(month, 'yyyy-MM')
     return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public balance(): Observable<FeePaymentReport> {
+    return this.http.get<SimpleResponse<FeePaymentReport>>(`${this.apiUrl}/fee/balance`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
