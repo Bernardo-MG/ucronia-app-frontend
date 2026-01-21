@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { MemberStatus, Profile } from '@ucronia/domain';
+import { MemberStatus, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ProfileCreation } from '../../profiles/profile-creation';
-import { ProfilePatch } from '../../profiles/profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { toParam } from '../sorting-param-parser';
+import { SponsorPatch } from '../../sponsor/sponsor-patch';
 
-export class ProfileEndpoint {
+export class SponsorEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -21,7 +21,7 @@ export class ProfileEndpoint {
     sort: Sorting,
     active: MemberStatus,
     name: string
-  ): Observable<PaginatedResponse<Profile>> {
+  ): Observable<PaginatedResponse<Sponsor>> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
 
     let params = new HttpParams();
@@ -37,38 +37,38 @@ export class ProfileEndpoint {
     params = params.append('status', status);
     params = params.append('name', name);
 
-    return this.http.get<PaginatedResponse<Profile>>(`${this.apiUrl}/profile`, { params })
+    return this.http.get<PaginatedResponse<Sponsor>>(`${this.apiUrl}/sponsor`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
   
-  public create(data: ProfileCreation): Observable<Profile> {
-    return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
+  public create(data: ProfileCreation): Observable<Sponsor> {
+    return this.http.post<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public patch(data: ProfilePatch): Observable<Profile> {
-    return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
+  public patch(data: SponsorPatch): Observable<Sponsor> {
+    return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<Profile> {
-    return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
+  public delete(index: number): Observable<Sponsor> {
+    return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public one(index: number): Observable<Profile> {
-    return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
+  public one(index: number): Observable<Sponsor> {
+    return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

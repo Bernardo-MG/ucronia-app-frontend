@@ -1,13 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { MemberStatus, Profile } from '@ucronia/domain';
+import { Guest, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { ProfileCreation } from '../../profiles/profile-creation';
-import { ProfilePatch } from '../../profiles/profile-patch';
+import { GuestPatch } from '../../guests/guest-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { toParam } from '../sorting-param-parser';
 
-export class ProfileEndpoint {
+export class GuestEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -21,7 +20,7 @@ export class ProfileEndpoint {
     sort: Sorting,
     active: MemberStatus,
     name: string
-  ): Observable<PaginatedResponse<Profile>> {
+  ): Observable<PaginatedResponse<Guest>> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
 
     let params = new HttpParams();
@@ -37,38 +36,30 @@ export class ProfileEndpoint {
     params = params.append('status', status);
     params = params.append('name', name);
 
-    return this.http.get<PaginatedResponse<Profile>>(`${this.apiUrl}/profile`, { params })
+    return this.http.get<PaginatedResponse<Guest>>(`${this.apiUrl}/profile/guest`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
   
-  public create(data: ProfileCreation): Observable<Profile> {
-    return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
+  public patch(data: GuestPatch): Observable<Guest> {
+    return this.http.patch<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public patch(data: ProfilePatch): Observable<Profile> {
-    return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
+  public delete(index: number): Observable<Guest> {
+    return this.http.delete<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<Profile> {
-    return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public one(index: number): Observable<Profile> {
-    return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
+  public one(index: number): Observable<Guest> {
+    return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

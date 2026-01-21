@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, InjectionToken } from '@angular/core';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
+import { GuestEndpoint } from './endpoint/guest-endpoint copy';
 import { MemberEndpoint } from './endpoint/member-endpoint';
+import { MemberProfileEndpoint } from './endpoint/member-profile-endpoint';
 import { MyFeesEndpoint } from './endpoint/my-fees-endpoint';
 import { ProfileEndpoint } from './endpoint/profile-endpoint';
+import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
 
 export const UCRONIA_API_BASE_URL = new InjectionToken<string>('UCRONIA_API_BASE_URL');
@@ -22,6 +25,18 @@ export class UcroniaClient {
 
   public get profile() {
     return new ProfileEndpoint(this.http, this.base_url);
+  }
+
+  public get guest() {
+    return new GuestEndpoint(this.http, this.base_url);
+  }
+
+  public get sponsor() {
+    return new SponsorEndpoint(this.http, this.base_url);
+  }
+
+  public get memberProfile() {
+    return new MemberProfileEndpoint(this.http, this.base_url);
   }
 
   public get fee() {

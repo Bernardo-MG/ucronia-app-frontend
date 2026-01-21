@@ -17,17 +17,11 @@ export class ProfilesService {
   private readonly messageService = inject(MessageService);
 
   private readonly client;
-  private readonly guestClient;
-  private readonly memberClient;
-  private readonly sponsorClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/profile');
-    this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
-    this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
   }
 
   public getAll(
@@ -37,30 +31,19 @@ export class ProfilesService {
     name: string,
     filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
   ): Observable<PaginatedResponse<ProfileInfo>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
-    );
+    let endpoint;
 
-    const status = active ? active.toString().toUpperCase() : '';
-
-    let clientToUse;
     if (filterType === 'guest') {
-      clientToUse = this.guestClient;
+      endpoint = this.ucroniaClient.guest.page;
     } else if (filterType === 'member') {
-      clientToUse = this.memberClient;
+      endpoint = this.ucroniaClient.memberProfile.page;
     } else if (filterType === 'sponsor') {
-      clientToUse = this.sponsorClient;
+      endpoint = this.ucroniaClient.sponsor.page;
     } else {
-      clientToUse = this.client;
+      endpoint = this.ucroniaClient.profile.page;
     }
 
-    return clientToUse
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .parameter('status', status)
-      .parameter('name', name)
-      .read<PaginatedResponse<ProfileInfo>>();
+    return endpoint(page, sort, active, name);
   }
 
 
@@ -156,30 +139,15 @@ export class ProfilesService {
           const requests: Observable<any>[] = [];
 
           if (profile.types?.includes('guest')) {
-            requests.push(
-              this.guestClient
-                .appendRoute(`/${number}`)
-                .read<SimpleResponse<Guest>>()
-                .pipe(map(resp => resp.content))
-            );
+            requests.push(this.ucroniaClient.guest.one(number));
           }
 
           if (profile.types?.includes('member')) {
-            requests.push(
-              this.memberClient
-                .appendRoute(`/${number}`)
-                .read<SimpleResponse<Member>>()
-                .pipe(map(resp => resp.content))
-            );
+            requests.push(this.ucroniaClient.memberProfile.one(number));
           }
 
           if (profile.types?.includes('sponsor')) {
-            requests.push(
-              this.sponsorClient
-                .appendRoute(`/${number}`)
-                .read<SimpleResponse<Sponsor>>()
-                .pipe(map(resp => resp.content))
-            );
+            requests.push(this.ucroniaClient.sponsor.one(number));
           }
 
           if (requests.length === 0) {
@@ -275,11 +243,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.guestClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Guest>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.guest.patch(patch);
   }
 
   private updateSponsor(data: Sponsor): Observable<Sponsor> {
@@ -292,11 +256,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.sponsorClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Sponsor>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.sponsor.patch(patch);
   }
 
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
@@ -310,11 +270,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.memberClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<MemberProfile>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.memberProfile.patch(patch);
   }
 
 }
