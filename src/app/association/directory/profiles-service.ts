@@ -1,16 +1,18 @@
 import { Injectable, inject } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch } from '@ucronia/api';
-import { FeeType, Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch, UcroniaClient } from '@ucronia/api';
+import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfilesService {
+
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   private readonly messageService = inject(MessageService);
 
@@ -63,10 +65,9 @@ export class ProfilesService {
 
 
   public create(data: ProfileCreation): Observable<Profile> {
-    return this.client
-      .create<SimpleResponse<Profile>>(data)
+    return this.ucroniaClient.profile
+      .create(data)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -124,11 +125,9 @@ export class ProfilesService {
   }
 
   public delete(number: number): Observable<Profile> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<Profile>>()
+    return this.ucroniaClient.profile
+      .delete(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -150,11 +149,9 @@ export class ProfilesService {
   }
 
   public getOne(number: number): Observable<ProfileInfo> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<ProfileInfo>>()
+    return this.ucroniaClient.profile
+      .one(number)
       .pipe(
-        map(r => r.content),
         switchMap(profile => {
           const requests: Observable<any>[] = [];
 
@@ -265,11 +262,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.client
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Profile>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.profile.patch(patch);
   }
 
   private updateGuest(data: Guest): Observable<Guest> {
