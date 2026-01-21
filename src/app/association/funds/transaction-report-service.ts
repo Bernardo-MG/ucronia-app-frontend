@@ -7,8 +7,8 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class TransactionReportService {
-  private http = inject(HttpClient);
 
+  private readonly http = inject(HttpClient);
 
   public downloadExcelReport(): Observable<any> {
     const headers = new HttpHeaders({
