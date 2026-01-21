@@ -135,14 +135,14 @@ export class FeeView implements OnInit {
       },
       accept: () =>
         this.call(
-          () => this.service.delete(fee.month, fee.member.number),
+          () => this.service.delete(fee.member.number, fee.month),
           () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
         )
     });
   }
 
   public onSelectFee(fee: { member: number, date: Date }) {
-    this.service.getOne(fee.date, fee.member)
+    this.service.getOne(fee.member, fee.date)
       .subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }

@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { FeeCreation, FeeUpdate } from '@ucronia/api';
+import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
 import { Fee, FeePayment, Member, MemberStatus, Profile } from "@ucronia/domain";
-import { format } from 'date-fns';
 import { environment } from 'environments/environment';
 import { map, Observable } from 'rxjs';
 
@@ -11,52 +10,34 @@ import { map, Observable } from 'rxjs';
 })
 export class FeeService {
 
-  private readonly feeClient;
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   private readonly memberClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.feeClient = clientProvider.url(environment.apiUrl + '/fee');
     this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
   }
 
   public create(data: FeeCreation): Observable<FeePayment> {
-    return this.feeClient
-      .create<SimpleResponse<FeePayment>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.fee.create(data);
   }
 
   public pay(data: FeePayment): Observable<FeePayment> {
-    return this.feeClient
-      .appendRoute('/pay')
-      .create<SimpleResponse<FeePayment>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.fee.pay(data);
   }
 
   public update(member: number, month: Date, data: FeeUpdate): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM')
-    return this.feeClient
-      .appendRoute(`/${formattedMonth}/${member}`)
-      .update<SimpleResponse<Fee>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.fee.update(member, month, data);
   }
 
-  public delete(month: Date, memberNumber: number): Observable<Fee> {
-    const formattedMonth = month.toISOString().slice(0, 7);
-    return this.feeClient
-      .appendRoute(`/${formattedMonth}/${memberNumber}`)
-      .delete<SimpleResponse<Fee>>()
-      .pipe(map(r => r.content));
+  public delete(member: number, month: Date): Observable<Fee> {
+    return this.ucroniaClient.fee.delete(member, month);
   }
 
-  public getOne(month: Date, memberNumber: number): Observable<Fee> {
-    const formattedMonth = month.toISOString().slice(0, 7);
-    return this.feeClient
-      .appendRoute(`/${formattedMonth}/${memberNumber}`)
-      .read<SimpleResponse<Fee>>()
-      .pipe(map(r => r.content));
+  public getOne(member: number, month: Date): Observable<Fee> {
+    return this.ucroniaClient.fee.one(member, month);
   }
 
   public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {

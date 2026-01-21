@@ -1,8 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SimpleResponse, SortingProperty } from '@bernardo-mg/request';
-import { MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePayment, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
+import { FeeCreation } from '../../fees/fee-creation';
+import { FeeUpdate } from '../../fees/fee-update';
+import { format } from 'date-fns';
 
 export class FeeEndpoint {
 
@@ -37,6 +40,49 @@ export class FeeEndpoint {
 
   public range(): Observable<YearsRange> {
     return this.http.get<SimpleResponse<YearsRange>>(`${this.apiUrl}/fee/range`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public create(data: FeeCreation): Observable<FeePayment> {
+    return this.http.post<SimpleResponse<FeePayment>>(`${this.apiUrl}/fee`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public pay(data: FeePayment): Observable<FeePayment> {
+    return this.http.post<SimpleResponse<FeePayment>>(`${this.apiUrl}/fee/pay`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public update(member: number, month: Date, data: FeeUpdate): Observable<Fee> {
+    const formattedMonth = format(month, 'yyyy-MM')
+    return this.http.put<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public delete(member: number, month: Date): Observable<Fee> {
+    const formattedMonth = format(month, 'yyyy-MM')
+    return this.http.delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public one(member: number, month: Date): Observable<Fee> {
+    const formattedMonth = format(month, 'yyyy-MM')
+    return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
