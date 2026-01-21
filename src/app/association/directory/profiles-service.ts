@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch, UcroniaClient } from '@ucronia/api';
+import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient } from '@ucronia/api';
 import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
-import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
@@ -15,14 +14,6 @@ export class ProfilesService {
   private readonly ucroniaClient = inject(UcroniaClient);
 
   private readonly messageService = inject(MessageService);
-
-  private readonly client;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/profile');
-  }
 
   public getAll(
     page: number | undefined = undefined,
@@ -164,17 +155,8 @@ export class ProfilesService {
   }
 
   public convertToMember(number: number, feeType: number): Observable<Member> {
-    const conversion: ProfileMembershipConversion = {
-      feeType
-    };
-
-    return this.client
-      .appendRoute(`/${number}/member`)
-      .update<SimpleResponse<Member>>(
-        conversion
-      )
+    return this.ucroniaClient.profile.toMember(number, feeType)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -187,11 +169,8 @@ export class ProfilesService {
   }
 
   public convertToSponsor(number: number): Observable<Sponsor> {
-    return this.client
-      .appendRoute(`/${number}/sponsor`)
-      .update<SimpleResponse<Sponsor>>(undefined)
+    return this.ucroniaClient.profile.toSponsor(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -204,11 +183,8 @@ export class ProfilesService {
   }
 
   public convertToGuest(number: number): Observable<Guest> {
-    return this.client
-      .appendRoute(`/${number}/guest`)
-      .update<SimpleResponse<Guest>>(undefined)
+    return this.ucroniaClient.profile.toGuest(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',

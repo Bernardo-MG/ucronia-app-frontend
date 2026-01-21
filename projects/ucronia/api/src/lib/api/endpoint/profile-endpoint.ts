@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { MemberStatus, Profile } from '@ucronia/domain';
+import { Guest, Member, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ProfileCreation } from '../../profiles/profile-creation';
 import { ProfilePatch } from '../../profiles/profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { toParam } from '../sorting-param-parser';
+import { ProfileMembershipConversion } from '../../members/profile-membership-conversion';
 
 export class ProfileEndpoint {
 
@@ -69,6 +70,34 @@ export class ProfileEndpoint {
 
   public one(index: number): Observable<Profile> {
     return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public toMember(number: number, feeType: number): Observable<Member> {
+    const conversion: ProfileMembershipConversion = {
+      feeType
+    };
+
+    return this.http.put<SimpleResponse<Member>>(`${this.apiUrl}/profile/${number}/member`, conversion)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public toSponsor(number: number): Observable<Sponsor> {
+    return this.http.put<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/${number}/member`, undefined)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public toGuest(number: number): Observable<Guest> {
+    return this.http.put<SimpleResponse<Guest>>(`${this.apiUrl}/profile/${number}/guest`, undefined)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
