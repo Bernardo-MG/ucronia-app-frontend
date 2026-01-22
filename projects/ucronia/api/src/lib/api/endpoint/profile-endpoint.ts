@@ -11,11 +11,18 @@ import { ProfileMembershipConversion } from '../../members/profile-membership-co
 export class ProfileEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
+  private readonly transformProfileEndpoint;
 
   public constructor(
     private http: HttpClient,
     private apiUrl: string
-  ) { }
+  ) {
+    this.transformProfileEndpoint = new TransformProfileEndpoint(http, apiUrl);
+  }
+
+  public get transform() {
+    return this.transformProfileEndpoint;
+  }
 
   public page(
     page: number | undefined,
@@ -75,6 +82,17 @@ export class ProfileEndpoint {
         map(response => response.content)
       );
   }
+
+}
+
+export class TransformProfileEndpoint {
+  
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) { }
 
   public toMember(number: number, feeType: number): Observable<Member> {
     const conversion: ProfileMembershipConversion = {

@@ -10,10 +10,18 @@ export class TransactionEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
+  private readonly transactionCalendarEndpoint;
+
   public constructor(
     private http: HttpClient,
     private apiUrl: string
-  ) { }
+  ) {
+    this.transactionCalendarEndpoint = new TransactionCalendarEndpoint(http, apiUrl);
+  }
+
+  public get calendar() {
+    return this.transactionCalendarEndpoint;
+  }
 
   public create(data: Transaction): Observable<Transaction> {
     return this.http.post<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction`, data)
@@ -68,52 +76,6 @@ export class TransactionEndpoint {
     );
   }
 
-  public calendar(year: number, month: number): Observable<Transaction[]> {
-    let dateValue;
-    if (month < 10) {
-      dateValue = `${year}-0${month + 1}`;
-    } else {
-      dateValue = `${year}-${month + 1}`;
-    }
-    const date = new Date(dateValue)
-    const from = startOfMonth(date);
-    const to = new Date(format(lastDayOfMonth(date), 'yyyy-MM-dd'));
-
-    const fromWithMargin = addDays(from, -7);
-    const toWithMargin = addDays(to, 7);
-
-    const offset = new Date().getTimezoneOffset();
-    const fromUtc = addMinutes(fromWithMargin, offset);
-    const toUtc = addMinutes(toWithMargin, offset);
-
-    const defaultProperties = [new SortingProperty('date'), new SortingProperty('description')];
-
-    let params = new HttpParams();
-    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
-    params = params.append('from', fromUtc.toISOString());
-    params = params.append('to', toUtc.toISOString());
-
-    return this.http.get<SimpleResponse<Transaction[]>>(`${this.apiUrl}/transaction/calendar`, { params })
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public range(): Observable<Month[]> {
-    return this.http.get<SimpleResponse<TransactionCalendarMonthsRange>>(`${this.apiUrl}/transaction/calendar/range`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content),
-        map(r => r.months.map(m => {
-          const date = new Date(m);
-          const month = new Month(date.getFullYear(), date.getMonth() + 1);
-
-          return month;
-        }))
-      );
-  }
-
   public currentBalance(): Observable<TransactionCurrentBalance> {
     return this.http.get<SimpleResponse<TransactionCurrentBalance>>(`${this.apiUrl}/transaction/balance`)
       .pipe(
@@ -141,6 +103,50 @@ export class TransactionEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
+      );
+  }
+
+}
+
+export class TransactionCalendarEndpoint {
+
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) { }
+
+  public between(from: Date, to: Date): Observable<Transaction[]> {
+    const offset = new Date().getTimezoneOffset();
+    const fromUtc = addMinutes(from, offset);
+    const toUtc = addMinutes(to, offset);
+
+    const defaultProperties = [new SortingProperty('date'), new SortingProperty('description')];
+
+    let params = new HttpParams();
+    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    params = params.append('from', fromUtc.toISOString());
+    params = params.append('to', toUtc.toISOString());
+
+    return this.http.get<SimpleResponse<Transaction[]>>(`${this.apiUrl}/transaction/calendar`, { params })
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public range(): Observable<Month[]> {
+    return this.http.get<SimpleResponse<TransactionCalendarMonthsRange>>(`${this.apiUrl}/transaction/calendar/range`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content),
+        map(r => r.months.map(m => {
+          const date = new Date(m);
+          const month = new Month(date.getFullYear(), date.getMonth() + 1);
+
+          return month;
+        }))
       );
   }
 

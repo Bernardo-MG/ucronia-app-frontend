@@ -155,7 +155,7 @@ export class ProfilesService {
   }
 
   public convertToMember(number: number, feeType: number): Observable<Member> {
-    return this.ucroniaClient.profile.toMember(number, feeType)
+    return this.ucroniaClient.profile.transform.toMember(number, feeType)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -169,7 +169,7 @@ export class ProfilesService {
   }
 
   public convertToSponsor(number: number): Observable<Sponsor> {
-    return this.ucroniaClient.profile.toSponsor(number)
+    return this.ucroniaClient.profile.transform.toSponsor(number)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -183,7 +183,7 @@ export class ProfilesService {
   }
 
   public convertToGuest(number: number): Observable<Guest> {
-    return this.ucroniaClient.profile.toGuest(number)
+    return this.ucroniaClient.profile.transform.toGuest(number)
       .pipe(
         tap(() => {
           this.messageService.add({
