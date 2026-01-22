@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, InjectionToken } from '@angular/core';
+import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint copy';
@@ -46,6 +47,10 @@ export class UcroniaClient {
 
   public get feeType() {
     return new FeeTypeEndpoint(this.http, this.base_url);
+  }
+
+  public get contactMethod() {
+    return new ContactMethodEndpoint(this.http, this.base_url);
   }
 
   public get transaction() {
