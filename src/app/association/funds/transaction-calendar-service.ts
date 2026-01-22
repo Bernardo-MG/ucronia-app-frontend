@@ -32,7 +32,7 @@ export class TransactionCalendarService {
   }
 
   public getRange(): Observable<Month[]> {
-    return this.ucroniaClient.transaction.calendar.range();
+    return this.ucroniaClient.transaction.range();
   }
 
 }

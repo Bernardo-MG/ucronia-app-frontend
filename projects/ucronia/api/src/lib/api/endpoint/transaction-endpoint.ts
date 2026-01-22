@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
-import { Transaction, TransactionCalendarMonthsRange, TransactionCurrentBalance, TransactionMonthlyBalance } from '@ucronia/domain';
-import { addDays, addMinutes, format, lastDayOfMonth, startOfMonth } from 'date-fns';
+import { Transaction, TransactionCurrentBalance, TransactionMonthlyBalance, TransactionMonthsRange } from '@ucronia/domain';
+import { addMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
@@ -10,18 +10,10 @@ export class TransactionEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
-  private readonly transactionCalendarEndpoint;
-
   public constructor(
     private http: HttpClient,
     private apiUrl: string
-  ) {
-    this.transactionCalendarEndpoint = new TransactionCalendarEndpoint(http, apiUrl);
-  }
-
-  public get calendar() {
-    return this.transactionCalendarEndpoint;
-  }
+  ) {}
 
   public page(
     page: number | undefined,
@@ -139,19 +131,8 @@ export class TransactionEndpoint {
       );
   }
 
-}
-
-export class TransactionCalendarEndpoint {
-
-  private readonly errorInterceptor = new ErrorRequestInterceptor();
-
-  public constructor(
-    private http: HttpClient,
-    private apiUrl: string
-  ) { }
-
   public range(): Observable<Month[]> {
-    return this.http.get<SimpleResponse<TransactionCalendarMonthsRange>>(`${this.apiUrl}/transaction/calendar/range`)
+    return this.http.get<SimpleResponse<TransactionMonthsRange>>(`${this.apiUrl}/range`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
@@ -163,5 +144,4 @@ export class TransactionCalendarEndpoint {
         }))
       );
   }
-
 }
