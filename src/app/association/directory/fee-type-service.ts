@@ -1,54 +1,32 @@
 import { inject, Injectable } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse } from '@bernardo-mg/request';
+import { UcroniaClient } from '@ucronia/api';
 import { FeeType } from '@ucronia/domain';
-import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
-import { catchError, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, expand, Observable, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FeeTypeService {
 
+  private readonly ucroniaClient = inject(UcroniaClient);
+
   private readonly messageService = inject(MessageService);
 
-  private readonly client;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/fee/type');
-  }
-
   public getAll(page: number | undefined = undefined): Observable<PaginatedResponse<FeeType>> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
-
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<FeeType>>();
+    return this.ucroniaClient.feeType.page(page)
   }
 
   public getAllAvailable(): Observable<FeeType[]> {
-    const sorting = new SortingParams(
-      [new SortingProperty('name')]
-    );
     const pageSize = 100;
 
-    return this.client
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<FeeType>>()
+    return this.ucroniaClient.feeType.page(1, pageSize)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.client
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<FeeType>>();
+            return this.ucroniaClient.feeType.page(nextPage, pageSize);
           }
           return of();
         }),
@@ -60,10 +38,8 @@ export class FeeTypeService {
   }
 
   public create(data: FeeType): Observable<FeeType> {
-    return this.client
-      .create<SimpleResponse<FeeType>>(data)
+    return this.ucroniaClient.feeType.create(data)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -76,11 +52,8 @@ export class FeeTypeService {
   }
 
   public update(data: FeeType): Observable<FeeType> {
-    return this.client
-      .appendRoute(`/${data.number}`)
-      .update<SimpleResponse<FeeType>>(data)
+    return this.ucroniaClient.feeType.update(data)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -93,11 +66,8 @@ export class FeeTypeService {
   }
 
   public delete(number: number): Observable<FeeType> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<FeeType>>()
+    return this.ucroniaClient.feeType.delete(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',

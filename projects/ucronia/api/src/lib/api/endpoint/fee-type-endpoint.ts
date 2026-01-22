@@ -1,0 +1,62 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
+import { FeeType } from '@ucronia/domain';
+import { catchError, map, Observable } from 'rxjs';
+import { ErrorRequestInterceptor } from '../error-request-interceptor';
+
+export class FeeTypeEndpoint {
+
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) { }
+
+  public page(
+    page: number | undefined,
+    size: number | undefined = undefined
+  ): Observable<PaginatedResponse<FeeType>> {
+    const defaultProperties = [new SortingProperty('name')];
+
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', page);
+    }
+    if (size) {
+      params = params.append('size', size);
+    }
+
+    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+
+    return this.http.get<PaginatedResponse<FeeType>>(`${this.apiUrl}/fee/type`, { params })
+      .pipe(
+        catchError(this.errorInterceptor.handle)
+      );
+  }
+
+  public create(data: FeeType): Observable<FeeType> {
+    return this.http.post<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public update(data: FeeType): Observable<FeeType> {
+    return this.http.put<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public delete(index: number): Observable<FeeType> {
+    return this.http.delete<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type/${index}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+}
