@@ -1,4 +1,5 @@
 import { Injectable, inject } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Month } from '@bernardo-mg/ui';
 import { UcroniaClient } from '@ucronia/api';
 import { Transaction } from "@ucronia/domain";
@@ -25,7 +26,9 @@ export class TransactionCalendarService {
 
     const fromWithMargin = addDays(from, -7);
     const toWithMargin = addDays(to, 7);
-    return this.ucroniaClient.transaction.calendar.between(fromWithMargin, toWithMargin);
+
+    return getAllPages((page, size) => this.ucroniaClient.transaction
+      .page(page, size, fromWithMargin, toWithMargin));
   }
 
   public getRange(): Observable<Month[]> {

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { SimpleResponse, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { Transaction, TransactionCalendarMonthsRange, TransactionCurrentBalance, TransactionMonthlyBalance } from '@ucronia/domain';
 import { addDays, addMinutes, format, lastDayOfMonth, startOfMonth } from 'date-fns';
@@ -21,6 +21,39 @@ export class TransactionEndpoint {
 
   public get calendar() {
     return this.transactionCalendarEndpoint;
+  }
+
+  public page(
+    page: number | undefined,
+    size: number | undefined = undefined,
+    from: Date | undefined,
+    to: Date | undefined
+  ): Observable<PaginatedResponse<Transaction>> {
+    const offset = new Date().getTimezoneOffset();
+    let fromUtc;
+    let toUtc;
+
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', page);
+    }
+    if (size) {
+      params = params.append('size', size);
+    }
+
+    if (from) {
+      fromUtc = addMinutes(from, offset);
+      params = params.append('from', fromUtc.toISOString());
+    }
+    if (to) {
+      toUtc = addMinutes(to, offset);
+      params = params.append('to', toUtc.toISOString());
+    }
+
+    return this.http.get<PaginatedResponse<Transaction>>(`${this.apiUrl}/transaction`, { params })
+      .pipe(
+        catchError(this.errorInterceptor.handle)
+      );
   }
 
   public create(data: Transaction): Observable<Transaction> {
@@ -116,25 +149,6 @@ export class TransactionCalendarEndpoint {
     private http: HttpClient,
     private apiUrl: string
   ) { }
-
-  public between(from: Date, to: Date): Observable<Transaction[]> {
-    const offset = new Date().getTimezoneOffset();
-    const fromUtc = addMinutes(from, offset);
-    const toUtc = addMinutes(to, offset);
-
-    const defaultProperties = [new SortingProperty('date'), new SortingProperty('description')];
-
-    let params = new HttpParams();
-    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
-    params = params.append('from', fromUtc.toISOString());
-    params = params.append('to', toUtc.toISOString());
-
-    return this.http.get<SimpleResponse<Transaction[]>>(`${this.apiUrl}/transaction/calendar`, { params })
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
 
   public range(): Observable<Month[]> {
     return this.http.get<SimpleResponse<TransactionCalendarMonthsRange>>(`${this.apiUrl}/transaction/calendar/range`)
