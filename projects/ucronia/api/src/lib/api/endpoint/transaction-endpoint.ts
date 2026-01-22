@@ -72,7 +72,7 @@ export class TransactionEndpoint {
       );
   }
 
-  public one(index: number): Observable<Transaction> {
+  public get(index: number): Observable<Transaction> {
     return this.http.get<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

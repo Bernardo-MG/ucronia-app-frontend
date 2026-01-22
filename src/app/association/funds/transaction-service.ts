@@ -23,7 +23,7 @@ export class TransactionService {
   }
 
   public getOne(index: number): Observable<Transaction> {
-    return this.ucroniaClient.transaction.one(index);
+    return this.ucroniaClient.transaction.get(index);
   }
 
 }

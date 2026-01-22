@@ -67,7 +67,7 @@ export class SponsorEndpoint {
       );
   }
 
-  public one(index: number): Observable<Sponsor> {
+  public get(index: number): Observable<Sponsor> {
     return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

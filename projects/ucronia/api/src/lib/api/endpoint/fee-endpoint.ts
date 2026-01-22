@@ -80,7 +80,7 @@ export class FeeEndpoint {
       );
   }
 
-  public one(member: number, month: Date): Observable<Fee> {
+  public get(member: number, month: Date): Observable<Fee> {
     const formattedMonth = format(month, 'yyyy-MM')
     return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(

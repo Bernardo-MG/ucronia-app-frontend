@@ -75,7 +75,7 @@ export class ProfileEndpoint {
       );
   }
 
-  public one(index: number): Observable<Profile> {
+  public get(index: number): Observable<Profile> {
     return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

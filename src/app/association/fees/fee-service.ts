@@ -37,7 +37,7 @@ export class FeeService {
   }
 
   public getOne(member: number, month: Date): Observable<Fee> {
-    return this.ucroniaClient.fee.one(member, month);
+    return this.ucroniaClient.fee.get(member, month);
   }
 
   public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {

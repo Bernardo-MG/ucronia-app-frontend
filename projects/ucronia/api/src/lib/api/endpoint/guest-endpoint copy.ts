@@ -58,7 +58,7 @@ export class GuestEndpoint {
       );
   }
 
-  public one(index: number): Observable<Guest> {
+  public get(index: number): Observable<Guest> {
     return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

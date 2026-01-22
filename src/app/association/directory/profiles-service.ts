@@ -124,21 +124,21 @@ export class ProfilesService {
 
   public getOne(number: number): Observable<ProfileInfo> {
     return this.ucroniaClient.profile
-      .one(number)
+      .get(number)
       .pipe(
         switchMap(profile => {
           const requests: Observable<any>[] = [];
 
           if (profile.types?.includes('guest')) {
-            requests.push(this.ucroniaClient.guest.one(number));
+            requests.push(this.ucroniaClient.guest.get(number));
           }
 
           if (profile.types?.includes('member')) {
-            requests.push(this.ucroniaClient.memberProfile.one(number));
+            requests.push(this.ucroniaClient.memberProfile.get(number));
           }
 
           if (profile.types?.includes('sponsor')) {
-            requests.push(this.ucroniaClient.sponsor.one(number));
+            requests.push(this.ucroniaClient.sponsor.get(number));
           }
 
           if (requests.length === 0) {

@@ -60,7 +60,7 @@ export class MemberProfileEndpoint {
       );
   }
 
-  public one(index: number): Observable<MemberProfile> {
+  public get(index: number): Observable<MemberProfile> {
     return this.http.get<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
