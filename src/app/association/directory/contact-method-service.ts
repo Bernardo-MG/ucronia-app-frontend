@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { ContactMethod } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
-import { catchError, expand, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -19,22 +20,7 @@ export class ContactMethodService {
   }
 
   public getAllAvailable(): Observable<ContactMethod[]> {
-    const pageSize = 100;
-
-    return this.ucroniaClient.contactMethod.page(0, pageSize)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.ucroniaClient.contactMethod.page(nextPage, pageSize);
-          }
-          return of();
-        }),
-        // accumulate from all pages into one array
-        reduce((methods: ContactMethod[], res?: PaginatedResponse<ContactMethod>) => {
-          return res ? [...methods, ...res.content] : methods;
-        }, [])
-      );
+    return getAllPages(this.ucroniaClient.contactMethod.page);
   }
 
   public create(data: ContactMethod): Observable<ContactMethod> {

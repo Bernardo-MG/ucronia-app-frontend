@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { PaginatedResponse } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { FeeType } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, expand, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -19,22 +20,7 @@ export class FeeTypeService {
   }
 
   public getAllAvailable(): Observable<FeeType[]> {
-    const pageSize = 100;
-
-    return this.ucroniaClient.feeType.page(1, pageSize)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.ucroniaClient.feeType.page(nextPage, pageSize);
-          }
-          return of();
-        }),
-        // accumulate from all pages into one array
-        reduce((methods: FeeType[], res?: PaginatedResponse<FeeType>) => {
-          return res ? [...methods, ...res.content] : methods;
-        }, [])
-      );
+    return getAllPages(this.ucroniaClient.feeType.page);
   }
 
   public create(data: FeeType): Observable<FeeType> {
