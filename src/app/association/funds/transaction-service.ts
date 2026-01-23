@@ -15,7 +15,7 @@ export class TransactionService {
   }
 
   public update(data: Transaction): Observable<Transaction> {
-    return this.ucroniaClient.transaction.update(data);
+    return this.ucroniaClient.transaction.update(data.index, data);
   }
 
   public delete(index: number): Observable<Transaction> {

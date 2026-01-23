@@ -206,7 +206,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.ucroniaClient.profile.patch(patch);
+    return this.ucroniaClient.profile.patch(data.number, patch);
   }
 
   private updateGuest(data: Guest): Observable<Guest> {
@@ -219,7 +219,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.ucroniaClient.guest.patch(patch);
+    return this.ucroniaClient.guest.patch(data.number, patch);
   }
 
   private updateSponsor(data: Sponsor): Observable<Sponsor> {
@@ -232,7 +232,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.ucroniaClient.sponsor.patch(patch);
+    return this.ucroniaClient.sponsor.patch(data.number, patch);
   }
 
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
@@ -246,7 +246,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.ucroniaClient.memberProfile.patch(patch);
+    return this.ucroniaClient.memberProfile.patch(data.number,patch);
   }
 
 }

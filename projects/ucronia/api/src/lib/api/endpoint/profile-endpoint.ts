@@ -50,7 +50,15 @@ export class ProfileEndpoint {
         catchError(this.errorInterceptor.handle)
       );
   }
-  
+
+  public get(number: number): Observable<Profile> {
+    return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
   public create(data: ProfileCreation): Observable<Profile> {
     return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
       .pipe(
@@ -59,24 +67,16 @@ export class ProfileEndpoint {
       );
   }
 
-  public patch(data: ProfilePatch): Observable<Profile> {
-    return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
+  public patch(number: number, data: ProfilePatch): Observable<Profile> {
+    return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<Profile> {
-    return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public get(index: number): Observable<Profile> {
-    return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${index}`)
+  public delete(number: number): Observable<Profile> {
+    return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -86,7 +86,7 @@ export class ProfileEndpoint {
 }
 
 export class TransformProfileEndpoint {
-  
+
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
   public constructor(

@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { FeeTypeUpdate } from '../../fees/fee-type-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class FeeTypeEndpoint {
@@ -43,16 +44,16 @@ export class FeeTypeEndpoint {
       );
   }
 
-  public update(data: FeeType): Observable<FeeType> {
-    return this.http.put<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type`, data)
+  public update(number: number, data: FeeTypeUpdate): Observable<FeeType> {
+    return this.http.put<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<FeeType> {
-    return this.http.delete<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type/${index}`)
+  public delete(number: number): Observable<FeeType> {
+    return this.http.delete<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

@@ -72,7 +72,7 @@ export class LibraryService {
       .pipe(map(r => r.content));
   }
 
-  public updateFictionBook(data: BookUpdate): Observable<FictionBook> {
+  public updateFictionBook(number: number, data: BookUpdate): Observable<FictionBook> {
     return this.fictionBookClient
       .appendRoute(`/${data.number}`)
       .update<SimpleResponse<GameBook>>(data)

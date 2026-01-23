@@ -38,7 +38,7 @@ export class ContactMethodService {
   }
 
   public update(data: ContactMethod): Observable<ContactMethod> {
-    return this.ucroniaClient.contactMethod.update(data)
+    return this.ucroniaClient.contactMethod.update(data.number, data)
       .pipe(
         tap(() => {
           this.messageService.add({

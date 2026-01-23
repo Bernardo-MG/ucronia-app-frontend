@@ -5,6 +5,7 @@ import { Transaction, TransactionCurrentBalance, TransactionMonthlyBalance, Tran
 import { addMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
+import { TransactionUpdate } from '../../transaction/transaction-update';
 
 export class TransactionEndpoint {
 
@@ -13,7 +14,7 @@ export class TransactionEndpoint {
   public constructor(
     private http: HttpClient,
     private apiUrl: string
-  ) {}
+  ) { }
 
   public page(
     page: number | undefined,
@@ -48,6 +49,14 @@ export class TransactionEndpoint {
       );
   }
 
+  public get(index: number): Observable<Transaction> {
+    return this.http.get<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
   public create(data: Transaction): Observable<Transaction> {
     return this.http.post<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction`, data)
       .pipe(
@@ -56,8 +65,8 @@ export class TransactionEndpoint {
       );
   }
 
-  public update(data: Transaction): Observable<Transaction> {
-    return this.http.put<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction`, data)
+  public update(index: number, data: TransactionUpdate): Observable<Transaction> {
+    return this.http.put<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -66,14 +75,6 @@ export class TransactionEndpoint {
 
   public delete(index: number): Observable<Transaction> {
     return this.http.delete<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public get(index: number): Observable<Transaction> {
-    return this.http.get<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -144,4 +145,5 @@ export class TransactionEndpoint {
         }))
       );
   }
+
 }

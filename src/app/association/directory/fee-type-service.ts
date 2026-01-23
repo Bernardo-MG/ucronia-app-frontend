@@ -38,7 +38,7 @@ export class FeeTypeService {
   }
 
   public update(data: FeeType): Observable<FeeType> {
-    return this.ucroniaClient.feeType.update(data)
+    return this.ucroniaClient.feeType.update(data.number, data)
       .pipe(
         tap(() => {
           this.messageService.add({

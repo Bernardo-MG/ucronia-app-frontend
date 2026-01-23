@@ -16,6 +16,15 @@ export class FeeEndpoint {
     private apiUrl: string
   ) { }
 
+  public get(member: number, month: Date): Observable<Fee> {
+    const formattedMonth = format(month, 'yyyy-MM')
+    return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
   public year(year: number, active: MemberStatus): Observable<MemberFees[]> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName')];
 
@@ -74,15 +83,6 @@ export class FeeEndpoint {
   public delete(member: number, month: Date): Observable<Fee> {
     const formattedMonth = format(month, 'yyyy-MM')
     return this.http.delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public get(member: number, month: Date): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM')
-    return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

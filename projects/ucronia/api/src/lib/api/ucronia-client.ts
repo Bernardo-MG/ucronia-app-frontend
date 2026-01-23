@@ -3,7 +3,7 @@ import { inject, Injectable, InjectionToken } from '@angular/core';
 import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
-import { GuestEndpoint } from './endpoint/guest-endpoint copy';
+import { GuestEndpoint } from './endpoint/guest-endpoint';
 import { LibraryEndpoint } from './endpoint/library-endpoint';
 import { MemberEndpoint } from './endpoint/member-endpoint';
 import { MemberProfileEndpoint } from './endpoint/member-profile-endpoint';

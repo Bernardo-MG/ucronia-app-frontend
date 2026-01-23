@@ -81,8 +81,8 @@ export class GameBookEndpoint {
       );
   }
 
-  public delete(index: number): Observable<GameBook> {
-    return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${index}`)
+  public delete(number: number): Observable<GameBook> {
+    return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

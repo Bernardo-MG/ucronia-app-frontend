@@ -2,11 +2,11 @@ import { ProfileName } from "@ucronia/domain";
 import { ProfilePatchChannel } from "../profiles/profile-patch-channel";
 
 export class SponsorPatch {
-  public number = -1;
   public identifier?: string;
-  public birthDate?: Date;
   public name?: ProfileName;
+  public birthDate?: Date;
   public contactChannels?: ProfilePatchChannel[] = [];
   public years?: number[] = [];
+  public address?: string;
   public comments?: string;
 }

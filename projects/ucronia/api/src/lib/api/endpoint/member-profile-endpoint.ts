@@ -43,25 +43,25 @@ export class MemberProfileEndpoint {
         catchError(this.errorInterceptor.handle)
       );
   }
-  
-  public patch(data: MemberProfilePatch): Observable<MemberProfile> {
-    return this.http.patch<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member`, data)
+
+  public get(number: number): Observable<MemberProfile> {
+    return this.http.get<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<MemberProfile> {
-    return this.http.delete<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${index}`)
+  public patch(number: number, data: MemberProfilePatch): Observable<MemberProfile> {
+    return this.http.patch<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public get(index: number): Observable<MemberProfile> {
-    return this.http.get<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${index}`)
+  public delete(number: number): Observable<MemberProfile> {
+    return this.http.delete<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

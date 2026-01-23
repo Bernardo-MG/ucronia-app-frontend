@@ -42,7 +42,15 @@ export class SponsorEndpoint {
         catchError(this.errorInterceptor.handle)
       );
   }
-  
+
+  public get(number: number): Observable<Sponsor> {
+    return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
   public create(data: ProfileCreation): Observable<Sponsor> {
     return this.http.post<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor`, data)
       .pipe(
@@ -51,24 +59,16 @@ export class SponsorEndpoint {
       );
   }
 
-  public patch(data: SponsorPatch): Observable<Sponsor> {
-    return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor`, data)
+  public patch(number: number, data: SponsorPatch): Observable<Sponsor> {
+    return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<Sponsor> {
-    return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${index}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public get(index: number): Observable<Sponsor> {
-    return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${index}`)
+  public delete(number: number): Observable<Sponsor> {
+    return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

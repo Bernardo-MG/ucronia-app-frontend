@@ -41,25 +41,25 @@ export class GuestEndpoint {
         catchError(this.errorInterceptor.handle)
       );
   }
-  
-  public patch(data: GuestPatch): Observable<Guest> {
-    return this.http.patch<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest`, data)
+
+  public get(number: number): Observable<Guest> {
+    return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<Guest> {
-    return this.http.delete<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${index}`)
+  public patch(number: number, data: GuestPatch): Observable<Guest> {
+    return this.http.patch<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public get(index: number): Observable<Guest> {
-    return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${index}`)
+  public delete(number: number): Observable<Guest> {
+    return this.http.delete<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

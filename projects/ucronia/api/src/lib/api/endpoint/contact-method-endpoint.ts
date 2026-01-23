@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
 import { ContactMethod } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { ContactMethodUpdate } from '../../profiles/contact-method-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class ContactMethodEndpoint {
@@ -43,16 +44,16 @@ export class ContactMethodEndpoint {
       );
   }
 
-  public update(data: ContactMethod): Observable<ContactMethod> {
-    return this.http.put<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod`, data)
+  public update(number: number, data: ContactMethodUpdate): Observable<ContactMethod> {
+    return this.http.put<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
       );
   }
 
-  public delete(index: number): Observable<ContactMethod> {
-    return this.http.delete<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${index}`)
+  public delete(number: number): Observable<ContactMethod> {
+    return this.http.delete<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
