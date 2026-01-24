@@ -24,8 +24,6 @@ export class TransactionEndpoint {
     to: Date | undefined
   ): Observable<PaginatedResponse<Transaction>> {
     const offset = new Date().getTimezoneOffset();
-    let fromUtc;
-    let toUtc;
 
     let params = new HttpParams();
     if (page) {
@@ -39,11 +37,11 @@ export class TransactionEndpoint {
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     if (from) {
-      fromUtc = addMinutes(from, offset);
+      const fromUtc = addMinutes(from, offset);
       params = params.append('from', fromUtc.toISOString());
     }
     if (to) {
-      toUtc = addMinutes(to, offset);
+      const toUtc = addMinutes(to, offset);
       params = params.append('to', toUtc.toISOString());
     }
 
