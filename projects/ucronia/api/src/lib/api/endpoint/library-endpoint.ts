@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
@@ -13,6 +13,7 @@ import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class LibraryEndpoint {
 
+  private readonly reportEndpoint;
   private readonly lendingEndpoint;
   private readonly gameBookEndpoint;
   private readonly fictionBookEndpoint;
@@ -25,6 +26,7 @@ export class LibraryEndpoint {
     private http: HttpClient,
     private apiUrl: string
   ) {
+    this.reportEndpoint = new ReportEndpoint(this.http, this.apiUrl);
     this.lendingEndpoint = new LendingEndpoint(this.http, this.apiUrl);
     this.gameBookEndpoint = new GameBookEndpoint(this.http, this.apiUrl);
     this.fictionBookEndpoint = new FictionBookEndpoint(this.http, this.apiUrl);
@@ -32,6 +34,10 @@ export class LibraryEndpoint {
     this.gameSystemEndpoint = new GameSystemEndpoint(this.http, this.apiUrl);
     this.authorEndpoint = new AuthorEndpoint(this.http, this.apiUrl);
     this.publisherEndpoint = new PublisherEndpoint(this.http, this.apiUrl);
+  }
+
+  public get report(): ReportEndpoint {
+    return this.reportEndpoint;
   }
 
   public get lending(): LendingEndpoint {
@@ -60,6 +66,38 @@ export class LibraryEndpoint {
 
   public get publisher(): PublisherEndpoint {
     return this.publisherEndpoint;
+  }
+
+}
+
+export class ReportEndpoint {
+
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) { }
+
+  public excel(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/vnd.ms-excel'
+    });
+
+    return this.http.get(`${this.apiUrl}/transaction`, {
+      headers,
+      responseType: 'blob'
+    }).pipe(
+      map((response: Blob) => {
+        const blob = new Blob([response], { type: 'application/vnd.ms-excel' });
+        const url = window.URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = 'books.xlsx';
+        anchor.click();
+        window.URL.revokeObjectURL(url);
+      })
+    );
   }
 
 }

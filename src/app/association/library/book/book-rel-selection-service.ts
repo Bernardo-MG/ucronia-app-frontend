@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { UcroniaClient } from '@ucronia/api';
 import { Author, BookType, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
-import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,86 +9,62 @@ import { Observable } from 'rxjs';
 })
 export class BookRelationshipSelectionService {
 
-  private readonly authorClient;
-
-  private readonly bookTypeClient;
-
-  private readonly donorClient;
-
-  private readonly gameSystemClient;
-
-  private readonly publisherClient;
-
-  private readonly memberClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
-    this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/profile');
-    this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
-    this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public getBookTypes(page: number): Observable<PaginatedResponse<BookType>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.bookTypeClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.bookType.page(page, undefined, sorting);
   }
 
   public getGameSystems(page: number): Observable<PaginatedResponse<GameSystem>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.gameSystemClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
   }
 
   public getAuthors(page: number): Observable<PaginatedResponse<Author>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.authorClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.author.page(page, undefined, sorting);
   }
 
   public getPublishers(page: number): Observable<PaginatedResponse<Publisher>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.publisherClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
   }
 
   public getDonors(page: number): Observable<PaginatedResponse<Profile>> {
-    return this.donorClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .read();
+    const sorting = new Sorting(
+      [
+        new SortingProperty('firstName'),
+        new SortingProperty('lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.profile.page(page, undefined, sorting, undefined);
   }
 
   public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
-    return this.memberClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Member>>();
+    const sorting = new Sorting(
+      [
+        new SortingProperty('firstName'),
+        new SortingProperty('lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
   }
 
 }

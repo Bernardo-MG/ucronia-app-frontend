@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Guest, Member, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
+import { Guest, Member, Profile, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ProfileMembershipConversion } from '../../members/profile-membership-conversion';
 import { ProfileCreation } from '../../profiles/profile-creation';
@@ -27,7 +27,6 @@ export class ProfileEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    active: MemberStatus,
     name: string | undefined
   ): Observable<PaginatedResponse<Profile>> {
     let params = new HttpParams();
@@ -37,8 +36,6 @@ export class ProfileEndpoint {
     if (size) {
       params = params.append('size', size);
     }
-
-    const status = active ? active.toString().toUpperCase() : '';
 
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
