@@ -1,11 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { MemberStatus, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ProfileCreation } from '../../profiles/profile-creation';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { toParam } from '../sorting-param-parser';
 import { SponsorPatch } from '../../sponsor/sponsor-patch';
+import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class SponsorEndpoint {
 
@@ -17,21 +16,23 @@ export class SponsorEndpoint {
   ) { }
 
   public page(
-    page: number | undefined,
-    sort: Sorting,
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string
   ): Observable<PaginatedResponse<Sponsor>> {
-    const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
     }
+    if (size) {
+      params = params.append('size', size);
+    }
 
     const status = active ? active.toString().toUpperCase() : '';
 
-    toParam(sort.properties, defaultProperties)
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
@@ -43,7 +44,9 @@ export class SponsorEndpoint {
       );
   }
 
-  public get(number: number): Observable<Sponsor> {
+  public get(
+    number: number
+  ): Observable<Sponsor> {
     return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -51,7 +54,9 @@ export class SponsorEndpoint {
       );
   }
 
-  public create(data: ProfileCreation): Observable<Sponsor> {
+  public create(
+    data: ProfileCreation
+  ): Observable<Sponsor> {
     return this.http.post<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -59,7 +64,10 @@ export class SponsorEndpoint {
       );
   }
 
-  public patch(number: number, data: SponsorPatch): Observable<Sponsor> {
+  public patch(
+    number: number,
+    data: SponsorPatch
+  ): Observable<Sponsor> {
     return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -67,7 +75,9 @@ export class SponsorEndpoint {
       );
   }
 
-  public delete(number: number): Observable<Sponsor> {
+  public delete(
+    number: number
+  ): Observable<Sponsor> {
     return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

@@ -1,9 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { Member } from '@ucronia/domain';
 import { catchError, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { toParam } from '../sorting-param-parser';
 
 export class MemberEndpoint {
 
@@ -14,15 +13,21 @@ export class MemberEndpoint {
     private apiUrl: string
   ) { }
 
-  public page(page: number | undefined = undefined, sort: Sorting, name: string): Observable<PaginatedResponse<Member>> {
-    const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
-
+  public page(
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
+    name: string
+  ): Observable<PaginatedResponse<Member>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
     }
+    if (size) {
+      params = params.append('size', size);
+    }
 
-    toParam(sort.properties, defaultProperties)
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('name', name);

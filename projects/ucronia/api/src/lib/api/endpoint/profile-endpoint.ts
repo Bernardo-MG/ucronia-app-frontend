@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Guest, Member, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { ProfileMembershipConversion } from '../../members/profile-membership-conversion';
 import { ProfileCreation } from '../../profiles/profile-creation';
 import { ProfilePatch } from '../../profiles/profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { toParam } from '../sorting-param-parser';
-import { ProfileMembershipConversion } from '../../members/profile-membership-conversion';
 
 export class ProfileEndpoint {
 
@@ -25,21 +24,23 @@ export class ProfileEndpoint {
   }
 
   public page(
-    page: number | undefined,
-    sort: Sorting,
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string | undefined
   ): Observable<PaginatedResponse<Profile>> {
-    const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
     }
+    if (size) {
+      params = params.append('size', size);
+    }
 
     const status = active ? active.toString().toUpperCase() : '';
 
-    toParam(sort.properties, defaultProperties)
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
@@ -54,7 +55,9 @@ export class ProfileEndpoint {
       );
   }
 
-  public get(number: number): Observable<Profile> {
+  public get(
+    number: number
+  ): Observable<Profile> {
     return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -62,7 +65,9 @@ export class ProfileEndpoint {
       );
   }
 
-  public create(data: ProfileCreation): Observable<Profile> {
+  public create(
+    data: ProfileCreation
+  ): Observable<Profile> {
     return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -70,7 +75,10 @@ export class ProfileEndpoint {
       );
   }
 
-  public patch(number: number, data: ProfilePatch): Observable<Profile> {
+  public patch(
+    number: number,
+    data: ProfilePatch
+  ): Observable<Profile> {
     return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -78,7 +86,9 @@ export class ProfileEndpoint {
       );
   }
 
-  public delete(number: number): Observable<Profile> {
+  public delete(
+    number: number
+  ): Observable<Profile> {
     return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -97,7 +107,10 @@ export class TransformProfileEndpoint {
     private apiUrl: string
   ) { }
 
-  public toMember(number: number, feeType: number): Observable<Member> {
+  public toMember(
+    number: number,
+    feeType: number
+  ): Observable<Member> {
     const conversion: ProfileMembershipConversion = {
       feeType
     };
@@ -109,7 +122,9 @@ export class TransformProfileEndpoint {
       );
   }
 
-  public toSponsor(number: number): Observable<Sponsor> {
+  public toSponsor(
+    number: number
+  ): Observable<Sponsor> {
     return this.http.put<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/${number}/member`, undefined)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -117,7 +132,9 @@ export class TransformProfileEndpoint {
       );
   }
 
-  public toGuest(number: number): Observable<Guest> {
+  public toGuest(
+    number: number
+  ): Observable<Guest> {
     return this.http.put<SimpleResponse<Guest>>(`${this.apiUrl}/profile/${number}/guest`, undefined)
       .pipe(
         catchError(this.errorInterceptor.handle),

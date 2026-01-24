@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { ContactMethod } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ContactMethodUpdate } from '../../profiles/contact-method-update';
@@ -15,11 +15,10 @@ export class ContactMethodEndpoint {
   ) { }
 
   public page(
-    page: number | undefined,
-    size: number | undefined = undefined
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<ContactMethod>> {
-    const defaultProperties = [new SortingProperty('name')];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
@@ -28,7 +27,7 @@ export class ContactMethodEndpoint {
       params = params.append('size', size);
     }
 
-    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod`, { params })
       .pipe(
@@ -36,7 +35,9 @@ export class ContactMethodEndpoint {
       );
   }
 
-  public create(data: ContactMethod): Observable<ContactMethod> {
+  public create(
+    data: ContactMethod
+  ): Observable<ContactMethod> {
     return this.http.post<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -44,7 +45,10 @@ export class ContactMethodEndpoint {
       );
   }
 
-  public update(number: number, data: ContactMethodUpdate): Observable<ContactMethod> {
+  public update(
+    number: number,
+    data: ContactMethodUpdate
+  ): Observable<ContactMethod> {
     return this.http.put<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -52,7 +56,9 @@ export class ContactMethodEndpoint {
       );
   }
 
-  public delete(number: number): Observable<ContactMethod> {
+  public delete(
+    number: number
+  ): Observable<ContactMethod> {
     return this.http.delete<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

@@ -4,7 +4,7 @@ import { Guest, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { GuestPatch } from '../../guests/guest-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { toParam } from '../sorting-param-parser';
+import { mergeProperties } from '../sorting-param-merger';
 
 export class GuestEndpoint {
 
@@ -16,22 +16,23 @@ export class GuestEndpoint {
   ) { }
 
   public page(
-    page: number | undefined,
-    sort: Sorting,
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string
   ): Observable<PaginatedResponse<Guest>> {
-    const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
     }
+    if (size) {
+      params = params.append('size', size);
+    }
 
     const status = active ? active.toString().toUpperCase() : '';
 
-    toParam(sort.properties, defaultProperties)
-      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
     params = params.append('name', name);
@@ -42,7 +43,9 @@ export class GuestEndpoint {
       );
   }
 
-  public get(number: number): Observable<Guest> {
+  public get(
+    number: number
+  ): Observable<Guest> {
     return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -50,7 +53,10 @@ export class GuestEndpoint {
       );
   }
 
-  public patch(number: number, data: GuestPatch): Observable<Guest> {
+  public patch(
+    number: number,
+    data: GuestPatch
+  ): Observable<Guest> {
     return this.http.patch<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -58,7 +64,9 @@ export class GuestEndpoint {
       );
   }
 
-  public delete(number: number): Observable<Guest> {
+  public delete(
+    number: number
+  ): Observable<Guest> {
     return this.http.delete<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

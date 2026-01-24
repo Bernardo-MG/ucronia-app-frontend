@@ -4,7 +4,7 @@ import { MemberProfile, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { MemberProfilePatch } from '../../members/member-profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { toParam } from '../sorting-param-parser';
+import { mergeProperties } from '../sorting-param-merger';
 
 export class MemberProfileEndpoint {
 
@@ -16,21 +16,23 @@ export class MemberProfileEndpoint {
   ) { }
 
   public page(
-    page: number | undefined,
-    sort: Sorting,
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string | undefined
   ): Observable<PaginatedResponse<MemberProfile>> {
-    const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
     }
+    if (size) {
+      params = params.append('size', size);
+    }
 
     const status = active ? active.toString().toUpperCase() : '';
 
-    toParam(sort.properties, defaultProperties)
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
@@ -44,7 +46,9 @@ export class MemberProfileEndpoint {
       );
   }
 
-  public get(number: number): Observable<MemberProfile> {
+  public get(
+    number: number
+  ): Observable<MemberProfile> {
     return this.http.get<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -52,7 +56,10 @@ export class MemberProfileEndpoint {
       );
   }
 
-  public patch(number: number, data: MemberProfilePatch): Observable<MemberProfile> {
+  public patch(
+    number: number,
+    data: MemberProfilePatch
+  ): Observable<MemberProfile> {
     return this.http.patch<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -60,7 +67,9 @@ export class MemberProfileEndpoint {
       );
   }
 
-  public delete(number: number): Observable<MemberProfile> {
+  public delete(
+    number: number
+  ): Observable<MemberProfile> {
     return this.http.delete<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

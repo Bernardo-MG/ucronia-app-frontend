@@ -16,8 +16,11 @@ export class FeeEndpoint {
     private apiUrl: string
   ) { }
 
-  public get(member: number, month: Date): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM')
+  public get(
+    member: number,
+    month: Date
+  ): Observable<Fee> {
+    const formattedMonth = format(month, 'yyyy-MM');
     return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -25,7 +28,10 @@ export class FeeEndpoint {
       );
   }
 
-  public year(year: number, active: MemberStatus): Observable<MemberFees[]> {
+  public year(
+    year: number,
+    active: MemberStatus
+  ): Observable<MemberFees[]> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName')];
 
     let status;
@@ -55,7 +61,9 @@ export class FeeEndpoint {
       );
   }
 
-  public create(data: FeeCreation): Observable<FeePayment> {
+  public create(
+    data: FeeCreation
+  ): Observable<FeePayment> {
     return this.http.post<SimpleResponse<FeePayment>>(`${this.apiUrl}/fee`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -63,7 +71,9 @@ export class FeeEndpoint {
       );
   }
 
-  public pay(data: FeePayment): Observable<FeePayment> {
+  public pay(
+    data: FeePayment
+  ): Observable<FeePayment> {
     return this.http.post<SimpleResponse<FeePayment>>(`${this.apiUrl}/fee/pay`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -71,7 +81,11 @@ export class FeeEndpoint {
       );
   }
 
-  public update(member: number, month: Date, data: FeeUpdate): Observable<Fee> {
+  public update(
+    member: number,
+    month: Date,
+    data: FeeUpdate
+  ): Observable<Fee> {
     const formattedMonth = format(month, 'yyyy-MM')
     return this.http.put<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`, data)
       .pipe(
@@ -80,7 +94,10 @@ export class FeeEndpoint {
       );
   }
 
-  public delete(member: number, month: Date): Observable<Fee> {
+  public delete(
+    member: number,
+    month: Date
+  ): Observable<Fee> {
     const formattedMonth = format(month, 'yyyy-MM')
     return this.http.delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(

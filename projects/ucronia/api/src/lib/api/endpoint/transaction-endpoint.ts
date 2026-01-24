@@ -1,11 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { Transaction, TransactionCurrentBalance, TransactionMonthlyBalance, TransactionMonthsRange } from '@ucronia/domain';
 import { addMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { TransactionUpdate } from '../../transaction/transaction-update';
+import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class TransactionEndpoint {
 
@@ -17,8 +17,9 @@ export class TransactionEndpoint {
   ) { }
 
   public page(
-    page: number | undefined,
+    page: number | undefined = undefined,
     size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
     from: Date | undefined,
     to: Date | undefined
   ): Observable<PaginatedResponse<Transaction>> {
@@ -33,6 +34,9 @@ export class TransactionEndpoint {
     if (size) {
       params = params.append('size', size);
     }
+
+    sort?.properties
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     if (from) {
       fromUtc = addMinutes(from, offset);
@@ -49,7 +53,9 @@ export class TransactionEndpoint {
       );
   }
 
-  public get(index: number): Observable<Transaction> {
+  public get(
+    index: number
+  ): Observable<Transaction> {
     return this.http.get<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -57,7 +63,9 @@ export class TransactionEndpoint {
       );
   }
 
-  public create(data: Transaction): Observable<Transaction> {
+  public create(
+    data: Transaction
+  ): Observable<Transaction> {
     return this.http.post<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -65,7 +73,10 @@ export class TransactionEndpoint {
       );
   }
 
-  public update(index: number, data: TransactionUpdate): Observable<Transaction> {
+  public update(
+    index: number,
+    data: TransactionUpdate
+  ): Observable<Transaction> {
     return this.http.put<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -73,7 +84,9 @@ export class TransactionEndpoint {
       );
   }
 
-  public delete(index: number): Observable<Transaction> {
+  public delete(
+    index: number
+  ): Observable<Transaction> {
     return this.http.delete<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -110,7 +123,10 @@ export class TransactionEndpoint {
       );
   }
 
-  public monthlyBalance(from: Date | undefined, to: Date | undefined): Observable<TransactionMonthlyBalance[]> {
+  public monthlyBalance(
+    from: Date | undefined,
+    to: Date | undefined
+  ): Observable<TransactionMonthlyBalance[]> {
     const offset = new Date().getTimezoneOffset();
     let fromUtc;
     let toUtc;

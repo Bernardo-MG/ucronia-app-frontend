@@ -5,6 +5,7 @@ import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Fictio
 import { environment } from 'environments/environment';
 import { BookCreation } from 'projects/ucronia/api/src/lib/library/book-creation';
 import { GameBookUpdate } from 'projects/ucronia/api/src/lib/library/game-book-update';
+import { mergeProperties } from 'projects/ucronia/api/src/public-api';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -63,7 +64,19 @@ export class LibraryService {
   }
 
   public getAllGameBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
-    return this.ucroniaClient.library.gameBook.page(page, undefined, sort);
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('title'),
+          new SortingProperty('supertitle'),
+          new SortingProperty('subtitle'),
+          new SortingProperty('number')
+        ]
+      )
+    );
+
+    return this.ucroniaClient.library.gameBook.page(page, undefined, sorting);
   }
 
   public createFictionBook(data: BookInfo): Observable<FictionBook> {
@@ -83,12 +96,19 @@ export class LibraryService {
   }
 
   public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('title'),
+          new SortingProperty('supertitle'),
+          new SortingProperty('subtitle'),
+          new SortingProperty('number')
+        ]
+      )
     );
 
-    return this.ucroniaClient.library.fictionBook.page(page, undefined, sort);
+    return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting);
   }
 
   public getBookTypes(page: number | undefined = undefined): Observable<PaginatedResponse<BookType>> {
@@ -140,11 +160,11 @@ export class LibraryService {
   }
 
   public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<PaginatedResponse<Member>> {
-        const sorting = new Sorting(
+    const sorting = new Sorting(
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    return this.ucroniaClient.memberProfile.page(page, sorting,  active, undefined);
+    return this.ucroniaClient.memberProfile.page(page, sorting, active, undefined);
   }
 
 }

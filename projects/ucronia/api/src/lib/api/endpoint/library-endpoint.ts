@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { AuthorUpdate } from '../../library/author-update';
@@ -10,7 +10,6 @@ import { GameBookUpdate } from '../../library/game-book-update';
 import { GameSystemUpdate } from '../../library/game-system-update';
 import { PublisherUpdate } from '../../library/publisher-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { toParam } from '../sorting-param-parser';
 
 export class LibraryEndpoint {
 
@@ -59,7 +58,7 @@ export class LibraryEndpoint {
     return this.authorEndpoint;
   }
 
-  public get publisher(): PublisherEndpoint {  
+  public get publisher(): PublisherEndpoint {
     return this.publisherEndpoint;
   }
 
@@ -77,7 +76,7 @@ export class LendingEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<BookLending>> {
 
     let params = new HttpParams();
@@ -88,7 +87,7 @@ export class LendingEndpoint {
       params = params.append('size', size);
     }
 
-    sort.properties
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<BookLending>>(`${this.apiUrl}/library/lending`, { params })
@@ -97,7 +96,9 @@ export class LendingEndpoint {
       );
   }
 
-  public lend(data: BookLent): Observable<BookLending> {
+  public lend(
+    data: BookLent
+  ): Observable<BookLending> {
     return this.http.post<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -105,7 +106,9 @@ export class LendingEndpoint {
       );
   }
 
-  public return(data: BookReturned): Observable<BookLending> {
+  public return(
+    data: BookReturned
+  ): Observable<BookLending> {
     return this.http.put<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -113,7 +116,9 @@ export class LendingEndpoint {
       );
   }
 
-  public delete(number: number): Observable<GameBook> {
+  public delete(
+    number: number
+  ): Observable<GameBook> {
     return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -135,9 +140,8 @@ export class GameBookEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined,
   ): Observable<PaginatedResponse<GameBook>> {
-    const defaultProperties = [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')];
 
     let params = new HttpParams();
     if (page) {
@@ -147,7 +151,7 @@ export class GameBookEndpoint {
       params = params.append('size', size);
     }
 
-    toParam(sort.properties, defaultProperties)
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<GameBook>>(`${this.apiUrl}/library/book/game`, { params })
@@ -156,7 +160,9 @@ export class GameBookEndpoint {
       );
   }
 
-  public get(number: number): Observable<GameBook> {
+  public get(
+    number: number
+  ): Observable<GameBook> {
     return this.http.get<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -164,7 +170,9 @@ export class GameBookEndpoint {
       );
   }
 
-  public create(data: BookCreation): Observable<GameBook> {
+  public create(
+    data: BookCreation
+  ): Observable<GameBook> {
     return this.http.post<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -172,7 +180,10 @@ export class GameBookEndpoint {
       );
   }
 
-  public update(number: number, data: GameBookUpdate): Observable<GameBook> {
+  public update(
+    number: number,
+    data: GameBookUpdate
+  ): Observable<GameBook> {
     return this.http.put<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -180,7 +191,9 @@ export class GameBookEndpoint {
       );
   }
 
-  public delete(number: number): Observable<GameBook> {
+  public delete(
+    number: number
+  ): Observable<GameBook> {
     return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -202,9 +215,8 @@ export class FictionBookEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<FictionBook>> {
-    const defaultProperties = [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')];
 
     let params = new HttpParams();
     if (page) {
@@ -214,7 +226,7 @@ export class FictionBookEndpoint {
       params = params.append('size', size);
     }
 
-    toParam(sort.properties, defaultProperties)
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction`, { params })
@@ -223,7 +235,9 @@ export class FictionBookEndpoint {
       );
   }
 
-  public get(number: number): Observable<FictionBook> {
+  public get(
+    number: number
+  ): Observable<FictionBook> {
     return this.http.get<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -231,7 +245,9 @@ export class FictionBookEndpoint {
       );
   }
 
-  public create(data: BookCreation): Observable<FictionBook> {
+  public create(
+    data: BookCreation
+  ): Observable<FictionBook> {
     return this.http.post<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -239,7 +255,10 @@ export class FictionBookEndpoint {
       );
   }
 
-  public update(number: number, data: FictionBookUpdate): Observable<FictionBook> {
+  public update(
+    number: number,
+    data: FictionBookUpdate
+  ): Observable<FictionBook> {
     return this.http.put<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -247,7 +266,9 @@ export class FictionBookEndpoint {
       );
   }
 
-  public delete(number: number): Observable<FictionBook> {
+  public delete(
+    number: number
+  ): Observable<FictionBook> {
     return this.http.delete<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -269,7 +290,7 @@ export class BookTypeEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<BookType>> {
 
     let params = new HttpParams();
@@ -280,7 +301,7 @@ export class BookTypeEndpoint {
       params = params.append('size', size);
     }
 
-    sort.properties
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<BookType>>(`${this.apiUrl}/library/bookType`, { params })
@@ -289,7 +310,9 @@ export class BookTypeEndpoint {
       );
   }
 
-  public get(number: number): Observable<BookType> {
+  public get(
+    number: number
+  ): Observable<BookType> {
     return this.http.get<SimpleResponse<BookType>>(`${this.apiUrl}/library/bookType/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -297,7 +320,9 @@ export class BookTypeEndpoint {
       );
   }
 
-  public create(data: BookCreation): Observable<BookType> {
+  public create(
+    data: BookCreation
+  ): Observable<BookType> {
     return this.http.post<SimpleResponse<BookType>>(`${this.apiUrl}/library/bookType`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -305,7 +330,10 @@ export class BookTypeEndpoint {
       );
   }
 
-  public update(number: number, data: BookTypeUpdate): Observable<BookType> {
+  public update(
+    number: number,
+    data: BookTypeUpdate
+  ): Observable<BookType> {
     return this.http.put<SimpleResponse<BookType>>(`${this.apiUrl}/library/bookType/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -313,7 +341,9 @@ export class BookTypeEndpoint {
       );
   }
 
-  public delete(number: number): Observable<BookType> {
+  public delete(
+    number: number
+  ): Observable<BookType> {
     return this.http.delete<SimpleResponse<BookType>>(`${this.apiUrl}/library/bookType/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -335,7 +365,7 @@ export class GameSystemEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<GameSystem>> {
 
     let params = new HttpParams();
@@ -346,7 +376,7 @@ export class GameSystemEndpoint {
       params = params.append('size', size);
     }
 
-    sort.properties
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<GameSystem>>(`${this.apiUrl}/library/gameSystem`, { params })
@@ -355,7 +385,9 @@ export class GameSystemEndpoint {
       );
   }
 
-  public get(number: number): Observable<GameSystem> {
+  public get(
+    number: number
+  ): Observable<GameSystem> {
     return this.http.get<SimpleResponse<GameSystem>>(`${this.apiUrl}/library/gameSystem/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -363,7 +395,9 @@ export class GameSystemEndpoint {
       );
   }
 
-  public create(data: BookCreation): Observable<GameSystem> {
+  public create(
+    data: BookCreation
+  ): Observable<GameSystem> {
     return this.http.post<SimpleResponse<GameSystem>>(`${this.apiUrl}/library/gameSystem`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -371,7 +405,10 @@ export class GameSystemEndpoint {
       );
   }
 
-  public update(number: number, data: GameSystemUpdate): Observable<GameSystem> {
+  public update(
+    number: number,
+    data: GameSystemUpdate
+  ): Observable<GameSystem> {
     return this.http.put<SimpleResponse<GameSystem>>(`${this.apiUrl}/library/gameSystem/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -379,7 +416,9 @@ export class GameSystemEndpoint {
       );
   }
 
-  public delete(number: number): Observable<GameSystem> {
+  public delete(
+    number: number
+  ): Observable<GameSystem> {
     return this.http.delete<SimpleResponse<GameSystem>>(`${this.apiUrl}/library/gameSystem/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -401,7 +440,7 @@ export class AuthorEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<Author>> {
 
     let params = new HttpParams();
@@ -412,7 +451,7 @@ export class AuthorEndpoint {
       params = params.append('size', size);
     }
 
-    sort.properties
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<Author>>(`${this.apiUrl}/library/author`, { params })
@@ -421,7 +460,9 @@ export class AuthorEndpoint {
       );
   }
 
-  public get(number: number): Observable<Author> {
+  public get(
+    number: number
+  ): Observable<Author> {
     return this.http.get<SimpleResponse<Author>>(`${this.apiUrl}/library/author/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -429,7 +470,9 @@ export class AuthorEndpoint {
       );
   }
 
-  public create(data: BookCreation): Observable<Author> {
+  public create(
+    data: BookCreation
+  ): Observable<Author> {
     return this.http.post<SimpleResponse<Author>>(`${this.apiUrl}/library/author`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -437,7 +480,10 @@ export class AuthorEndpoint {
       );
   }
 
-  public update(number: number, data: AuthorUpdate): Observable<Author> {
+  public update(
+    number: number,
+    data: AuthorUpdate
+  ): Observable<Author> {
     return this.http.put<SimpleResponse<Author>>(`${this.apiUrl}/library/author/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -445,7 +491,9 @@ export class AuthorEndpoint {
       );
   }
 
-  public delete(number: number): Observable<Author> {
+  public delete(
+    number: number
+  ): Observable<Author> {
     return this.http.delete<SimpleResponse<Author>>(`${this.apiUrl}/library/author/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -467,7 +515,7 @@ export class PublisherEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<Publisher>> {
 
     let params = new HttpParams();
@@ -478,7 +526,7 @@ export class PublisherEndpoint {
       params = params.append('size', size);
     }
 
-    sort.properties
+    sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<Publisher>>(`${this.apiUrl}/library/author`, { params })
@@ -487,7 +535,9 @@ export class PublisherEndpoint {
       );
   }
 
-  public get(number: number): Observable<Publisher> {
+  public get(
+    number: number
+  ): Observable<Publisher> {
     return this.http.get<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -495,7 +545,9 @@ export class PublisherEndpoint {
       );
   }
 
-  public create(data: BookCreation): Observable<Publisher> {
+  public create(
+    data: BookCreation
+  ): Observable<Publisher> {
     return this.http.post<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -503,7 +555,10 @@ export class PublisherEndpoint {
       );
   }
 
-  public update(number: number, data: PublisherUpdate): Observable<Publisher> {
+  public update(
+    number: number,
+    data: PublisherUpdate
+  ): Observable<Publisher> {
     return this.http.put<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -511,7 +566,9 @@ export class PublisherEndpoint {
       );
   }
 
-  public delete(number: number): Observable<Publisher> {
+  public delete(
+    number: number
+  ): Observable<Publisher> {
     return this.http.delete<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

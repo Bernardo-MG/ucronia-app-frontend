@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient } from '@ucronia/api';
 import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
+import { mergeProperties } from 'projects/ucronia/api/src/public-api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
 
@@ -22,7 +23,18 @@ export class ProfilesService {
     name: string,
     filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
   ): Observable<PaginatedResponse<ProfileInfo>> {
-    let endpoint;
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('firstName'),
+          new SortingProperty('lastName'),
+          new SortingProperty('number')
+        ]
+      )
+    );
+
+    let endpoint: (page: number | undefined, size: number | undefined, sort: Sorting | undefined, active: MemberStatus, name: string) => Observable<PaginatedResponse<ProfileInfo>>;
 
     if (filterType === 'guest') {
       endpoint = this.ucroniaClient.guest.page;
@@ -34,7 +46,7 @@ export class ProfilesService {
       endpoint = this.ucroniaClient.profile.page;
     }
 
-    return endpoint(page, sort, active, name);
+    return endpoint(page, undefined, sorting, active, name);
   }
 
 
@@ -246,7 +258,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.ucroniaClient.memberProfile.patch(data.number,patch);
+    return this.ucroniaClient.memberProfile.patch(data.number, patch);
   }
 
 }

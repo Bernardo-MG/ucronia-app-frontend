@@ -2,6 +2,7 @@
  * Public API Surface of api
  */
 
+export * from './lib/api/sorting-param-merger';
 export * from './lib/api/ucronia-client';
 export * from './lib/fees/fee-calendar-selection';
 export * from './lib/fees/fee-creation';

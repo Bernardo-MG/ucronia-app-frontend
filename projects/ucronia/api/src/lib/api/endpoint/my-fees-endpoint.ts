@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
 import { catchError, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -13,15 +13,23 @@ export class MyFeesEndpoint {
     private apiUrl: string
   ) { }
 
-  public page(page: number | undefined = undefined): Observable<PaginatedResponse<Fee>> {
+  public page(
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined
+  ): Observable<PaginatedResponse<Fee>> {
     const defaultProperties = [new SortingProperty('month', SortingDirection.Descending)];
 
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
     }
+    if (size) {
+      params = params.append('size', size);
+    }
 
-    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<Fee>>(`${this.apiUrl}/user/fee`, { params })
       .pipe(

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeTypeUpdate } from '../../fees/fee-type-update';
@@ -15,11 +15,10 @@ export class FeeTypeEndpoint {
   ) { }
 
   public page(
-    page: number | undefined,
-    size: number | undefined = undefined
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined
   ): Observable<PaginatedResponse<FeeType>> {
-    const defaultProperties = [new SortingProperty('name')];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
@@ -28,7 +27,7 @@ export class FeeTypeEndpoint {
       params = params.append('size', size);
     }
 
-    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<PaginatedResponse<FeeType>>(`${this.apiUrl}/fee/type`, { params })
       .pipe(
@@ -36,7 +35,9 @@ export class FeeTypeEndpoint {
       );
   }
 
-  public create(data: FeeType): Observable<FeeType> {
+  public create(
+    data: FeeType
+  ): Observable<FeeType> {
     return this.http.post<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -44,7 +45,10 @@ export class FeeTypeEndpoint {
       );
   }
 
-  public update(number: number, data: FeeTypeUpdate): Observable<FeeType> {
+  public update(
+    number: number,
+    data: FeeTypeUpdate
+  ): Observable<FeeType> {
     return this.http.put<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -52,7 +56,9 @@ export class FeeTypeEndpoint {
       );
   }
 
-  public delete(number: number): Observable<FeeType> {
+  public delete(
+    number: number
+  ): Observable<FeeType> {
     return this.http.delete<SimpleResponse<FeeType>>(`${this.apiUrl}/fee/type/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),

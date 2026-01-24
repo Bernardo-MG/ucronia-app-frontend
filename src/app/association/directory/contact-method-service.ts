@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { ContactMethod } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
@@ -16,11 +16,19 @@ export class ContactMethodService {
   private readonly messageService = inject(MessageService);
 
   public getAll(page: number | undefined = undefined): Observable<PaginatedResponse<ContactMethod>> {
-    return this.ucroniaClient.contactMethod.page(page);
+    const sorting = new Sorting(
+      [new SortingProperty('name')]
+    );
+
+    return this.ucroniaClient.contactMethod.page(page, undefined, sorting);
   }
 
   public getAllAvailable(): Observable<ContactMethod[]> {
-    return getAllPages(this.ucroniaClient.contactMethod.page);
+    const sorting = new Sorting(
+      [new SortingProperty('name')]
+    );
+
+    return getAllPages((page, size) => this.ucroniaClient.contactMethod.page(page, size, sorting));
   }
 
   public create(data: ContactMethod): Observable<ContactMethod> {
