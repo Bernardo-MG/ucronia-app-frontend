@@ -67,30 +67,19 @@ export class LibraryService {
   }
 
   public createFictionBook(data: BookInfo): Observable<FictionBook> {
-    return this.fictionBookClient
-      .create<SimpleResponse<FictionBook>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.fictionBook.create(data);
   }
 
   public updateFictionBook(number: number, data: BookUpdate): Observable<FictionBook> {
-    return this.fictionBookClient
-      .appendRoute(`/${data.number}`)
-      .update<SimpleResponse<GameBook>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.fictionBook.update(number, data);
   }
 
   public getOneFictionBook(number: number): Observable<FictionBook> {
-    return this.fictionBookClient
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<GameBook>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.fictionBook.get(number);
   }
 
   public deleteFictionBook(number: number): Observable<FictionBook> {
-    return this.fictionBookClient
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<FictionBook>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.fictionBook.delete(number);
   }
 
   public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
@@ -99,10 +88,7 @@ export class LibraryService {
       [new SortingProperty('title'), new SortingProperty('supertitle'), new SortingProperty('subtitle'), new SortingProperty('number')]
     );
 
-    return this.fictionBookClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.fictionBook.page(page, undefined, sort);
   }
 
   public getBookTypes(page: number | undefined = undefined): Observable<PaginatedResponse<BookType>> {
