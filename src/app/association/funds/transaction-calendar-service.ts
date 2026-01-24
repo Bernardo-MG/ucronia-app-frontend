@@ -28,7 +28,7 @@ export class TransactionCalendarService {
     const toWithMargin = addDays(to, 7);
 
     return getAllPages((page, size) => this.ucroniaClient.transaction
-      .page(page, size, fromWithMargin, toWithMargin));
+      .page(page, size, undefined, fromWithMargin, toWithMargin));
   }
 
   public getRange(): Observable<Month[]> {

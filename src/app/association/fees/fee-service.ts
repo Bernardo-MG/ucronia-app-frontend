@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
 import { Fee, FeePayment, Member, MemberStatus, Profile } from "@ucronia/domain";
-import { environment } from 'environments/environment';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -11,14 +10,6 @@ import { map, Observable } from 'rxjs';
 export class FeeService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
-
-  private readonly memberClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
-  }
 
   public create(data: FeeCreation): Observable<FeePayment> {
     return this.ucroniaClient.fee.create(data);
@@ -41,18 +32,19 @@ export class FeeService {
   }
 
   public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
-    return this.memberClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Member>>();
+    const sorting = new Sorting(
+      [
+        new SortingProperty('firstName'),
+        new SortingProperty('lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
   }
 
-  public getOneContact(id: number): Observable<Profile> {
-    return this.memberClient
-      .appendRoute(`/${id}`)
-      .read<SimpleResponse<Profile>>()
-      .pipe(map(r => r.content));
+  public getOneProfile(id: number): Observable<Profile> {
+    return this.ucroniaClient.profile.get(id);
   }
 
 }

@@ -18,7 +18,7 @@ export class MemberEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    name: string
+    name: string | undefined = undefined
   ): Observable<PaginatedResponse<Member>> {
     let params = new HttpParams();
     if (page) {
@@ -31,7 +31,9 @@ export class MemberEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    params = params.append('name', name);
+    if (name) {
+      params = params.append('name', name);
+    }
 
     return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/member`, { params })
       .pipe(
