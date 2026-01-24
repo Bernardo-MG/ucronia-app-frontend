@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member } from "@ucronia/domain";
@@ -22,8 +22,8 @@ export class MemberService {
         ]
       )
     );
-    
-    return this.ucroniaClient.member.page(page, sorting,  name);
+
+    return this.ucroniaClient.member.page(page, undefined, sorting, name);
   }
 
 }
