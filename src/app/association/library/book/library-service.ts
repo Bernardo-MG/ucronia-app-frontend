@@ -115,7 +115,7 @@ export class LibraryService {
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    return this.ucroniaClient.profile.page(page, undefined, sorting, MemberStatus.All, undefined);
+    return this.ucroniaClient.profile.page(page, undefined, sorting, undefined);
   }
 
   public lend(data: BookLent): Observable<BookLending> {

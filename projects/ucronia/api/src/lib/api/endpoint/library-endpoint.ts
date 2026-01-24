@@ -2,12 +2,16 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { AuthorCreation } from '../../library/author-creation';
 import { AuthorUpdate } from '../../library/author-update';
 import { BookCreation } from '../../library/book-creation';
+import { BookTypeCreation } from '../../library/book-type-creation';
 import { BookTypeUpdate } from '../../library/book-type-update';
 import { FictionBookUpdate } from '../../library/fiction-book-update';
 import { GameBookUpdate } from '../../library/game-book-update';
+import { GameSystemCreation } from '../../library/game-system-creation';
 import { GameSystemUpdate } from '../../library/game-system-update';
+import { PublisherCreation } from '../../library/publisher-creation';
 import { PublisherUpdate } from '../../library/publisher-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
@@ -359,7 +363,7 @@ export class BookTypeEndpoint {
   }
 
   public create(
-    data: BookCreation
+    data: BookTypeCreation
   ): Observable<BookType> {
     return this.http.post<SimpleResponse<BookType>>(`${this.apiUrl}/library/bookType`, data)
       .pipe(
@@ -434,7 +438,7 @@ export class GameSystemEndpoint {
   }
 
   public create(
-    data: BookCreation
+    data: GameSystemCreation
   ): Observable<GameSystem> {
     return this.http.post<SimpleResponse<GameSystem>>(`${this.apiUrl}/library/gameSystem`, data)
       .pipe(
@@ -509,7 +513,7 @@ export class AuthorEndpoint {
   }
 
   public create(
-    data: BookCreation
+    data: AuthorCreation
   ): Observable<Author> {
     return this.http.post<SimpleResponse<Author>>(`${this.apiUrl}/library/author`, data)
       .pipe(
@@ -584,7 +588,7 @@ export class PublisherEndpoint {
   }
 
   public create(
-    data: BookCreation
+    data: PublisherCreation
   ): Observable<Publisher> {
     return this.http.post<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author`, data)
       .pipe(
