@@ -132,23 +132,19 @@ export class LibraryService {
   }
 
   public lend(data: BookLent): Observable<BookLending> {
-    return this.lendingClient
-      .create<SimpleResponse<BookLending>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.lending.lend(data);
   }
 
   public return(data: BookReturned): Observable<BookLending> {
-    return this.lendingClient
-      .update<SimpleResponse<BookLending>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.lending.return(data);
   }
 
   public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<PaginatedResponse<Member>> {
-    return this.memberClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .parameter('status', active.toString().toUpperCase())
-      .read<PaginatedResponse<Member>>();
+        const sorting = new Sorting(
+      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+    );
+
+    return this.ucroniaClient.memberProfile.page(page, sorting,  active, undefined);
   }
 
 }

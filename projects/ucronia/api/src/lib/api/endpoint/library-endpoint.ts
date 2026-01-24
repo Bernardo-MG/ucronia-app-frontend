@@ -1,19 +1,20 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { Author, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { AuthorUpdate } from '../../library/author-update';
 import { BookCreation } from '../../library/book-creation';
 import { BookTypeUpdate } from '../../library/book-type-update';
 import { FictionBookUpdate } from '../../library/fiction-book-update';
 import { GameBookUpdate } from '../../library/game-book-update';
 import { GameSystemUpdate } from '../../library/game-system-update';
+import { PublisherUpdate } from '../../library/publisher-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { toParam } from '../sorting-param-parser';
-import { AuthorUpdate } from '../../library/author-update';
-import { PublisherUpdate } from '../../library/publisher-update';
 
 export class LibraryEndpoint {
 
+  private readonly lendingEndpoint;
   private readonly gameBookEndpoint;
   private readonly fictionBookEndpoint;
   private readonly bookTypeEndpoint;
@@ -25,12 +26,17 @@ export class LibraryEndpoint {
     private http: HttpClient,
     private apiUrl: string
   ) {
+    this.lendingEndpoint = new LendingEndpoint(this.http, this.apiUrl);
     this.gameBookEndpoint = new GameBookEndpoint(this.http, this.apiUrl);
     this.fictionBookEndpoint = new FictionBookEndpoint(this.http, this.apiUrl);
     this.bookTypeEndpoint = new BookTypeEndpoint(this.http, this.apiUrl);
     this.gameSystemEndpoint = new GameSystemEndpoint(this.http, this.apiUrl);
     this.authorEndpoint = new AuthorEndpoint(this.http, this.apiUrl);
     this.publisherEndpoint = new PublisherEndpoint(this.http, this.apiUrl);
+  }
+
+  public get lending(): LendingEndpoint {
+    return this.lendingEndpoint;
   }
 
   public get gameBook(): GameBookEndpoint {
@@ -55,6 +61,64 @@ export class LibraryEndpoint {
 
   public get publisher(): PublisherEndpoint {  
     return this.publisherEndpoint;
+  }
+
+}
+
+export class LendingEndpoint {
+
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) { }
+
+  public page(
+    page: number | undefined,
+    size: number | undefined = undefined,
+    sort: Sorting
+  ): Observable<PaginatedResponse<BookLending>> {
+
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', page);
+    }
+    if (size) {
+      params = params.append('size', size);
+    }
+
+    sort.properties
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+
+    return this.http.get<PaginatedResponse<BookLending>>(`${this.apiUrl}/library/lending`, { params })
+      .pipe(
+        catchError(this.errorInterceptor.handle)
+      );
+  }
+
+  public lend(data: BookLent): Observable<BookLending> {
+    return this.http.post<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public return(data: BookReturned): Observable<BookLending> {
+    return this.http.put<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public delete(number: number): Observable<GameBook> {
+    return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
   }
 
 }

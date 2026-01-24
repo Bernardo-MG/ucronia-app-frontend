@@ -1,12 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { MemberProfile, MemberStatus, Profile } from '@ucronia/domain';
+import { MemberProfile, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { ProfileCreation } from '../../profiles/profile-creation';
-import { ProfilePatch } from '../../profiles/profile-patch';
+import { MemberProfilePatch } from '../../members/member-profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { toParam } from '../sorting-param-parser';
-import { MemberProfilePatch } from '../../members/member-profile-patch';
 
 export class MemberProfileEndpoint {
 
@@ -21,7 +19,7 @@ export class MemberProfileEndpoint {
     page: number | undefined,
     sort: Sorting,
     active: MemberStatus,
-    name: string
+    name: string | undefined
   ): Observable<PaginatedResponse<MemberProfile>> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
 
@@ -36,7 +34,9 @@ export class MemberProfileEndpoint {
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
-    params = params.append('name', name);
+    if (name) {
+      params = params.append('name', name);
+    }
 
     return this.http.get<PaginatedResponse<MemberProfile>>(`${this.apiUrl}/profile/member`, { params })
       .pipe(
