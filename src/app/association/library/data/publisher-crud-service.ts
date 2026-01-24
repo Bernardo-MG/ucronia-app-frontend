@@ -1,60 +1,43 @@
 import { Injectable, inject } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { mergeProperties } from '@ucronia/api';
 import { Publisher } from "@ucronia/domain";
-import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
+import { UcroniaClient } from 'projects/ucronia/api/src/lib/api/ucronia-client';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class PublisherCrudService implements CrudService<Publisher> {
 
-  private readonly client;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/library/publisher');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public create(data: Publisher): Observable<Publisher> {
-    return this.client
-      .create<SimpleResponse<Publisher>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.publisher.create(data);
   }
 
   public update(data: Publisher): Observable<Publisher> {
-    return this.client
-      .appendRoute(`/${data.number}`)
-      .update<SimpleResponse<Publisher>>(data)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.publisher.update(data.number, data);
   }
 
   public getOne(number: number): Observable<Publisher> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<Publisher>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.publisher.get(number);
   }
 
   public delete(number: number): Observable<Publisher> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<Publisher>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.library.publisher.delete(number);
   }
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<Publisher>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
+      mergeProperties(
       sort.properties,
       [new SortingProperty('name'), new SortingProperty('number')]
+      )
     );
 
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
   }
 
 }
