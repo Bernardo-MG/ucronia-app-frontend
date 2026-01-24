@@ -28,7 +28,7 @@ export class ProfileEndpoint {
     page: number | undefined,
     sort: Sorting,
     active: MemberStatus,
-    name: string
+    name: string | undefined
   ): Observable<PaginatedResponse<Profile>> {
     const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')];
 
@@ -43,7 +43,10 @@ export class ProfileEndpoint {
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
-    params = params.append('name', name);
+
+    if (name) {
+      params = params.append('name', name);
+    }
 
     return this.http.get<PaginatedResponse<Profile>>(`${this.apiUrl}/profile`, { params })
       .pipe(

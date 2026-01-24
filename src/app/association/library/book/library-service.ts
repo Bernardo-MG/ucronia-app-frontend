@@ -92,54 +92,43 @@ export class LibraryService {
   }
 
   public getBookTypes(page: number | undefined = undefined): Observable<PaginatedResponse<BookType>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.bookTypeClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.bookType.page(page, undefined, sorting);
   }
 
   public getGameSystems(page: number | undefined = undefined): Observable<PaginatedResponse<GameSystem>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.gameSystemClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
   }
 
   public getAuthors(page: number | undefined = undefined): Observable<PaginatedResponse<Author>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.authorClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.author.page(page, undefined, sorting);
   }
 
   public getPublishers(page: number | undefined = undefined): Observable<PaginatedResponse<Publisher>> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.publisherClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
   }
 
   public getDonors(page: number | undefined = undefined): Observable<PaginatedResponse<Profile>> {
-    return this.donorClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(new SortingParams([new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]))
-      .read();
+    const sorting = new Sorting(
+      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+    );
+
+    return this.ucroniaClient.profile.page(page, sorting, MemberStatus.All, undefined);
   }
 
   public lend(data: BookLent): Observable<BookLending> {
