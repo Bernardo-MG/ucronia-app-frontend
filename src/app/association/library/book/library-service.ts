@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate, UcroniaClient } from '@ucronia/api';
 import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
-import { environment } from 'environments/environment';
 import { BookCreation } from 'projects/ucronia/api/src/lib/library/book-creation';
 import { GameBookUpdate } from 'projects/ucronia/api/src/lib/library/game-book-update';
 import { mergeProperties } from 'projects/ucronia/api/src/public-api';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -14,38 +13,6 @@ import { Observable, map } from 'rxjs';
 export class LibraryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
-
-  private readonly gameBookClient;
-
-  private readonly fictionBookClient;
-
-  private readonly authorClient;
-
-  private readonly bookTypeClient;
-
-  private readonly donorClient;
-
-  private readonly gameSystemClient;
-
-  private readonly publisherClient;
-
-  private readonly lendingClient;
-
-  private readonly memberClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.gameBookClient = clientProvider.url(environment.apiUrl + '/library/book/game');
-    this.fictionBookClient = clientProvider.url(environment.apiUrl + '/library/book/fiction');
-    this.authorClient = clientProvider.url(environment.apiUrl + '/library/author');
-    this.bookTypeClient = clientProvider.url(environment.apiUrl + '/library/bookType');
-    this.donorClient = clientProvider.url(environment.apiUrl + '/profile');
-    this.gameSystemClient = clientProvider.url(environment.apiUrl + '/library/gameSystem');
-    this.publisherClient = clientProvider.url(environment.apiUrl + '/library/publisher');
-    this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/profile');
-  }
 
   public createGameBook(data: BookCreation): Observable<BookInfo> {
     return this.ucroniaClient.library.gameBook.create(data);
@@ -148,7 +115,7 @@ export class LibraryService {
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    return this.ucroniaClient.profile.page(page, sorting, MemberStatus.All, undefined);
+    return this.ucroniaClient.profile.page(page, undefined, sorting, MemberStatus.All, undefined);
   }
 
   public lend(data: BookLent): Observable<BookLending> {
@@ -164,7 +131,7 @@ export class LibraryService {
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    return this.ucroniaClient.memberProfile.page(page, sorting, active, undefined);
+    return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
   }
 
 }
