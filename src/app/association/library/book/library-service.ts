@@ -1,10 +1,7 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { BookUpdate, UcroniaClient } from '@ucronia/api';
+import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from "@ucronia/domain";
-import { BookCreation } from 'projects/ucronia/api/src/lib/library/book-creation';
-import { GameBookUpdate } from 'projects/ucronia/api/src/lib/library/game-book-update';
-import { mergeProperties } from 'projects/ucronia/api/src/public-api';
 import { Observable } from 'rxjs';
 
 @Injectable({

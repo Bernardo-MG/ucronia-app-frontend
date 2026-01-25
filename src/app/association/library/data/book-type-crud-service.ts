@@ -1,9 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { UcroniaClient } from '@ucronia/api';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { BookType } from "@ucronia/domain";
-import { mergeProperties } from 'projects/ucronia/api/src/public-api';
 import { Observable } from 'rxjs';
 
 @Injectable({

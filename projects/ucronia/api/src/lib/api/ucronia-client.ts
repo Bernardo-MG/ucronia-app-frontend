@@ -14,9 +14,6 @@ import { TransactionEndpoint } from './endpoint/transaction-endpoint';
 
 export const UCRONIA_API_BASE_URL = new InjectionToken<string>('UCRONIA_API_BASE_URL');
 
-@Injectable({
-  providedIn: 'root',
-})
 export class UcroniaClient {
 
   private readonly http = inject(HttpClient);

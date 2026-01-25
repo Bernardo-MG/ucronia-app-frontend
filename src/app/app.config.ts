@@ -5,7 +5,7 @@ import { provideRouter } from '@angular/router';
 import { jwtAuthenticationInterceptor, unauthorizedInterceptor } from '@bernardo-mg/authentication';
 import { dateInterceptor, errorInterceptor } from '@bernardo-mg/request';
 import Aura from '@primeng/themes/aura';
-import { UCRONIA_API_BASE_URL } from '@ucronia/api';
+import { UCRONIA_API_BASE_URL, UcroniaClient } from '@ucronia/api';
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
@@ -34,6 +34,7 @@ export const appConfig: ApplicationConfig = {
     {
       provide: UCRONIA_API_BASE_URL,
       useValue: environment.apiUrl
-    }
+    },
+    UcroniaClient
   ]
 };

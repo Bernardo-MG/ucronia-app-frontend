@@ -1,9 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient } from '@ucronia/api';
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
 import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
-import { mergeProperties } from 'projects/ucronia/api/src/public-api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
 
