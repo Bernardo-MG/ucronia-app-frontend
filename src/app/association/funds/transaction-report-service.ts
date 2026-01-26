@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
 import { Observable } from 'rxjs';
@@ -9,8 +8,6 @@ import { Observable } from 'rxjs';
 export class TransactionReportService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
-
-  private readonly http = inject(HttpClient);
 
   public downloadExcelReport(): Observable<any> {
     return this.ucroniaClient.transaction.excel();

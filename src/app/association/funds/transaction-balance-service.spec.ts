@@ -1,18 +1,22 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { UcroniaClient } from '@ucronia/api';
+import { of } from 'rxjs';
 import { TransactionBalanceService } from './transaction-balance-service';
 
 describe('TransactionBalanceService', () => {
   let service: TransactionBalanceService;
 
+  const mockUcroniaClient = {
+    transaction: {
+      currentBalance: jasmine.createSpy().and.returnValue(of({})),
+      monthlyBalance: jasmine.createSpy().and.returnValue(of({}))
+    }
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
       providers: [
-        TransactionBalanceService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
     service = TestBed.inject(TransactionBalanceService);

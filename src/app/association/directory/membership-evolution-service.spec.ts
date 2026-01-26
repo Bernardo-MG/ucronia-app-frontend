@@ -1,18 +1,23 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { UcroniaClient } from '@ucronia/api';
+import { of } from 'rxjs';
 import { MembershipEvolutionService } from './membership-evolution-service';
 
 describe('MembershipEvolutionService', () => {
   let service: MembershipEvolutionService;
 
+  const mockUcroniaClient = {
+    library: {
+      member: {
+        evolution: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
       providers: [
-        MembershipEvolutionService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
     service = TestBed.inject(MembershipEvolutionService);
