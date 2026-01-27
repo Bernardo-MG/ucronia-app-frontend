@@ -1,8 +1,9 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { PaginatedResponse } from '@bernardo-mg/request';
+import { Author } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { of } from 'rxjs';
 import { AuthorCrudService } from '../author-crud-service';
 import { LibraryAuthorList } from './library-author-list';
 
@@ -10,18 +11,26 @@ describe('LibraryAuthorList', () => {
   let component: LibraryAuthorList;
   let fixture: ComponentFixture<LibraryAuthorList>;
 
+  const authorCrudServiceMock = jasmine.createSpyObj<AuthorCrudService>(
+    'AuthorCrudService',
+    ['getAll', 'create', 'update', 'delete']
+  );
+
   beforeEach(async () => {
+
+    authorCrudServiceMock.getAll.and.returnValue(
+      of(new PaginatedResponse<Author>())
+    );
+
     await TestBed.configureTestingModule({
       imports: [
         LibraryAuthorList
       ],
       providers: [
-        AuthorCrudService,
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: AuthorCrudService, useValue: authorCrudServiceMock }
       ]
     })
       .compileComponents();
