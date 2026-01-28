@@ -1,9 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
-import { LoginForm } from '../login-form/login-form';
+import { Login, LoginForm } from '../login-form/login-form';
 import { LoginService } from '../login-service';
-import { LoginRequest } from '../models/login-request';
 
 /**
  * Login view component. Smart component for building the login UI. Wraps the login component.
@@ -64,7 +63,7 @@ export class LoginView {
    * 
    * @param login user login info
    */
-  public onLogin(login: LoginRequest) {
+  public onLogin(login: Login) {
     // Login request
 
     // Mark the form as loading

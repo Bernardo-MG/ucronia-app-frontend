@@ -10,6 +10,7 @@ import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
+import { SECURITY_API_BASE_URL } from '@bernardo-mg/security';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -33,6 +34,10 @@ export const appConfig: ApplicationConfig = {
     }),
     {
       provide: UCRONIA_API_BASE_URL,
+      useValue: environment.apiUrl
+    },
+    {
+      provide: SECURITY_API_BASE_URL,
       useValue: environment.apiUrl
     },
     UcroniaClient

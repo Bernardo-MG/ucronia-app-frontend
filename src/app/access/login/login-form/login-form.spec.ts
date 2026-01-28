@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginRequest } from '../models/login-request';
+import { LoginRequest } from '@bernardo-mg/security';
 import { LoginForm } from './login-form';
 
 describe('LoginForm', () => {

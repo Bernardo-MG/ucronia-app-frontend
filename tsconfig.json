@@ -16,6 +16,9 @@
       "@bernardo-mg/form": [
         "./dist/bernardo-mg/form"
       ],
+      "@bernardo-mg/security": [
+        "./dist/bernardo-mg/security"
+      ],
       "@bernardo-mg/ui": [
         "./dist/bernardo-mg/ui"
       ],
@@ -69,6 +72,12 @@
     },
     {
       "path": "./projects/ucronia/api/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bernardo-mg/security/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bernardo-mg/security/tsconfig.spec.json"
     }
   ]
 }

@@ -1,32 +1,27 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthService, SecurityDetails } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider } from '@bernardo-mg/request';
+import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { LoginService } from './login-service';
-import { LoginRequest } from './models/login-request';
 
 describe('LoginService', () => {
   let service: LoginService;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
 
+  const mockSecurityClient = {
+    login: {
+      login: jasmine.createSpy().and.returnValue(of({}))
+    }
+  };
+
   beforeEach(() => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['setDetails']);
-
-    const mockClient = {
-      create: jasmine.createSpy('create').and.returnValue(
-        of({ content: { token: 'token', username: 'username', logged: true } })
-      )
-    };
-
-    const angularCrudClientProviderMock = {
-      url: jasmine.createSpy('url').and.returnValue(mockClient)
-    };
 
     TestBed.configureTestingModule({
       providers: [
         LoginService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: AngularCrudClientProvider, useValue: angularCrudClientProviderMock }
+        { provide: SecurityClient, useValue: mockSecurityClient }
       ]
     });
 

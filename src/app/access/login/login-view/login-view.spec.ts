@@ -2,11 +2,11 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
-import { LoginService } from '../login-service';
-import { LoginRequest } from '../models/login-request';
-import { LoginView } from './login-view';
 import { SecurityDetails } from '@bernardo-mg/authentication';
+import { LoginRequest } from '@bernardo-mg/security';
 import { Observable, Observer, of } from 'rxjs';
+import { LoginService } from '../login-service';
+import { LoginView } from './login-view';
 
 describe('Login', () => {
   let component: LoginView;
