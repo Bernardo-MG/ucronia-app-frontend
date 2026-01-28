@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideRouter } from '@angular/router';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
@@ -25,7 +26,8 @@ describe('PasswordResetRequest', () => {
       imports: [PasswordResetRequestView],
       providers: [
         PasswordResetService,
-        { provide: SecurityClient, useValue: mockSecurityClient }
+        { provide: SecurityClient, useValue: mockSecurityClient },
+        provideRouter([])
       ]
     })
       .compileComponents();

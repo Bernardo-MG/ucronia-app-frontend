@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of, throwError } from 'rxjs';
@@ -26,7 +27,8 @@ describe('PasswordResetView', () => {
       ],
       providers: [
         PasswordResetService,
-        { provide: SecurityClient, useValue: mockSecurityClient }
+        { provide: SecurityClient, useValue: mockSecurityClient },
+        provideRouter([])
       ]
     })
       .compileComponents();
@@ -105,9 +107,7 @@ describe('PasswordResetView', () => {
       component['token'] = 'token';
       component.onPasswordReset('password');
 
-      expect(spy).toHaveBeenCalledWith('token', jasmine.objectContaining({
-        password: 'password'
-      }));
+      expect(spy).toHaveBeenCalledWith('token', 'password');
     });
 
     it('should set failures on error with FailureResponse', () => {
