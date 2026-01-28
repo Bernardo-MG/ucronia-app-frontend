@@ -1,4 +1,4 @@
-export class UserActivate {
+export class UserActivation {
   constructor(
     public password = ''
   ) { }

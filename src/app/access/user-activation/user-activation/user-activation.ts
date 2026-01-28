@@ -5,7 +5,6 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { finalize, throwError } from 'rxjs';
-import { UserActivate } from '../models/user-activate';
 import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
 
@@ -75,9 +74,7 @@ export class UserActivation {
 
     this.failures.clear();
 
-    const activate = new UserActivate();
-    activate.password = password;
-    this.service.activateUser(this.token, activate).subscribe({
+    this.service.activateUser(this.token, password).subscribe({
       next: response => {
         this.status = 'finished';
         this.waiting = false;
