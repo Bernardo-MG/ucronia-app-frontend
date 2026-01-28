@@ -1,37 +1,29 @@
 import { TestBed } from '@angular/core/testing';
-import { UserTokenStatus } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
+import { User, UserTokenStatus } from '@bernardo-mg/authentication';
+import { SimpleResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { AccessUserActivateService } from './user-activate-service';
 
 describe('AccessUserActivateService', () => {
   let service: AccessUserActivateService;
-  let client: jasmine.SpyObj<CrudClient>;
-  let clientProvider: jasmine.SpyObj<AngularCrudClientProvider>;
 
   const mockSecurityClient = {
     user: {
       onboarding: {
-        activate: jasmine.createSpy().and.returnValue(of({})),
-        validateToken: jasmine.createSpy().and.returnValue(of({}))
+        activate: jasmine.createSpy().and.returnValue(of({ content: {} as User })),
+        validateToken: jasmine.createSpy().and.returnValue(of({ content: {} as UserTokenStatus }))
       }
     }
   };
 
   beforeEach(() => {
-    client = jasmine.createSpyObj('CrudClient', ['create', 'read', 'appendRoute']);
-    client.appendRoute.and.returnValue(client);
-
-    clientProvider = jasmine.createSpyObj('AngularCrudClientProvider', ['url']);
-    clientProvider.url.and.returnValue(client);
-
     TestBed.configureTestingModule({
-      imports: [],
       providers: [
         { provide: SecurityClient, useValue: mockSecurityClient }
       ]
     });
+
     service = TestBed.inject(AccessUserActivateService);
   });
 
@@ -43,22 +35,26 @@ describe('AccessUserActivateService', () => {
 
     it('should append token to route', () => {
       const token = 'token';
-      const reset = 'password';
-      client.create.and.returnValue(of({ content: undefined }));
+      const password = 'password';
 
-      service.activateUser(token, reset).subscribe();
+      service.activateUser(token, password).subscribe();
 
-      expect(client.appendRoute).toHaveBeenCalledWith(`/${token}`);
+      expect(mockSecurityClient.user.onboarding.activate)
+        .toHaveBeenCalledWith(token, { password });
     });
 
-    it('should call create with Password', () => {
+    it('should call create with Password', (done) => {
       const token = 'token';
-      const reset = 'password';
-      client.create.and.returnValue(of({ content: undefined }));
+      const password = 'password';
 
-      service.activateUser(token, reset).subscribe();
+      const mockResponse = new SimpleResponse<User>(new User());
 
-      expect(client.create).toHaveBeenCalledWith(reset);
+      mockSecurityClient.user.onboarding.activate.and.returnValue(of(mockResponse));
+
+      service.activateUser(token, password).subscribe(res => {
+        expect(res).toEqual(mockResponse);
+        done();
+      });
     });
 
   });
@@ -67,24 +63,24 @@ describe('AccessUserActivateService', () => {
 
     it('should append token to route', () => {
       const token = 'token';
-      const response = { content: new UserTokenStatus(true, 'username') };
-      client.read.and.returnValue(of(response));
 
-      service.validateToken(token)
-        .subscribe(res => expect(res).toEqual(response));
+      service.validateToken(token).subscribe();
 
-      expect(client.appendRoute).toHaveBeenCalledWith(`/${token}`);
+      expect(mockSecurityClient.user.onboarding.validateToken)
+        .toHaveBeenCalledWith(token);
     });
 
-    it('should call read and return UserTokenStatus', () => {
+    it('should call read and return UserTokenStatus', (done) => {
       const token = 'token';
-      const response = { content: new UserTokenStatus(true, 'username') };
-      client.read.and.returnValue(of(response));
 
-      service.validateToken(token)
-        .subscribe(res => expect(res).toEqual(response));
+      const mockResponse = new SimpleResponse<UserTokenStatus>(new UserTokenStatus(true, 'username'));
 
-      expect(client.read).toHaveBeenCalled();
+      mockSecurityClient.user.onboarding.validateToken.and.returnValue(of(mockResponse));
+
+      service.validateToken(token).subscribe(res => {
+        expect(res).toEqual(mockResponse);
+        done();
+      });
     });
 
   });
