@@ -1,7 +1,7 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { UCRONIA_API_BASE_URL, SecurityClient } from './security-client';
+import { SECURITY_API_BASE_URL, SecurityClient } from './security-client';
 
 describe('SecurityClient', () => {
   let service: SecurityClient;
@@ -12,7 +12,7 @@ describe('SecurityClient', () => {
         SecurityClient,
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        { provide: UCRONIA_API_BASE_URL, useValue: 'http://localhost/api' }
+        { provide: SECURITY_API_BASE_URL, useValue: 'http://localhost/api' }
       ]
     });
 

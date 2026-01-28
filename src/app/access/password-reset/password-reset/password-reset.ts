@@ -5,7 +5,6 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { finalize, throwError } from 'rxjs';
-import { Password } from '../../models/password';
 import { PasswordResetForm } from '../password-reset-form/password-reset-form';
 import { PasswordResetService } from '../password-reset-service';
 
@@ -71,8 +70,7 @@ export class PasswordReset {
     this.failures.clear();
 
     // TODO: maybe with a string is enough
-    const reset = new Password(password);
-    this.service.resetPassword(this.token, reset).subscribe({
+    this.service.resetPassword(this.token, password).subscribe({
       next: response => {
         this.status = 'finished';
         this.waiting = false;

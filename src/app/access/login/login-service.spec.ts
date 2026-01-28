@@ -45,7 +45,8 @@ describe('LoginService', () => {
 
     service.login(loginRequest, rememberMe).subscribe(result => {
       expect(authServiceSpy.setDetails).toHaveBeenCalledWith(
-        expectedSecurityDetails,
+        true,
+        'token',
         rememberMe
       );
       expect(result).toEqual(expectedSecurityDetails);

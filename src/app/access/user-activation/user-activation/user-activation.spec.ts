@@ -2,6 +2,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { User } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
@@ -84,7 +85,7 @@ describe('UserActivation', () => {
 
     it('should set status to finished on successful activation', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'activateUser').and.returnValue(of({ content: undefined }));
+      spyOn(service, 'activateUser').and.returnValue(of({ content: new User() }));
 
       component['token'] = 'token';
       component.onActivateUser('password');
