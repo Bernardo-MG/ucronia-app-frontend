@@ -1,6 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { User } from '@bernardo-mg/authentication';
+import { User, UserTokenStatus } from '@bernardo-mg/authentication';
 import { SimpleResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { Observable } from 'rxjs';

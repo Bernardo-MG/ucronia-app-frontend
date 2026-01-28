@@ -1,7 +1,6 @@
 
 import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
-import { Email } from '../../models/email';
 import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
 import { PasswordResetService } from '../password-reset-service';
 
@@ -25,11 +24,11 @@ export class PasswordResetRequest {
   /**
    * Handles the password reset request.
    * 
-   * @param resetPassword password reset data
+   * @param password new password
    */
-  public onPasswordResetRequest(resetPassword: Email) {
+  public onPasswordResetRequest(password: string) {
     // TODO: maybe an string is enough
-    this.service.requestResetPassword(resetPassword).subscribe();
+    this.service.requestResetPassword(password).subscribe();
     this.finished = true;
   }
 

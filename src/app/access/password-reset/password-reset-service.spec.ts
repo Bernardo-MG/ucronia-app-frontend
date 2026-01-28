@@ -1,10 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { UserTokenStatus } from '@app/access/models/user-token-status';
+import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
-import { Email } from '../models/email';
-import { Password } from '../models/password';
 import { PasswordResetService } from './password-reset-service';
 
 describe('PasswordResetService', () => {
@@ -46,7 +44,7 @@ describe('PasswordResetService', () => {
   describe('request password reset', () => {
 
     it('should call create with PasswordResetRequest', () => {
-      const request = new Email('test@example.com');
+      const request = 'test@example.com';
       client.create.and.returnValue(of({ content: undefined }));
 
       service.requestResetPassword(request).subscribe();
@@ -60,7 +58,7 @@ describe('PasswordResetService', () => {
 
     it('should append token to route', () => {
       const token = 'token';
-      const reset = new Password('newpass');
+      const reset = 'newpass';
       client.create.and.returnValue(of({ content: undefined }));
 
       service.resetPassword(token, reset).subscribe();
@@ -70,7 +68,7 @@ describe('PasswordResetService', () => {
 
     it('should call create with PasswordReset', () => {
       const token = 'token';
-      const reset = new Password('newpass');
+      const reset = 'newpass';
       client.create.and.returnValue(of({ content: undefined }));
 
       service.resetPassword(token, reset).subscribe();

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { User } from '@bernardo-mg/authentication';
+import { User, UserTokenStatus } from '@bernardo-mg/authentication';
 import { SimpleResponse } from '@bernardo-mg/request';
 import { catchError, Observable } from 'rxjs';
-import { UserTokenStatus } from '../../token/user-token-status';
 import { UserActivation } from '../../user/user-activation';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 

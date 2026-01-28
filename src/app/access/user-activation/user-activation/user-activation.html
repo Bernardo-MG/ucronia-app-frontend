@@ -11,7 +11,7 @@
         Activar usuario {{username}}
       </ng-template>
       <access-user-activation-form [failures]="failures" [loading]="waiting"
-      (save)="onActivateUser($event.password)" />
+      (save)="onActivateUser($event)" />
     </p-card>
   }
   @case ('invalid_token') {

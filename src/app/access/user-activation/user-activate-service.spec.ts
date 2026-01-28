@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { Password } from '@app/access/models/password';
+import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
 import { of } from 'rxjs';
 import { AccessUserActivateService } from './user-activate-service';
@@ -35,7 +34,7 @@ describe('AccessUserActivateService', () => {
 
     it('should append token to route', () => {
       const token = 'token';
-      const reset = new Password('password');
+      const reset = 'password';
       client.create.and.returnValue(of({ content: undefined }));
 
       service.activateUser(token, reset).subscribe();
@@ -45,7 +44,7 @@ describe('AccessUserActivateService', () => {
 
     it('should call create with Password', () => {
       const token = 'token';
-      const reset = new Password('password');
+      const reset = 'password';
       client.create.and.returnValue(of({ content: undefined }));
 
       service.activateUser(token, reset).subscribe();
