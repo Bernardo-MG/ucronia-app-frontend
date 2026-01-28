@@ -6,16 +6,16 @@ import { User } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
-import { UserActivation } from './user-activation';
+import { UserActivationView } from './user-activation-view';
 
-describe('UserActivation', () => {
-  let component: UserActivation;
-  let fixture: ComponentFixture<UserActivation>;
+describe('UserActivationView', () => {
+  let component: UserActivationView;
+  let fixture: ComponentFixture<UserActivationView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        UserActivation
+        UserActivationView
       ],
       providers: [
         AccessUserActivateService,
@@ -26,7 +26,7 @@ describe('UserActivation', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivation);
+    fixture = TestBed.createComponent(UserActivationView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
