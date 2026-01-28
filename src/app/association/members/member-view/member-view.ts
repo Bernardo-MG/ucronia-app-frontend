@@ -4,14 +4,13 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
-import { ContactMethod, Member, MemberProfile, MemberStatus } from "@ucronia/domain";
+import { Member, MemberProfile } from "@ucronia/domain";
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { finalize, forkJoin, Subject } from 'rxjs';
-import { MemberContactMethodService } from '../member-contact-method-service';
+import { finalize, Subject } from 'rxjs';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
 
@@ -23,10 +22,8 @@ import { MemberService } from '../member-service';
 export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
-  private readonly memberContactMethodService = inject(MemberContactMethodService);
 
   public data = new PaginatedResponse<Member>();
-  public contactMethodSelection: ContactMethod[] = [];
 
   public selectedData = new Member();
   public memberContact = new MemberProfile();
@@ -37,7 +34,6 @@ export class MemberView implements OnInit {
 
   public failures = new FailureStore();
 
-  public activeFilter = MemberStatus.Active;
   public nameFilterSubject = new Subject<string>();
   public nameFilter = '';
 
@@ -47,15 +43,9 @@ export class MemberView implements OnInit {
 
   public ngOnInit(): void {
     this.loading = true;
-    forkJoin({
-      data: this.service.getAll(1, this.sort, this.activeFilter, this.nameFilter),
-      contactMethods: this.memberContactMethodService.getAll()
-    })
+    this.service.getAll(1, this.sort, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(({ data, contactMethods }) => {
-        this.data = data;
-        this.contactMethodSelection = contactMethods;
-      });
+      .subscribe((data) => this.data = data);
   }
 
   // EVENT HANDLERS
@@ -77,17 +67,6 @@ export class MemberView implements OnInit {
     this.load(page);
   }
 
-  public onChangeMemberStatus(status: 'all' | 'active' | 'inactive') {
-    if (status === 'all') {
-      this.activeFilter = MemberStatus.All;
-    } else if (status === 'active') {
-      this.activeFilter = MemberStatus.Active;
-    } else if (status === 'inactive') {
-      this.activeFilter = MemberStatus.Inactive;
-    }
-    this.load();
-  }
-
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
@@ -98,7 +77,7 @@ export class MemberView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter)
+    this.service.getAll(page, this.sort, this.nameFilter)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }

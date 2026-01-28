@@ -17,7 +17,7 @@ import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
-import { MembershipEvolutionChartComponent } from '../membership-evolution-chart/membership-evolution-chart.component';
+import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { ProfileInfo } from '../model/profile-info';
 import { ProfileDetails } from '../profile-details/profile-details';
 import { ProfileEditionForm } from '../profile-edition-form/profile-edition-form';
@@ -28,12 +28,12 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileDetails, MembershipEvolutionChartComponent, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileDetails, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
 
-  private readonly service = inject(ProfilesService);
+  private readonly profileService = inject(ProfilesService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
 
@@ -86,7 +86,7 @@ export class DirectoryView implements OnInit {
     this.loading = true;
     this.editing = true;
     forkJoin({
-      profile: this.service.getOne(profile.number),
+      profile: this.profileService.getOne(profile.number),
       contactMethodSelection: this.contactMethodService.getAllAvailable(),
       feeTypes: this.feeTypeService.getAllAvailable()
     })
@@ -126,7 +126,7 @@ export class DirectoryView implements OnInit {
   public onShowInfo(profile: ProfileInfo) {
     this.loading = true;
     this.showing = true;
-    this.service.getOne(profile.number)
+    this.profileService.getOne(profile.number)
       .pipe(finalize(() => this.loading = false))
       .subscribe(profile => this.selectedData = profile);
   }
@@ -137,7 +137,7 @@ export class DirectoryView implements OnInit {
 
   public onCreate(toCreate: ProfileCreationEvent): void {
     this.mutation(
-      this.service.create(toCreate as any),
+      this.profileService.create(toCreate as any),
       () => this.load()
     );
   }
@@ -162,22 +162,22 @@ export class DirectoryView implements OnInit {
     for (const type of addedTypes) {
       switch (type) {
         case 'member':
-          conversions.push(this.service.convertToMember(updated.number, updated.feeType?.number as number));
+          conversions.push(this.profileService.convertToMember(updated.number, updated.feeType?.number as number));
           break;
 
         case 'guest':
-          conversions.push(this.service.convertToGuest(updated.number));
+          conversions.push(this.profileService.convertToGuest(updated.number));
           break;
 
         case 'sponsor':
-          conversions.push(this.service.convertToSponsor(updated.number));
+          conversions.push(this.profileService.convertToSponsor(updated.number));
           break;
       }
     }
 
     if (conversions.length === 0) {
       return this.mutation(
-        this.service.update(updated),
+        this.profileService.update(updated),
         () => this.load(this.profiles.page)
       );
     }
@@ -189,7 +189,7 @@ export class DirectoryView implements OnInit {
       .subscribe({
         next: () => {
           this.mutation(
-            this.service.update(updated),
+            this.profileService.update(updated),
             () => this.load(this.profiles.page)
           );
         },
@@ -199,7 +199,7 @@ export class DirectoryView implements OnInit {
 
   public onDelete(number: number) {
     this.mutation(
-      this.service.delete(number),
+      this.profileService.delete(number),
       () => this.load()
     );
   }
@@ -224,7 +224,7 @@ export class DirectoryView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.loading = true;
 
-    this.service.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
+    this.profileService.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         this.profiles = response;

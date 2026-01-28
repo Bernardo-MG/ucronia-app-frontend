@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -25,7 +24,7 @@ import { MemberSelectStepper } from '../member-select-stepper/member-select-step
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [RouterModule, CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePayForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -135,14 +134,14 @@ export class FeeView implements OnInit {
       },
       accept: () =>
         this.call(
-          () => this.service.delete(fee.month, fee.member.number),
+          () => this.service.delete(fee.member.number, fee.month),
           () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
         )
     });
   }
 
   public onSelectFee(fee: { member: number, date: Date }) {
-    this.service.getOne(fee.date, fee.member)
+    this.service.getOne(fee.member, fee.date)
       .subscribe(fee => this.selectedData = fee);
     this.showing = true;
   }
@@ -187,17 +186,17 @@ export class FeeView implements OnInit {
   private loadRange() {
     this.feeCalendarService.getRange().subscribe(d => {
       this.range = d;
-      this.loadYear();
+      this.loadYear(this.range);
 
       // Load initial year
       this.loadCalendar(this.year);
     });
   }
 
-  private loadYear() {
-    if (this.range.years.length) {
-      const firstYear = Number(this.range.years[0]);
-      const lastYear = Number(this.range.years[this.range.years.length - 1]);
+  private loadYear(range: YearsRange) {
+    if (range.years.length) {
+      const firstYear = Number(range.years[0]);
+      const lastYear = Number(range.years[range.years.length - 1]);
       // If the current year is outside the range, set it back
       if (this.year < firstYear) {
         this.year = firstYear;

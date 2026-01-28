@@ -77,7 +77,7 @@ export class LibraryView implements OnInit {
   private sort = new Sorting();
 
   private delete: (number: number) => Observable<BookInfo> = (number) => EMPTY;
-  private update: (data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
+  private update: (number: number, data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
   private read: (page: number | undefined, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
@@ -159,7 +159,7 @@ export class LibraryView implements OnInit {
 
   private onUpdate(toSave: BookUpdate) {
     this.call(
-      () => this.update(toSave),
+      () => this.update(toSave.number, toSave),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }

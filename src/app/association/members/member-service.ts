@@ -1,7 +1,7 @@
-import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { Member, MemberStatus } from "@ucronia/domain";
-import { environment } from 'environments/environment';
+import { inject, Injectable } from '@angular/core';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
+import { Member } from "@ucronia/domain";
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,32 +9,21 @@ import { Observable } from 'rxjs';
 })
 export class MemberService {
 
-  private readonly client;
+  private readonly ucroniaClient = inject(UcroniaClient);
 
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/member');
-  }
-
-  public getAll(page: number | undefined = undefined, sort: Sorting, active: MemberStatus, name: string): Observable<PaginatedResponse<Member>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<PaginatedResponse<Member>> {
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('firstName'),
+          new SortingProperty('lastName'),
+          new SortingProperty('number')
+        ]
+      )
     );
 
-    let status;
-    if (active) {
-      status = active.toString().toUpperCase();
-    } else {
-      status = '';
-    }
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .parameter('status', status)
-      .parameter('name', name)
-      .read<PaginatedResponse<Member>>();
+    return this.ucroniaClient.member.page(page, undefined, sorting, name);
   }
 
 }

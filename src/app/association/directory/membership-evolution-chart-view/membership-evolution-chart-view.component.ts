@@ -8,11 +8,11 @@ import { finalize } from 'rxjs';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 
 @Component({
-  selector: 'assoc-membership-evolution-chart',
+  selector: 'assoc-membership-evolution-chart-view',
   imports: [FormsModule, SelectModule],
-  templateUrl: './membership-evolution-chart.component.html'
+  templateUrl: './membership-evolution-chart-view.component.html'
 })
-export class MembershipEvolutionChartComponent implements OnDestroy {
+export class MembershipEvolutionChartView implements OnDestroy {
 
   private readonly service = inject(MembershipEvolutionService);
 

@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfileMembershipConversion, ProfilePatch, SponsorPatch } from '@ucronia/api';
-import { FeeType, Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
-import { environment } from 'environments/environment';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
+import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
-import { Observable, catchError, concat, expand, forkJoin, last, map, of, reduce, switchMap, tap, throwError } from 'rxjs';
+import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
 
 @Injectable({
@@ -12,21 +11,9 @@ import { ProfileInfo } from './model/profile-info';
 })
 export class ProfilesService {
 
+  private readonly ucroniaClient = inject(UcroniaClient);
+
   private readonly messageService = inject(MessageService);
-
-  private readonly client;
-  private readonly guestClient;
-  private readonly memberClient;
-  private readonly sponsorClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/profile');
-    this.guestClient = clientProvider.url(environment.apiUrl + '/profile/guest');
-    this.memberClient = clientProvider.url(environment.apiUrl + '/profile/member');
-    this.sponsorClient = clientProvider.url(environment.apiUrl + '/profile/sponsor');
-  }
 
   public getAll(
     page: number | undefined = undefined,
@@ -35,38 +22,37 @@ export class ProfilesService {
     name: string,
     filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
   ): Observable<PaginatedResponse<ProfileInfo>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('firstName'),
+          new SortingProperty('lastName'),
+          new SortingProperty('number')
+        ]
+      )
     );
 
-    const status = active ? active.toString().toUpperCase() : '';
+    let endpoint: (page: number | undefined, size: number | undefined, sort: Sorting | undefined, active: MemberStatus, name: string) => Observable<PaginatedResponse<ProfileInfo>>;
 
-    let clientToUse;
     if (filterType === 'guest') {
-      clientToUse = this.guestClient;
+      endpoint = this.ucroniaClient.guest.page;
     } else if (filterType === 'member') {
-      clientToUse = this.memberClient;
+      endpoint = this.ucroniaClient.memberProfile.page;
     } else if (filterType === 'sponsor') {
-      clientToUse = this.sponsorClient;
+      endpoint = this.ucroniaClient.sponsor.page;
     } else {
-      clientToUse = this.client;
+      endpoint = this.ucroniaClient.profile.page;
     }
 
-    return clientToUse
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .parameter('status', status)
-      .parameter('name', name)
-      .read<PaginatedResponse<ProfileInfo>>();
+    return endpoint(page, undefined, sorting, active, name);
   }
 
 
   public create(data: ProfileCreation): Observable<Profile> {
-    return this.client
-      .create<SimpleResponse<Profile>>(data)
+    return this.ucroniaClient.profile
+      .create(data)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -124,11 +110,9 @@ export class ProfilesService {
   }
 
   public delete(number: number): Observable<Profile> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .delete<SimpleResponse<Profile>>()
+    return this.ucroniaClient.profile
+      .delete(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -150,39 +134,22 @@ export class ProfilesService {
   }
 
   public getOne(number: number): Observable<ProfileInfo> {
-    return this.client
-      .appendRoute(`/${number}`)
-      .read<SimpleResponse<ProfileInfo>>()
+    return this.ucroniaClient.profile
+      .get(number)
       .pipe(
-        map(r => r.content),
         switchMap(profile => {
           const requests: Observable<any>[] = [];
 
           if (profile.types?.includes('guest')) {
-            requests.push(
-              this.guestClient
-                .appendRoute(`/${number}`)
-                .read<SimpleResponse<Guest>>()
-                .pipe(map(resp => resp.content))
-            );
+            requests.push(this.ucroniaClient.guest.get(number));
           }
 
           if (profile.types?.includes('member')) {
-            requests.push(
-              this.memberClient
-                .appendRoute(`/${number}`)
-                .read<SimpleResponse<Member>>()
-                .pipe(map(resp => resp.content))
-            );
+            requests.push(this.ucroniaClient.memberProfile.get(number));
           }
 
           if (profile.types?.includes('sponsor')) {
-            requests.push(
-              this.sponsorClient
-                .appendRoute(`/${number}`)
-                .read<SimpleResponse<Sponsor>>()
-                .pipe(map(resp => resp.content))
-            );
+            requests.push(this.ucroniaClient.sponsor.get(number));
           }
 
           if (requests.length === 0) {
@@ -199,17 +166,8 @@ export class ProfilesService {
   }
 
   public convertToMember(number: number, feeType: number): Observable<Member> {
-    const conversion: ProfileMembershipConversion = {
-      feeType
-    };
-
-    return this.client
-      .appendRoute(`/${number}/member`)
-      .update<SimpleResponse<Member>>(
-        conversion
-      )
+    return this.ucroniaClient.profile.transform.toMember(number, feeType)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -222,11 +180,8 @@ export class ProfilesService {
   }
 
   public convertToSponsor(number: number): Observable<Sponsor> {
-    return this.client
-      .appendRoute(`/${number}/sponsor`)
-      .update<SimpleResponse<Sponsor>>(undefined)
+    return this.ucroniaClient.profile.transform.toSponsor(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -239,11 +194,8 @@ export class ProfilesService {
   }
 
   public convertToGuest(number: number): Observable<Guest> {
-    return this.client
-      .appendRoute(`/${number}/guest`)
-      .update<SimpleResponse<Guest>>(undefined)
+    return this.ucroniaClient.profile.transform.toGuest(number)
       .pipe(
-        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',
@@ -265,11 +217,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.client
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Profile>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.profile.patch(data.number, patch);
   }
 
   private updateGuest(data: Guest): Observable<Guest> {
@@ -282,11 +230,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.guestClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Guest>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.guest.patch(data.number, patch);
   }
 
   private updateSponsor(data: Sponsor): Observable<Sponsor> {
@@ -299,11 +243,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.sponsorClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<Sponsor>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.sponsor.patch(data.number, patch);
   }
 
   private updateMember(data: MemberProfile): Observable<MemberProfile> {
@@ -317,11 +257,7 @@ export class ProfilesService {
         }
       })
     };
-
-    return this.memberClient
-      .appendRoute(`/${data.number}`)
-      .patch<SimpleResponse<MemberProfile>>(patch)
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.memberProfile.patch(data.number, patch);
   }
 
 }

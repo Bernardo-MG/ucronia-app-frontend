@@ -11,9 +11,10 @@ import { CrudClient } from './crud-client';
   providedIn: "root"
 })
 export class AngularCrudClientProvider {
-  private readonly http = inject(HttpClient);
-  private readonly errorInterceptor = inject(AngularErrorRequestInterceptor);
 
+  private readonly http = inject(HttpClient);
+
+  private readonly errorInterceptor = inject(AngularErrorRequestInterceptor);
 
   public url(url: string): CrudClient {
     return new AngularCrudClient(this.http, url, this.errorInterceptor);

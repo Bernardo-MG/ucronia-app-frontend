@@ -1,22 +1,22 @@
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { BookRelationshipSelectionService } from './book-rel-selection-service';
+import { UCRONIA_API_BASE_URL, UcroniaClient } from './ucronia-client';
 
-describe('BookRelationshipSelectionService', () => {
-  let service: BookRelationshipSelectionService;
+describe('UcroniaClient', () => {
+  let service: UcroniaClient;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [],
       providers: [
-        BookRelationshipSelectionService,
+        UcroniaClient,
         provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        provideHttpClientTesting(),
+        { provide: UCRONIA_API_BASE_URL, useValue: 'http://localhost/api' }
       ]
     });
 
-    service = TestBed.inject(BookRelationshipSelectionService);
+    service = TestBed.inject(UcroniaClient);
   });
 
   it('should be created', () => {

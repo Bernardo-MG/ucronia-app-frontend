@@ -3,18 +3,17 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TransactionMonthlyBalance } from "@ucronia/domain";
 import Chart from 'chart.js/auto';
-import { format, lastDayOfMonth } from 'date-fns';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 
 @Component({
-  selector: 'assoc-transaction-balance-chart',
+  selector: 'assoc-transaction-balance-chart-view',
   imports: [FormsModule, SelectModule],
-  templateUrl: './transaction-balance-chart.html'
+  templateUrl: './transaction-balance-chart-view.html'
 })
-export class TransactionBalanceChart implements OnInit {
+export class TransactionBalanceChartview implements OnInit {
 
   private readonly balanceService = inject(TransactionBalanceService);
   private readonly transactionCalendarService = inject(TransactionCalendarService);
