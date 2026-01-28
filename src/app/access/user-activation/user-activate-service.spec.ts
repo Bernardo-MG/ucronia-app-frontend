@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { AccessUserActivateService } from './user-activate-service';
 
@@ -8,6 +9,15 @@ describe('AccessUserActivateService', () => {
   let service: AccessUserActivateService;
   let client: jasmine.SpyObj<CrudClient>;
   let clientProvider: jasmine.SpyObj<AngularCrudClientProvider>;
+
+  const mockSecurityClient = {
+    user: {
+      onboarding: {
+        activate: jasmine.createSpy().and.returnValue(of({})),
+        validateToken: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
 
   beforeEach(() => {
     client = jasmine.createSpyObj('CrudClient', ['create', 'read', 'appendRoute']);
@@ -19,8 +29,7 @@ describe('AccessUserActivateService', () => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        AccessUserActivateService,
-        { provide: AngularCrudClientProvider, useValue: clientProvider }
+        { provide: SecurityClient, useValue: mockSecurityClient }
       ]
     });
     service = TestBed.inject(AccessUserActivateService);
