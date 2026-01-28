@@ -10,7 +10,7 @@ describe('LoginService', () => {
 
   const mockSecurityClient = {
     login: {
-      login: jasmine.createSpy().and.returnValue(of({}))
+      login: jasmine.createSpy()
     }
   };
 
@@ -35,12 +35,18 @@ describe('LoginService', () => {
     const loginRequest = new LoginRequest('test', '1234');
     const rememberMe = true;
 
+    const apiResponse = {
+      logged: true,
+      token: 'token'
+    };
+
     const expectedSecurityDetails: SecurityDetails = {
       token: 'token',
       username: 'username',
       logged: true
     } as any;
 
+    mockSecurityClient.login.login.and.returnValue(of(apiResponse));
     authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
 
     service.login(loginRequest, rememberMe).subscribe(result => {
@@ -49,6 +55,7 @@ describe('LoginService', () => {
         'token',
         rememberMe
       );
+
       expect(result).toEqual(expectedSecurityDetails);
       done();
     });
