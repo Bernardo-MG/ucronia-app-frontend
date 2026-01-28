@@ -19,7 +19,6 @@ describe('LoginService', () => {
 
     TestBed.configureTestingModule({
       providers: [
-        LoginService,
         { provide: AuthService, useValue: authServiceSpy },
         { provide: SecurityClient, useValue: mockSecurityClient }
       ]

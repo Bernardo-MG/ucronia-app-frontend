@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { UserTokenStatus } from '@app/access/models/user-token-status';
 import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { Email } from '../models/email';
 import { Password } from '../models/password';
@@ -10,6 +11,16 @@ describe('PasswordResetService', () => {
   let service: PasswordResetService;
   let client: jasmine.SpyObj<CrudClient>;
   let clientProvider: jasmine.SpyObj<AngularCrudClientProvider>;
+
+  const mockSecurityClient = {
+    password: {
+      reset: {
+        requestReset: jasmine.createSpy().and.returnValue(of({})),
+        reset: jasmine.createSpy().and.returnValue(of({})),
+        validateToken: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
 
   beforeEach(() => {
     client = jasmine.createSpyObj('CrudClient', ['create', 'read', 'appendRoute']);
@@ -21,8 +32,7 @@ describe('PasswordResetService', () => {
     TestBed.configureTestingModule({
       imports: [],
       providers: [
-        PasswordResetService,
-        { provide: AngularCrudClientProvider, useValue: clientProvider }
+        { provide: SecurityClient, useValue: mockSecurityClient }
       ]
     });
 

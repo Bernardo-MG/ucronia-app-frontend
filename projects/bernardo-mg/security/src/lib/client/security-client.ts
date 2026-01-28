@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, InjectionToken } from '@angular/core';
 import { LoginEndpoint } from './endpoint/login-endpoint';
+import { PasswordEndpoint } from './endpoint/password-endpoint';
 
 export const SECURITY_API_BASE_URL = new InjectionToken<string>('SECURITY_API_BASE_URL');
 
@@ -11,6 +12,10 @@ export class SecurityClient {
 
   public get login() {
     return new LoginEndpoint(this.http, this.base_url);
+  }
+
+  public get password() {
+    return new PasswordEndpoint(this.http, this.base_url);
   }
 
 }
