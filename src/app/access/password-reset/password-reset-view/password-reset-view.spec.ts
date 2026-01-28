@@ -1,8 +1,6 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { of, throwError } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
 import { PasswordResetView } from './password-reset-view';
@@ -11,6 +9,16 @@ describe('PasswordResetView', () => {
   let component: PasswordResetView;
   let fixture: ComponentFixture<PasswordResetView>;
 
+  const mockSecurityClient = {
+    password: {
+      reset: {
+        requestReset: jasmine.createSpy().and.returnValue(of({})),
+        reset: jasmine.createSpy().and.returnValue(of({})),
+        validateToken: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -18,9 +26,7 @@ describe('PasswordResetView', () => {
       ],
       providers: [
         PasswordResetService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        provideRouter([])
+        { provide: SecurityClient, useValue: mockSecurityClient }
       ]
     })
       .compileComponents();
