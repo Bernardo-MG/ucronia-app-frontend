@@ -14,11 +14,11 @@ import { PasswordResetService } from '../password-reset-service';
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'login-password-reset',
+  selector: 'login-password-reset-view',
   imports: [CardModule, BlockUIModule, PasswordResetForm],
-  templateUrl: './password-reset.html'
+  templateUrl: './password-reset-view.html'
 })
-export class PasswordReset {
+export class PasswordResetView {
 
   private readonly service = inject(PasswordResetService);
 

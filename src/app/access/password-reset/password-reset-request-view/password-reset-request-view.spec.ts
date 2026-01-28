@@ -4,16 +4,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
-import { PasswordResetRequest } from './password-reset-request';
+import { PasswordResetRequestView } from './password-reset-request-view';
 
 describe('PasswordResetRequest', () => {
-  let component: PasswordResetRequest;
-  let fixture: ComponentFixture<PasswordResetRequest>;
+  let component: PasswordResetRequestView;
+  let fixture: ComponentFixture<PasswordResetRequestView>;
   let service: PasswordResetService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PasswordResetRequest],
+      imports: [PasswordResetRequestView],
       providers: [
         PasswordResetService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -22,7 +22,7 @@ describe('PasswordResetRequest', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordResetRequest);
+    fixture = TestBed.createComponent(PasswordResetRequestView);
     component = fixture.componentInstance;
     service = TestBed.inject(PasswordResetService);
     fixture.detectChanges();

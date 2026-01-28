@@ -5,16 +5,16 @@ import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
 import { of, throwError } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
-import { PasswordReset } from './password-reset';
+import { PasswordResetView } from './password-reset-view';
 
-describe('PasswordReset', () => {
-  let component: PasswordReset;
-  let fixture: ComponentFixture<PasswordReset>;
+describe('PasswordResetView', () => {
+  let component: PasswordResetView;
+  let fixture: ComponentFixture<PasswordResetView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PasswordReset
+        PasswordResetView
       ],
       providers: [
         PasswordResetService,
@@ -25,7 +25,7 @@ describe('PasswordReset', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordReset);
+    fixture = TestBed.createComponent(PasswordResetView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
