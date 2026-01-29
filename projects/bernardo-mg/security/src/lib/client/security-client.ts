@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, InjectionToken } from '@angular/core';
 import { LoginEndpoint } from './endpoint/login-endpoint';
 import { PasswordEndpoint } from './endpoint/password-endpoint';
+import { PermissionEndpoint } from './endpoint/permission-endpoint';
 import { RoleEndpoint } from './endpoint/role-endpoint';
 import { UserEndpoint } from './endpoint/user-endpoint';
 
@@ -26,6 +27,10 @@ export class SecurityClient {
 
   public get role() {
     return new RoleEndpoint(this.http, this.base_url);
+  }
+
+  public get permission() {
+    return new PermissionEndpoint(this.http, this.base_url);
   }
 
 }

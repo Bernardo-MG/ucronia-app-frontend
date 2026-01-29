@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
-import { environment } from 'environments/environment';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 
 @Injectable({
@@ -12,17 +11,6 @@ import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 export class RoleService {
 
   private securityClient = inject(SecurityClient);
-
-  private readonly client;
-
-  private readonly permissionsClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/security/role');
-    this.permissionsClient = clientProvider.url(environment.apiUrl + '/security/permission');
-  }
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<Role>> {
     const sorting = new Sorting(
@@ -50,23 +38,17 @@ export class RoleService {
   }
 
   public getAllPermissions(): Observable<ResourcePermission[]> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('resource'), new SortingProperty('action')]
     );
     const pageSize = 100;
 
-    return this.permissionsClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<ResourcePermission>>()
+    return this.securityClient.permission.page(undefined, pageSize, sorting)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.permissionsClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<ResourcePermission>>();
+            return this.securityClient.permission.page(nextPage, pageSize, sorting);
           }
           return of();
         }),
