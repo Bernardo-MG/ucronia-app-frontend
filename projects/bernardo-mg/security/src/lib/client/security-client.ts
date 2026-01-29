@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, InjectionToken } from '@angular/core';
 import { LoginEndpoint } from './endpoint/login-endpoint';
 import { PasswordEndpoint } from './endpoint/password-endpoint';
+import { RoleEndpoint } from './endpoint/role-endpoint';
 import { UserEndpoint } from './endpoint/user-endpoint';
 
 export const SECURITY_API_BASE_URL = new InjectionToken<string>('SECURITY_API_BASE_URL');
@@ -21,6 +22,10 @@ export class SecurityClient {
 
   public get user() {
     return new UserEndpoint(this.http, this.base_url);
+  }
+
+  public get role() {
+    return new RoleEndpoint(this.http, this.base_url);
   }
 
 }
