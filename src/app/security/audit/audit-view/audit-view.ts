@@ -2,12 +2,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { LoginRegister } from '@bernardo-mg/security';
 import { CardModule } from 'primeng/card';
-import { TablePageEvent } from 'primeng/table';
 import { finalize } from 'rxjs';
 import { AccessAuditLoginService } from '../access-audit-login-service';
 import { AuditLoginList } from '../audit-login-list/audit-login-list';
-import { LoginRegister } from '../models/login-register';
 
 @Component({
   selector: 'access-audit-view',

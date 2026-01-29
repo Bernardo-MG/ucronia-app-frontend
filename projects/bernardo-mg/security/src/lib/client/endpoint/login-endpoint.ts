@@ -1,11 +1,40 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { LoginStatus } from '@bernardo-mg/authentication';
-import { SimpleResponse } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
+import { LoginRegister } from '../../login/login-register';
 import { LoginRequest } from '../../login/login-request';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class LoginEndpoint {
+
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  private readonly loginRegisterEndpoint;
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) {
+    this.loginRegisterEndpoint = new LoginRegisterEndpoint(http, apiUrl);
+  }
+
+  public get register() {
+    return this.loginRegisterEndpoint;
+  }
+
+  public login(request: LoginRequest): Observable<LoginStatus> {
+    return this.http
+      .post<SimpleResponse<LoginStatus>>(`${this.apiUrl}/login`, request)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+}
+
+export class LoginRegisterEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -14,12 +43,30 @@ export class LoginEndpoint {
     private apiUrl: string
   ) { }
 
-  public login(request: LoginRequest): Observable<LoginStatus> {
-    return this.http
-      .post<SimpleResponse<LoginStatus>>(`${this.apiUrl}/login`, request)
+  public page(
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
+    name: string | undefined = undefined
+  ): Observable<PaginatedResponse<LoginRegister>> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', page);
+    }
+    if (size) {
+      params = params.append('size', size);
+    }
+
+    sort?.properties
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+
+    if (name) {
+      params = params.append('name', name);
+    }
+
+    return this.http.get<PaginatedResponse<LoginRegister>>(`${this.apiUrl}/security/login/register`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
