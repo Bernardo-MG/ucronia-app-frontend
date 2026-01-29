@@ -7,7 +7,6 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { LoginRequest } from '../models/login-request';
 
 /**
  * Login form component. Dumb component for just handling the form.
@@ -47,7 +46,7 @@ export class LoginForm {
   /**
    * Login event. Sent when the user accepts the data in the form.
    */
-  public readonly login = output<LoginRequest>();
+  public readonly login = output<Login>();
 
   /**
    * Remember me event. Sent when the user changes the remember me flag.
@@ -86,8 +85,8 @@ export class LoginForm {
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
-      const user = new LoginRequest(this.form.value.username, this.form.value.password);
-      this.login.emit(user);
+      const login = new Login(this.form.value.username, this.form.value.password);
+      this.login.emit(login);
     }
   }
 
@@ -112,4 +111,11 @@ export class LoginForm {
     }
   }
 
+}
+
+export class Login {
+  constructor(
+    public username: string,
+    public password: string
+  ) { }
 }

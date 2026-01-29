@@ -238,7 +238,7 @@ describe('PasswordResetForm', () => {
       const formEl = fixture.debugElement.query(By.css('form'));
       formEl.triggerEventHandler('ngSubmit', {});
 
-      expect(component.save.emit).toHaveBeenCalledWith({ password: 'password', confirmPassword: 'password' });
+      expect(component.save.emit).toHaveBeenCalledWith('password');
     });
 
     it('should not emit save when submitting an invalid form', () => {

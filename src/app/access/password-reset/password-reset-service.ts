@@ -1,42 +1,26 @@
 import { Injectable, inject } from '@angular/core';
-import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
+import { UserTokenStatus } from '@bernardo-mg/authentication';
+import { SimpleResponse } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { Observable } from 'rxjs';
-import { Password } from '../models/password';
-import { Email } from '../models/email';
 
 @Injectable({
   providedIn: "root"
 })
 export class PasswordResetService {
 
-  private readonly client;
+  private securityClient = inject(SecurityClient);
 
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/password/reset');
+  public requestResetPassword(email: string): Observable<SimpleResponse<void>> {
+    return this.securityClient.password.reset.requestReset({ email });
   }
 
-  public requestResetPassword(request: Email): Observable<SimpleResponse<void>> {
-    return this.client
-      // Reset password request
-      .create(request);
-  }
-
-  public resetPassword(token: string, reset: Password): Observable<SimpleResponse<void>> {
-    return this.client
-      // Reset password
-      .appendRoute(`/${token}`)
-      .create(reset);
+  public resetPassword(token: string, password: string): Observable<SimpleResponse<void>> {
+    return this.securityClient.password.reset.reset(token, { password });
   }
 
   public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
-    return this.client
-      // Validate token request
-      .appendRoute(`/${token}`)
-      .read<SimpleResponse<UserTokenStatus>>();
+    return this.securityClient.password.reset.validateToken(token);
   }
 
 }

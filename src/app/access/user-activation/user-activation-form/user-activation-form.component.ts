@@ -1,7 +1,6 @@
 
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfirmPassword } from '@app/access/models/confirm-password';
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
@@ -23,7 +22,7 @@ export class UserActivationForm implements OnChanges {
 
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ConfirmPassword>();
+  public readonly save = output<string>();
 
   public formStatus: FormStatus;
 
@@ -92,7 +91,7 @@ export class UserActivationForm implements OnChanges {
   public onSave() {
     if (this.form.valid) {
       // Valid form, can emit data
-      this.save.emit(this.form.value);
+      this.save.emit(this.form.value.password);
     }
   }
 

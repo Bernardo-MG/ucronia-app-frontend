@@ -1,31 +1,39 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { User } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { of, throwError } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
-import { UserActivation } from './user-activation';
+import { UserActivationView } from './user-activation-view';
 
-describe('UserActivation', () => {
-  let component: UserActivation;
-  let fixture: ComponentFixture<UserActivation>;
+describe('UserActivationView', () => {
+  let component: UserActivationView;
+  let fixture: ComponentFixture<UserActivationView>;
+
+  const mockSecurityClient = {
+    user: {
+      onboarding: {
+        activate: jasmine.createSpy().and.returnValue(of({})),
+        validateToken: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        UserActivation
+        UserActivationView
       ],
       providers: [
         AccessUserActivateService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
+        { provide: SecurityClient, useValue: mockSecurityClient },
         provideRouter([])
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserActivation);
+    fixture = TestBed.createComponent(UserActivationView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -84,7 +92,7 @@ describe('UserActivation', () => {
 
     it('should set status to finished on successful activation', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'activateUser').and.returnValue(of({ content: undefined }));
+      spyOn(service, 'activateUser').and.returnValue(of({ content: new User() }));
 
       component['token'] = 'token';
       component.onActivateUser('password');

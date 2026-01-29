@@ -1,32 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthService, SecurityDetails } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider } from '@bernardo-mg/request';
+import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { LoginService } from './login-service';
-import { LoginRequest } from './models/login-request';
 
 describe('LoginService', () => {
   let service: LoginService;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
 
+  const mockSecurityClient = {
+    login: {
+      login: jasmine.createSpy()
+    }
+  };
+
   beforeEach(() => {
     authServiceSpy = jasmine.createSpyObj('AuthService', ['setDetails']);
 
-    const mockClient = {
-      create: jasmine.createSpy('create').and.returnValue(
-        of({ content: { token: 'token', username: 'username', logged: true } })
-      )
-    };
-
-    const angularCrudClientProviderMock = {
-      url: jasmine.createSpy('url').and.returnValue(mockClient)
-    };
-
     TestBed.configureTestingModule({
       providers: [
-        LoginService,
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: AngularCrudClientProvider, useValue: angularCrudClientProviderMock }
+        { provide: SecurityClient, useValue: mockSecurityClient }
       ]
     });
 
@@ -41,19 +35,27 @@ describe('LoginService', () => {
     const loginRequest = new LoginRequest('test', '1234');
     const rememberMe = true;
 
+    const apiResponse = {
+      logged: true,
+      token: 'token'
+    };
+
     const expectedSecurityDetails: SecurityDetails = {
       token: 'token',
       username: 'username',
       logged: true
     } as any;
 
+    mockSecurityClient.login.login.and.returnValue(of(apiResponse));
     authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
 
     service.login(loginRequest, rememberMe).subscribe(result => {
       expect(authServiceSpy.setDetails).toHaveBeenCalledWith(
-        expectedSecurityDetails,
+        true,
+        'token',
         rememberMe
       );
+
       expect(result).toEqual(expectedSecurityDetails);
       done();
     });

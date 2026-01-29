@@ -1,31 +1,39 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { FailureResponse } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { of, throwError } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
-import { PasswordReset } from './password-reset';
+import { PasswordResetView } from './password-reset-view';
 
-describe('PasswordReset', () => {
-  let component: PasswordReset;
-  let fixture: ComponentFixture<PasswordReset>;
+describe('PasswordResetView', () => {
+  let component: PasswordResetView;
+  let fixture: ComponentFixture<PasswordResetView>;
+
+  const mockSecurityClient = {
+    password: {
+      reset: {
+        requestReset: jasmine.createSpy().and.returnValue(of({})),
+        reset: jasmine.createSpy().and.returnValue(of({})),
+        validateToken: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        PasswordReset
+        PasswordResetView
       ],
       providers: [
         PasswordResetService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
+        { provide: SecurityClient, useValue: mockSecurityClient },
         provideRouter([])
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(PasswordReset);
+    fixture = TestBed.createComponent(PasswordResetView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -99,9 +107,7 @@ describe('PasswordReset', () => {
       component['token'] = 'token';
       component.onPasswordReset('password');
 
-      expect(spy).toHaveBeenCalledWith('token', jasmine.objectContaining({
-        password: 'password'
-      }));
+      expect(spy).toHaveBeenCalledWith('token', 'password');
     });
 
     it('should set failures on error with FailureResponse', () => {

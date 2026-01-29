@@ -31,14 +31,14 @@ export const routes: Routes = [
               {
                 path: '',
                 loadComponent: () =>
-                  import('./access/password-reset/password-reset-request/password-reset-request')
-                    .then(m => m.PasswordResetRequest)
+                  import('./access/password-reset/password-reset-request-view/password-reset-request-view')
+                    .then(m => m.PasswordResetRequestView)
               },
               {
                 path: ':token',
                 loadComponent: () =>
-                  import('./access/password-reset/password-reset/password-reset')
-                    .then(m => m.PasswordReset)
+                  import('./access/password-reset/password-reset-view/password-reset-view')
+                    .then(m => m.PasswordResetView)
               }
             ]
           },
@@ -48,8 +48,8 @@ export const routes: Routes = [
               {
                 path: ':token',
                 loadComponent: () =>
-                  import('./access/user-activation/user-activation/user-activation')
-                    .then(m => m.UserActivation)
+                  import('./access/user-activation/user-activation-view/user-activation-view')
+                    .then(m => m.UserActivationView)
               }
             ]
           }

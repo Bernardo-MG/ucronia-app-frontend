@@ -81,15 +81,16 @@ export class AuthService {
   /**
    * Stores security details and optionally persists them.
    *
-   * @param loginStatus login status details
+   * @param logged flag indicating if it was logged
+   * @param token login token
    * @param store whether to store details in local storage
    */
-  public setDetails(loginStatus: LoginStatus, store: boolean): SecurityDetails {
-    const newDetails = new SecurityDetails(loginStatus.logged);
+  public setDetails(logged: boolean, token: string, store: boolean): SecurityDetails {
+    const newDetails = new SecurityDetails(logged);
 
-    if (loginStatus.token) {
-      newDetails.token = loginStatus.token;
-      const tokenData: TokenData | null = this.jwtHelper.decodeToken(loginStatus.token);
+    if (token) {
+      newDetails.token = token;
+      const tokenData: TokenData | null = this.jwtHelper.decodeToken(token);
 
       if (tokenData) {
         newDetails.username = tokenData.sub || '';

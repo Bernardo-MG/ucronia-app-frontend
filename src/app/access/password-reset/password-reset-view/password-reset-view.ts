@@ -5,23 +5,22 @@ import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
 import { finalize, throwError } from 'rxjs';
-import { UserActivate } from '../models/user-activate';
-import { AccessUserActivateService } from '../user-activate-service';
-import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
+import { PasswordResetForm } from '../password-reset-form/password-reset-form';
+import { PasswordResetService } from '../password-reset-service';
 
 /**
- * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
+ * Password reset. Changes the password for an existing user, identified by a token.
  * 
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'access-user-activation',
-  imports: [CardModule, UserActivationForm, BlockUIModule],
-  templateUrl: './user-activation.html'
+  selector: 'login-password-reset-view',
+  imports: [CardModule, BlockUIModule, PasswordResetForm],
+  templateUrl: './password-reset-view.html'
 })
-export class UserActivation {
+export class PasswordResetView {
 
-  private readonly service = inject(AccessUserActivateService);
+  private readonly service = inject(PasswordResetService);
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
@@ -29,7 +28,7 @@ export class UserActivation {
   public validating = false;
 
   /**
-   * Waiting flag. If set to true the component is waiting for the user actiation request to finish.
+   * Waiting flag. If set to true the component is waiting for the password change request to finish.
    */
   public waiting = false;
 
@@ -39,17 +38,12 @@ export class UserActivation {
   public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
 
   /**
-   * Username for the user being activated. This is taken from the token validation response.
-   */
-  public username = '';
-
-  /**
    * Token for identifying the user.
    */
   private token = '';
 
   /**
-   * Failures when activating the user.
+   * Failures when reseting the password.
    */
   public failures = new FailureStore();
 
@@ -66,18 +60,17 @@ export class UserActivation {
   }
 
   /**
-   * Activates the user with the received password. The user will be acquired by the backend from the token.
+   * Resets the password. The user will be acquired by the backend from the token.
    * 
    * @param password new password for the user
    */
-  public onActivateUser(password: string): void {
+  public onPasswordReset(password: string): void {
     this.waiting = true;
 
     this.failures.clear();
 
-    const activate = new UserActivate();
-    activate.password = password;
-    this.service.activateUser(this.token, activate).subscribe({
+    // TODO: maybe with a string is enough
+    this.service.resetPassword(this.token, password).subscribe({
       next: response => {
         this.status = 'finished';
         this.waiting = false;
@@ -110,7 +103,6 @@ export class UserActivation {
             this.status = 'invalid_token';
           } else {
             this.token = token;
-            this.username = response.content.username;
           }
         },
         error: response => {

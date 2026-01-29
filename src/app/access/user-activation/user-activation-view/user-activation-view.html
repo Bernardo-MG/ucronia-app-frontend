@@ -1,16 +1,17 @@
+
 @switch (status) {
   @case ('valid_token') {
-    <p-blockui [target]="passwordReset" [blocked]="validating">
+    <p-blockui [target]="userActivation" [blocked]="validating">
       <div>
         <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
       </div>
     </p-blockui>
-    <p-card #passwordReset>
+    <p-card #userActivation>
       <ng-template #title>
-        Cambiar contraseña
+        Activar usuario {{username}}
       </ng-template>
-      <login-password-reset-form [failures]="failures" [loading]="waiting"
-      (save)="onPasswordReset($event.password)" />
+      <access-user-activation-form [failures]="failures" [loading]="waiting"
+      (save)="onActivateUser($event)" />
     </p-card>
   }
   @case ('invalid_token') {
@@ -20,7 +21,7 @@
   }
   @case ('finished') {
     <p-card>
-      Se ha cambiado la contraseña
+      Usuario activado
     </p-card>
   }
 }

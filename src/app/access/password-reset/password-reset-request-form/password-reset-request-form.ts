@@ -4,7 +4,6 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
-import { Email } from '../../models/email';
 
 /**
  * Password reset request form component. Dumb component for just handling the form.
@@ -16,7 +15,7 @@ import { Email } from '../../models/email';
 })
 export class PasswordResetRequestForm {
 
-  public readonly save = output<Email>();
+  public readonly save = output<string>();
 
   public form: any;
 
@@ -34,7 +33,7 @@ export class PasswordResetRequestForm {
   public onSave() {
     if (this.form.valid) {
       // Valid form, can emit data
-      this.save.emit(this.form.value);
+      this.save.emit(this.form.value.email);
     }
   }
 

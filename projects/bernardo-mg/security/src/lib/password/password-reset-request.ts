@@ -1,4 +1,4 @@
-export class Email {
+export class PasswordResetRequest {
   constructor(
     public email = ''
   ) { }

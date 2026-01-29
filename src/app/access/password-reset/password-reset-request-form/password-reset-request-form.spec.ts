@@ -90,7 +90,7 @@ describe('PasswordResetRequestForm', () => {
       const formEl = fixture.debugElement.query(By.css('form'));
       formEl.triggerEventHandler('ngSubmit', {});
 
-      expect(component.save.emit).toHaveBeenCalledWith({ email: 'test@example.com' });
+      expect(component.save.emit).toHaveBeenCalledWith('test@example.com');
     });
 
     it('should not emit save when submitting an invalid form', () => {
