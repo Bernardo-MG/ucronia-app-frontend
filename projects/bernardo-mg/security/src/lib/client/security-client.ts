@@ -5,6 +5,7 @@ import { PasswordEndpoint } from './endpoint/password-endpoint';
 import { PermissionEndpoint } from './endpoint/permission-endpoint';
 import { RoleEndpoint } from './endpoint/role-endpoint';
 import { UserEndpoint } from './endpoint/user-endpoint';
+import { UserTokenEndpoint } from './endpoint/user-token-endpoint';
 
 export const SECURITY_API_BASE_URL = new InjectionToken<string>('SECURITY_API_BASE_URL');
 
@@ -31,6 +32,10 @@ export class SecurityClient {
 
   public get permission() {
     return new PermissionEndpoint(this.http, this.base_url);
+  }
+
+  public get userToken() {
+    return new UserTokenEndpoint(this.http, this.base_url);
   }
 
 }
