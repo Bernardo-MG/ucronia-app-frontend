@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { Member } from "@ucronia/domain";
 import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
+import { UcroniaClient } from '@ucronia/api';
+import { Member, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 import { UserChange } from './models/user-change';
@@ -12,18 +14,18 @@ import { UserCreation } from './models/user-creation';
 })
 export class UserService {
 
+  private securityClient = inject(SecurityClient);
+
+  private readonly ucroniaClient = inject(UcroniaClient);
+
   private readonly inviteClient;
   private readonly client;
-  private readonly rolesClient;
-  private readonly membersClient;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
     this.client = clientProvider.url(environment.apiUrl + '/security/user');
     this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
-    this.rolesClient = clientProvider.url(environment.apiUrl + '/security/role');
-    this.membersClient = clientProvider.url(environment.apiUrl + '/member');
   }
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<User>> {
@@ -80,23 +82,17 @@ export class UserService {
   }
 
   public getAllRoles(): Observable<Role[]> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
     const pageSize = 100;
 
-    return this.rolesClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<Role>>()
+    return this.securityClient.role.page(undefined, pageSize, sorting)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.rolesClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<Role>>();
+            return this.securityClient.role.page(nextPage, pageSize, sorting);
           }
           return of();
         }),
@@ -138,23 +134,17 @@ export class UserService {
   }
 
   private getAllMembers(): Observable<Member[]> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
     const pageSize = 100;
 
-    return this.membersClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<Member>>()
+    return this.ucroniaClient.memberProfile.page(undefined, pageSize, sorting, MemberStatus.All)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.rolesClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<Member>>();
+            return this.ucroniaClient.memberProfile.page(nextPage, pageSize, sorting, MemberStatus.All);
           }
           return of();
         }),

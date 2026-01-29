@@ -20,7 +20,7 @@ export class MemberProfileEndpoint {
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
     active: MemberStatus,
-    name: string | undefined
+    name: string | undefined = undefined
   ): Observable<PaginatedResponse<MemberProfile>> {
     let params = new HttpParams();
     if (page) {
