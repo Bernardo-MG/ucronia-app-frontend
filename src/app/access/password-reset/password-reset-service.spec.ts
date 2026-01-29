@@ -1,14 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { UserTokenStatus } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, CrudClient } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { PasswordResetService } from './password-reset-service';
 
 describe('PasswordResetService', () => {
   let service: PasswordResetService;
-  let client: jasmine.SpyObj<CrudClient>;
-  let clientProvider: jasmine.SpyObj<AngularCrudClientProvider>;
 
   const mockSecurityClient = {
     password: {
@@ -21,14 +18,7 @@ describe('PasswordResetService', () => {
   };
 
   beforeEach(() => {
-    client = jasmine.createSpyObj('CrudClient', ['create', 'read', 'appendRoute']);
-    client.appendRoute.and.returnValue(client);
-
-    clientProvider = jasmine.createSpyObj('AngularCrudClientProvider', ['url']);
-    clientProvider.url.and.returnValue(client);
-
     TestBed.configureTestingModule({
-      imports: [],
       providers: [
         { provide: SecurityClient, useValue: mockSecurityClient }
       ]
@@ -43,65 +33,46 @@ describe('PasswordResetService', () => {
 
   describe('request password reset', () => {
 
-    it('should call create with PasswordResetRequest', () => {
-      const request = 'test@example.com';
-      client.create.and.returnValue(of({ content: undefined }));
+    it('should call requestReset with email payload', () => {
+      const email = 'test@example.com';
 
-      service.requestResetPassword(request).subscribe();
+      service.requestResetPassword(email).subscribe();
 
-      expect(client.create).toHaveBeenCalledWith(request);
+      expect(mockSecurityClient.password.reset.requestReset)
+        .toHaveBeenCalledWith({ email });
     });
 
   });
 
   describe('reset password', () => {
 
-    it('should append token to route', () => {
+    it('should call reset with token and password payload', () => {
       const token = 'token';
-      const reset = 'newpass';
-      client.create.and.returnValue(of({ content: undefined }));
+      const password = 'newpass';
 
-      service.resetPassword(token, reset).subscribe();
+      service.resetPassword(token, password).subscribe();
 
-      expect(client.appendRoute).toHaveBeenCalledWith(`/${token}`);
-    });
-
-    it('should call create with PasswordReset', () => {
-      const token = 'token';
-      const reset = 'newpass';
-      client.create.and.returnValue(of({ content: undefined }));
-
-      service.resetPassword(token, reset).subscribe();
-
-      expect(client.create).toHaveBeenCalledWith(reset);
+      expect(mockSecurityClient.password.reset.reset)
+        .toHaveBeenCalledWith(token, { password });
     });
 
   });
 
   describe('validate token', () => {
 
-    it('should append token to route', () => {
+    it('should call validateToken with token', () => {
       const token = 'token';
       const response = { content: new UserTokenStatus(true, 'username') };
-      client.read.and.returnValue(of(response));
+
+      mockSecurityClient.password.reset.validateToken
+        .and.returnValue(of(response));
 
       service.validateToken(token)
         .subscribe((res) => expect(res).toEqual(response));
 
-      expect(client.appendRoute).toHaveBeenCalledWith(`/${token}`);
-    });
-
-    it('should call create with UserTokenStatus', () => {
-      const token = 'token';
-      const response = { content: new UserTokenStatus(true, 'username') };
-      client.read.and.returnValue(of(response));
-
-      service.validateToken(token)
-        .subscribe((res) => expect(res).toEqual(response));
-
-      expect(client.read).toHaveBeenCalled();
+      expect(mockSecurityClient.password.reset.validateToken)
+        .toHaveBeenCalledWith(token);
     });
 
   });
-
 });
