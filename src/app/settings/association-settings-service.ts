@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AssociationSettingsService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
-x
+
   public getAll(): Observable<Setting[]> {
     return this.ucroniaClient.setting.getAll();
   }
