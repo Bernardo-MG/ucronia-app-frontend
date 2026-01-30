@@ -28,6 +28,7 @@ export * from './lib/members/member';
 export * from './lib/members/member-profile';
 export * from './lib/members/member-status';
 export * from './lib/members/membership-evolution-month';
+export * from './lib/setting/public-settings';
 export * from './lib/setting/setting';
 export * from './lib/sponsors/sponsor';
 export * from './lib/transactions/transaction';
