@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { LoginRegister } from '../models/login-register';
+import { LoginRegister } from '@bernardo-mg/security';
 
 @Component({
   selector: 'access-audit-login-list',

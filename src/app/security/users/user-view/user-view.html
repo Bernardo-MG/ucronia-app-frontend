@@ -6,7 +6,7 @@
   <access-user-list [loading]="loading" [editable]="editable" [deletable]="deletable" [users]="data.content"
     [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
     (showRoles)="onShowRolesInfo($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
-    (changePage)="load($event)" (active)="onSetActive($event)" (edit)="onStartEditing($event.user, $event.view)" />
+    (changePage)="load($event)" (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
 </p-panel>
 @if (showing) {
 <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
-import { Transaction } from "@ucronia/domain";
+import { Transaction } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({

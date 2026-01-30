@@ -2,17 +2,15 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { Member } from "@ucronia/domain";
+import { UserUpdate } from '@bernardo-mg/security';
+import { Member } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
-import { TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
-import { UserChange } from '../models/user-change';
-import { UserCreation } from '../models/user-creation';
-import { AccessUserForm } from '../user-form/user-form';
+import { AccessUserForm, UserFormData } from '../user-form/user-form';
 import { AccessUserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
 import { AccessUserMemberEditor } from '../user-member-editor/user-member-editor';
@@ -84,7 +82,7 @@ export class UserView implements OnInit {
     this.showingRoles = true;
   }
 
-  public onInvite(toCreate: UserCreation): void {
+  public onInvite(toCreate: UserFormData): void {
     this.call(
       () => this.service.invite(toCreate),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
@@ -92,54 +90,50 @@ export class UserView implements OnInit {
   }
 
   public onSetRoles(roles: Role[]): void {
-    const user: UserChange = {
-      username: this.selectedData.username,
-      name: this.selectedData.name,
-      email: this.selectedData.email,
-      enabled: this.selectedData.enabled,
-      passwordNotExpired: this.selectedData.passwordNotExpired,
+    const user: UserUpdate = {
+      ...this.selectedData,
       roles: [...roles.map(r => r.name)]
     }
     this.call(
-      () => this.service.update(user),
+      () => this.service.update(this.selectedData.username, user),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
-  public onUpdate(toUpdate: UserChange): void {
-    const user: UserChange = {
+  public onUpdate(toUpdate: UserFormData): void {
+    const user: UserUpdate = {
       ...toUpdate,
       enabled: this.selectedData.enabled,
       passwordNotExpired: this.selectedData.passwordNotExpired,
       roles: this.selectedData.roles.map(r => r.name)
     }
     this.call(
-      () => this.service.update(user),
+      () => this.service.update(this.selectedData.username, user),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
   public onAssignMember(member: Member): void {
     this.call(
-      () => this.service.assignMember(this.selectedData.username, member),
+      () => this.service.assignProfile(this.selectedData.username, member.number),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
   public onShowUser(user: User) {
     this.selectedData = user;
-    this.service.getMember(user.username).subscribe(member => this.member = member);
+    this.service.getProfile(user.username).subscribe(member => this.member = member);
     this.showing = true;
   }
 
-  public onSetActive(status: boolean) {
-    const userUpdate: UserChange = {
+  public onSetEnabled(status: boolean) {
+    const userUpdate: UserUpdate = {
       ...this.selectedData,
       roles: this.selectedData.roles.map(r => r.name),
       enabled: status
     };
     this.call(
-      () => this.service.update(userUpdate),
+      () => this.service.update(this.selectedData.username, userUpdate),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
@@ -164,7 +158,7 @@ export class UserView implements OnInit {
     this.selectedData = user;
     switch (view) {
       case 'member':
-        this.service.getMember(user.username).subscribe(member => this.member = member);
+        this.service.getProfile(user.username).subscribe(member => this.member = member);
         this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
         break;
       case 'roles':

@@ -1,7 +1,7 @@
 import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { Transaction } from "@ucronia/domain";
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarMonth } from '@bernardo-mg/ui';
+import { Transaction } from '@ucronia/domain';
 import { CalendarEvent } from 'angular-calendar';
 import { addMinutes } from 'date-fns';
 

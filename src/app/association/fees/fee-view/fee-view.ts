@@ -3,7 +3,7 @@ import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-s
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from "@ucronia/domain";
+import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';

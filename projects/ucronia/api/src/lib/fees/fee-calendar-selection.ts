@@ -1,4 +1,4 @@
-import { ProfileName } from "@ucronia/domain";
+import { ProfileName } from "@bernardo-mg/security";
 
 export class FeeCalendarSelection {
   public number = -1;

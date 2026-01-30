@@ -1,6 +1,5 @@
-export class UserChange {
-  // TODO: not actually in the model
-  public username = '';
+
+export class UserUpdate {
   public name = '';
   public email = '';
   public enabled = false;

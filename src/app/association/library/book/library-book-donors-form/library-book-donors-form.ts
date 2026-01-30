@@ -1,12 +1,11 @@
 
 import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Donation } from "@ucronia/domain";
-import { Donor } from "@ucronia/domain";
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
+import { Donation, Donor } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';

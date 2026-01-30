@@ -1,68 +1,47 @@
 import { inject, Injectable } from '@angular/core';
-import { Member } from "@ucronia/domain";
 import { Role, User } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Profile, SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
+import { MemberProfile, MemberStatus } from '@ucronia/domain';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
-import { UserChange } from './models/user-change';
-import { UserCreation } from './models/user-creation';
 
 @Injectable({
   providedIn: "root"
 })
 export class UserService {
 
-  private readonly inviteClient;
-  private readonly client;
-  private readonly rolesClient;
-  private readonly membersClient;
+  private readonly securityClient = inject(SecurityClient);
 
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/security/user');
-    this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
-    this.rolesClient = clientProvider.url(environment.apiUrl + '/security/role');
-    this.membersClient = clientProvider.url(environment.apiUrl + '/member');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<User>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('name')]
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('name')
+        ]
+      )
     );
 
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.securityClient.user.page(page, undefined, sorting);
   }
 
   public invite(data: UserCreation): Observable<User> {
-    return this.inviteClient
-      .create<SimpleResponse<User>>(data)
-      .pipe(map(r => r.content));
+    return this.securityClient.user.onboarding.invite(data);
   }
 
-  public update(data: UserChange): Observable<User> {
-    return this.client
-      .appendRoute(`/${data.username}`)
-      .update<SimpleResponse<User>>(data)
-      .pipe(map(r => r.content));
+  public update(username: string, data: UserUpdate): Observable<User> {
+    return this.securityClient.user.update(username, data);
   }
 
   public delete(username: string): Observable<User> {
-    return this.client
-      .appendRoute(`/${username}`)
-      .delete<SimpleResponse<User>>()
-      .pipe(map(r => r.content));
+    return this.securityClient.user.delete(username);
   }
 
   public getOne(username: string): Observable<User> {
-    return this.client
-      .appendRoute(`/${username}`)
-      .read<SimpleResponse<User>>()
-      .pipe(map(r => r.content));
+    return this.securityClient.user.get(username);
   }
 
   // ROLES
@@ -80,27 +59,20 @@ export class UserService {
   }
 
   public getAllRoles(): Observable<Role[]> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('name')]
     );
     const pageSize = 100;
 
-    return this.rolesClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<Role>>()
+    return this.securityClient.role.page(undefined, pageSize, sorting)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.rolesClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<Role>>();
+            return this.securityClient.role.page(nextPage, pageSize, sorting);
           }
           return of();
         }),
-        // accumulate roles from all pages into one array
         reduce((roles: Role[], res?: PaginatedResponse<Role>) => {
           return res ? [...roles, ...res.content] : roles;
         }, [])
@@ -109,23 +81,17 @@ export class UserService {
 
   // Members
 
-  public getMember(username: string): Observable<Member> {
-    return this.client
-      .appendRoute(`/${username}/profile`)
-      .read<SimpleResponse<Member>>()
-      .pipe(map(r => r.content));
+  public getProfile(username: string): Observable<Profile> {
+    return this.securityClient.user.profile.get(username);
   }
 
-  public assignMember(username: string, member: Member): Observable<Member> {
-    return this.client
-      .appendRoute(`/${username}/profile/${member.number}`)
-      .create<SimpleResponse<Member>>(null)
-      .pipe(map(r => r.content));
+  public assignProfile(username: string, profile: number): Observable<Profile> {
+    return this.securityClient.user.profile.set(username, profile);
   }
 
-  public getAvailableMembers(username: string): Observable<Member[]> {
+  public getAvailableMembers(username: string): Observable<MemberProfile[]> {
     return combineLatest([
-      this.getMember(username),
+      this.getProfile(username),
       this.getAllMembers()
     ]).pipe(
       map(([member, members]) => {
@@ -137,29 +103,23 @@ export class UserService {
     );
   }
 
-  private getAllMembers(): Observable<Member[]> {
-    const sorting = new SortingParams(
+  private getAllMembers(): Observable<MemberProfile[]> {
+    const sorting = new Sorting(
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
     const pageSize = 100;
 
-    return this.membersClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<Member>>()
+    return this.ucroniaClient.memberProfile.page(undefined, pageSize, sorting, MemberStatus.All)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.rolesClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<Member>>();
+            return this.ucroniaClient.memberProfile.page(nextPage, pageSize, sorting, MemberStatus.All);
           }
           return of();
         }),
         // accumulate members from all pages into one array
-        reduce((members: Member[], res?: PaginatedResponse<Member>) => {
+        reduce((members: MemberProfile[], res?: PaginatedResponse<MemberProfile>) => {
           return res ? [...members, ...res.content] : members;
         }, [])
       );

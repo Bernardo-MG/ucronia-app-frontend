@@ -1,10 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Role } from '@bernardo-mg/authentication';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { ContactMethod, ContactMethodUpdate } from '@bernardo-mg/security';
 import { catchError, map, Observable } from 'rxjs';
+import { RoleChange } from '../../request/role-change';
+import { RoleCreation } from '../../request/role-creation';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
-export class ContactMethodEndpoint {
+export class RoleEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -17,7 +19,7 @@ export class ContactMethodEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<ContactMethod>> {
+  ): Observable<PaginatedResponse<Role>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
@@ -26,18 +28,31 @@ export class ContactMethodEndpoint {
       params = params.append('size', size);
     }
 
-    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    return this.http.get<PaginatedResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod`, { params })
+    params = params.append('status', status);
+
+    return this.http.get<PaginatedResponse<Role>>(`${this.apiUrl}/security/role`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
+  public get(
+    name: string
+  ): Observable<Role> {
+    return this.http.get<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
   public create(
-    data: ContactMethod
-  ): Observable<ContactMethod> {
-    return this.http.post<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod`, data)
+    data: RoleCreation
+  ): Observable<Role> {
+    return this.http.post<SimpleResponse<Role>>(`${this.apiUrl}/security/role`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -45,10 +60,10 @@ export class ContactMethodEndpoint {
   }
 
   public update(
-    number: number,
-    data: ContactMethodUpdate
-  ): Observable<ContactMethod> {
-    return this.http.put<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${number}`, data)
+    name: string,
+    data: RoleChange
+  ): Observable<Role> {
+    return this.http.patch<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -56,9 +71,9 @@ export class ContactMethodEndpoint {
   }
 
   public delete(
-    number: number
-  ): Observable<ContactMethod> {
-    return this.http.delete<SimpleResponse<ContactMethod>>(`${this.apiUrl}/profile/contactMethod/${number}`)
+    name: string
+  ): Observable<Role> {
+    return this.http.delete<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

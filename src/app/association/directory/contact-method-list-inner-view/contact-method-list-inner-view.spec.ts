@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PaginatedResponse } from '@bernardo-mg/request';
-import { ContactMethod } from '@ucronia/domain';
+import { ContactMethod } from '@bernardo-mg/security';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';

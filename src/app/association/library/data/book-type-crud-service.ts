@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { BookType } from "@ucronia/domain";
+import { BookType } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -1,4 +1,4 @@
-import { ProfileName } from "../profiles/profile-name";
+import { ProfileName } from "@bernardo-mg/security";
 
 export class MemberFees {
   public member = new MemberFeesMember();

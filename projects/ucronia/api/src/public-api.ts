@@ -21,7 +21,5 @@ export * from './lib/library/publisher-creation';
 export * from './lib/library/publisher-update';
 export * from './lib/members/member-profile-patch';
 export * from './lib/members/profile-membership-conversion';
-export * from './lib/profiles/profile-creation';
-export * from './lib/profiles/profile-patch';
 export * from './lib/sponsor/sponsor-patch';
 

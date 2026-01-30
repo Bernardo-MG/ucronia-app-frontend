@@ -1,5 +1,4 @@
-import { Profile } from "@ucronia/domain";
-
+import { Profile } from "@bernardo-mg/security";
 
 /**
  * Account for a user.

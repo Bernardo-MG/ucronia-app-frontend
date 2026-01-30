@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { Profile } from "@ucronia/domain";
+import { Profile } from '@bernardo-mg/security';
 
 @Component({
   selector: 'account-profile-profile',

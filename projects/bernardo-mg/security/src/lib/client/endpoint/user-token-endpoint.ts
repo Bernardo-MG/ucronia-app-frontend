@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { UserToken } from '@bernardo-mg/authentication';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { MemberProfile, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { MemberProfilePatch } from '../../members/member-profile-patch';
+import { UserTokenPatch } from '../../request/user-token-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
-export class MemberProfileEndpoint {
+export class UserTokenEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -17,10 +17,8 @@ export class MemberProfileEndpoint {
   public page(
     page: number | undefined = undefined,
     size: number | undefined = undefined,
-    sort: Sorting | undefined = undefined,
-    active: MemberStatus,
-    name: string | undefined = undefined
-  ): Observable<PaginatedResponse<MemberProfile>> {
+    sort: Sorting | undefined = undefined
+  ): Observable<PaginatedResponse<UserToken>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
@@ -29,26 +27,21 @@ export class MemberProfileEndpoint {
       params = params.append('size', size);
     }
 
-    const status = active ? active.toString().toUpperCase() : '';
-
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
-    if (name) {
-      params = params.append('name', name);
-    }
 
-    return this.http.get<PaginatedResponse<MemberProfile>>(`${this.apiUrl}/profile/member`, { params })
+    return this.http.get<PaginatedResponse<UserToken>>(`${this.apiUrl}/security/user/token`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
   public get(
-    number: number
-  ): Observable<MemberProfile> {
-    return this.http.get<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`)
+    token: string
+  ): Observable<UserToken> {
+    return this.http.get<SimpleResponse<UserToken>>(`${this.apiUrl}/security/user/token/${token}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -56,20 +49,10 @@ export class MemberProfileEndpoint {
   }
 
   public patch(
-    number: number,
-    data: MemberProfilePatch
-  ): Observable<MemberProfile> {
-    return this.http.patch<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`, data)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
-
-  public delete(
-    number: number
-  ): Observable<MemberProfile> {
-    return this.http.delete<SimpleResponse<MemberProfile>>(`${this.apiUrl}/profile/member/${number}`)
+    token: string,
+    data: UserTokenPatch
+  ): Observable<UserToken> {
+    return this.http.patch<SimpleResponse<UserToken>>(`${this.apiUrl}/security/user/token/${token}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

@@ -1,7 +1,7 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { TransactionMonthlyBalance } from "@ucronia/domain";
+import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { SelectModule } from 'primeng/select';
 import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';

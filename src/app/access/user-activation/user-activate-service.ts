@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AccessUserActivateService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   public activateUser(token: string, password: string): Observable<SimpleResponse<User>> {
     return this.securityClient.user.onboarding.activate(token, { password });

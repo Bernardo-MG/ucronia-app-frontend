@@ -19,7 +19,7 @@
     "ng": "ng",
     "start": "ng serve --open",
     "build-libs": "ng build @bernardo-mg/authentication --configuration development && ng build @bernardo-mg/request --configuration development && ng build @bernardo-mg/security --configuration development && ng build @bernardo-mg/ui --configuration development && ng build @bernardo-mg/form --configuration development && ng build @ucronia/domain --configuration development && ng build @ucronia/api --configuration development",
-    "build-libs-production": "ng build @bernardo-mg/authentication --configuration production && ng build @bernardo-mg/request --configuration production && ng build @bernardo-mg/ui --configuration production && ng build @bernardo-mg/form --configuration production && ng build @ucronia/domain --configuration production && ng build @ucronia/api --configuration production",
+    "build-libs-production": "ng build @bernardo-mg/authentication --configuration production && ng build @bernardo-mg/request --configuration production && ng build @bernardo-mg/security --configuration production && ng build @bernardo-mg/ui --configuration production && ng build @bernardo-mg/form --configuration production && ng build @ucronia/domain --configuration production && ng build @ucronia/api --configuration production",
     "build": "ng build",
     "build-production": "ng build --configuration production",
     "watch": "ng build --watch --configuration development",

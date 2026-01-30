@@ -2,7 +2,7 @@ import { Component, inject, Input, input, output, SimpleChanges } from '@angular
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod } from "@ucronia/domain";
+import { ContactMethod } from '@bernardo-mg/security';
 import { ButtonModule } from 'primeng/button';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';

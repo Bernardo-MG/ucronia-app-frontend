@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Guest, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { GuestPatch } from '../../guests/guest-patch';
+import { Profile } from '../../domain/profile';
+import { ProfileCreation } from '../../request/profile-creation';
+import { ProfilePatch } from '../../request/profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
-export class GuestEndpoint {
+export class ProfileEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -18,9 +19,8 @@ export class GuestEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    active: MemberStatus,
-    name: string
-  ): Observable<PaginatedResponse<Guest>> {
+    name: string | undefined
+  ): Observable<PaginatedResponse<Profile>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
@@ -29,14 +29,16 @@ export class GuestEndpoint {
       params = params.append('size', size);
     }
 
-    const status = active ? active.toString().toUpperCase() : '';
-
-    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties
+      .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     params = params.append('status', status);
-    params = params.append('name', name);
 
-    return this.http.get<PaginatedResponse<Guest>>(`${this.apiUrl}/profile/guest`, { params })
+    if (name) {
+      params = params.append('name', name);
+    }
+
+    return this.http.get<PaginatedResponse<Profile>>(`${this.apiUrl}/profile`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
@@ -44,8 +46,18 @@ export class GuestEndpoint {
 
   public get(
     number: number
-  ): Observable<Guest> {
-    return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
+  ): Observable<Profile> {
+    return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public create(
+    data: ProfileCreation
+  ): Observable<Profile> {
+    return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -54,9 +66,9 @@ export class GuestEndpoint {
 
   public patch(
     number: number,
-    data: GuestPatch
-  ): Observable<Guest> {
-    return this.http.patch<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`, data)
+    data: ProfilePatch
+  ): Observable<Profile> {
+    return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -65,8 +77,8 @@ export class GuestEndpoint {
 
   public delete(
     number: number
-  ): Observable<Guest> {
-    return this.http.delete<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
+  ): Observable<Profile> {
+    return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

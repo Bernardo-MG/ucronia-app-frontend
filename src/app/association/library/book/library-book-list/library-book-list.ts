@@ -1,7 +1,7 @@
 import { Component, inject, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { FictionBook, GameBook } from "@ucronia/domain";
+import { FictionBook, GameBook } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
