@@ -3,7 +3,7 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Member, MemberStatus, Profile } from "@ucronia/domain";
+import { MemberProfile, MemberStatus, Profile } from "@ucronia/domain";
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 
 @Injectable({
@@ -73,7 +73,6 @@ export class UserService {
           }
           return of();
         }),
-        // accumulate roles from all pages into one array
         reduce((roles: Role[], res?: PaginatedResponse<Role>) => {
           return res ? [...roles, ...res.content] : roles;
         }, [])
@@ -90,7 +89,7 @@ export class UserService {
     return this.securityClient.user.profile.set(username, profile);
   }
 
-  public getAvailableMembers(username: string): Observable<Member[]> {
+  public getAvailableMembers(username: string): Observable<MemberProfile[]> {
     return combineLatest([
       this.getProfile(username),
       this.getAllMembers()
@@ -104,7 +103,7 @@ export class UserService {
     );
   }
 
-  private getAllMembers(): Observable<Member[]> {
+  private getAllMembers(): Observable<MemberProfile[]> {
     const sorting = new Sorting(
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
@@ -120,7 +119,7 @@ export class UserService {
           return of();
         }),
         // accumulate members from all pages into one array
-        reduce((members: Member[], res?: PaginatedResponse<Member>) => {
+        reduce((members: MemberProfile[], res?: PaginatedResponse<MemberProfile>) => {
           return res ? [...members, ...res.content] : members;
         }, [])
       );
