@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Role, User } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus, Profile } from "@ucronia/domain";
-import { environment } from 'environments/environment';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 import { UserChange } from './models/user-change';
 import { UserCreation } from './models/user-creation';
@@ -17,14 +16,6 @@ export class UserService {
   private readonly securityClient = inject(SecurityClient);
 
   private readonly ucroniaClient = inject(UcroniaClient);
-
-  private readonly inviteClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
-  }
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<User>> {
     const sorting = new Sorting(
@@ -40,9 +31,7 @@ export class UserService {
   }
 
   public invite(data: UserCreation): Observable<User> {
-    return this.inviteClient
-      .create<SimpleResponse<User>>(data)
-      .pipe(map(r => r.content));
+    return this.securityClient.user.onboarding.invite(data);
   }
 
   public update(data: UserChange): Observable<User> {

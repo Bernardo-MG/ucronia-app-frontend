@@ -123,6 +123,16 @@ export class UserOnboardingEndpoint {
       );
   }
 
+  public invite(
+    data: UserCreation
+  ): Observable<User> {
+    return this.http.post<SimpleResponse<User>>(`${this.apiUrl}/security/user/onboarding/invite`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
 }
 
 export class UserProfileEndpoint {
