@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 })
 export class LoginService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   private authService = inject(AuthService);
 

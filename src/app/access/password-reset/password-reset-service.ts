@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class PasswordResetService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   public requestResetPassword(email: string): Observable<SimpleResponse<void>> {
     return this.securityClient.password.reset.requestReset({ email });

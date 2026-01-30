@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class UserTokenService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
     const sorting = new Sorting(

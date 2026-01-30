@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { Role, User } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
+import { AngularCrudClientProvider, PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
-import { UcroniaClient } from '@ucronia/api';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
@@ -14,7 +14,7 @@ import { UserCreation } from './models/user-creation';
 })
 export class UserService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
@@ -29,15 +29,16 @@ export class UserService {
   }
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<User>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('name')]
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('name')
+        ]
+      )
     );
 
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+    return this.securityClient.user.page(page, undefined, sorting);
   }
 
   public invite(data: UserCreation): Observable<User> {
@@ -47,24 +48,15 @@ export class UserService {
   }
 
   public update(data: UserChange): Observable<User> {
-    return this.client
-      .appendRoute(`/${data.username}`)
-      .update<SimpleResponse<User>>(data)
-      .pipe(map(r => r.content));
+    return this.securityClient.user.update(data.username, data);
   }
 
   public delete(username: string): Observable<User> {
-    return this.client
-      .appendRoute(`/${username}`)
-      .delete<SimpleResponse<User>>()
-      .pipe(map(r => r.content));
+    return this.securityClient.user.delete(username);
   }
 
   public getOne(username: string): Observable<User> {
-    return this.client
-      .appendRoute(`/${username}`)
-      .read<SimpleResponse<User>>()
-      .pipe(map(r => r.content));
+    return this.securityClient.user.get(username);
   }
 
   // ROLES

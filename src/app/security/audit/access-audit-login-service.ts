@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class AccessAuditLoginService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<LoginRegister>> {
     const sorting = new Sorting(

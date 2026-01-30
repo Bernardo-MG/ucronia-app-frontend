@@ -10,7 +10,7 @@ import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 })
 export class RoleService {
 
-  private securityClient = inject(SecurityClient);
+  private readonly securityClient = inject(SecurityClient);
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<Role>> {
     const sorting = new Sorting(
