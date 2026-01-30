@@ -1,25 +1,38 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { SecurityClient } from '@bernardo-mg/security';
+import { of } from 'rxjs';
 import { AccessAuditLoginService } from '../access-audit-login-service';
-import { AccessAuditLogin } from './audit-view';
+import { AuditView } from './audit-view';
 
-describe('AccessAuditLogin', () => {
-  let component: AccessAuditLogin;
-  let fixture: ComponentFixture<AccessAuditLogin>;
+describe('AuditView', () => {
+  let component: AuditView;
+  let fixture: ComponentFixture<AuditView>;
+
+  const securityClientMock = {
+    login: {
+      register: {
+        page: jasmine.createSpy().and.returnValue(of({
+          content: [],
+          page: 0,
+          size: 10,
+          totalElements: 0,
+          totalPages: 0
+        }))
+      }
+    }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccessAuditLogin],
+      imports: [AuditView],
       providers: [
         AccessAuditLoginService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: SecurityClient, useValue: securityClientMock }
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessAuditLogin);
+    fixture = TestBed.createComponent(AuditView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

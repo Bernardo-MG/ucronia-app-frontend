@@ -13,7 +13,7 @@ import { AuditLoginList } from '../audit-login-list/audit-login-list';
   imports: [CardModule, AuditLoginList],
   templateUrl: './audit-view.html'
 })
-export class AccessAuditLogin implements OnInit {
+export class AuditView implements OnInit {
 
   private readonly service = inject(AccessAuditLoginService);
 

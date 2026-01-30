@@ -205,7 +205,7 @@ export const routes: Routes = [
                 // Security audit
                 path: 'audit',
                 canActivate: [ResourceGuard("user", "view")],
-                loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AccessAuditLogin)
+                loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AuditView)
               }
             ]
           },
