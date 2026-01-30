@@ -1,12 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Role, User } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { SecurityClient } from '@bernardo-mg/security';
+import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus, Profile } from "@ucronia/domain";
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
-import { UserChange } from './models/user-change';
-import { UserCreation } from './models/user-creation';
 
 @Injectable({
   providedIn: "root"
@@ -34,8 +32,8 @@ export class UserService {
     return this.securityClient.user.onboarding.invite(data);
   }
 
-  public update(data: UserChange): Observable<User> {
-    return this.securityClient.user.update(data.username, data);
+  public update(username: string, data: UserUpdate): Observable<User> {
+    return this.securityClient.user.update(username, data);
   }
 
   public delete(username: string): Observable<User> {
