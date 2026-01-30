@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Profile } from '@bernardo-mg/security';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
-import { Fee, FeePayment, Member, MemberStatus, Profile } from "@ucronia/domain";
+import { Fee, FeePayment, Member, MemberStatus } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({

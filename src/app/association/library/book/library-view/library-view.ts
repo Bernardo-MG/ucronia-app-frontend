@@ -7,7 +7,7 @@ import { FormWithSelection } from '@app/shared/data/form-with-selection/form-wit
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from "@ucronia/domain";
+import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';

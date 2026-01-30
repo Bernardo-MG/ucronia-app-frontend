@@ -4,7 +4,8 @@ import { Component, inject, Input, input, OnChanges, output, SimpleChanges } fro
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod, FeeType } from "@ucronia/domain";
+import { ContactMethod } from '@bernardo-mg/security';
+import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';

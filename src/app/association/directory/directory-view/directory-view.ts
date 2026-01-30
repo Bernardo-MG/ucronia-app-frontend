@@ -4,8 +4,9 @@ import { ProfileCreationEvent, ProfileCreationForm } from '@app/association/dire
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ContactMethod } from '@bernardo-mg/security';
 import { TextFilter } from '@bernardo-mg/ui';
-import { ContactMethod, FeeType, MemberStatus } from "@ucronia/domain";
+import { FeeType, MemberStatus } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';

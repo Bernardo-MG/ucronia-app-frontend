@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { ContactMethod } from '@bernardo-mg/security';
 import { UcroniaClient } from '@ucronia/api';
-import { ContactMethod } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 

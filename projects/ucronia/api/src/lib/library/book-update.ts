@@ -1,6 +1,4 @@
-import { BookLending } from "@ucronia/domain";
-import { Donation } from "@ucronia/domain";
-import { Title } from "@ucronia/domain";
+import { BookLending, Donation, Title } from "@ucronia/domain";
 
 export class BookUpdate {
   public number = -1;

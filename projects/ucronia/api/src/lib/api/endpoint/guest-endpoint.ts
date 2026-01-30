@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Guest, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { GuestPatch } from '../../guests/guest-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { mergeProperties } from '../sorting-param-merger';
 
 export class GuestEndpoint {
 

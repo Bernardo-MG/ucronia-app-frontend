@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { BookLending } from "@ucronia/domain";
+import { BookLending } from '@ucronia/domain';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({

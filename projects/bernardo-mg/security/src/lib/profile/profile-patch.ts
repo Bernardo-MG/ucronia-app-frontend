@@ -1,4 +1,4 @@
-import { ProfileName } from "@ucronia/domain";
+import { ProfileName } from "./profile-name";
 import { ProfilePatchChannel } from "./profile-patch-channel";
 
 export class ProfilePatch {

@@ -3,7 +3,7 @@ import { Component, input, output } from '@angular/core';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
-import { BookInfo, BookLent, Member, MemberStatus } from "@ucronia/domain";
+import { BookInfo, BookLent, Member, MemberStatus } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';

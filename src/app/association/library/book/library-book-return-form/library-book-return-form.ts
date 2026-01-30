@@ -1,12 +1,9 @@
 
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Fee } from "@ucronia/domain";
-import { BookInfo } from "@ucronia/domain";
-import { Borrower } from "@ucronia/domain";
-import { BookReturned } from "@ucronia/domain";
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { BookInfo, BookReturned, Borrower, Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';

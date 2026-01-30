@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Guest, Member, Profile, Sponsor } from '@ucronia/domain';
+import { Profile, ProfileCreation, ProfilePatch } from '@bernardo-mg/security';
+import { Guest, Member, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ProfileMembershipConversion } from '../../members/profile-membership-conversion';
-import { ProfileCreation } from '../../profiles/profile-creation';
-import { ProfilePatch } from '../../profiles/profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class ProfileEndpoint {

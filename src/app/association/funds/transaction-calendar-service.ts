@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Month } from '@bernardo-mg/ui';
 import { UcroniaClient } from '@ucronia/api';
-import { Transaction } from "@ucronia/domain";
-import { startOfMonth, format, lastDayOfMonth, addDays } from 'date-fns';
+import { Transaction } from '@ucronia/domain';
+import { addDays, format, lastDayOfMonth, startOfMonth } from 'date-fns';
 import { Observable } from 'rxjs';
 
 @Injectable({

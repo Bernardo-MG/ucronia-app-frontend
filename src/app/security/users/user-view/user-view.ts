@@ -3,7 +3,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UserUpdate } from '@bernardo-mg/security';
-import { Member } from "@ucronia/domain";
+import { Member } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';

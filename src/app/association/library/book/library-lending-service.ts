@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { BookLending } from "@ucronia/domain";
+import { BookLending } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({

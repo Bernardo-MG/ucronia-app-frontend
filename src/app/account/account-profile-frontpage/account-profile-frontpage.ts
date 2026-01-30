@@ -3,7 +3,7 @@ import { Component, inject } from '@angular/core';
 import { AccountProfileProfile } from '@app/account/account-profile-profile/account-profile-profile';
 import { Account } from '@app/account/models/account';
 import { AccountService } from '@app/account/services/account-service';
-import { Profile } from "@ucronia/domain";
+import { Profile } from '@bernardo-mg/security';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';

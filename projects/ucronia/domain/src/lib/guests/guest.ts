@@ -1,5 +1,4 @@
-import { ContactChannel } from "../profiles/profile";
-import { ProfileName } from "../profiles/profile-name";
+import { ContactChannel, ProfileName } from "@bernardo-mg/security";
 
 export class Guest {
   public number = -1;

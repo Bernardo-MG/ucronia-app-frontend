@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Role, User } from '@bernardo-mg/authentication';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
+import { Profile, SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { MemberProfile, MemberStatus, Profile } from "@ucronia/domain";
+import { MemberProfile, MemberStatus } from '@ucronia/domain';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 
 @Injectable({
