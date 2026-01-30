@@ -9,7 +9,6 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { PickListModule } from 'primeng/picklist';
-import { UserChange } from '../models/user-change';
 
 @Component({
   selector: 'access-user-form',
@@ -28,7 +27,7 @@ export class AccessUserForm implements OnChanges {
     this.username = value.username;
   }
 
-  public readonly save = output<UserChange>();
+  public readonly save = output<UserFormData>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
@@ -71,4 +70,11 @@ export class AccessUserForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class UserFormData {
+  public username = '';
+  public name = '';
+  public email = '';
+  public roles: string[] = [];
 }

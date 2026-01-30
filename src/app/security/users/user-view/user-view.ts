@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { UserCreation, UserUpdate } from '@bernardo-mg/security';
+import { UserUpdate } from '@bernardo-mg/security';
 import { Member } from "@ucronia/domain";
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -10,7 +10,7 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { AccessUserForm } from '../user-form/user-form';
+import { AccessUserForm, UserFormData } from '../user-form/user-form';
 import { AccessUserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
 import { AccessUserMemberEditor } from '../user-member-editor/user-member-editor';
@@ -82,7 +82,7 @@ export class UserView implements OnInit {
     this.showingRoles = true;
   }
 
-  public onInvite(toCreate: UserCreation): void {
+  public onInvite(toCreate: UserFormData): void {
     this.call(
       () => this.service.invite(toCreate),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
@@ -91,10 +91,7 @@ export class UserView implements OnInit {
 
   public onSetRoles(roles: Role[]): void {
     const user: UserUpdate = {
-      name: this.selectedData.name,
-      email: this.selectedData.email,
-      enabled: this.selectedData.enabled,
-      passwordNotExpired: this.selectedData.passwordNotExpired,
+      ...this.selectedData,
       roles: [...roles.map(r => r.name)]
     }
     this.call(
@@ -103,7 +100,7 @@ export class UserView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: UserUpdate): void {
+  public onUpdate(toUpdate: UserFormData): void {
     const user: UserUpdate = {
       ...toUpdate,
       enabled: this.selectedData.enabled,
@@ -129,7 +126,7 @@ export class UserView implements OnInit {
     this.showing = true;
   }
 
-  public onSetActive(status: boolean) {
+  public onSetEnabled(status: boolean) {
     const userUpdate: UserUpdate = {
       ...this.selectedData,
       roles: this.selectedData.roles.map(r => r.name),
