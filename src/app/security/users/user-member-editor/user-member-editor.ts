@@ -12,7 +12,7 @@ import { EMPTY, Observable } from 'rxjs';
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, TableModule],
   templateUrl: './user-member-editor.html'
 })
-export class AccessUserMemberEditor implements OnChanges {
+export class UserMemberEditor implements OnChanges {
 
   public readonly getMember = input<(username: string) => Observable<Member>>((username: string) => EMPTY);
   public readonly username = input('');

@@ -10,7 +10,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   imports: [CommonModule, SkeletonModule, TableModule],
   templateUrl: './role-info.html'
 })
-export class AccessRoleInfo implements OnChanges {
+export class RoleInfo implements OnChanges {
 
   public readonly data = input(new Role());
   public readonly loading = input(false);

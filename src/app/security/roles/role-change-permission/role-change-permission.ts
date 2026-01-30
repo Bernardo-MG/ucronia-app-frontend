@@ -9,7 +9,7 @@ import { PickListModule } from 'primeng/picklist';
   imports: [CommonModule, ButtonModule, PickListModule],
   templateUrl: './role-change-permission.html'
 })
-export class AccessRoleChangePermission implements OnChanges {
+export class RoleChangePermission implements OnChanges {
 
   public readonly selection = input<ResourcePermission[]>([]);
   public readonly permissions = input<ResourcePermission[]>([]);

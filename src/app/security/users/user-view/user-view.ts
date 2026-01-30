@@ -10,17 +10,17 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { AccessUserForm, UserFormData } from '../user-form/user-form';
-import { AccessUserInfo } from '../user-info/user-info';
+import { UserForm, UserFormData } from '../user-form/user-form';
+import { UserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
-import { AccessUserMemberEditor } from '../user-member-editor/user-member-editor';
+import { UserMemberEditor } from '../user-member-editor/user-member-editor';
 import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
 import { UserRolesInfo } from '../user-roles-info/user-roles-info';
 import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, AccessUserForm, AccessUserInfo, UserRolesEditor, AccessUserMemberEditor, UserRolesInfo, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditor, UserRolesInfo, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {

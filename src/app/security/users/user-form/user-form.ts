@@ -15,7 +15,7 @@ import { PickListModule } from 'primeng/picklist';
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule, PickListModule],
   templateUrl: './user-form.html'
 })
-export class AccessUserForm implements OnChanges {
+export class UserForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
