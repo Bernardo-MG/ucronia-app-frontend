@@ -3,6 +3,7 @@ import { inject, InjectionToken } from '@angular/core';
 import { LoginEndpoint } from './endpoint/login-endpoint';
 import { PasswordEndpoint } from './endpoint/password-endpoint';
 import { PermissionEndpoint } from './endpoint/permission-endpoint';
+import { ProfileEndpoint } from './endpoint/profile-endpoint';
 import { RoleEndpoint } from './endpoint/role-endpoint';
 import { UserEndpoint } from './endpoint/user-endpoint';
 import { UserTokenEndpoint } from './endpoint/user-token-endpoint';
@@ -36,6 +37,10 @@ export class SecurityClient {
 
   public get userToken() {
     return new UserTokenEndpoint(this.http, this.base_url);
+  }
+
+  public get profile() {
+    return new ProfileEndpoint(this.http, this.base_url);
   }
 
 }

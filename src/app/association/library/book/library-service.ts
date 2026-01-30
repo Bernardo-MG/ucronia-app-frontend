@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { Profile } from '@bernardo-mg/security';
+import { Profile, SecurityClient } from '@bernardo-mg/security';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Publisher } from '@ucronia/domain';
 import { Observable } from 'rxjs';
@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
   providedIn: "root"
 })
 export class LibraryService {
+
+  private readonly securityClient = inject(SecurityClient);
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
@@ -113,7 +115,7 @@ export class LibraryService {
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
 
-    return this.ucroniaClient.profile.page(page, undefined, sorting, undefined);
+    return this.securityClient.profile.page(page, undefined, sorting, undefined);
   }
 
   public lend(data: BookLent): Observable<BookLending> {
