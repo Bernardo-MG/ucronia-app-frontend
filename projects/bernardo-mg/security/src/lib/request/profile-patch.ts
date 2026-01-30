@@ -1,5 +1,4 @@
-import { ProfileName } from "./profile-name";
-import { ProfilePatchChannel } from "./profile-patch-channel";
+import { ProfileName } from "../domain/profile-name";
 
 export class ProfilePatch {
   public identifier?: string;
@@ -8,4 +7,9 @@ export class ProfilePatch {
   public contactChannels?: ProfilePatchChannel[] = [];
   public address?: string;
   public comments?: string;
+}
+
+export class ProfilePatchChannel {
+  public method = -1;
+  public detail = '';
 }

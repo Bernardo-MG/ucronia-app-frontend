@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { UserToken } from '@bernardo-mg/authentication';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
-import { UserTokenPatch } from '../../token/user-token-patch';
+import { UserTokenPatch } from '../../request/user-token-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class UserTokenEndpoint {

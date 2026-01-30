@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { SimpleResponse } from '@bernardo-mg/request';
 import { catchError, Observable } from 'rxjs';
-import { PasswordReset } from '../../password/password-reset';
-import { PasswordResetRequest } from '../../password/password-reset-request';
+import { PasswordReset } from '../../request/password-reset';
+import { PasswordResetRequest } from '../../request/password-reset-request';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class PasswordEndpoint {

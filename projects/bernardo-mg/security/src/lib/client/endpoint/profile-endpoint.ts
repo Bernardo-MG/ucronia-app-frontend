@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
-import { Profile } from '../../profile/profile';
-import { ProfileCreation } from '../../profile/profile-creation';
-import { ProfilePatch } from '../../profile/profile-patch';
+import { Profile } from '../../domain/profile';
+import { ProfileCreation } from '../../request/profile-creation';
+import { ProfilePatch } from '../../request/profile-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class ProfileEndpoint {

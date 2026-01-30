@@ -2,10 +2,10 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, UserTokenStatus } from '@bernardo-mg/authentication';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
-import { Profile } from '../../profile/profile';
-import { UserActivation } from '../../user/user-activation';
-import { UserCreation } from '../../user/user-creation';
-import { UserUpdate } from '../../user/user-update';
+import { Profile } from '../../domain/profile';
+import { UserActivation } from '../../request/user-activation';
+import { UserCreation } from '../../request/user-creation';
+import { UserUpdate } from '../../request/user-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class UserEndpoint {
