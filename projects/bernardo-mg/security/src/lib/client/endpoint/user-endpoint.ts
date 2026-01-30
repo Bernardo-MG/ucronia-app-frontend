@@ -1,29 +1,34 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, UserTokenStatus } from '@bernardo-mg/authentication';
 import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Profile } from "@ucronia/domain";
 import { catchError, map, Observable } from 'rxjs';
 import { UserActivation } from '../../user/user-activation';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
-import { RoleChange } from '../../role/role-change';
-import { RoleCreation } from '../../role/role-creation';
 import { UserCreation } from '../../user/user-creation';
 import { UserUpdate } from '../../user/user-update';
+import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class UserEndpoint {
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
   private readonly userOnboardingEndpoint;
+  private readonly userProfileEndpoint;
 
   public constructor(
     private http: HttpClient,
     private apiUrl: string
   ) {
     this.userOnboardingEndpoint = new UserOnboardingEndpoint(http, apiUrl);
+    this.userProfileEndpoint = new UserProfileEndpoint(http, apiUrl);
   }
 
   public get onboarding() {
     return this.userOnboardingEndpoint;
+  }
+
+  public get profile() {
+    return this.userProfileEndpoint;
   }
 
   public page(
@@ -115,6 +120,38 @@ export class UserOnboardingEndpoint {
       .get<SimpleResponse<UserTokenStatus>>(`${this.apiUrl}/security/user/onboarding/activate/${token}`)
       .pipe(
         catchError(this.errorInterceptor.handle)
+      );
+  }
+
+}
+
+export class UserProfileEndpoint {
+
+  private readonly errorInterceptor = new ErrorRequestInterceptor();
+
+  public constructor(
+    private http: HttpClient,
+    private apiUrl: string
+  ) { }
+
+  public get(
+    username: string
+  ): Observable<Profile> {
+    return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/security/user/${username}/profile`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
+  public set(
+    username: string,
+    profile: number
+  ): Observable<Profile> {
+    return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/security/user/${username}/profile/${profile}`, null)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
       );
   }
 

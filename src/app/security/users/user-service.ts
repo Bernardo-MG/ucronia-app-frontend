@@ -3,7 +3,7 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { AngularCrudClientProvider, PaginatedResponse, SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Member, MemberStatus } from "@ucronia/domain";
+import { Member, MemberStatus, Profile } from "@ucronia/domain";
 import { environment } from 'environments/environment';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 import { UserChange } from './models/user-change';
@@ -19,12 +19,10 @@ export class UserService {
   private readonly ucroniaClient = inject(UcroniaClient);
 
   private readonly inviteClient;
-  private readonly client;
 
   constructor() {
     const clientProvider = inject(AngularCrudClientProvider);
 
-    this.client = clientProvider.url(environment.apiUrl + '/security/user');
     this.inviteClient = clientProvider.url(environment.apiUrl + '/security/user/onboarding/invite');
   }
 
@@ -97,23 +95,17 @@ export class UserService {
 
   // Members
 
-  public getMember(username: string): Observable<Member> {
-    return this.client
-      .appendRoute(`/${username}/profile`)
-      .read<SimpleResponse<Member>>()
-      .pipe(map(r => r.content));
+  public getProfile(username: string): Observable<Profile> {
+    return this.securityClient.user.profile.get(username);
   }
 
-  public assignMember(username: string, member: Member): Observable<Member> {
-    return this.client
-      .appendRoute(`/${username}/profile/${member.number}`)
-      .create<SimpleResponse<Member>>(null)
-      .pipe(map(r => r.content));
+  public assignProfile(username: string, profile: number): Observable<Profile> {
+    return this.securityClient.user.profile.set(username, profile);
   }
 
   public getAvailableMembers(username: string): Observable<Member[]> {
     return combineLatest([
-      this.getMember(username),
+      this.getProfile(username),
       this.getAllMembers()
     ]).pipe(
       map(([member, members]) => {

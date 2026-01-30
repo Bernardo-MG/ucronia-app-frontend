@@ -121,14 +121,14 @@ export class UserView implements OnInit {
 
   public onAssignMember(member: Member): void {
     this.call(
-      () => this.service.assignMember(this.selectedData.username, member),
+      () => this.service.assignProfile(this.selectedData.username, member.number),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
 
   public onShowUser(user: User) {
     this.selectedData = user;
-    this.service.getMember(user.username).subscribe(member => this.member = member);
+    this.service.getProfile(user.username).subscribe(member => this.member = member);
     this.showing = true;
   }
 
@@ -164,7 +164,7 @@ export class UserView implements OnInit {
     this.selectedData = user;
     switch (view) {
       case 'member':
-        this.service.getMember(user.username).subscribe(member => this.member = member);
+        this.service.getProfile(user.username).subscribe(member => this.member = member);
         this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
         break;
       case 'roles':
