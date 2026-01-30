@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, InjectionToken } from '@angular/core';
+import { inject, InjectionToken } from '@angular/core';
 import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
@@ -9,6 +9,7 @@ import { MemberEndpoint } from './endpoint/member-endpoint';
 import { MemberProfileEndpoint } from './endpoint/member-profile-endpoint';
 import { MyFeesEndpoint } from './endpoint/my-fees-endpoint';
 import { ProfileEndpoint } from './endpoint/profile-endpoint';
+import { SettingEndpoint } from './endpoint/setting-endpoint';
 import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
 
@@ -61,6 +62,10 @@ export class UcroniaClient {
 
   public get library() {
     return new LibraryEndpoint(this.http, this.base_url);
+  }
+
+  public get setting() {
+    return new SettingEndpoint(this.http, this.base_url);
   }
 
 }

@@ -1,12 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { SimpleResponse } from '@bernardo-mg/request';
-import { Month } from '@bernardo-mg/ui';
-import { Setting, Transaction, TransactionCurrentBalance, TransactionMonthlyBalance, TransactionMonthsRange } from '@ucronia/domain';
-import { addMinutes } from 'date-fns';
+import { Setting } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { TransactionUpdate } from '../../transaction/transaction-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 import { SettingUpdate } from '../../setting/setting-update';
+import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class SettingEndpoint {
 
@@ -28,8 +25,8 @@ export class SettingEndpoint {
   public update(
     code: string, 
     data: SettingUpdate
-  ): Observable<Transaction> {
-    return this.http.put<SimpleResponse<Transaction>>(`${this.apiUrl}/settings/${code}`, data)
+  ): Observable<Setting> {
+    return this.http.put<SimpleResponse<Setting>>(`${this.apiUrl}/settings/${code}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
