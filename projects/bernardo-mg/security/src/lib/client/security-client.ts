@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, InjectionToken } from '@angular/core';
+import { AccountEndpoint } from './endpoint/account-endpoint';
 import { LoginEndpoint } from './endpoint/login-endpoint';
 import { PasswordEndpoint } from './endpoint/password-endpoint';
 import { PermissionEndpoint } from './endpoint/permission-endpoint';
@@ -41,6 +42,10 @@ export class SecurityClient {
 
   public get profile() {
     return new ProfileEndpoint(this.http, this.base_url);
+  }
+
+  public get account() {
+    return new AccountEndpoint(this.http, this.base_url);
   }
 
 }
