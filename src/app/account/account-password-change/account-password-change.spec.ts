@@ -2,7 +2,7 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
-import { AccountService } from '@app/account/services/account-service';
+import { AccountService } from '@app/account/account-service';
 import { AccountPasswordChange } from './account-password-change';
 
 describe('AccountPasswordChangeContainer', () => {

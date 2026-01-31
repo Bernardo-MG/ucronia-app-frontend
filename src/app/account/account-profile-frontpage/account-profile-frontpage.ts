@@ -1,7 +1,7 @@
 
 import { Component, inject } from '@angular/core';
 import { AccountProfileProfile } from '@app/account/account-profile-profile/account-profile-profile';
-import { AccountService } from '@app/account/services/account-service';
+import { AccountService } from '@app/account/account-service';
 import { Profile } from '@bernardo-mg/security';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';

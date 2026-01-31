@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
-import { AccountService } from '@app/account/services/account-service';
+import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { PasswordChange } from 'projects/bernardo-mg/security/src/lib/request/password-change';
