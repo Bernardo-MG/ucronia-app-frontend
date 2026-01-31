@@ -1,19 +1,19 @@
 
 import { Component, inject } from '@angular/core';
-import { AccountProfileProfile } from '@app/account/account-profile-profile/account-profile-profile';
+import { AccountProfileDetails } from '@app/account/account-profile-details/account-profile-details';
+import { AccountService } from '@app/account/account-service';
 import { Account } from '@app/account/models/account';
-import { AccountService } from '@app/account/services/account-service';
 import { Profile } from '@bernardo-mg/security';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'account-profile-frontpage',
-  imports: [CardModule, SkeletonModule, AccountProfileProfile],
-  templateUrl: './account-profile-frontpage.html'
+  selector: 'account-profile-view',
+  imports: [CardModule, SkeletonModule, AccountProfileDetails],
+  templateUrl: './account-profile-view.html'
 })
-export class AccountProfileFrontpage {
+export class AccountProfileView {
 
   public account = new Account();
 

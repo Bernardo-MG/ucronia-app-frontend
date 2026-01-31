@@ -1,17 +1,17 @@
 import { Component, inject } from '@angular/core';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
+import { AccountService } from '@app/account/account-service';
 import { PasswordChange } from '@app/account/models/password-change';
-import { AccountService } from '@app/account/services/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 
 @Component({
-  selector: 'account-password-change',
+  selector: 'account-password-change-view',
   imports: [CardModule, AccountChangePasswordForm],
-  templateUrl: './account-password-change.html'
+  templateUrl: './account-password-change-view.html'
 })
-export class AccountPasswordChange {
+export class AccountPasswordChangeView {
 
   private readonly service = inject(AccountService);
 

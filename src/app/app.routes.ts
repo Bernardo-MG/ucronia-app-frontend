@@ -69,14 +69,14 @@ export const routes: Routes = [
               {
                 path: 'profile',
                 loadComponent: () =>
-                  import('./account/account-profile-frontpage/account-profile-frontpage')
-                    .then(m => m.AccountProfileFrontpage)
+                  import('./account/account-profile-view/account-profile-view')
+                    .then(m => m.AccountProfileView)
               },
               {
                 path: 'password',
                 loadComponent: () =>
-                  import('./account/account-password-change/account-password-change')
-                    .then(m => m.AccountPasswordChange)
+                  import('./account/account-password-change-view/account-password-change-view')
+                    .then(m => m.AccountPasswordChangeView)
               }
             ]
           },
