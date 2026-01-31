@@ -7,11 +7,11 @@ import { PasswordChange } from 'projects/bernardo-mg/security/src/lib/request/pa
 import { throwError } from 'rxjs';
 
 @Component({
-  selector: 'account-password-change',
+  selector: 'account-password-change-view',
   imports: [CardModule, AccountChangePasswordForm],
-  templateUrl: './account-password-change.html'
+  templateUrl: './account-password-change-view.html'
 })
-export class AccountPasswordChange {
+export class AccountPasswordChangeView {
 
   private readonly service = inject(AccountService);
 

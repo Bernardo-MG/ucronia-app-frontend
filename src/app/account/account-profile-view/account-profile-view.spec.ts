@@ -2,15 +2,15 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from '@app/account/account-service';
-import { AccountProfileFrontpage } from './account-profile-frontpage';
+import { AccountProfileView } from './account-profile-view';
 
-describe('AccountProfileFrontpageContainer', () => {
-  let component: AccountProfileFrontpage;
-  let fixture: ComponentFixture<AccountProfileFrontpage>;
+describe('AccountProfileView', () => {
+  let component: AccountProfileView;
+  let fixture: ComponentFixture<AccountProfileView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AccountProfileFrontpage],
+      imports: [AccountProfileView],
       providers: [
         AccountService,
         provideHttpClient(withInterceptorsFromDi()),
@@ -19,7 +19,7 @@ describe('AccountProfileFrontpageContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountProfileFrontpage);
+    fixture = TestBed.createComponent(AccountProfileView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

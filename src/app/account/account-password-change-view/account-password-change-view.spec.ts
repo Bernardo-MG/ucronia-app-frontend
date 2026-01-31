@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
 import { AccountService } from '@app/account/account-service';
-import { AccountPasswordChange } from './account-password-change';
+import { AccountPasswordChangeView } from './account-password-change-view';
 
-describe('AccountPasswordChangeContainer', () => {
-  let component: AccountPasswordChange;
-  let fixture: ComponentFixture<AccountPasswordChange>;
+describe('AccountPasswordChangeView', () => {
+  let component: AccountPasswordChangeView;
+  let fixture: ComponentFixture<AccountPasswordChangeView>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccountPasswordChange,
+        AccountPasswordChangeView,
         AccountChangePasswordForm
       ],
       providers: [
@@ -23,7 +23,7 @@ describe('AccountPasswordChangeContainer', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccountPasswordChange);
+    fixture = TestBed.createComponent(AccountPasswordChangeView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
