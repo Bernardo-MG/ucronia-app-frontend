@@ -1,16 +1,24 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { SecurityClient } from '@bernardo-mg/security';
+import { of } from 'rxjs';
 import { AccountService } from './account-service';
 
 describe('AccountService', () => {
   let service: AccountService;
 
+  const securityClientMock = {
+    account: {
+      get: jasmine.createSpy().and.returnValue(of({}))
+    },
+    password: {
+      change: jasmine.createSpy().and.returnValue(of({}))
+    }
+  };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       providers: [
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: SecurityClient, useValue: securityClientMock }
       ]
     })
       .compileComponents();

@@ -1,13 +1,22 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
 import { AccountService } from '@app/account/account-service';
+import { SecurityClient } from '@bernardo-mg/security';
+import { of } from 'rxjs';
 import { AccountPasswordChangeView } from './account-password-change-view';
 
 describe('AccountPasswordChangeView', () => {
   let component: AccountPasswordChangeView;
   let fixture: ComponentFixture<AccountPasswordChangeView>;
+
+  const securityClientMock = {
+    account: {
+      get: jasmine.createSpy().and.returnValue(of({}))
+    },
+    password: {
+      change: jasmine.createSpy().and.returnValue(of({}))
+    }
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -17,8 +26,7 @@ describe('AccountPasswordChangeView', () => {
       ],
       providers: [
         AccountService,
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting()
+        { provide: SecurityClient, useValue: securityClientMock }
       ]
     })
       .compileComponents();
