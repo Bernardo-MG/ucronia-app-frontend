@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/association/directory/member-status-selector/member-status-selector';
-import { ProfileCreationEvent, ProfileCreationForm } from '@app/association/directory/profile-creation-form/profile-creation-form';
+import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -21,7 +21,7 @@ import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { ProfileInfo } from '../model/profile-info';
 import { ProfileDetails } from '../profile-details/profile-details';
-import { ProfileEditionForm } from '../profile-edition-form/profile-edition-form';
+import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
 import { ProfilesService } from '../profiles-service';
@@ -29,7 +29,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileDetails, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileDetails, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -136,7 +136,7 @@ export class DirectoryView implements OnInit {
     this.load();
   }
 
-  public onCreate(toCreate: ProfileCreationEvent): void {
+  public onCreate(toCreate: ProfileCreationFormData): void {
     this.mutation(
       this.profileService.create(toCreate as any),
       () => this.load()

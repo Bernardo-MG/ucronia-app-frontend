@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationService } from 'primeng/api';
-import { ProfileEditionForm } from './profile-edition-form';
+import { ProfileInfoEditionForm } from './profile-info-edition-form';
 
-describe('ProfileEditionForm', () => {
-  let component: ProfileEditionForm;
-  let fixture: ComponentFixture<ProfileEditionForm>;
+describe('ProfileInfoEditionForm', () => {
+  let component: ProfileInfoEditionForm;
+  let fixture: ComponentFixture<ProfileInfoEditionForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        ProfileEditionForm
+        ProfileInfoEditionForm
       ],
       providers: [
         ConfirmationService
@@ -17,7 +17,7 @@ describe('ProfileEditionForm', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ProfileEditionForm);
+    fixture = TestBed.createComponent(ProfileInfoEditionForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

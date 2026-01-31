@@ -3,18 +3,18 @@ import { Component, Input, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { FeePayment, Member } from '@ucronia/domain';
+import { FeePayments, Member } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 
 @Component({
-  selector: 'assoc-fee-pay-form',
+  selector: 'assoc-fee-payments-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule],
-  templateUrl: './fee-pay-form.html'
+  templateUrl: './fee-payments-form.html'
 })
-export class FeePayForm {
+export class FeePaymentsForm {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
@@ -26,7 +26,7 @@ export class FeePayForm {
     this.fullname = value.name.fullName;
   }
 
-  public readonly save = output<FeePayment>();
+  public readonly save = output<FeePayments>();
 
   private fb = inject(FormBuilder);
 

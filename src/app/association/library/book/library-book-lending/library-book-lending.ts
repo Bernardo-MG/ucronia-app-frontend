@@ -3,7 +3,7 @@ import { Component, input, output } from '@angular/core';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
-import { BookInfo, BookLent, Member, MemberStatus } from '@ucronia/domain';
+import { BookLent, Member, MemberStatus } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';
@@ -19,7 +19,7 @@ export class LibraryBookLending {
   public readonly getMemberSelection = input<(page: number, active: MemberStatus) => Observable<PaginatedResponse<any>>>((page: number, active: MemberStatus) => EMPTY);
   public readonly waiting = input(false);
   public readonly failures = input(new FailureStore());
-  public readonly book = input(new BookInfo());
+  public readonly book = input(0);
 
   public readonly save = output<BookLent>();
 

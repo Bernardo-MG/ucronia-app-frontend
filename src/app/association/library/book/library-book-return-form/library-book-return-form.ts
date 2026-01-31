@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges, inject, input, output } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookInfo, BookReturned, Borrower, Fee } from '@ucronia/domain';
+import { BookReturned, Borrower, Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -18,6 +18,7 @@ import { MessageModule } from 'primeng/message';
 export class LibraryBookReturnForm implements OnChanges {
 
   public readonly loading = input(false);
+  public readonly lentDate = input(new Date());
   public readonly failures = input(new FailureStore());
 
   @Input() public set borrower(value: Borrower) {
@@ -25,9 +26,8 @@ export class LibraryBookReturnForm implements OnChanges {
     this.memberName = value.name.fullName;
   }
 
-  @Input() public set book(value: BookInfo) {
-    this.form.get('book')?.setValue(value.number);
-    this.lentDate = value.lendings[value.lendings.length - 1].lendingDate;
+  @Input() public set book(value: number) {
+    this.form.get('book')?.setValue(value);
   }
 
   public readonly save = output<BookReturned>();
@@ -40,7 +40,6 @@ export class LibraryBookReturnForm implements OnChanges {
 
   public memberName = '';
 
-  public lentDate = new Date();
   public readonly today = new Date();
 
   constructor() {

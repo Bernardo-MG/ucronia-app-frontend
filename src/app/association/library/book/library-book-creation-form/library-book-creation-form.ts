@@ -3,7 +3,7 @@ import { Component, inject, input, OnChanges, output, SimpleChanges } from '@ang
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookInfo, Language } from '@ucronia/domain';
+import { Language, Title } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -22,7 +22,7 @@ export class LibraryBookCreationForm implements OnChanges {
 
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<{ book: BookInfo, kind: 'fiction' | 'game' }>();
+  public readonly save = output<LibraryBookCreationFormData>();
 
   public formStatus: FormStatus;
 
@@ -78,4 +78,15 @@ export class LibraryBookCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class LibraryBookCreationFormData {
+  public book = new LibraryBookCreationFormDataBook();
+  public kind: 'fiction' | 'game' = 'fiction';
+}
+
+export class LibraryBookCreationFormDataBook {
+  public title = new Title();
+  public isbn = '';
+  public language = '';
 }

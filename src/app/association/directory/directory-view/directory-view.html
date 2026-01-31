@@ -113,7 +113,7 @@
 
   <!-- Edition dialog -->
   <p-dialog header="Editar perfil" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-    <assoc-profile-edition-form [loading]="loading" [data]="selectedData" [feeTypes]="feeTypes" [failures]="failures"
+    <assoc-profile-info-edition-form [loading]="loading" [data]="selectedData" [feeTypes]="feeTypes" [failures]="failures"
       [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
   </p-dialog>
 

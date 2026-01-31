@@ -20,11 +20,11 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 import { ProfileInfo } from '../model/profile-info';
 
 @Component({
-  selector: 'assoc-profile-edition-form',
+  selector: 'assoc-profile-info-edition-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
-  templateUrl: './profile-edition-form.html'
+  templateUrl: './profile-info-edition-form.html'
 })
-export class ProfileEditionForm implements OnChanges {
+export class ProfileInfoEditionForm implements OnChanges {
 
   private readonly fb = inject(FormBuilder);
 

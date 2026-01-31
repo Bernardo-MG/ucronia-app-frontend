@@ -3,7 +3,7 @@ import { Component, inject, input, Input, OnChanges, output, SimpleChanges } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookInfo, Language } from '@ucronia/domain';
+import { Author, BookLending, Donation, Language, Publisher, Title } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -23,11 +23,11 @@ export class LibraryBookEditionForm implements OnChanges {
 
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: BookInfo) {
+  @Input() public set data(value: LibraryBookEditionFormData) {
     this.form.patchValue(value as any);
   }
 
-  public readonly save = output<BookInfo>();
+  public readonly save = output<LibraryBookEditionFormData>();
 
   public formStatus: FormStatus;
 
@@ -88,3 +88,17 @@ export class LibraryBookEditionForm implements OnChanges {
   }
 
 }
+
+export class LibraryBookEditionFormData {
+  public number = -1;
+  public title = new Title();
+  public lent = false;
+  public isbn = '';
+  public language = '';
+  public publishDate = new Date();
+  public authors: Author[] = [];
+  public lendings: BookLending[] = [];
+  public publishers: Publisher[] = [];
+  public donation: Donation | undefined;
+}
+

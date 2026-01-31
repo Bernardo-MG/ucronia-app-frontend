@@ -3,7 +3,7 @@ import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-s
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayment, FeePaymentReport, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePaymentReport, FeePayments, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -16,15 +16,15 @@ import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeDetails } from '../fee-details/fee-details';
-import { FeeEditionForm } from '../fee-edition-form/fee-edition-form';
-import { FeePayForm } from '../fee-pay-form/fee-pay-form';
+import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
+import { FeePaymentsForm } from '../fee-payments-form/fee-payments-form';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
 import { MemberSelectStepper } from '../member-select-stepper/member-select-stepper';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePayForm, MemberSelectStepper, FeeCreationForm],
+  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePaymentsForm, MemberSelectStepper, FeeCreationForm],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -94,7 +94,7 @@ export class FeeView implements OnInit {
     this.loadReport();
   }
 
-  public onUpdate(toUpdate: Fee): void {
+  public onUpdate(toUpdate: FeeEditionFormData): void {
     const update = {
       transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
     }
@@ -104,7 +104,7 @@ export class FeeView implements OnInit {
     );
   }
 
-  public onPay(data: FeePayment): void {
+  public onPay(data: FeePayments): void {
     this.call(
       () => this.service.pay(data),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })

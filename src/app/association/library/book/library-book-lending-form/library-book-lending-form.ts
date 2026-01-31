@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges, inject, input, output } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookInfo, BookLent, Member } from '@ucronia/domain';
+import { BookLent, Member } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -28,8 +28,8 @@ export class LibraryBookLendingForm implements OnChanges {
     this.memberName = value.name.fullName;
   }
 
-  @Input() public set book(value: BookInfo) {
-    this.form.get('book')?.setValue(value.number);
+  @Input() public set book(value: number) {
+    this.form.get('book')?.setValue(value);
   }
 
   public formStatus: FormStatus;

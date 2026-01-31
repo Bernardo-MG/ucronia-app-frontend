@@ -157,11 +157,11 @@
   @if(selectedData.lent) {
   <p-dialog header="Devolver libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
     <assoc-library-book-return-form [loading]="loading" [failures]="failures" [borrower]="borrower"
-      [book]="selectedData" (save)="onReturn($event)" />
+      [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
   </p-dialog>
   } @else {
   <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-    <assoc-library-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData"
+    <assoc-library-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData.number"
       [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
   </p-dialog>
   }

@@ -7,7 +7,7 @@ import { FormWithSelection } from '@app/shared/data/form-with-selection/form-wit
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -18,7 +18,7 @@ import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
-import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
+import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
@@ -76,8 +76,8 @@ export class LibraryView implements OnInit {
 
   private sort = new Sorting();
 
-  private delete: (number: number) => Observable<BookInfo> = (number) => EMPTY;
-  private update: (number: number, data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
+  private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
+  private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
   private read: (page: number | undefined, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
@@ -85,6 +85,10 @@ export class LibraryView implements OnInit {
 
   public get borrower(): Borrower {
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
+  }
+
+  public get lentDate(): Date {
+    return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
 
   constructor() {
@@ -144,7 +148,7 @@ export class LibraryView implements OnInit {
     }
   }
 
-  public onCreate(toCreate: { book: BookInfo, kind: 'fiction' | 'game' }): void {
+  public onCreate(toCreate: LibraryBookCreationFormData): void {
     this.call(
       () => {
         if (toCreate.kind === 'game') {

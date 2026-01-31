@@ -93,7 +93,7 @@
   <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
     <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)"
       (selectMember)="onSelectMember($event)">
-      <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
+      <assoc-fee-payments-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
     </assoc-member-select-stepper>
   </p-dialog>
   }

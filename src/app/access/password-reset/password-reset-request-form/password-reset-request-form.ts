@@ -1,6 +1,6 @@
 
 import { Component, inject, output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -17,7 +17,7 @@ export class PasswordResetRequestForm {
 
   public readonly save = output<string>();
 
-  public form: any;
+  public form: FormGroup;
 
   constructor() {
     const formBuilder = inject(FormBuilder);

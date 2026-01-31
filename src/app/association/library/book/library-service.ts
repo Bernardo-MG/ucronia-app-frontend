@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Profile, SecurityClient } from '@bernardo-mg/security';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Publisher } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class LibraryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public createGameBook(data: BookCreation): Observable<BookInfo> {
+  public createGameBook(data: BookCreation): Observable<BookCreation> {
     return this.ucroniaClient.library.gameBook.create(data);
   }
 
@@ -46,7 +46,7 @@ export class LibraryService {
     return this.ucroniaClient.library.gameBook.page(page, undefined, sorting);
   }
 
-  public createFictionBook(data: BookInfo): Observable<FictionBook> {
+  public createFictionBook(data: BookCreation): Observable<FictionBook> {
     return this.ucroniaClient.library.fictionBook.create(data);
   }
 

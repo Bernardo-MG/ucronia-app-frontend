@@ -3,7 +3,6 @@ import { Component, Input, OnChanges, SimpleChanges, inject, input, output } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { FeeCreation } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -26,7 +25,7 @@ export class FeeCreationForm implements OnChanges {
     this.memberName = value.name.fullName;
   }
 
-  public readonly save = output<FeeCreation>();
+  public readonly save = output<FeeCreationFormData>();
 
   public formStatus: FormStatus;
 
@@ -74,4 +73,9 @@ export class FeeCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class FeeCreationFormData {
+  public month = new Date();
+  public member = -1;
 }
