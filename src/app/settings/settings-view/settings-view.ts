@@ -1,8 +1,8 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Setting } from '@app/settings/models/setting';
 import { AuthService } from '@bernardo-mg/authentication';
+import { Setting } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';

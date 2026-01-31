@@ -1,34 +1,21 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
-import { Setting } from './models/setting';
-import { SettingChange } from './models/setting-change';
+import { SettingUpdate, UcroniaClient } from '@ucronia/api';
+import { Setting } from '@ucronia/domain';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class AssociationSettingsService {
 
-  private readonly client;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/settings');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public getAll(): Observable<Setting[]> {
-    return this.client
-      .read<SimpleResponse<Setting[]>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.setting.getAll();
   }
 
-  public update(code: string, setting: SettingChange): Observable<Setting> {
-    return this.client
-      .appendRoute(`/${code}`)
-      .update<SimpleResponse<Setting>>(setting)
-      .pipe(map(r => r.content));
+  public update(code: string, setting: SettingUpdate): Observable<Setting> {
+    return this.ucroniaClient.setting.update(code,setting);
   }
 
 }

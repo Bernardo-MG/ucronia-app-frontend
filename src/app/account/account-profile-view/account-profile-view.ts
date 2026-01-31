@@ -2,10 +2,10 @@
 import { Component, inject } from '@angular/core';
 import { AccountProfileDetails } from '@app/account/account-profile-details/account-profile-details';
 import { AccountService } from '@app/account/account-service';
-import { Account } from '@app/account/models/account';
 import { Profile } from '@bernardo-mg/security';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
+import { Account } from 'projects/bernardo-mg/security/src/lib/domain/account';
 import { finalize } from 'rxjs';
 
 @Component({

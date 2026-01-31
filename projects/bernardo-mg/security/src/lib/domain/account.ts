@@ -1,4 +1,4 @@
-import { Profile } from "@bernardo-mg/security";
+import { Profile } from "./profile";
 
 /**
  * Account for a user.

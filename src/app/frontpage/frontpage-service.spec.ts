@@ -1,16 +1,25 @@
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { UcroniaClient } from '@ucronia/api';
+import { of } from 'rxjs';
 import { FrontpageService } from './frontpage-service';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 
 describe('FrontpageService', () => {
   let service: FrontpageService;
 
+  const ucroniaClienttMock = {
+    setting: {
+      public: {
+        get: jasmine.createSpy().and.returnValue(of({}))
+      }
+    }
+  };
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      providers: [
+        { provide: UcroniaClient, useValue: ucroniaClienttMock }
+      ]
+    });
     service = TestBed.inject(FrontpageService);
   });
 

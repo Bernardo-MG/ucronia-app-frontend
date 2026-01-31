@@ -1,13 +1,13 @@
 
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { PasswordChange } from '@app/account/models/password-change';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { PasswordChange } from 'projects/bernardo-mg/security/src/lib/request/password-change';
 
 @Component({
   selector: 'account-change-password-form',
