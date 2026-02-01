@@ -1,5 +1,5 @@
 import { Component, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { EMPTY, Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { NameNumber } from '../model/name-number';
 })
 export class SelectionList implements OnInit, OnChanges {
 
-  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<any>>>((page: number) => EMPTY);
+  public readonly getSelection = input<(page: number) => Observable<Page<any>>>((page: number) => EMPTY);
   public readonly heading = input('Data');
   public readonly dataKey = input('number');
   public readonly nameRenderer = input((row: any) => row.name);
@@ -29,7 +29,7 @@ export class SelectionList implements OnInit, OnChanges {
 
   public selectedData: NameNumber | undefined;
 
-  public selection = new PaginatedResponse<NameNumber>();
+  public selection = new Page<NameNumber>();
 
   public ngOnInit(): void {
     this.getSelection()(0)

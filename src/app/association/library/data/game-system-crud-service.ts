@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { GameSystem } from '@ucronia/domain';
 import { Observable } from 'rxjs';
@@ -28,7 +28,7 @@ export class GameSystemCrudService implements CrudService<GameSystem> {
     return this.ucroniaClient.library.gameSystem.delete(number);
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<GameSystem>> {
+  public getAll(page: number, sort: Sorting): Observable<Page<GameSystem>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

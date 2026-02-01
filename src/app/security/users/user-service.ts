@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Role, User } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Profile, SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { MemberProfile, MemberStatus } from '@ucronia/domain';
@@ -15,7 +15,7 @@ export class UserService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<User>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<User>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -73,7 +73,7 @@ export class UserService {
           }
           return of();
         }),
-        reduce((roles: Role[], res?: PaginatedResponse<Role>) => {
+        reduce((roles: Role[], res?: Page<Role>) => {
           return res ? [...roles, ...res.content] : roles;
         }, [])
       );
@@ -119,7 +119,7 @@ export class UserService {
           return of();
         }),
         // accumulate members from all pages into one array
-        reduce((members: MemberProfile[], res?: PaginatedResponse<MemberProfile>) => {
+        reduce((members: MemberProfile[], res?: Page<MemberProfile>) => {
           return res ? [...members, ...res.content] : members;
         }, [])
       );

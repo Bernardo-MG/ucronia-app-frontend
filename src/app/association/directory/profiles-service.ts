@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Profile, ProfileCreation, ProfilePatch, SecurityClient } from '@bernardo-mg/security';
 import { GuestPatch, MemberProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
 import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Sponsor } from '@ucronia/domain';
@@ -24,7 +24,7 @@ export class ProfilesService {
     active: MemberStatus,
     name: string,
     filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
-  ): Observable<PaginatedResponse<ProfileInfo>> {
+  ): Observable<Page<ProfileInfo>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -36,7 +36,7 @@ export class ProfilesService {
       )
     );
 
-    let endpoint: (page: number | undefined, size: number | undefined, sort: Sorting | undefined, active: MemberStatus, name: string) => Observable<PaginatedResponse<ProfileInfo>>;
+    let endpoint: (page: number | undefined, size: number | undefined, sort: Sorting | undefined, active: MemberStatus, name: string) => Observable<Page<ProfileInfo>>;
 
     if (filterType === 'guest') {
       endpoint = this.ucroniaClient.guest.page;

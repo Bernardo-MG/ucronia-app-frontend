@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -32,7 +32,7 @@ export class RoleView implements OnInit {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<Role>();
+  public data = new Page<Role>();
 
   public selectedData = new Role();
 

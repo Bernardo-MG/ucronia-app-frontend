@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { MemberProfile, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { MemberProfilePatch } from '../../members/member-profile-patch';
@@ -20,7 +20,7 @@ export class MemberProfileEndpoint {
     sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string | undefined = undefined
-  ): Observable<PaginatedResponse<MemberProfile>> {
+  ): Observable<Page<MemberProfile>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

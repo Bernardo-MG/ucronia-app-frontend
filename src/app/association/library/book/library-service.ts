@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Profile, SecurityClient } from '@bernardo-mg/security';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Publisher } from '@ucronia/domain';
@@ -30,7 +30,7 @@ export class LibraryService {
     return this.ucroniaClient.library.gameBook.delete(number);
   }
 
-  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<GameBook>> {
+  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting): Observable<Page<GameBook>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -62,7 +62,7 @@ export class LibraryService {
     return this.ucroniaClient.library.fictionBook.delete(number);
   }
 
-  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<FictionBook>> {
+  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<Page<FictionBook>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -78,7 +78,7 @@ export class LibraryService {
     return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting);
   }
 
-  public getBookTypes(page: number | undefined = undefined): Observable<PaginatedResponse<BookType>> {
+  public getBookTypes(page: number | undefined = undefined): Observable<Page<BookType>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
@@ -86,7 +86,7 @@ export class LibraryService {
     return this.ucroniaClient.library.bookType.page(page, undefined, sorting);
   }
 
-  public getGameSystems(page: number | undefined = undefined): Observable<PaginatedResponse<GameSystem>> {
+  public getGameSystems(page: number | undefined = undefined): Observable<Page<GameSystem>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
@@ -94,7 +94,7 @@ export class LibraryService {
     return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
   }
 
-  public getAuthors(page: number | undefined = undefined): Observable<PaginatedResponse<Author>> {
+  public getAuthors(page: number | undefined = undefined): Observable<Page<Author>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
@@ -102,7 +102,7 @@ export class LibraryService {
     return this.ucroniaClient.library.author.page(page, undefined, sorting);
   }
 
-  public getPublishers(page: number | undefined = undefined): Observable<PaginatedResponse<Publisher>> {
+  public getPublishers(page: number | undefined = undefined): Observable<Page<Publisher>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
@@ -110,7 +110,7 @@ export class LibraryService {
     return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
   }
 
-  public getDonors(page: number | undefined = undefined): Observable<PaginatedResponse<Profile>> {
+  public getDonors(page: number | undefined = undefined): Observable<Page<Profile>> {
     const sorting = new Sorting(
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );
@@ -126,7 +126,7 @@ export class LibraryService {
     return this.ucroniaClient.library.lending.return(data);
   }
 
-  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<PaginatedResponse<Member>> {
+  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<Page<Member>> {
     const sorting = new Sorting(
       [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
     );

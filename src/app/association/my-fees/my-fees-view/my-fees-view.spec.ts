@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
 import { of } from 'rxjs';
 import { MyFeesService } from '../my-fees-service';
@@ -16,7 +16,7 @@ describe('MyFeesView', () => {
 
   beforeEach(async () => {
     myFeesMock.getAll.and.returnValue(
-      of(new PaginatedResponse<Fee>())
+      of(new Page<Fee>())
     );
 
     await TestBed.configureTestingModule({

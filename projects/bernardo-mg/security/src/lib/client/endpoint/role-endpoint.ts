@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Role } from '@bernardo-mg/authentication';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { RoleChange } from '../../request/role-change';
 import { RoleCreation } from '../../request/role-creation';
@@ -19,7 +19,7 @@ export class RoleEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<Role>> {
+  ): Observable<Page<Role>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

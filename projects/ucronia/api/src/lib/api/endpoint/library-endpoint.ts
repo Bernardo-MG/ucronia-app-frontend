@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { AuthorCreation } from '../../library/author-creation';
@@ -119,7 +119,7 @@ export class LendingEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<BookLending>> {
+  ): Observable<Page<BookLending>> {
 
     let params = new HttpParams();
     if (page) {
@@ -183,7 +183,7 @@ export class GameBookEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-  ): Observable<PaginatedResponse<GameBook>> {
+  ): Observable<Page<GameBook>> {
 
     let params = new HttpParams();
     if (page) {
@@ -258,7 +258,7 @@ export class FictionBookEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<FictionBook>> {
+  ): Observable<Page<FictionBook>> {
 
     let params = new HttpParams();
     if (page) {
@@ -333,7 +333,7 @@ export class BookTypeEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<BookType>> {
+  ): Observable<Page<BookType>> {
 
     let params = new HttpParams();
     if (page) {
@@ -408,7 +408,7 @@ export class GameSystemEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<GameSystem>> {
+  ): Observable<Page<GameSystem>> {
 
     let params = new HttpParams();
     if (page) {
@@ -483,7 +483,7 @@ export class AuthorEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<Author>> {
+  ): Observable<Page<Author>> {
 
     let params = new HttpParams();
     if (page) {
@@ -558,7 +558,7 @@ export class PublisherEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<Publisher>> {
+  ): Observable<Page<Publisher>> {
 
     let params = new HttpParams();
     if (page) {

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
 import { catchError, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -17,7 +17,7 @@ export class MyFeesEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<Fee>> {
+  ): Observable<Page<Fee>> {
     const defaultProperties = [new SortingProperty('month', SortingDirection.Descending)];
 
     let params = new HttpParams();

@@ -1,7 +1,7 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { LoginRegister } from '@bernardo-mg/security';
 import { CardModule } from 'primeng/card';
 import { finalize } from 'rxjs';
@@ -17,7 +17,7 @@ export class AuditView implements OnInit {
 
   private readonly service = inject(AccessAuditLoginService);
 
-  public data = new PaginatedResponse<LoginRegister>();
+  public data = new Page<LoginRegister>();
 
   /**
    * Loading flag.

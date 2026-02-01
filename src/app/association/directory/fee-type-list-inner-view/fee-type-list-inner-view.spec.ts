@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
@@ -18,7 +18,7 @@ describe('FeeTypeListInnerView', () => {
 
   beforeEach(async () => {
     feeTypeServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<FeeType>())
+      of(new Page<FeeType>())
     );
 
     await TestBed.configureTestingModule({

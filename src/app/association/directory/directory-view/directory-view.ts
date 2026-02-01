@@ -3,7 +3,7 @@ import { MemberStatusSelector } from '@app/association/directory/member-status-s
 import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ContactMethod } from '@bernardo-mg/security';
 import { TextFilter } from '@bernardo-mg/ui';
 import { FeeType, MemberStatus } from '@ucronia/domain';
@@ -42,7 +42,7 @@ export class DirectoryView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public profiles = new PaginatedResponse<ProfileInfo>();
+  public profiles = new Page<ProfileInfo>();
 
   public activeFilter = MemberStatus.Active;
   public nameFilter = '';

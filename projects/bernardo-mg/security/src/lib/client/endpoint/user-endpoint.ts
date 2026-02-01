@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, UserTokenStatus } from '@bernardo-mg/authentication';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { Profile } from '../../domain/profile';
 import { UserActivation } from '../../request/user-activation';
@@ -35,7 +35,7 @@ export class UserEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<User>> {
+  ): Observable<Page<User>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

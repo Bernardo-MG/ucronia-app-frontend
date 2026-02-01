@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { BookType } from '@ucronia/domain';
 import { Observable } from 'rxjs';
@@ -28,7 +28,7 @@ export class BookTypeCrudService implements CrudService<BookType> {
     return this.ucroniaClient.library.bookType.delete(number);
   }
 
-  public getAll(page: number, sort: Sorting): Observable<PaginatedResponse<BookType>> {
+  public getAll(page: number, sort: Sorting): Observable<Page<BookType>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

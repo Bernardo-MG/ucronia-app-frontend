@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { ArrayPaginatedResponse } from '@bernardo-mg/request';
+import { arrayPage } from '@bernardo-mg/request';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
@@ -19,7 +19,7 @@ export class RoleInfo implements OnChanges {
 
   public view: string = 'details';
 
-  public rolePermissions = new ArrayPaginatedResponse<ResourcePermission>([], 1, 0);
+  public rolePermissions = arrayPage<ResourcePermission>([], 1, 0);
 
   public get firstRolePermission() {
     return (this.rolePermissions.page - 1) * this.rolePermissions.size;
@@ -29,7 +29,7 @@ export class RoleInfo implements OnChanges {
 
   public ngOnChanges({ data }: SimpleChanges): void {
     if (data) {
-      this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data().permissions, 1, this.pageSize);
+      this.rolePermissions = arrayPage<ResourcePermission>(this.data().permissions, 1, this.pageSize);
     }
   }
 
@@ -39,7 +39,7 @@ export class RoleInfo implements OnChanges {
 
   public onPermissionsPageChange(event: TablePageEvent) {
     const page = (event.first / this.pageSize) + 1;
-    this.rolePermissions = new ArrayPaginatedResponse<ResourcePermission>(this.data().permissions, page, this.pageSize);
+    this.rolePermissions = arrayPage<ResourcePermission>(this.data().permissions, page, this.pageSize);
   }
 
 }

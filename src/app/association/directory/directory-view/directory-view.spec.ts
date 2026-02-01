@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { ContactMethod } from '@bernardo-mg/security';
 import { FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -38,16 +38,16 @@ describe('DirectoryView', () => {
 
   beforeEach(async () => {
     profileServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<ProfileInfo>())
+      of(new Page<ProfileInfo>())
     );
     contactMethodServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<ContactMethod>())
+      of(new Page<ContactMethod>())
     );
     feeTypeServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<FeeType>())
+      of(new Page<FeeType>())
     );
     contactMethodServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<ContactMethod>())
+      of(new Page<ContactMethod>())
     );
     membershipEvolutionServiceMock.monthly.and.returnValue(
       of([])

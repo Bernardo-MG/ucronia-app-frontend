@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Profile, SecurityClient } from '@bernardo-mg/security';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
 import { Fee, FeePayments, Member, MemberStatus } from '@ucronia/domain';
@@ -34,7 +34,7 @@ export class FeeService {
     return this.ucroniaClient.fee.get(member, month);
   }
 
-  public getMembers(page: number, active: MemberStatus): Observable<PaginatedResponse<Member>> {
+  public getMembers(page: number, active: MemberStatus): Observable<Page<Member>> {
     const sorting = new Sorting(
       [
         new SortingProperty('firstName'),

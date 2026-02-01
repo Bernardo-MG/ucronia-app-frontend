@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { ProfileCreation } from '@bernardo-mg/security';
 import { MemberStatus, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
@@ -21,7 +21,7 @@ export class SponsorEndpoint {
     sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string
-  ): Observable<PaginatedResponse<Sponsor>> {
+  ): Observable<Page<Sponsor>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

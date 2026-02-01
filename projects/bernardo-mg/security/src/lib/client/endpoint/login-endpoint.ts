@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { LoginStatus } from '@bernardo-mg/authentication';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { LoginRegister } from '../../domain/login-register';
 import { LoginRequest } from '../../request/login-request';
@@ -48,7 +48,7 @@ export class LoginRegisterEndpoint {
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
     name: string | undefined = undefined
-  ): Observable<PaginatedResponse<LoginRegister>> {
+  ): Observable<Page<LoginRegister>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

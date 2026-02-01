@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { UserToken } from '@bernardo-mg/authentication';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { UserTokenPatch } from '../../request/user-token-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -18,7 +18,7 @@ export class UserTokenEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<UserToken>> {
+  ): Observable<Page<UserToken>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

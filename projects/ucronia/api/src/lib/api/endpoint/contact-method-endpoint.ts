@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { ContactMethod, ContactMethodUpdate } from '@bernardo-mg/security';
 import { catchError, map, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -17,7 +17,7 @@ export class ContactMethodEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<ContactMethod>> {
+  ): Observable<Page<ContactMethod>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

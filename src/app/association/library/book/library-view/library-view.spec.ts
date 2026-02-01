@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { GameBook } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
@@ -41,7 +41,7 @@ describe('LibraryView', () => {
 
   beforeEach(async () => {
     libraryServiceMock.getAllGameBooks.and.returnValue(
-      of(new PaginatedResponse<GameBook>())
+      of(new Page<GameBook>())
     );
 
     await TestBed.configureTestingModule({

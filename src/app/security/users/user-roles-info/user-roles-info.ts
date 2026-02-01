@@ -1,7 +1,7 @@
 
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import { Role, User } from '@bernardo-mg/authentication';
-import { ArrayPaginatedResponse } from '@bernardo-mg/request';
+import { arrayPage } from '@bernardo-mg/request';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
@@ -14,7 +14,7 @@ export class UserRolesInfo implements OnChanges {
   public readonly user = input(new User());
   public readonly loading = input(false);
 
-  public roles = new ArrayPaginatedResponse<Role>([], 0, 0);
+  public roles = arrayPage<Role>([], 0, 0);
 
   private pageSize = 10;
 
@@ -34,7 +34,7 @@ export class UserRolesInfo implements OnChanges {
   }
 
   private buildPage(page: number) {
-    return new ArrayPaginatedResponse<Role>(this.user().roles, page, this.pageSize);
+    return arrayPage<Role>(this.user().roles, page, this.pageSize);
   }
 
 }

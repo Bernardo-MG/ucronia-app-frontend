@@ -1,7 +1,7 @@
-import { PaginatedResponse } from "@bernardo-mg/request";
+import { Page } from "@bernardo-mg/request";
 import { Observable, expand, of, reduce } from "rxjs";
 
-export function getAllPages<T>(page : (number: number | undefined, size: number | undefined) => Observable<PaginatedResponse<T>>): Observable<T[]> {
+export function getAllPages<T>(page : (number: number | undefined, size: number | undefined) => Observable<Page<T>>): Observable<T[]> {
     const pageSize = 100;
 
     return page(1, pageSize)
@@ -14,7 +14,7 @@ export function getAllPages<T>(page : (number: number | undefined, size: number 
           return of();
         }),
         // accumulate from all pages into one array
-        reduce((data: T[], res?: PaginatedResponse<T>) => {
+        reduce((data: T[], res?: Page<T>) => {
           return res ? [...data, ...res.content] : data;
         }, [])
       );

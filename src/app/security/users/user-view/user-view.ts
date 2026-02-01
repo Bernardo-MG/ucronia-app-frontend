@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UserUpdate } from '@bernardo-mg/security';
 import { Member } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
@@ -32,7 +32,7 @@ export class UserView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public data = new PaginatedResponse<User>();
+  public data = new Page<User>();
 
   public selectedData = new User();
   public member = new Member();

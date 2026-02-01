@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { BookType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
@@ -19,7 +19,7 @@ describe('LibraryBookTypeList', () => {
   beforeEach(async () => {
 
     bookTypeCrudServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<BookType>())
+      of(new Page<BookType>())
     );
 
     await TestBed.configureTestingModule({

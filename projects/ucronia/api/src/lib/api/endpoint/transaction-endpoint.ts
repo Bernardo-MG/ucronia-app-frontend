@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { Transaction, TransactionCurrentBalance, TransactionMonthlyBalance, TransactionMonthsRange } from '@ucronia/domain';
 import { addMinutes } from 'date-fns';
@@ -22,7 +22,7 @@ export class TransactionEndpoint {
     sort: Sorting | undefined = undefined,
     from: Date | undefined,
     to: Date | undefined
-  ): Observable<PaginatedResponse<Transaction>> {
+  ): Observable<Page<Transaction>> {
     const offset = new Date().getTimezoneOffset();
 
     let params = new HttpParams();

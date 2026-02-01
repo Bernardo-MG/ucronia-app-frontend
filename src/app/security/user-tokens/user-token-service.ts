@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ export class UserTokenService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<UserToken>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<UserToken>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

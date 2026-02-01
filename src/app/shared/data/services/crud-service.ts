@@ -1,9 +1,9 @@
-import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
+import { Page, Sorting } from '@bernardo-mg/request';
 import { Observable } from 'rxjs';
 
 export interface CrudService<E> {
 
-  getAll(page: number, sort: Sorting): Observable<PaginatedResponse<E>>;
+  getAll(page: number, sort: Sorting): Observable<Page<E>>;
 
   create(entity: E): Observable<E>;
 

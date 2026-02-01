@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { ContactMethod } from '@bernardo-mg/security';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
@@ -18,7 +18,7 @@ describe('ContactMethodListInnerView', () => {
 
   beforeEach(async () => {
     contactMethodServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<ContactMethod>())
+      of(new Page<ContactMethod>())
     );
 
     await TestBed.configureTestingModule({

@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeTypeUpdate } from '../../fees/fee-type-update';
@@ -18,7 +18,7 @@ export class FeeTypeEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<PaginatedResponse<FeeType>> {
+  ): Observable<Page<FeeType>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

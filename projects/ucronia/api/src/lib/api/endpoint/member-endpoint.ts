@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Member, MembershipEvolutionMonth } from '@ucronia/domain';
 import { addMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
@@ -19,7 +19,7 @@ export class MemberEndpoint {
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
     name: string | undefined = undefined
-  ): Observable<PaginatedResponse<Member>> {
+  ): Observable<Page<Member>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

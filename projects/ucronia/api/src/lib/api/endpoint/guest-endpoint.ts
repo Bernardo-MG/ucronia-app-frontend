@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Guest, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { GuestPatch } from '../../guests/guest-patch';
@@ -20,7 +20,7 @@ export class GuestEndpoint {
     sort: Sorting | undefined = undefined,
     active: MemberStatus,
     name: string
-  ): Observable<PaginatedResponse<Guest>> {
+  ): Observable<Page<Guest>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

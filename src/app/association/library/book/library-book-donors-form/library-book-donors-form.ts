@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormStatus } from '@bernardo-mg/form';
-import { FailureStore, PaginatedResponse } from '@bernardo-mg/request';
+import { FailureStore, Page } from '@bernardo-mg/request';
 import { Donation, Donor } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -24,7 +24,7 @@ export class LibraryBookDonorsForm implements OnInit, OnChanges {
 
   public readonly failures = input(new FailureStore());
 
-  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<Donor>>>((page: number) => EMPTY);
+  public readonly getSelection = input<(page: number) => Observable<Page<Donor>>>((page: number) => EMPTY);
 
   @Input() public set data(value: Donation | undefined) {
     this.form.patchValue(value as any);
@@ -42,7 +42,7 @@ export class LibraryBookDonorsForm implements OnInit, OnChanges {
 
   public selectingDonor = false;
 
-  public selection = new PaginatedResponse<Donor>();
+  public selection = new Page<Donor>();
 
   constructor() {
     const fb = inject(FormBuilder);

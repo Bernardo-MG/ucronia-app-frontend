@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
@@ -46,8 +46,8 @@ export class LibraryView implements OnInit {
 
   public selectedData: FictionBook | GameBook = new GameBook();
 
-  public data = new PaginatedResponse<FictionBook | GameBook>();
-  public lendings = new PaginatedResponse<BookLending>();
+  public data = new Page<FictionBook | GameBook>();
+  public lendings = new Page<BookLending>();
 
   public source: 'game' | 'fiction' = 'game';
   public list: 'books' | 'lendings' = 'books';
@@ -78,7 +78,7 @@ export class LibraryView implements OnInit {
 
   private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
   private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
-  private read: (page: number | undefined, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
+  private read: (page: number | undefined, sort: Sorting) => Observable<Page<FictionBook | GameBook>> = (page, sort) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;

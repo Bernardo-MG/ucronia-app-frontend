@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
@@ -12,7 +12,7 @@ export class RoleService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<Role>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<Role>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -53,7 +53,7 @@ export class RoleService {
           return of();
         }),
         // accumulate roles from all pages into one array
-        reduce((permissions: ResourcePermission[], res?: PaginatedResponse<ResourcePermission>) => {
+        reduce((permissions: ResourcePermission[], res?: Page<ResourcePermission>) => {
           return res ? [...permissions, ...res.content] : permissions;
         }, [])
       );

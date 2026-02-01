@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { FeeType } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
@@ -15,7 +15,7 @@ export class FeeTypeService {
 
   private readonly messageService = inject(MessageService);
 
-  public getAll(page: number | undefined = undefined): Observable<PaginatedResponse<FeeType>> {
+  public getAll(page: number | undefined = undefined): Observable<Page<FeeType>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );

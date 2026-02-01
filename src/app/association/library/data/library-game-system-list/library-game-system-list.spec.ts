@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { GameSystem } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
@@ -19,7 +19,7 @@ describe('LibraryGameSystemList', () => {
   beforeEach(async () => {
 
     gameSystemCrudServiceMock.getAll.and.returnValue(
-      of(new PaginatedResponse<GameSystem>())
+      of(new Page<GameSystem>())
     );
 
     await TestBed.configureTestingModule({

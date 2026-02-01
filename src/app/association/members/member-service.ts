@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
 import { Observable } from 'rxjs';
@@ -11,7 +11,7 @@ export class MemberService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<PaginatedResponse<Member>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<Page<Member>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

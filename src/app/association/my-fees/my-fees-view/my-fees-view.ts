@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { finalize } from 'rxjs';
@@ -20,7 +20,7 @@ export class MyFeesView implements OnInit {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<Fee>();
+  public data = new Page<Fee>();
 
   /**
    * Loading flag.
