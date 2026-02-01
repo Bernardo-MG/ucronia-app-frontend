@@ -29,9 +29,9 @@ export class PasswordResetForm implements OnChanges {
   public form: FormGroup;
 
   constructor() {
-    const formBuilder = inject(FormBuilder);
+    const fb = inject(FormBuilder);
 
-    this.form = formBuilder.nonNullable.group(
+    this.form = fb.nonNullable.group(
       {
         password: ['', Validators.required],
         confirmPassword: ['', [Validators.required]]

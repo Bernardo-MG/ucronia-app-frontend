@@ -20,9 +20,9 @@ export class PasswordResetRequestForm {
   public form: FormGroup;
 
   constructor() {
-    const formBuilder = inject(FormBuilder);
+    const fb = inject(FormBuilder);
 
-    this.form = formBuilder.nonNullable.group({
+    this.form = fb.nonNullable.group({
       email: ['', [Validators.required, Validators.email]]
     });
   }
