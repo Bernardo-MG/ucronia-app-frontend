@@ -28,15 +28,11 @@ export const routes: Routes = [
             children: [
               {
                 path: '',
-                loadComponent: () =>
-                  import('./access/password-reset/password-reset-request-view/password-reset-request-view')
-                    .then(m => m.PasswordResetRequestView)
+                loadComponent: () =>  import('@bernardo-mg/login').then(m => m.PasswordResetRequestView)
               },
               {
                 path: ':token',
-                loadComponent: () =>
-                  import('./access/password-reset/password-reset-view/password-reset-view')
-                    .then(m => m.PasswordResetView)
+                loadComponent: () => import('@bernardo-mg/login').then(m => m.PasswordResetView)
               }
             ]
           },
