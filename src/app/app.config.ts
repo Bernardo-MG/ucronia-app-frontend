@@ -4,13 +4,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { jwtAuthenticationInterceptor, unauthorizedInterceptor } from '@bernardo-mg/authentication';
 import { dateInterceptor, errorInterceptor } from '@bernardo-mg/request';
+import { SECURITY_API_BASE_URL, SecurityClient } from '@bernardo-mg/security';
 import Aura from '@primeng/themes/aura';
 import { UCRONIA_API_BASE_URL, UcroniaClient } from '@ucronia/api';
 import { environment } from 'environments/environment';
 import { MessageService } from 'primeng/api';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
-import { SECURITY_API_BASE_URL } from '@bernardo-mg/security';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -40,6 +40,7 @@ export const appConfig: ApplicationConfig = {
       provide: SECURITY_API_BASE_URL,
       useValue: environment.apiUrl
     },
+    SecurityClient,
     UcroniaClient
   ]
 };
