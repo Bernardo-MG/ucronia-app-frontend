@@ -21,9 +21,7 @@ export const routes: Routes = [
         children: [
           {
             path: 'login',
-            loadComponent: () =>
-              import('./access/login/login-view/login-view')
-                .then(m => m.LoginView)
+            loadComponent: () => import('@bernardo-mg/login').then(m => m.LoginView)
           },
           {
             path: 'password/reset',
