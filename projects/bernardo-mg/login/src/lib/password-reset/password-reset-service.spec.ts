@@ -31,19 +31,6 @@ describe('PasswordResetService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('request password reset', () => {
-
-    it('should call requestReset with email payload', () => {
-      const email = 'test@example.com';
-
-      service.requestResetPassword(email).subscribe();
-
-      expect(mockSecurityClient.password.reset.requestReset)
-        .toHaveBeenCalledWith({ email });
-    });
-
-  });
-
   describe('reset password', () => {
 
     it('should call reset with token and password payload', () => {

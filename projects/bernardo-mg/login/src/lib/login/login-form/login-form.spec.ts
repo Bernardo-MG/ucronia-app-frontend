@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Login, LoginForm } from './login-form';
 
 describe('LoginForm', () => {
@@ -10,8 +10,10 @@ describe('LoginForm', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         LoginForm
+      ],
+      providers: [
+        provideAnimationsAsync()
       ]
     })
       .compileComponents();

@@ -10,7 +10,7 @@ export class LoginService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
   /**
    * Logs in a user. This requires sending a login request. If the request fails it returns an

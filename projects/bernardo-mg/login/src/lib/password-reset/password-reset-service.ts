@@ -11,10 +11,6 @@ export class PasswordResetService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  public requestResetPassword(email: string): Observable<SimpleResponse<void>> {
-    return this.securityClient.password.reset.requestReset({ email });
-  }
-
   public resetPassword(token: string, password: string): Observable<SimpleResponse<void>> {
     return this.securityClient.password.reset.reset(token, { password });
   }

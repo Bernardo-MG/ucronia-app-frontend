@@ -2,7 +2,7 @@
 import { Component, inject } from '@angular/core';
 import { CardModule } from 'primeng/card';
 import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
-import { PasswordResetService } from '../password-reset-service';
+import { PasswordResetRequestService } from '../password-reset-request-service';
 
 /**
  * Password reset form component. Dumb component for just handling the form.
@@ -14,7 +14,7 @@ import { PasswordResetService } from '../password-reset-service';
 })
 export class PasswordResetRequestView {
 
-  private readonly service = inject(PasswordResetService);
+  private readonly service = inject(PasswordResetRequestService);
 
   /**
    * Finished flag. If set to true the component is finished and allows no furter operation.

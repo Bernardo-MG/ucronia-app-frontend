@@ -13,7 +13,6 @@ describe('PasswordResetView', () => {
   const mockSecurityClient = {
     password: {
       reset: {
-        requestReset: jasmine.createSpy().and.returnValue(of({})),
         reset: jasmine.createSpy().and.returnValue(of({})),
         validateToken: jasmine.createSpy().and.returnValue(of({}))
       }
