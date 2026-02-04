@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService, SecurityDetails } from '@bernardo-mg/authentication';
+import { AuthService, PermissionList, SecurityDetails } from '@bernardo-mg/authentication';
 import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { LoginService } from './login-service';
@@ -43,8 +43,9 @@ describe('LoginService', () => {
     const expectedSecurityDetails: SecurityDetails = {
       token: 'token',
       username: 'username',
-      logged: true
-    } as any;
+      logged: true,
+      permissions: new PermissionList()
+    };
 
     mockSecurityClient.login.login.and.returnValue(of(apiResponse));
     authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);

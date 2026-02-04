@@ -91,9 +91,7 @@ describe('PasswordResetRequest', () => {
       expect(spy).toHaveBeenCalledWith(email);
     });
 
-    it('should call set as finished', () => {
-      const spy = spyOn(service, 'requestResetPassword').and.returnValue(of({ content: undefined }));
-
+    it('should set as finished', () => {
       component.onPasswordResetRequest('test@example.com');
 
       expect(component.finished).toBeTrue();

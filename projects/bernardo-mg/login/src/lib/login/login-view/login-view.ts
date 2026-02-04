@@ -89,7 +89,7 @@ export class LoginView {
           // Reactivate form
           this.waiting = false;
         },
-        error: error => {
+        error: () => {
           // Failed request
           this.failedLogin = true;
           // Reactivate form

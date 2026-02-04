@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { SecurityDetails } from '@bernardo-mg/authentication';
 import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
-import { Observable, Observer, of } from 'rxjs';
+import { Observable, Observer, of, throwError } from 'rxjs';
 import { LoginService } from '../login-service';
 import { LoginView } from './login-view';
 
@@ -84,11 +84,9 @@ describe('Login', () => {
 
     it('should set failedLogin to true on error response', () => {
       const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue({
-        subscribe: (_: any) => {
-          _.error({});
-        }
-      } as any);
+      spyOn(loginService, 'login').and.returnValue(
+        throwError(() => new Error('login failed'))
+      );
 
       component.onLogin(new LoginRequest('user', 'pass'));
 

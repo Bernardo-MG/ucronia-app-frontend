@@ -71,7 +71,7 @@ export class PasswordResetView {
 
     // TODO: maybe with a string is enough
     this.service.resetPassword(this.token, password).subscribe({
-      next: response => {
+      next: () => {
         this.status = 'finished';
         this.waiting = false;
       },
@@ -105,7 +105,7 @@ export class PasswordResetView {
             this.token = token;
           }
         },
-        error: response => {
+        error: () => {
           this.status = 'invalid_token';
         }
       });
