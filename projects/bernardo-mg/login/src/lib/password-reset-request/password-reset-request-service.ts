@@ -10,7 +10,7 @@ export class PasswordResetRequestService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  public requestResetPassword(email: string): Observable<SimpleResponse<void>> {
+  public requestPasswordReset(email: string): Observable<SimpleResponse<void>> {
     return this.securityClient.password.reset.requestReset({ email });
   }
 

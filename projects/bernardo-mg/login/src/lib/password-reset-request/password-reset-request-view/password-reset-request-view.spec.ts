@@ -83,7 +83,7 @@ describe('PasswordResetRequest', () => {
   describe('password reset', () => {
 
     it('should call service', () => {
-      const spy = spyOn(service, 'requestResetPassword').and.returnValue(of({ content: undefined }));
+      const spy = spyOn(service, 'requestPasswordReset').and.returnValue(of({ content: undefined }));
       const email = 'test@example.com';
 
       component.onPasswordResetRequest(email);

@@ -33,7 +33,7 @@ describe('PasswordResetRequestService', () => {
   it('should call requestReset with email payload', () => {
     const email = 'test@example.com';
 
-    service.requestResetPassword(email).subscribe();
+    service.requestPasswordReset(email).subscribe();
 
     expect(mockSecurityClient.password.reset.requestReset)
       .toHaveBeenCalledWith({ email });

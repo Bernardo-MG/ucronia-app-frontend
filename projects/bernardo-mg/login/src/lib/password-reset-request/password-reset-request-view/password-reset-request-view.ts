@@ -28,7 +28,7 @@ export class PasswordResetRequestView {
    */
   public onPasswordResetRequest(password: string) {
     // TODO: maybe an string is enough
-    this.service.requestResetPassword(password).subscribe();
+    this.service.requestPasswordReset(password).subscribe();
     this.finished = true;
   }
 
