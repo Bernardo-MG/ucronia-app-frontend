@@ -41,7 +41,21 @@ describe('PasswordResetService', () => {
       .toHaveBeenCalledWith(token, { password });
   });
 
-  it('should call validateToken with token', () => {
+  it('should call validateToken with token', (done) => {
+    const token = 'token';
+    const status = new UserTokenStatus(true, 'username');
+
+    mockSecurityClient.password.reset.validateToken
+      .and.returnValue(of(status));
+
+    service.validateToken(token).subscribe(() => {
+      expect(mockSecurityClient.password.reset.validateToken)
+        .toHaveBeenCalledWith(token);
+      done();
+    });
+  });
+
+  it('should return token status', (done) => {
     const token = 'token';
     const status = new UserTokenStatus(true, 'username');
 
@@ -49,10 +63,10 @@ describe('PasswordResetService', () => {
       .and.returnValue(of(status));
 
     service.validateToken(token)
-      .subscribe((res) => expect(res).toEqual(status));
-
-    expect(mockSecurityClient.password.reset.validateToken)
-      .toHaveBeenCalledWith(token);
+      .subscribe((res) => {
+        expect(res).toEqual(status);
+        done();
+      });
   });
 
 });
