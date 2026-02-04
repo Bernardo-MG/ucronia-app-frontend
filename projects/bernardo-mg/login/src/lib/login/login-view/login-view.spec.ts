@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter, Router } from '@angular/router';
 import { SecurityDetails } from '@bernardo-mg/authentication';
-import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
-import { Observable, Observer, of, throwError } from 'rxjs';
+import { SecurityClient } from '@bernardo-mg/security';
+import { NEVER, of, throwError } from 'rxjs';
+import { LoginEvent } from '../login-form/login-form';
 import { LoginService } from '../login-service';
 import { LoginView } from './login-view';
 
@@ -41,12 +42,12 @@ describe('Login', () => {
   });
 
   it('should call login service when onLogin is triggered', () => {
-    const loginService = TestBed.inject(LoginService);
-    const spy = spyOn(loginService, 'login').and.returnValue(
+    const service = TestBed.inject(LoginService);
+    const spy = spyOn(service, 'login').and.returnValue(
       of(new SecurityDetails(true))
     );
 
-    const login = new LoginRequest('username', 'password');
+    const login = new LoginEvent('username', 'password');
     component.onLogin(login);
 
     expect(spy).toHaveBeenCalledWith(login, false);
@@ -55,36 +56,30 @@ describe('Login', () => {
   describe('waiting', () => {
 
     it('should set waiting to true while login is in progress', () => {
-      const loginService = TestBed.inject(LoginService);
+      const service = TestBed.inject(LoginService);
 
-      const subject = new Observable<SecurityDetails>();
-      spyOn(loginService, 'login').and.returnValue(subject);
+      spyOn(service, 'login').and.returnValue(NEVER);
 
-      component.onLogin(new LoginRequest('username', 'password'));
+      component.onLogin(new LoginEvent('username', 'password'));
 
       expect(component.waiting).toBeTrue();
     });
 
     it('should set waiting to false after login', () => {
-      const loginService = TestBed.inject(LoginService);
+      const service = TestBed.inject(LoginService);
 
-      let capturedObserver!: Observer<SecurityDetails>;
-      spyOn(loginService, 'login').and.returnValue(
-        new Observable<SecurityDetails>(observer => {
-          capturedObserver = observer;
-        })
+      spyOn(service, 'login').and.returnValue(
+        of(new SecurityDetails(true))
       );
 
-      component.onLogin(new LoginRequest('username', 'password'));
-      capturedObserver.next(new SecurityDetails(true));
-      capturedObserver.complete();
+      component.onLogin(new LoginEvent('username', 'password'));
 
       expect(component.waiting).toBeFalse();
     });
 
     it('should set waiting to false when there is an error', () => {
-      const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue(
+      const service = TestBed.inject(LoginService);
+      spyOn(service, 'login').and.returnValue(
         throwError(() => new Error('login failed'))
       );
 
@@ -96,34 +91,34 @@ describe('Login', () => {
   describe('login result', () => {
 
     it('should set failedLogin to false if login succeeds', () => {
-      const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue(
+      const service = TestBed.inject(LoginService);
+      spyOn(service, 'login').and.returnValue(
         of(new SecurityDetails(true))
       );
 
-      component.onLogin(new LoginRequest('username', 'password'));
+      component.onLogin(new LoginEvent('username', 'password'));
 
       expect(component.failedLogin).toBeFalse();
     });
 
     it('should set failedLogin to true if login fails', () => {
-      const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue(
+      const service = TestBed.inject(LoginService);
+      spyOn(service, 'login').and.returnValue(
         of(new SecurityDetails(false))
       );
 
-      component.onLogin(new LoginRequest('username', 'password'));
+      component.onLogin(new LoginEvent('username', 'password'));
 
       expect(component.failedLogin).toBeTrue();
     });
 
     it('should set failedLogin to true on error response', () => {
-      const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue(
+      const service = TestBed.inject(LoginService);
+      spyOn(service, 'login').and.returnValue(
         throwError(() => new Error('login failed'))
       );
 
-      component.onLogin(new LoginRequest('user', 'pass'));
+      component.onLogin(new LoginEvent('user', 'pass'));
 
       expect(component.failedLogin).toBeTrue();
     });
@@ -136,12 +131,12 @@ describe('Login', () => {
       const router = TestBed.inject(Router);
       const navigateSpy = spyOn(router, 'navigate');
 
-      const loginService = TestBed.inject(LoginService);
-      spyOn(loginService, 'login').and.returnValue(
+      const service = TestBed.inject(LoginService);
+      spyOn(service, 'login').and.returnValue(
         of(new SecurityDetails(true))
       );
 
-      component.onLogin(new LoginRequest('user', 'pass'));
+      component.onLogin(new LoginEvent('user', 'pass'));
 
       expect(navigateSpy).toHaveBeenCalledWith(['/']);
     });
