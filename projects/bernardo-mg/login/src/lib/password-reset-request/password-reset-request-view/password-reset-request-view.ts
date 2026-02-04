@@ -24,6 +24,7 @@ export class PasswordResetRequestView {
    * @param password new password
    */
   public onPasswordResetRequest(password: string) {
+    // TODO: should change flag on subscription
     this.service.requestPasswordReset(password).subscribe();
     this.finished = true;
   }
