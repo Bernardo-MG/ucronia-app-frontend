@@ -52,24 +52,48 @@ describe('Login', () => {
     expect(spy).toHaveBeenCalledWith(login, false);
   });
 
-  it('should set waiting to true while login is in progress and false after', () => {
-    const loginService = TestBed.inject(LoginService);
+  describe('waiting', () => {
 
-    let capturedObserver!: Observer<SecurityDetails>;
-    spyOn(loginService, 'login').and.returnValue(
-      new Observable<SecurityDetails>(observer => {
-        capturedObserver = observer; // fully typed Observer<SecurityDetails>
-      })
-    );
+    it('should set waiting to true while login is in progress and false after', () => {
+      const loginService = TestBed.inject(LoginService);
 
-    component.onLogin(new LoginRequest('username', 'password'));
-    expect(component.waiting).toBeTrue();
+      let capturedObserver!: Observer<SecurityDetails>;
+      spyOn(loginService, 'login').and.returnValue(
+        new Observable<SecurityDetails>(observer => {
+          capturedObserver = observer;
+        })
+      );
 
-    capturedObserver.next(new SecurityDetails(true));
-    expect(component.waiting).toBeFalse();
+      component.onLogin(new LoginRequest('username', 'password'));
+      expect(component.waiting).toBeTrue();
+
+      capturedObserver.next(new SecurityDetails(true));
+      expect(component.waiting).toBeFalse();
+    });
+
+    it('should set waiting to false when there is an error', () => {
+      const loginService = TestBed.inject(LoginService);
+      spyOn(loginService, 'login').and.returnValue(
+        throwError(() => new Error('login failed'))
+      );
+
+      expect(component.waiting).toBeFalse();
+    });
+
   });
 
   describe('login result', () => {
+
+    it('should set failedLogin to false if login succeeds', () => {
+      const loginService = TestBed.inject(LoginService);
+      spyOn(loginService, 'login').and.returnValue(
+        of(new SecurityDetails(true))
+      );
+
+      component.onLogin(new LoginRequest('username', 'password'));
+
+      expect(component.failedLogin).toBeFalse();
+    });
 
     it('should set failedLogin to true if login fails', () => {
       const loginService = TestBed.inject(LoginService);

@@ -16,9 +16,6 @@ export class PasswordResetRequestView {
 
   private readonly service = inject(PasswordResetRequestService);
 
-  /**
-   * Finished flag. If set to true the component is finished and allows no furter operation.
-   */
   public finished = false;
 
   /**
@@ -27,7 +24,6 @@ export class PasswordResetRequestView {
    * @param password new password
    */
   public onPasswordResetRequest(password: string) {
-    // TODO: maybe an string is enough
     this.service.requestPasswordReset(password).subscribe();
     this.finished = true;
   }

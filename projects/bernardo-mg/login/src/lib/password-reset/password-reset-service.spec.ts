@@ -31,35 +31,28 @@ describe('PasswordResetService', () => {
     expect(service).toBeTruthy();
   });
 
-  describe('reset password', () => {
+  it('should call password reset with token and password payload', () => {
+    const token = 'token';
+    const password = 'newpass';
 
-    it('should call reset with token and password payload', () => {
-      const token = 'token';
-      const password = 'newpass';
+    service.resetPassword(token, password).subscribe();
 
-      service.resetPassword(token, password).subscribe();
-
-      expect(mockSecurityClient.password.reset.reset)
-        .toHaveBeenCalledWith(token, { password });
-    });
-
+    expect(mockSecurityClient.password.reset.reset)
+      .toHaveBeenCalledWith(token, { password });
   });
 
-  describe('validate token', () => {
+  it('should call validateToken with token', () => {
+    const token = 'token';
+    const status = new UserTokenStatus(true, 'username');
 
-    it('should call validateToken with token', () => {
-      const token = 'token';
-      const response = { content: new UserTokenStatus(true, 'username') };
+    mockSecurityClient.password.reset.validateToken
+      .and.returnValue(of(status));
 
-      mockSecurityClient.password.reset.validateToken
-        .and.returnValue(of(response));
+    service.validateToken(token)
+      .subscribe((res) => expect(res).toEqual(status));
 
-      service.validateToken(token)
-        .subscribe((res) => expect(res).toEqual(response));
-
-      expect(mockSecurityClient.password.reset.validateToken)
-        .toHaveBeenCalledWith(token);
-    });
-
+    expect(mockSecurityClient.password.reset.validateToken)
+      .toHaveBeenCalledWith(token);
   });
+
 });

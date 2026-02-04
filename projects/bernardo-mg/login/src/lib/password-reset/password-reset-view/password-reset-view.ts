@@ -9,7 +9,7 @@ import { PasswordResetForm } from '../password-reset-form/password-reset-form';
 import { PasswordResetService } from '../password-reset-service';
 
 /**
- * Password reset. Changes the password for an existing user, identified by a token.
+ * Password reset. Changes the password for an existing user, this user is identified by a token.
  * 
  * This token is received through the route, and validated before allowing the user to do anything.
  */
@@ -25,32 +25,19 @@ export class PasswordResetView {
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
    */
-  public validating = false;
+  public validatingToken = false;
 
-  /**
-   * Waiting flag. If set to true the component is waiting for the password change request to finish.
-   */
   public waiting = false;
 
-  /**
-   * View status.
-   */
   public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
-
-  /**
-   * Token for identifying the user.
-   */
   private token = '';
 
-  /**
-   * Failures when reseting the password.
-   */
   public failures = new FailureStore();
 
   constructor() {
     const route = inject(ActivatedRoute);
 
-    // Validate token from route
+    // Validate token taken from route
     route.paramMap.subscribe(params => {
       const token = params.get('token');
       if (token) {
@@ -60,7 +47,7 @@ export class PasswordResetView {
   }
 
   /**
-   * Resets the password. The user will be acquired by the backend from the token.
+   * Resets the password. The user is identified by the token.
    * 
    * @param password new password for the user
    */
@@ -69,23 +56,22 @@ export class PasswordResetView {
 
     this.failures.clear();
 
-    // TODO: maybe with a string is enough
-    this.service.resetPassword(this.token, password).subscribe({
-      next: () => {
-        this.status = 'finished';
-        this.waiting = false;
-      },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        this.waiting = false;
+    this.service.resetPassword(this.token, password)
+      .pipe(finalize(() => this.waiting = false))
+      .subscribe({
+        next: () => {
+          this.status = 'finished';
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
 
-        return throwError(() => error);
-      }
-    });
+          return throwError(() => error);
+        }
+      });
   }
 
   /**
@@ -94,12 +80,12 @@ export class PasswordResetView {
    * @param token token to validate
    */
   private validateToken(token: string): void {
-    this.validating = true;
+    this.validatingToken = true;
     this.service.validateToken(token)
-      .pipe(finalize(() => this.validating = false))
+      .pipe(finalize(() => this.validatingToken = false))
       .subscribe({
         next: response => {
-          if (!response.content.valid) {
+          if (!response.valid) {
             this.status = 'invalid_token';
           } else {
             this.token = token;

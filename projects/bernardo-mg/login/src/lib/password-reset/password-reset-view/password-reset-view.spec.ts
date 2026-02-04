@@ -43,7 +43,7 @@ describe('PasswordResetView', () => {
 
   it('should show spinner when validating is true', () => {
     component.status = 'valid_token';
-    component.validating = true;
+    component.validatingToken = true;
     fixture.detectChanges();
 
     const spinner = fixture.nativeElement.querySelector('.pi-spinner');
@@ -77,7 +77,7 @@ describe('PasswordResetView', () => {
       expect(component.status).toBe('invalid_token');
     });
 
-    it('should set status to "invalid_token" on validation error', () => {
+    it('should set status to "invalid_token" on token validation error', () => {
       const service = TestBed.inject(PasswordResetService);
       spyOn(service, 'validateToken').and.returnValue(throwError(() => new Error('error')));
 

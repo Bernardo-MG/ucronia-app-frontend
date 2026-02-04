@@ -13,12 +13,10 @@ export class LoginService {
   private readonly authService = inject(AuthService);
 
   /**
-   * Logs in a user. This requires sending a login request. If the request fails it returns an
-   * empty login details object, otherwise it returns the login details received from the API.
-   * 
-   * If the 'remember me' flag is active, the user will be stored in the local storage.
+   * Logs in a user. On success it stores the response as the auth details.
    * 
    * @param request login request
+   * @param rememberMe remember me flag
    * @returns the user resulting from the login
    */
   public login(request: LoginRequest, rememberMe: boolean): Observable<SecurityDetails> {

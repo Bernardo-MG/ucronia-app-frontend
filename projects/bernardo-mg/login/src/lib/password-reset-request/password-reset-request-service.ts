@@ -1,5 +1,4 @@
 import { Injectable, inject } from '@angular/core';
-import { SimpleResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { Observable } from 'rxjs';
 
@@ -10,7 +9,13 @@ export class PasswordResetRequestService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  public requestPasswordReset(email: string): Observable<SimpleResponse<void>> {
+  /**
+   * Request a password reset for the user identified by the email.
+   * 
+   * @param email email of the user to reset the password for
+   * @returns empty response
+   */
+  public requestPasswordReset(email: string): Observable<void> {
     return this.securityClient.password.reset.requestReset({ email });
   }
 
