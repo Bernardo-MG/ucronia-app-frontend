@@ -3,20 +3,18 @@ import { By } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
-import { PasswordResetService } from '../password-reset-service';
+import { PasswordResetRequestService } from '../password-reset-request-service';
 import { PasswordResetRequestView } from './password-reset-request-view';
 
 describe('PasswordResetRequest', () => {
   let component: PasswordResetRequestView;
   let fixture: ComponentFixture<PasswordResetRequestView>;
-  let service: PasswordResetService;
+  let service: PasswordResetRequestService;
 
   const mockSecurityClient = {
     password: {
       reset: {
-        requestReset: jasmine.createSpy().and.returnValue(of({})),
-        reset: jasmine.createSpy().and.returnValue(of({})),
-        validateToken: jasmine.createSpy().and.returnValue(of({}))
+        requestReset: jasmine.createSpy().and.returnValue(of({}))
       }
     }
   };
@@ -25,7 +23,7 @@ describe('PasswordResetRequest', () => {
     await TestBed.configureTestingModule({
       imports: [PasswordResetRequestView],
       providers: [
-        PasswordResetService,
+        PasswordResetRequestService,
         { provide: SecurityClient, useValue: mockSecurityClient },
         provideRouter([])
       ]
@@ -34,7 +32,7 @@ describe('PasswordResetRequest', () => {
 
     fixture = TestBed.createComponent(PasswordResetRequestView);
     component = fixture.componentInstance;
-    service = TestBed.inject(PasswordResetService);
+    service = TestBed.inject(PasswordResetRequestService);
     fixture.detectChanges();
   });
 
@@ -85,7 +83,7 @@ describe('PasswordResetRequest', () => {
   describe('password reset', () => {
 
     it('should call service', () => {
-      const spy = spyOn(service, 'requestResetPassword').and.returnValue(of({ content: undefined }));
+      const spy = spyOn(service, 'requestPasswordReset').and.returnValue(of(undefined));
       const email = 'test@example.com';
 
       component.onPasswordResetRequest(email);
@@ -93,9 +91,7 @@ describe('PasswordResetRequest', () => {
       expect(spy).toHaveBeenCalledWith(email);
     });
 
-    it('should call set as finished', () => {
-      const spy = spyOn(service, 'requestResetPassword').and.returnValue(of({ content: undefined }));
-
+    it('should set as finished', () => {
       component.onPasswordResetRequest('test@example.com');
 
       expect(component.finished).toBeTrue();

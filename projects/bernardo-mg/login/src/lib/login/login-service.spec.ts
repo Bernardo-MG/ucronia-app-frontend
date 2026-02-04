@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { AuthService, SecurityDetails } from '@bernardo-mg/authentication';
+import { AuthService, PermissionList, SecurityDetails } from '@bernardo-mg/authentication';
 import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
 import { of } from 'rxjs';
 import { LoginService } from './login-service';
@@ -8,7 +8,7 @@ describe('LoginService', () => {
   let service: LoginService;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
 
-  const mockSecurityClient = {
+  const securityClientMock = {
     login: {
       login: jasmine.createSpy()
     }
@@ -20,7 +20,7 @@ describe('LoginService', () => {
     TestBed.configureTestingModule({
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
-        { provide: SecurityClient, useValue: mockSecurityClient }
+        { provide: SecurityClient, useValue: securityClientMock }
       ]
     });
 
@@ -31,7 +31,7 @@ describe('LoginService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should login and store details', (done) => {
+  it('should store details on login', (done) => {
     const loginRequest = new LoginRequest('test', '1234');
     const rememberMe = true;
 
@@ -43,19 +43,44 @@ describe('LoginService', () => {
     const expectedSecurityDetails: SecurityDetails = {
       token: 'token',
       username: 'username',
-      logged: true
-    } as any;
+      logged: true,
+      permissions: new PermissionList()
+    };
 
-    mockSecurityClient.login.login.and.returnValue(of(apiResponse));
+    securityClientMock.login.login.and.returnValue(of(apiResponse));
     authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
 
-    service.login(loginRequest, rememberMe).subscribe(result => {
+    service.login(loginRequest, rememberMe).subscribe(() => {
       expect(authServiceSpy.setDetails).toHaveBeenCalledWith(
         true,
         'token',
         rememberMe
       );
 
+      done();
+    });
+  });
+
+  it('should return updated details', (done) => {
+    const loginRequest = new LoginRequest('test', '1234');
+    const rememberMe = true;
+
+    const apiResponse = {
+      logged: true,
+      token: 'token'
+    };
+
+    const expectedSecurityDetails: SecurityDetails = {
+      token: 'token',
+      username: 'username',
+      logged: true,
+      permissions: new PermissionList()
+    };
+
+    securityClientMock.login.login.and.returnValue(of(apiResponse));
+    authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
+
+    service.login(loginRequest, rememberMe).subscribe(result => {
       expect(result).toEqual(expectedSecurityDetails);
       done();
     });

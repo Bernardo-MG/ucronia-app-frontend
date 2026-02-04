@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
-import { of, throwError } from 'rxjs';
+import { NEVER, of, throwError } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
 import { PasswordResetView } from './password-reset-view';
 
@@ -13,7 +14,6 @@ describe('PasswordResetView', () => {
   const mockSecurityClient = {
     password: {
       reset: {
-        requestReset: jasmine.createSpy().and.returnValue(of({})),
         reset: jasmine.createSpy().and.returnValue(of({})),
         validateToken: jasmine.createSpy().and.returnValue(of({}))
       }
@@ -44,7 +44,7 @@ describe('PasswordResetView', () => {
 
   it('should show spinner when validating is true', () => {
     component.status = 'valid_token';
-    component.validating = true;
+    component.validatingToken = true;
     fixture.detectChanges();
 
     const spinner = fixture.nativeElement.querySelector('.pi-spinner');
@@ -55,7 +55,7 @@ describe('PasswordResetView', () => {
 
     it('should set token when token is valid', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(of({ content: { valid: true, username: 'username' } }));
+      spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
 
       component['validateToken']('token');
       expect(component.status).toBe('valid_token');
@@ -63,7 +63,7 @@ describe('PasswordResetView', () => {
 
     it('should call validateToken with the token from the route', () => {
       const service = TestBed.inject(PasswordResetService);
-      const spy = spyOn(service, 'validateToken').and.returnValue(of({ content: { valid: true, username: 'username' } }));
+      const spy = spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
 
       component['validateToken']('token');
 
@@ -72,13 +72,13 @@ describe('PasswordResetView', () => {
 
     it('should set status to "invalid_token" when token is invalid', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(of({ content: { valid: false, username: 'username' } }));
+      spyOn(service, 'validateToken').and.returnValue(of({ valid: false, username: 'username' }));
 
       component['validateToken']('token');
       expect(component.status).toBe('invalid_token');
     });
 
-    it('should set status to "invalid_token" on validation error', () => {
+    it('should set status to "invalid_token" on token validation error', () => {
       const service = TestBed.inject(PasswordResetService);
       spyOn(service, 'validateToken').and.returnValue(throwError(() => new Error('error')));
 
@@ -92,7 +92,7 @@ describe('PasswordResetView', () => {
 
     it('should set status to finished on success', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'resetPassword').and.returnValue(of({ content: undefined }));
+      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
@@ -102,13 +102,17 @@ describe('PasswordResetView', () => {
 
     it('should call resetPassword with correct token and password', () => {
       const service = TestBed.inject(PasswordResetService);
-      const spy = spyOn(service, 'resetPassword').and.returnValue(of({ content: undefined }));
+      const spy = spyOn(service, 'resetPassword').and.returnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('password');
 
       expect(spy).toHaveBeenCalledWith('token', 'password');
     });
+
+  });
+
+  describe('failures', () => {
 
     it('should set failures on error with FailureResponse', () => {
       const service = TestBed.inject(PasswordResetService);
@@ -133,6 +137,92 @@ describe('PasswordResetView', () => {
       component.onPasswordReset('any');
 
       expect(Object.keys(component.failures.getAllFailures()).length).toBe(0);
+    });
+
+    it('should clear failures on success', () => {
+      const service = TestBed.inject(PasswordResetService);
+      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
+
+      component['token'] = 'token';
+      component.onPasswordReset('newpassword');
+
+      expect(Object.keys(component.failures.getAllFailures()).length).toBe(0);
+    });
+
+  });
+
+  describe('waiting', () => {
+
+    it('should set waiting to true while password reset is in progress', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'resetPassword').and.returnValue(NEVER);
+
+      component['token'] = 'token';
+      component.onPasswordReset('newpassword');
+
+      expect(component.waiting).toBeTrue();
+    });
+
+    it('should set waiting to false after password reset', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
+
+      component['token'] = 'token';
+      component.onPasswordReset('newpassword');
+
+      expect(component.waiting).toBeFalse();
+    });
+
+    it('should set waiting to false when there is an error', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'resetPassword').and.returnValue(
+        throwError(() => new Error('Password reset failed'))
+      );
+
+      component['token'] = 'token';
+      component.onPasswordReset('newpassword');
+
+      expect(component.waiting).toBeFalse();
+    });
+
+  });
+
+
+  describe('validating token', () => {
+
+    it('should set validating token to true while token validation is in progress', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'validateToken').and.returnValue(NEVER);
+
+      component['validateToken']('token');
+
+      expect(component.validatingToken).toBeTrue();
+    });
+
+    it('should set validating token to false after token validation', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'validateToken').and.returnValue(of(new UserTokenStatus()));
+
+      component['validateToken']('token');
+
+      expect(component.validatingToken).toBeFalse();
+    });
+
+    it('should set validating token to false when there is an error', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'validateToken').and.returnValue(
+        throwError(() => new Error('Password reset failed'))
+      );
+
+      component['validateToken']('token');
+
+      expect(component.validatingToken).toBeFalse();
     });
 
   });

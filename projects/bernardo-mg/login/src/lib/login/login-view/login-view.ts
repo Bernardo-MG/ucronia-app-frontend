@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CardModule } from 'primeng/card';
-import { Login, LoginForm } from '../login-form/login-form';
+import { finalize } from 'rxjs';
+import { LoginEvent, LoginForm } from '../login-form/login-form';
 import { LoginService } from '../login-service';
 
 /**
@@ -9,7 +10,7 @@ import { LoginService } from '../login-service';
  * 
  * ## Failure message
  * 
- * If the login request fails the failed field will be set to true. This will show the error
+ * If the login request fails the failed flag will be set to true. This will show the error
  * message.
  * 
  * ## Return URL
@@ -63,37 +64,25 @@ export class LoginView {
    * 
    * @param login user login info
    */
-  public onLogin(login: Login) {
-    // Login request
-
-    // Mark the form as loading
+  public onLogin(login: LoginEvent) {
     this.waiting = true;
     this.failedLogin = false;
 
     this.service.login(login, this.rememberMe)
+      .pipe(finalize(() => this.waiting = false))
       .subscribe({
         next: user => {
-          // Succesful request
-
           if (user.logged) {
-            // Logged in
-
             // Redirects to the return route
             this.router.navigate([this.returnRoute]);
-
-            this.failedLogin = false;
-          } else {
-            this.failedLogin = true;
           }
 
-          // Reactivate form
-          this.waiting = false;
+          // Set status
+          this.failedLogin = !user.logged;
         },
-        error: error => {
+        error: () => {
           // Failed request
           this.failedLogin = true;
-          // Reactivate form
-          this.waiting = false;
         }
       });
   }

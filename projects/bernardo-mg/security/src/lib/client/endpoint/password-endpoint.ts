@@ -40,27 +40,30 @@ export class PasswordResetEndpoint {
     private apiUrl: string
   ) { }
 
-  public requestReset(request: PasswordResetRequest): Observable<SimpleResponse<void>> {
+  public requestReset(request: PasswordResetRequest): Observable<void> {
     return this.http
       .post<SimpleResponse<void>>(`${this.apiUrl}/password/reset`, request)
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(r => r.content)
       );
   }
 
-  public reset(token: string, reset: PasswordReset): Observable<SimpleResponse<void>> {
+  public reset(token: string, reset: PasswordReset): Observable<void> {
     return this.http
       .post<SimpleResponse<void>>(`${this.apiUrl}/password/reset/${token}`, reset)
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(r => r.content)
       );
   }
 
-  public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
+  public validateToken(token: string): Observable<UserTokenStatus> {
     return this.http
       .get<SimpleResponse<UserTokenStatus>>(`${this.apiUrl}/password/reset/${token}`)
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(r => r.content)
       );
   }
 

@@ -9,9 +9,7 @@ import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 /**
- * Login form component. Dumb component for just handling the form.
- * 
- * Includes checkbox for the 'remember me' functionality.
+ * Login form component. Includes checkbox for the 'remember me' functionality.
  */
 @Component({
   selector: 'login-form',
@@ -38,36 +36,16 @@ export class LoginForm {
     return this._waiting;
   }
 
-  /**
-   * Failed login flag. Shows the failure warning.
-   */
   @Input() public failedLogin = false;
 
-  /**
-   * Login event. Sent when the user accepts the data in the form.
-   */
-  public readonly login = output<Login>();
-
-  /**
-   * Remember me event. Sent when the user changes the remember me flag.
-   */
+  public readonly login = output<LoginEvent>();
   public readonly rememberMe = output<boolean>();
-
-  /**
-   * Lost password event. Sent when the user clicks on the lost password option.
-   */
   public readonly lostPassword = output<void>();
 
-  /**
-   * Login enabled flag.
-   */
   public get loginEnabled(): boolean {
     return ((this.form.valid) && (!this.waiting));
   }
 
-  /**
-   * Form structure.
-   */
   public form: FormGroup;
 
   constructor() {
@@ -85,7 +63,7 @@ export class LoginForm {
   public onLogin() {
     if (this.form.valid) {
       // Valid form, can send data
-      const login = new Login(this.form.value.username, this.form.value.password);
+      const login = new LoginEvent(this.form.value.username, this.form.value.password);
       this.login.emit(login);
     }
   }
@@ -113,7 +91,7 @@ export class LoginForm {
 
 }
 
-export class Login {
+export class LoginEvent {
   constructor(
     public username: string,
     public password: string

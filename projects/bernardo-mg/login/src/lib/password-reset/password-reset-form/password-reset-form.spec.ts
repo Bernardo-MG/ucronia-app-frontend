@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FailureStore } from '@bernardo-mg/request';
 import { PasswordResetForm } from './password-reset-form';
 
@@ -11,8 +11,10 @@ describe('PasswordResetForm', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        BrowserAnimationsModule,
         PasswordResetForm
+      ],
+      providers: [
+        provideAnimationsAsync()
       ]
     })
       .compileComponents();
