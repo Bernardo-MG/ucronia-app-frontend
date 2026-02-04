@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
+import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { NEVER, of, throwError } from 'rxjs';
@@ -185,6 +186,43 @@ describe('PasswordResetView', () => {
       component.onPasswordReset('newpassword');
 
       expect(component.waiting).toBeFalse();
+    });
+
+  });
+
+
+  describe('validating token', () => {
+
+    it('should set validating token to true while token validation is in progress', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'validateToken').and.returnValue(NEVER);
+
+      component['validateToken']('token');
+
+      expect(component.validatingToken).toBeTrue();
+    });
+
+    it('should set validating token to false after token validation', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'validateToken').and.returnValue(of(new UserTokenStatus()));
+
+      component['validateToken']('token');
+
+      expect(component.validatingToken).toBeFalse();
+    });
+
+    it('should set validating token to false when there is an error', () => {
+      const service = TestBed.inject(PasswordResetService);
+
+      spyOn(service, 'validateToken').and.returnValue(
+        throwError(() => new Error('Password reset failed'))
+      );
+
+      component['validateToken']('token');
+
+      expect(component.validatingToken).toBeFalse();
     });
 
   });
