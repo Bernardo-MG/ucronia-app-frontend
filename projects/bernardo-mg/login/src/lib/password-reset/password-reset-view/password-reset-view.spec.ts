@@ -54,7 +54,7 @@ describe('PasswordResetView', () => {
 
     it('should set token when token is valid', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(of({ content: { valid: true, username: 'username' } }));
+      spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
 
       component['validateToken']('token');
       expect(component.status).toBe('valid_token');
@@ -62,7 +62,7 @@ describe('PasswordResetView', () => {
 
     it('should call validateToken with the token from the route', () => {
       const service = TestBed.inject(PasswordResetService);
-      const spy = spyOn(service, 'validateToken').and.returnValue(of({ content: { valid: true, username: 'username' } }));
+      const spy = spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
 
       component['validateToken']('token');
 
@@ -71,7 +71,7 @@ describe('PasswordResetView', () => {
 
     it('should set status to "invalid_token" when token is invalid', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(of({ content: { valid: false, username: 'username' } }));
+      spyOn(service, 'validateToken').and.returnValue(of({ valid: false, username: 'username' }));
 
       component['validateToken']('token');
       expect(component.status).toBe('invalid_token');
@@ -91,7 +91,7 @@ describe('PasswordResetView', () => {
 
     it('should set status to finished on success', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'resetPassword').and.returnValue(of({ content: undefined }));
+      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
@@ -101,7 +101,7 @@ describe('PasswordResetView', () => {
 
     it('should call resetPassword with correct token and password', () => {
       const service = TestBed.inject(PasswordResetService);
-      const spy = spyOn(service, 'resetPassword').and.returnValue(of({ content: undefined }));
+      const spy = spyOn(service, 'resetPassword').and.returnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('password');

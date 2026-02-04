@@ -54,7 +54,18 @@ describe('Login', () => {
 
   describe('waiting', () => {
 
-    it('should set waiting to true while login is in progress and false after', () => {
+    it('should set waiting to true while login is in progress', () => {
+      const loginService = TestBed.inject(LoginService);
+
+      const subject = new Observable<SecurityDetails>();
+      spyOn(loginService, 'login').and.returnValue(subject);
+
+      component.onLogin(new LoginRequest('username', 'password'));
+
+      expect(component.waiting).toBeTrue();
+    });
+
+    it('should set waiting to false after login', () => {
       const loginService = TestBed.inject(LoginService);
 
       let capturedObserver!: Observer<SecurityDetails>;
@@ -65,9 +76,9 @@ describe('Login', () => {
       );
 
       component.onLogin(new LoginRequest('username', 'password'));
-      expect(component.waiting).toBeTrue();
-
       capturedObserver.next(new SecurityDetails(true));
+      capturedObserver.complete();
+
       expect(component.waiting).toBeFalse();
     });
 
