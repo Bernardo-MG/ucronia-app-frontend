@@ -28,7 +28,7 @@ export class PublisherCrudService implements CrudService<Publisher> {
     return this.ucroniaClient.library.publisher.delete(number);
   }
 
-  public getAll(page: number, sort: Sorting): Observable<Page<Publisher>> {
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<Publisher>> {
     const sorting = new Sorting(
       mergeProperties(
       sort.properties,

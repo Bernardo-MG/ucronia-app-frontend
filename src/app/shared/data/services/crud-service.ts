@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 export interface CrudService<E> {
 
-  getAll(page: number, sort: Sorting): Observable<Page<E>>;
+  getAll(page: number | undefined, sort: Sorting): Observable<Page<E>>;
 
   create(entity: E): Observable<E>;
 
