@@ -139,7 +139,7 @@ export class TransactionEndpoint {
       params = params.append('to', toUtc.toISOString());
     }
 
-    return this.http.get<SimpleResponse<TransactionMonthlyBalance[]>>(`${this.apiUrl}/transaction/balance`, { params })
+    return this.http.get<SimpleResponse<TransactionMonthlyBalance[]>>(`${this.apiUrl}/transaction/balance/monthly`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
