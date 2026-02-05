@@ -28,7 +28,7 @@ export class AuthorCrudService implements CrudService<Author> {
     return this.ucroniaClient.library.author.delete(number);
   }
 
-  public getAll(page: number, sort: Sorting): Observable<Page<Author>> {
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<Author>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

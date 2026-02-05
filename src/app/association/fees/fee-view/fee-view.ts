@@ -161,7 +161,7 @@ export class FeeView implements OnInit {
     this.editing = true;
   }
 
-  public onGetSelection(page: number, active: MemberStatus) {
+  public onGetSelection(page: number | undefined, active: MemberStatus) {
     return this.service.getMembers(page, active);
   }
 

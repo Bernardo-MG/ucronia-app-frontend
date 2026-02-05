@@ -28,7 +28,7 @@ export class GameSystemCrudService implements CrudService<GameSystem> {
     return this.ucroniaClient.library.gameSystem.delete(number);
   }
 
-  public getAll(page: number, sort: Sorting): Observable<Page<GameSystem>> {
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<GameSystem>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

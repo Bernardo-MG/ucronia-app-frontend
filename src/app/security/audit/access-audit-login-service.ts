@@ -11,7 +11,7 @@ export class AccessAuditLoginService {
 
   private readonly securityClient = inject(SecurityClient);
 
-  public getAll(page: number, sort: Sorting): Observable<Page<LoginRegister>> {
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<LoginRegister>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

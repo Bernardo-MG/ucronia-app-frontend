@@ -16,7 +16,7 @@ import { LibraryBookLendingForm } from '../library-book-lending-form/library-boo
 })
 export class LibraryBookLending {
 
-  public readonly getMemberSelection = input<(page: number, active: MemberStatus) => Observable<Page<any>>>((page: number, active: MemberStatus) => EMPTY);
+  public readonly getMemberSelection = input<(page: number | undefined, active: MemberStatus) => Observable<Page<any>>>((page: number | undefined, active: MemberStatus) => EMPTY);
   public readonly waiting = input(false);
   public readonly failures = input(new FailureStore());
   public readonly book = input(0);
