@@ -147,7 +147,7 @@ export class TransactionEndpoint {
   }
 
   public range(): Observable<Month[]> {
-    return this.http.get<SimpleResponse<TransactionMonthsRange>>(`${this.apiUrl}/range`)
+    return this.http.get<SimpleResponse<TransactionMonthsRange>>(`${this.apiUrl}/transaction/range`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
