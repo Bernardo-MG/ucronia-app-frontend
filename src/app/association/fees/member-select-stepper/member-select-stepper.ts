@@ -1,5 +1,5 @@
 
-import { Component, input, OnInit, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
@@ -16,21 +16,17 @@ import { EMPTY, Observable } from 'rxjs';
   imports: [FormsModule, ButtonModule, CardModule, ReactiveFormsModule, StepperModule, MemberStatusSelectComponent, SelectionList],
   templateUrl: './member-select-stepper.html'
 })
-export class MemberSelectStepper implements OnInit {
+export class MemberSelectStepper {
 
-  public readonly getMemberSelection = input<(page: number, active: MemberStatus) => Observable<Page<Member>>>((page: number, active: MemberStatus) => EMPTY);
+  public readonly getMemberSelection = input<(page: number | undefined, active: MemberStatus) => Observable<Page<Member>>>((page: number | undefined, active: MemberStatus) => EMPTY);
 
   public readonly selectMember = output<NameNumber>();
 
   public readonly nameRenderer = (data: Member): string => data.name.fullName;
 
-  public getSelection: (page: number) => Observable<Page<Member>> = (page: number) => EMPTY;
+  public getSelection: (page: number) => Observable<Page<Member>> = (page: number) => this.getMemberSelection()(undefined, MemberStatus.Active);
 
   public currentStep = 1;
-
-  public ngOnInit(): void {
-    this.getSelection = (page: number) => this.getMemberSelection()(page, MemberStatus.Active);
-  }
 
   public onReturnToMembers() {
     this.currentStep = 1;

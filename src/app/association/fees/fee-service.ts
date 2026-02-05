@@ -34,7 +34,7 @@ export class FeeService {
     return this.ucroniaClient.fee.get(member, month);
   }
 
-  public getMembers(page: number, active: MemberStatus): Observable<Page<Member>> {
+  public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
     const sorting = new Sorting(
       [
         new SortingProperty('firstName'),
