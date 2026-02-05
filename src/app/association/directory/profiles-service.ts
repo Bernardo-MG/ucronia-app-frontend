@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { Profile, ProfileCreation, ProfilePatch, SecurityClient } from '@bernardo-mg/security';
-import { GuestPatch, MemberProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
-import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Sponsor } from '@ucronia/domain';
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
+import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
@@ -11,8 +10,6 @@ import { ProfileInfo } from './model/profile-info';
   providedIn: 'root'
 })
 export class ProfilesService {
-
-  private readonly securityClient = inject(SecurityClient);
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
@@ -36,24 +33,24 @@ export class ProfilesService {
       )
     );
 
-    let endpoint: (page: number | undefined, size: number | undefined, sort: Sorting | undefined, active: MemberStatus, name: string) => Observable<Page<ProfileInfo>>;
+    let query;
 
     if (filterType === 'guest') {
-      endpoint = this.ucroniaClient.guest.page;
+      query = this.ucroniaClient.guest.page(page, undefined, sorting, name);
     } else if (filterType === 'member') {
-      endpoint = this.ucroniaClient.memberProfile.page;
+      query = this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, name);
     } else if (filterType === 'sponsor') {
-      endpoint = this.ucroniaClient.sponsor.page;
+      query = this.ucroniaClient.sponsor.page(page, undefined, sorting, name);
     } else {
-      endpoint = this.securityClient.profile.page;
+      query = this.ucroniaClient.profile.page(page, undefined, sorting, name);
     }
 
-    return endpoint(page, undefined, sorting, active, name);
+    return query;
   }
 
 
   public create(data: ProfileCreation): Observable<Profile> {
-    return this.securityClient.profile
+    return this.ucroniaClient.profile
       .create(data)
       .pipe(
         tap(() => {
@@ -113,7 +110,7 @@ export class ProfilesService {
   }
 
   public delete(number: number): Observable<Profile> {
-    return this.securityClient.profile
+    return this.ucroniaClient.profile
       .delete(number)
       .pipe(
         tap(() => {
@@ -137,7 +134,7 @@ export class ProfilesService {
   }
 
   public getOne(number: number): Observable<ProfileInfo> {
-    return this.securityClient.profile
+    return this.ucroniaClient.profile
       .get(number)
       .pipe(
         switchMap(profile => {
@@ -220,7 +217,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.securityClient.profile.patch(data.number, patch);
+    return this.ucroniaClient.profile.patch(data.number, patch);
   }
 
   private updateGuest(data: Guest): Observable<Guest> {

@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { ProfileCreation } from '@bernardo-mg/security';
-import { MemberStatus, Sponsor } from '@ucronia/domain';
+import { Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { ProfileCreation } from '../../profile/profile-creation';
 import { SponsorPatch } from '../../sponsor/sponsor-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
@@ -19,7 +19,6 @@ export class SponsorEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    active: MemberStatus,
     name: string
   ): Observable<Page<Sponsor>> {
     let params = new HttpParams();
@@ -29,8 +28,6 @@ export class SponsorEndpoint {
     if (size) {
       params = params.append('size', size);
     }
-
-    const status = active ? active.toString().toUpperCase() : '';
 
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));

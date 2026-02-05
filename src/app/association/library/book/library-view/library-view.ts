@@ -49,13 +49,13 @@ export class LibraryView implements OnInit {
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
 
-  public source: 'game' | 'fiction' = 'game';
+  public source: BookSelection = BookSelection.Game;
   public list: 'books' | 'lendings' = 'books';
 
   public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
   public selectedTab: 'books' | 'lendings' = 'books';
 
-  public bookOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Juegos', value: 'game' }, { label: 'Ficción', value: 'fiction' }];
+  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.Game }, { label: 'Ficción', value: BookSelection.Fiction }];
   public selectedBookView: 'all' | 'game' | 'fiction' = 'game';
 
   /**
@@ -196,8 +196,8 @@ export class LibraryView implements OnInit {
   }
 
   public onChangeSource(event: SelectButtonChangeEvent) {
-    this.source = event.value as 'game' | 'fiction';
-    if (this.source === 'game') {
+    this.source = event.value as BookSelection;
+    if (this.source === BookSelection.Game) {
       this.delete = this.service.deleteGameBook.bind(this.service);
       this.update = this.service.updateGameBook.bind(this.service);
       this.read = this.service.getAllGameBooks.bind(this.service);
@@ -390,4 +390,9 @@ export class LibraryView implements OnInit {
       });
   }
 
+}
+
+export enum BookSelection {
+  Game = 'game',
+  Fiction = 'fiction'
 }

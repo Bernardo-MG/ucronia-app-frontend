@@ -1,4 +1,4 @@
-import { ProfileName } from "@bernardo-mg/security";
+import { ProfileName } from "../profile/profile-name";
 
 export class Fee {
   public month = new Date();

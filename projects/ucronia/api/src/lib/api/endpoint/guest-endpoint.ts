@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Guest, MemberStatus } from '@ucronia/domain';
+import { Guest } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { GuestPatch } from '../../guests/guest-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -18,7 +18,6 @@ export class GuestEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    active: MemberStatus,
     name: string
   ): Observable<Page<Guest>> {
     let params = new HttpParams();
@@ -28,8 +27,6 @@ export class GuestEndpoint {
     if (size) {
       params = params.append('size', size);
     }
-
-    const status = active ? active.toString().toUpperCase() : '';
 
     sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 

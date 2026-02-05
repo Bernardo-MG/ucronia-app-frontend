@@ -1,4 +1,4 @@
-import { Profile } from "./profile";
+import { Profile } from "@ucronia/domain";
 
 /**
  * Account for a user.

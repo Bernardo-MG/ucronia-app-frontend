@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, UserTokenStatus } from '@bernardo-mg/authentication';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Profile } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { Profile } from '../../domain/profile';
 import { UserActivation } from '../../request/user-activation';
 import { UserCreation } from '../../request/user-creation';
 import { UserUpdate } from '../../request/user-update';

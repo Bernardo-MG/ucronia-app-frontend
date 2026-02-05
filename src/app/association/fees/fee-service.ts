@@ -1,16 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { Profile, SecurityClient } from '@bernardo-mg/security';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
-import { Fee, FeePayments, Member, MemberStatus } from '@ucronia/domain';
+import { Fee, FeePayments, Member, MemberStatus, Profile } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class FeeService {
-
-  private readonly securityClient = inject(SecurityClient);
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
@@ -47,7 +44,7 @@ export class FeeService {
   }
 
   public getOneProfile(id: number): Observable<Profile> {
-    return this.securityClient.profile.get(id);
+    return this.ucroniaClient.profile.get(id);
   }
 
 }

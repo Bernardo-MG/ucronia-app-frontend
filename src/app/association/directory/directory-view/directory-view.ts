@@ -4,9 +4,8 @@ import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/d
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ContactMethod } from '@bernardo-mg/security';
 import { TextFilter } from '@bernardo-mg/ui';
-import { FeeType, MemberStatus } from '@ucronia/domain';
+import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
@@ -77,7 +76,6 @@ export class DirectoryView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loading = true;
     this.load();
   }
 

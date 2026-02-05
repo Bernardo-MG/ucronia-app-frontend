@@ -1,4 +1,4 @@
-import { ProfileName } from "../domain/profile-name";
+import { ProfileName } from '@ucronia/domain';
 
 export class ProfilePatch {
   public identifier?: string;
