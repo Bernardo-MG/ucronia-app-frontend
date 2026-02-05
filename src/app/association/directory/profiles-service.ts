@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { Profile, ProfileCreation, ProfilePatch, SecurityClient } from '@bernardo-mg/security';
-import { GuestPatch, MemberProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
-import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Sponsor } from '@ucronia/domain';
+import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
+import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileInfo } from './model/profile-info';
@@ -11,8 +10,6 @@ import { ProfileInfo } from './model/profile-info';
   providedIn: 'root'
 })
 export class ProfilesService {
-
-  private readonly securityClient = inject(SecurityClient);
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
@@ -45,7 +42,7 @@ export class ProfilesService {
     } else if (filterType === 'sponsor') {
       query = this.ucroniaClient.sponsor.page(page, undefined, sorting, name);
     } else {
-      query = this.securityClient.profile.page(page, undefined, sorting, name);
+      query = this.ucroniaClient.profile.page(page, undefined, sorting, name);
     }
 
     return query;
@@ -53,7 +50,7 @@ export class ProfilesService {
 
 
   public create(data: ProfileCreation): Observable<Profile> {
-    return this.securityClient.profile
+    return this.ucroniaClient.profile
       .create(data)
       .pipe(
         tap(() => {
@@ -113,7 +110,7 @@ export class ProfilesService {
   }
 
   public delete(number: number): Observable<Profile> {
-    return this.securityClient.profile
+    return this.ucroniaClient.profile
       .delete(number)
       .pipe(
         tap(() => {
@@ -137,7 +134,7 @@ export class ProfilesService {
   }
 
   public getOne(number: number): Observable<ProfileInfo> {
-    return this.securityClient.profile
+    return this.ucroniaClient.profile
       .get(number)
       .pipe(
         switchMap(profile => {
@@ -220,7 +217,7 @@ export class ProfilesService {
         }
       })
     };
-    return this.securityClient.profile.patch(data.number, patch);
+    return this.ucroniaClient.profile.patch(data.number, patch);
   }
 
   private updateGuest(data: Guest): Observable<Guest> {

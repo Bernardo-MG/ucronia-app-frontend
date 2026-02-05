@@ -1,7 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { ContactMethod, ContactMethodUpdate } from '@bernardo-mg/security';
+import { ContactMethod } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { ContactMethodUpdate } from '../../profile/contact-method-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class ContactMethodEndpoint {

@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { ProfileCreation } from '@bernardo-mg/security';
-import { MemberStatus, Sponsor } from '@ucronia/domain';
+import { Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { ProfileCreation } from '../../profile/profile-creation';
 import { SponsorPatch } from '../../sponsor/sponsor-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 

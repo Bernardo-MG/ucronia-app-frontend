@@ -1,4 +1,5 @@
-import { ProfileName, ProfilePatchChannel } from "@bernardo-mg/security";
+import { ProfileName } from "@ucronia/domain";
+import { ProfilePatchChannel } from "../profile/profile-patch";
 
 export class SponsorPatch {
   public identifier?: string;

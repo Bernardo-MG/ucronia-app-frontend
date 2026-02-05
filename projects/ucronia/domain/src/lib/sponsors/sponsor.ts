@@ -1,4 +1,5 @@
-import { ContactChannel, ProfileName } from "@bernardo-mg/security";
+import { ContactChannel } from "../profile/profile";
+import { ProfileName } from "../profile/profile-name";
 
 export class Sponsor {
   public number = -1;
