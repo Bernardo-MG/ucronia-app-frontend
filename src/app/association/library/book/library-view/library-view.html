@@ -49,24 +49,24 @@
     </div>
 
     @if(list === 'books') {
-    <div class="border border-gray-300 rounded-lg p-1 inline-block">
-      <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
-        aria-labelledby="basic" (onChange)="onChangeSource($event)" />
-    </div>
+      <div class="border border-gray-300 rounded-lg p-1 inline-block">
+        <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
+          aria-labelledby="basic" (onChange)="onChangeSource($event)" />
+      </div>
 
-    <div class="ml-auto space-x-2">
-      @if (createable) {
-      <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
-        aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
-      }
+      <div class="ml-auto space-x-2">
+        @if (createable) {
+          <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
+            aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
+        }
 
-      <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
-        [attr.aria-disabled]="loadingExcel" rounded />
+        <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+          [attr.aria-disabled]="loadingExcel" rounded />
 
-      @if (dataMenuItems) {
-      <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
-      }
-    </div>
+        @if (dataMenuItems) {
+          <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
+        }
+      </div>
     }
   </div>
 
@@ -94,7 +94,6 @@
   </p-dialog>
 
   @switch (view) {
-
     @case ('details') {
       <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
         <ng-template #header>
