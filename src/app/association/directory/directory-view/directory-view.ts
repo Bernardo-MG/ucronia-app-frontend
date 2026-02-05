@@ -77,7 +77,6 @@ export class DirectoryView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loading = true;
     this.load();
   }
 

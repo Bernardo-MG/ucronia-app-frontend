@@ -19,7 +19,6 @@ export class SponsorEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    active: MemberStatus,
     name: string
   ): Observable<Page<Sponsor>> {
     let params = new HttpParams();
@@ -29,8 +28,6 @@ export class SponsorEndpoint {
     if (size) {
       params = params.append('size', size);
     }
-
-    const status = active ? active.toString().toUpperCase() : '';
 
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));

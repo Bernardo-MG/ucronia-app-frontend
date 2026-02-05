@@ -36,19 +36,19 @@ export class ProfilesService {
       )
     );
 
-    let endpoint: (page: number | undefined, size: number | undefined, sort: Sorting | undefined, active: MemberStatus, name: string) => Observable<Page<ProfileInfo>>;
+    let query;
 
     if (filterType === 'guest') {
-      endpoint = this.ucroniaClient.guest.page;
+      query = this.ucroniaClient.guest.page(page, undefined, sorting, name);
     } else if (filterType === 'member') {
-      endpoint = this.ucroniaClient.memberProfile.page;
+      query = this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, name);
     } else if (filterType === 'sponsor') {
-      endpoint = this.ucroniaClient.sponsor.page;
+      query = this.ucroniaClient.sponsor.page(page, undefined, sorting, name);
     } else {
-      endpoint = this.securityClient.profile.page;
+      query = this.securityClient.profile.page(page, undefined, sorting, name);
     }
 
-    return endpoint(page, undefined, sorting, active, name);
+    return query;
   }
 
 
