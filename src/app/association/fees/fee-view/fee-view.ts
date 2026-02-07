@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
 import { Fee, FeePaymentReport, FeePayments, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -33,7 +33,7 @@ export class FeeView implements OnInit {
   private readonly reportService = inject(FeeReportService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
-  public readonly service = inject(FeeService);
+  private readonly service = inject(FeeService);
 
   public readonly createable;
   public readonly editable;
@@ -160,6 +160,10 @@ export class FeeView implements OnInit {
 
   public onSelectMember(member: any) {
     this.selectedMember = (member as Member);
+  }
+
+  public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
+    return this.service.getMembers(page, active);
   }
 
   public loadCalendar(year: number) {
