@@ -27,6 +27,7 @@ export class FeePaymentsForm {
   }
 
   public readonly save = output<FeePayments>();
+  public readonly return = output();
 
   private fb = inject(FormBuilder);
 

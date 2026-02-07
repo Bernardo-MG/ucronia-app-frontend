@@ -4,22 +4,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
-import { Page } from '@bernardo-mg/request';
+import { FailureStore, Page } from '@bernardo-mg/request';
 import { Member, MemberStatus } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';
+import { FeeCreationForm, FeeCreationFormData } from '../fee-creation-form/fee-creation-form';
 
 @Component({
-  selector: 'assoc-member-select-stepper',
-  imports: [FormsModule, ButtonModule, ReactiveFormsModule, StepperModule, SelectionList, MemberStatusSelector],
-  templateUrl: './member-select-stepper.html'
+  selector: 'assoc-fee-creation-stepper',
+  imports: [FormsModule, ReactiveFormsModule, StepperModule, SelectionList, MemberStatusSelector, FeeCreationForm],
+  templateUrl: './fee-creation-stepper.html'
 })
-export class MemberSelectStepper {
+export class FeeCreationStepper {
 
+  public readonly loading = input(false);
+  public readonly failures = input(new FailureStore());
+  public readonly member = input(new Member());
   public readonly getMemberSelection = input<(page: number | undefined, active: MemberStatus) => Observable<Page<Member>>>((page: number | undefined, active: MemberStatus) => EMPTY);
 
   public readonly selectMember = output<NameNumber>();
+  public readonly save = output<FeeCreationFormData>();
 
   public readonly nameRenderer = (data: Member): string => data.name.fullName;
 

@@ -14,17 +14,16 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
-import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
+import { FeeCreationStepper } from '../fee-creation-stepper/fee-creation-stepper';
 import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
-import { FeePaymentsForm } from '../fee-payments-form/fee-payments-form';
+import { FeePaymentsStepper } from '../fee-payments-stepper/fee-payments-stepper';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
-import { MemberSelectStepper } from '../member-select-stepper/member-select-stepper';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, FeePaymentsForm, MemberSelectStepper, FeeCreationForm, MemberStatusSelector],
+  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsStepper],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {

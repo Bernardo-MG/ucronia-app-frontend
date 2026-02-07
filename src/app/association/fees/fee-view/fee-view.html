@@ -81,19 +81,16 @@
   @case('create') {
     <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }"
       class="rounded-lg">
-      <assoc-member-select-stepper [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)">
-        <assoc-fee-creation-form [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
-          (save)="onCreateUnpaid($event)" />
-      </assoc-member-select-stepper>
+      <assoc-fee-creation-stepper [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
+        [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)"
+        (save)="onCreateUnpaid($event)" />
     </p-dialog>
   }
 
   @case('pay') {
     <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
-      <assoc-member-select-stepper [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)">
-        <assoc-fee-payments-form [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
-          (save)="onPay($event)" />
-      </assoc-member-select-stepper>
+      <assoc-fee-payments-stepper [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
+        [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)" (save)="onPay($event)" />
     </p-dialog>
   }
 

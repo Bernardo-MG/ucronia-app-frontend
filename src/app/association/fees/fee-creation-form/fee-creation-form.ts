@@ -26,6 +26,7 @@ export class FeeCreationForm implements OnChanges {
   }
 
   public readonly save = output<FeeCreationFormData>();
+  public readonly return = output();
 
   public formStatus: FormStatus;
 

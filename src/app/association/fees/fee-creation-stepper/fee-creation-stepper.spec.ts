@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MemberSelectStepper } from './member-select-stepper';
+import { FeeCreationStepper } from './fee-creation-stepper';
 
-describe('MemberSelectStepper', () => {
-  let component: MemberSelectStepper;
-  let fixture: ComponentFixture<MemberSelectStepper>;
+describe('FeeCreationStepper', () => {
+  let component: FeeCreationStepper;
+  let fixture: ComponentFixture<FeeCreationStepper>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        MemberSelectStepper
+        FeeCreationStepper
       ],
       providers: [
         provideAnimationsAsync()
@@ -17,7 +17,7 @@ describe('MemberSelectStepper', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberSelectStepper);
+    fixture = TestBed.createComponent(FeeCreationStepper);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
