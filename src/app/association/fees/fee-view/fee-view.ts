@@ -11,7 +11,7 @@ import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
@@ -51,7 +51,8 @@ export class FeeView implements OnInit {
    * Loading flag. Shows the loading visual cue.
    */
   public loadingCalendar = false;
-  public loading = false;
+  public loadingReport = false;
+  public loadingDetail = false;
   public showing = false;
 
   public selectedData = new Fee();
@@ -151,10 +152,6 @@ export class FeeView implements OnInit {
     this.loadCalendar(this.year);
   }
 
-  public onGoToYear(year: number) {
-    this.loadCalendar(year);
-  }
-
   public onStartEditingView(view: string): void {
     this.view = view;
     this.showing = false;
@@ -175,18 +172,30 @@ export class FeeView implements OnInit {
   }
 
   private loadReport() {
+    this.loadingReport = true;
+
     this.reportService.getPaymentReport()
+      .pipe(finalize(() => this.loadingReport = false))
       .subscribe(response => this.report = response);
   }
 
   private loadRange() {
-    this.feeCalendarService.getRange().subscribe(d => {
-      this.range = d;
-      this.loadYear(this.range);
+    this.loadingCalendar = true;
 
-      // Load initial year
-      this.loadCalendar(this.year);
-    });
+    this.feeCalendarService.getRange()
+      .pipe(
+        tap(range => {
+          this.range = range;
+          this.loadYear(range);
+        }),
+        switchMap(() =>
+          this.feeCalendarService.getCalendar(this.year, this.activeFilter)
+        ),
+        finalize(() => this.loadingCalendar = false)
+      )
+      .subscribe(data => {
+        this.feeCalendar = data;
+      });
   }
 
   private loadYear(range: YearsRange) {
@@ -203,9 +212,9 @@ export class FeeView implements OnInit {
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
+    this.loadingDetail = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.loadingDetail = false))
       .subscribe({
         next: () => {
           this.failures.clear();
