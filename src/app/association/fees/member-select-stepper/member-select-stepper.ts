@@ -3,17 +3,16 @@ import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NameNumber } from '@app/shared/data/model/name-number';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
-import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { Page } from '@bernardo-mg/request';
 import { Member, MemberStatus } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';
 
 @Component({
   selector: 'assoc-member-select-stepper',
-  imports: [FormsModule, ButtonModule, CardModule, ReactiveFormsModule, StepperModule, MemberStatusSelectComponent, SelectionList],
+  imports: [FormsModule, ButtonModule, ReactiveFormsModule, StepperModule, SelectionList, MemberStatusSelector],
   templateUrl: './member-select-stepper.html'
 })
 export class MemberSelectStepper {
@@ -32,7 +31,7 @@ export class MemberSelectStepper {
     this.currentStep = 1;
   }
 
-  public onChangeActiveFilter(active: MemberStatus) {
+  public onChangeMemberStatus(active: MemberStatus) {
     this.getSelection = (page: number) => this.getMemberSelection()(page, active);
   }
 
