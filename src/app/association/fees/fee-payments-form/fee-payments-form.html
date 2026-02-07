@@ -18,17 +18,17 @@
   <h3>Cuotas</h3>
   <!-- Each fee -->
   @for (date of months.controls; track date; let i = $index) {
-    <div class="row">
-      <div class="col-sm-10">
-        <p-floatlabel variant="in" class="mb-2 d-flex">
-          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')"
-            view="month" dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" appendTo="body" />
+    <div class="flex items-center w-full mb-2">
+      <div>
+        <p-floatlabel variant="in" class="w-full">
+          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')" view="month" dateFormat="yy-mm"
+            (onSelect)="onMonthSelect($event, i)" appendTo="body" />
           <label [for]="'monthYearInput_' + i">Mes</label>
         </p-floatlabel>
       </div>
-      <div class="col-sm-2">
-        <p-button icon="pi pi-trash" (click)="removeDate(i)"
-          [disabled]="!formStatus.formEnabled" aria-label="Eliminar mes" [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
+      <div class="ml-2">
+        <p-button icon="pi pi-trash" (click)="removeDate(i)" [disabled]="!formStatus.formEnabled" aria-label="Eliminar mes"
+          [attr.aria-disabled]="!formStatus.formEnabled" rounded text />
       </div>
     </div>
   }
