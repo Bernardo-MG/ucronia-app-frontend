@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MemberStatusSelector } from '@app/association/directory/member-status-selector/member-status-selector';
 import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';

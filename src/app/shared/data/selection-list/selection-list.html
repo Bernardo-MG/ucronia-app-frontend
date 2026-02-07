@@ -3,14 +3,14 @@
   (onPage)="onGoToSelectionPage($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
   <ng-template #header>
     <tr>
-      <th></th>
+      <th class="w-20"></th>
       <th>{{heading()}}</th>
     </tr>
   </ng-template>
   <ng-template #body let-name>
     <tr>
       <td>
-        <p-button icon="pi pi-plus-circle" severity="secondary" (click)="this.choose.emit(name);"
+        <p-button icon="pi pi-sign-in" severity="secondary" (click)="this.choose.emit(name);"
           aria-label="Nuevo" rounded text />
       </td>
       <td>{{nameRenderer()(name)}}</td>

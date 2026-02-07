@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
 import { Fee, FeePaymentReport, FeePayments, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -11,20 +11,19 @@ import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
-import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
+import { FeeCreationStepper } from '../fee-creation-stepper/fee-creation-stepper';
 import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
-import { FeePaymentsForm } from '../fee-payments-form/fee-payments-form';
+import { FeePaymentsStepper } from '../fee-payments-stepper/fee-payments-stepper';
 import { FeeReportService } from '../fee-report-service';
 import { FeeService } from '../fee-service';
-import { MemberSelectStepper } from '../member-select-stepper/member-select-stepper';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePaymentsForm, MemberSelectStepper, FeeCreationForm],
+  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsStepper],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -33,7 +32,7 @@ export class FeeView implements OnInit {
   private readonly reportService = inject(FeeReportService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
-  public readonly service = inject(FeeService);
+  private readonly service = inject(FeeService);
 
   public readonly createable;
   public readonly editable;
@@ -51,7 +50,8 @@ export class FeeView implements OnInit {
    * Loading flag. Shows the loading visual cue.
    */
   public loadingCalendar = false;
-  public loading = false;
+  public loadingReport = false;
+  public loadingDetail = false;
   public showing = false;
 
   public selectedData = new Fee();
@@ -146,13 +146,9 @@ export class FeeView implements OnInit {
     this.showing = true;
   }
 
-  public onChangeActiveFilter(active: MemberStatus) {
+  public onChangeMemberStatus(active: MemberStatus) {
     this.activeFilter = active;
     this.loadCalendar(this.year);
-  }
-
-  public onGoToYear(year: number) {
-    this.loadCalendar(year);
   }
 
   public onStartEditingView(view: string): void {
@@ -161,12 +157,12 @@ export class FeeView implements OnInit {
     this.editing = true;
   }
 
-  public onGetSelection(page: number | undefined, active: MemberStatus) {
-    return this.service.getMembers(page, active);
-  }
-
   public onSelectMember(member: any) {
     this.selectedMember = (member as Member);
+  }
+
+  public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
+    return this.service.getMembers(page, active);
   }
 
   public loadCalendar(year: number) {
@@ -179,18 +175,30 @@ export class FeeView implements OnInit {
   }
 
   private loadReport() {
+    this.loadingReport = true;
+
     this.reportService.getPaymentReport()
+      .pipe(finalize(() => this.loadingReport = false))
       .subscribe(response => this.report = response);
   }
 
   private loadRange() {
-    this.feeCalendarService.getRange().subscribe(d => {
-      this.range = d;
-      this.loadYear(this.range);
+    this.loadingCalendar = true;
 
-      // Load initial year
-      this.loadCalendar(this.year);
-    });
+    this.feeCalendarService.getRange()
+      .pipe(
+        tap(range => {
+          this.range = range;
+          this.loadYear(range);
+        }),
+        switchMap(() =>
+          this.feeCalendarService.getCalendar(this.year, this.activeFilter)
+        ),
+        finalize(() => this.loadingCalendar = false)
+      )
+      .subscribe(data => {
+        this.feeCalendar = data;
+      });
   }
 
   private loadYear(range: YearsRange) {
@@ -207,9 +215,9 @@ export class FeeView implements OnInit {
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
+    this.loadingDetail = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.loadingDetail = false))
       .subscribe({
         next: () => {
           this.failures.clear();
