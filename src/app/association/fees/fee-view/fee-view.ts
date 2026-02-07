@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
@@ -24,7 +24,7 @@ import { MemberSelectStepper } from '../member-select-stepper/member-select-step
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, MemberStatusSelectComponent, FeeEditionForm, FeeDetails, FeePaymentsForm, MemberSelectStepper, FeeCreationForm],
+  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, FeePaymentsForm, MemberSelectStepper, FeeCreationForm, MemberStatusSelector],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -147,7 +147,7 @@ export class FeeView implements OnInit {
     this.showing = true;
   }
 
-  public onChangeActiveFilter(active: MemberStatus) {
+  public onChangeMemberStatus(active: MemberStatus) {
     this.activeFilter = active;
     this.loadCalendar(this.year);
   }
