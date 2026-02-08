@@ -123,7 +123,7 @@ export class TransformProfileEndpoint {
   public toSponsor(
     number: number
   ): Observable<Sponsor> {
-    return this.http.put<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/${number}/member`, undefined)
+    return this.http.put<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/${number}/sponsor`, undefined)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
