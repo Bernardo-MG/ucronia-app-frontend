@@ -36,7 +36,7 @@ export class SponsorEndpoint {
       params = params.append('name', name);
     }
 
-    return this.http.get<PaginatedResponse<Sponsor>>(`${this.apiUrl}/sponsor`, { params })
+    return this.http.get<PaginatedResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
@@ -45,7 +45,7 @@ export class SponsorEndpoint {
   public get(
     number: number
   ): Observable<Sponsor> {
-    return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`)
+    return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -55,7 +55,7 @@ export class SponsorEndpoint {
   public create(
     data: ProfileCreation
   ): Observable<Sponsor> {
-    return this.http.post<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor`, data)
+    return this.http.post<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -66,7 +66,7 @@ export class SponsorEndpoint {
     number: number,
     data: SponsorPatch
   ): Observable<Sponsor> {
-    return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`, data)
+    return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -76,7 +76,7 @@ export class SponsorEndpoint {
   public delete(
     number: number
   ): Observable<Sponsor> {
-    return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/sponsor/${number}`)
+    return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

@@ -25,6 +25,8 @@ import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
 import { ProfilesService } from '../profiles-service';
 import { SponsorList } from '../sponsor-list/sponsor-list';
+import { DirectoryReportService } from '../directory-report-service';
+import { DirectoryReport } from '../model/directory-status-report';
 
 @Component({
   selector: 'assoc-directory-view',
@@ -34,6 +36,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 export class DirectoryView implements OnInit {
 
   private readonly profileService = inject(ProfilesService);
+  private readonly directoryReportService = inject(DirectoryReportService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
 
@@ -49,8 +52,7 @@ export class DirectoryView implements OnInit {
   public selectedData = new ProfileInfo();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
-
-  private sort = new Sorting();
+  public report = new DirectoryReport();
 
   /**
    * Loading flag.
@@ -66,6 +68,8 @@ export class DirectoryView implements OnInit {
 
   public selectedStatus: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
 
+  private sort = new Sorting();
+
   constructor() {
     const authService = inject(AuthService);
 
@@ -77,6 +81,8 @@ export class DirectoryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
+    this.directoryReportService.getReport()
+      .subscribe(r => this.report = r);
   }
 
   // EVENT HANDLERS
@@ -137,7 +143,11 @@ export class DirectoryView implements OnInit {
   public onCreate(toCreate: ProfileCreationFormData): void {
     this.mutation(
       this.profileService.create(toCreate as any),
-      () => this.load()
+      () => {
+        this.load();
+        this.directoryReportService.getReport()
+          .subscribe(r => this.report = r);
+      }
     );
   }
 
@@ -177,7 +187,11 @@ export class DirectoryView implements OnInit {
     if (conversions.length === 0) {
       return this.mutation(
         this.profileService.update(updated),
-        () => this.load(this.profiles.page)
+        () => {
+          this.load(this.profiles.page);
+          this.directoryReportService.getReport()
+            .subscribe(r => this.report = r);
+        }
       );
     }
 
@@ -199,7 +213,11 @@ export class DirectoryView implements OnInit {
   public onDelete(number: number) {
     this.mutation(
       this.profileService.delete(number),
-      () => this.load()
+      () => {
+        this.load();
+        this.directoryReportService.getReport()
+          .subscribe(r => this.report = r);
+      }
     );
   }
 
