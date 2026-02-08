@@ -9,7 +9,7 @@ describe('DirectoryService', () => {
   let service: DirectoryService;
 
   const mockUcroniaClient = {
-    library: {
+    profile: {
       guest: {
         create: jasmine.createSpy().and.returnValue(of({})),
         update: jasmine.createSpy().and.returnValue(of({})),

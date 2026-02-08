@@ -35,7 +35,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 })
 export class DirectoryView implements OnInit {
 
-  private readonly profileService = inject(DirectoryService);
+  private readonly directoryService = inject(DirectoryService);
   private readonly directoryReportService = inject(DirectoryReportService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
@@ -91,7 +91,7 @@ export class DirectoryView implements OnInit {
     this.loading = true;
     this.editing = true;
     forkJoin({
-      profile: this.profileService.getOne(profile.number),
+      profile: this.directoryService.getOne(profile.number),
       contactMethodSelection: this.contactMethodService.getAllAvailable(),
       feeTypes: this.feeTypeService.getAllAvailable()
     })
@@ -131,7 +131,7 @@ export class DirectoryView implements OnInit {
   public onShowInfo(profile: ProfileInfo) {
     this.loading = true;
     this.showing = true;
-    this.profileService.getOne(profile.number)
+    this.directoryService.getOne(profile.number)
       .pipe(finalize(() => this.loading = false))
       .subscribe(profile => this.selectedData = profile);
   }
@@ -142,7 +142,7 @@ export class DirectoryView implements OnInit {
 
   public onCreate(toCreate: ProfileCreationFormData): void {
     this.mutation(
-      this.profileService.create(toCreate as any),
+      this.directoryService.create(toCreate as any),
       () => {
         this.load();
         this.directoryReportService.getReport()
@@ -162,7 +162,7 @@ export class DirectoryView implements OnInit {
     const newTypes = updated.types ?? [];
 
     this.mutation(
-      this.profileService.update(updated, previousTypes, newTypes),
+      this.directoryService.update(updated, previousTypes, newTypes),
       () => {
         this.load(this.profiles.page);
         this.directoryReportService.getReport()
@@ -173,7 +173,7 @@ export class DirectoryView implements OnInit {
 
   public onDelete(number: number) {
     this.mutation(
-      this.profileService.delete(number),
+      this.directoryService.delete(number),
       () => {
         this.load();
         this.directoryReportService.getReport()
@@ -202,7 +202,7 @@ export class DirectoryView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.loading = true;
 
-    this.profileService.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
+    this.directoryService.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         this.profiles = response;
