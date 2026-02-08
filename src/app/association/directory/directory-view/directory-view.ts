@@ -13,20 +13,20 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
 import { ContactMethodService } from '../contact-method-service';
+import { DirectoryReportService } from '../directory-report-service';
+import { DirectoryService } from '../directory-service';
 import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
+import { DirectoryReport } from '../model/directory-status-report';
 import { ProfileInfo } from '../model/profile-info';
 import { ProfileDetails } from '../profile-details/profile-details';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
-import { ProfilesService } from '../profiles-service';
 import { SponsorList } from '../sponsor-list/sponsor-list';
-import { DirectoryReportService } from '../directory-report-service';
-import { DirectoryReport } from '../model/directory-status-report';
 
 @Component({
   selector: 'assoc-directory-view',
@@ -35,7 +35,7 @@ import { DirectoryReport } from '../model/directory-status-report';
 })
 export class DirectoryView implements OnInit {
 
-  private readonly profileService = inject(ProfilesService);
+  private readonly profileService = inject(DirectoryService);
   private readonly directoryReportService = inject(DirectoryReportService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);

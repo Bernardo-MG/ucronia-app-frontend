@@ -5,17 +5,17 @@ import { ContactMethod, FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';
+import { DirectoryService } from '../directory-service';
 import { FeeTypeService } from '../fee-type-service';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 import { ProfileInfo } from '../model/profile-info';
-import { ProfilesService } from '../profiles-service';
 import { DirectoryView } from './directory-view';
 
 describe('DirectoryView', () => {
   let component: DirectoryView;
   let fixture: ComponentFixture<DirectoryView>;
 
-  const profileServiceMock = jasmine.createSpyObj<ProfilesService>(
+  const profileServiceMock = jasmine.createSpyObj<DirectoryService>(
     'ProfilesService',
     ['getOne', 'getAll', 'create', 'update', 'delete', 'convertToMember', 'convertToGuest', 'convertToSponsor']
   );
@@ -60,7 +60,7 @@ describe('DirectoryView', () => {
         ConfirmationService,
         MessageService,
         provideAnimationsAsync(),
-        { provide: ProfilesService, useValue: profileServiceMock },
+        { provide: DirectoryService, useValue: profileServiceMock },
         { provide: ContactMethodService, useValue: contactMethodServiceMock },
         { provide: FeeTypeService, useValue: feeTypeServiceMock },
         { provide: MembershipEvolutionService, useValue: membershipEvolutionServiceMock }

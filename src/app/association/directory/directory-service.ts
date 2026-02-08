@@ -9,7 +9,7 @@ import { ProfileInfo } from './model/profile-info';
 @Injectable({
   providedIn: 'root'
 })
-export class ProfilesService {
+export class DirectoryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 

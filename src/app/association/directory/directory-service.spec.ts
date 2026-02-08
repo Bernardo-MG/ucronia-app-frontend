@@ -3,10 +3,10 @@ import { SecurityClient } from '@bernardo-mg/security';
 import { UcroniaClient } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { ProfilesService } from './profiles-service';
+import { DirectoryService } from './directory-service';
 
-describe('ProfilesService', () => {
-  let service: ProfilesService;
+describe('DirectoryService', () => {
+  let service: DirectoryService;
 
   const mockUcroniaClient = {
     library: {
@@ -46,7 +46,7 @@ describe('ProfilesService', () => {
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
-    service = TestBed.inject(ProfilesService);
+    service = TestBed.inject(DirectoryService);
   });
 
   it('should be created', () => {
