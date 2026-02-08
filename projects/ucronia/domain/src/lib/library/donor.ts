@@ -1,4 +1,4 @@
-import { ProfileName } from "../profiles/profile-name";
+import { ProfileName } from "../profile/profile-name";
 
 export class Donor {
   public number = -1;

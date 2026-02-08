@@ -2,7 +2,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { DetailField } from '@bernardo-mg/ui';
-import { Fee } from "@ucronia/domain";
+import { Fee } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({

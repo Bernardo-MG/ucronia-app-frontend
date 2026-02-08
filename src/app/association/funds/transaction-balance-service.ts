@@ -1,53 +1,21 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { TransactionCurrentBalance, TransactionMonthlyBalance } from "@ucronia/domain";
-import { addMinutes } from 'date-fns';
-import { environment } from 'environments/environment';
-import { Observable, map } from 'rxjs';
+import { UcroniaClient } from '@ucronia/api';
+import { TransactionCurrentBalance, TransactionMonthlyBalance } from '@ucronia/domain';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class TransactionBalanceService {
 
-  private readonly balanceClient;
-
-  private readonly monthlyBalanceClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.balanceClient = clientProvider.url(environment.apiUrl + '/transaction/balance');
-    this.monthlyBalanceClient = clientProvider.url(environment.apiUrl + '/transaction/balance/monthly');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public current(): Observable<TransactionCurrentBalance> {
-    return this.balanceClient
-      .read<SimpleResponse<TransactionCurrentBalance>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.transaction.currentBalance();
   }
 
   public monthly(from: Date | undefined, to: Date | undefined): Observable<TransactionMonthlyBalance[]> {
-    const offset = new Date().getTimezoneOffset();
-    let fromUtc;
-    let toUtc;
-
-    if (from) {
-      fromUtc = addMinutes(from, offset);
-    } else {
-      fromUtc = undefined;
-    }
-    if (to) {
-      toUtc = addMinutes(to, offset);
-    } else {
-      toUtc = undefined;
-    }
-
-    return this.monthlyBalanceClient
-      .parameter('from', fromUtc?.toISOString())
-      .parameter('to', toUtc?.toISOString())
-      .read<SimpleResponse<TransactionMonthlyBalance[]>>()
-      .pipe(map(r => r.content));
+    return this.ucroniaClient.transaction.monthlyBalance(from, to);
   }
 
 }

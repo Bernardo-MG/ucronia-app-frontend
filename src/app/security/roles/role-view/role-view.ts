@@ -1,22 +1,22 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
-import { AccessRoleChangePermission } from '../role-change-permission/role-change-permission';
-import { AccessRoleForm } from '../role-form/role-form';
-import { AccessRoleInfo } from '../role-info/role-info';
+import { RoleChangePermission } from '../role-change-permission/role-change-permission';
+import { RoleForm } from '../role-form/role-form';
+import { RoleInfo } from '../role-info/role-info';
 import { RoleList } from '../role-list/role-list';
 import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [PanelModule, TableModule, ButtonModule, DialogModule, AccessRoleForm, AccessRoleInfo, AccessRoleChangePermission, RoleList],
+  imports: [PanelModule, TableModule, ButtonModule, DialogModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
@@ -32,7 +32,7 @@ export class RoleView implements OnInit {
     return (this.data.page - 1) * this.data.size;
   }
 
-  public data = new PaginatedResponse<Role>();
+  public data = new Page<Role>();
 
   public selectedData = new Role();
 

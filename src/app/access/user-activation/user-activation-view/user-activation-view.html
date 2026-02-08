@@ -1,0 +1,27 @@
+
+@switch (status) {
+  @case ('valid_token') {
+    <p-blockui [target]="userActivation" [blocked]="validating">
+      <div>
+        <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
+      </div>
+    </p-blockui>
+    <p-card #userActivation>
+      <ng-template #title>
+        Activar usuario {{username}}
+      </ng-template>
+      <access-user-activation-form [failures]="failures" [loading]="waiting"
+      (save)="onActivateUser($event)" />
+    </p-card>
+  }
+  @case ('invalid_token') {
+    <p-card>
+      Token inválido
+    </p-card>
+  }
+  @case ('finished') {
+    <p-card>
+      Usuario activado
+    </p-card>
+  }
+}

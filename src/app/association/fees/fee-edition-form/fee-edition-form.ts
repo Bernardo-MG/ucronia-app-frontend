@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
-import { Fee } from "@ucronia/domain";
+import { Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -30,7 +30,7 @@ export class FeeEditionForm implements OnChanges {
     this.fee = value;
   }
 
-  public readonly save = output<Fee>();
+  public readonly save = output<FeeEditionFormData>();
 
   public formStatus: FormStatus;
 
@@ -83,4 +83,12 @@ export class FeeEditionForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class FeeEditionFormData {
+  public transaction = new FeeEditionFormDataTransaction();
+}
+
+export class FeeEditionFormDataTransaction {
+  public date = new Date();
 }

@@ -13,8 +13,14 @@
       "@bernardo-mg/authentication": [
         "./dist/bernardo-mg/authentication"
       ],
+      "@bernardo-mg/login": [
+        "./dist/bernardo-mg/login"
+      ],
       "@bernardo-mg/form": [
         "./dist/bernardo-mg/form"
+      ],
+      "@bernardo-mg/security": [
+        "./dist/bernardo-mg/security"
       ],
       "@bernardo-mg/ui": [
         "./dist/bernardo-mg/ui"
@@ -69,6 +75,18 @@
     },
     {
       "path": "./projects/ucronia/api/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bernardo-mg/security/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bernardo-mg/security/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/bernardo-mg/login/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/bernardo-mg/login/tsconfig.spec.json"
     }
   ]
 }

@@ -1,8 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Password } from '@app/access/models/password';
-import { UserTokenStatus } from '@app/access/models/user-token-status';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
+import { User, UserTokenStatus } from '@bernardo-mg/authentication';
+import { SimpleResponse } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,26 +9,14 @@ import { Observable } from 'rxjs';
 })
 export class AccessUserActivateService {
 
-  private readonly client;
+  private readonly securityClient = inject(SecurityClient);
 
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/security/user/onboarding/activate');
-  }
-
-  public activateUser(token: string, reset: Password): Observable<SimpleResponse<void>> {
-    return this.client
-      // Validate token request
-      .appendRoute(`/${token}`)
-      .create(reset);
+  public activateUser(token: string, password: string): Observable<SimpleResponse<User>> {
+    return this.securityClient.user.onboarding.activate(token, { password });
   }
 
   public validateToken(token: string): Observable<SimpleResponse<UserTokenStatus>> {
-    return this.client
-      // Validate token request
-      .appendRoute(`/${token}`)
-      .read();
+    return this.securityClient.user.onboarding.validateToken(token);
   }
 
 }

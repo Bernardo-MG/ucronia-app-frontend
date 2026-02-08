@@ -1,0 +1,18 @@
+/* To learn more about Typescript configuration file: https://www.typescriptlang.org/docs/handbook/tsconfig-json.html. */
+/* To learn more about Angular compiler options: https://angular.dev/reference/configs/angular-compiler-options. */
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": []
+  },
+  "include": [
+    "src/**/*.ts"
+, "../../ucronia/domain/src/lib/profile/profile.ts", "../../ucronia/domain/src/lib/profile/profile-name.ts", "../../ucronia/api/src/lib/profile/profile-patch.ts", "../../ucronia/api/src/lib/profile/profile-creation.ts", "../../ucronia/domain/src/lib/profile/contact-method.ts", "../../ucronia/api/src/lib/profile/contact-method-update.ts"  ],
+  "exclude": [
+    "**/*.spec.ts"
+  ]
+}

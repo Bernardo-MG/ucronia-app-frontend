@@ -1,5 +1,5 @@
-import { ContactChannel } from "../profiles/profile";
-import { ProfileName } from "../profiles/profile-name";
+import { ContactChannel } from "../profile/profile";
+import { ProfileName } from "../profile/profile-name";
 
 export class MemberProfile {
   public number = -1;

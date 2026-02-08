@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, Sorting, SortingParams } from '@bernardo-mg/request';
-import { BookLending } from "@ucronia/domain";
-import { environment } from 'environments/environment';
+import { Page, Sorting } from '@bernardo-mg/request';
+import { UcroniaClient } from '@ucronia/api';
+import { BookLending } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -9,23 +9,10 @@ import { Observable } from 'rxjs';
 })
 export class LibraryLendingService {
 
-  private readonly lendingClient;
+  private readonly ucroniaClient = inject(UcroniaClient);
 
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.lendingClient = clientProvider.url(environment.apiUrl + '/library/lending');
-  }
-
-  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<BookLending>> {
-    const sorting = new SortingParams(
-      sort.properties
-    );
-
-    return this.lendingClient
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read();
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<BookLending>> {
+    return this.ucroniaClient.library.lending.page(page, undefined, sort);
   }
 
 }

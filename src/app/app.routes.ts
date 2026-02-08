@@ -21,24 +21,18 @@ export const routes: Routes = [
         children: [
           {
             path: 'login',
-            loadComponent: () =>
-              import('./access/login/login-view/login-view')
-                .then(m => m.LoginView)
+            loadComponent: () => import('@bernardo-mg/login').then(m => m.LoginView)
           },
           {
             path: 'password/reset',
             children: [
               {
                 path: '',
-                loadComponent: () =>
-                  import('./access/password-reset/password-reset-request/password-reset-request')
-                    .then(m => m.PasswordResetRequest)
+                loadComponent: () =>  import('@bernardo-mg/login').then(m => m.PasswordResetRequestView)
               },
               {
                 path: ':token',
-                loadComponent: () =>
-                  import('./access/password-reset/password-reset/password-reset')
-                    .then(m => m.PasswordReset)
+                loadComponent: () => import('@bernardo-mg/login').then(m => m.PasswordResetView)
               }
             ]
           },
@@ -48,8 +42,8 @@ export const routes: Routes = [
               {
                 path: ':token',
                 loadComponent: () =>
-                  import('./access/user-activation/user-activation/user-activation')
-                    .then(m => m.UserActivation)
+                  import('./access/user-activation/user-activation-view/user-activation-view')
+                    .then(m => m.UserActivationView)
               }
             ]
           }
@@ -69,14 +63,14 @@ export const routes: Routes = [
               {
                 path: 'profile',
                 loadComponent: () =>
-                  import('./account/account-profile-frontpage/account-profile-frontpage')
-                    .then(m => m.AccountProfileFrontpage)
+                  import('./account/account-profile-view/account-profile-view')
+                    .then(m => m.AccountProfileView)
               },
               {
                 path: 'password',
                 loadComponent: () =>
-                  import('./account/account-password-change/account-password-change')
-                    .then(m => m.AccountPasswordChange)
+                  import('./account/account-password-change-view/account-password-change-view')
+                    .then(m => m.AccountPasswordChangeView)
               }
             ]
           },
@@ -205,7 +199,7 @@ export const routes: Routes = [
                 // Security audit
                 path: 'audit',
                 canActivate: [ResourceGuard("user", "view")],
-                loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AccessAuditLogin)
+                loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AuditView)
               }
             ]
           },

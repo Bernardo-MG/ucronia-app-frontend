@@ -1,13 +1,13 @@
 
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { PasswordChange } from '@app/account/models/password-change';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { PasswordChange } from 'projects/bernardo-mg/security/src/lib/request/password-change';
 
 @Component({
   selector: 'account-change-password-form',
@@ -19,7 +19,7 @@ export class AccountChangePasswordForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<PasswordChange>();
+  public readonly save = output<AccountChangePasswordFormData>();
 
   public formStatus: FormStatus;
 
@@ -68,4 +68,9 @@ export class AccountChangePasswordForm implements OnChanges {
     return pass === confirmPass ? null : { notSame: true }
   }
 
+}
+
+export class AccountChangePasswordFormData {
+  public newPassword = '';
+  public oldPassword = '';
 }

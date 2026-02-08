@@ -3,16 +3,16 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { RoleService } from '../role-service';
-import { AccessRoleInfo } from './role-info';
+import { RoleInfo } from './role-info';
 
-describe('AccessRoleInfo', () => {
-  let component: AccessRoleInfo;
-  let fixture: ComponentFixture<AccessRoleInfo>;
+describe('RoleInfo', () => {
+  let component: RoleInfo;
+  let fixture: ComponentFixture<RoleInfo>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        AccessRoleInfo
+        RoleInfo
       ],
       providers: [
         RoleService,
@@ -23,7 +23,7 @@ describe('AccessRoleInfo', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessRoleInfo);
+    fixture = TestBed.createComponent(RoleInfo);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

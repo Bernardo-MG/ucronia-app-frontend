@@ -408,6 +408,98 @@
           }
         }
       }
+    },
+    "@bernardo-mg/security": {
+      "projectType": "library",
+      "root": "projects/bernardo-mg/security",
+      "sourceRoot": "projects/bernardo-mg/security/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/bernardo-mg/security/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/bernardo-mg/security/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
+          "options": {
+            "tsConfig": "projects/bernardo-mg/security/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/bernardo-mg/security/**/*.ts",
+              "projects/bernardo-mg/security/**/*.html"
+            ]
+          }
+        }
+      }
+    },
+    "@bernardo-mg/login": {
+      "projectType": "library",
+      "root": "projects/bernardo-mg/login",
+      "sourceRoot": "projects/bernardo-mg/login/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/bernardo-mg/login/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/bernardo-mg/login/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
+          "options": {
+            "tsConfig": "projects/bernardo-mg/login/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/bernardo-mg/login/**/*.ts",
+              "projects/bernardo-mg/login/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {

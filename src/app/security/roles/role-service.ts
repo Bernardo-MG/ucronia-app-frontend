@@ -1,7 +1,8 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { AngularCrudClientProvider, PaginatedResponse, PaginationParams, SimpleResponse, Sorting, SortingParams, SortingProperty } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { SecurityClient } from '@bernardo-mg/security';
+import { mergeProperties } from '@ucronia/api';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 
 @Injectable({
@@ -9,27 +10,19 @@ import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 })
 export class RoleService {
 
-  private readonly client;
+  private readonly securityClient = inject(SecurityClient);
 
-  private readonly permissionsClient;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/security/role');
-    this.permissionsClient = clientProvider.url(environment.apiUrl + '/security/permission');
-  }
-
-  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<PaginatedResponse<Role>> {
-    const sorting = new SortingParams(
-      sort.properties,
-      [new SortingProperty('name')]
+  public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<Role>> {
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('name')
+        ]
+      )
     );
 
-    return this.client
-      .loadParameters(new PaginationParams(page))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<Role>>();
+    return this.securityClient.role.page(page, undefined, sorting);
   }
 
   public getAvailablePermissions(role: string): Observable<ResourcePermission[]> {
@@ -45,58 +38,41 @@ export class RoleService {
   }
 
   public getAllPermissions(): Observable<ResourcePermission[]> {
-    const sorting = new SortingParams(
+    const sorting = new Sorting(
       [new SortingProperty('resource'), new SortingProperty('action')]
     );
     const pageSize = 100;
 
-    return this.permissionsClient
-      .loadParameters(new PaginationParams(1, pageSize))
-      .loadParameters(sorting)
-      .read<PaginatedResponse<ResourcePermission>>()
+    return this.securityClient.permission.page(undefined, pageSize, sorting)
       .pipe(
         expand(response => {
           if (!response.last) {
             const nextPage = response.page + 1;
-            return this.permissionsClient
-              .loadParameters(new PaginationParams(nextPage, pageSize))
-              .loadParameters(sorting)
-              .read<PaginatedResponse<ResourcePermission>>();
+            return this.securityClient.permission.page(nextPage, pageSize, sorting);
           }
           return of();
         }),
         // accumulate roles from all pages into one array
-        reduce((permissions: ResourcePermission[], res?: PaginatedResponse<ResourcePermission>) => {
+        reduce((permissions: ResourcePermission[], res?: Page<ResourcePermission>) => {
           return res ? [...permissions, ...res.content] : permissions;
         }, [])
       );
   }
 
-  public create(data: Role): Observable<Role> {
-    return this.client
-      .create<SimpleResponse<Role>>(data)
-      .pipe(map(r => r.content));
+  public create(role: Role): Observable<Role> {
+    return this.securityClient.role.create(role);
   }
 
   public update(data: Role): Observable<Role> {
-    return this.client
-      .appendRoute(`/${data.name}`)
-      .update<SimpleResponse<Role>>(data)
-      .pipe(map(r => r.content));
+    return this.securityClient.role.update(data.name, data);
   }
 
   public delete(role: string): Observable<Role> {
-    return this.client
-      .appendRoute(`/${role}`)
-      .delete<SimpleResponse<Role>>()
-      .pipe(map(r => r.content));
+    return this.securityClient.role.delete(role);
   }
 
   public getOne(role: string): Observable<Role> {
-    return this.client
-      .appendRoute(`/${role}`)
-      .read<SimpleResponse<Role>>()
-      .pipe(map(r => r.content));
+    return this.securityClient.role.get(role);
   }
 
 }

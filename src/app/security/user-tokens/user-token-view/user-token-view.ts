@@ -2,12 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, UserToken } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
-import { TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
@@ -23,7 +22,7 @@ export class UserTokenView implements OnInit {
   private readonly service = inject(UserTokenService);
   private readonly messageService = inject(MessageService);
 
-  public data = new PaginatedResponse<UserToken>();
+  public data = new Page<UserToken>();
 
   public selectedData = new UserToken();
 

@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MemberStatus } from "@ucronia/domain";
+import { MemberStatus } from '@ucronia/domain';
 import { SelectModule } from 'primeng/select';
 
 @Component({

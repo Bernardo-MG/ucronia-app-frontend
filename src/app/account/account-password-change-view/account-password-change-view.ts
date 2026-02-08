@@ -1,0 +1,46 @@
+import { Component, inject } from '@angular/core';
+import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
+import { AccountService } from '@app/account/account-service';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { CardModule } from 'primeng/card';
+import { PasswordChange } from 'projects/bernardo-mg/security/src/lib/request/password-change';
+import { throwError } from 'rxjs';
+
+@Component({
+  selector: 'account-password-change-view',
+  imports: [CardModule, AccountChangePasswordForm],
+  templateUrl: './account-password-change-view.html'
+})
+export class AccountPasswordChangeView {
+
+  private readonly service = inject(AccountService);
+
+  public saving = false;
+
+  public failures = new FailureStore();
+
+  public onChangePassword(data: PasswordChange) {
+    this.saving = true;
+
+    this.service.changePassword(data).subscribe({
+      next: status => {
+        // Succesful request
+
+        // Reactivate form
+        this.saving = false;
+      },
+      error: error => {
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else {
+          this.failures.clear();
+        }
+        // Reactivate view
+        this.saving = false;
+
+        return throwError(() => error);
+      }
+    });
+  }
+
+}

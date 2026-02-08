@@ -9,10 +9,10 @@
           <i class="pi pi-user text-xl"></i>
         </div>
         <div>
-          @if (loading) {
-            <p-skeleton />
+          @if (loadingReport) {
+          <p-skeleton />
           } @else {
-            <p class="text-2xl font-semibold">{{report.paid}}</p>
+          <p class="text-2xl font-semibold">{{report.paid}}</p>
           }
           <p class="uppercase text-gray-500 text-sm">Cuotas pagadas</p>
         </div>
@@ -25,10 +25,10 @@
           <i class="pi pi-user text-xl"></i>
         </div>
         <div>
-          @if (loading) {
-            <p-skeleton />
+          @if (loadingReport) {
+          <p-skeleton />
           } @else {
-            <p class="text-2xl font-semibold">{{report.unpaid}}</p>
+          <p class="text-2xl font-semibold">{{report.unpaid}}</p>
           }
           <p class="uppercase text-gray-500 text-sm">Sin pagar</p>
         </div>
@@ -45,14 +45,14 @@
     }
   </div>
 
+  <!-- Buttons -->
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <assoc-member-status-selector [status]="activeFilter" (filter)="onChangeMemberStatus($event)" />
+  </div>
+
   <!-- Fee Calendar Panel -->
   <div class="w-full">
     <p-panel class="shadow rounded-lg">
-
-      <ng-template #icons>
-        <assoc-member-status-select [disabled]="loadingCalendar" (changeStatus)="onChangeActiveFilter($event)" />
-
-      </ng-template>
 
       <!-- Calendar -->
       <assoc-fee-calendar [year]="year" [range]="range" [loading]="loadingCalendar" [feeCalendar]="feeCalendar"
@@ -64,7 +64,7 @@
   <!-- Fee Info Dialog -->
   <p-dialog header="Cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }" class="rounded-lg"
     contentStyleClass="p-4 space-y-4">
-    <assoc-fee-details [data]="selectedData" [loading]="loading" />
+    <assoc-fee-details [data]="selectedData" [loading]="loadingDetail" />
 
     <div class="flex space-x-2">
       <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
@@ -79,28 +79,25 @@
   @switch (view) {
 
   @case('create') {
-  <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }"
-    class="rounded-lg">
-    <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)"
-      (selectMember)="onSelectMember($event)">
-      <assoc-fee-creation-form [loading]="loading" [failures]="failures" [member]="selectedMember"
+    <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }"
+      class="rounded-lg">
+      <assoc-fee-creation-stepper [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
+        [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)"
         (save)="onCreateUnpaid($event)" />
-    </assoc-member-select-stepper>
-  </p-dialog>
+    </p-dialog>
   }
 
   @case('pay') {
-  <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
-    <assoc-member-select-stepper [getMemberSelection]="onGetSelection.bind(this)"
-      (selectMember)="onSelectMember($event)">
-      <assoc-fee-pay-form [loading]="loading" [failures]="failures" [member]="selectedMember" (save)="onPay($event)" />
-    </assoc-member-select-stepper>
-  </p-dialog>
+    <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
+      <assoc-fee-payments-stepper [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
+        [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)" (save)="onPay($event)" />
+    </p-dialog>
   }
 
   @case('edition') {
   <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
-    <assoc-fee-edition-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+    <assoc-fee-edition-form [loading]="loadingDetail" [data]="selectedData" [failures]="failures"
+      (save)="onUpdate($event)" />
   </p-dialog>
   }
 

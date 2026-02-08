@@ -3,7 +3,7 @@ import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormStatus } from '@bernardo-mg/form';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { EMPTY, Observable } from 'rxjs';
@@ -16,7 +16,7 @@ import { NameNumber } from '../model/name-number';
 })
 export class FormWithSelection {
 
-  public readonly getSelection = input<(page: number) => Observable<PaginatedResponse<NameNumber>>>((page: number) => EMPTY);
+  public readonly getSelection = input<(page: number) => Observable<Page<NameNumber>>>((page: number) => EMPTY);
 
   public readonly save = output<NameNumber>();
 

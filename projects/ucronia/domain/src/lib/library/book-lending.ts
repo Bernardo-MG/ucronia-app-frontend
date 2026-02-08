@@ -1,4 +1,4 @@
-import { ProfileName } from "../profiles/profile-name";
+import { ProfileName } from "../profile/profile-name";
 import { LentBook } from "./lent-book";
 
 

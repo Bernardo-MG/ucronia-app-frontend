@@ -19,7 +19,7 @@ export class ProfileCreationForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public readonly save = output<ProfileCreationEvent>();
+  public readonly save = output<ProfileCreationFormData>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
@@ -59,8 +59,11 @@ export class ProfileCreationForm implements OnChanges {
 
 }
 
-export class ProfileCreationEvent {
+export class ProfileCreationFormData {
   constructor(
-    public name: { firstName: string, lastName: string }
+    public name: {
+      firstName: string,
+      lastName: string
+    }
   ) { }
 }

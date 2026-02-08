@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { CrudService } from '@app/shared/data/services/crud-service';
-import { FailureResponse, PaginatedResponse, Sorting } from '@bernardo-mg/request';
+import { FailureResponse, Page, Sorting } from '@bernardo-mg/request';
 import { Confirmation, ConfirmationService, MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { CrudNameList } from './crud-name-list';
@@ -15,7 +15,7 @@ describe('CrudNameList', () => {
 
   beforeEach(async () => {
     mockService = jasmine.createSpyObj('CrudService', ['getAll', 'create', 'update', 'delete']);
-    mockService.getAll.and.returnValue(of(new PaginatedResponse()));
+    mockService.getAll.and.returnValue(of(new Page()));
     mockService.create.and.returnValue(of({}));
     mockService.update.and.returnValue(of({}));
     mockService.delete.and.returnValue(of({}));

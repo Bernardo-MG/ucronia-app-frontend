@@ -1,32 +1,22 @@
 import { Injectable, inject } from '@angular/core';
-import { AngularCrudClientProvider, SimpleResponse } from '@bernardo-mg/request';
-import { environment } from 'environments/environment';
+import { UcroniaClient } from '@ucronia/api';
 import { Observable, map } from 'rxjs';
-import { PublicSettings } from '../settings/models/public-settings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FrontpageService {
 
-  private readonly client;
-
-  constructor() {
-    const clientProvider = inject(AngularCrudClientProvider);
-
-    this.client = clientProvider.url(environment.apiUrl + '/settings/public');
-  }
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public getCalendarCode(): Observable<string> {
-    return this.client
-      .read<SimpleResponse<PublicSettings>>()
-      .pipe(map(r => r.content.calendarCode));
+    return this.ucroniaClient.setting.public.get()
+      .pipe(map(s => s.calendarCode));
   }
 
   public getMapCode(): Observable<string> {
-    return this.client
-      .read<SimpleResponse<PublicSettings>>()
-      .pipe(map(r => r.content.mapCode));
+    return this.ucroniaClient.setting.public.get()
+      .pipe(map(s => s.mapCode));
   }
 
   public getInstagramUrl(): string {

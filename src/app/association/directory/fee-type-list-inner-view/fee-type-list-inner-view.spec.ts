@@ -1,16 +1,26 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter } from '@angular/router';
+import { Page } from '@bernardo-mg/request';
+import { FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { of } from 'rxjs';
+import { FeeTypeService } from '../fee-type-service';
 import { FeeTypeListInnerView } from './fee-type-list-inner-view';
 
 describe('FeeTypeListInnerView', () => {
   let component: FeeTypeListInnerView;
   let fixture: ComponentFixture<FeeTypeListInnerView>;
 
+  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>(
+    'FeeTypeService',
+    ['getAll', 'create', 'update', 'delete']
+  );
+
   beforeEach(async () => {
+    feeTypeServiceMock.getAll.and.returnValue(
+      of(new Page<FeeType>())
+    );
+
     await TestBed.configureTestingModule({
       imports: [
         FeeTypeListInnerView
@@ -19,9 +29,7 @@ describe('FeeTypeListInnerView', () => {
         ConfirmationService,
         MessageService,
         provideAnimationsAsync(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
-        provideRouter([])
+        { provide: FeeTypeService, useValue: feeTypeServiceMock }
       ]
     })
       .compileComponents();

@@ -1,0 +1,25 @@
+<p-stepper [value]="currentStep" [linear]="true">
+  <p-step-list>
+    <p-step [value]="1">Socio</p-step>
+    <p-step [value]="2">Fecha</p-step>
+  </p-step-list>
+  <p-step-panels>
+    <p-step-panel [value]="1">
+      <ng-template #content>
+        <!-- Member selection -->
+        <div class="flex items-center w-full justify-between mb-3">
+          <div>Selecciona un socio</div>
+          <assoc-member-status-selector (filter)="onChangeMemberStatus($event)" />
+        </div>
+        <shared-selection-list heading="Socio" [getSelection]="getSelection" (choose)="onSelectMember($event)"
+          [nameRenderer]="nameRenderer" [status]="getSelection" />
+      </ng-template>
+    </p-step-panel>
+    <p-step-panel [value]="2">
+      <ng-template #content>
+        <assoc-fee-payments-form [loading]="loading()" [failures]="failures()" [member]="member()"
+          (save)="save.emit($event)" (return)="onReturnToMembers()" />
+      </ng-template>
+    </p-step-panel>
+  </p-step-panels>
+</p-stepper>

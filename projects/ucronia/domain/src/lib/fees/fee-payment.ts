@@ -1,5 +1,5 @@
 
-export class FeePayment {
+export class FeePayments {
   public member = 0;
   public paymentDate = new FeePaymentTransaction();
   public months: Date[] = [];

@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AccessUserInfo } from './user-info';
+import { UserInfo } from './user-info';
 
-describe('AccessUserForm', () => {
-  let component: AccessUserInfo;
-  let fixture: ComponentFixture<AccessUserInfo>;
+describe('UserInfo', () => {
+  let component: UserInfo;
+  let fixture: ComponentFixture<UserInfo>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        AccessUserInfo
+        UserInfo
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(AccessUserInfo);
+    fixture = TestBed.createComponent(UserInfo);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

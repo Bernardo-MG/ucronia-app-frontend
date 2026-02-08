@@ -5,9 +5,9 @@ import { Router, RouterModule } from '@angular/router';
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookInfo, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from "@ucronia/domain";
+import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -18,7 +18,7 @@ import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
 import { BookReportService } from '../book-report-service';
-import { LibraryBookCreationForm } from '../library-book-creation-form/library-book-creation-form';
+import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
@@ -46,16 +46,16 @@ export class LibraryView implements OnInit {
 
   public selectedData: FictionBook | GameBook = new GameBook();
 
-  public data = new PaginatedResponse<FictionBook | GameBook>();
-  public lendings = new PaginatedResponse<BookLending>();
+  public data = new Page<FictionBook | GameBook>();
+  public lendings = new Page<BookLending>();
 
-  public source: 'game' | 'fiction' = 'game';
+  public source: BookSelection = BookSelection.Game;
   public list: 'books' | 'lendings' = 'books';
 
   public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
   public selectedTab: 'books' | 'lendings' = 'books';
 
-  public bookOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Juegos', value: 'game' }, { label: 'Ficción', value: 'fiction' }];
+  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.Game }, { label: 'Ficción', value: BookSelection.Fiction }];
   public selectedBookView: 'all' | 'game' | 'fiction' = 'game';
 
   /**
@@ -76,15 +76,19 @@ export class LibraryView implements OnInit {
 
   private sort = new Sorting();
 
-  private delete: (number: number) => Observable<BookInfo> = (number) => EMPTY;
-  private update: (data: BookUpdate) => Observable<BookInfo> = (data) => EMPTY;
-  private read: (page: number | undefined, sort: Sorting) => Observable<PaginatedResponse<FictionBook | GameBook>> = (page, sort) => EMPTY;
+  private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
+  private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
+  private read: (page: number | undefined, sort: Sorting) => Observable<Page<FictionBook | GameBook>> = (page, sort) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
   public get borrower(): Borrower {
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
+  }
+
+  public get lentDate(): Date {
+    return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
 
   constructor() {
@@ -144,7 +148,7 @@ export class LibraryView implements OnInit {
     }
   }
 
-  public onCreate(toCreate: { book: BookInfo, kind: 'fiction' | 'game' }): void {
+  public onCreate(toCreate: LibraryBookCreationFormData): void {
     this.call(
       () => {
         if (toCreate.kind === 'game') {
@@ -159,7 +163,7 @@ export class LibraryView implements OnInit {
 
   private onUpdate(toSave: BookUpdate) {
     this.call(
-      () => this.update(toSave),
+      () => this.update(toSave.number, toSave),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
     );
   }
@@ -192,8 +196,8 @@ export class LibraryView implements OnInit {
   }
 
   public onChangeSource(event: SelectButtonChangeEvent) {
-    this.source = event.value as 'game' | 'fiction';
-    if (this.source === 'game') {
+    this.source = event.value as BookSelection;
+    if (this.source === BookSelection.Game) {
       this.delete = this.service.deleteGameBook.bind(this.service);
       this.update = this.service.updateGameBook.bind(this.service);
       this.read = this.service.getAllGameBooks.bind(this.service);
@@ -386,4 +390,9 @@ export class LibraryView implements OnInit {
       });
   }
 
+}
+
+export enum BookSelection {
+  Game = 'game',
+  Fiction = 'fiction'
 }

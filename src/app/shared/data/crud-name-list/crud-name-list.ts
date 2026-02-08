@@ -1,7 +1,7 @@
 import { Component, inject, input, OnInit } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -29,7 +29,7 @@ export class CrudNameList implements OnInit {
 
   public readonly entityKey = input('');
 
-  public data = new PaginatedResponse<any>();
+  public data = new Page<any>();
 
   public loading = false;
 

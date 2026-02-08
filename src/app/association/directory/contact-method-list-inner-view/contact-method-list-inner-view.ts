@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, PaginatedResponse } from '@bernardo-mg/request';
-import { ContactMethod } from "@ucronia/domain";
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
@@ -24,7 +24,7 @@ export class ContactMethodListInnerView implements OnInit {
   public readonly deletable;
 
   public selectedData = new ContactMethod();
-  public contactMethodData = new PaginatedResponse<ContactMethod>();
+  public contactMethodData = new Page<ContactMethod>();
   public contactMethodSelection: ContactMethod[] = [];
 
   /**

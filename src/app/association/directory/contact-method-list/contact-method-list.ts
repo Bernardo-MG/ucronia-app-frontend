@@ -1,5 +1,5 @@
 import { Component, inject, input, output } from '@angular/core';
-import { ContactMethod } from "@ucronia/domain";
+import { ContactMethod } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';

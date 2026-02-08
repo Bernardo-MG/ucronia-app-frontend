@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PaginatedResponse } from '@bernardo-mg/request';
+import { Page } from '@bernardo-mg/request';
 import { TableModule } from 'primeng/table';
 import { of } from 'rxjs';
 import { NameNumber } from '../model/name-number';
@@ -18,7 +18,7 @@ describe('SelectionList', () => {
     component = fixture.componentInstance;
 
     fixture.componentRef.setInput('getSelection', (page: number) => {
-      const response = new PaginatedResponse<NameNumber>();
+      const response = new Page<NameNumber>();
       response.page = page;
       response.size = 10;
       response.totalElements = 30;
