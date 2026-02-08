@@ -163,7 +163,11 @@ export class DirectoryView implements OnInit {
 
     this.mutation(
       this.profileService.update(updated, previousTypes, newTypes),
-      () => this.load(this.profiles.page)
+      () => {
+        this.load(this.profiles.page);
+        this.directoryReportService.getReport()
+          .subscribe(r => this.report = r);
+      }
     );
   }
 
