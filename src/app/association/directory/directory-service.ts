@@ -64,7 +64,7 @@ export class DirectoryService {
       );
   }
 
-  public fullUpdate(toUpdate: ProfileInfo, previousTypes: string[], newTypes: string[]): Observable<Profile> {
+  public update(toUpdate: ProfileInfo, previousTypes: string[], newTypes: string[]): Observable<Profile> {
 
     // Find added types
     const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
@@ -87,57 +87,12 @@ export class DirectoryService {
     }
 
     if (conversions.length === 0) {
-      return this.update(toUpdate);
+      return this.updateProfileInfo(toUpdate);
     }
 
     return forkJoin(conversions).pipe(
-      switchMap(() => this.update(toUpdate))
+      switchMap(() => this.updateProfileInfo(toUpdate))
     );
-  }
-
-  public update(data: ProfileInfo): Observable<Profile> {
-    const update = this.updateProfile(data);
-    const observables: Observable<any>[] = [update];
-
-    if (data.types.includes("guest")) {
-      const guest: Guest = {
-        ...data,
-        games: data.games ? data.games as Date[] : []
-      };
-      observables.push(this.updateGuest(guest));
-    }
-
-    if (data.types.includes("member")) {
-      const member: MemberProfile = {
-        ...data,
-        feeType: data.feeType ? data.feeType : new MemberProfileFeeType(),
-        active: data.active ? true : false,
-        renew: data.renew ? true : false
-      };
-      observables.push(this.updateMember(member));
-    }
-
-    if (data.types.includes("sponsor")) {
-      const sponsor: Sponsor = {
-        ...data,
-        years: data.years ? data.years as number[] : []
-      };
-      observables.push(this.updateSponsor(sponsor));
-    }
-
-    return concat(...observables)
-      .pipe(
-        last(),
-        map(r => r.content),
-        tap(() => {
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Actualizado',
-            detail: 'Datos actualizados',
-            life: 3000
-          });
-        })
-      );
   }
 
   public delete(number: number): Observable<Profile> {
@@ -196,7 +151,7 @@ export class DirectoryService {
       );
   }
 
-  public convertToMember(number: number, feeType: number): Observable<Member> {
+  private convertToMember(number: number, feeType: number): Observable<Member> {
     return this.ucroniaClient.profile.transform.toMember(number, feeType)
       .pipe(
         tap(() => {
@@ -210,7 +165,7 @@ export class DirectoryService {
       );
   }
 
-  public convertToSponsor(number: number): Observable<Sponsor> {
+  private convertToSponsor(number: number): Observable<Sponsor> {
     return this.ucroniaClient.profile.transform.toSponsor(number)
       .pipe(
         tap(() => {
@@ -224,9 +179,54 @@ export class DirectoryService {
       );
   }
 
-  public convertToGuest(number: number): Observable<Guest> {
+  private convertToGuest(number: number): Observable<Guest> {
     return this.ucroniaClient.profile.transform.toGuest(number)
       .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
+  }
+
+  private updateProfileInfo(data: ProfileInfo): Observable<Profile> {
+    const update = this.updateProfile(data);
+    const observables: Observable<any>[] = [update];
+
+    if (data.types.includes("guest")) {
+      const guest: Guest = {
+        ...data,
+        games: data.games ? data.games as Date[] : []
+      };
+      observables.push(this.updateGuest(guest));
+    }
+
+    if (data.types.includes("member")) {
+      const member: MemberProfile = {
+        ...data,
+        feeType: data.feeType ? data.feeType : new MemberProfileFeeType(),
+        active: data.active ? true : false,
+        renew: data.renew ? true : false
+      };
+      observables.push(this.updateMember(member));
+    }
+
+    if (data.types.includes("sponsor")) {
+      const sponsor: Sponsor = {
+        ...data,
+        years: data.years ? data.years as number[] : []
+      };
+      observables.push(this.updateSponsor(sponsor));
+    }
+
+    return concat(...observables)
+      .pipe(
+        last(),
+        map(r => r.content),
         tap(() => {
           this.messageService.add({
             severity: 'info',

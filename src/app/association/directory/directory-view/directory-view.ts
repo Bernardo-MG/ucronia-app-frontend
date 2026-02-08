@@ -162,7 +162,7 @@ export class DirectoryView implements OnInit {
     const newTypes = updated.types ?? [];
 
     this.mutation(
-      this.profileService.fullUpdate(updated, previousTypes, newTypes),
+      this.profileService.update(updated, previousTypes, newTypes),
       () => this.load(this.profiles.page)
     );
   }
