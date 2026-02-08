@@ -152,62 +152,19 @@ export class DirectoryView implements OnInit {
   }
 
   public onUpdate(toUpdate: ProfileInfo): void {
-    const number = this.selectedData.number;
     const updated: ProfileInfo = {
       ...this.selectedData,
       ...toUpdate,
-      number
+      number: this.selectedData.number
     };
 
     const previousTypes = this.selectedData.types ?? [];
     const newTypes = updated.types ?? [];
 
-    // Find added types
-    const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
-
-    const conversions: Observable<any>[] = [];
-
-    // Create conversion calls for new types
-    for (const type of addedTypes) {
-      switch (type) {
-        case 'member':
-          conversions.push(this.profileService.convertToMember(updated.number, updated.feeType?.number as number));
-          break;
-
-        case 'guest':
-          conversions.push(this.profileService.convertToGuest(updated.number));
-          break;
-
-        case 'sponsor':
-          conversions.push(this.profileService.convertToSponsor(updated.number));
-          break;
-      }
-    }
-
-    if (conversions.length === 0) {
-      return this.mutation(
-        this.profileService.update(updated),
-        () => {
-          this.load(this.profiles.page);
-          this.directoryReportService.getReport()
-            .subscribe(r => this.report = r);
-        }
-      );
-    }
-
-    this.loading = true;
-
-    forkJoin(conversions)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        next: () => {
-          this.mutation(
-            this.profileService.update(updated),
-            () => this.load(this.profiles.page)
-          );
-        },
-        error: err => console.error(err)
-      });
+    this.mutation(
+      this.profileService.fullUpdate(updated, previousTypes, newTypes),
+      () => this.load(this.profiles.page)
+    );
   }
 
   public onDelete(number: number) {

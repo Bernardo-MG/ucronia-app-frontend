@@ -64,6 +64,37 @@ export class DirectoryService {
       );
   }
 
+  public fullUpdate(toUpdate: ProfileInfo, previousTypes: string[], newTypes: string[]): Observable<Profile> {
+
+    // Find added types
+    const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
+
+    const conversions: Observable<any>[] = [];
+
+    // Conversion calls for new types
+    for (const type of addedTypes) {
+      switch (type) {
+        case 'member':
+          conversions.push(this.convertToMember(toUpdate.number, toUpdate.feeType?.number as number));
+          break;
+        case 'guest':
+          conversions.push(this.convertToGuest(toUpdate.number));
+          break;
+        case 'sponsor':
+          conversions.push(this.convertToSponsor(toUpdate.number));
+          break;
+      }
+    }
+
+    if (conversions.length === 0) {
+      return this.update(toUpdate);
+    }
+
+    return forkJoin(conversions).pipe(
+      switchMap(() => this.update(toUpdate))
+    );
+  }
+
   public update(data: ProfileInfo): Observable<Profile> {
     const update = this.updateProfile(data);
     const observables: Observable<any>[] = [update];
