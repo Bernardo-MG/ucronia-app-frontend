@@ -19,7 +19,7 @@ export class SponsorEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    name: string
+    name: string | undefined = undefined
   ): Observable<Page<Sponsor>> {
     let params = new HttpParams();
     if (page) {
@@ -32,8 +32,9 @@ export class SponsorEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    params = params.append('status', status);
-    params = params.append('name', name);
+    if (name) {
+      params = params.append('name', name);
+    }
 
     return this.http.get<PaginatedResponse<Sponsor>>(`${this.apiUrl}/sponsor`, { params })
       .pipe(

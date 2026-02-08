@@ -28,7 +28,7 @@ export class ProfileEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    name: string | undefined
+    name: string | undefined = undefined
   ): Observable<Page<Profile>> {
     let params = new HttpParams();
     if (page) {

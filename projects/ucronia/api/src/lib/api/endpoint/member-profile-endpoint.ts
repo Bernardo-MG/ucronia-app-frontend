@@ -18,7 +18,7 @@ export class MemberProfileEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    active: MemberStatus,
+    active: MemberStatus = MemberStatus.All,
     name: string | undefined = undefined
   ): Observable<Page<MemberProfile>> {
     let params = new HttpParams();
