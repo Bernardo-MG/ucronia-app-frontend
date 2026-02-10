@@ -7,7 +7,7 @@ import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class SettingEndpoint {
 
-  private readonly transformProfileEndpoint;
+  private readonly publicSettingEndpoint;
 
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
@@ -15,11 +15,11 @@ export class SettingEndpoint {
     private http: HttpClient,
     private apiUrl: string
   ) {
-    this.transformProfileEndpoint = new PublicSettingEndpoint(http, apiUrl);
+    this.publicSettingEndpoint = new PublicSettingEndpoint(http, apiUrl);
   }
 
   get public() {
-    return this.transformProfileEndpoint;
+    return this.publicSettingEndpoint;
   }
 
   public getAll(): Observable<Setting[]> {
@@ -53,7 +53,7 @@ export class PublicSettingEndpoint {
   ) { }
 
   public get(): Observable<PublicSettings> {
-    return this.http.get<SimpleResponse<PublicSettings>>(`${this.apiUrl}/settings`)
+    return this.http.get<SimpleResponse<PublicSettings>>(`${this.apiUrl}/settings/public`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
