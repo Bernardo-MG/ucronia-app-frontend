@@ -42,19 +42,17 @@ export class PasswordResetEndpoint {
 
   public requestReset(request: PasswordResetRequest): Observable<void> {
     return this.http
-      .post<SimpleResponse<void>>(`${this.apiUrl}/password/reset`, request)
+      .post<void>(`${this.apiUrl}/password/reset`, request)
       .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(r => r.content)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
   public reset(token: string, reset: PasswordReset): Observable<void> {
     return this.http
-      .post<SimpleResponse<void>>(`${this.apiUrl}/password/reset/${token}`, reset)
+      .post<void>(`${this.apiUrl}/password/reset/${token}`, reset)
       .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(r => r.content)
+        catchError(this.errorInterceptor.handle)
       );
   }
 
@@ -80,10 +78,9 @@ export class PasswordChangeEndpoint {
 
   public change(request: PasswordChange): Observable<void> {
     return this.http
-      .post<SimpleResponse<void>>(`${this.apiUrl}/password/change`, request)
+      .post<void>(`${this.apiUrl}/password/change`, request)
       .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(r => r.content)
+        catchError(this.errorInterceptor.handle)
       );
   }
 

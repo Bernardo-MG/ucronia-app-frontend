@@ -27,7 +27,7 @@ export class PasswordResetView {
    */
   public validatingToken = false;
 
-  public waiting = false;
+  public loading = false;
 
   public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
   private token = '';
@@ -52,15 +52,16 @@ export class PasswordResetView {
    * @param password new password for the user
    */
   public onPasswordReset(password: string): void {
-    this.waiting = true;
+    this.loading = true;
 
     this.failures.clear();
 
     this.service.resetPassword(this.token, password)
-      .pipe(finalize(() => this.waiting = false))
+      .pipe(finalize(() => this.loading = false))
       .subscribe({
-        next: () => {
+        complete: () => {
           this.status = 'finished';
+          console.log('Password reset successfully');
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -91,8 +92,8 @@ export class PasswordResetView {
             this.token = token;
           }
         },
-        error: () => {
-          this.status = 'invalid_token';
+        error: (error) => {
+          return throwError(() => error);
         }
       });
   }
