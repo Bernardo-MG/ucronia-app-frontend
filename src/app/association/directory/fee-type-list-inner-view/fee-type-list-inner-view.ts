@@ -97,7 +97,7 @@ export class FeeTypeListInnerView implements OnInit {
     observable
       .pipe(finalize(() => this.loading = false))
       .subscribe({
-        next: () => {
+        complete: () => {
           this.failures.clear();
           this.creating = false;
           this.editing = false;

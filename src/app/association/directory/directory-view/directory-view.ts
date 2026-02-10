@@ -219,7 +219,7 @@ export class DirectoryView implements OnInit {
     observable
       .pipe(finalize(() => this.loading = false))
       .subscribe({
-        next: () => {
+        complete: () => {
           this.failures.clear();
           this.editing = false;
           this.creating = false;
