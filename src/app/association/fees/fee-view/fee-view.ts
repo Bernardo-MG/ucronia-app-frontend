@@ -219,7 +219,7 @@ export class FeeView implements OnInit {
     action()
       .pipe(finalize(() => this.loadingDetail = false))
       .subscribe({
-        next: () => {
+        complete: () => {
           this.failures.clear();
           this.view = 'none';
           this.showing = false;

@@ -167,7 +167,7 @@ export class CrudNameList implements OnInit {
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
-        next: () => {
+        complete: () => {
           this.failures.clear();
           this.view = 'none';
           this.load(this.data.page);

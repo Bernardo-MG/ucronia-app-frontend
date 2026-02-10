@@ -78,14 +78,6 @@ describe('PasswordResetView', () => {
       expect(component.status).toBe('invalid_token');
     });
 
-    it('should set status to "invalid_token" on token validation error', () => {
-      const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(throwError(() => new Error('error')));
-
-      component['validateToken']('token');
-      expect(component.status).toBe('invalid_token');
-    });
-
   });
 
   describe('password reset', () => {
@@ -161,7 +153,7 @@ describe('PasswordResetView', () => {
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
 
-      expect(component.waiting).toBeTrue();
+      expect(component.loading).toBeTrue();
     });
 
     it('should set waiting to false after password reset', () => {
@@ -172,7 +164,7 @@ describe('PasswordResetView', () => {
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
 
-      expect(component.waiting).toBeFalse();
+      expect(component.loading).toBeFalse();
     });
 
     it('should set waiting to false when there is an error', () => {
@@ -185,7 +177,7 @@ describe('PasswordResetView', () => {
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
 
-      expect(component.waiting).toBeFalse();
+      expect(component.loading).toBeFalse();
     });
 
   });

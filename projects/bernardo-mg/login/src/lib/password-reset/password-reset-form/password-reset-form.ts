@@ -5,6 +5,8 @@ import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
@@ -13,7 +15,7 @@ import { MessageModule } from 'primeng/message';
  */
 @Component({
   selector: 'login-password-reset-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, IconFieldModule, InputIconModule],
   templateUrl: './password-reset-form.html'
 })
 export class PasswordResetForm implements OnChanges {
