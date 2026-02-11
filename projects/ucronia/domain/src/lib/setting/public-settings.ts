@@ -1,4 +1,6 @@
 export class PublicSettings {
-  calendarCode = '';
-  mapCode = '';
+  calendar = '';
+  map = '';
+  email = '';
+  instagram = '';
 }

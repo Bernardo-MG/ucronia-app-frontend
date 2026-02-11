@@ -30,10 +30,10 @@ export class Frontpage implements OnInit {
 
   public ngOnInit(): void {
     // Read calendar code
-    this.service.getCalendarCode()
+    this.service.getCalendar()
       .subscribe(response => this.calendarCode = response);
     // Read location code
-    this.service.getMapCode()
+    this.service.getMap()
       .subscribe(response => this.locationCode = response);
   }
 
