@@ -8,11 +8,11 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'assoc-third-party-settings-form',
+  selector: 'assoc-social-settings-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, ButtonModule],
-  templateUrl: './third-party-settings-form.html'
+  templateUrl: './social-settings-form.html'
 })
-export class ThirdPartySettingsForm implements OnChanges {
+export class SocialSettingsForm implements OnChanges {
 
   public readonly googleMaps = input('');
   public readonly teamUp = input('');

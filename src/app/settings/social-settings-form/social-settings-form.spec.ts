@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ThirdPartySettingsForm } from './third-party-settings-form';
+import { SocialSettingsForm } from './social-settings-form';
 
 describe('ThirdPartySettingsForm', () => {
-  let component: ThirdPartySettingsForm;
-  let fixture: ComponentFixture<ThirdPartySettingsForm>;
+  let component: SocialSettingsForm;
+  let fixture: ComponentFixture<SocialSettingsForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ThirdPartySettingsForm]
+      imports: [SocialSettingsForm]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ThirdPartySettingsForm);
+    fixture = TestBed.createComponent(SocialSettingsForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -6,11 +6,11 @@ import { Setting } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
-import { ThirdPartySettingsForm } from '../third-party-settings-form/third-party-settings-form';
+import { SocialSettingsForm } from '../social-settings-form/social-settings-form';
 
 @Component({
   selector: 'assoc-settings-view',
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ThirdPartySettingsForm],
+  imports: [CardModule, ReactiveFormsModule, FormsModule, SocialSettingsForm],
   templateUrl: './settings-view.html'
 })
 export class SettingsView implements OnInit {

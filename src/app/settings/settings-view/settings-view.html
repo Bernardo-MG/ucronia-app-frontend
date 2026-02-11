@@ -4,7 +4,7 @@
   </header>
   <div class="max-w-2xl mx-auto space-y-6">
   <p-card>
-    <assoc-third-party-settings-form [loading]="loading" [googleMaps]="getSetting('social.googleMap.id')"
+    <assoc-social-settings-form [loading]="loading" [googleMaps]="getSetting('social.googleMap.id')"
       [teamUp]="getSetting('social.teamup.id')" (save)="onSaveThirdPartySettings($event)" />
   </p-card>
   
