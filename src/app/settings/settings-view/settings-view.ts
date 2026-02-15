@@ -5,11 +5,11 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
-import { SocialSettingsForm, SocialSettingsFormEvent } from '../social-settings-form/social-settings-form';
+import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
 
 @Component({
   selector: 'assoc-settings-view',
-  imports: [CardModule, ReactiveFormsModule, FormsModule, SocialSettingsForm],
+  imports: [CardModule, ReactiveFormsModule, FormsModule, ContactSettingsForm],
   templateUrl: './settings-view.html'
 })
 export class SettingsView implements OnInit {

@@ -4,7 +4,8 @@
   </header>
   <div class="max-w-2xl mx-auto space-y-6">
     <p-card>
-      <assoc-social-settings-form [loading]="loading" [googleMaps]="map" [teamUp]="calendar" [instagram]="instagram"
+        <h2 class="text-2xl font-semibold mb-2">Contacto y redes sociales</h2>
+      <assoc-contact-settings-form [loading]="loading" [googleMaps]="map" [teamUp]="calendar" [instagram]="instagram"
         (save)="onSaveThirdPartySettings($event)" />
     </p-card>
   </div>
