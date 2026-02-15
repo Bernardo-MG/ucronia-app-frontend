@@ -23,6 +23,18 @@ export class SettingsView implements OnInit {
 
   public loading = false;
 
+  public get map(): string {
+    return this.getSetting('social.googleMap.id');
+  }
+
+  public get calendar(): string {
+    return this.getSetting('social.teamup.id');
+  }
+
+  public get instagram(): string {
+    return this.getSetting('social.instagram');
+  }
+
   constructor() {
     const authService = inject(AuthService);
 
@@ -33,10 +45,6 @@ export class SettingsView implements OnInit {
   public ngOnInit(): void {
     this.service.getAll()
       .subscribe(response => this.settings = response);
-  }
-
-  public getSetting(code: string) {
-    return this.settings.find(s => s.code === code)?.value ?? '';
   }
 
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
@@ -55,6 +63,10 @@ export class SettingsView implements OnInit {
     this.service.updateFeeAmount(values.feeAmount)
       .pipe(finalize(() => this.loading = false))
       .subscribe();
+  }
+
+  private getSetting(code: string) {
+    return this.settings.find(s => s.code === code)?.value ?? '';
   }
 
 }

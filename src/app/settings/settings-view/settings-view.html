@@ -4,8 +4,7 @@
   </header>
   <div class="max-w-2xl mx-auto space-y-6">
     <p-card>
-      <assoc-social-settings-form [loading]="loading" [googleMaps]="getSetting('social.googleMap.id')"
-        [teamUp]="getSetting('social.teamup.id')" [instagram]="getSetting('social.instagram')"
+      <assoc-social-settings-form [loading]="loading" [googleMaps]="map" [teamUp]="calendar" [instagram]="instagram"
         (save)="onSaveThirdPartySettings($event)" />
     </p-card>
   </div>
