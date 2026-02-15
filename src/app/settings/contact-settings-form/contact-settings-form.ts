@@ -33,9 +33,10 @@ export class ContactSettingsForm implements OnChanges {
     const formBuilder = inject(FormBuilder);
 
     this.form = formBuilder.nonNullable.group({
+      email: [''],
+      instagram: [''],
       googleMaps: [''],
-      teamUp: [''],
-      instagram: ['']
+      teamUp: ['']
     });
 
     this.formStatus = new FormStatus(this.form);
