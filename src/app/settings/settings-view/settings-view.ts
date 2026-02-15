@@ -42,10 +42,10 @@ export class SettingsView implements OnInit {
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe(r => {
-        this.email = r.email.value;
-        this.instagram = r.instagram.value;
-        this.map = r.googleMaps.value;
-        this.calendar = r.teamUp.value;
+        this.email = r.email;
+        this.instagram = r.instagram;
+        this.map = r.googleMaps;
+        this.calendar = r.teamUp;
       });
   }
 

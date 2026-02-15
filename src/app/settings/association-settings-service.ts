@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
 import { Setting } from '@ucronia/domain';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -14,20 +14,24 @@ export class AssociationSettingsService {
     return this.ucroniaClient.setting.getAll();
   }
 
-  public getEmail(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("contact.email");
+  public getEmail(): Observable<string> {
+    return this.ucroniaClient.setting.get("contact.email")
+      .pipe(map(setting => setting.value));
   }
 
-  public getInstagram(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("contact.instagram");
+  public getInstagram(): Observable<string> {
+    return this.ucroniaClient.setting.get("contact.instagram")
+      .pipe(map(setting => setting.value));
   }
 
-  public getMap(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("contact.googleMap");
+  public getMap(): Observable<string> {
+    return this.ucroniaClient.setting.get("contact.googleMap")
+      .pipe(map(setting => setting.value));
   }
 
-  public getCalendar(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("contact.teamup");
+  public getCalendar(): Observable<string> {
+    return this.ucroniaClient.setting.get("contact.teamup")
+      .pipe(map(setting => setting.value));
   }
 
   public updateInstagram(instagram: string): Observable<Setting> {
