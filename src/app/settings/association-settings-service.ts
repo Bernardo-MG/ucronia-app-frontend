@@ -26,10 +26,6 @@ export class AssociationSettingsService {
     return this.ucroniaClient.setting.get("social.instagram");
   }
 
-  public updateFeeAmount(feeAmount: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("fee.amount", { value: feeAmount });
-  }
-
   public updateInstagram(instagram: string): Observable<Setting> {
     return this.ucroniaClient.setting.update("social.instagram", { value: instagram });
   }

@@ -74,11 +74,4 @@ export class SettingsView implements OnInit {
     }
   }
 
-  public onSaveMembershipSettings(values: { feeAmount: string }) {
-    this.loading = true;
-    this.service.updateFeeAmount(values.feeAmount)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe();
-  }
-
 }
