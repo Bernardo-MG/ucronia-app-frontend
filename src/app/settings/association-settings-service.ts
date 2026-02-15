@@ -15,35 +15,35 @@ export class AssociationSettingsService {
   }
 
   public getEmail(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("social.email");
+    return this.ucroniaClient.setting.get("contact.email");
   }
 
   public getInstagram(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("social.instagram");
+    return this.ucroniaClient.setting.get("contact.instagram");
   }
 
   public getMap(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("social.googleMap.id");
+    return this.ucroniaClient.setting.get("contact.googleMap");
   }
 
   public getCalendar(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("social.teamup.id");
+    return this.ucroniaClient.setting.get("contact.teamup");
   }
 
   public updateInstagram(instagram: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("social.instagram", { value: instagram });
+    return this.ucroniaClient.setting.update("contact.instagram", { value: instagram });
   }
 
   public updateEmail(email: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("social.email", { value: email });
+    return this.ucroniaClient.setting.update("contact.email", { value: email });
   }
 
   public updateMap(mapId: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("social.googleMap.id", { value: mapId });
+    return this.ucroniaClient.setting.update("contact.googleMap", { value: mapId });
   }
 
   public updateCalendar(calendarId: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("social.teamup.id", { value: calendarId });
+    return this.ucroniaClient.setting.update("contact.teamup", { value: calendarId });
   }
 
 }
