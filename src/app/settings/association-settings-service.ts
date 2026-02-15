@@ -14,16 +14,20 @@ export class AssociationSettingsService {
     return this.ucroniaClient.setting.getAll();
   }
 
+  public getEmail(): Observable<Setting> {
+    return this.ucroniaClient.setting.get("social.email");
+  }
+
+  public getInstagram(): Observable<Setting> {
+    return this.ucroniaClient.setting.get("social.instagram");
+  }
+
   public getMap(): Observable<Setting> {
     return this.ucroniaClient.setting.get("social.googleMap.id");
   }
 
   public getCalendar(): Observable<Setting> {
     return this.ucroniaClient.setting.get("social.teamup.id");
-  }
-
-  public getInstagram(): Observable<Setting> {
-    return this.ucroniaClient.setting.get("social.instagram");
   }
 
   public updateInstagram(instagram: string): Observable<Setting> {

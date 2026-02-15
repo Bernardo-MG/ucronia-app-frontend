@@ -14,9 +14,10 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class ContactSettingsForm implements OnChanges {
 
+  public readonly email = input('');
+  public readonly instagram = input('');
   public readonly googleMaps = input('');
   public readonly teamUp = input('');
-  public readonly instagram = input('');
   public readonly loading = input(false);
 
   public readonly save = output<SocialSettingsFormEvent>();
@@ -40,18 +41,21 @@ export class ContactSettingsForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, googleMaps, teamUp, instagram }: SimpleChanges): void {
+  public ngOnChanges({ loading, email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (loading) {
       this.formStatus.loading = this.loading();
+    }
+    if (instagram) {
+      this.form.get('instagram')?.setValue(instagram.currentValue);
+    }
+    if (email) {
+      this.form.get('email')?.setValue(email.currentValue);
     }
     if (googleMaps) {
       this.form.get('googleMaps')?.setValue(googleMaps.currentValue);
     }
     if (teamUp) {
       this.form.get('teamUp')?.setValue(teamUp.currentValue);
-    }
-    if (instagram) {
-      this.form.get('instagram')?.setValue(instagram.currentValue);
     }
   }
 

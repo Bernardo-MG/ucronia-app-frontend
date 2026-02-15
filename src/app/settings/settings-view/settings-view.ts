@@ -16,9 +16,10 @@ export class SettingsView implements OnInit {
 
   private readonly service = inject(AssociationSettingsService);
 
+  public email = '';
+  public instagram = '';
   public map = '';
   public calendar = '';
-  public instagram = '';
 
   public readonly editable;
   public loading = false;
@@ -34,15 +35,17 @@ export class SettingsView implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
+      email: this.service.getEmail(),
+      instagram: this.service.getInstagram(),
       googleMaps: this.service.getMap(),
-      teamUp: this.service.getCalendar(),
-      instagram: this.service.getInstagram()
+      teamUp: this.service.getCalendar()
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe(r => {
+        this.email = r.email.value;
+        this.instagram = r.instagram.value;
         this.map = r.googleMaps.value;
         this.calendar = r.teamUp.value;
-        this.instagram = r.instagram.value;
       });
   }
 
