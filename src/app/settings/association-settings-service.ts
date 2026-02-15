@@ -14,8 +14,20 @@ export class AssociationSettingsService {
     return this.ucroniaClient.setting.getAll();
   }
 
-  public update(code: string, setting: SettingUpdate): Observable<Setting> {
-    return this.ucroniaClient.setting.update(code,setting);
+  public updateFeeAmount(feeAmount: string): Observable<Setting> {
+    return this.ucroniaClient.setting.update("fee.amount", { value: feeAmount });
+  }
+
+  public updateMap(mapId: string): Observable<Setting> {
+    return this.ucroniaClient.setting.update("social.googleMap.id", { value: mapId });
+  }
+
+  public updateCalendar(calendarId: string): Observable<Setting> {
+    return this.ucroniaClient.setting.update("social.teamup.id", { value: calendarId });
+  }
+
+  public updateInstagram(instagram: string): Observable<Setting> {
+    return this.ucroniaClient.setting.update("social.instagram", { value: instagram });
   }
 
 }

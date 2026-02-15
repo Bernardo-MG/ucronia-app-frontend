@@ -35,10 +35,6 @@ export class SettingsView implements OnInit {
       .subscribe(response => this.settings = response);
   }
 
-  public onSaveConfig(config: Setting) {
-    return this.service.update(config.code, config).subscribe();
-  }
-
   public getSetting(code: string) {
     return this.settings.find(s => s.code === code)?.value ?? '';
   }
@@ -46,22 +42,17 @@ export class SettingsView implements OnInit {
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
     this.loading = true;
     forkJoin({
-      googleMaps: this.service.update("social.googleMap.id", { value: values.googleMaps }),
-      teamUp: this.service.update("social.teamup.id", { value: values.teamUp }),
-      instagram: this.service.update("social.instagram", { value: values.instagram })
+      googleMaps: this.service.updateMap(values.googleMaps),
+      teamUp: this.service.updateCalendar(values.teamUp),
+      instagram: this.service.updateInstagram(values.instagram)
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe();
   }
 
   public onSaveMembershipSettings(values: { feeAmount: string }) {
-    const feeAmountSetting = {
-      value: values.feeAmount
-    };
     this.loading = true;
-    forkJoin({
-      googleMaps: this.service.update("fee.amount", feeAmountSetting)
-    })
+    this.service.updateFeeAmount(values.feeAmount)
       .pipe(finalize(() => this.loading = false))
       .subscribe();
   }
