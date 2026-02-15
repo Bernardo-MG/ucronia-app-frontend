@@ -32,7 +32,8 @@ export class SocialSettingsForm implements OnChanges {
 
     this.form = formBuilder.nonNullable.group({
       googleMaps: [''],
-      teamUp: ['']
+      teamUp: [''],
+      instagram: ['']
     });
 
     this.formStatus = new FormStatus(this.form);
