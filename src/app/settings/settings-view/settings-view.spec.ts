@@ -10,7 +10,7 @@ describe('SettingsView', () => {
 
   const ucroniaClientMock = {
     setting: {
-      getAll: jasmine.createSpy().and.returnValue(of([])),
+      get: jasmine.createSpy().and.returnValue(of({})),
       update: jasmine.createSpy().and.returnValue(of({}))
     }
   };
