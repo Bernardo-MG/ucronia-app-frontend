@@ -1,5 +1,21 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <h1 class="border-b border-gray-300 text-4xl font-semibold">Servicios de terceros</h1>
+
+  <p-floatlabel variant="in" class="flex mb-2">
+    <p-icon-field>
+      <p-inputicon class="pi pi-envelope" />
+      <input pInputText type="text" id="emailInput" formControlName="email" class="w-full" />
+    </p-icon-field>
+    <label for="emailInput">Email</label>
+  </p-floatlabel>
+
+  <p-floatlabel variant="in" class="flex mb-2">
+    <p-icon-field>
+      <p-inputicon class="pi pi-instagram" />
+      <input pInputText type="text" id="instagramInput" formControlName="instagram" class="w-full" />
+    </p-icon-field>
+    <label for="instagramInput">Instagram</label>
+  </p-floatlabel>
+
   <p-floatlabel variant="in" class="flex mb-2">
     <p-icon-field>
       <p-inputicon class="pi pi-map-marker" />
@@ -7,6 +23,7 @@
     </p-icon-field>
     <label for="googleMapsInput">Google maps</label>
   </p-floatlabel>
+
   <p-floatlabel variant="in" class="flex mb-2">
     <p-icon-field>
       <p-inputicon class="pi pi-calendar" />

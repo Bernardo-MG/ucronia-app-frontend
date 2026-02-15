@@ -9,14 +9,14 @@ export class FrontpageService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getCalendarCode(): Observable<string> {
+  public getCalendar(): Observable<string> {
     return this.ucroniaClient.setting.public.get()
-      .pipe(map(s => s.calendarCode));
+      .pipe(map(s => s.calendar));
   }
 
-  public getMapCode(): Observable<string> {
+  public getMap(): Observable<string> {
     return this.ucroniaClient.setting.public.get()
-      .pipe(map(s => s.mapCode));
+      .pipe(map(s => s.map));
   }
 
   public getInstagramUrl(): string {

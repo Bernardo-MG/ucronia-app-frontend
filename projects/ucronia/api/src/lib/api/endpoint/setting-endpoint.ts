@@ -30,6 +30,16 @@ export class SettingEndpoint {
       );
   }
 
+  public get(
+    code: string
+  ): Observable<Setting> {
+    return this.http.get<SimpleResponse<Setting>>(`${this.apiUrl}/settings/${code}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
   public update(
     code: string,
     data: SettingUpdate

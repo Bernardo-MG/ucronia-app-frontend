@@ -2,73 +2,79 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
-import { Setting } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
-import { ThirdPartySettingsForm } from '../third-party-settings-form/third-party-settings-form';
+import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
 
 @Component({
   selector: 'assoc-settings-view',
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ThirdPartySettingsForm],
+  imports: [CardModule, ReactiveFormsModule, FormsModule, ContactSettingsForm],
   templateUrl: './settings-view.html'
 })
 export class SettingsView implements OnInit {
 
   private readonly service = inject(AssociationSettingsService);
 
-  public settings: Setting[] = [];
+  public email = '';
+  public instagram = '';
+  public map = '';
+  public calendar = '';
 
   public readonly editable;
-
   public loading = false;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
+    // TODO: apply this permission
     this.editable = authService.hasPermission("association_settings", "update");
   }
 
   public ngOnInit(): void {
-    this.service.getAll()
-      .subscribe(response => this.settings = response);
-  }
-
-  public onSaveConfig(config: Setting) {
-    return this.service.update(config.code, config).subscribe();
-  }
-
-  public getSetting(code: string) {
-    return this.settings.find(s => s.code === code)?.value ?? '';
-  }
-
-  public onSaveThirdPartySettings(values: { googleMaps: string, teamUp: string }) {
-    const googleMapsSetting = {
-      value: values.googleMaps
-    };
-    const teamUpSetting = {
-      value: values.teamUp
-    };
     this.loading = true;
     forkJoin({
-      googleMaps: this.service.update("social.googleMap.id", googleMapsSetting),
-      teamUp: this.service.update("social.teamup.id", teamUpSetting)
+      email: this.service.getEmail(),
+      instagram: this.service.getInstagram(),
+      googleMaps: this.service.getMap(),
+      teamUp: this.service.getCalendar()
     })
       .pipe(finalize(() => this.loading = false))
-      .subscribe();
+      .subscribe(r => {
+        this.email = r.email;
+        this.instagram = r.instagram;
+        this.map = r.googleMaps;
+        this.calendar = r.teamUp;
+      });
   }
 
-  public onSaveMembershipSettings(values: { feeAmount: string }) {
-    const feeAmountSetting = {
-      value: values.feeAmount
-    };
-    this.loading = true;
-    forkJoin({
-      googleMaps: this.service.update("fee.amount", feeAmountSetting)
-    })
-      .pipe(finalize(() => this.loading = false))
-      .subscribe();
+  public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
+    const updates = [];
+
+    if (values.email !== undefined) {
+      updates.push(this.service.updateEmail(values.email));
+    }
+
+    if (values.instagram !== undefined) {
+      updates.push(this.service.updateInstagram(values.instagram));
+    }
+
+    if (values.googleMaps !== undefined) {
+      updates.push(this.service.updateMap(values.googleMaps));
+    }
+
+    if (values.teamUp !== undefined) {
+      updates.push(this.service.updateCalendar(values.teamUp));
+    }
+
+    if (updates.length > 0) {
+      this.loading = true;
+
+      forkJoin(updates)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe();
+    }
   }
 
 }
