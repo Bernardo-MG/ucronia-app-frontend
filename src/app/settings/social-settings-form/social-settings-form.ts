@@ -60,8 +60,17 @@ export class SocialSettingsForm implements OnChanges {
    */
   public onSave() {
     if (this.form.valid) {
-      // Valid form, can emit data
-      this.save.emit(this.form.value);
+      const changedValues: any = {};
+
+      Object.entries(this.form.controls).forEach(([key, control]) => {
+        if (control.dirty) {
+          changedValues[key] = control.value;
+        }
+      });
+
+      if (Object.keys(changedValues).length > 0) {
+        this.save.emit(changedValues);
+      }
     }
   }
 
@@ -69,9 +78,8 @@ export class SocialSettingsForm implements OnChanges {
 
 export class SocialSettingsFormEvent {
   constructor(
-    public googleMaps: string,
-    public teamUp: string,
-    public instagram: string
-  ) {
-  }
+    public googleMaps?: string,
+    public teamUp?: string,
+    public instagram?: string
+  ) { }
 }

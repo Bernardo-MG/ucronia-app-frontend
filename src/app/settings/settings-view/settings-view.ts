@@ -47,14 +47,27 @@ export class SettingsView implements OnInit {
   }
 
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
-    this.loading = true;
-    forkJoin({
-      googleMaps: this.service.updateMap(values.googleMaps),
-      teamUp: this.service.updateCalendar(values.teamUp),
-      instagram: this.service.updateInstagram(values.instagram)
-    })
-      .pipe(finalize(() => this.loading = false))
-      .subscribe();
+    const updates = [];
+
+    if (values.googleMaps !== undefined) {
+      updates.push(this.service.updateMap(values.googleMaps));
+    }
+
+    if (values.teamUp !== undefined) {
+      updates.push(this.service.updateCalendar(values.teamUp));
+    }
+
+    if (values.instagram !== undefined) {
+      updates.push(this.service.updateInstagram(values.instagram));
+    }
+
+    if (updates.length > 0) {
+      this.loading = true;
+
+      forkJoin(updates)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe();
+    }
   }
 
   public onSaveMembershipSettings(values: { feeAmount: string }) {
