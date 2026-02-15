@@ -8,17 +8,19 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
-  selector: 'assoc-third-party-settings-form',
+  selector: 'assoc-contact-settings-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, ButtonModule],
-  templateUrl: './third-party-settings-form.html'
+  templateUrl: './contact-settings-form.html'
 })
-export class ThirdPartySettingsForm implements OnChanges {
+export class ContactSettingsForm implements OnChanges {
 
+  public readonly email = input('');
+  public readonly instagram = input('');
   public readonly googleMaps = input('');
   public readonly teamUp = input('');
   public readonly loading = input(false);
 
-  public readonly save = output<{ googleMaps: string, teamUp: string }>();
+  public readonly save = output<SocialSettingsFormEvent>();
 
   public formStatus: FormStatus;
 
@@ -31,6 +33,8 @@ export class ThirdPartySettingsForm implements OnChanges {
     const formBuilder = inject(FormBuilder);
 
     this.form = formBuilder.nonNullable.group({
+      email: [''],
+      instagram: [''],
       googleMaps: [''],
       teamUp: ['']
     });
@@ -38,9 +42,15 @@ export class ThirdPartySettingsForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, googleMaps, teamUp }: SimpleChanges): void {
+  public ngOnChanges({ loading, email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (loading) {
-      this.formStatus.loading = this.loading();
+      this.formStatus.loading = loading.currentValue;
+    }
+    if (instagram) {
+      this.form.get('instagram')?.setValue(instagram.currentValue);
+    }
+    if (email) {
+      this.form.get('email')?.setValue(email.currentValue);
     }
     if (googleMaps) {
       this.form.get('googleMaps')?.setValue(googleMaps.currentValue);
@@ -55,9 +65,27 @@ export class ThirdPartySettingsForm implements OnChanges {
    */
   public onSave() {
     if (this.form.valid) {
-      // Valid form, can emit data
-      this.save.emit(this.form.value);
+      const changedValues: any = {};
+
+      Object.entries(this.form.controls).forEach(([key, control]) => {
+        if (control.dirty) {
+          changedValues[key] = control.value;
+        }
+      });
+
+      if (Object.keys(changedValues).length > 0) {
+        this.save.emit(changedValues);
+      }
     }
   }
 
+}
+
+export class SocialSettingsFormEvent {
+  constructor(
+    public instagram?: string,
+    public email?: string,
+    public googleMaps?: string,
+    public teamUp?: string
+  ) { }
 }

@@ -13,8 +13,9 @@
     </header>
 
     <div class="px-2">
-      <ui-teamup-calendar [code]="calendarCode" [showSearch]="true" [showViewSelector]="true" [showSidePanel]="true"
-        [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true" [disableSidePanel]="true">
+      <ui-teamup-calendar [code]="settings.calendar" [showSearch]="true" [showViewSelector]="true"
+        [showSidePanel]="true" [showViewSelector]="true" [showAgendaHeader]="true" [showYearViewHeader]="true"
+        [disableSidePanel]="true">
       </ui-teamup-calendar>
     </div>
   </div>
@@ -26,7 +27,7 @@
     </header>
 
     <div class="px-2">
-      <ui-google-maps [code]="locationCode"></ui-google-maps>
+      <ui-google-maps [code]="settings.map"></ui-google-maps>
     </div>
   </div>
 
@@ -36,10 +37,10 @@
   </header>
 
   <div class="flex justify-center space-x-6 pt-4">
-    <a [href]="instagramLink">
+    <a [href]="settings.instagram">
       <img src="img/Instagram_Glyph_Black.svg" alt="Instagram" class="w-12 h-12">
     </a>
-    <a [href]="emailLink">
+    <a [href]="'mailto:' + settings.email">
       <img src="img/email-icon.png" alt="Email" class="w-12 h-12">
     </a>
   </div>
