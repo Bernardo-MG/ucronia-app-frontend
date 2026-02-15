@@ -44,7 +44,7 @@ export class ContactSettingsForm implements OnChanges {
 
   public ngOnChanges({ loading, email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (loading) {
-      this.formStatus.loading = this.loading();
+      this.formStatus.loading = loading.currentValue;
     }
     if (instagram) {
       this.form.get('instagram')?.setValue(instagram.currentValue);
