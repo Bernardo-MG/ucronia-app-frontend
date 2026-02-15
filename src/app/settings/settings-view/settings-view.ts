@@ -31,12 +31,18 @@ export class SettingsView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.service.getMap()
-      .subscribe(map => this.map = map.value);
-    this.service.getCalendar()
-      .subscribe(calendar => this.calendar = calendar.value);
-    this.service.getInstagram()
-      .subscribe(instagram => this.instagram = instagram.value);
+    this.loading = true;
+    forkJoin({
+      googleMaps: this.service.getMap(),
+      teamUp: this.service.getCalendar(),
+      instagram: this.service.getInstagram()
+    })
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(r => {
+        this.map = r.googleMaps.value;
+        this.calendar = r.teamUp.value;
+        this.instagram = r.instagram.value;
+      });
   }
 
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
