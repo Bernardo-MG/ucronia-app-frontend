@@ -3,9 +3,10 @@
     <h1 class="text-4xl font-bold">Configuración</h1>
   </header>
   <div class="max-w-2xl mx-auto space-y-6">
-  <p-card>
-    <assoc-social-settings-form [loading]="loading" [googleMaps]="getSetting('social.googleMap.id')"
-      [teamUp]="getSetting('social.teamup.id')" (save)="onSaveThirdPartySettings($event)" />
-  </p-card>
-  
+    <p-card>
+      <assoc-social-settings-form [loading]="loading" [googleMaps]="getSetting('social.googleMap.id')"
+        [teamUp]="getSetting('social.teamup.id')" [instagram]="getSetting('social.instagram')"
+        (save)="onSaveThirdPartySettings($event)" />
+    </p-card>
+  </div>
 </div>

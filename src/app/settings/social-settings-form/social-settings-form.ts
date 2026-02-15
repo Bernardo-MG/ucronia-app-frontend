@@ -16,9 +16,10 @@ export class SocialSettingsForm implements OnChanges {
 
   public readonly googleMaps = input('');
   public readonly teamUp = input('');
+  public readonly instagram = input('');
   public readonly loading = input(false);
 
-  public readonly save = output<{ googleMaps: string, teamUp: string }>();
+  public readonly save = output<SocialSettingsFormEvent>();
 
   public formStatus: FormStatus;
 
@@ -39,7 +40,7 @@ export class SocialSettingsForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, googleMaps, teamUp }: SimpleChanges): void {
+  public ngOnChanges({ loading, googleMaps, teamUp, instagram }: SimpleChanges): void {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
@@ -48,6 +49,9 @@ export class SocialSettingsForm implements OnChanges {
     }
     if (teamUp) {
       this.form.get('teamUp')?.setValue(teamUp.currentValue);
+    }
+    if (instagram) {
+      this.form.get('instagram')?.setValue(instagram.currentValue);
     }
   }
 
@@ -61,4 +65,13 @@ export class SocialSettingsForm implements OnChanges {
     }
   }
 
+}
+
+export class SocialSettingsFormEvent {
+  constructor(
+    public googleMaps: string,
+    public teamUp: string,
+    public instagram: string
+  ) {
+  }
 }

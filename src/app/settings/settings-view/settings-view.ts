@@ -6,7 +6,7 @@ import { Setting } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
-import { SocialSettingsForm } from '../social-settings-form/social-settings-form';
+import { SocialSettingsForm, SocialSettingsFormEvent } from '../social-settings-form/social-settings-form';
 
 @Component({
   selector: 'assoc-settings-view',
@@ -43,17 +43,12 @@ export class SettingsView implements OnInit {
     return this.settings.find(s => s.code === code)?.value ?? '';
   }
 
-  public onSaveThirdPartySettings(values: { googleMaps: string, teamUp: string }) {
-    const googleMapsSetting = {
-      value: values.googleMaps
-    };
-    const teamUpSetting = {
-      value: values.teamUp
-    };
+  public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
     this.loading = true;
     forkJoin({
-      googleMaps: this.service.update("social.googleMap.id", googleMapsSetting),
-      teamUp: this.service.update("social.teamup.id", teamUpSetting)
+      googleMaps: this.service.update("social.googleMap.id", { value: values.googleMaps }),
+      teamUp: this.service.update("social.teamup.id", { value: values.teamUp }),
+      instagram: this.service.update("social.instagram", { value: values.instagram })
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe();
