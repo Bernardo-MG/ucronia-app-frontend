@@ -78,8 +78,9 @@ export class ContactSettingsForm implements OnChanges {
 
 export class SocialSettingsFormEvent {
   constructor(
+    public instagram?: string,
+    public email?: string,
     public googleMaps?: string,
-    public teamUp?: string,
-    public instagram?: string
+    public teamUp?: string
   ) { }
 }

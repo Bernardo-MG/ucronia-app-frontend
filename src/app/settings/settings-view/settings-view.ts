@@ -49,16 +49,20 @@ export class SettingsView implements OnInit {
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
     const updates = [];
 
+    if (values.email !== undefined) {
+      updates.push(this.service.updateEmail(values.email));
+    }
+
+    if (values.instagram !== undefined) {
+      updates.push(this.service.updateInstagram(values.instagram));
+    }
+
     if (values.googleMaps !== undefined) {
       updates.push(this.service.updateMap(values.googleMaps));
     }
 
     if (values.teamUp !== undefined) {
       updates.push(this.service.updateCalendar(values.teamUp));
-    }
-
-    if (values.instagram !== undefined) {
-      updates.push(this.service.updateInstagram(values.instagram));
     }
 
     if (updates.length > 0) {

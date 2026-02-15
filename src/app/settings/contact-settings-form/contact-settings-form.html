@@ -2,6 +2,22 @@
 
   <p-floatlabel variant="in" class="flex mb-2">
     <p-icon-field>
+      <p-inputicon class="pi pi-instagram" />
+      <input pInputText type="text" id="instagramInput" formControlName="instagram" class="w-full" />
+    </p-icon-field>
+    <label for="instagramInput">Instagram</label>
+  </p-floatlabel>
+
+  <p-floatlabel variant="in" class="flex mb-2">
+    <p-icon-field>
+      <p-inputicon class="pi pi-envelope" />
+      <input pInputText type="text" id="emailInput" formControlName="email" class="w-full" />
+    </p-icon-field>
+    <label for="emailInput">Email</label>
+  </p-floatlabel>
+
+  <p-floatlabel variant="in" class="flex mb-2">
+    <p-icon-field>
       <p-inputicon class="pi pi-map-marker" />
       <input pInputText type="text" id="googleMapsInput" formControlName="googleMaps" class="w-full" />
     </p-icon-field>
@@ -14,14 +30,6 @@
       <input pInputText type="text" id="teamUpInput" formControlName="teamUp" class="w-full" />
     </p-icon-field>
     <label for="teamUpInput">Team Up</label>
-  </p-floatlabel>
-
-  <p-floatlabel variant="in" class="flex mb-2">
-    <p-icon-field>
-      <p-inputicon class="pi pi-instagram" />
-      <input pInputText type="text" id="instagramInput" formControlName="instagram" class="w-full" />
-    </p-icon-field>
-    <label for="instagramInput">Instagram</label>
   </p-floatlabel>
 
   <p-button type="submit" name="Guardar" [loading]="loading()">
