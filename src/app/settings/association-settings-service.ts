@@ -1,12 +1,15 @@
-import { Injectable, inject } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
 import { Setting } from '@ucronia/domain';
-import { map, Observable } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
 export class AssociationSettingsService {
+
+  private readonly messageService = inject(MessageService);
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
@@ -31,19 +34,55 @@ export class AssociationSettingsService {
   }
 
   public updateInstagram(instagram: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("contact.instagram", { value: instagram });
+    return this.ucroniaClient.setting.update("contact.instagram", { value: instagram }).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Instagram actualizado',
+          life: 3000
+        });
+      })
+    );
   }
 
   public updateEmail(email: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("contact.email", { value: email });
+    return this.ucroniaClient.setting.update("contact.email", { value: email }).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Correo actualizado',
+          life: 3000
+        });
+      })
+    );
   }
 
   public updateMap(mapId: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("contact.googleMap", { value: mapId });
+    return this.ucroniaClient.setting.update("contact.googleMap", { value: mapId }).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Google Maps actualizado',
+          life: 3000
+        });
+      })
+    );
   }
 
   public updateCalendar(calendarId: string): Observable<Setting> {
-    return this.ucroniaClient.setting.update("contact.teamup", { value: calendarId });
+    return this.ucroniaClient.setting.update("contact.teamup", { value: calendarId }).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Teamup actualizado',
+          life: 3000
+        });
+      })
+    );
   }
 
 }
