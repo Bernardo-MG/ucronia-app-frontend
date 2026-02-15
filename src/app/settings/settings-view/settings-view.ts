@@ -2,7 +2,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
-import { Setting } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
@@ -17,23 +16,12 @@ export class SettingsView implements OnInit {
 
   private readonly service = inject(AssociationSettingsService);
 
-  public settings: Setting[] = [];
+  public map = '';
+  public calendar = '';
+  public instagram = '';
 
   public readonly editable;
-
   public loading = false;
-
-  public get map(): string {
-    return this.getSetting('social.googleMap.id');
-  }
-
-  public get calendar(): string {
-    return this.getSetting('social.teamup.id');
-  }
-
-  public get instagram(): string {
-    return this.getSetting('social.instagram');
-  }
 
   constructor() {
     const authService = inject(AuthService);
@@ -43,8 +31,12 @@ export class SettingsView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.service.getAll()
-      .subscribe(response => this.settings = response);
+    this.service.getMap()
+      .subscribe(map => this.map = map.value);
+    this.service.getCalendar()
+      .subscribe(calendar => this.calendar = calendar.value);
+    this.service.getInstagram()
+      .subscribe(instagram => this.instagram = instagram.value);
   }
 
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
@@ -63,10 +55,6 @@ export class SettingsView implements OnInit {
     this.service.updateFeeAmount(values.feeAmount)
       .pipe(finalize(() => this.loading = false))
       .subscribe();
-  }
-
-  private getSetting(code: string) {
-    return this.settings.find(s => s.code === code)?.value ?? '';
   }
 
 }
