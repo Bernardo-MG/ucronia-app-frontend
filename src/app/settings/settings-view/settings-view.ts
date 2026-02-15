@@ -27,6 +27,7 @@ export class SettingsView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
+    // TODO: apply this permission
     this.editable = authService.hasPermission("association_settings", "update");
   }
 
