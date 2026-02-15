@@ -10,10 +10,6 @@ export class AssociationSettingsService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getAll(): Observable<Setting[]> {
-    return this.ucroniaClient.setting.getAll();
-  }
-
   public getEmail(): Observable<string> {
     return this.ucroniaClient.setting.get("contact.email")
       .pipe(map(setting => setting.value));
