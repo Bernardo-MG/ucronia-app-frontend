@@ -14,14 +14,14 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
 import { ContactMethodService } from '../contact-method-service';
-import { DirectoryReportService } from '../directory-report-service';
+import { DirectorySummaryService } from '../directory-summary-service';
 import { DirectoryService } from '../directory-service';
 import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
-import { DirectoryReport } from '../model/directory-status-report';
+import { DirectorySummary } from '../model/directory-summary';
 import { ProfileInfo } from '../model/profile-info';
 import { ProfileDetails } from '../profile-details/profile-details';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
@@ -37,7 +37,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 export class DirectoryView implements OnInit {
 
   private readonly directoryService = inject(DirectoryService);
-  private readonly directoryReportService = inject(DirectoryReportService);
+  private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
 
@@ -53,7 +53,7 @@ export class DirectoryView implements OnInit {
   public selectedData = new ProfileInfo();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
-  public report = new DirectoryReport();
+  public summary = new DirectorySummary();
 
   /**
    * Loading flag.
@@ -82,8 +82,8 @@ export class DirectoryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
-    this.directoryReportService.getReport()
-      .subscribe(r => this.report = r);
+    this.directorySummaryService.getSummary()
+      .subscribe(r => this.summary = r);
   }
 
   // EVENT HANDLERS
@@ -146,8 +146,8 @@ export class DirectoryView implements OnInit {
       this.directoryService.create(toCreate as any),
       () => {
         this.load();
-        this.directoryReportService.getReport()
-          .subscribe(r => this.report = r);
+        this.directorySummaryService.getSummary()
+          .subscribe(r => this.summary = r);
       }
     );
   }
@@ -166,8 +166,8 @@ export class DirectoryView implements OnInit {
       this.directoryService.update(updated, previousTypes, newTypes),
       () => {
         this.load(this.profiles.page);
-        this.directoryReportService.getReport()
-          .subscribe(r => this.report = r);
+        this.directorySummaryService.getSummary()
+          .subscribe(r => this.summary = r);
       }
     );
   }
@@ -177,8 +177,8 @@ export class DirectoryView implements OnInit {
       this.directoryService.delete(number),
       () => {
         this.load();
-        this.directoryReportService.getReport()
-          .subscribe(r => this.report = r);
+        this.directorySummaryService.getSummary()
+          .subscribe(r => this.summary = r);
       }
     );
   }

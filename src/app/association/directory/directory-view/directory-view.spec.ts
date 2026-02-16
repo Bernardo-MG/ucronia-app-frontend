@@ -5,11 +5,11 @@ import { ContactMethod, FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';
-import { DirectoryReportService } from '../directory-report-service';
+import { DirectorySummaryService } from '../directory-summary-service';
 import { DirectoryService } from '../directory-service';
 import { FeeTypeService } from '../fee-type-service';
 import { MembershipEvolutionService } from '../membership-evolution-service';
-import { DirectoryReport } from '../model/directory-status-report';
+import { DirectorySummary } from '../model/directory-summary';
 import { ProfileInfo } from '../model/profile-info';
 import { DirectoryView } from './directory-view';
 
@@ -22,9 +22,9 @@ describe('DirectoryView', () => {
     ['getOne', 'getAll', 'create', 'update', 'delete']
   );
 
-  const directoryReportServiceMock = jasmine.createSpyObj<DirectoryReportService>(
-    'DirectoryReportService',
-    ['getReport']
+  const directorySummaryServiceMock = jasmine.createSpyObj<DirectorySummaryService>(
+    'DirectorySummaryService',
+    ['getSummary']
   );
 
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>(
@@ -46,8 +46,8 @@ describe('DirectoryView', () => {
     directoryServiceMock.getAll.and.returnValue(
       of(new Page<ProfileInfo>())
     );
-    directoryReportServiceMock.getReport.and.returnValue(
-      of(new DirectoryReport())
+    directorySummaryServiceMock.getSummary.and.returnValue(
+      of(new DirectorySummary())
     );
     contactMethodServiceMock.getAll.and.returnValue(
       of(new Page<ContactMethod>())
@@ -71,7 +71,7 @@ describe('DirectoryView', () => {
         MessageService,
         provideAnimationsAsync(),
         { provide: DirectoryService, useValue: directoryServiceMock },
-        { provide: DirectoryReportService, useValue: directoryReportServiceMock },
+        { provide: DirectorySummaryService, useValue: directorySummaryServiceMock },
         { provide: ContactMethodService, useValue: contactMethodServiceMock },
         { provide: FeeTypeService, useValue: feeTypeServiceMock },
         { provide: MembershipEvolutionService, useValue: membershipEvolutionServiceMock }

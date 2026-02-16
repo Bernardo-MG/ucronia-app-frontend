@@ -4,19 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
+import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
+import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -31,7 +32,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -48,6 +49,7 @@ export class LibraryView implements OnInit {
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
+  public summary = new LibrarySummary();
 
   public source: BookSelection = BookSelection.Game;
   public list: 'books' | 'lendings' = 'books';
@@ -137,6 +139,8 @@ export class LibraryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
+    this.service.getSummary()
+      .subscribe(r => this.summary = r);
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {

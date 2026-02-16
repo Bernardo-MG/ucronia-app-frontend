@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
 import { forkJoin, map, Observable } from 'rxjs';
-import { DirectoryReport } from './model/directory-status-report';
+import { DirectorySummary } from './model/directory-summary';
 import { MemberStatus } from '@ucronia/domain';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DirectoryReportService {
+export class DirectorySummaryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getReport(): Observable<DirectoryReport> {
+  public getSummary(): Observable<DirectorySummary> {
     return forkJoin({
       members: this.ucroniaClient.memberProfile.page(undefined, 0, undefined, MemberStatus.Active),
       guests: this.ucroniaClient.guest.page(undefined, 0),
