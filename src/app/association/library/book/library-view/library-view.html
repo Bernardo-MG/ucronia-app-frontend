@@ -5,9 +5,9 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
-    <app-summary-card [value]="summary.games" [label]="'Juegos'"/>
-    <app-summary-card [value]="summary.fiction" [label]="'Ficción'"/>
-    <app-summary-card [value]="summary.lent" [label]="'Prestados'"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.games" label="Juegos" icon="pi pi-book"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.fiction" label="Ficción" icon="pi pi-book"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.lent" label="Prestados" icon="pi pi-bookmark"/>
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">

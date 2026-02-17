@@ -9,9 +9,9 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
-    <app-summary-card [value]="summary.members" [label]="'Socios'"/>
-    <app-summary-card [value]="summary.guests" [label]="'Invitados'"/>
-    <app-summary-card [value]="summary.sponsors" [label]="'Esponsors'"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.members" label="Socios" icon="pi pi-user"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.guests" label="Invitados" icon="pi pi-user-plus"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.sponsors" label="Esponsors" icon="pi pi-star"/>
   </div>
 
   <!-- Buttons -->

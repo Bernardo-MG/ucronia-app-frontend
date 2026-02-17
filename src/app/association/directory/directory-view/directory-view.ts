@@ -59,6 +59,7 @@ export class DirectoryView implements OnInit {
    * Loading flag.
    */
   public loading = false;
+  public loadingSummary = false;
   public editing = false;
   public creating = false;
   public showing = false;
@@ -82,8 +83,7 @@ export class DirectoryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
-    this.directorySummaryService.getSummary()
-      .subscribe(r => this.summary = r);
+    this.loadSummary();
   }
 
   // EVENT HANDLERS
@@ -146,8 +146,7 @@ export class DirectoryView implements OnInit {
       this.directoryService.create(toCreate as any),
       () => {
         this.load();
-        this.directorySummaryService.getSummary()
-          .subscribe(r => this.summary = r);
+        this.loadSummary();
       }
     );
   }
@@ -166,8 +165,7 @@ export class DirectoryView implements OnInit {
       this.directoryService.update(updated, previousTypes, newTypes),
       () => {
         this.load(this.profiles.page);
-        this.directorySummaryService.getSummary()
-          .subscribe(r => this.summary = r);
+        this.loadSummary();
       }
     );
   }
@@ -177,8 +175,7 @@ export class DirectoryView implements OnInit {
       this.directoryService.delete(number),
       () => {
         this.load();
-        this.directorySummaryService.getSummary()
-          .subscribe(r => this.summary = r);
+        this.loadSummary();
       }
     );
   }
@@ -236,6 +233,13 @@ export class DirectoryView implements OnInit {
           return throwError(() => error);
         }
       });
+  }
+
+  private loadSummary() {
+    this.loadingSummary = true;
+    this.directorySummaryService.getSummary()
+      .pipe(finalize(() => this.loadingSummary = false))
+      .subscribe(r => this.summary = r);
   }
 
 }

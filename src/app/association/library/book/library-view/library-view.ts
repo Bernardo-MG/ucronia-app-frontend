@@ -65,6 +65,7 @@ export class LibraryView implements OnInit {
    */
   public loading = false;
   public loadingExcel = false;
+  public loadingSummary = false;
   public editing = false;
   public showing = false;
 
@@ -139,8 +140,7 @@ export class LibraryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
-    this.service.getSummary()
-      .subscribe(r => this.summary = r);
+    this.loadSummary();
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
@@ -161,7 +161,10 @@ export class LibraryView implements OnInit {
           return this.service.createFictionBook(toCreate.book);
         }
       },
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
@@ -175,21 +178,30 @@ export class LibraryView implements OnInit {
   public onLend(toSave: BookLent) {
     this.call(
       () => this.service.lend(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
   public onReturn(toSave: BookReturned) {
     this.call(
       () => this.service.return(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
   public onDelete(number: number) {
     this.call(
       () => this.delete(number),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
@@ -392,6 +404,13 @@ export class LibraryView implements OnInit {
           return throwError(() => error);
         }
       });
+  }
+
+  private loadSummary() {
+    this.loadingSummary = true;
+    this.service.getSummary()
+      .pipe(finalize(() => this.loadingSummary = false))
+      .subscribe(r => this.summary = r);
   }
 
 }
