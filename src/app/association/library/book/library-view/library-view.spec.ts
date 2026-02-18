@@ -4,6 +4,7 @@ import { Page } from '@bernardo-mg/request';
 import { GameBook } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
+import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
@@ -25,7 +26,8 @@ describe('LibraryView', () => {
       'deleteGameBook',
       'deleteFictionBook',
       'lend',
-      'return'
+      'return',
+      'getSummary'
     ]
   );
 
@@ -42,6 +44,9 @@ describe('LibraryView', () => {
   beforeEach(async () => {
     libraryServiceMock.getAllGameBooks.and.returnValue(
       of(new Page<GameBook>())
+    );
+    libraryServiceMock.getSummary.and.returnValue(
+      of(new LibrarySummary())
     );
 
     await TestBed.configureTestingModule({

@@ -1,12 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePaymentReport, FeePayments, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePayments, FeePaymentSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
@@ -23,7 +23,7 @@ import { FeeService } from '../fee-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [CardModule, DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsStepper],
+  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsStepper, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -50,11 +50,12 @@ export class FeeView implements OnInit {
    * Loading flag. Shows the loading visual cue.
    */
   public loadingCalendar = false;
-  public loadingReport = false;
+  public loadingSummary = false;
   public loadingDetail = false;
   public showing = false;
 
   public selectedData = new Fee();
+  public summary = new FeePaymentSummary();
   public selectedMember = new Member();
 
   public failures = new FailureStore();
@@ -65,7 +66,6 @@ export class FeeView implements OnInit {
 
   public readonly creationItems: MenuItem[] = [];
 
-  public report = new FeePaymentReport();
 
   constructor() {
     const authService = inject(AuthService);
@@ -91,7 +91,7 @@ export class FeeView implements OnInit {
       });
 
     // Load report
-    this.loadReport();
+    this.loadSummary();
   }
 
   public onUpdate(toUpdate: FeeEditionFormData): void {
@@ -174,12 +174,12 @@ export class FeeView implements OnInit {
       .subscribe(data => this.feeCalendar = data);
   }
 
-  private loadReport() {
-    this.loadingReport = true;
+  private loadSummary() {
+    this.loadingSummary = true;
 
     this.reportService.getPaymentReport()
-      .pipe(finalize(() => this.loadingReport = false))
-      .subscribe(response => this.report = response);
+      .pipe(finalize(() => this.loadingSummary = false))
+      .subscribe(response => this.summary = response);
   }
 
   private loadRange() {
@@ -224,7 +224,7 @@ export class FeeView implements OnInit {
           this.view = 'none';
           this.showing = false;
           this.loadRange();
-          this.loadReport();
+          this.loadSummary();
           onSuccess();
         },
         error: error => {

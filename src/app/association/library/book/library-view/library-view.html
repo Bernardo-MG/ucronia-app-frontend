@@ -5,41 +5,9 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
-    <p-card class="w-45">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-          <i class="pi pi-book text-xl"></i>
-        </div>
-        <div>
-          <p class="text-2xl font-semibold">1</p>
-          <p class="uppercase text-gray-500 text-sm">Juegos</p>
-        </div>
-      </div>
-    </p-card>
-
-    <p-card class="w-45">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-          <i class="pi pi-book text-xl"></i>
-        </div>
-        <div>
-          <p class="text-2xl font-semibold">0</p>
-          <p class="uppercase text-gray-500 text-sm">Ficción</p>
-        </div>
-      </div>
-    </p-card>
-
-    <p-card class="w-45">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-          <i class="pi pi-bookmark text-xl"></i>
-        </div>
-        <div>
-          <p class="text-2xl font-semibold">0</p>
-          <p class="uppercase text-gray-500 text-sm">Prestados</p>
-        </div>
-      </div>
-    </p-card>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.games" label="Juegos" icon="pi pi-book"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.fiction" label="Ficción" icon="pi pi-book"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.lent" label="Prestados" icon="pi pi-bookmark"/>
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">

@@ -1,0 +1,15 @@
+<p-card class="w-60">
+  <div class="flex items-center space-x-4">
+    <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
+      <i class="{{icon()}} text-xl"></i>
+    </div>
+    <div>
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
+        <p class="text-2xl font-semibold">{{value()}}</p>
+      }
+      <p class="uppercase text-gray-500 text-sm">{{label()}}</p>
+    </div>
+  </div>
+</p-card>
