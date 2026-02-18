@@ -18,7 +18,7 @@ import { FeeCreationStepper } from '../fee-creation-stepper/fee-creation-stepper
 import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
 import { FeePaymentsStepper } from '../fee-payments-stepper/fee-payments-stepper';
-import { FeeReportService } from '../fee-report-service';
+import { FeeSummaryService } from '../fee-summary-service';
 import { FeeService } from '../fee-service';
 
 @Component({
@@ -29,7 +29,7 @@ import { FeeService } from '../fee-service';
 export class FeeView implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
-  private readonly reportService = inject(FeeReportService);
+  private readonly reportService = inject(FeeSummaryService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
@@ -177,7 +177,7 @@ export class FeeView implements OnInit {
   private loadSummary() {
     this.loadingSummary = true;
 
-    this.reportService.getPaymentReport()
+    this.reportService.getSummary()
       .pipe(finalize(() => this.loadingSummary = false))
       .subscribe(response => this.summary = response);
   }

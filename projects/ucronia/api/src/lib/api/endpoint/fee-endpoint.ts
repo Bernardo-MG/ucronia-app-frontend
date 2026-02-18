@@ -106,8 +106,8 @@ export class FeeEndpoint {
       );
   }
 
-  public balance(): Observable<FeePaymentSummary> {
-    return this.http.get<SimpleResponse<FeePaymentSummary>>(`${this.apiUrl}/fee/balance`)
+  public summary(): Observable<FeePaymentSummary> {
+    return this.http.get<SimpleResponse<FeePaymentSummary>>(`${this.apiUrl}/fee/summary`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

@@ -6,12 +6,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class FeeReportService {
+export class FeeSummaryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getPaymentReport(): Observable<FeePaymentSummary> {
-    return this.ucroniaClient.fee.balance();
+  public getSummary(): Observable<FeePaymentSummary> {
+    return this.ucroniaClient.fee.summary();
   }
 
 }

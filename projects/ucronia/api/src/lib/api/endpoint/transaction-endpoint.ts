@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
-import { Transaction, TransactionCurrentBalance, TransactionMonthlyBalance, TransactionMonthsRange } from '@ucronia/domain';
+import { Transaction, TransactionSummary, TransactionMonthlyBalance, TransactionMonthsRange } from '@ucronia/domain';
 import { addMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
 import { TransactionUpdate } from '../../transaction/transaction-update';
@@ -113,8 +113,8 @@ export class TransactionEndpoint {
     );
   }
 
-  public currentBalance(): Observable<TransactionCurrentBalance> {
-    return this.http.get<SimpleResponse<TransactionCurrentBalance>>(`${this.apiUrl}/transaction/balance`)
+  public summary(): Observable<TransactionSummary> {
+    return this.http.get<SimpleResponse<TransactionSummary>>(`${this.apiUrl}/transaction/summary`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

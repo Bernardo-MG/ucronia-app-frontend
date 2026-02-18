@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
 import { of } from 'rxjs';
-import { FeeReportService } from './fee-report-service';
+import { FeeSummaryService } from './fee-summary-service';
 
-describe('FeeReportService', () => {
-  let service: FeeReportService;
+describe('FeeSummaryService', () => {
+  let service: FeeSummaryService;
 
   const mockUcroniaClient = {
     fee: {
-      balance: jasmine.createSpy().and.returnValue(of({}))
+      summary: jasmine.createSpy().and.returnValue(of({}))
     }
   };
 
@@ -18,7 +18,7 @@ describe('FeeReportService', () => {
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
-    service = TestBed.inject(FeeReportService);
+    service = TestBed.inject(FeeSummaryService);
   });
 
   it('should be created', () => {
