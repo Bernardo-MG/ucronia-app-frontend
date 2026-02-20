@@ -2,8 +2,8 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center">
-    <app-summary-card [loading]="loadingSummary" [value]="1" label="Socios" icon="pi pi-user"/>
-    <app-summary-card [loading]="loadingSummary" [value]="0" label="No renuevan" icon="pi pi-times-circle"/>
+    <app-summary-card [loading]="loadingSummary" [value]="active" label="Socios" icon="pi pi-user"/>
+    <app-summary-card [loading]="loadingSummary" [value]="notRenewing" label="No renuevan" icon="pi pi-times-circle"/>
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
