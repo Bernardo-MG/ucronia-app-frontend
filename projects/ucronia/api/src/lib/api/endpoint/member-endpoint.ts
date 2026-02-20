@@ -3,6 +3,7 @@ import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/r
 import { Member, MembershipEvolutionMonth } from '@ucronia/domain';
 import { format } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
+import { MemberSummary } from '../../members/member-summary';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class MemberEndpoint {
@@ -38,6 +39,14 @@ export class MemberEndpoint {
     return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/member`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
+      );
+  }
+
+  public summary(): Observable<MemberSummary> {
+    return this.http.get<SimpleResponse<MemberSummary>>(`${this.apiUrl}/member/summary`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(r => r.content)
       );
   }
 
