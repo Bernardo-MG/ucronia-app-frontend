@@ -4,10 +4,11 @@ import { Member } from '@ucronia/domain';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { MemberRenewTag } from '../member-renew-tag/member-renew-tag';
 
 @Component({
   selector: 'assoc-member-list',
-  imports: [TableModule, ButtonModule, BadgeModule],
+  imports: [TableModule, ButtonModule, BadgeModule, MemberRenewTag],
   templateUrl: './member-list.html'
 })
 export class MemberList {

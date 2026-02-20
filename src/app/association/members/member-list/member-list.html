@@ -15,7 +15,7 @@
   <ng-template #body let-member>
     <tr class="hover:bg-gray-50 transition-colors">
       <td class="py-2 px-4">
-        {{ member.name.fullName }}
+        {{ member.name.fullName }} <assoc-member-renew-tag [renew]="member.renew" />
       </td>
     </tr>
   </ng-template>
