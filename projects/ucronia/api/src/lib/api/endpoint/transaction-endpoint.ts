@@ -106,7 +106,7 @@ export class TransactionEndpoint {
         const url = window.URL.createObjectURL(blob);
         const anchor = document.createElement('a');
         anchor.href = url;
-        anchor.download = 'transactions.xlsx';
+        anchor.download = 'ucronia_transactions';
         anchor.click();
         window.URL.revokeObjectURL(url);
       })
