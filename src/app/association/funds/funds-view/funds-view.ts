@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
+import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
@@ -20,7 +21,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChartview],
+  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChartview, SummaryCard],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {

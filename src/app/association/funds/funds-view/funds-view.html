@@ -1,21 +1,15 @@
 <div class="p-4 space-y-6">
-  <div class="pb-2 grid grid-cols-1 md:grid-cols-2 gap-4">
-
+  <div class="pb-2 grid grid-cols-2 gap-4">
+  
     <!-- Evolución -->
-    <div class="pb-2">
-      <p-card>
-        <ng-template #title>Evolución</ng-template>
-        <assoc-transaction-balance-chart-view />
-      </p-card>
-    </div>
-
-    <!-- Saldo -->
-    <div class="pb-2">
-      <p-card>
-        <ng-template #title>Saldo</ng-template>
-        <p>Saldo actual: {{ summary.total }}</p>
-        <p>Resultados del mes: {{ summary.results }}</p>
-      </p-card>
+    <p-card class="pb-2 max-w-md">
+      <ng-template #title>Evolución</ng-template>
+      <assoc-transaction-balance-chart-view />
+    </p-card>
+  
+    <div class="grid grid-cols-1 gap-4">
+      <app-summary-card [loading]="loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
+      <app-summary-card [loading]="loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
     </div>
 
   </div>
