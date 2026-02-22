@@ -118,7 +118,7 @@ export class FundsView implements OnInit {
     });
   }
 
-  public onStartEditingView(view: string): void {
+  public onStartView(view: string): void {
     this.view = view;
     this.showing = false;
     this.editing = true;
