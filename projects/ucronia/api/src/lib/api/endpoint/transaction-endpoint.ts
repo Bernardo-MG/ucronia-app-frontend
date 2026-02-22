@@ -97,7 +97,7 @@ export class TransactionEndpoint {
       'Accept': 'application/vnd.ms-excel'
     });
 
-    return this.http.get(`${this.apiUrl}/transaction`, {
+    return this.http.get(`${this.apiUrl}/transaction/report`, {
       headers,
       responseType: 'blob'
     }).pipe(
