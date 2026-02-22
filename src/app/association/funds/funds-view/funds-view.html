@@ -1,44 +1,33 @@
 <div class="p-4 space-y-6">
-  <div class="pb-2 grid grid-cols-1 md:grid-cols-3 gap-4">
-
+  <div class="pb-2 grid grid-cols-2 gap-4">
+  
     <!-- Evolución -->
-    <div class="pb-2">
-      <p-card>
-        <ng-template #title>Evolución</ng-template>
-        <assoc-transaction-balance-chart-view />
-      </p-card>
-    </div>
-
-    <!-- Saldo -->
-    <div class="pb-2">
-      <p-card>
-        <ng-template #title>Saldo</ng-template>
-        <p>Saldo actual: {{ balance.total }}</p>
-        <p>Resultados del mes: {{ balance.results }}</p>
-      </p-card>
-    </div>
-
-    <!-- Descargas -->
-    <div>
-      <p-card>
-        <ng-template #title>Descargas</ng-template>
-        <div class="mt-2 flex justify-center">
-          <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()"
-            aria-label="Descargar excel" [attr.aria-disabled]="loadingExcel" severity="secondary" rounded text />
-        </div>
-      </p-card>
+    <p-card class="pb-2 max-w-md">
+      <ng-template #title>Evolución</ng-template>
+      <assoc-transaction-balance-chart-view />
+    </p-card>
+  
+    <div class="grid grid-cols-1 gap-4">
+      <app-summary-card [loading]="loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
+      <app-summary-card [loading]="loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
     </div>
 
   </div>
 
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <div class="ml-auto space-x-2">
+      @if (createable) {
+        <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
+          aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
+      }
+
+      <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+        [attr.aria-disabled]="loadingExcel" rounded />
+    </div>
+  </div>
+
   <!-- Funds Calendar -->
   <p-panel class="shadow rounded-lg">
-
-    <ng-template #icons>
-      <p-button icon="pi pi-plus-circle" severity="secondary" (click)="onStartEditingView('creation')"
-        [disabled]="!createable" aria-label="Nueva transacción" [attr.aria-disabled]="!createable" rounded text
-        class="!p-2" />
-    </ng-template>
 
     <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
       (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
@@ -52,7 +41,7 @@
 
     <div class="flex space-x-2">
       <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-        [attr.aria-disabled]="!editable" (click)="onStartEditingView('edition')" rounded text class="!p-2" />
+        [attr.aria-disabled]="!editable" (click)="onStartView('edition')" rounded text class="!p-2" />
 
       <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
         [attr.aria-disabled]="!deletable" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
@@ -62,19 +51,19 @@
   <!-- Creation / Edition Dialogs -->
   @switch (view) {
 
-  @case('creation') {
-  <p-dialog header="Crear transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
-    class="rounded-lg">
-    <assoc-transaction-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
-  </p-dialog>
-  }
+    @case('creation') {
+      <p-dialog header="Crear transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+        class="rounded-lg">
+        <assoc-transaction-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      </p-dialog>
+    }
 
-  @case('edition') {
-  <p-dialog header="Editar transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
-    class="rounded-lg">
-    <assoc-transaction-form [data]="selectedData" [loading]="loading" [failures]="failures" (save)="onUpdate($event)" />
-  </p-dialog>
-  }
+    @case('edition') {
+      <p-dialog header="Editar transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+        class="rounded-lg">
+        <assoc-transaction-form [data]="selectedData" [loading]="loading" [failures]="failures" (save)="onUpdate($event)" />
+      </p-dialog>
+    }
 
   }
 </div>

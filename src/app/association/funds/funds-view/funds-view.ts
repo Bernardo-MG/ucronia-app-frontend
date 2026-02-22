@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
+import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { Transaction, TransactionCurrentBalance } from '@ucronia/domain';
+import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -20,7 +21,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChartview],
+  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChartview, SummaryCard],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -37,7 +38,7 @@ export class FundsView implements OnInit {
   public loading = false;
   public loadingCalendar = false;
   public loadingExcel = false;
-  public loadingBalance = false;
+  public loadingSummary = false;
   public editing = false;
   public showing = false;
 
@@ -48,7 +49,7 @@ export class FundsView implements OnInit {
   public selectedData = new Transaction();
 
   public transactions: Transaction[] = [];
-  public balance = new TransactionCurrentBalance();
+  public summary = new TransactionSummary();
 
   public view: string = '';
 
@@ -77,11 +78,11 @@ export class FundsView implements OnInit {
         }
       });
 
-    // Read balance
-    this.loadingBalance = true;
-    this.transactionBalanceService.current()
-      .pipe(finalize(() => this.loadingBalance = false))
-      .subscribe(b => this.balance = b);
+    // Read summary
+    this.loadingSummary = true;
+    this.transactionBalanceService.summary()
+      .pipe(finalize(() => this.loadingSummary = false))
+      .subscribe(s => this.summary = s);
   }
 
   public onCreate(toCreate: Transaction): void {
@@ -118,7 +119,7 @@ export class FundsView implements OnInit {
     });
   }
 
-  public onStartEditingView(view: string): void {
+  public onStartView(view: string): void {
     this.view = view;
     this.showing = false;
     this.editing = true;

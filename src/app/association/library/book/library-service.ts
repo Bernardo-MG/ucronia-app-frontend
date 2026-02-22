@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from '@ucronia/domain';
-import { Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
+import { LibrarySummary } from '../model/library-summary';
 
 @Injectable({
   providedIn: "root"
@@ -129,6 +130,23 @@ export class LibraryService {
     );
 
     return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
+  }
+
+  public getSummary(): Observable<LibrarySummary> {
+    return forkJoin({
+      games: this.ucroniaClient.library.gameBook.page(undefined, 0),
+      fiction: this.ucroniaClient.library.fictionBook.page(undefined, 0),
+      lent: this.ucroniaClient.library.lending.page(undefined, 0)
+    })
+      .pipe(
+        map((r) => {
+          return {
+            games: r.games.totalElements,
+            fiction: r.fiction.totalElements,
+            lent: r.lent.totalElements
+          }
+        })
+      )
   }
 
 }

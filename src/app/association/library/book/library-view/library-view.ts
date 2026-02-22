@@ -4,19 +4,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
+import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { EMPTY, finalize, Observable, throwError } from 'rxjs';
+import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
@@ -31,7 +32,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, CardModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -48,6 +49,7 @@ export class LibraryView implements OnInit {
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
+  public summary = new LibrarySummary();
 
   public source: BookSelection = BookSelection.Game;
   public list: 'books' | 'lendings' = 'books';
@@ -63,6 +65,7 @@ export class LibraryView implements OnInit {
    */
   public loading = false;
   public loadingExcel = false;
+  public loadingSummary = false;
   public editing = false;
   public showing = false;
 
@@ -137,6 +140,7 @@ export class LibraryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
+    this.loadSummary();
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
@@ -157,7 +161,10 @@ export class LibraryView implements OnInit {
           return this.service.createFictionBook(toCreate.book);
         }
       },
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
@@ -171,21 +178,30 @@ export class LibraryView implements OnInit {
   public onLend(toSave: BookLent) {
     this.call(
       () => this.service.lend(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
   public onReturn(toSave: BookReturned) {
     this.call(
       () => this.service.return(toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
   public onDelete(number: number) {
     this.call(
       () => this.delete(number),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.loadSummary();
+      }
     );
   }
 
@@ -388,6 +404,13 @@ export class LibraryView implements OnInit {
           return throwError(() => error);
         }
       });
+  }
+
+  private loadSummary() {
+    this.loadingSummary = true;
+    this.service.getSummary()
+      .pipe(finalize(() => this.loadingSummary = false))
+      .subscribe(r => this.summary = r);
   }
 
 }

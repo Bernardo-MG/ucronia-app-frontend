@@ -1,4 +1,4 @@
-<p-panel>
+<p-panel class="shadow rounded-lg">
   <ng-template #icons>
     <p-button icon="pi pi-envelope" severity="secondary" (click)="onStartInvitation()" [disabled]="!createable"
       aria-label="Invitar usuario" [attr.aria-disabled]="!createable" rounded text />
@@ -9,37 +9,37 @@
     (changePage)="load($event)" (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
 </p-panel>
 @if (showing) {
-<p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-  <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
-</p-dialog>
+  <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+    <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
+  </p-dialog>
 }
 @if (showingRoles) {
-<p-dialog header="Roles" [modal]="true" [(visible)]="showingRoles" [style]="{ width: '25rem' }">
-  <access-user-roles-info [user]="selectedData" [loading]="loading" />
-</p-dialog>
+  <p-dialog header="Roles" [modal]="true" [(visible)]="showingRoles" [style]="{ width: '25rem' }">
+    <access-user-roles-info [user]="selectedData" [loading]="loading" />
+  </p-dialog>
 }
 @switch (view) {
-@case ('invite') {
-<p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-  <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
-    (save)="onInvite($event)" />
-</p-dialog>
-}
-@case ('edition') {
-<p-dialog header="Editar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-  <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
-    (save)="onUpdate($event)" />
-</p-dialog>
-}
-@case ('roles') {
-<p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-  <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
-</p-dialog>
-}
-@case ('member') {
-<p-dialog header="Asignar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-  <access-user-member-editor [username]="selectedData.username" [selection]="availableMembers" [member]="member"
-    (assignMember)="onAssignMember($event)" />
-</p-dialog>
-}
+  @case ('invite') {
+    <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
+        (save)="onInvite($event)" />
+    </p-dialog>
+  }
+  @case ('edition') {
+    <p-dialog header="Editar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
+        (save)="onUpdate($event)" />
+    </p-dialog>
+  }
+  @case ('roles') {
+    <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+      <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
+    </p-dialog>
+  }
+  @case ('member') {
+    <p-dialog header="Asignar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+      <access-user-member-editor [username]="selectedData.username" [selection]="availableMembers" [member]="member"
+        (assignMember)="onAssignMember($event)" />
+    </p-dialog>
+  }
 }

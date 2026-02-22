@@ -1,17 +1,17 @@
 import { Injectable, inject } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
-import { FeePaymentReport } from '@ucronia/domain';
+import { FeePaymentSummary } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
-export class FeeReportService {
+export class FeeSummaryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getPaymentReport(): Observable<FeePaymentReport> {
-    return this.ucroniaClient.fee.balance();
+  public getSummary(): Observable<FeePaymentSummary> {
+    return this.ucroniaClient.fee.summary();
   }
 
 }

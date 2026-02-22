@@ -34,7 +34,7 @@ export * from './lib/setting/public-settings';
 export * from './lib/setting/setting';
 export * from './lib/sponsors/sponsor';
 export * from './lib/transactions/transaction';
-export * from './lib/transactions/transaction-current-balance';
+export * from './lib/transactions/transaction-summary';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
 

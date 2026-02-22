@@ -3,37 +3,8 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center">
-    <p-card class="w-60">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-          <i class="pi pi-user text-xl"></i>
-        </div>
-        <div>
-          @if (loadingReport) {
-          <p-skeleton />
-          } @else {
-          <p class="text-2xl font-semibold">{{report.paid}}</p>
-          }
-          <p class="uppercase text-gray-500 text-sm">Cuotas pagadas</p>
-        </div>
-      </div>
-    </p-card>
-
-    <p-card class="w-60">
-      <div class="flex items-center space-x-4">
-        <div class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
-          <i class="pi pi-user text-xl"></i>
-        </div>
-        <div>
-          @if (loadingReport) {
-          <p-skeleton />
-          } @else {
-          <p class="text-2xl font-semibold">{{report.unpaid}}</p>
-          }
-          <p class="uppercase text-gray-500 text-sm">Sin pagar</p>
-        </div>
-      </div>
-    </p-card>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.paid" label="Cuotas pagadas" icon="pi pi-check-circle"/>
+    <app-summary-card [loading]="loadingSummary" [value]="summary.unpaid" label="Sin pagar" icon="pi pi-times-circle"/>
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">

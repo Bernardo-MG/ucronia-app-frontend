@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TransactionCurrentBalance } from '@ucronia/domain';
+import { TransactionSummary } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
@@ -18,16 +18,6 @@ describe('FundsView', () => {
     ['create', 'update', 'delete', 'getOne']
   );
 
-  const transactionCalendarMock = jasmine.createSpyObj<TransactionCalendarService>(
-    'TransactionCalendarService',
-    ['getCalendarInRange', 'getRange']
-  );
-
-  const transactionBalanceMock = jasmine.createSpyObj<TransactionBalanceService>(
-    'TransactionBalanceService',
-    ['current', 'monthly']
-  );
-
   const transactionReportServiceMock = jasmine.createSpyObj<TransactionReportService>(
     'TransactionReportService',
     ['downloadExcelReport']
@@ -35,7 +25,7 @@ describe('FundsView', () => {
 
   const transactionBalanceServiceMock = jasmine.createSpyObj<TransactionBalanceService>(
     'TransactionBalanceService',
-    ['current', 'monthly']
+    ['summary', 'monthly']
   );
 
   const transactionCalendarServiceMock = jasmine.createSpyObj<TransactionCalendarService>(
@@ -47,8 +37,8 @@ describe('FundsView', () => {
     transactionBalanceServiceMock.monthly.and.returnValue(
       of([])
     );
-    transactionBalanceServiceMock.current.and.returnValue(
-      of(new TransactionCurrentBalance())
+    transactionBalanceServiceMock.summary.and.returnValue(
+      of(new TransactionSummary())
     );
     transactionCalendarServiceMock.getRange.and.returnValue(
       of([])
@@ -62,8 +52,6 @@ describe('FundsView', () => {
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: TransactionCalendarService, useValue: transactionCalendarMock },
-        { provide: TransactionBalanceService, useValue: transactionBalanceMock },
         { provide: TransactionService, useValue: transactionServiceMock },
         { provide: TransactionReportService, useValue: transactionReportServiceMock },
         { provide: TransactionBalanceService, useValue: transactionBalanceServiceMock },

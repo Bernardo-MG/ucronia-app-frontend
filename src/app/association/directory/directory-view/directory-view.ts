@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -13,14 +14,14 @@ import { PanelModule } from 'primeng/panel';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
 import { ContactMethodService } from '../contact-method-service';
-import { DirectoryReportService } from '../directory-report-service';
+import { DirectorySummaryService } from '../directory-summary-service';
 import { DirectoryService } from '../directory-service';
 import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
-import { DirectoryReport } from '../model/directory-status-report';
+import { DirectorySummary } from '../model/directory-summary';
 import { ProfileInfo } from '../model/profile-info';
 import { ProfileDetails } from '../profile-details/profile-details';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
@@ -30,13 +31,13 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileDetails, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileDetails, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
 
   private readonly directoryService = inject(DirectoryService);
-  private readonly directoryReportService = inject(DirectoryReportService);
+  private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
 
@@ -52,12 +53,13 @@ export class DirectoryView implements OnInit {
   public selectedData = new ProfileInfo();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
-  public report = new DirectoryReport();
+  public summary = new DirectorySummary();
 
   /**
    * Loading flag.
    */
   public loading = false;
+  public loadingSummary = false;
   public editing = false;
   public creating = false;
   public showing = false;
@@ -81,8 +83,7 @@ export class DirectoryView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
-    this.directoryReportService.getReport()
-      .subscribe(r => this.report = r);
+    this.loadSummary();
   }
 
   // EVENT HANDLERS
@@ -145,8 +146,7 @@ export class DirectoryView implements OnInit {
       this.directoryService.create(toCreate as any),
       () => {
         this.load();
-        this.directoryReportService.getReport()
-          .subscribe(r => this.report = r);
+        this.loadSummary();
       }
     );
   }
@@ -165,8 +165,7 @@ export class DirectoryView implements OnInit {
       this.directoryService.update(updated, previousTypes, newTypes),
       () => {
         this.load(this.profiles.page);
-        this.directoryReportService.getReport()
-          .subscribe(r => this.report = r);
+        this.loadSummary();
       }
     );
   }
@@ -176,8 +175,7 @@ export class DirectoryView implements OnInit {
       this.directoryService.delete(number),
       () => {
         this.load();
-        this.directoryReportService.getReport()
-          .subscribe(r => this.report = r);
+        this.loadSummary();
       }
     );
   }
@@ -235,6 +233,13 @@ export class DirectoryView implements OnInit {
           return throwError(() => error);
         }
       });
+  }
+
+  private loadSummary() {
+    this.loadingSummary = true;
+    this.directorySummaryService.getSummary()
+      .pipe(finalize(() => this.loadingSummary = false))
+      .subscribe(r => this.summary = r);
   }
 
 }

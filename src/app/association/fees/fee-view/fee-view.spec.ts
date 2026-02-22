@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FeePaymentReport } from '@ucronia/domain';
+import { FeePaymentSummary } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
-import { FeeReportService } from '../fee-report-service';
+import { FeeSummaryService } from '../fee-summary-service';
 import { FeeService } from '../fee-service';
 import { FeeView } from './fee-view';
 
@@ -22,9 +22,9 @@ describe('FeeView', () => {
     ['update', 'pay', 'create', 'delete', 'getOne', 'getMembers']
   );
 
-  const feeReportMock = jasmine.createSpyObj<FeeReportService>(
+  const feeReportMock = jasmine.createSpyObj<FeeSummaryService>(
     'FeeReportService',
-    ['getPaymentReport']
+    ['getSummary']
   );
 
   beforeEach(async () => {
@@ -36,8 +36,8 @@ describe('FeeView', () => {
       of([])
     );
 
-    feeReportMock.getPaymentReport.and.returnValue(
-      of(new FeePaymentReport())
+    feeReportMock.getSummary.and.returnValue(
+      of(new FeePaymentSummary())
     );
 
     await TestBed.configureTestingModule({
@@ -50,7 +50,7 @@ describe('FeeView', () => {
         provideAnimationsAsync(),
         { provide: FeeCalendarService, useValue: feeCalendarMock },
         { provide: FeeService, useValue: feeServiceMock },
-        { provide: FeeReportService, useValue: feeReportMock }
+        { provide: FeeSummaryService, useValue: feeReportMock }
       ]
     })
       .compileComponents();

@@ -8,7 +8,7 @@ describe('TransactionBalanceService', () => {
 
   const mockUcroniaClient = {
     transaction: {
-      currentBalance: jasmine.createSpy().and.returnValue(of({})),
+      summary: jasmine.createSpy().and.returnValue(of({})),
       monthlyBalance: jasmine.createSpy().and.returnValue(of({}))
     }
   };

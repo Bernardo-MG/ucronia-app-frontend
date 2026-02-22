@@ -88,7 +88,7 @@ export class ReportEndpoint {
       'Accept': 'application/vnd.ms-excel'
     });
 
-    return this.http.get(`${this.apiUrl}/transaction`, {
+    return this.http.get(`${this.apiUrl}/library/book`, {
       headers,
       responseType: 'blob'
     }).pipe(
@@ -97,7 +97,7 @@ export class ReportEndpoint {
         const url = window.URL.createObjectURL(blob);
         const anchor = document.createElement('a');
         anchor.href = url;
-        anchor.download = 'books.xlsx';
+        anchor.download = 'ucronia_library';
         anchor.click();
         window.URL.revokeObjectURL(url);
       })

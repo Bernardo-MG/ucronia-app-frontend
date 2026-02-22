@@ -1,10 +1,9 @@
 import { TestBed } from '@angular/core/testing';
-
 import { UcroniaClient } from '@ucronia/api';
-import { DirectoryReportService } from './directory-report-service';
+import { DirectorySummaryService } from './directory-summary-service';
 
-describe('DirectoryReportService', () => {
-  let service: DirectoryReportService;
+describe('DirectorySummaryService', () => {
+  let service: DirectorySummaryService;
 
   const mockUcroniaClient = {};
 
@@ -14,7 +13,7 @@ describe('DirectoryReportService', () => {
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
-    service = TestBed.inject(DirectoryReportService);
+    service = TestBed.inject(DirectorySummaryService);
   });
 
   it('should be created', () => {
