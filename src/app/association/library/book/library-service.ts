@@ -33,9 +33,9 @@ export class LibraryService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('title'),
-          new SortingProperty('supertitle'),
-          new SortingProperty('subtitle'),
+          new SortingProperty('title.title'),
+          new SortingProperty('title.supertitle'),
+          new SortingProperty('title.subtitle'),
           new SortingProperty('number')
         ]
       )
@@ -65,10 +65,10 @@ export class LibraryService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('title'),
-          new SortingProperty('supertitle'),
-          new SortingProperty('subtitle'),
-          new SortingProperty('number')
+          new SortingProperty('title.title'),
+          new SortingProperty('title.supertitle'),
+          new SortingProperty('title.subtitle'),
+          new SortingProperty('title.number')
         ]
       )
     );
