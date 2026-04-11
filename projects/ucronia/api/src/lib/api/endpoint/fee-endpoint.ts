@@ -32,7 +32,10 @@ export class FeeEndpoint {
     year: number,
     active: MemberStatus
   ): Observable<MemberFees[]> {
-    const defaultProperties = [new SortingProperty('firstName'), new SortingProperty('lastName')];
+    const defaultProperties = [
+      new SortingProperty('name.firstName'),
+      new SortingProperty('name.lastName')
+    ];
 
     let status;
     if (active) {

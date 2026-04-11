@@ -16,8 +16,8 @@ export class MemberService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('firstName'),
-          new SortingProperty('lastName'),
+          new SortingProperty('name.firstName'),
+          new SortingProperty('name.lastName'),
           new SortingProperty('number')
         ]
       )
