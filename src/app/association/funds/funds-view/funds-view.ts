@@ -70,7 +70,7 @@ export class FundsView implements OnInit {
       .subscribe(months => {
         // To show in the selection box we have to reverse the order
         this.months = months
-          .map(m => new Date(`${m.year}-${m.month}`));
+          .map(m => new Date(m.year, m.month - 1));
         // TODO: then sort the months instead of reversing
         this.months = [...this.months].reverse();
         if (!this.loadingCalendar) {

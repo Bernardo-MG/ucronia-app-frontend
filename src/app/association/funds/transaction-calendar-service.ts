@@ -14,13 +14,7 @@ export class TransactionCalendarService {
   private readonly ucroniaClient = inject(UcroniaClient);
 
   public getCalendarInRange(year: number, month: number): Observable<Transaction[]> {
-    let dateValue;
-    if (month < 10) {
-      dateValue = `${year}-0${month + 1}`;
-    } else {
-      dateValue = `${year}-${month + 1}`;
-    }
-    const date = new Date(dateValue)
+    const date = new Date(year, month);
     const from = startOfMonth(date);
     const to = new Date(format(lastDayOfMonth(date), 'yyyy-MM-dd'));
 

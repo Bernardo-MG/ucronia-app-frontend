@@ -153,9 +153,7 @@ export class TransactionEndpoint {
         map(response => response.content),
         map(r => r.months.map(m => {
           const date = new Date(m);
-          const month = new Month(date.getFullYear(), date.getMonth() + 1);
-
-          return month;
+          return new Month(date.getFullYear(), date.getMonth() + 1);
         }))
       );
   }

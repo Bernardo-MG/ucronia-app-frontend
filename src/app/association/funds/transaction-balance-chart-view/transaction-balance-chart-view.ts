@@ -51,7 +51,7 @@ export class TransactionBalanceChartview implements OnInit {
       .subscribe(months => {
         // To show in the selection box we have to reverse the order
         this.monthsSelection = months.reverse()
-          .map(m => new Date(`${m.year}-${m.month}`))
+          .map(m => new Date(m.year, m.month - 1))
           .map((m: Date) => ({
             value: m,
             label: m.toISOString().slice(0, 7),
