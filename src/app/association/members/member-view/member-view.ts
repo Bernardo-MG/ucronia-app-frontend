@@ -10,7 +10,7 @@ import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { TablePageEvent } from 'primeng/table';
-import { MemberSummary } from 'projects/ucronia/api/src/lib/members/member-summary';
+import { MemberCount } from 'projects/ucronia/api/src/lib/members/member-summary';
 import { finalize, Subject } from 'rxjs';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
@@ -28,14 +28,14 @@ export class MemberView implements OnInit {
 
   public selectedData = new Member();
   public memberContact = new MemberProfile();
-  private memberSummary = new MemberSummary();
+  private MemberCount = new MemberCount();
 
   public get active() {
-    return this.memberSummary.active;
+    return this.MemberCount.active;
   }
 
   public get notRenewing() {
-    return this.memberSummary.active - this.memberSummary.renew;
+    return this.MemberCount.active - this.MemberCount.renew;
   }
 
   private sort = new Sorting();
@@ -95,7 +95,7 @@ export class MemberView implements OnInit {
     this.loadingSummary = true;
     this.service.getSummary()
       .pipe(finalize(() => this.loadingSummary = false))
-      .subscribe(summary => this.memberSummary = summary);
+      .subscribe(summary => this.MemberCount = summary);
   }
 
 }
