@@ -45,10 +45,10 @@ export class TransactionBalanceChartview implements OnInit {
 
   public ngOnInit(): void {
     // Read balance range
+    // TODO: should it wait when loading range?
     this.transactionCalendarService.getRange()
       .pipe(finalize(() => this.setupBalanceReload()))
       .subscribe(months => {
-        // To show in the selection box we have to reverse the order
         this.months = months.map(m => {
           return {
             label: `${m.year}-${String(m.month).padStart(2, '0')}`,
