@@ -18,8 +18,6 @@ export class MyFeesEndpoint {
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
   ): Observable<Page<Fee>> {
-    const defaultProperties = [new SortingProperty('month', SortingDirection.Descending)];
-
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);

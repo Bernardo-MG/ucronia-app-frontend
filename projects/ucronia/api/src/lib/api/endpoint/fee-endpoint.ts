@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SimpleResponse, SortingProperty } from '@bernardo-mg/request';
+import { SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { Fee, FeePayments, FeePaymentSummary, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { format } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
@@ -30,13 +30,9 @@ export class FeeEndpoint {
 
   public year(
     year: number,
-    active: MemberStatus
+    active: MemberStatus,
+    sort: Sorting | undefined = undefined
   ): Observable<MemberFees[]> {
-    const defaultProperties = [
-      new SortingProperty('name.firstName'),
-      new SortingProperty('name.lastName')
-    ];
-
     let status;
     if (active) {
       status = active.toString().toUpperCase();
@@ -47,7 +43,7 @@ export class FeeEndpoint {
     let params = new HttpParams();
     params = params.append('status', status);
 
-    defaultProperties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
     return this.http.get<SimpleResponse<MemberFees[]>>(`${this.apiUrl}/fee/${year}`, { params })
       .pipe(
