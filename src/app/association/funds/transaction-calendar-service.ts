@@ -16,7 +16,7 @@ export class TransactionCalendarService {
   public getCalendarInRange(year: number, month: number): Observable<Transaction[]> {
     const date = new Date(year, month);
     const from = startOfMonth(date);
-    const to = new Date(format(lastDayOfMonth(date), 'yyyy-MM-dd'));
+    const to = lastDayOfMonth(date);
 
     const fromWithMargin = addDays(from, -7);
     const toWithMargin = addDays(to, 7);
