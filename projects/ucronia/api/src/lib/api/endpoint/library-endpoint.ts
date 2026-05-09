@@ -179,7 +179,9 @@ export class LendingEndpoint {
 }
 
 function mapBookDates<T extends GameBook | FictionBook>(book: T): T {
-  book.publishDate = new Date(book.publishDate);
+  if (book.publishDate) {
+    book.publishDate = new Date(book.publishDate);
+  }
   book.lendings.forEach((lending) => {
     if (lending.lendingDate) {
       lending.lendingDate = new Date(lending.lendingDate);
