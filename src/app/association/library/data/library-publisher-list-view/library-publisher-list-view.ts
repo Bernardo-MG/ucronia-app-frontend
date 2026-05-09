@@ -4,11 +4,11 @@ import { CrudNameList } from '@app/shared/data/crud-name-list/crud-name-list';
 import { PublisherCrudService } from '../publisher-crud-service';
 
 @Component({
-  selector: 'assoc-library-publisher-list',
+  selector: 'assoc-library-publisher-list-view',
     imports: [CrudNameList],
-  templateUrl: './library-publisher-list.html'
+  templateUrl: './library-publisher-list-view.html'
 })
-export class LibraryPublisherList {
+export class LibraryPublisherListView {
 
   protected service = inject(PublisherCrudService);
 

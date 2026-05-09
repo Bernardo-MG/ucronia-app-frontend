@@ -101,7 +101,7 @@ export const routes: Routes = [
                     children: [
                       {
                         path: '',
-                        loadComponent: () => import('./association/library/data/library-author-list/library-author-list').then(m => m.LibraryAuthorList),
+                        loadComponent: () => import('./association/library/data/library-author-list-view/library-author-list-view').then(m => m.LibraryAuthorListView),
                         canActivate: [ResourceGuard("library_author", "view")]
                       }
                     ]
@@ -121,7 +121,7 @@ export const routes: Routes = [
                     children: [
                       {
                         path: '',
-                        loadComponent: () => import('./association/library/data/library-publisher-list/library-publisher-list').then(m => m.LibraryPublisherList),
+                        loadComponent: () => import('./association/library/data/library-publisher-list-view/library-publisher-list-view').then(m => m.LibraryPublisherListView),
                         canActivate: [ResourceGuard("library_publisher", "view")]
                       }
                     ]
@@ -131,7 +131,7 @@ export const routes: Routes = [
                     children: [
                       {
                         path: '',
-                        loadComponent: () => import('./association/library/data/library-book-type-list/library-book-type-list').then(m => m.LibraryBookTypeList),
+                        loadComponent: () => import('./association/library/data/library-book-type-list-view/library-book-type-list-view').then(m => m.LibraryBookTypeListview),
                         canActivate: [ResourceGuard("library_book_type", "view")]
                       }
                     ]
@@ -141,7 +141,7 @@ export const routes: Routes = [
                     children: [
                       {
                         path: '',
-                        loadComponent: () => import('./association/library/data/library-game-system-list/library-game-system-list').then(m => m.LibraryGameSystemList),
+                        loadComponent: () => import('./association/library/data/library-game-system-list-view/library-game-system-list-view').then(m => m.LibraryGameSystemListView),
                         canActivate: [ResourceGuard("library_game_system", "view")]
                       }
                     ]

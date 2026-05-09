@@ -1,41 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
-import { GameSystem } from '@ucronia/domain';
+import { Author } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { GameSystemCrudService } from '../game-system-crud-service';
-import { LibraryGameSystemList } from './library-game-system-list';
+import { AuthorCrudService } from '../author-crud-service';
+import { LibraryAuthorListView } from './library-author-list-view';
 
-describe('LibraryGameSystemList', () => {
-  let component: LibraryGameSystemList;
-  let fixture: ComponentFixture<LibraryGameSystemList>;
+describe('LibraryAuthorListView', () => {
+  let component: LibraryAuthorListView;
+  let fixture: ComponentFixture<LibraryAuthorListView>;
 
-  const gameSystemCrudServiceMock = jasmine.createSpyObj<GameSystemCrudService>(
-    'GameSystemCrudService',
+  const authorCrudServiceMock = jasmine.createSpyObj<AuthorCrudService>(
+    'AuthorCrudService',
     ['getAll', 'create', 'update', 'delete']
   );
 
   beforeEach(async () => {
 
-    gameSystemCrudServiceMock.getAll.and.returnValue(
-      of(new Page<GameSystem>())
+    authorCrudServiceMock.getAll.and.returnValue(
+      of(new Page<Author>())
     );
 
     await TestBed.configureTestingModule({
       imports: [
-        LibraryGameSystemList
+        LibraryAuthorListView
       ],
       providers: [
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: GameSystemCrudService, useValue: gameSystemCrudServiceMock }
+        { provide: AuthorCrudService, useValue: authorCrudServiceMock }
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryGameSystemList);
+    fixture = TestBed.createComponent(LibraryAuthorListView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
