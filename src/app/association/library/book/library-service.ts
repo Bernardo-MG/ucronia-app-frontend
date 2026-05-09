@@ -68,7 +68,7 @@ export class LibraryService {
           new SortingProperty('title.title'),
           new SortingProperty('title.supertitle'),
           new SortingProperty('title.subtitle'),
-          new SortingProperty('title.number')
+          new SortingProperty('number')
         ]
       )
     );
