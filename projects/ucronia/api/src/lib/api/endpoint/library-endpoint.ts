@@ -108,6 +108,12 @@ export class ReportEndpoint {
 
 export class LendingEndpoint {
 
+  public mapLendingDates = (lending: BookLending): BookLending => ({
+    ...lending,
+    lendingDate: new Date(lending.lendingDate),
+    returnDate: lending.returnDate ? new Date(lending.returnDate) : undefined
+  });
+
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
   public constructor(
@@ -136,11 +142,7 @@ export class LendingEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => {
-          response.content.map((lending) => {
-            lending.lendingDate = new Date(lending.lendingDate);
-            lending.returnDate = new Date(lending.returnDate);
-            return lending;
-          });
+          response.content.map((lending) => this.mapLendingDates(lending));
           return response;
         })
       );
@@ -153,11 +155,7 @@ export class LendingEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
-        map((lending) => {
-          lending.lendingDate = new Date(lending.lendingDate);
-          lending.returnDate = new Date(lending.returnDate);
-          return lending;
-        })
+        map((lending) => this.mapLendingDates(lending))
       );
   }
 
@@ -168,11 +166,7 @@ export class LendingEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
-        map((lending) => {
-          lending.lendingDate = new Date(lending.lendingDate);
-          lending.returnDate = new Date(lending.returnDate);
-          return lending;
-        })
+        map((lending) => this.mapLendingDates(lending))
       );
   }
 
@@ -181,6 +175,9 @@ export class LendingEndpoint {
 function mapBookDates<T extends GameBook | FictionBook>(book: T): T {
   if (book.publishDate) {
     book.publishDate = new Date(book.publishDate);
+  }
+  if (book.donation?.date) {
+    book.donation.date = new Date(book.donation.date);
   }
   book.lendings.forEach((lending) => {
     if (lending.lendingDate) {
