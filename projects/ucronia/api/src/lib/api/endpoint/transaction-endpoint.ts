@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { Transaction, TransactionMonthlyBalance, TransactionMonthsRange, TransactionSummary } from '@ucronia/domain';
-import { addMinutes, subMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
 import { TransactionUpdate } from '../../transaction/transaction-update';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -135,9 +134,7 @@ export class TransactionEndpoint {
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
         map(r => r.map(b => {
-          const offset = new Date().getTimezoneOffset();
-          const date = subMinutes(new Date(b.month), offset);
-          b.month = date;
+          b.month = new Date(b.month);
           return b;
         }))
       );
@@ -149,8 +146,7 @@ export class TransactionEndpoint {
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
         map(r => r.months.map(m => {
-          const offset = new Date().getTimezoneOffset();
-          const date = subMinutes(new Date(m), offset);
+          const date = new Date(m);
           return new Month(date.getFullYear(), date.getMonth() + 1);
         }))
       );

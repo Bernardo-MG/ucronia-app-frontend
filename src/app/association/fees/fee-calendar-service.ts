@@ -15,8 +15,8 @@ export class FeeCalendarService {
   public getCalendar(year: number, active: MemberStatus): Observable<MemberFees[]> {
     const sorting = new Sorting(
       [
-      new SortingProperty('name.firstName'),
-      new SortingProperty('name.lastName')
+        new SortingProperty('member.name.firstName'),
+        new SortingProperty('member.name.lastName')
       ]
     );
 

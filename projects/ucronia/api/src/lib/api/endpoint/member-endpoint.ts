@@ -1,8 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Month } from '@bernardo-mg/ui';
 import { Member, MembershipEvolutionMonth } from '@ucronia/domain';
-import { subMinutes } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
 import { MemberCount } from '../../members/member-summary';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
@@ -69,9 +67,7 @@ export class MemberEndpoint {
         catchError(this.errorInterceptor.handle),
         map(r => r.content),
         map(r => r.map(b => {
-          const offset = new Date().getTimezoneOffset();
-          const date = subMinutes(new Date(b.month), offset);
-          b.month = date;
+          b.month = new Date(b.month);
           return b;
         }))
       );

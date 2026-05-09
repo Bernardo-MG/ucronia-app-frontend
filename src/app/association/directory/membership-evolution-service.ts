@@ -15,6 +15,7 @@ export class MembershipEvolutionService {
   public monthly(start: Month | undefined, end: Month | undefined): Observable<MembershipEvolutionMonth[]> {
     let startDate;
     if (start) {
+      // TODO: months should start in 0
       startDate = startOfMonth(new Date(start.year, start.month - 1, 1));
     } else {
       startDate = undefined;
@@ -22,6 +23,7 @@ export class MembershipEvolutionService {
 
     let endDate;
     if (end) {
+      // TODO: months should start in 0
       endDate = endOfMonth(new Date(end.year, end.month - 1, 1));
     } else {
       endDate = undefined;

@@ -3,7 +3,6 @@ import { Colors } from '@app/shared/utils/colors';
 import { CalendarMonth } from '@bernardo-mg/ui';
 import { Transaction } from '@ucronia/domain';
 import { CalendarEvent } from 'angular-calendar';
-import { addMinutes } from 'date-fns';
 
 @Component({
   selector: 'assoc-transaction-calendar',
@@ -23,7 +22,6 @@ export class TransactionCalendar implements OnChanges {
 
   public ngOnChanges({ transactions }: SimpleChanges): void {
     if (transactions) {
-      const offset = new Date().getTimezoneOffset();
       this.events = this.transactions().map(t => {
         let color;
         if (t.amount >= 0) {
@@ -34,7 +32,7 @@ export class TransactionCalendar implements OnChanges {
         return {
           title: `${t.description} (${t.amount}€)`,
           color: color,
-          start: addMinutes(t.date, -offset),
+          start: t.date,
           meta: {
             transactionId: t.index,
           }

@@ -19,14 +19,16 @@ export class TransactionBalanceService {
   public monthly(start: Month | undefined, end: Month | undefined): Observable<TransactionMonthlyBalance[]> {
     let startDate;
     if (start) {
-      startDate = startOfMonth(new Date(start.year, start.month - 1, 1));
+      // TODO: months should start in 0
+      startDate = startOfMonth(new Date(start.year, start.month - 1));
     } else {
       startDate = undefined;
     }
 
     let endDate;
     if (end) {
-      endDate = endOfMonth(new Date(end.year, end.month - 1, 1));
+      // TODO: months should start in 0
+      endDate = endOfMonth(new Date(end.year, end.month - 1));
     } else {
       endDate = undefined;
     }
