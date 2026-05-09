@@ -134,7 +134,15 @@ export class LendingEndpoint {
 
     return this.http.get<PaginatedResponse<BookLending>>(`${this.apiUrl}/library/lending`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.map((lending) => {
+            lending.lendingDate = new Date(lending.lendingDate);
+            lending.returnDate = new Date(lending.returnDate);
+            return lending;
+          });
+          return response;
+        })
       );
   }
 
@@ -144,7 +152,12 @@ export class LendingEndpoint {
     return this.http.post<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((lending) => {
+          lending.lendingDate = new Date(lending.lendingDate);
+          lending.returnDate = new Date(lending.returnDate);
+          return lending;
+        })
       );
   }
 
@@ -154,20 +167,29 @@ export class LendingEndpoint {
     return this.http.put<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((lending) => {
+          lending.lendingDate = new Date(lending.lendingDate);
+          lending.returnDate = new Date(lending.returnDate);
+          return lending;
+        })
       );
   }
 
-  public delete(
-    number: number
-  ): Observable<GameBook> {
-    return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
+}
 
+function mapBookDates<T extends GameBook | FictionBook>(book: T): T {
+  book.publishDate = new Date(book.publishDate);
+  book.lendings.forEach((lending) => {
+    if (lending.lendingDate) {
+      lending.lendingDate = new Date(lending.lendingDate);
+    }
+    if (lending.returnDate) {
+      lending.returnDate = new Date(lending.returnDate);
+    }
+    return lending;
+  });
+  return book;
 }
 
 export class GameBookEndpoint {
@@ -198,7 +220,11 @@ export class GameBookEndpoint {
 
     return this.http.get<PaginatedResponse<GameBook>>(`${this.apiUrl}/library/book/game`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.map((book) => mapBookDates(book));
+          return response;
+        })
       );
   }
 
@@ -208,7 +234,8 @@ export class GameBookEndpoint {
     return this.http.get<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -218,7 +245,8 @@ export class GameBookEndpoint {
     return this.http.post<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -229,7 +257,8 @@ export class GameBookEndpoint {
     return this.http.put<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -239,7 +268,8 @@ export class GameBookEndpoint {
     return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -273,7 +303,11 @@ export class FictionBookEndpoint {
 
     return this.http.get<PaginatedResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.map((book) => mapBookDates(book));
+          return response;
+        })
       );
   }
 
@@ -283,7 +317,8 @@ export class FictionBookEndpoint {
     return this.http.get<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -293,7 +328,8 @@ export class FictionBookEndpoint {
     return this.http.post<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -304,7 +340,8 @@ export class FictionBookEndpoint {
     return this.http.put<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -314,7 +351,8 @@ export class FictionBookEndpoint {
     return this.http.delete<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
