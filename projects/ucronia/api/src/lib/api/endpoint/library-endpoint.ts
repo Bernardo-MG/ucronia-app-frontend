@@ -609,7 +609,7 @@ export class PublisherEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    return this.http.get<PaginatedResponse<Publisher>>(`${this.apiUrl}/library/author`, { params })
+    return this.http.get<PaginatedResponse<Publisher>>(`${this.apiUrl}/library/publisher`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
@@ -618,7 +618,7 @@ export class PublisherEndpoint {
   public get(
     number: number
   ): Observable<Publisher> {
-    return this.http.get<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`)
+    return this.http.get<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -628,7 +628,7 @@ export class PublisherEndpoint {
   public create(
     data: PublisherCreation
   ): Observable<Publisher> {
-    return this.http.post<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author`, data)
+    return this.http.post<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -639,7 +639,7 @@ export class PublisherEndpoint {
     number: number,
     data: PublisherUpdate
   ): Observable<Publisher> {
-    return this.http.put<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`, data)
+    return this.http.put<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -649,7 +649,7 @@ export class PublisherEndpoint {
   public delete(
     number: number
   ): Observable<Publisher> {
-    return this.http.delete<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`)
+    return this.http.delete<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
