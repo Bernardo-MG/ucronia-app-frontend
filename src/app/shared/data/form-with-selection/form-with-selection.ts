@@ -16,6 +16,10 @@ import { NameNumber } from '../model/name-number';
 })
 export class FormWithSelection {
 
+  @Input() public set data(value: NameNumber) {
+    this.form.patchValue(value as any);
+  }
+
   public readonly getSelection = input<(page: number) => Observable<Page<NameNumber>>>((page: number) => EMPTY);
 
   public readonly save = output<NameNumber>();
@@ -23,10 +27,6 @@ export class FormWithSelection {
   public readonly formStatus;
 
   public selecting = false;
-
-  @Input() public set data(value: NameNumber) {
-    this.form.patchValue(value as any);
-  }
 
   public get name() {
     return this.form.value.name;
@@ -49,8 +49,10 @@ export class FormWithSelection {
     this.selecting = true;
   }
 
-  public onSelect(selected: NameNumber) {
-    this.form.patchValue(selected as any);
+  public onChoose(selected: NameNumber) {
+    this.form.setValue(selected as any);
+    // TODO: this shouldn't be needed
+    this.form.markAsDirty();
     this.selecting = false;
   }
 
