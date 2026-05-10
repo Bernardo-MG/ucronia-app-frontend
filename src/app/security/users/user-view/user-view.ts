@@ -163,8 +163,10 @@ export class UserView implements OnInit {
         break;
       case 'roles':
         this.loading = true;
-        this.service.getAllRoles()
-          .pipe(finalize(() => this.loading = false))
+        this.service.getAvailableRoles(user.username)
+          .pipe(
+            finalize(() => this.loading = false)
+          )
           .subscribe(r => this.roleSelection = r);
         break;
     }
