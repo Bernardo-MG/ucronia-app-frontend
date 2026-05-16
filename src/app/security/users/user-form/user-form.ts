@@ -49,9 +49,12 @@ export class UserForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading }: SimpleChanges): void {
+  public ngOnChanges({ loading, selection }: SimpleChanges): void {
     if (loading) {
       this.formStatus.loading = this.loading();
+    }
+    if (selection) {
+      this.roles = [];
     }
   }
 
