@@ -28,7 +28,7 @@ export const routes: Routes = [
             children: [
               {
                 path: '',
-                loadComponent: () =>  import('@bernardo-mg/login').then(m => m.PasswordResetRequestView)
+                loadComponent: () => import('@bernardo-mg/login').then(m => m.PasswordResetRequestView)
               },
               {
                 path: ':token',
@@ -37,15 +37,10 @@ export const routes: Routes = [
             ]
           },
           {
-            path: 'users/activate',
-            children: [
-              {
-                path: ':token',
-                loadComponent: () =>
-                  import('./access/user-activation/user-activation-view/user-activation-view')
-                    .then(m => m.UserActivationView)
-              }
-            ]
+            path: 'users/activate/:token',
+            loadComponent: () =>
+              import('./access/user-activation/user-activation-view/user-activation-view')
+                .then(m => m.UserActivationView)
           }
         ]
       },
