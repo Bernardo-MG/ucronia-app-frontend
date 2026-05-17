@@ -11,11 +11,11 @@ export class FeeService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public create(data: FeeCreation): Observable<FeePayments> {
+  public create(data: FeeCreation): Observable<Fee> {
     return this.ucroniaClient.fee.create(data);
   }
 
-  public pay(data: FeePayments): Observable<FeePayments> {
+  public pay(data: FeePayments): Observable<Fee[]> {
     return this.ucroniaClient.fee.pay(data);
   }
 
