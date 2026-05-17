@@ -16,15 +16,42 @@ export class FeeEndpoint {
     private apiUrl: string
   ) { }
 
+  private mapFee(fee: Fee): Fee {
+    fee.month = new Date(fee.month);
+    if (fee.transaction?.date) {
+      fee.transaction.date = new Date(fee.transaction.date);
+    }
+    return fee;
+  }
+
+  private mapMemberFees(list: MemberFees[]): MemberFees[] {
+    return list.map(mf => {
+      mf.fees = mf.fees.map(f => {
+        f.month = new Date(f.month);
+        return f;
+      });
+      return mf;
+    });
+  }
+
+  private mapFeePayments(fp: FeePayments): FeePayments {
+    if (fp.paymentDate?.date) {
+      fp.paymentDate.date = new Date(fp.paymentDate.date);
+    }
+    fp.months = fp.months.map(m => new Date(m));
+    return fp;
+  }
+
   public get(
     member: number,
     month: Date
   ): Observable<Fee> {
     const formattedMonth = format(month, 'yyyy-MM');
-    return this.http.get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+    return this.http
+      .get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => this.mapFee(r.content))
       );
   }
 
@@ -48,7 +75,7 @@ export class FeeEndpoint {
     return this.http.get<SimpleResponse<MemberFees[]>>(`${this.apiUrl}/fee/${year}`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => this.mapMemberFees(r.content))
       );
   }
 
@@ -56,7 +83,7 @@ export class FeeEndpoint {
     return this.http.get<SimpleResponse<YearsRange>>(`${this.apiUrl}/fee/range`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => r.content)
       );
   }
 
@@ -66,7 +93,7 @@ export class FeeEndpoint {
     return this.http.post<SimpleResponse<FeePayments>>(`${this.apiUrl}/fee`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => this.mapFeePayments(r.content))
       );
   }
 
@@ -76,7 +103,7 @@ export class FeeEndpoint {
     return this.http.post<SimpleResponse<FeePayments>>(`${this.apiUrl}/fee/pay`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => this.mapFeePayments(r.content))
       );
   }
 
@@ -85,11 +112,12 @@ export class FeeEndpoint {
     month: Date,
     data: FeeUpdate
   ): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM')
-    return this.http.put<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`, data)
+    const formattedMonth = format(month, 'yyyy-MM');
+    return this.http
+      .put<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => this.mapFee(r.content))
       );
   }
 
@@ -97,11 +125,12 @@ export class FeeEndpoint {
     member: number,
     month: Date
   ): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM')
-    return this.http.delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+    const formattedMonth = format(month, 'yyyy-MM');
+    return this.http
+      .delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => this.mapFee(r.content))
       );
   }
 
@@ -109,7 +138,7 @@ export class FeeEndpoint {
     return this.http.get<SimpleResponse<FeePaymentSummary>>(`${this.apiUrl}/fee/summary`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(r => r.content)
       );
   }
 
