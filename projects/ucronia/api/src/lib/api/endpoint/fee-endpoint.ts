@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SimpleResponse, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Fee, FeePayments, FeePaymentSummary, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
-import { format } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
@@ -46,9 +45,8 @@ export class FeeEndpoint {
     member: number,
     month: Date
   ): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM');
     return this.http
-      .get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+      .get<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${month.toISOString()}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(r => this.mapFee(r.content))
@@ -112,9 +110,8 @@ export class FeeEndpoint {
     month: Date,
     data: FeeUpdate
   ): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM');
     return this.http
-      .put<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`, data)
+      .put<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${month.toISOString()}/${member}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(r => this.mapFee(r.content))
@@ -125,9 +122,8 @@ export class FeeEndpoint {
     member: number,
     month: Date
   ): Observable<Fee> {
-    const formattedMonth = format(month, 'yyyy-MM');
     return this.http
-      .delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${formattedMonth}/${member}`)
+      .delete<SimpleResponse<Fee>>(`${this.apiUrl}/fee/${month.toISOString()}/${member}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(r => this.mapFee(r.content))
