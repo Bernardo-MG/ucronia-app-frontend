@@ -33,14 +33,6 @@ export class FeeEndpoint {
     });
   }
 
-  private mapFeePayments(fp: FeePayments): FeePayments {
-    if (fp.paymentDate?.date) {
-      fp.paymentDate.date = new Date(fp.paymentDate.date);
-    }
-    fp.months = fp.months.map(m => new Date(m));
-    return fp;
-  }
-
   public get(
     member: number,
     month: Date
@@ -87,21 +79,21 @@ export class FeeEndpoint {
 
   public create(
     data: FeeCreation
-  ): Observable<FeePayments> {
-    return this.http.post<SimpleResponse<FeePayments>>(`${this.apiUrl}/fee`, data)
+  ): Observable<Fee> {
+    return this.http.post<SimpleResponse<Fee>>(`${this.apiUrl}/fee`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(r => this.mapFeePayments(r.content))
+        map(r => this.mapFee(r.content))
       );
   }
 
   public pay(
     data: FeePayments
-  ): Observable<FeePayments> {
-    return this.http.post<SimpleResponse<FeePayments>>(`${this.apiUrl}/fee/pay`, data)
+  ): Observable<Fee[]> {
+    return this.http.post<SimpleResponse<Fee[]>>(`${this.apiUrl}/fee/pay`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(r => this.mapFeePayments(r.content))
+        map(r => r.content.map((f) => this.mapFee(f)))
       );
   }
 
