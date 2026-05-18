@@ -63,7 +63,7 @@ export class RoleEndpoint {
     name: string,
     data: RoleChange
   ): Observable<Role> {
-    return this.http.patch<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`, data)
+    return this.http.put<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
