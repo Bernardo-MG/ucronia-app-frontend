@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Fee, FeePayments, FeePaymentSummary, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePayments, FeeSummary, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
@@ -122,8 +122,15 @@ export class FeeEndpoint {
       );
   }
 
-  public summary(): Observable<FeePaymentSummary> {
-    return this.http.get<SimpleResponse<FeePaymentSummary>>(`${this.apiUrl}/fee/summary`)
+  public summary(
+    from: Date,
+    to: Date
+  ): Observable<FeeSummary> {
+    let params = new HttpParams();
+    params = params.append('from', from.toISOString());
+    params = params.append('to', to.toISOString());
+
+    return this.http.get<SimpleResponse<FeeSummary>>(`${this.apiUrl}/fee/summary`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(r => r.content)
