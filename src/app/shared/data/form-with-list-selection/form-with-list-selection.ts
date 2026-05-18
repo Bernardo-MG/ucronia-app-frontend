@@ -16,23 +16,23 @@ import { NameNumber } from '../model/name-number';
 })
 export class FormWithListSelection {
 
-  public readonly getSelection = input<(page: number) => Observable<Page<NameNumber>>>((page: number) => EMPTY);
-
-  public readonly save = output<NameNumber[]>();
-
-  public readonly formStatus;
-
   @Input() public set data(value: NameNumber[]) {
     if (value) {
       (this.form as any).get('rows').setValue(value);
     }
   }
 
+  public readonly getSelection = input<(page: number) => Observable<Page<NameNumber>>>((page: number) => EMPTY);
+
+  public readonly save = output<NameNumber[]>();
+
+  public readonly formStatus;
+
+  public selecting = false;
+
   public get rows(): NameNumber[] {
     return (this.form as any).get('rows').value;
   }
-
-  public selecting = false;
 
   public form: FormGroup;
 

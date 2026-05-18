@@ -79,7 +79,7 @@ export class UserEndpoint {
     username: string,
     data: UserUpdate
   ): Observable<User> {
-    return this.http.patch<SimpleResponse<User>>(`${this.apiUrl}/security/user/${username}`, data)
+    return this.http.put<SimpleResponse<User>>(`${this.apiUrl}/security/user/${username}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)

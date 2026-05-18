@@ -105,7 +105,11 @@ export class UserService {
 
   private getAllMembers(): Observable<MemberProfile[]> {
     const sorting = new Sorting(
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
     );
     const pageSize = 100;
 

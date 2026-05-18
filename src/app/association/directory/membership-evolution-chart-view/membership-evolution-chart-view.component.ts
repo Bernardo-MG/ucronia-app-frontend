@@ -1,10 +1,11 @@
 
 import { Component, OnDestroy, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Month } from '@bernardo-mg/ui';
 import { MembershipEvolutionMonth } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { SelectModule } from 'primeng/select';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 
 @Component({
@@ -21,28 +22,22 @@ export class MembershipEvolutionChartView implements OnDestroy {
 
   public balance: MembershipEvolutionMonth[] = [];
 
-  public months: Date[] = [];
+  public months: { label: string, value: Month }[] = [];
 
-  private _startMonth: Date | undefined = undefined;
-
-  public get startMonth(): Date {
-    return this._startMonth as Date;
+  private startMonth$ = new BehaviorSubject<Month | undefined>(undefined);
+  public get startMonth(): Month | undefined {
+    return this.startMonth$.value;
+  }
+  public set startMonth(month: Month | undefined) {
+    this.startMonth$.next(month);
   }
 
-  public set startMonth(month: Date) {
-    this._startMonth = month;
-    this.loadBalance();
+  private endMonth$ = new BehaviorSubject<Month | undefined>(undefined);
+  public get endMonth(): Month | undefined {
+    return this.endMonth$.value;
   }
-
-  private _endMonth: Date | undefined = undefined;
-
-  public get endMonth(): Date {
-    return this._endMonth as Date;
-  }
-
-  public set endMonth(month: Date) {
-    this._endMonth = month;
-    this.loadBalance();
+  public set endMonth(month: Month | undefined) {
+    this.endMonth$.next(month);
   }
 
   public get waiting() {
@@ -55,22 +50,26 @@ export class MembershipEvolutionChartView implements OnDestroy {
 
   public chart: any;
 
-  public monthsSelection: { label: string, value: Date }[] = [];
-
   constructor() {
-    // Read balance range
+    // Read evolution range
     this.readingRange = true;
     this.service.monthly(this.startMonth, this.endMonth)
-      .pipe(finalize(() => this.readingRange = false))
-      .subscribe(b => {
-        this.months = b.map(v => v.month);
-        this.monthsSelection = this.months.map((m: Date) => ({
-          value: m,
-          label: m.toISOString().slice(0, 7),
-        }));
-        this.startMonth = this.months[0];
-        this.endMonth = this.months[this.months.length - 1];
-        this.loadBalance();
+      .pipe(
+        finalize(() => this.readingRange = false),
+        finalize(() => this.setupBalanceReload())
+      )
+      .subscribe(months => {
+        this.months = months.map(m => {
+          return {
+            label: `${m.month.getFullYear()}-${String(m.month.getMonth() + 1).padStart(2, '0')}`,
+            value: new Month(m.month.getFullYear(), m.month.getMonth() + 1)
+          };
+        });
+        // Range
+        if (this.months.length) {
+          this.startMonth = this.months[this.months.length - 1].value;
+          this.endMonth = this.months[0].value;
+        }
       });
   }
 
@@ -80,13 +79,13 @@ export class MembershipEvolutionChartView implements OnDestroy {
     }
   }
 
-  private loadChart(balance: MembershipEvolutionMonth[]) {
+  private loadChart() {
     if (this.chart) {
       this.chart.destroy();
     }
 
-    const labels = balance.map(b => b.month.toISOString().slice(0, 7));
-    const totals = balance.map(b => b.total);
+    const labels = this.balance.map(b => b.month.toISOString().slice(0, 7));
+    const totals = this.balance.map(b => b.total);
 
     const data = {
       labels: labels,
@@ -108,13 +107,19 @@ export class MembershipEvolutionChartView implements OnDestroy {
     });
   }
 
-  private loadBalance() {
-    this.readingBalance = true;
-    this.service.monthly(this.startMonth, this.endMonth)
-      .pipe(finalize(() => this.readingBalance = false))
-      .subscribe(response => {
-        this.balance = response;
-        this.loadChart(response);
+  private setupBalanceReload() {
+    combineLatest([this.startMonth$, this.endMonth$])
+      .pipe(
+        switchMap(([start, end]) => {
+          if (!start || !end) return [];
+          this.readingBalance = true;
+          return this.service.monthly(start, end)
+            .pipe(finalize(() => this.readingBalance = false));
+        })
+      )
+      .subscribe(data => {
+        this.balance = data;
+        this.loadChart();
       });
   }
 

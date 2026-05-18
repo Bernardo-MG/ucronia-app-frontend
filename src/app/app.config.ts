@@ -3,7 +3,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import { jwtAuthenticationInterceptor, unauthorizedInterceptor } from '@bernardo-mg/authentication';
-import { dateInterceptor, errorInterceptor } from '@bernardo-mg/request';
+import { errorInterceptor } from '@bernardo-mg/request';
 import { SECURITY_API_BASE_URL, SecurityClient } from '@bernardo-mg/security';
 import Aura from '@primeng/themes/aura';
 import { UCRONIA_API_BASE_URL, UcroniaClient } from '@ucronia/api';
@@ -22,7 +22,6 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([
         jwtAuthenticationInterceptor(environment.apiUrl),
         unauthorizedInterceptor(environment.apiUrl),
-        dateInterceptor(),
         errorInterceptor()
       ])
     ),

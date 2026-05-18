@@ -11,11 +11,11 @@ export class FeeService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public create(data: FeeCreation): Observable<FeePayments> {
+  public create(data: FeeCreation): Observable<Fee> {
     return this.ucroniaClient.fee.create(data);
   }
 
-  public pay(data: FeePayments): Observable<FeePayments> {
+  public pay(data: FeePayments): Observable<Fee[]> {
     return this.ucroniaClient.fee.pay(data);
   }
 
@@ -34,8 +34,8 @@ export class FeeService {
   public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
     const sorting = new Sorting(
       [
-        new SortingProperty('firstName'),
-        new SortingProperty('lastName'),
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
         new SortingProperty('number')
       ]
     );

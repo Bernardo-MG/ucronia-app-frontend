@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FeePaymentSummary } from '@ucronia/domain';
+import { FeeSummary } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
@@ -37,7 +37,7 @@ describe('FeeView', () => {
     );
 
     feeReportMock.getSummary.and.returnValue(
-      of(new FeePaymentSummary())
+      of(new FeeSummary())
     );
 
     await TestBed.configureTestingModule({

@@ -3,6 +3,7 @@ import { Component, OnChanges, SimpleChanges, input, output } from '@angular/cor
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { MemberFees, MemberFeesFee, YearsRange } from '@ucronia/domain';
+import { getMonth } from 'date-fns';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
@@ -83,7 +84,7 @@ export class FeeCalendar implements OnChanges {
   }
 
   public hasMonth(months: MemberFeesFee[], month: number): boolean {
-    return months.find(m => (m.month.getMonth() + 1) === month) !== undefined;
+    return months.some(m => getMonth(m.month) + 1 === month);
   }
 
   public onSelectFee(member: number, months: MemberFeesFee[], month: number) {
@@ -100,7 +101,7 @@ export class FeeCalendar implements OnChanges {
   }
 
   private getCalendarMonth(months: MemberFeesFee[], month: number): MemberFeesFee {
-    return months.find(m => (m.month.getMonth() + 1) === month) as MemberFeesFee;
+    return months.find(m => getMonth(m.month) + 1 === month) as MemberFeesFee;
   }
 
 }

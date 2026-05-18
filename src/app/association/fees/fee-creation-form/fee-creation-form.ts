@@ -39,7 +39,7 @@ export class FeeCreationForm implements OnChanges {
 
     this.form = fb.group({
       member: [null, Validators.required],
-      month: ['', Validators.required]
+      month: [null, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -49,15 +49,6 @@ export class FeeCreationForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
-  }
-
-  public onMonthSelect(date: Date) {
-    // TODO: this is just a patch
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const formatted = `${year}-${month}`;
-
-    this.form.get('month')?.setValue(formatted, { emitEvent: false });
   }
 
   /**

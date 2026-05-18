@@ -4,7 +4,7 @@ import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayments, FeePaymentSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePayments, FeeSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -55,7 +55,7 @@ export class FeeView implements OnInit {
   public showing = false;
 
   public selectedData = new Fee();
-  public summary = new FeePaymentSummary();
+  public summary = new FeeSummary();
   public selectedMember = new Member();
 
   public failures = new FailureStore();

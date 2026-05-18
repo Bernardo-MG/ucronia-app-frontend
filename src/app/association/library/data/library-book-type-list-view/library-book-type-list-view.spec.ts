@@ -1,41 +1,41 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
-import { Publisher } from '@ucronia/domain';
+import { BookType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { PublisherCrudService } from '../publisher-crud-service';
-import { LibraryPublisherList } from './library-publisher-list';
+import { BookTypeCrudService } from '../book-type-crud-service';
+import { LibraryBookTypeListview } from './library-book-type-list-view';
 
-describe('LibraryPublisherList', () => {
-  let component: LibraryPublisherList;
-  let fixture: ComponentFixture<LibraryPublisherList>;
+describe('LibraryBookTypeListView', () => {
+  let component: LibraryBookTypeListview;
+  let fixture: ComponentFixture<LibraryBookTypeListview>;
 
-  const publisherCrudServiceMock = jasmine.createSpyObj<PublisherCrudService>(
-    'PublisherCrudService',
+  const bookTypeCrudServiceMock = jasmine.createSpyObj<BookTypeCrudService>(
+    'BookTypeCrudService',
     ['getAll', 'create', 'update', 'delete']
   );
 
   beforeEach(async () => {
 
-    publisherCrudServiceMock.getAll.and.returnValue(
-      of(new Page<Publisher>())
+    bookTypeCrudServiceMock.getAll.and.returnValue(
+      of(new Page<BookType>())
     );
 
     await TestBed.configureTestingModule({
       imports: [
-        LibraryPublisherList
+        LibraryBookTypeListview
       ],
       providers: [
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: PublisherCrudService, useValue: publisherCrudServiceMock }
+        { provide: BookTypeCrudService, useValue: bookTypeCrudServiceMock }
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryPublisherList);
+    fixture = TestBed.createComponent(LibraryBookTypeListview);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

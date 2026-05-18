@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
+import { Sorting } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { SortingProperty } from 'projects/bernardo-mg/request/src/lib/models/sorting-property';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +13,14 @@ export class FeeCalendarService {
   private readonly ucroniaClient = inject(UcroniaClient);
 
   public getCalendar(year: number, active: MemberStatus): Observable<MemberFees[]> {
-    return this.ucroniaClient.fee.year(year, active);
+    const sorting = new Sorting(
+      [
+        new SortingProperty('member.name.firstName'),
+        new SortingProperty('member.name.lastName')
+      ]
+    );
+
+    return this.ucroniaClient.fee.year(year, active, sorting);
   }
 
   public getRange(): Observable<YearsRange> {

@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { MemberSummary, mergeProperties, UcroniaClient } from '@ucronia/api';
+import { MemberCount, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
@@ -16,8 +16,8 @@ export class MemberService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('firstName'),
-          new SortingProperty('lastName'),
+          new SortingProperty('name.firstName'),
+          new SortingProperty('name.lastName'),
           new SortingProperty('number')
         ]
       )
@@ -26,8 +26,8 @@ export class MemberService {
     return this.ucroniaClient.member.page(page, undefined, sorting, name);
   }
 
-  public getSummary(): Observable<MemberSummary> {
-    return this.ucroniaClient.member.summary();
+  public getSummary(): Observable<MemberCount> {
+    return this.ucroniaClient.member.count();
   }
 
 }

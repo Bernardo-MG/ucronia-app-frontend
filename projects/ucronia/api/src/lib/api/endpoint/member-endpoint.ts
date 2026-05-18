@@ -1,9 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Member, MembershipEvolutionMonth } from '@ucronia/domain';
-import { format } from 'date-fns';
 import { catchError, map, Observable } from 'rxjs';
-import { MemberSummary } from '../../members/member-summary';
+import { MemberCount } from '../../members/member-summary';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class MemberEndpoint {
@@ -42,8 +41,8 @@ export class MemberEndpoint {
       );
   }
 
-  public summary(): Observable<MemberSummary> {
-    return this.http.get<SimpleResponse<MemberSummary>>(`${this.apiUrl}/member/summary`)
+  public count(): Observable<MemberCount> {
+    return this.http.get<SimpleResponse<MemberCount>>(`${this.apiUrl}/member/count`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(r => r.content)
@@ -57,16 +56,20 @@ export class MemberEndpoint {
     let params = new HttpParams();
 
     if (from) {
-      params = params.append('from', format(from, 'yyyy-MM'));
+      params = params.append('from', from.toISOString());
     }
     if (to) {
-      params = params.append('to', format(to, 'yyyy-MM'));
+      params = params.append('to', to.toISOString());
     }
 
     return this.http.get<SimpleResponse<MembershipEvolutionMonth[]>>(`${this.apiUrl}/member/evolution`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(r => r.content)
+        map(r => r.content),
+        map(r => r.map(b => {
+          b.month = new Date(b.month);
+          return b;
+        }))
       );
   }
 

@@ -1,6 +1,7 @@
 
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { SelectModule } from 'primeng/select';
@@ -20,21 +21,21 @@ export class TransactionBalanceChartview implements OnInit {
 
   public balance: TransactionMonthlyBalance[] = [];
 
-  public months: Date[] = [];
+  public months: { label: string, value: Month }[] = [];
 
-  private startMonth$ = new BehaviorSubject<Date>(new Date());
-  public get startMonth(): Date {
+  private startMonth$ = new BehaviorSubject<Month>(new Month(0, 0));
+  public get startMonth(): Month {
     return this.startMonth$.value;
   }
-  public set startMonth(month: Date) {
+  public set startMonth(month: Month) {
     this.startMonth$.next(month);
   }
 
-  private endMonth$ = new BehaviorSubject<Date>(new Date());
-  public get endMonth(): Date {
+  private endMonth$ = new BehaviorSubject<Month>(new Month(0, 0));
+  public get endMonth(): Month {
     return this.endMonth$.value;
   }
-  public set endMonth(month: Date) {
+  public set endMonth(month: Month) {
     this.endMonth$.next(month);
   }
 
@@ -42,23 +43,22 @@ export class TransactionBalanceChartview implements OnInit {
 
   public chart: any;
 
-  public monthsSelection: { label: string, value: Date }[] = [];
-
   public ngOnInit(): void {
     // Read balance range
+    // TODO: should it wait when loading range?
     this.transactionCalendarService.getRange()
       .pipe(finalize(() => this.setupBalanceReload()))
       .subscribe(months => {
-        // To show in the selection box we have to reverse the order
-        this.monthsSelection = months.reverse()
-          .map(m => new Date(`${m.year}-${m.month}`))
-          .map((m: Date) => ({
-            value: m,
-            label: m.toISOString().slice(0, 7),
-          }));
-        if (this.monthsSelection.length) {
-          this.startMonth = this.monthsSelection[this.monthsSelection.length - 1].value;
-          this.endMonth = this.monthsSelection[0].value;
+        this.months = months.map(m => {
+          return {
+            label: `${m.year}-${String(m.month).padStart(2, '0')}`,
+            value: m
+          };
+        });
+        // Range
+        if (this.months.length) {
+          this.startMonth = this.months[this.months.length - 1].value;
+          this.endMonth = this.months[0].value;
         }
       });
   }

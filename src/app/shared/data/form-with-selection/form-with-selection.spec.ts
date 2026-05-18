@@ -43,7 +43,7 @@ describe('FormWithSelection', () => {
     it('should load data when selected and exit selecting mode', () => {
       component.onStartSelecting();
       const selection = { number: 2, name: 'Selected' };
-      component.onSelect(selection);
+      component.onChoose(selection);
 
       expect(component.form.value as any).toEqual(selection);
       expect(component.selecting).toBeFalse();

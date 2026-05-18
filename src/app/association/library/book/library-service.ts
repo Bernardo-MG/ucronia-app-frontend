@@ -33,9 +33,9 @@ export class LibraryService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('title'),
-          new SortingProperty('supertitle'),
-          new SortingProperty('subtitle'),
+          new SortingProperty('title.title'),
+          new SortingProperty('title.supertitle'),
+          new SortingProperty('title.subtitle'),
           new SortingProperty('number')
         ]
       )
@@ -65,9 +65,9 @@ export class LibraryService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('title'),
-          new SortingProperty('supertitle'),
-          new SortingProperty('subtitle'),
+          new SortingProperty('title.title'),
+          new SortingProperty('title.supertitle'),
+          new SortingProperty('title.subtitle'),
           new SortingProperty('number')
         ]
       )
@@ -110,7 +110,11 @@ export class LibraryService {
 
   public getDonors(page: number | undefined = undefined): Observable<Page<Profile>> {
     const sorting = new Sorting(
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
     );
 
     return this.ucroniaClient.profile.page(page, undefined, sorting, undefined);
@@ -126,7 +130,11 @@ export class LibraryService {
 
   public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<Page<Member>> {
     const sorting = new Sorting(
-      [new SortingProperty('firstName'), new SortingProperty('lastName'), new SortingProperty('number')]
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
     );
 
     return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);

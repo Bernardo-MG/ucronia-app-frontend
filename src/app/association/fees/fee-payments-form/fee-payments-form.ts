@@ -4,6 +4,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { FeePayments, Member } from '@ucronia/domain';
+import { isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -64,18 +65,15 @@ export class FeePaymentsForm {
   }
 
   public onMonthSelect(date: Date, index: number) {
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
+    const controlValue = this.months.at(index).value;
 
-    let dateValue;
-    if (month < 10) {
-      dateValue = `${year}-0${month}`;
-    } else {
-      dateValue = `${year}-${month}`;
-    }
+    // If your form stores a Date:
+    const currentDate = controlValue instanceof Date
+      ? controlValue
+      : new Date(controlValue);
 
-    if(this.months.at(index).value !== dateValue) {
-      this.months.at(index).setValue(dateValue, { emitEvent: false });
+    if (!isSameMonth(currentDate, date)) {
+      this.months.at(index).setValue(date, { emitEvent: false });
     }
   }
 

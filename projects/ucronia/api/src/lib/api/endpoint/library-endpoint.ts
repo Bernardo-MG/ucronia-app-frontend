@@ -108,6 +108,12 @@ export class ReportEndpoint {
 
 export class LendingEndpoint {
 
+  public mapLendingDates = (lending: BookLending): BookLending => ({
+    ...lending,
+    lendingDate: new Date(lending.lendingDate),
+    returnDate: lending.returnDate ? new Date(lending.returnDate) : undefined
+  });
+
   private readonly errorInterceptor = new ErrorRequestInterceptor();
 
   public constructor(
@@ -134,7 +140,11 @@ export class LendingEndpoint {
 
     return this.http.get<PaginatedResponse<BookLending>>(`${this.apiUrl}/library/lending`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.map((lending) => this.mapLendingDates(lending));
+          return response;
+        })
       );
   }
 
@@ -144,7 +154,8 @@ export class LendingEndpoint {
     return this.http.post<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((lending) => this.mapLendingDates(lending))
       );
   }
 
@@ -154,20 +165,30 @@ export class LendingEndpoint {
     return this.http.put<SimpleResponse<BookLending>>(`${this.apiUrl}/library/lending`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((lending) => this.mapLendingDates(lending))
       );
   }
 
-  public delete(
-    number: number
-  ): Observable<GameBook> {
-    return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
-      );
-  }
+}
 
+function mapBookDates<T extends GameBook | FictionBook>(book: T): T {
+  if (book.publishDate) {
+    book.publishDate = new Date(book.publishDate);
+  }
+  if (book.donation?.date) {
+    book.donation.date = new Date(book.donation.date);
+  }
+  book.lendings.forEach((lending) => {
+    if (lending.lendingDate) {
+      lending.lendingDate = new Date(lending.lendingDate);
+    }
+    if (lending.returnDate) {
+      lending.returnDate = new Date(lending.returnDate);
+    }
+    return lending;
+  });
+  return book;
 }
 
 export class GameBookEndpoint {
@@ -198,7 +219,11 @@ export class GameBookEndpoint {
 
     return this.http.get<PaginatedResponse<GameBook>>(`${this.apiUrl}/library/book/game`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.map((book) => mapBookDates(book));
+          return response;
+        })
       );
   }
 
@@ -208,7 +233,8 @@ export class GameBookEndpoint {
     return this.http.get<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -218,7 +244,8 @@ export class GameBookEndpoint {
     return this.http.post<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -229,7 +256,8 @@ export class GameBookEndpoint {
     return this.http.put<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -239,7 +267,8 @@ export class GameBookEndpoint {
     return this.http.delete<SimpleResponse<GameBook>>(`${this.apiUrl}/library/book/game/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -273,7 +302,11 @@ export class FictionBookEndpoint {
 
     return this.http.get<PaginatedResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.map((book) => mapBookDates(book));
+          return response;
+        })
       );
   }
 
@@ -283,7 +316,8 @@ export class FictionBookEndpoint {
     return this.http.get<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -293,7 +327,8 @@ export class FictionBookEndpoint {
     return this.http.post<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -304,7 +339,8 @@ export class FictionBookEndpoint {
     return this.http.put<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -314,7 +350,8 @@ export class FictionBookEndpoint {
     return this.http.delete<SimpleResponse<FictionBook>>(`${this.apiUrl}/library/book/fiction/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map((book) => mapBookDates(book))
       );
   }
 
@@ -571,7 +608,7 @@ export class PublisherEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    return this.http.get<PaginatedResponse<Publisher>>(`${this.apiUrl}/library/author`, { params })
+    return this.http.get<PaginatedResponse<Publisher>>(`${this.apiUrl}/library/publisher`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
@@ -580,7 +617,7 @@ export class PublisherEndpoint {
   public get(
     number: number
   ): Observable<Publisher> {
-    return this.http.get<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`)
+    return this.http.get<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -590,7 +627,7 @@ export class PublisherEndpoint {
   public create(
     data: PublisherCreation
   ): Observable<Publisher> {
-    return this.http.post<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author`, data)
+    return this.http.post<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -601,7 +638,7 @@ export class PublisherEndpoint {
     number: number,
     data: PublisherUpdate
   ): Observable<Publisher> {
-    return this.http.put<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`, data)
+    return this.http.put<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
@@ -611,7 +648,7 @@ export class PublisherEndpoint {
   public delete(
     number: number
   ): Observable<Publisher> {
-    return this.http.delete<SimpleResponse<Publisher>>(`${this.apiUrl}/library/author/${number}`)
+    return this.http.delete<SimpleResponse<Publisher>>(`${this.apiUrl}/library/publisher/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
