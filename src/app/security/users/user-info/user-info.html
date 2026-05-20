@@ -1,97 +1,45 @@
-<!-- Username -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Usuario</div>
-  <div class="col-span-8">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{ user().username }}
-    }
-  </div>
-</div>
+<div class="ms-3 space-y-5">
 
-<!-- Name -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Nombre</div>
-  <div class="col-span-8">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{ user().name }}
-    }
+  <!-- Username -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Usuario" [value]="user().username" />
   </div>
-</div>
 
-<!-- Email -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">E-mail</div>
-  <div class="col-span-8">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{ user().email }}
-    }
+  <!-- Name -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Nombre" [value]="user().name" />
   </div>
-</div>
 
-@if (member()) {
-  <!-- Member -->
-  <div class="grid grid-cols-12 py-1">
-    <div class="col-span-4 text-blue-600 font-medium">Socio</div>
-    <div class="col-span-8">
-      @if (loading()) {
-        <p-skeleton class="mb-2" />
-      } @else {
-        {{ member().name.fullName }}
-      }
+  <!-- Email -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-envelope" name="E-mail" [value]="user().email" />
+  </div>
+
+  @if (member()) {
+    <!-- Member -->
+    <div>
+      <ui-detail-field [loading]="loading()" icon="pi pi-user" name="E-mail" [value]="member().name.fullName" />
     </div>
-  </div>
-}
+  }
 
-<!-- Enabled -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Activo</div>
-  <div class="col-span-8">
-    @if (user().enabled) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
+  <!-- Enabled -->
+  <div>
+    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-power-off" name="Activo" [value]="user().enabled" />
   </div>
-</div>
 
-<!-- Expired -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">No expirado</div>
-  <div class="col-span-8">
-    @if (user().notExpired) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
+  <!-- Expired -->
+  <div>
+    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-clock" name="No expirado" [value]="user().notExpired" />
   </div>
-</div>
 
-<!-- Password expired -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Clave no expirada</div>
-  <div class="col-span-8">
-    @if (user().passwordNotExpired) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
+  <!-- Password expired -->
+  <div>
+    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-lock" name="Clave no expirada" [value]="user().passwordNotExpired" />
   </div>
-</div>
 
-<!-- Locked -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Desbloqueado</div>
-  <div class="col-span-8">
-    @if (user().notLocked) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
+  <!-- Locked -->
+  <div>
+    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-lock-open" name="Desbloqueado" [value]="user().notLocked" />
   </div>
+
 </div>

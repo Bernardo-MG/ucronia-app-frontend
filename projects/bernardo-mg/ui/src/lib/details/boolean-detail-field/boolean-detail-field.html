@@ -1,0 +1,16 @@
+<div class="flex gap-3 items-center">
+  <i class="{{icon()}} text-gray-400"></i>
+  <div>
+    <p class="text-gray-500 text-sm">{{name()}}</p>
+
+    @if (loading()) {
+      <p-skeleton />
+    } @else {
+      @if (value()) {
+        <span class="pi pi-check text-green-600"></span>
+      } @else {
+        <span class="pi pi-times text-yellow-600"></span>
+      }
+    }
+  </div>
+</div>
