@@ -1,8 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Sorting } from '@bernardo-mg/request';
+import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
-import { SortingProperty } from 'projects/bernardo-mg/request/src/lib/models/sorting-property';
 import { Observable } from 'rxjs';
 
 @Injectable({

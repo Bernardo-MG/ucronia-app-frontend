@@ -3,8 +3,10 @@
  */
 
 export * from './lib/client/security-client';
+export * from './lib/domain/account';
 export * from './lib/domain/login-register';
 export * from './lib/request/login-request';
+export * from './lib/request/password-change';
 export * from './lib/request/password-reset';
 export * from './lib/request/password-reset-request';
 export * from './lib/request/role-change';
