@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
+import { MemberCount } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MemberCount } from 'projects/ucronia/api/src/lib/members/member-summary';
 import { of } from 'rxjs';
 import { MemberService } from '../member-service';
 import { MemberView } from './member-view';
