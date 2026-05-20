@@ -12,8 +12,8 @@ import { ProfileDetails } from '../model/profile-info';
 })
 export class ProfileInfo {
 
-  public data = input(new ProfileDetails());
-  public loading = input(false);
+  public readonly data = input(new ProfileDetails());
+  public readonly loading = input(false);
 
   public get isMember(): boolean {
     return this.data().types.includes('member');

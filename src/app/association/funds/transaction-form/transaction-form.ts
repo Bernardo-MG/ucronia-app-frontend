@@ -9,10 +9,11 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-transaction-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, TextareaModule, FloatLabelModule, DatePickerModule, MessageModule],
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm implements OnChanges {
