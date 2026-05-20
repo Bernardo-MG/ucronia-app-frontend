@@ -37,7 +37,7 @@
   <!-- Info Dialog -->
   <p-dialog header="Transacción" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
     contentStyleClass="p-4 space-y-4">
-    <assoc-transaction-info [transaction]="selectedData" />
+    <assoc-transaction-info [transaction]="selectedData" [loading]="loading" />
 
     <div class="flex space-x-2">
       <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
