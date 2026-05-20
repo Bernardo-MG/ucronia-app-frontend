@@ -5,10 +5,11 @@ import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { UserStatusTag } from '../user-status-tag/user-status-tag';
 
 @Component({
   selector: 'access-user-list',
-  imports: [TableModule, ButtonModule, MenuModule],
+  imports: [TableModule, ButtonModule, MenuModule, UserStatusTag],
   templateUrl: './user-list.html'
 })
 export class UserList {
