@@ -1,7 +1,13 @@
 <div class="flex gap-3 items-center">
-  <div class="w-8 h-8 rounded-full border-2 border-{{color}} flex items-center justify-center">
-    <span class="{{actualIcon}} text-{{color}} text-sm"></span>
-  </div>
+  @if(value()) {
+    <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
+      <span class="{{actualIcon}} text-green-600 text-sm"></span>
+    </div>
+  } @else {
+    <div class="w-8 h-8 rounded-full border-2 border-red-600 flex items-center justify-center">
+      <span class="{{actualIcon}} text-red-600 text-sm"></span>
+    </div>
+  }
   <div>
     <p class="text-gray-500 text-sm">{{name()}}</p>
 

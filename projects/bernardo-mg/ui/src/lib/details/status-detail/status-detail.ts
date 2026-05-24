@@ -16,14 +16,6 @@ export class StatusDetail {
   public readonly trueText = input('');
   public readonly falseText = input('');
 
-  public get color() {
-    if (this.value()) {
-      return 'green-600';
-    } else {
-      return 'red-600';
-    }
-  }
-
   public get actualIcon() {
     if ((!this.value()) && this.falseIcon()) {
       return this.falseIcon();
