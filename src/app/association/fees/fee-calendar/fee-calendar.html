@@ -32,7 +32,7 @@
         <td>
           @if (hasMonth(memberFees.fees, monthNumber)) {
             @if(isPaid(memberFees.fees, monthNumber)) {
-              <p-button icon="pi pi-check text-success" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
+              <p-button icon="pi pi-check text-green-500" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
             } @else {
               <p-button icon="pi pi-times text-danger" severity="warn" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
             }
