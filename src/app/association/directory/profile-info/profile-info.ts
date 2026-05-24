@@ -1,13 +1,13 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { DetailField } from '@bernardo-mg/ui';
+import { DetailField, StatusField } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { ProfileDetails } from '../model/profile-info';
 
 @Component({
   selector: 'assoc-profile-info',
-  imports: [CommonModule, SkeletonModule, CardModule, DetailField, DatePipe],
+  imports: [CommonModule, SkeletonModule, CardModule, DetailField, StatusField, DatePipe],
   templateUrl: './profile-info.html'
 })
 export class ProfileInfo {

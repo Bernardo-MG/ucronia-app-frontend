@@ -1,52 +1,19 @@
 @if (isMember) {
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center pb-4">
     <p-card class="w-60">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
-          <span class="pi pi-check text-green-600 text-sm"></span>
-        </div>
-
-        <span class="font-medium">Estado</span>
-      </div>
-
-      <div class="mt-2">
-        @if (loading()) {
-          <p-skeleton />
-        } @else {
-          @if (data().active) {
-            <span class="text-green-700 font-semibold">Activo</span>
-          } @else {
-            <span class="text-red-600 font-semibold">Baja</span>
-          }
-        }
-      </div>
+      <ui-status-detail icon="pi pi-check" [loading]="loading()" [value]="data().active ? true : false" trueText="Activo"
+        falseText="Inactivo" name="Estado" />
     </p-card>
-
+  
     <p-card class="w-60">
-      <div class="flex items-center space-x-3">
-        <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
-          <span class="pi pi-replay text-green-600 text-sm"></span>
-        </div>
-
-        <span class="font-medium">Renovación</span>
-      </div>
-
-      <div class="mt-2">
-        @if (loading()) {
-          <p-skeleton />
-        } @else {
-          @if (data().renew) {
-            <span class="text-green-700 font-semibold">Renueva</span>
-          } @else {
-            <span class="text-red-600 font-semibold">Baja</span>
-          }
-        }
-      </div>
+      <ui-status-detail icon="pi pi-check" [loading]="loading()" [value]="data().active ? true : false" trueText="Renueva"
+        falseText="Baja" name="Estado" />
     </p-card>
-
+  
     <p-card class="w-60">
       <div>
-        <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Tipo de cuota" [value]="data().feeType?.name + ' (' + data().feeType?.amount + '€)'" />
+        <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Tipo de cuota"
+          [value]="data().feeType?.name + ' (' + data().feeType?.amount + '€)'" />
       </div>
     </p-card>
   </div>
