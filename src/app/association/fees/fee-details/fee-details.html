@@ -1,8 +1,8 @@
 <div class="ms-3 space-y-5">
   <p-card class="w-60">
     <ui-status-detail icon="pi pi-check" falseIcon="pi pi-times" [loading]="loading()"
-      [value]="data().paid ? true : false" trueText="{{ data().transaction?.date | date:'yyyy-MM-dd' }}"
-      falseText="Sin pagar" name="Pagado" />
+      [value]="data().paid" trueText="{{ data().transaction?.date | date:'yyyy-MM-dd' }}"
+      falseText="Sin pagar" name="Pagada" />
   </p-card>
 
   <!-- Month -->
