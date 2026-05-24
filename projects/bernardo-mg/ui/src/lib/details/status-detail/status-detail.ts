@@ -15,4 +15,12 @@ export class StatusField {
   public readonly trueText = input('');
   public readonly falseText = input('');
 
+  public get color() {
+    if(this.value()) {
+      return 'green-600';
+    } else {
+      return 'red-600';
+    }
+  }
+
 }
