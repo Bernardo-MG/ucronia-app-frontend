@@ -1,4 +1,9 @@
 <div class="ms-3 space-y-5">
+  <p-card class="w-60">
+    <ui-status-detail icon="pi pi-check" falseIcon="pi pi-times" [loading]="loading()"
+      [value]="data().paid ? true : false" trueText="{{ data().transaction?.date | date:'yyyy-MM-dd' }}"
+      falseText="Sin pagar" name="Pagado" />
+  </p-card>
 
   <!-- Month -->
   <div>
@@ -16,30 +21,5 @@
     <ui-detail-field [loading]="loading()" icon="pi pi-credit-card" name="Tipo de cuota"
       [value]="data().feeType.name + ' (' + data().feeType.amount + '€)'" />
   </div>
-
-  @if (loading()) {
-    <p-skeleton />
-  } @else if (data().paid) {
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-full border-2 border-green-600 flex items-center justify-center">
-        <span class="pi pi-check text-green-600 text-sm"></span>
-      </div>
-
-      <div class="flex flex-col">
-        <span class="font-medium leading-tight">Pagado</span>
-        <div>{{ data().transaction?.date | date:'yyyy-MM-dd' }}</div>
-      </div>
-    </div>
-  }@else {
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-full border-2 border-red-600 flex items-center justify-center">
-        <span class="pi pi-times text-red-600 text-sm"></span>
-      </div>
-
-      <div class="flex flex-col">
-        <span class="font-medium leading-tight">Sin pagar</span>
-      </div>
-    </div>
-  }
 
 </div>
