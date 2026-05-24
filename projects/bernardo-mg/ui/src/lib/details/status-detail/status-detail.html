@@ -1,6 +1,6 @@
 <div class="flex gap-3 items-center">
   <div class="w-8 h-8 rounded-full border-2 border-{{color}} flex items-center justify-center">
-    <span class="{{icon()}} text-{{color}} text-sm"></span>
+    <span class="{{actualIcon}} text-{{color}} text-sm"></span>
   </div>
   <div>
     <p class="text-gray-500 text-sm">{{name()}}</p>
@@ -8,11 +8,7 @@
     @if (loading()) {
       <p-skeleton />
     } @else {
-      @if (value()) {
-        <span class="text-green-700 font-semibold">{{ trueText() }}</span>
-      } @else {
-        <span class="text-red-600 font-semibold">{{ falseText() }}</span>
-      }
+      <span class="font-semibold">{{ text }}</span>
     }
   </div>
 </div>
