@@ -6,7 +6,7 @@ import { SkeletonModule } from 'primeng/skeleton';
   imports: [SkeletonModule],
   templateUrl: './status-detail.html'
 })
-export class StatusField {
+export class StatusDetail {
 
   public readonly loading = input(false);
   public readonly name = input('');
