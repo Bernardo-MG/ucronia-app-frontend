@@ -1,3 +1,23 @@
+<div class="mb-3">
+  <p-card class="w-60">
+    <div class="mb-3">
+      <ui-status-detail icon="pi pi-power-off" [loading]="loading()" [value]="user().enabled" trueText="Activo"
+        falseText="Inactivo" name="Activo" />
+    </div>
+    <div class="mb-3">
+      <ui-status-detail icon="pi pi-clock" [loading]="loading()" [value]="user().notExpired" trueText="No expirado"
+        falseText="Expirado" name="Expiración" />
+    </div>
+    <div class="mb-3">
+      <ui-status-detail icon="pi pi-lock" [loading]="loading()" [value]="user().passwordNotExpired" trueText="Clave no expirada"
+        falseText="Clave expirada" name="Expiración de clave" />
+    </div>
+    <div>
+      <ui-status-detail icon="pi pi-lock-open" [loading]="loading()" [value]="user().notLocked" trueText="Desbloqueado"
+        falseText="Bloqueado" name="Bloqueo" />
+    </div>
+  </p-card>
+</div>
 <div class="ms-3 space-y-5">
 
   <!-- Username -->
@@ -21,25 +41,5 @@
       <ui-detail-field [loading]="loading()" icon="pi pi-user" name="E-mail" [value]="member().name.fullName" />
     </div>
   }
-
-  <!-- Enabled -->
-  <div>
-    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-power-off" name="Activo" [value]="user().enabled" />
-  </div>
-
-  <!-- Expired -->
-  <div>
-    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-clock" name="No expirado" [value]="user().notExpired" />
-  </div>
-
-  <!-- Password expired -->
-  <div>
-    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-lock" name="Clave no expirada" [value]="user().passwordNotExpired" />
-  </div>
-
-  <!-- Locked -->
-  <div>
-    <ui-boolean-detail-field [loading]="loading()" icon="pi pi-lock-open" name="Desbloqueado" [value]="user().notLocked" />
-  </div>
 
 </div>

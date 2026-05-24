@@ -4,7 +4,6 @@
 
 export * from './lib/calendar/calendar-month/calendar-month';
 export * from './lib/calendar/models/month';
-export * from './lib/details/boolean-detail-field/boolean-detail-field';
 export * from './lib/details/detail-field/detail-field';
 export * from './lib/details/status-detail/status-detail';
 export * from './lib/details/text-filter/text-filter';
