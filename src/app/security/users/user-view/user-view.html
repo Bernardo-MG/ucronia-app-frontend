@@ -5,19 +5,16 @@
   </ng-template>
   <access-user-list [loading]="loading" [editable]="editable" [deletable]="deletable" [users]="data.content"
     [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
-    (showRoles)="onShowRolesInfo($event)" (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)"
-    (changePage)="load($event)" (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
+    (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
+    (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
 </p-panel>
+
 @if (showing) {
   <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
     <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
   </p-dialog>
 }
-@if (showingRoles) {
-  <p-dialog header="Roles" [modal]="true" [(visible)]="showingRoles" [style]="{ width: '25rem' }">
-    <access-user-roles-info [user]="selectedData" [loading]="loading" />
-  </p-dialog>
-}
+
 @switch (view) {
   @case ('invite') {
     <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">

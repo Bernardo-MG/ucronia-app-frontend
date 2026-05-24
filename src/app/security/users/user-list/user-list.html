@@ -15,7 +15,7 @@
       <td>{{ user.name }} <assoc-user-status-tag [user]="user" /></td>
       <td>
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable()"
-          (click)="openInfoMenu($event, user)" rounded text />
+          (click)="show.emit(user)" rounded text />
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
           [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, user)" rounded text />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
