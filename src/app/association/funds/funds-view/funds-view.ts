@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
-import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { SummaryCard } from '@bernardo-mg/ui';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';

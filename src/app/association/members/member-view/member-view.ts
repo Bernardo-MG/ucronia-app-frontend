@@ -1,10 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { TextFilter } from '@bernardo-mg/ui';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { MemberCount } from '@ucronia/api';
 import { Member, MemberProfile } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';

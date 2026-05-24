@@ -1,97 +1,66 @@
-<!-- Username -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Usuario</div>
-  <div class="col-span-8">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{ user().username }}
-    }
-  </div>
+<div class="mb-3">
+  <p-card>
+    <div class="grid grid-cols-2 gap-4">
+
+      <!-- Enabled -->
+      <ui-status-detail icon="pi pi-power-off" [loading]="loading()" [value]="user().enabled" trueText="Activo"
+        falseText="Inactivo" name="Activo" />
+
+      <!-- Not Expired -->
+      <ui-status-detail icon="pi pi-clock" [loading]="loading()" [value]="user().notExpired" trueText="No expirado"
+        falseText="Expirado" name="Expiración" />
+
+      <!-- Password Not Expired -->
+      <ui-status-detail icon="pi pi-lock" [loading]="loading()" [value]="user().passwordNotExpired"
+        trueText="Clave no expirada" falseText="Clave expirada" name="Expiración de clave" />
+
+      <!-- Not Locked -->
+      <ui-status-detail icon="pi pi-lock-open" [loading]="loading()" [value]="user().notLocked" trueText="Desbloqueado"
+        falseText="Bloqueado" name="Bloqueo" />
+
+    </div>
+  </p-card>
 </div>
 
-<!-- Name -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Nombre</div>
-  <div class="col-span-8">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{ user().name }}
-    }
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+  <!-- Username -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Usuario" [value]="user().username" />
   </div>
+
+  <!-- Name -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Nombre" [value]="user().name" />
+  </div>
+
 </div>
 
 <!-- Email -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">E-mail</div>
-  <div class="col-span-8">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{ user().email }}
-    }
-  </div>
+<div class="mt-6">
+  <ui-detail-field [loading]="loading()" icon="pi pi-envelope" name="E-mail" [value]="user().email" />
 </div>
 
 @if (member()) {
   <!-- Member -->
-  <div class="grid grid-cols-12 py-1">
-    <div class="col-span-4 text-blue-600 font-medium">Socio</div>
-    <div class="col-span-8">
-      @if (loading()) {
-        <p-skeleton class="mb-2" />
-      } @else {
-        {{ member().name.fullName }}
-      }
-    </div>
+  <div class="mt-6">
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Miembro" [value]="member().name.fullName" />
   </div>
 }
 
-<!-- Enabled -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Activo</div>
-  <div class="col-span-8">
-    @if (user().enabled) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
-  </div>
-</div>
-
-<!-- Expired -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">No expirado</div>
-  <div class="col-span-8">
-    @if (user().notExpired) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
-  </div>
-</div>
-
-<!-- Password expired -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Clave no expirada</div>
-  <div class="col-span-8">
-    @if (user().passwordNotExpired) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
-  </div>
-</div>
-
-<!-- Locked -->
-<div class="grid grid-cols-12 py-1">
-  <div class="col-span-4 text-blue-600 font-medium">Desbloqueado</div>
-  <div class="col-span-8">
-    @if (user().notLocked) {
-      <span class="pi pi-check text-green-600"></span>
-    } @else {
-      <span class="pi pi-times text-yellow-600"></span>
-    }
-  </div>
-</div>
+<p-card header="Roles">
+  <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="roles.content" paginator="true"
+    [rows]="roles.size" [totalRecords]="roles.totalElements" [first]="first" (onPage)="onPageChange($event)"
+    showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
+    <ng-template #header>
+      <tr>
+        <th>Nombre</th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-role>
+      <tr>
+        <td>{{role.name}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

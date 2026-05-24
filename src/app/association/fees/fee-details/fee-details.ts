@@ -1,13 +1,13 @@
 
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { DetailField } from '@bernardo-mg/ui';
+import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Fee } from '@ucronia/domain';
-import { SkeletonModule } from 'primeng/skeleton';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'assoc-fee-details',
-  imports: [SkeletonModule, DetailField, DatePipe],
+  imports: [CardModule, DetailField, StatusDetail, DatePipe],
   templateUrl: './fee-details.html'
 })
 export class FeeDetails {

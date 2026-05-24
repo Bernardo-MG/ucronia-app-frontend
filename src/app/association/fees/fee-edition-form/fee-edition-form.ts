@@ -4,7 +4,7 @@ import { Component, Input, OnChanges, SimpleChanges, inject, input, output } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { DetailField } from '@bernardo-mg/ui';
+import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -16,7 +16,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, DetailField, DatePipe],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, DetailField, StatusDetail, DatePipe],
   templateUrl: './fee-edition-form.html'
 })
 export class FeeEditionForm implements OnChanges {
