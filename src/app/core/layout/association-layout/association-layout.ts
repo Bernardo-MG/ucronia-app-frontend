@@ -111,6 +111,14 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
+    if (authService.hasPermission('activity', 'view')) {
+      items.push(
+        {
+          label: 'Actividad',
+          routerLink: '/association/activity',
+          icon: 'pi pi-calendar'
+        });
+    }
 
     return items;
   }
