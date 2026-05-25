@@ -5,11 +5,11 @@ import { BookType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { BookTypeCrudService } from '../book-type-crud-service';
-import { LibraryBookTypeListview } from './library-book-type-list-view';
+import { LibraryBookTypeListView } from './library-book-type-list-view';
 
 describe('LibraryBookTypeListView', () => {
-  let component: LibraryBookTypeListview;
-  let fixture: ComponentFixture<LibraryBookTypeListview>;
+  let component: LibraryBookTypeListView;
+  let fixture: ComponentFixture<LibraryBookTypeListView>;
 
   const bookTypeCrudServiceMock = jasmine.createSpyObj<BookTypeCrudService>(
     'BookTypeCrudService',
@@ -24,7 +24,7 @@ describe('LibraryBookTypeListView', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        LibraryBookTypeListview
+        LibraryBookTypeListView
       ],
       providers: [
         MessageService,
@@ -35,7 +35,7 @@ describe('LibraryBookTypeListView', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(LibraryBookTypeListview);
+    fixture = TestBed.createComponent(LibraryBookTypeListView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
