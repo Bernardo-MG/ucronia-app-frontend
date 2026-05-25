@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { Activity } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
@@ -6,7 +7,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'app-activity-list',
-  imports: [ButtonModule, TableModule],
+  imports: [ButtonModule, TableModule, DatePipe],
   templateUrl: './activity-list.html'
 })
 export class ActivityList {
