@@ -2,6 +2,7 @@
  * Public API Surface of domain
  */
 
+export * from './lib/activity/activity';
 export * from './lib/fees/fee';
 export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
@@ -34,7 +35,7 @@ export * from './lib/setting/public-settings';
 export * from './lib/setting/setting';
 export * from './lib/sponsors/sponsor';
 export * from './lib/transactions/transaction';
-export * from './lib/transactions/transaction-summary';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
+export * from './lib/transactions/transaction-summary';
 
