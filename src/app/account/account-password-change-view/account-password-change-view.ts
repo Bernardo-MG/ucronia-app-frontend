@@ -7,7 +7,6 @@ import { CardModule } from 'primeng/card';
 import { throwError } from 'rxjs';
 
 @Component({
-  selector: 'account-password-change-view',
   imports: [CardModule, AccountChangePasswordForm],
   templateUrl: './account-password-change-view.html'
 })

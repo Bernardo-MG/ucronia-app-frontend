@@ -22,7 +22,6 @@ import { LoginService } from '../login-service';
  * This is done as the user may be redirected to the login at any point in the app.
  */
 @Component({
-  selector: 'login-view',
   imports: [RouterModule, CardModule, LoginForm],
   templateUrl: './login-view.html'
 })

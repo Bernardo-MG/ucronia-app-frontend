@@ -14,7 +14,6 @@ import { PasswordResetService } from '../password-reset-service';
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'login-password-reset-view',
   imports: [CardModule, BlockUIModule, PasswordResetForm],
   templateUrl: './password-reset-view.html'
 })

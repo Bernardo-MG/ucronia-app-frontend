@@ -9,7 +9,6 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'account-profile-view',
   imports: [CardModule, SkeletonModule, AccountProfileDetails],
   templateUrl: './account-profile-view.html'
 })

@@ -14,7 +14,6 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
-  selector: 'access-user-activation-view',
   imports: [CardModule, UserActivationForm, BlockUIModule],
   templateUrl: './user-activation-view.html'
 })
