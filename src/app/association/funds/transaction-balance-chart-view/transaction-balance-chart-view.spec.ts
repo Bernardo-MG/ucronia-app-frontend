@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
-import { TransactionBalanceChartview } from './transaction-balance-chart-view';
+import { TransactionBalanceChartView } from './transaction-balance-chart-view';
 
-describe('TransactionBalanceChartview', () => {
-  let component: TransactionBalanceChartview;
-  let fixture: ComponentFixture<TransactionBalanceChartview>;
+describe('TransactionBalanceChartView', () => {
+  let component: TransactionBalanceChartView;
+  let fixture: ComponentFixture<TransactionBalanceChartView>;
 
   const transactionBalanceServiceMock = jasmine.createSpyObj<TransactionBalanceService>(
     'TransactionBalanceService',
@@ -27,13 +27,13 @@ describe('TransactionBalanceChartview', () => {
     );
 
     TestBed.configureTestingModule({
-      imports: [TransactionBalanceChartview],
+      imports: [TransactionBalanceChartView],
       providers: [
         { provide: TransactionBalanceService, useValue: transactionBalanceServiceMock },
         { provide: TransactionCalendarService, useValue: transactionCalendarServiceMock }
       ]
     });
-    fixture = TestBed.createComponent(TransactionBalanceChartview);
+    fixture = TestBed.createComponent(TransactionBalanceChartView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

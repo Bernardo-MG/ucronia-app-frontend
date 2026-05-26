@@ -16,7 +16,7 @@ export class TransactionCalendar implements OnChanges {
   public readonly months = input<Date[]>([]);
 
   public readonly changeMonth = output<Date>();
-  public readonly pickDate = output<CalendarEvent<{ transactionId: number }>>();
+  public readonly pickDate = output<number>();
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
@@ -38,6 +38,12 @@ export class TransactionCalendar implements OnChanges {
           }
         };
       });
+    }
+  }
+
+  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
+    if (event.meta) {
+      this.pickDate.emit(event.meta.transactionId);
     }
   }
 

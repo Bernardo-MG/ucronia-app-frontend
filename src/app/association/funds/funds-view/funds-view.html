@@ -28,13 +28,20 @@
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <ui-text-filter (filter)="onFilter($event)" />
+
+    <assoc-transaction-display-selector (view)="onViewChange($event)" />
   </div>
 
-  <!-- Funds Calendar -->
+  <!-- Transactions -->
   <p-panel class="shadow rounded-lg">
 
-    <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
-      (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+    @if (selectedView=='calendar') {
+      <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
+        (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+    } @else if (selectedView=='list') {
+      <assoc-transaction-list [data]="transactions" [loading]="loading"
+        (edit)="onStartView('edition')" />
+    }
 
   </p-panel>
 

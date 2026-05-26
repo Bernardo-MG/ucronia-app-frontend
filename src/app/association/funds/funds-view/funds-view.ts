@@ -11,17 +11,19 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { TransactionBalanceChartview } from '../transaction-balance-chart-view/transaction-balance-chart-view';
+import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
+import { TransactionDisplaySelector } from '../transaction-display-selector/transaction-display-selector';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { TransactionInfo } from '../transaction-info/transaction-info';
+import { TransactionList } from '../transaction-list/transaction-list';
 import { TransactionReportService } from '../transaction-report-service';
 import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionBalanceChartview, SummaryCard],
+  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView, SummaryCard],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -54,6 +56,7 @@ export class FundsView implements OnInit {
   public summary = new TransactionSummary();
 
   public view: string = '';
+  public selectedView: 'calendar' | 'list' = 'calendar';
 
   public failures = new FailureStore();
 
@@ -128,17 +131,19 @@ export class FundsView implements OnInit {
     this.editing = true;
   }
 
-  public onShowInfo(event: CalendarEvent<{ transactionId: number }>) {
-    if (event.meta) {
-      this.service.getOne(event.meta.transactionId)
-        .subscribe(transaction => this.selectedData = transaction);
-      this.showing = true;
-    }
+  public onShowInfo(transactionId: number) {
+    this.service.getOne(transactionId)
+      .subscribe(transaction => this.selectedData = transaction);
+    this.showing = true;
   }
 
   public onFilter(filter: string) {
     this.descriptionFilter = filter;
     this.loadCalendar();
+  }
+
+  public onViewChange(view: 'calendar' | 'list') {
+    this.selectedView = view;
   }
 
   public downloadExcel() {

@@ -1,27 +1,27 @@
 import { Component, inject, input, output } from '@angular/core';
-import { FeeType } from '@ucronia/domain';
+import { Transaction } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
-  selector: 'assoc-fee-type-list',
+  selector: 'assoc-transaction-list',
   imports: [ButtonModule, TableModule],
-  templateUrl: './fee-type-list.html'
+  templateUrl: './transaction-list.html'
 })
-export class FeeTypeList {
+export class TransactionList {
 
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly loading = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
-  public readonly data = input<FeeType[]>([]);
+  public readonly data = input<Transaction[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
   
-  public readonly edit = output<FeeType>();
+  public readonly edit = output<Transaction>();
   public readonly delete = output<number>();
   public readonly changePage = output<number>();
 
@@ -34,7 +34,7 @@ export class FeeTypeList {
     this.changePage.emit(page);
   }
 
-  public confirmDelete(event: Event, feeType: FeeType) {
+  public confirmDelete(event: Event, transaction: Transaction) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -48,7 +48,7 @@ export class FeeTypeList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit(feeType.number)
+      accept: () => this.delete.emit(transaction.index)
     });
   }
 
