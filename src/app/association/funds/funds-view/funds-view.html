@@ -27,9 +27,11 @@
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <ui-text-filter (filter)="onFilter($event)" />
-
     <assoc-transaction-display-selector (view)="onViewChange($event)" />
+
+    @if (selectedView=='list') {
+      <ui-text-filter (filter)="onFilter($event)" />
+    }
   </div>
 
   <!-- Transactions -->
