@@ -23,7 +23,7 @@ export class TransactionCalendarService {
     const toWithMargin = addDays(to, 7);
 
     return getAllPages((page, size) => this.ucroniaClient.transaction
-      .page(page, size, undefined, fromWithMargin, toWithMargin))
+      .page(page, size, undefined, undefined, fromWithMargin, toWithMargin))
       .pipe(
         // TODO: Why is this needed for the calendar?
         map(transactions => {

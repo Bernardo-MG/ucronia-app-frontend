@@ -23,9 +23,9 @@ export class TransactionService {
     return this.ucroniaClient.transaction.delete(index);
   }
 
-  public getAll(page: number | undefined = undefined): Observable<Page<Transaction>> {
+  public getAll(page: number | undefined = undefined, description: string | undefined = undefined): Observable<Page<Transaction>> {
     return this.ucroniaClient.transaction
-      .page(page, undefined, undefined, undefined, undefined);
+      .page(page, undefined, undefined, description, undefined, undefined);
   }
 
   public getOne(index: number): Observable<Transaction> {

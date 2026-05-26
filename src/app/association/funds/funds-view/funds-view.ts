@@ -143,7 +143,7 @@ export class FundsView implements OnInit {
 
   public onFilter(filter: string) {
     this.descriptionFilter = filter;
-    this.loadCalendar();
+    this.loadList();
   }
 
   public onViewChange(view: 'calendar' | 'list') {
@@ -166,7 +166,7 @@ export class FundsView implements OnInit {
 
   public loadList(page: number = 0) {
     this.loadingList = true;
-    this.service.getAll(page)
+    this.service.getAll(page, this.descriptionFilter)
       .pipe(finalize(() => this.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
   }
