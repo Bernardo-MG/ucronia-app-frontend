@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
-import { SummaryCard } from '@bernardo-mg/ui';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -21,7 +21,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChartview, SummaryCard],
+  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionBalanceChartview, SummaryCard],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -47,6 +47,8 @@ export class FundsView implements OnInit {
   public readonly deletable;
 
   public selectedData = new Transaction();
+
+  public descriptionFilter = '';
 
   public transactions: Transaction[] = [];
   public summary = new TransactionSummary();
@@ -75,7 +77,7 @@ export class FundsView implements OnInit {
         // TODO: then sort the months instead of reversing
         this.months = [...this.months].reverse();
         if (!this.loadingCalendar) {
-          this.loadCalendar(this.getDefaultMonth());
+          this.loadCalendar();
         }
       });
 
@@ -134,6 +136,11 @@ export class FundsView implements OnInit {
     }
   }
 
+  public onFilter(filter: string) {
+    this.descriptionFilter = filter;
+    this.loadCalendar();
+  }
+
   public downloadExcel() {
     this.loadingExcel = true;
     this.reportService.downloadExcelReport()
@@ -141,7 +148,7 @@ export class FundsView implements OnInit {
       .subscribe();
   }
 
-  public loadCalendar(month: Date) {
+  public loadCalendar(month: Date = this.getDefaultMonth()) {
     this.loadingCalendar = true;
     this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
@@ -167,7 +174,7 @@ export class FundsView implements OnInit {
           this.failures.clear();
           this.view = 'none';
           this.showing = false;
-          this.loadCalendar(this.getDefaultMonth());
+          this.loadCalendar();
           onSuccess();
         },
         error: error => {
