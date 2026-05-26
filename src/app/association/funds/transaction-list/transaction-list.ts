@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { Transaction } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
@@ -5,7 +6,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-transaction-list',
-  imports: [ButtonModule, TableModule],
+  imports: [ButtonModule, TableModule, DatePipe],
   templateUrl: './transaction-list.html'
 })
 export class TransactionList {
