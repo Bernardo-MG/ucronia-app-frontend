@@ -39,8 +39,9 @@
       <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
         (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
     } @else if (selectedView=='list') {
-      <assoc-transaction-list [data]="transactions" [loading]="loading"
-        (edit)="onStartView('edition')" />
+      <assoc-transaction-list [loading]="loading" [data]="transactionsPage.content" [rows]="transactionsPage.size"
+        [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
+        (changePage)="loadList($event)" />
     }
 
   </p-panel>

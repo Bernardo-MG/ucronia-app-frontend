@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
+import { Page } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { UcroniaClient } from '@ucronia/api';
 import { Transaction } from '@ucronia/domain';

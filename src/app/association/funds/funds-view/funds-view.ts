@@ -1,10 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
-import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -39,6 +38,7 @@ export class FundsView implements OnInit {
 
   public loading = false;
   public loadingCalendar = false;
+  public loadingList = false;
   public loadingExcel = false;
   public loadingSummary = false;
   public editing = false;
@@ -53,6 +53,7 @@ export class FundsView implements OnInit {
   public descriptionFilter = '';
 
   public transactions: Transaction[] = [];
+  public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
   public view: string = '';
@@ -81,6 +82,9 @@ export class FundsView implements OnInit {
         this.months = [...this.months].reverse();
         if (!this.loadingCalendar) {
           this.loadCalendar();
+        }
+        if (!this.loadingList) {
+          this.loadList();
         }
       });
 
@@ -158,6 +162,13 @@ export class FundsView implements OnInit {
     this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
+  }
+
+  public loadList(page: number = 0) {
+    this.loadingList = true;
+    this.service.getAll(page)
+      .pipe(finalize(() => this.loadingList = false))
+      .subscribe(transactions => this.transactionsPage = transactions);
   }
 
   private getDefaultMonth() {
