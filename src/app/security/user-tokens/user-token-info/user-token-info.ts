@@ -2,11 +2,12 @@
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
-import { SkeletonModule } from 'primeng/skeleton';
+import { DetailField, StatusDetail } from '@bernardo-mg/ui';
+import { CardModule } from 'primeng/card';
 
 @Component({
   selector: 'access-user-token-info',
-  imports: [SkeletonModule, DatePipe],
+  imports: [CardModule, StatusDetail, DetailField, DatePipe],
   templateUrl: './user-token-info.html'
 })
 export class UserTokenInfo {

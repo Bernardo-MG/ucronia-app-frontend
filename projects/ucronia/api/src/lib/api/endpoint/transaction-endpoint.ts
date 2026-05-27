@@ -19,6 +19,7 @@ export class TransactionEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
+    description: string | undefined,
     from: Date | undefined,
     to: Date | undefined
   ): Observable<Page<Transaction>> {
@@ -33,6 +34,9 @@ export class TransactionEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
+    if (description) {
+      params = params.append('description', description);
+    }
     if (from) {
       params = params.append('from', from.toISOString());
     }

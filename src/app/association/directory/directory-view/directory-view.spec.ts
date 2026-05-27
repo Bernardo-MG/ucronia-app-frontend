@@ -10,7 +10,7 @@ import { DirectoryService } from '../directory-service';
 import { FeeTypeService } from '../fee-type-service';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 import { DirectorySummary } from '../model/directory-summary';
-import { ProfileInfo } from '../model/profile-info';
+import { ProfileDetails } from '../model/profile-info';
 import { DirectoryView } from './directory-view';
 
 describe('DirectoryView', () => {
@@ -44,7 +44,7 @@ describe('DirectoryView', () => {
 
   beforeEach(async () => {
     directoryServiceMock.getAll.and.returnValue(
-      of(new Page<ProfileInfo>())
+      of(new Page<ProfileDetails>())
     );
     directorySummaryServiceMock.getSummary.and.returnValue(
       of(new DirectorySummary())

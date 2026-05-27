@@ -1,7 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { SecurityClient } from '@bernardo-mg/security';
-import { Account } from 'projects/bernardo-mg/security/src/lib/domain/account';
-import { PasswordChange } from 'projects/bernardo-mg/security/src/lib/request/password-change';
+import { Account, PasswordChange, SecurityClient } from '@bernardo-mg/security';
 import { Observable } from 'rxjs';
 
 @Injectable({

@@ -1,4 +1,4 @@
-export class ProfileInfo {
+export class ProfileDetails {
   public number = -1;
   public identifier = '';
   public birthDate = new Date();

@@ -5,10 +5,11 @@ import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { UserStatusTag } from '../user-status-tag/user-status-tag';
 
 @Component({
   selector: 'access-user-list',
-  imports: [TableModule, ButtonModule, MenuModule],
+  imports: [TableModule, ButtonModule, MenuModule, UserStatusTag],
   templateUrl: './user-list.html'
 })
 export class UserList {
@@ -25,14 +26,12 @@ export class UserList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<User>();
-  public readonly showRoles = output<User>();
   public readonly delete = output<string>();
   public readonly edit = output<{ view: string, user: User }>();
   public readonly active = output<boolean>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  @ViewChild('infoMenu') private infoMenu!: Menu;
   @ViewChild('editionMenu') private editionMenu!: Menu;
 
   public infoMenuItems: MenuItem[] = [];
@@ -63,24 +62,6 @@ export class UserList {
       },
       accept: () => this.delete.emit(username)
     });
-  }
-
-  public openInfoMenu(event: Event, user: User) {
-    this.infoMenuItems = [];
-
-    // Load info menu
-    this.infoMenuItems.push(
-      {
-        label: 'Datos',
-        command: () => this.show.emit(user)
-      },
-      {
-        label: 'Roles',
-        command: () => this.showRoles.emit(user)
-      }
-    );
-
-    this.infoMenu.toggle(event);
   }
 
   public openEditionMenu(event: Event, user: User) {

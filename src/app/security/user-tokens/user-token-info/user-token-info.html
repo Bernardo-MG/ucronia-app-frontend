@@ -1,96 +1,51 @@
-<!-- Username -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Usuario</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{data().username}}
-    }
-  </div>
+<div class="mb-3">
+  <p-card>
+    <div class="grid grid-cols-2 gap-4">
+
+      <!-- Consumed -->
+      <ui-status-detail icon="pi pi-power-off" [loading]="loading()" [value]="data().consumed" trueText="Activo"
+        falseText="Consumido" name="Consumido" />
+
+      <!-- Revoked -->
+      <ui-status-detail icon="pi pi-ban" [loading]="loading()" [value]="data().revoked" trueText="Vigente"
+        falseText="Revocado" name="Revocado" />
+
+    </div>
+  </p-card>
 </div>
-<!-- Name -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Nombre</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{data().name}}
-    }
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+  <!-- Username -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Usuario" [value]="data().username" />
   </div>
+
+  <!-- Name -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Nombre" [value]="data().name" />
+  </div>
+
 </div>
+
 <!-- Token -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Token</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{data().token}}
-    }
-  </div>
+<div class="mt-6">
+  <ui-detail-field [loading]="loading()" icon="pi pi-lock" name="Token" [value]="data().token" />
 </div>
+
 <!-- Scope -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Alcance</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{data().scope}}
-    }
-  </div>
+<div class="mt-6">
+  <ui-detail-field [loading]="loading()" icon="pi pi-list-check" name="Alcance" [value]="data().scope" />
 </div>
+
 <!-- Creation date -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Fecha de creación</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{data().creationDate | date:'yyyy-MM-dd hh:mm:ss'}}
-    }
-  </div>
+<div class="mt-6">
+  <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de creación"
+    [value]="data().creationDate | date:'yyyy-MM-dd hh:mm:ss'" />
 </div>
+
 <!-- Expiration date -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Fecha de
-  expiración</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      {{data().expirationDate | date:'yyyy-MM-dd hh:mm:ss'}}
-    }
-  </div>
-</div><!-- Consumed -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Consumido</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      @if (data().consumed) {
-        <span class="pi pi-check text-warning"></span>
-      } @else {
-        <span class="pi pi-times text-success"></span>
-      }
-    }
-  </div>
-</div>
-<!-- Revoked -->
-<div class="row mb-2">
-  <div class="col-sm-3 text-primary">Revocado</div>
-  <div class="col-sm-9">
-    @if (loading()) {
-      <p-skeleton class="mb-2" />
-    } @else {
-      @if (data().revoked) {
-        <span class="pi pi-check text-warning"></span>
-      } @else {
-        <span class="pi pi-times text-success"></span>
-      }
-    }
-  </div>
+<div class="mt-6">
+  <ui-detail-field [loading]="loading()" icon="pi pi-calendar-clock" name="Fecha de expiración"
+    [value]="data().expirationDate | date:'yyyy-MM-dd hh:mm:ss'" />
 </div>

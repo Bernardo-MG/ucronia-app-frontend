@@ -1,11 +1,12 @@
 <div class="flex gap-3 items-center">
-  <i class="{{icon()}} text-gray-400"></i>
+  <i class="{{icon()}}"></i>
   <div>
     <p class="text-gray-500 text-sm">{{name()}}</p>
+
     @if (loading()) {
       <p-skeleton />
     } @else {
-      <p class="font-medium">{{value()}}</p>
+      <p class="font-semibold" [innerHTML]="formatMultiline(value())"></p>
     }
   </div>
 </div>

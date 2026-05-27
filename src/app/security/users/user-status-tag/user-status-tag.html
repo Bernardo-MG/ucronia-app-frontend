@@ -1,0 +1,12 @@
+@if(!user().enabled) {
+  <p-tag value="Desactivado" severity="warn" badgeSize="small" class="me-1" />
+}
+@if(!user().notLocked) {
+  <p-tag value="Bloqueado" severity="danger" badgeSize="small" class="me-1" />
+}
+@if(!user().notExpired) {
+  <p-tag value="Expirado" severity="warn" badgeSize="small" class="me-1" />
+}
+@if(!user().passwordNotExpired) {
+  <p-tag value="Contraseña expirada" severity="warn" badgeSize="small" class="me-1" />
+}

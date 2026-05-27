@@ -1,42 +1,38 @@
-
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
+import { format } from 'date-fns';
 import { SelectModule } from 'primeng/select';
-import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
+import { BehaviorSubject, finalize, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
-import { TransactionCalendarService } from '../transaction-calendar-service';
 
 @Component({
   selector: 'assoc-transaction-balance-chart-view',
   imports: [FormsModule, SelectModule],
   templateUrl: './transaction-balance-chart-view.html'
 })
-export class TransactionBalanceChartview implements OnInit {
+export class TransactionBalanceChartView implements OnInit, OnDestroy {
 
-  private readonly balanceService = inject(TransactionBalanceService);
-  private readonly transactionCalendarService = inject(TransactionCalendarService);
+  private readonly service = inject(TransactionBalanceService);
 
   public balance: TransactionMonthlyBalance[] = [];
 
-  public months: { label: string, value: Month }[] = [];
+  public readonly ranges = [
+    { label: '3 meses', value: 3 },
+    { label: '6 meses', value: 6 },
+    { label: '1 año', value: 12 },
+    { label: '2 años', value: 24 }
+  ];
 
-  private startMonth$ = new BehaviorSubject<Month>(new Month(0, 0));
-  public get startMonth(): Month {
-    return this.startMonth$.value;
-  }
-  public set startMonth(month: Month) {
-    this.startMonth$.next(month);
-  }
+  private readonly selectedRange$ = new BehaviorSubject<number>(3);
 
-  private endMonth$ = new BehaviorSubject<Month>(new Month(0, 0));
-  public get endMonth(): Month {
-    return this.endMonth$.value;
+  public get selectedRange(): number {
+    return this.selectedRange$.value;
   }
-  public set endMonth(month: Month) {
-    this.endMonth$.next(month);
+  public set selectedRange(value: number) {
+    this.selectedRange$.next(value);
   }
 
   public loading = false;
@@ -44,23 +40,7 @@ export class TransactionBalanceChartview implements OnInit {
   public chart: any;
 
   public ngOnInit(): void {
-    // Read balance range
-    // TODO: should it wait when loading range?
-    this.transactionCalendarService.getRange()
-      .pipe(finalize(() => this.setupBalanceReload()))
-      .subscribe(months => {
-        this.months = months.map(m => {
-          return {
-            label: `${m.year}-${String(m.month).padStart(2, '0')}`,
-            value: m
-          };
-        });
-        // Range
-        if (this.months.length) {
-          this.startMonth = this.months[this.months.length - 1].value;
-          this.endMonth = this.months[0].value;
-        }
-      });
+    this.setupBalanceReload();
   }
 
   public ngOnDestroy(): void {
@@ -69,20 +49,12 @@ export class TransactionBalanceChartview implements OnInit {
     }
   }
 
-  public onSelectStartMonth(event: any) {
-    this.startMonth = event.target.value;
-  }
-
-  public onSelectEndMonth(event: any) {
-    this.endMonth = event.target.value;
-  }
-
   private loadChart() {
     if (this.chart) {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.month.toISOString().slice(0, 7))
+    const labels = this.balance.map(b => format(b.month, 'yyyy-MM'))
     const totals = this.balance.map(b => b.total)
     const results = this.balance.map(b => b.results)
 
@@ -113,13 +85,19 @@ export class TransactionBalanceChartview implements OnInit {
   }
 
   private setupBalanceReload() {
-    combineLatest([this.startMonth$, this.endMonth$])
+    this.selectedRange$
       .pipe(
-        switchMap(([start, end]) => {
-          if (!start || !end) return [];
+        switchMap(range => {
+          const now = new Date();
+          const end = new Month(now.getFullYear(), now.getMonth() + 1);
+          const startDate = new Date(now);
+          startDate.setMonth(startDate.getMonth() - range);
+          const start = new Month(startDate.getFullYear(), startDate.getMonth() + 1);
+
           this.loading = true;
-          return this.balanceService.monthly(start, end)
-            .pipe(finalize(() => this.loading = false));
+
+          return this.service.monthly(start, end)
+            .pipe(finalize(() => (this.loading = false)));
         })
       )
       .subscribe(data => {

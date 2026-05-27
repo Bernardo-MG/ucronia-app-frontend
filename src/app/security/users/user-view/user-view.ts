@@ -15,12 +15,11 @@ import { UserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
 import { UserMemberEditor } from '../user-member-editor/user-member-editor';
 import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
-import { UserRolesInfo } from '../user-roles-info/user-roles-info';
 import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditor, UserRolesInfo, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditor, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -43,7 +42,6 @@ export class UserView implements OnInit {
   public loading = false;
   public editing = false;
   public showing = false;
-  public showingRoles = false;
 
   public view: string = '';
 
@@ -75,11 +73,6 @@ export class UserView implements OnInit {
     this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.data.page);
-  }
-
-  public onShowRolesInfo(user: User) {
-    this.selectedData = user;
-    this.showingRoles = true;
   }
 
   public onInvite(toCreate: UserFormData): void {
@@ -191,7 +184,6 @@ export class UserView implements OnInit {
           this.view = 'none';
           this.editing = false;
           this.showing = false;
-          this.showingRoles = false;
           this.load();
           onSuccess();
         },

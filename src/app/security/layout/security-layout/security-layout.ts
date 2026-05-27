@@ -48,13 +48,8 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    this.menus =
-      [
-        {
-          label: 'Seguridad',
-          items: items
-        }
-      ]
+    this.menus = items;
+
   }
 
 }

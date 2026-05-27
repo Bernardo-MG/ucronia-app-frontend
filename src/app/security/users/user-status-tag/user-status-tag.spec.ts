@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SummaryCard } from './summary-card';
+import { UserStatusTag } from './user-status-tag';
 
-describe('SummaryCard', () => {
-  let component: SummaryCard;
-  let fixture: ComponentFixture<SummaryCard>;
+describe('UserStatusTag', () => {
+  let component: UserStatusTag;
+  let fixture: ComponentFixture<UserStatusTag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SummaryCard]
+      imports: [UserStatusTag]
     })
-      .compileComponents();
+    .compileComponents();
 
-    fixture = TestBed.createComponent(SummaryCard);
+    fixture = TestBed.createComponent(UserStatusTag);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

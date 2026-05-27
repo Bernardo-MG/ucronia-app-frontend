@@ -1,27 +1,28 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
-import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
-import { CalendarEvent } from 'angular-calendar';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
-import { TransactionBalanceChartview } from '../transaction-balance-chart-view/transaction-balance-chart-view';
+import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
+import { TransactionDisplaySelector } from '../transaction-display-selector/transaction-display-selector';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { TransactionInfo } from '../transaction-info/transaction-info';
+import { TransactionList } from '../transaction-list/transaction-list';
 import { TransactionReportService } from '../transaction-report-service';
 import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TransactionBalanceChartview, SummaryCard],
+  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView, SummaryCard],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -37,6 +38,7 @@ export class FundsView implements OnInit {
 
   public loading = false;
   public loadingCalendar = false;
+  public loadingList = false;
   public loadingExcel = false;
   public loadingSummary = false;
   public editing = false;
@@ -48,10 +50,14 @@ export class FundsView implements OnInit {
 
   public selectedData = new Transaction();
 
+  public descriptionFilter = '';
+
   public transactions: Transaction[] = [];
+  public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
   public view: string = '';
+  public selectedView: 'calendar' | 'list' = 'calendar';
 
   public failures = new FailureStore();
 
@@ -75,7 +81,10 @@ export class FundsView implements OnInit {
         // TODO: then sort the months instead of reversing
         this.months = [...this.months].reverse();
         if (!this.loadingCalendar) {
-          this.loadCalendar(this.getDefaultMonth());
+          this.loadCalendar();
+        }
+        if (!this.loadingList) {
+          this.loadList();
         }
       });
 
@@ -126,12 +135,19 @@ export class FundsView implements OnInit {
     this.editing = true;
   }
 
-  public onShowInfo(event: CalendarEvent<{ transactionId: number }>) {
-    if (event.meta) {
-      this.service.getOne(event.meta.transactionId)
-        .subscribe(transaction => this.selectedData = transaction);
-      this.showing = true;
-    }
+  public onShowInfo(transactionId: number) {
+    this.service.getOne(transactionId)
+      .subscribe(transaction => this.selectedData = transaction);
+    this.showing = true;
+  }
+
+  public onFilter(filter: string) {
+    this.descriptionFilter = filter;
+    this.loadList();
+  }
+
+  public onViewChange(view: 'calendar' | 'list') {
+    this.selectedView = view;
   }
 
   public downloadExcel() {
@@ -141,11 +157,18 @@ export class FundsView implements OnInit {
       .subscribe();
   }
 
-  public loadCalendar(month: Date) {
+  public loadCalendar(month: Date = this.getDefaultMonth()) {
     this.loadingCalendar = true;
     this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
       .pipe(finalize(() => this.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
+  }
+
+  public loadList(page: number = 0) {
+    this.loadingList = true;
+    this.service.getAll(page, this.descriptionFilter)
+      .pipe(finalize(() => this.loadingList = false))
+      .subscribe(transactions => this.transactionsPage = transactions);
   }
 
   private getDefaultMonth() {
@@ -167,7 +190,7 @@ export class FundsView implements OnInit {
           this.failures.clear();
           this.view = 'none';
           this.showing = false;
-          this.loadCalendar(this.getDefaultMonth());
+          this.loadCalendar();
           onSuccess();
         },
         error: error => {

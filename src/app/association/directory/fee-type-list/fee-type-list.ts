@@ -34,7 +34,7 @@ export class FeeTypeList {
     this.changePage.emit(page);
   }
 
-  public confirmDelete(event: Event, FeeType: FeeType) {
+  public confirmDelete(event: Event, feeType: FeeType) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -48,7 +48,7 @@ export class FeeTypeList {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.delete.emit(FeeType.number)
+      accept: () => this.delete.emit(feeType.number)
     });
   }
 

@@ -2,14 +2,13 @@
 import { Component, inject } from '@angular/core';
 import { AccountProfileDetails } from '@app/account/account-profile-details/account-profile-details';
 import { AccountService } from '@app/account/account-service';
+import { Account } from '@bernardo-mg/security';
 import { Profile } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { Account } from 'projects/bernardo-mg/security/src/lib/domain/account';
 import { finalize } from 'rxjs';
 
 @Component({
-  selector: 'account-profile-view',
   imports: [CardModule, SkeletonModule, AccountProfileDetails],
   templateUrl: './account-profile-view.html'
 })

@@ -1,41 +1,50 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+
   <!-- Description -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="descriptionInput" formControlName="description" maxlength="200" class="w-100" />
+  <p-floatlabel variant="in" class="mb-2">
+    <textarea pTextarea id="descriptionInput" formControlName="description" maxlength="200" rows="4"
+      class="w-full"></textarea>
     <label for="descriptionInput">Descripción</label>
   </p-floatlabel>
+
   <div class="mb-2">
     @for (failure of failures().getFailures('description'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+    <p-message severity="error" size="small" variant="simple">
+      {{ failure.message }}
+    </p-message>
     }
   </div>
+
   <!-- Date -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
+  <p-floatlabel variant="in" class="mb-2">
     <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
-      dateFormat="yy-mm-dd" appendTo="body" />
+      dateFormat="yy-mm-dd" appendTo="body" class="w-full" />
     <label for="dateInput">Fecha</label>
   </p-floatlabel>
+
   <div class="mb-2">
     @for (failure of failures().getFailures('date'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+    <p-message severity="error" size="small" variant="simple">
+      {{ failure.message }}
+    </p-message>
     }
   </div>
+
   <!-- Amount -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="number" id="amountInput" formControlName="amount" class="w-100" />
+  <p-floatlabel variant="in" class="mb-2">
+    <input pInputText type="number" id="amountInput" formControlName="amount" class="w-full" />
     <label for="amountInput">Importe</label>
   </p-floatlabel>
+
   <div class="mb-2">
     @for (failure of failures().getFailures('amount'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+    <p-message severity="error" size="small" variant="simple">
+      {{ failure.message }}
+    </p-message>
     }
   </div>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()" class="w-full"
+    label="Guardar" />
+
 </form>

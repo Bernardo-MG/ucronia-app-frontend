@@ -8,9 +8,14 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class DetailField {
 
-  public loading = input(false);
-  public name = input('');
-  public value = input<any>('');
-  public icon = input('');
+  public readonly loading = input(false);
+  public readonly name = input('');
+  public readonly value = input<any>('');
+  public readonly icon = input('');
+
+  public formatMultiline(value: string | null | undefined): string {
+    if (value === null || value === undefined) return '';
+    return String(value).replace(/\n/g, '<br>');
+  }
 
 }

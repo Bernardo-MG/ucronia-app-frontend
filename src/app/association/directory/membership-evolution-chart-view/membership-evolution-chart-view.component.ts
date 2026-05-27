@@ -1,11 +1,12 @@
 
-import { Component, OnDestroy, inject, output } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { MembershipEvolutionMonth } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
+import { format } from 'date-fns';
 import { SelectModule } from 'primeng/select';
-import { BehaviorSubject, combineLatest, finalize, switchMap } from 'rxjs';
+import { BehaviorSubject, finalize, switchMap } from 'rxjs';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 
 @Component({
@@ -13,7 +14,7 @@ import { MembershipEvolutionService } from '../membership-evolution-service';
   imports: [FormsModule, SelectModule],
   templateUrl: './membership-evolution-chart-view.component.html'
 })
-export class MembershipEvolutionChartView implements OnDestroy {
+export class MembershipEvolutionChartView implements OnInit, OnDestroy {
 
   private readonly service = inject(MembershipEvolutionService);
 
@@ -22,55 +23,28 @@ export class MembershipEvolutionChartView implements OnDestroy {
 
   public balance: MembershipEvolutionMonth[] = [];
 
-  public months: { label: string, value: Month }[] = [];
+  public readonly ranges = [
+    { label: '3 meses', value: 3 },
+    { label: '6 meses', value: 6 },
+    { label: '1 año', value: 12 },
+    { label: '2 años', value: 24 }
+  ];
 
-  private startMonth$ = new BehaviorSubject<Month | undefined>(undefined);
-  public get startMonth(): Month | undefined {
-    return this.startMonth$.value;
-  }
-  public set startMonth(month: Month | undefined) {
-    this.startMonth$.next(month);
-  }
+  private readonly selectedRange$ = new BehaviorSubject<number>(3);
 
-  private endMonth$ = new BehaviorSubject<Month | undefined>(undefined);
-  public get endMonth(): Month | undefined {
-    return this.endMonth$.value;
+  public get selectedRange(): number {
+    return this.selectedRange$.value;
   }
-  public set endMonth(month: Month | undefined) {
-    this.endMonth$.next(month);
+  public set selectedRange(value: number) {
+    this.selectedRange$.next(value);
   }
 
-  public get waiting() {
-    return (this.readingBalance || this.readingRange);
-  }
-
-  private readingBalance = false;
-
-  private readingRange = false;
+  public loading = false;
 
   public chart: any;
 
-  constructor() {
-    // Read evolution range
-    this.readingRange = true;
-    this.service.monthly(this.startMonth, this.endMonth)
-      .pipe(
-        finalize(() => this.readingRange = false),
-        finalize(() => this.setupBalanceReload())
-      )
-      .subscribe(months => {
-        this.months = months.map(m => {
-          return {
-            label: `${m.month.getFullYear()}-${String(m.month.getMonth() + 1).padStart(2, '0')}`,
-            value: new Month(m.month.getFullYear(), m.month.getMonth() + 1)
-          };
-        });
-        // Range
-        if (this.months.length) {
-          this.startMonth = this.months[this.months.length - 1].value;
-          this.endMonth = this.months[0].value;
-        }
-      });
+  public ngOnInit(): void {
+    this.setupBalanceReload();
   }
 
   public ngOnDestroy(): void {
@@ -84,7 +58,7 @@ export class MembershipEvolutionChartView implements OnDestroy {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => b.month.toISOString().slice(0, 7));
+    const labels = this.balance.map(b => format(b.month, 'yyyy-MM'))
     const totals = this.balance.map(b => b.total);
 
     const data = {
@@ -108,13 +82,19 @@ export class MembershipEvolutionChartView implements OnDestroy {
   }
 
   private setupBalanceReload() {
-    combineLatest([this.startMonth$, this.endMonth$])
+    this.selectedRange$
       .pipe(
-        switchMap(([start, end]) => {
-          if (!start || !end) return [];
-          this.readingBalance = true;
+        switchMap(range => {
+          const now = new Date();
+          const end = new Month(now.getFullYear(), now.getMonth() + 1);
+          const startDate = new Date(now);
+          startDate.setMonth(startDate.getMonth() - range);
+          const start = new Month(startDate.getFullYear(), startDate.getMonth() + 1);
+
+          this.loading = true;
+
           return this.service.monthly(start, end)
-            .pipe(finalize(() => this.readingBalance = false));
+            .pipe(finalize(() => (this.loading = false)));
         })
       )
       .subscribe(data => {

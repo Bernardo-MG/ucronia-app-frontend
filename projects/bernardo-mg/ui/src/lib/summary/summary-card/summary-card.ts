@@ -3,7 +3,7 @@ import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
-  selector: 'app-summary-card',
+  selector: 'ui-summary-card',
   imports: [CardModule, SkeletonModule],
   templateUrl: './summary-card.html'
 })

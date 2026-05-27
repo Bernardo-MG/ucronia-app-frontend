@@ -16,7 +16,7 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { ProfileInfo } from '../model/profile-info';
+import { ProfileDetails } from '../model/profile-info';
 
 @Component({
   selector: 'assoc-profile-info-edition-form',
@@ -32,7 +32,7 @@ export class ProfileInfoEditionForm implements OnChanges {
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly feeTypes = input<FeeType[]>([]);
 
-  @Input() public set data(value: ProfileInfo) {
+  @Input() public set data(value: ProfileDetails) {
     this.form.patchValue(value as any);
 
     this.contactChannels.clear();
@@ -59,7 +59,7 @@ export class ProfileInfoEditionForm implements OnChanges {
     this.selected = [...value.types];
   }
 
-  public readonly save = output<ProfileInfo>();
+  public readonly save = output<ProfileDetails>();
 
   public today = new Date();
 
@@ -172,7 +172,7 @@ export class ProfileInfoEditionForm implements OnChanges {
 
   public submit() {
     if (this.formStatus.saveEnabled) {
-      const value: ProfileInfo = {
+      const value: ProfileDetails = {
         ...this.form.value,
         types: [...this.selected]
       };

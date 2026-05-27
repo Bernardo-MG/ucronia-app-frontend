@@ -8,8 +8,8 @@
     </p-card>
   
     <div class="grid grid-cols-1 gap-4">
-      <app-summary-card [loading]="loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
-      <app-summary-card [loading]="loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
+      <ui-summary-card [loading]="loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
+      <ui-summary-card [loading]="loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
     </div>
 
   </div>
@@ -26,18 +26,32 @@
     </div>
   </div>
 
-  <!-- Funds Calendar -->
+  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <assoc-transaction-display-selector (view)="onViewChange($event)" />
+
+    @if (selectedView === 'list') {
+      <ui-text-filter (filter)="onFilter($event)" />
+    }
+  </div>
+
+  <!-- Transactions -->
   <p-panel class="shadow rounded-lg">
 
-    <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
-      (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+    @if (selectedView === 'calendar') {
+      <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
+        (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+    } @else if (selectedView === 'list') {
+      <assoc-transaction-list [loading]="loading" [data]="transactionsPage.content" [rows]="transactionsPage.size"
+        [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
+        (changePage)="loadList($event)" />
+    }
 
   </p-panel>
 
   <!-- Info Dialog -->
   <p-dialog header="Transacción" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
     contentStyleClass="p-4 space-y-4">
-    <assoc-transaction-info [transaction]="selectedData" />
+    <assoc-transaction-info [transaction]="selectedData" [loading]="loading" />
 
     <div class="flex space-x-2">
       <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"

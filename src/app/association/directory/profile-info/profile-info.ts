@@ -1,19 +1,19 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { DetailField } from '@bernardo-mg/ui';
+import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ProfileInfo } from '../model/profile-info';
+import { ProfileDetails } from '../model/profile-info';
 
 @Component({
-  selector: 'assoc-profile-details',
-  imports: [CommonModule, SkeletonModule, CardModule, DetailField, DatePipe],
-  templateUrl: './profile-details.html'
+  selector: 'assoc-profile-info',
+  imports: [CommonModule, SkeletonModule, CardModule, DetailField, StatusDetail, DatePipe],
+  templateUrl: './profile-info.html'
 })
-export class ProfileDetails {
+export class ProfileInfo {
 
-  public data = input(new ProfileInfo());
-  public loading = input(false);
+  public readonly data = input(new ProfileDetails());
+  public readonly loading = input(false);
 
   public get isMember(): boolean {
     return this.data().types.includes('member');

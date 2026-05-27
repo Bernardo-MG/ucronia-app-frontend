@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
-import { SummaryCard } from '@app/shared/summary/summary-card/summary-card';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { SummaryCard } from '@bernardo-mg/ui';
 import { FeeCreation } from '@ucronia/api';
 import { Fee, FeePayments, FeeSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
@@ -18,8 +18,8 @@ import { FeeCreationStepper } from '../fee-creation-stepper/fee-creation-stepper
 import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
 import { FeePaymentsStepper } from '../fee-payments-stepper/fee-payments-stepper';
-import { FeeSummaryService } from '../fee-summary-service';
 import { FeeService } from '../fee-service';
+import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',

@@ -8,7 +8,6 @@ import { PasswordResetRequestService } from '../password-reset-request-service';
  * Password reset form component. Dumb component for just handling the form.
  */
 @Component({
-  selector: 'login-password-reset-request-view',
   imports: [CardModule, PasswordResetRequestForm],
   templateUrl: './password-reset-request-view.html'
 })
