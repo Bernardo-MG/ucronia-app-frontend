@@ -14,7 +14,7 @@ import { TransactionCalendarService } from '../transaction-calendar-service';
   imports: [FormsModule, SelectModule],
   templateUrl: './transaction-balance-chart-view.html'
 })
-export class TransactionBalanceChartview implements OnInit {
+export class TransactionBalanceChartView implements OnInit {
 
   private readonly balanceService = inject(TransactionBalanceService);
   private readonly transactionCalendarService = inject(TransactionCalendarService);
