@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
-import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionBalanceChartView } from './transaction-balance-chart-view';
 
 describe('TransactionBalanceChartView', () => {
@@ -13,32 +12,26 @@ describe('TransactionBalanceChartView', () => {
     ['monthly']
   );
 
-  const transactionCalendarServiceMock = jasmine.createSpyObj<TransactionCalendarService>(
-    'TransactionCalendarService',
-    ['getRange']
-  );
-
   beforeEach(() => {
-    transactionBalanceServiceMock.monthly.and.returnValue(
-      of([])
-    );
-    transactionCalendarServiceMock.getRange.and.returnValue(
-      of([])
-    );
+    transactionBalanceServiceMock.monthly.and.returnValue(of([]));
 
     TestBed.configureTestingModule({
       imports: [TransactionBalanceChartView],
       providers: [
-        { provide: TransactionBalanceService, useValue: transactionBalanceServiceMock },
-        { provide: TransactionCalendarService, useValue: transactionCalendarServiceMock }
+        { provide: TransactionBalanceService, useValue: transactionBalanceServiceMock }
       ]
     });
+
     fixture = TestBed.createComponent(TransactionBalanceChartView);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture.detectChanges(); // triggers ngOnInit + setupBalanceReload
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load monthly data on init', () => {
+    expect(transactionBalanceServiceMock.monthly).toHaveBeenCalled();
   });
 });

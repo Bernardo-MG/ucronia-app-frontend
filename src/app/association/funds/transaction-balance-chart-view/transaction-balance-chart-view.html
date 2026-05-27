@@ -2,17 +2,10 @@
 
 <div class="row pt-2">
   <div class="col-4">
-    Inicio
+    Meses atrás
   </div>
   <div class="col-8">
-    <p-select [ngModel]="startMonth" [options]="months" (onChange)="startMonth = $event.value"
-      optionLabel="label" optionValue="value" placeholder="Mes inicial" />
-  </div>
-  <div class="col-4">
-    Fin
-  </div>
-  <div class="col-8">
-    <p-select [ngModel]="endMonth" [options]="months" (onChange)="endMonth = $event.value" optionLabel="label"
-      optionValue="value" placeholder="Mes final" />
+    <p-select [ngModel]="selectedRange" [options]="ranges" (onChange)="selectedRange = $event.value" optionLabel="label"
+      optionValue="value" placeholder="Seleccionar rango" />
   </div>
 </div>
