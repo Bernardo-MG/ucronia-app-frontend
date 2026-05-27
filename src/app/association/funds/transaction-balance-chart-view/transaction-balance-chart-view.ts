@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
@@ -13,9 +13,9 @@ import { TransactionBalanceService } from '../transaction-balance-service';
   imports: [FormsModule, SelectModule],
   templateUrl: './transaction-balance-chart-view.html'
 })
-export class TransactionBalanceChartView implements OnInit {
+export class TransactionBalanceChartView implements OnInit, OnDestroy {
 
-  private readonly balanceService = inject(TransactionBalanceService);
+  private readonly service = inject(TransactionBalanceService);
 
   public balance: TransactionMonthlyBalance[] = [];
 
@@ -96,7 +96,7 @@ export class TransactionBalanceChartView implements OnInit {
 
           this.loading = true;
 
-          return this.balanceService.monthly(start, end)
+          return this.service.monthly(start, end)
             .pipe(finalize(() => (this.loading = false)));
         })
       )
