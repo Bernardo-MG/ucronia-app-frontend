@@ -11,13 +11,15 @@ describe('MyFeesView', () => {
 
   const myFeesMock = jasmine.createSpyObj<MyFeesService>(
     'MyFeesService',
-    ['getAll']
+    ['getAll', 'hasFees']
   );
 
   beforeEach(async () => {
     myFeesMock.getAll.and.returnValue(
       of(new Page<Fee>())
     );
+
+    myFeesMock.hasFees.and.returnValue(of(false));
 
     await TestBed.configureTestingModule({
       imports: [MyFeesView],
