@@ -3,7 +3,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UserUpdate } from '@bernardo-mg/security';
-import { Member } from '@ucronia/domain';
+import { Member, MemberStatus } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -52,6 +52,7 @@ export class UserView implements OnInit {
   public roleSelection: Role[] = [];
 
   public availableMembers: Member[] = [];
+  public members: Member[] = [];
 
   constructor() {
     const authService = inject(AuthService);
@@ -165,6 +166,13 @@ export class UserView implements OnInit {
     }
     this.view = view;
     this.editing = true;
+  }
+
+  public onSearchMembers(event: { query: string }) {
+    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+      .subscribe(members => {
+        this.members = members;
+      });
   }
 
   public load(page: number | undefined = undefined) {

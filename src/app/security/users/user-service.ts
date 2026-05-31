@@ -89,6 +89,19 @@ export class UserService {
     return this.securityClient.user.profile.set(username, profile);
   }
 
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<MemberProfile[]> {
+    const sorting = new Sorting(
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
+      .pipe(map(page => page.content as MemberProfile[]));
+  }
+
   public getAvailableMembers(username: string): Observable<MemberProfile[]> {
     return combineLatest([
       this.getProfile(username),

@@ -157,13 +157,7 @@ export class FeeView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }) {
-    const query = event.query?.trim();
-    if (!query) {
-      this.members = [];
-      return;
-    }
-
-    this.service.searchMembers(query, MemberStatus.Active)
+    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
       });

@@ -4,28 +4,30 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { Member } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
+import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
+import { FormStatus } from 'projects/bernardo-mg/form/src/lib/status/form-status';
+import { FailureStore } from 'projects/bernardo-mg/request/src/lib/models/failure-store';
 import { EMPTY, Observable } from 'rxjs';
+import { UserMemberSearch, UserSearchEvent } from '../user-member-search/user-member-search';
 
 @Component({
   selector: 'access-user-member-editor',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, TableModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, TableModule, MessageModule, UserMemberSearch],
   templateUrl: './user-member-editor.html'
 })
 export class UserMemberEditor implements OnChanges {
 
-  public readonly getMember = input<(username: string) => Observable<Member>>((username: string) => EMPTY);
-  public readonly username = input('');
-  public readonly selection = input<Member[]>([]);
   public readonly member = input(new Member());
-  public readonly waitingMembersSelection = input(false);
+  public readonly members = input<Member[]>([]);
+  public readonly failures = input(new FailureStore());
 
   public readonly assignMember = output<Member>();
+  public readonly searchMember = output<UserSearchEvent>();
 
   public selected: Member[] = [];
 
-  public view: 'member' | 'select' = 'member';
-
+  public formStatus: FormStatus;
   public form: FormGroup;
 
   constructor() {
@@ -34,6 +36,8 @@ export class UserMemberEditor implements OnChanges {
     this.form = fb.group({
       fullName: [{ value: '', disabled: true }]
     });
+    
+    this.formStatus = new FormStatus(this.form);
   }
 
   public ngOnChanges({ member }: SimpleChanges): void {
@@ -42,18 +46,13 @@ export class UserMemberEditor implements OnChanges {
     }
   }
 
-  public onShowSelectMember() {
-    this.view = "select";
-  }
-
-  public onCancelSelectMember() {
-    this.view = "member";
-  }
-
   public onSelectMember(member: Member): void {
     this.form.get('fullName')?.setValue(member.name.fullName);
     this.assignMember.emit(member);
-    this.view = "member";
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

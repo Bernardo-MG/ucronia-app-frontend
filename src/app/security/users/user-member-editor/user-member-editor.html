@@ -1,39 +1,15 @@
-@switch (view) {
-  @case ('member') {
-    <form [formGroup]="form" novalidate>
-      <!-- Name -->
-      <div class="row mb-2">
-        <label for="nameInput" id="nameLabel" class="col-sm-2 col-form-label">Nombre</label>
-        <div class="col-sm-10">
-          <input pInputText formControlName="fullName" id="nameInput" aria-describedby="nameLabel">
-        </div>
-      </div>
-    </form>
-    <!-- Select button -->
-    <p-button icon="pi pi-search" severity="secondary" (click)="onShowSelectMember()" aria-label="Buscar socio" rounded
-      text />
-  }
-  @case ('select') {
-  <p-table dataKey="number" [value]="selection()">
-    <ng-template #header>
-      <tr>
-        <th>Nombre</th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template #body let-member>
-      <tr>
-        <td>{{ member.name.fullName }}</td>
-        <td>
-          <p-button icon="pi pi-plus-circle" severity="danger" aria-label="Seleccionar" (click)="onSelectMember(member)" rounded text />
-        </td>
-    </ng-template>
-  </p-table>
-    <div class="d-grid">
-      <!-- Cancel button -->
-      <button type="button" class="btn btn-primary" aria-label="Cancelar" (click)="onCancelSelectMember()">
-        Cancelar
-      </button>
+<form [formGroup]="form" novalidate>
+  <div class="mb-4">
+    <!-- Member -->
+    <label class="font-semibold mb-2 block">Socio</label>
+    <assoc-user-member-search [members]="members()" (selectMember)="onSelectMember($event)"
+      (searchMember)="searchMember.emit($event)" />
+    <div class="mb-2">
+      @if (isFieldInvalid('member')) {
+        <p-message severity="error" size="small" variant="simple">
+          Seleccione un socio válido
+        </p-message>
+      }
     </div>
-  }
-}
+  </div>
+</form>
