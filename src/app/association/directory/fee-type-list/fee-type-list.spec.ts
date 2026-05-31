@@ -15,7 +15,7 @@ describe('FeeTypeList', () => {
         ConfirmationService
       ]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(FeeTypeList);
     component = fixture.componentInstance;
