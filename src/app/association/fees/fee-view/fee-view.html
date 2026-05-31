@@ -30,7 +30,7 @@
   </div>
 
   <!-- Fee Info Dialog -->
-  <p-dialog header="Cuota" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }" class="rounded-lg"
+  <p-dialog header="Cuota" [modal]="true" [(visible)]="showing" class="rounded-lg"
     contentStyleClass="p-4 space-y-4">
     <assoc-fee-details [data]="selectedData" [loading]="loadingDetail" />
 
@@ -47,15 +47,16 @@
   @switch (view) {
 
     @case('create') {
-      <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }"
-        class="rounded-lg">
-        <assoc-fee-creation-form [loading]="loadingDetail" [failures]="failures" [members]="members" (save)="onCreateUnpaid($event)" (searchMember)="onSearchMembers($event)" />
+      <p-dialog header="Crear cuota sin pagar" [modal]="true" [(visible)]="editing" class="rounded-lg">
+        <assoc-fee-creation-form [loading]="loadingDetail" [failures]="failures" [members]="members"
+          (save)="onCreateUnpaid($event)" (searchMember)="onSearchMembers($event)" />
       </p-dialog>
     }
 
     @case('pay') {
-      <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
-        <assoc-fee-payments-form [loading]="loadingDetail" [failures]="failures" [members]="members" (save)="onPay($event)" (searchMember)="onSearchMembers($event)" />
+      <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" class="rounded-lg">
+        <assoc-fee-payments-form [loading]="loadingDetail" [failures]="failures" [members]="members" (save)="onPay($event)"
+          (searchMember)="onSearchMembers($event)" />
       </p-dialog>
     }
 

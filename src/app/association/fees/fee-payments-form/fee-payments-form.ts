@@ -9,12 +9,14 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MessageModule } from 'primeng/message';
 import { FeeMemberSearch, FeeSearchEvent } from '../fee-member-search/fee-member-search';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, FeeMemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, FeeMemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
