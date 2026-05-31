@@ -3,7 +3,7 @@ import { Component, input, output } from '@angular/core';
 import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { MemberStatusSelectComponent } from '@app/shared/profile/member-status-select/member-status-select.component';
 import { FailureStore, Page } from '@bernardo-mg/request';
-import { BookLent, Member, MemberStatus } from '@ucronia/domain';
+import { BookLent, MemberStatus, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { StepperModule } from 'primeng/stepper';
 import { EMPTY, Observable } from 'rxjs';
@@ -25,7 +25,7 @@ export class LibraryBookLending {
 
   public currentStep = 1;
 
-  public member = new Member();
+  public member = new PublicMember();
 
   public status = MemberStatus.Active;
 
@@ -34,7 +34,7 @@ export class LibraryBookLending {
   }
 
   public onSelectMember(member: any) {
-    this.member = (member as Member);
+    this.member = (member as PublicMember);
     this.currentStep = 2;
   }
 
@@ -42,6 +42,6 @@ export class LibraryBookLending {
     return this.getMemberSelection()(page, this.status);
   }
 
-  public readonly nameRenderer = (row: Member): string => row.name.fullName;
+  public readonly nameRenderer = (row: PublicMember): string => row.name.fullName;
 
 }

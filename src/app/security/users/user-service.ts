@@ -3,7 +3,7 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { MemberProfile, MemberStatus, Profile } from '@ucronia/domain';
+import { Member, MemberStatus, Profile } from '@ucronia/domain';
 import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 
 @Injectable({
@@ -89,7 +89,20 @@ export class UserService {
     return this.securityClient.user.profile.set(username, profile);
   }
 
-  public getAvailableMembers(username: string): Observable<MemberProfile[]> {
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<Member[]> {
+    const sorting = new Sorting(
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
+      .pipe(map(page => page.content as Member[]));
+  }
+
+  public getAvailableMembers(username: string): Observable<Member[]> {
     return combineLatest([
       this.getProfile(username),
       this.getAllMembers()
@@ -103,7 +116,7 @@ export class UserService {
     );
   }
 
-  private getAllMembers(): Observable<MemberProfile[]> {
+  private getAllMembers(): Observable<Member[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -123,7 +136,7 @@ export class UserService {
           return of();
         }),
         // accumulate members from all pages into one array
-        reduce((members: MemberProfile[], res?: Page<MemberProfile>) => {
+        reduce((members: Member[], res?: Page<Member>) => {
           return res ? [...members, ...res.content] : members;
         }, [])
       );

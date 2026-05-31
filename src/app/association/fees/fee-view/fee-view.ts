@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
-import { Fee, FeeSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -22,7 +22,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm,  FeeDetails, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
+  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -55,7 +55,7 @@ export class FeeView implements OnInit {
 
   public selectedData = new Fee();
   public summary = new FeeSummary();
-  public members: Member[] = [];
+  public members: PublicMember[] = [];
 
   public failures = new FailureStore();
 
@@ -157,20 +157,10 @@ export class FeeView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }) {
-    const query = event.query?.trim();
-    if (!query) {
-      this.members = [];
-      return;
-    }
-
-    this.service.searchMembers(query, MemberStatus.Active)
+    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
       });
-  }
-
-  public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
-    return this.service.getMembers(page, active);
   }
 
   public loadCalendar(year: number) {

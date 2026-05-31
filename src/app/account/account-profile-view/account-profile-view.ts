@@ -3,13 +3,14 @@ import { Component, inject } from '@angular/core';
 import { AccountProfileDetails } from '@app/account/account-profile-details/account-profile-details';
 import { AccountService } from '@app/account/account-service';
 import { Account } from '@bernardo-mg/security';
+import { DetailField } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';
 
 @Component({
-  imports: [CardModule, SkeletonModule, AccountProfileDetails],
+  imports: [CardModule, SkeletonModule, AccountProfileDetails, DetailField],
   templateUrl: './account-profile-view.html'
 })
 export class AccountProfileView {

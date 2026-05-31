@@ -1,5 +1,5 @@
 import { Component, input } from '@angular/core';
-import { MemberProfile } from '@ucronia/domain';
+import { Member } from '@ucronia/domain';
 import { TagModule } from 'primeng/tag';
 
 @Component({
@@ -9,6 +9,6 @@ import { TagModule } from 'primeng/tag';
 })
 export class MemberStatusTag {
 
-  public readonly member = input(new MemberProfile());
+  public readonly member = input(new Member());
 
 }

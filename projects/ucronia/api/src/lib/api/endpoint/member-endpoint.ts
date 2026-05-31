@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Member, MembershipEvolutionMonth } from '@ucronia/domain';
+import { Member, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { MemberCount } from '../../members/member-summary';
+import { MemberPatch } from '../../members/member-patch';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class MemberEndpoint {
@@ -18,6 +18,7 @@ export class MemberEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
+    active: MemberStatus = MemberStatus.All,
     name: string | undefined = undefined
   ): Observable<Page<Member>> {
     let params = new HttpParams();
@@ -28,48 +29,50 @@ export class MemberEndpoint {
       params = params.append('size', size);
     }
 
+    const status = active ? active.toString().toUpperCase() : '';
+
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
+    params = params.append('status', status);
     if (name) {
       params = params.append('name', name);
     }
 
-    return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/member`, { params })
+    return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/profile/member`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle)
       );
   }
 
-  public count(): Observable<MemberCount> {
-    return this.http.get<SimpleResponse<MemberCount>>(`${this.apiUrl}/member/count`)
+  public get(
+    number: number
+  ): Observable<Member> {
+    return this.http.get<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(r => r.content)
+        map(response => response.content)
       );
   }
 
-  public evolution(
-    from: Date | undefined = undefined,
-    to: Date | undefined = undefined
-  ): Observable<MembershipEvolutionMonth[]> {
-    let params = new HttpParams();
-
-    if (from) {
-      params = params.append('from', from.toISOString());
-    }
-    if (to) {
-      params = params.append('to', to.toISOString());
-    }
-
-    return this.http.get<SimpleResponse<MembershipEvolutionMonth[]>>(`${this.apiUrl}/member/evolution`, { params })
+  public patch(
+    number: number,
+    data: MemberPatch
+  ): Observable<Member> {
+    return this.http.patch<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(r => r.content),
-        map(r => r.map(b => {
-          b.month = new Date(b.month);
-          return b;
-        }))
+        map(response => response.content)
+      );
+  }
+
+  public delete(
+    number: number
+  ): Observable<Member> {
+    return this.http.delete<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
       );
   }
 

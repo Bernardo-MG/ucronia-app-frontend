@@ -1,11 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { AuthService } from '@bernardo-mg/authentication';
 import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { MemberCount } from '@ucronia/api';
-import { Member, MemberProfile } from '@ucronia/domain';
+import { Member, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
@@ -23,10 +22,10 @@ export class MemberView implements OnInit {
 
   private readonly service = inject(MemberService);
 
-  public data = new Page<Member>();
+  public data = new Page<PublicMember>();
 
-  public selectedData = new Member();
-  public memberContact = new MemberProfile();
+  public selectedData = new PublicMember();
+  public memberContact = new Member();
   private MemberCount = new MemberCount();
 
   public get active() {
@@ -46,10 +45,6 @@ export class MemberView implements OnInit {
 
   public nameFilterSubject = new Subject<string>();
   public nameFilter = '';
-
-  constructor() {
-    const authService = inject(AuthService);
-  }
 
   public ngOnInit(): void {
     this.load();

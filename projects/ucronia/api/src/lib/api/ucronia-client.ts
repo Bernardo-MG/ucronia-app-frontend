@@ -6,9 +6,9 @@ import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint';
 import { LibraryEndpoint } from './endpoint/library-endpoint';
 import { MemberEndpoint } from './endpoint/member-endpoint';
-import { MemberProfileEndpoint } from './endpoint/member-profile-endpoint';
 import { MyFeesEndpoint } from './endpoint/my-fees-endpoint';
 import { ProfileEndpoint } from './endpoint/profile-endpoint';
+import { PublicMemberEndpoint } from './endpoint/public-member-endpoint';
 import { SettingEndpoint } from './endpoint/setting-endpoint';
 import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
@@ -21,7 +21,7 @@ export class UcroniaClient {
   private readonly base_url = inject(UCRONIA_API_BASE_URL);
 
   public get member() {
-    return new MemberEndpoint(this.http, this.base_url);
+    return new PublicMemberEndpoint(this.http, this.base_url);
   }
 
   public get profile() {
@@ -37,7 +37,7 @@ export class UcroniaClient {
   }
 
   public get memberProfile() {
-    return new MemberProfileEndpoint(this.http, this.base_url);
+    return new MemberEndpoint(this.http, this.base_url);
   }
 
   public get fee() {

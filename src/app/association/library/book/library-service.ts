@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Member, MemberStatus, Profile, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { forkJoin, map, Observable } from 'rxjs';
 import { LibrarySummary } from '../model/library-summary';
 
@@ -128,7 +128,7 @@ export class LibraryService {
     return this.ucroniaClient.library.lending.return(data);
   }
 
-  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<Page<Member>> {
+  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<Page<PublicMember>> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
