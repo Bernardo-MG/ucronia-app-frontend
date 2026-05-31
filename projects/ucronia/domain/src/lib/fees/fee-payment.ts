@@ -8,7 +8,3 @@ export class FeePayments {
 export class FeePaymentTransaction {
   public date = new Date();
 }
-
-export class FeePaymentContact {
-  public number = -1;
-}

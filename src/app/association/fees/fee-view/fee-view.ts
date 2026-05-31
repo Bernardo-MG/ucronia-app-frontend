@@ -3,8 +3,7 @@ import { MemberStatusSelector } from '@app/shared/member/member-status-selector/
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
-import { FeeCreation } from '@ucronia/api';
-import { Fee, FeePayments, FeeSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -14,10 +13,10 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
-import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
+import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeDetails } from '../fee-details/fee-details';
-import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
-import { FeePaymentsForm } from '../fee-payments-form/fee-payments-form';
+import { FeeEditionEvent, FeeEditionForm } from '../fee-edition-form/fee-edition-form';
+import { FeePaymentsForm, FeesPaymentEvent } from '../fee-payments-form/fee-payments-form';
 import { FeeService } from '../fee-service';
 import { FeeSummaryService } from '../fee-summary-service';
 
@@ -94,7 +93,7 @@ export class FeeView implements OnInit {
     this.loadSummary();
   }
 
-  public onUpdate(toUpdate: FeeEditionFormData): void {
+  public onUpdate(toUpdate: FeeEditionEvent): void {
     const update = {
       transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
     }
@@ -104,14 +103,14 @@ export class FeeView implements OnInit {
     );
   }
 
-  public onPay(data: FeePayments): void {
+  public onPay(data: FeesPaymentEvent): void {
     this.call(
       () => this.service.pay(data),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
     );
   }
 
-  public onCreateUnpaid(data: FeeCreation): void {
+  public onCreateUnpaid(data: FeeCreationEvent): void {
     this.call(
       () => this.service.create(data),
       () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })

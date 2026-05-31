@@ -33,8 +33,8 @@ export class FeePaymentsForm {
     }
   }
 
-  public readonly save = output<FeePayments>();
-  public readonly searchMember = output<FeeSearch>();
+  public readonly save = output<FeesPaymentEvent>();
+  public readonly searchMember = output<FeeSearchEvent>();
   public readonly return = output();
 
   public selectedMember?: Member;
@@ -109,6 +109,12 @@ export class FeePaymentsForm {
 
 }
 
-export class FeeSearch {
+export class FeeSearchEvent {
   public query: string = '';
+}
+
+export class FeesPaymentEvent {
+  public member = 0;
+  public paymentDate = { date: new Date() };
+  public months: Date[] = [];
 }

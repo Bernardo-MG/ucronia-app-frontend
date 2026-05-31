@@ -26,8 +26,8 @@ export class FeeCreationForm implements OnChanges {
     this.form.get('member')?.setValue(value.number);
   }
 
-  public readonly save = output<FeeCreationFormData>();
-  public readonly searchMember = output<FeeSearch>();
+  public readonly save = output<FeeCreationEvent>();
+  public readonly searchMember = output<FeeSearchEvent>();
   public readonly return = output();
 
   public selectedMember?: Member;
@@ -78,11 +78,11 @@ export class FeeCreationForm implements OnChanges {
 
 }
 
-export class FeeCreationFormData {
+export class FeeCreationEvent {
   public month = new Date();
   public member = -1;
 }
 
-export class FeeSearch {
+export class FeeSearchEvent {
   public query: string = '';
 }
