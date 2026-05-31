@@ -1,11 +1,13 @@
 import { Component, input, output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { Member } from 'projects/ucronia/domain/src/lib/members/member';
 
 @Component({
   selector: 'assoc-fee-member-search',
-  imports: [FormsModule,ReactiveFormsModule, AutoCompleteModule],
+  imports: [FormsModule,ReactiveFormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './fee-member-search.html'
 })
 export class FeeMemberSearch {
