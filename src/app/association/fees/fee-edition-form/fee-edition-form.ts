@@ -30,7 +30,7 @@ export class FeeEditionForm implements OnChanges {
     this.fee = value;
   }
 
-  public readonly save = output<FeeEditionFormData>();
+  public readonly save = output<FeeEditionEvent>();
 
   public formStatus: FormStatus;
 
@@ -85,10 +85,6 @@ export class FeeEditionForm implements OnChanges {
 
 }
 
-export class FeeEditionFormData {
-  public transaction = new FeeEditionFormDataTransaction();
-}
-
-export class FeeEditionFormDataTransaction {
-  public date = new Date();
+export class FeeEditionEvent {
+  public transaction = { date: new Date() };
 }

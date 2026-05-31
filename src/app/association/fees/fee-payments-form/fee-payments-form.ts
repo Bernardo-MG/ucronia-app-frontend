@@ -1,44 +1,37 @@
 
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { FeePayments, Member } from '@ucronia/domain';
+import { Member } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
+import { FeeMemberSearch, FeeSearchEvent } from '../fee-member-search/fee-member-search';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, FeeMemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
 
+  private fb = inject(FormBuilder);
+
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly members = input<Member[]>([]);
 
-  @Input() public set member(value: Member) {
-    this.form.get('member')?.setValue(value.number);
-    this.months.clear();
-    this.addDate();
-    this.fullname = value.name.fullName;
-  }
-
-  public readonly save = output<FeePayments>();
+  public readonly save = output<FeesPaymentEvent>();
+  public readonly searchMember = output<FeeSearchEvent>();
   public readonly return = output();
-
-  private fb = inject(FormBuilder);
 
   public formStatus: FormStatus;
 
-  public memberName = "";
-
   public form: FormGroup;
-
-  public fullname = "";
 
   public today = new Date();
 
@@ -54,6 +47,18 @@ export class FeePaymentsForm {
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
+
+  public onSelectMember(member: Member) {
+    if (!member) {
+      return;
+    }
+
+    this.form.get('member')?.setValue(member.number);
+
+    if (this.months.length === 0) {
+      this.addDate();
+    }
   }
 
   public addDate() {
@@ -91,4 +96,10 @@ export class FeePaymentsForm {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class FeesPaymentEvent {
+  public member = 0;
+  public paymentDate = { date: new Date() };
+  public months: Date[] = [];
 }
