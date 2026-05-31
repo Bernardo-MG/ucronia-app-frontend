@@ -15,6 +15,12 @@
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+    <assoc-transaction-display-selector (view)="onViewChange($event)" />
+
+    @if (selectedView === 'list') {
+      <ui-text-filter (filter)="onFilter($event)" />
+    }
+
     <div class="ml-auto space-x-2">
       @if (createable) {
         <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
@@ -24,14 +30,6 @@
       <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
         [attr.aria-disabled]="loadingExcel" rounded />
     </div>
-  </div>
-
-  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <assoc-transaction-display-selector (view)="onViewChange($event)" />
-
-    @if (selectedView === 'list') {
-      <ui-text-filter (filter)="onFilter($event)" />
-    }
   </div>
 
   <!-- Transactions -->

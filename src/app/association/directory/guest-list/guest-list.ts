@@ -8,7 +8,7 @@ import { ProfileDetails } from '../model/profile-info';
 
 @Component({
   selector: 'assoc-guest-list',
-  imports: [ButtonModule, TableModule,  DatePipe],
+  imports: [ButtonModule, TableModule, DatePipe],
   templateUrl: './guest-list.html'
 })
 export class GuestList {

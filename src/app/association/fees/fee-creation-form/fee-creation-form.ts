@@ -1,36 +1,35 @@
 
-import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Member } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { FeeMemberSearch, FeeSearchEvent } from '../fee-member-search/fee-member-search';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, FeeMemberSearch],
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly members = input<PublicMember[]>([]);
 
-  @Input() public set member(value: Member) {
-    this.form.get('member')?.setValue(value.number);
-    this.memberName = value.name.fullName;
-  }
-
-  public readonly save = output<FeeCreationFormData>();
+  public readonly save = output<FeeCreationEvent>();
+  public readonly searchMember = output<FeeSearchEvent>();
   public readonly return = output();
 
   public formStatus: FormStatus;
-
-  public memberName = "";
 
   public form: FormGroup;
 
@@ -65,9 +64,17 @@ export class FeeCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+  public onSelectMember(member: PublicMember) {
+    if (!member) {
+      return;
+    }
+
+    this.form.get('member')?.setValue(member.number);
+  }
+
 }
 
-export class FeeCreationFormData {
+export class FeeCreationEvent {
   public month = new Date();
   public member = -1;
 }

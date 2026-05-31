@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { MemberCount, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Member } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,7 +11,7 @@ export class MemberService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<Page<Member>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<Page<PublicMember>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,

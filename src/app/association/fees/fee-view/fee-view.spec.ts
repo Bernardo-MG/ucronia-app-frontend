@@ -19,7 +19,7 @@ describe('FeeView', () => {
 
   const feeServiceMock = jasmine.createSpyObj<FeeService>(
     'FeeService',
-    ['update', 'pay', 'create', 'delete', 'getOne', 'getMembers']
+    ['update', 'pay', 'create', 'delete', 'getOne', 'searchMembers']
   );
 
   const feeReportMock = jasmine.createSpyObj<FeeSummaryService>(

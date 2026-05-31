@@ -3,15 +3,17 @@ import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
 
 @Component({
   selector: 'assoc-library-book-info',
-  imports: [SkeletonModule, LibraryBookLendings, DatePipe],
+  imports: [SkeletonModule, LibraryBookLendings, DetailField, DatePipe],
   templateUrl: './library-book-info.html'
 })
 export class LibraryBookInfo {
 
+  public readonly loading = input(false);
   public readonly book = input<FictionBook | GameBook>(new GameBook());
 
   public languages: Language[] = [];

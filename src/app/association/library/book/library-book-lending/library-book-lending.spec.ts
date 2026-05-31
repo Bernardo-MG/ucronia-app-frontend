@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { Member, MemberStatus } from '@ucronia/domain';
+import { PublicMember, MemberStatus } from '@ucronia/domain';
 import { of } from 'rxjs';
 import { LibraryBookLending } from './library-book-lending';
 
@@ -42,7 +42,7 @@ describe('LibraryBookLending', () => {
     });
 
     it('should go to step 2 when selecting a member', () => {
-      const member = new Member();
+      const member = new PublicMember();
       member.name.fullName = 'Test Member';
 
       component.onSelectMember(member);
@@ -64,7 +64,7 @@ describe('LibraryBookLending', () => {
     });
 
     it('should render member name using nameRenderer', () => {
-      const member = new Member();
+      const member = new PublicMember();
       member.name.fullName = 'Renderer Test';
 
       expect(component.nameRenderer(member)).toBe('Renderer Test');

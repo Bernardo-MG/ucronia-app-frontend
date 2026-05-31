@@ -57,8 +57,8 @@
   </p-panel>
 
   <!-- Dialogs -->
-  <p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
-    <assoc-library-book-info [book]="selectedData" />
+  <p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+    <assoc-library-book-info [loading]="loading" [book]="selectedData" />
   </p-dialog>
 
   @switch (view) {

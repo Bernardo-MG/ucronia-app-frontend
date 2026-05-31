@@ -1,78 +1,77 @@
-<ng-template #header>
-  <span class="text-lg font-semibold"># {{book().number}} {{book().title.fullTitle}}</span>
-</ng-template>
+<div class="ms-3 space-y-5">
 
-<!-- Number -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 font-medium"># {{book().number}}</div>
-</div>
-
-<!-- ISBN -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">ISBN</div>
-  <div class="col-span-9">{{book().isbn}}</div>
-</div>
-
-<!-- Title -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Título</div>
-  <div class="col-span-9">
-    <sup class="text-sm">{{book().title.supertitle}}</sup>
-    <span class="font-medium">{{book().title.title}}</span>
-    <sub class="text-sm">{{book().title.subtitle}}</sub>
+  <!-- Number -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-hashtag" name="Número" [value]="book().number" />
   </div>
-</div>
 
-<!-- Language -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Idioma</div>
-  <div class="col-span-9">{{language}}</div>
-</div>
+  <!-- ISBN -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-hashtag" name="ISBN" [value]="book().isbn" />
+  </div>
 
-<!-- Publish Date -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Fecha de publicación</div>
-  <div class="col-span-9">{{book().publishDate | date:'yyyy-MM-dd'}}</div>
-</div>
+  <!-- Title -->
+  <div class="flex gap-3 items-center">
+    <i class="pi pi-book"></i>
+    <div>
+      <p class="text-gray-500 text-sm">Título</p>
 
-<!-- Authors -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Autor</div>
-  <div class="col-span-9">{{authors}}</div>
-</div>
+      @if (loading()) {
+        <p-skeleton />
+      } @else {
+        <sup class="text-sm">{{book().title.supertitle}}</sup>
+        <span class="font-medium">{{book().title.title}}</span>
+        <sub class="text-sm">{{book().title.subtitle}}</sub>
+      }
+    </div>
+  </div>
 
-<!-- Publishers -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Editor</div>
-  <div class="col-span-9">{{publishers}}</div>
-</div>
+  <!-- Language -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-flag" name="Idioma" [value]="language" />
+  </div>
 
-@if(bookType) {
+  <!-- Publish Date -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de publicación"
+      [value]="book().publishDate | date:'yyyy-MM-dd'" />
+  </div>
+
+  <!-- Authors -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Autores" [value]="authors" />
+  </div>
+
+  <!-- Publishers -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Editores" [value]="publishers" />
+  </div>
+
   <!-- Book Type -->
-  <div class="grid grid-cols-12 gap-4 py-1">
-    <div class="col-span-3 text-blue-600 font-semibold">Tipo</div>
-    <div class="col-span-9">{{bookType.name}}</div>
-  </div>
-}
+  @if(bookType) {
+    <div>
+      <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Tipo" [value]="bookType.name" />
+    </div>
+  }
 
-@if(gameSystem) {
   <!-- Game System -->
-  <div class="grid grid-cols-12 gap-4 py-1">
-    <div class="col-span-3 text-blue-600 font-semibold">Sistema</div>
-    <div class="col-span-9">{{gameSystem.name}}</div>
+  @if(gameSystem) {
+    <div>
+      <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Sistema" [value]="gameSystem.name" />
+    </div>
+  }
+
+  <!-- Donation Date -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de donación"
+      [value]="book().donation?.date | date:'yyyy-MM-dd'" />
   </div>
-}
 
-<!-- Donation Date -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Fecha de donación</div>
-  <div class="col-span-9">{{book().donation?.date | date:'yyyy-MM-dd'}}</div>
-</div>
+  <!-- Donors -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Donante" [value]="donors" />
+  </div>
 
-<!-- Donors -->
-<div class="grid grid-cols-12 gap-4 py-1">
-  <div class="col-span-3 text-blue-600 font-semibold">Donante</div>
-  <div class="col-span-9">{{donors}}</div>
 </div>
 
 <!-- Lendings -->

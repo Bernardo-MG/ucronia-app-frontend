@@ -1,12 +1,36 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Contact -->
-  <h2>{{fullname}}</h2>
+  <div class="mb-4">
+    <!-- Member -->
+    <label class="font-semibold mb-2 block">Socio</label>
+    <assoc-fee-member-search [members]="members()" (selectMember)="onSelectMember($event)"
+      (searchMember)="searchMember.emit($event)" />
+    <div class="mb-2">
+      @if (isFieldInvalid('member')) {
+        <p-message severity="error" size="small" variant="simple">
+          Seleccione un socio válido
+        </p-message>
+      }
+    </div>
+  </div>
+
   <!-- Payment date -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <p-datepicker id="paymentDateInput" formControlName="paymentDate" [maxDate]="today" [invalid]="isFieldInvalid('paymentDate')"
-      dateFormat="yy-mm-dd" appendTo="body" />
-    <label for="paymentDateInput">Pago</label>
-  </p-floatlabel>
+  <div class="mb-2">
+    <p-inputgroup>
+      <p-inputgroup-addon>
+        <i class="pi pi-euro"></i>
+      </p-inputgroup-addon>
+      <p-floatlabel variant="in" class="d-flex">
+        <p-datepicker id="paymentDateInput" formControlName="paymentDate" [maxDate]="today"
+          [invalid]="isFieldInvalid('paymentDate')" dateFormat="yy-mm-dd" appendTo="body" />
+        <label for="paymentDateInput">Pago</label>
+      </p-floatlabel>
+    </p-inputgroup>
+    @for (failure of failures().getFailures('month'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
+    }
+  </div>
   <div class="mb-2">
     @for (failure of failures().getFailures('paymentDate'); track failure) {
       <p-message severity="error" size="small" variant="simple">
@@ -14,17 +38,23 @@
       </p-message>
     }
   </div>
+
   <!-- Fees -->
   <h3>Cuotas</h3>
   <!-- Each fee -->
   @for (date of months.controls; track date; let i = $index) {
     <div class="flex items-center w-full mb-2">
       <div>
-        <p-floatlabel variant="in" class="w-full">
-          <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')" view="month" dateFormat="yy-mm"
-            (onSelect)="onMonthSelect($event, i)" appendTo="body" />
-          <label [for]="'monthYearInput_' + i">Mes</label>
-        </p-floatlabel>
+        <p-inputgroup>
+          <p-inputgroup-addon>
+            <i class="pi pi-calendar"></i>
+          </p-inputgroup-addon>
+          <p-floatlabel variant="in" class="w-full">
+            <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')" view="month"
+              dateFormat="yy-mm" (onSelect)="onMonthSelect($event, i)" appendTo="body" />
+            <label [for]="'monthYearInput_' + i">Mes</label>
+          </p-floatlabel>
+        </p-inputgroup>
       </div>
       <div class="ml-2">
         <p-button icon="pi pi-trash" (click)="removeDate(i)" [disabled]="!formStatus.formEnabled" aria-label="Eliminar mes"

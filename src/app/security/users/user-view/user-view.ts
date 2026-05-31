@@ -3,7 +3,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UserUpdate } from '@bernardo-mg/security';
-import { Member } from '@ucronia/domain';
+import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -13,13 +13,13 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
-import { UserMemberEditor } from '../user-member-editor/user-member-editor';
+import { UserMemberEditorForm } from '../user-member-editor-form/user-member-editor-form';
 import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
 import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditor, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -34,7 +34,7 @@ export class UserView implements OnInit {
   public data = new Page<User>();
 
   public selectedData = new User();
-  public member = new Member();
+  public member = new PublicMember();
 
   /**
    * Loading flag.
@@ -51,7 +51,8 @@ export class UserView implements OnInit {
 
   public roleSelection: Role[] = [];
 
-  public availableMembers: Member[] = [];
+  public availableMembers: PublicMember[] = [];
+  public members: PublicMember[] = [];
 
   constructor() {
     const authService = inject(AuthService);
@@ -106,7 +107,7 @@ export class UserView implements OnInit {
     );
   }
 
-  public onAssignMember(member: Member): void {
+  public onAssignMember(member: PublicMember): void {
     this.call(
       () => this.service.assignProfile(this.selectedData.username, member.number),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
@@ -165,6 +166,13 @@ export class UserView implements OnInit {
     }
     this.view = view;
     this.editing = true;
+  }
+
+  public onSearchMembers(event: { query: string }) {
+    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+      .subscribe(members => {
+        this.members = members;
+      });
   }
 
   public load(page: number | undefined = undefined) {

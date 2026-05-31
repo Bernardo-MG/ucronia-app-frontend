@@ -1,7 +1,7 @@
 import { ProfileName } from "@ucronia/domain";
 import { ProfilePatchChannel } from "../profile/profile-patch";
 
-export class MemberProfilePatch {
+export class MemberPatch {
   public identifier?: string;
   public feeType = 0;
   public name?: ProfileName;

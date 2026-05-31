@@ -1,9 +1,9 @@
 @if(member().active) {
   @if(member().renew) {
-    <p-tag value="Activo" severity="success" badgeSize="small" />
+    <p-tag icon="pi pi-check" value="Activo" severity="success" badgeSize="small" />
   } @else {
-    <p-tag value="No renueva" severity="warn" badgeSize="small" />
+    <p-tag icon="pi pi-replay" value="No renueva" severity="warn" badgeSize="small" />
   }
 } @else {
-  <p-tag value="Baja" severity="danger" badgeSize="small" />
+  <p-tag icon="pi pi-check" value="Baja" severity="danger" badgeSize="small" />
 }

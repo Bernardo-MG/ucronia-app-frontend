@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { Member } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -14,7 +14,7 @@ import { MemberRenewTag } from '../member-renew-tag/member-renew-tag';
 export class MemberList {
 
   public readonly loading = input(false);
-  public readonly members = input<Member[]>([]);
+  public readonly members = input<PublicMember[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
