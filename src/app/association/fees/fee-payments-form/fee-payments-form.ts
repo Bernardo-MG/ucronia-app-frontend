@@ -3,14 +3,13 @@ import { Component, Input, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { FeePayments, Member, MemberStatus } from '@ucronia/domain';
+import { FeePayments, Member } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { FeeService } from '../fee-service';
 
 @Component({
   selector: 'assoc-fee-payments-form',
@@ -19,11 +18,13 @@ import { FeeService } from '../fee-service';
 })
 export class FeePaymentsForm {
 
+  private fb = inject(FormBuilder);
+
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly members = input<Member[]>([]);
 
   public selectedMember?: Member;
-  public suggestions: Array<Member> = [];
 
   @Input() public set member(value: Member) {
     if (value) {
@@ -31,23 +32,16 @@ export class FeePaymentsForm {
       this.form.get('member')?.setValue(value.number);
       this.months.clear();
       this.addDate();
-      this.fullname = value.name.fullName;
     }
   }
 
   public readonly save = output<FeePayments>();
+  public readonly search = output<FeeSearch>();
   public readonly return = output();
-
-  private fb = inject(FormBuilder);
-  private readonly feeService = inject(FeeService);
 
   public formStatus: FormStatus;
 
-  public memberName = "";
-
   public form: FormGroup;
-
-  public fullname = "";
 
   public today = new Date();
 
@@ -65,31 +59,13 @@ export class FeePaymentsForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public searchMembers(event: { query: string }) {
-    const query = event.query?.trim();
-    if (!query) {
-      this.suggestions = [];
-      return;
-    }
-
-    this.feeService.searchMembers(query, MemberStatus.Active)
-      .subscribe(members => {
-        this.suggestions = members.map(member => ({
-          ...member,
-          fullName: member.name.fullName
-        }));
-      });
-  }
-
   public onSelectMember(member: Member) {
     if (!member) {
       return;
     }
 
     this.selectedMember = member;
-    this.memberName = member.name.fullName;
     this.form.get('member')?.setValue(member.number);
-    this.fullname = member.name.fullName;
 
     if (this.months.length === 0) {
       this.addDate();
@@ -131,4 +107,8 @@ export class FeePaymentsForm {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class FeeSearch {
+  public query: string = '';
 }

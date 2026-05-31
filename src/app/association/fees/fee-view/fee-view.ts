@@ -57,6 +57,7 @@ export class FeeView implements OnInit {
   public selectedData = new Fee();
   public summary = new FeeSummary();
   public selectedMember = new Member();
+  public members: Member[] = [];
 
   public failures = new FailureStore();
 
@@ -159,6 +160,19 @@ export class FeeView implements OnInit {
 
   public onSelectMember(member: any) {
     this.selectedMember = (member as Member);
+  }
+
+  public onSearchMembers(event: { query: string }) {
+    const query = event.query?.trim();
+    if (!query) {
+      this.members = [];
+      return;
+    }
+
+    this.service.searchMembers(query, MemberStatus.Active)
+      .subscribe(members => {
+        this.members = members;
+      });
   }
 
   public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
