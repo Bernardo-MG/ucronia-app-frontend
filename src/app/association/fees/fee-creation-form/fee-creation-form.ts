@@ -27,7 +27,7 @@ export class FeeCreationForm implements OnChanges {
   }
 
   public readonly save = output<FeeCreationFormData>();
-  public readonly search = output<FeeSearch>();
+  public readonly searchMember = output<FeeSearch>();
   public readonly return = output();
 
   public selectedMember?: Member;

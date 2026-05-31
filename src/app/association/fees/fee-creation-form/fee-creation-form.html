@@ -4,7 +4,7 @@
     <label class="font-semibold mb-2 block">Socio</label>
     <p-autocomplete name="memberSearch" [(ngModel)]="selectedMember" [suggestions]="members()"
       optionLabel="name.fullName" dataKey="number" [forceSelection]="true" placeholder="Buscar socio..."
-      (completeMethod)="search.emit({ query: $event.query })" (onSelect)="onSelectMember($event.value)">
+      (completeMethod)="searchMember.emit({ query: $event.query })" (onSelect)="onSelectMember($event.value)">
       <ng-template let-item pTemplate="item">
         <span>{{ item.name.fullName }}</span>
       </ng-template>

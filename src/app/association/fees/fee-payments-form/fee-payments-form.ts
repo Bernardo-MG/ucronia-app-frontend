@@ -34,7 +34,7 @@ export class FeePaymentsForm {
   }
 
   public readonly save = output<FeePayments>();
-  public readonly search = output<FeeSearch>();
+  public readonly searchMember = output<FeeSearch>();
   public readonly return = output();
 
   public selectedMember?: Member;
