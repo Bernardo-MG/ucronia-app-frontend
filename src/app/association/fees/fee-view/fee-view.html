@@ -63,10 +63,10 @@
     }
 
     @case('edition') {
-    <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
-      <assoc-fee-edition-form [loading]="loadingDetail" [data]="selectedData" [failures]="failures"
-        (save)="onUpdate($event)" />
-    </p-dialog>
+      <p-dialog header="Editar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
+        <assoc-fee-edition-form [loading]="loadingDetail" [data]="selectedData" [failures]="failures"
+          (save)="onUpdate($event)" />
+      </p-dialog>
     }
 
   }
