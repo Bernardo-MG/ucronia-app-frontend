@@ -1,45 +1,33 @@
 <p-card>
-  <!-- Username -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">Nombre de usuario</div>
-    <div class="col-sm-9">
-      @if (loading) {
-        <p-skeleton class="mb-2" />
-      } @else {
-        {{account.username}}
-      }
+
+  <div class="ms-3 space-y-5">
+
+    <!-- Username -->
+    <div>
+      <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre de usuario" [value]="account.username" />
     </div>
-  </div>
-  <!-- Name -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">Nombre</div>
-    <div class="col-sm-9">
-      @if (loading) {
-        <p-skeleton class="mb-2" />
-      } @else {
-        {{account.name}}
-      }
+
+    <!-- Name -->
+    <div>
+      <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="account.name" />
     </div>
-  </div>
-  <!-- Email -->
-  <div class="row">
-    <div class="col-sm-3 text-primary">E-mail</div>
-    <div class="col-sm-9">
-      @if (loading) {
-        <p-skeleton class="mb-2" />
-      } @else {
-        {{account.email}}
-      }
+
+    <!-- Email -->
+    <div>
+      <ui-detail-field [loading]="loading" icon="pi pi-envelope" name="E-mail" [value]="account.email" />
     </div>
+
   </div>
+
 </p-card>
+
 @if (account.profile) {
-<article class="p-4">
-  <header>
-    <h2 class="border-bottom">Socio</h2>
-  </header>
-  <p-card>
-    <account-profile-details [data]="profile" />
-  </p-card>
-</article>
+  <article class="p-4">
+    <header>
+      <h2 class="border-bottom">Socio</h2>
+    </header>
+    <p-card>
+      <account-profile-details [data]="profile" />
+    </p-card>
+  </article>
 }
