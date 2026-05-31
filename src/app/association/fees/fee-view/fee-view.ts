@@ -56,7 +56,6 @@ export class FeeView implements OnInit {
 
   public selectedData = new Fee();
   public summary = new FeeSummary();
-  public selectedMember = new Member();
   public members: Member[] = [];
 
   public failures = new FailureStore();
@@ -156,10 +155,6 @@ export class FeeView implements OnInit {
     this.view = view;
     this.showing = false;
     this.editing = true;
-  }
-
-  public onSelectMember(member: any) {
-    this.selectedMember = (member as Member);
   }
 
   public onSearchMembers(event: { query: string }) {
