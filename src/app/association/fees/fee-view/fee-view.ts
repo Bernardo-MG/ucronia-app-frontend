@@ -14,7 +14,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
-import { FeeCreationStepper } from '../fee-creation-stepper/fee-creation-stepper';
+import { FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
 import { FeePaymentsForm } from '../fee-payments-form/fee-payments-form';
@@ -23,7 +23,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsForm, SummaryCard],
+  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm,  FeeDetails, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {

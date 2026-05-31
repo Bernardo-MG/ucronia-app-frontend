@@ -1,6 +1,22 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Member -->
-  <h2>{{memberName}}</h2>
+  <div class="mb-4">
+    <!-- Member -->
+    <label class="font-semibold mb-2 block">Socio</label>
+    <p-autocomplete name="memberSearch" [(ngModel)]="selectedMember" [suggestions]="members()"
+      optionLabel="name.fullName" dataKey="number" [forceSelection]="true" placeholder="Buscar socio..."
+      (completeMethod)="search.emit({ query: $event.query })" (onSelect)="onSelectMember($event.value)">
+      <ng-template let-item pTemplate="item">
+        <span>{{ item.name.fullName }}</span>
+      </ng-template>
+    </p-autocomplete>
+    <div class="mb-2">
+      @if (isFieldInvalid('member')) {
+      <p-message severity="error" size="small" variant="simple">
+        Seleccione un socio válido
+      </p-message>
+      }
+    </div>
+  </div>
   <!-- Month -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="monthInput" formControlName="month" [invalid]="isFieldInvalid('month')" view="month"
@@ -9,9 +25,9 @@
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('month'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{failure.message}}
-    </p-message>
+      <p-message severity="error" size="small" variant="simple">
+        {{failure.message}}
+      </p-message>
     }
   </div>
 

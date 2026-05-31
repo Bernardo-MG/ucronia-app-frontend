@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Member } from '@ucronia/domain';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -12,25 +13,26 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule],
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly members = input<Member[]>([]);
 
   @Input() public set member(value: Member) {
     this.form.get('member')?.setValue(value.number);
-    this.memberName = value.name.fullName;
   }
 
   public readonly save = output<FeeCreationFormData>();
+  public readonly search = output<FeeSearch>();
   public readonly return = output();
 
-  public formStatus: FormStatus;
+  public selectedMember?: Member;
 
-  public memberName = "";
+  public formStatus: FormStatus;
 
   public form: FormGroup;
 
@@ -65,9 +67,22 @@ export class FeeCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+  public onSelectMember(member: Member) {
+    if (!member) {
+      return;
+    }
+
+    this.selectedMember = member;
+    this.form.get('member')?.setValue(member.number);
+  }
+
 }
 
 export class FeeCreationFormData {
   public month = new Date();
   public member = -1;
+}
+
+export class FeeSearch {
+  public query: string = '';
 }

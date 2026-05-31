@@ -24,8 +24,6 @@ export class FeePaymentsForm {
   public readonly failures = input(new FailureStore());
   public readonly members = input<Member[]>([]);
 
-  public selectedMember?: Member;
-
   @Input() public set member(value: Member) {
     if (value) {
       this.selectedMember = value;
@@ -38,6 +36,8 @@ export class FeePaymentsForm {
   public readonly save = output<FeePayments>();
   public readonly search = output<FeeSearch>();
   public readonly return = output();
+
+  public selectedMember?: Member;
 
   public formStatus: FormStatus;
 
