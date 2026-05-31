@@ -22,8 +22,8 @@ export class FeePaymentsForm {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
-  public selectedMember?: Member & { fullName: string };
-  public suggestions: Array<Member & { fullName: string }> = [];
+  public selectedMember?: Member;
+  public suggestions: Array<Member> = [];
 
   @Input() public set member(value: Member) {
     if (value) {

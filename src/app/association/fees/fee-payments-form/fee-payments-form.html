@@ -5,9 +5,11 @@
   <div class="mb-4">
     <label class="font-semibold mb-2 block">Socio</label>
     <p-autocomplete
+      name="memberSearch"
       [(ngModel)]="selectedMember"
+      [ngModelOptions]="{ standalone: true }"
       [suggestions]="suggestions"
-      field="fullName"
+      field="name.fullName"
       dataKey="number"
       [dropdown]="true"
       [forceSelection]="true"
@@ -17,7 +19,7 @@
       [inputStyle]="{ width: '100%' }"
     >
       <ng-template let-member pTemplate="item">
-        {{ member.fullName }}
+        {{ member.name.fullName }}
       </ng-template>
     </p-autocomplete>
     <div class="mb-2">
