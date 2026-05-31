@@ -7,7 +7,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-transaction-info',
-  imports: [SkeletonModule, DetailField,  DatePipe],
+  imports: [SkeletonModule, DetailField, DatePipe],
   templateUrl: './transaction-info.html'
 })
 export class TransactionInfo {
