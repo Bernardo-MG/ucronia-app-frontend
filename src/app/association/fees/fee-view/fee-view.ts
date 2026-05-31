@@ -169,10 +169,6 @@ export class FeeView implements OnInit {
       });
   }
 
-  public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
-    return this.service.getMembers(page, active);
-  }
-
   public loadCalendar(year: number) {
     this.loadingCalendar = true;
 

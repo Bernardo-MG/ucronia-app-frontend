@@ -44,18 +44,6 @@ export class FeeService {
       .pipe(map(page => page.content as Member[]));
   }
 
-  public getMembers(page: number | undefined, active: MemberStatus): Observable<Page<Member>> {
-    const sorting = new Sorting(
-      [
-        new SortingProperty('name.firstName'),
-        new SortingProperty('name.lastName'),
-        new SortingProperty('number')
-      ]
-    );
-
-    return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
-  }
-
   public getOneProfile(id: number): Observable<Profile> {
     return this.ucroniaClient.profile.get(id);
   }
