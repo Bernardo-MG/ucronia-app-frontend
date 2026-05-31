@@ -13,13 +13,13 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
-import { UserMemberEditor } from '../user-member-editor/user-member-editor';
+import { UserMemberEditorForm } from '../user-member-editor-form/user-member-editor-form';
 import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
 import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditor, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {

@@ -1,23 +1,21 @@
 
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Member } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { TableModule } from 'primeng/table';
 import { FormStatus } from 'projects/bernardo-mg/form/src/lib/status/form-status';
 import { FailureStore } from 'projects/bernardo-mg/request/src/lib/models/failure-store';
-import { EMPTY, Observable } from 'rxjs';
 import { UserMemberSearch, UserSearchEvent } from '../user-member-search/user-member-search';
 
 @Component({
-  selector: 'access-user-member-editor',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, TableModule, MessageModule, UserMemberSearch],
-  templateUrl: './user-member-editor.html'
+  selector: 'access-user-member-editor-form',
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, MessageModule, UserMemberSearch],
+  templateUrl: './user-member-editor-form.html'
 })
-export class UserMemberEditor implements OnChanges {
+export class UserMemberEditorForm implements OnChanges {
 
+  public readonly loading = input(false);
   public readonly member = input(new Member());
   public readonly members = input<Member[]>([]);
   public readonly failures = input(new FailureStore());
@@ -30,25 +28,42 @@ export class UserMemberEditor implements OnChanges {
   public formStatus: FormStatus;
   public form: FormGroup;
 
+  public selectedMember = new Member();
+
   constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      fullName: [{ value: '', disabled: true }]
+      fullName: [null, Validators.required]
     });
-    
+
     this.formStatus = new FormStatus(this.form);
   }
 
   public ngOnChanges({ member }: SimpleChanges): void {
     if (member) {
-      this.form.get('fullName')?.setValue(member.currentValue.name.fullName);
+      if (member.currentValue) {
+        this.selectedMember = member.currentValue;
+        this.form.get('fullName')?.setValue(member.currentValue.name.fullName);
+      } else {
+        this.selectedMember = new Member();
+        this.form.get('fullName')?.setValue(null);
+      }
     }
   }
 
   public onSelectMember(member: Member): void {
+    this.selectedMember = member;
     this.form.get('fullName')?.setValue(member.name.fullName);
-    this.assignMember.emit(member);
+    // TODO: this shouldn't be needed
+    this.form.markAsDirty();
+  }
+
+  public onSave(): void {
+    if (this.form.valid) {
+      // Valid form, can emit data
+      this.assignMember.emit(this.selectedMember);
+    }
   }
 
   public isFieldInvalid(property: string): boolean {

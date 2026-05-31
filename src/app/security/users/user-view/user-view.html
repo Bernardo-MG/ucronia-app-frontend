@@ -44,7 +44,7 @@
     }
     @case ('member') {
       <p-dialog header="Asignar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <access-user-member-editor [username]="selectedData.username" [selection]="availableMembers" [member]="member" [members]="members"
+        <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
           (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
       </p-dialog>
     }
