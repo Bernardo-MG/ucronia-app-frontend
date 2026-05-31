@@ -1,9 +1,12 @@
 <div class="p-4">
 
-  <p-card>
-    <app-my-fees-list  [loading]="loading"
-      [fees]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-      (changePage)="load($event)" />
-  </p-card>
+  @if(hasFees || loading) {
+    <p-card>
+      <app-my-fees-list [loading]="loading" [fees]="data.content" [rows]="data.size" [page]="data.page"
+        [totalRecords]="data.totalElements" (changePage)="load($event)" />
+    </p-card>
+  } @else {
+    <p class="text-center text-gray-500">No tienes un perfil de socio asignado</p>
+  }
 
 </div>
