@@ -1,6 +1,18 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Contact -->
-  <h2>{{fullname}}</h2>
+  <div class="mb-4">
+    <!-- Member -->
+    <label class="font-semibold mb-2 block">Socio</label>
+    <assoc-fee-member-search [members]="members()" (selectMember)="onSelectMember($event)"
+      (searchMember)="searchMember.emit($event)" />
+    <div class="mb-2">
+      @if (isFieldInvalid('member')) {
+        <p-message severity="error" size="small" variant="simple">
+          Seleccione un socio válido
+        </p-message>
+      }
+    </div>
+  </div>
+
   <!-- Payment date -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="paymentDateInput" formControlName="paymentDate" [maxDate]="today" [invalid]="isFieldInvalid('paymentDate')"
@@ -14,6 +26,7 @@
       </p-message>
     }
   </div>
+
   <!-- Fees -->
   <h3>Cuotas</h3>
   <!-- Each fee -->
