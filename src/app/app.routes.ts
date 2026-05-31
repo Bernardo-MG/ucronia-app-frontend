@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoggedInGuard, LoggedOutGuard, ResourceGuard } from '@bernardo-mg/authentication';
-import { associationRoutes } from './association/association.routes';
+// Route arrays will be lazy-loaded via `loadChildren` to avoid eager import
 
 export const routes: Routes = [
   {
@@ -19,106 +19,27 @@ export const routes: Routes = [
       {
         path: '',
         canActivateChild: [LoggedOutGuard],
-        children: [
-          {
-            path: 'login',
-            loadComponent: () => import('@bernardo-mg/login').then(m => m.LoginView)
-          },
-          {
-            path: 'password/reset',
-            children: [
-              {
-                path: '',
-                loadComponent: () => import('@bernardo-mg/login').then(m => m.PasswordResetRequestView)
-              },
-              {
-                path: ':token',
-                loadComponent: () => import('@bernardo-mg/login').then(m => m.PasswordResetView)
-              }
-            ]
-          },
-          {
-            path: 'users/activate/:token',
-            loadComponent: () =>
-              import('./access/user-activation/user-activation-view/user-activation-view')
-                .then(m => m.UserActivationView)
-          }
-        ]
+        loadChildren: () => import('./access/access.routes').then(m => m.accessRoutes)
       },
       {
         path: '',
         canActivateChild: [LoggedInGuard],
         children: [
           {
-            path: 'account',
-            loadComponent: () =>
-              import('./account/account-layout/account-layout')
-                .then(m => m.AccountLayout),
-            children: [
-              { path: '', redirectTo: 'profile', pathMatch: 'full' },
-              {
-                path: 'profile',
-                loadComponent: () =>
-                  import('./account/account-profile-view/account-profile-view')
-                    .then(m => m.AccountProfileView)
-              },
-              {
-                path: 'password',
-                loadComponent: () =>
-                  import('./account/account-password-change-view/account-password-change-view')
-                    .then(m => m.AccountPasswordChangeView)
-              }
-            ]
+            path: '',
+            loadChildren: () => import('./account/account.routes').then(m => m.accountRoutes)
           },
           {
             path: 'association',
-            children: associationRoutes
-          },
-
-          {
-            // Security
-            path: 'security',
-            canActivate: [LoggedInGuard],
-            loadComponent: () => import('./security/layout/security-layout/security-layout').then(m => m.SecurityLayout),
-            children: [
-              {
-                // Root
-                path: '',
-                redirectTo: 'users',
-                pathMatch: 'full'
-              },
-              {
-                // Roles
-                path: 'roles',
-                canActivate: [ResourceGuard("role", "view")],
-                loadComponent: () => import('./security/roles/role-view/role-view').then(m => m.RoleView)
-              },
-              {
-                // Users
-                path: 'users',
-                canActivate: [ResourceGuard("user", "view")],
-                loadComponent: () => import('./security/users/user-view/user-view').then(m => m.UserView)
-              },
-              {
-                // User tokens
-                path: 'user-tokens',
-                canActivate: [ResourceGuard("user_token", "view")],
-                loadComponent: () => import('./security/user-tokens/user-token-view/user-token-view').then(m => m.UserTokenView)
-              },
-              {
-                // Security audit
-                path: 'audit',
-                canActivate: [ResourceGuard("user", "view")],
-                loadComponent: () => import('./security/audit/audit-view/audit-view').then(m => m.AuditView)
-              }
-            ]
+            loadChildren: () => import('./association/association.routes').then(m => m.associationRoutes)
           },
           {
-            path: 'settings',
-            canActivate: [ResourceGuard('association_settings', 'view')],
-            loadComponent: () =>
-              import('./settings/settings-view/settings-view')
-                .then(m => m.SettingsView)
+            path: '',
+            loadChildren: () => import('./security/security.routes').then(m => m.securityRoutes)
+          },
+          {
+            path: '',
+            loadChildren: () => import('./settings/settings.routes').then(m => m.settingsRoutes)
           }
         ]
       }
