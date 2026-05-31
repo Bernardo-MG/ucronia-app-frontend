@@ -60,8 +60,7 @@
 
     @case('pay') {
       <p-dialog header="Pagar cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }" class="rounded-lg">
-        <assoc-fee-payments-stepper [loading]="loadingDetail" [failures]="failures" [member]="selectedMember"
-          [getMemberSelection]="getMembers.bind(this)" (selectMember)="onSelectMember($event)" (save)="onPay($event)" />
+        <assoc-fee-payments-form [loading]="loadingDetail" [failures]="failures" (save)="onPay($event)" />
       </p-dialog>
     }
 

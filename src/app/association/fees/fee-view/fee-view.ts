@@ -17,13 +17,13 @@ import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationStepper } from '../fee-creation-stepper/fee-creation-stepper';
 import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionForm, FeeEditionFormData } from '../fee-edition-form/fee-edition-form';
-import { FeePaymentsStepper } from '../fee-payments-stepper/fee-payments-stepper';
+import { FeePaymentsForm } from '../fee-payments-form/fee-payments-form';
 import { FeeService } from '../fee-service';
 import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsStepper, SummaryCard],
+  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeeCreationStepper, FeePaymentsForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
