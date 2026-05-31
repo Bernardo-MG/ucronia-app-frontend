@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { MemberCount } from '@ucronia/api';
-import { Member } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { MemberService } from '../member-service';
@@ -19,7 +19,7 @@ describe('MemberView', () => {
 
   beforeEach(async () => {
     memberServiceMock.getAll.and.returnValue(
-      of(new Page<Member>())
+      of(new Page<PublicMember>())
     );
     memberServiceMock.getSummary.and.returnValue(
       of(new MemberCount())

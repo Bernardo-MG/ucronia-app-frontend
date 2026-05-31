@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { GuestPatch, MemberProfilePatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
-import { Guest, Member, MemberProfile, MemberProfileFeeType, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
+import { GuestPatch, MemberPatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
+import { Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { ProfileDetails } from './model/profile-info';
@@ -151,7 +151,7 @@ export class DirectoryService {
       );
   }
 
-  private convertToMember(number: number, feeType: number): Observable<Member> {
+  private convertToMember(number: number, feeType: number): Observable<PublicMember> {
     return this.ucroniaClient.profile.transform.toMember(number, feeType)
       .pipe(
         tap(() => {
@@ -206,9 +206,9 @@ export class DirectoryService {
     }
 
     if (data.types.includes("member")) {
-      const member: MemberProfile = {
+      const member: Member = {
         ...data,
-        feeType: data.feeType ? data.feeType : new MemberProfileFeeType(),
+        feeType: data.feeType ? data.feeType : new MemberFeeType(),
         active: data.active ? true : false,
         renew: data.renew ? true : false
       };
@@ -277,8 +277,8 @@ export class DirectoryService {
     return this.ucroniaClient.sponsor.patch(data.number, patch);
   }
 
-  private updateMember(data: MemberProfile): Observable<MemberProfile> {
-    const patch: MemberProfilePatch = {
+  private updateMember(data: Member): Observable<Member> {
+    const patch: MemberPatch = {
       ...data,
       feeType: data.feeType.number,
       contactChannels: data.contactChannels.map(c => {

@@ -3,7 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { Member } from 'projects/ucronia/domain/src/lib/members/member';
+import { PublicMember } from 'projects/ucronia/domain/src/lib/members/public-member';
 
 @Component({
   selector: 'assoc-fee-member-search',
@@ -12,10 +12,10 @@ import { Member } from 'projects/ucronia/domain/src/lib/members/member';
 })
 export class FeeMemberSearch {
   
-  public readonly members = input<Member[]>([]);
+  public readonly members = input<PublicMember[]>([]);
   
   public readonly searchMember = output<FeeSearchEvent>();
-  public readonly selectMember = output<Member>();
+  public readonly selectMember = output<PublicMember>();
 
 }
 

@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
-import { Fee, FeeSummary, Member, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -55,7 +55,7 @@ export class FeeView implements OnInit {
 
   public selectedData = new Fee();
   public summary = new FeeSummary();
-  public members: Member[] = [];
+  public members: PublicMember[] = [];
 
   public failures = new FailureStore();
 

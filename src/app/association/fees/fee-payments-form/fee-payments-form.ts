@@ -3,7 +3,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Member } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
@@ -25,7 +25,7 @@ export class FeePaymentsForm {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
-  public readonly members = input<Member[]>([]);
+  public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
   public readonly searchMember = output<FeeSearchEvent>();
@@ -51,7 +51,7 @@ export class FeePaymentsForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onSelectMember(member: Member) {
+  public onSelectMember(member: PublicMember) {
     if (!member) {
       return;
     }

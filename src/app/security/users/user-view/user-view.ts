@@ -3,7 +3,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UserUpdate } from '@bernardo-mg/security';
-import { Member, MemberStatus } from '@ucronia/domain';
+import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -34,7 +34,7 @@ export class UserView implements OnInit {
   public data = new Page<User>();
 
   public selectedData = new User();
-  public member = new Member();
+  public member = new PublicMember();
 
   /**
    * Loading flag.
@@ -51,8 +51,8 @@ export class UserView implements OnInit {
 
   public roleSelection: Role[] = [];
 
-  public availableMembers: Member[] = [];
-  public members: Member[] = [];
+  public availableMembers: PublicMember[] = [];
+  public members: PublicMember[] = [];
 
   constructor() {
     const authService = inject(AuthService);
@@ -107,7 +107,7 @@ export class UserView implements OnInit {
     );
   }
 
-  public onAssignMember(member: Member): void {
+  public onAssignMember(member: PublicMember): void {
     this.call(
       () => this.service.assignProfile(this.selectedData.username, member.number),
       () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })

@@ -3,7 +3,7 @@ import { Component, OnChanges, SimpleChanges, inject, input, output } from '@ang
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Member } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -23,7 +23,7 @@ export class FeeCreationForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
-  public readonly members = input<Member[]>([]);
+  public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
   public readonly searchMember = output<FeeSearchEvent>();
@@ -64,7 +64,7 @@ export class FeeCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
-  public onSelectMember(member: Member) {
+  public onSelectMember(member: PublicMember) {
     if (!member) {
       return;
     }

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
-import { Fee, FeePayments, Member, MemberStatus, Profile } from '@ucronia/domain';
+import { Fee, FeePayments, MemberStatus, Profile, PublicMember } from '@ucronia/domain';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -31,7 +31,7 @@ export class FeeService {
     return this.ucroniaClient.fee.get(member, month);
   }
 
-  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<Member[]> {
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -41,7 +41,7 @@ export class FeeService {
     );
 
     return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
-      .pipe(map(page => page.content as Member[]));
+      .pipe(map(page => page.content as PublicMember[]));
   }
 
   public getOneProfile(id: number): Observable<Profile> {
