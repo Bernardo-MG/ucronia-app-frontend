@@ -86,7 +86,11 @@ export class UserService {
   }
 
   public assignProfile(username: string, profile: number): Observable<Profile> {
-    return this.securityClient.user.profile.set(username, profile);
+    if (profile && profile > 0) {
+      return this.securityClient.user.profile.set(username, profile);
+    } else {
+      return this.securityClient.user.profile.delete(username);
+    }
   }
 
   public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<Member[]> {

@@ -59,6 +59,14 @@ export class UserMemberEditorForm implements OnChanges {
     this.form.markAsDirty();
   }
 
+  public onRemoveMember(): void {
+    this.selectedMember = new PublicMember();
+    this.form.get('fullName')?.setValue(null);
+    // TODO: this shouldn't be needed
+    this.form.markAsDirty();
+    this.assignMember.emit(this.selectedMember);
+  }
+
   public onSave(): void {
     if (this.form.valid) {
       // Valid form, can emit data
