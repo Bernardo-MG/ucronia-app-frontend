@@ -47,7 +47,7 @@ export class DirectoryView implements OnInit {
   public profiles = new Page<ProfileDetails>();
 
   public activeFilter = MemberStatus.Active;
-  public nameFilter = '';
+  public nameFilter: string | undefined = undefined;
 
   public selectedData = new ProfileDetails();
   public contactMethodSelection: ContactMethod[] = [];

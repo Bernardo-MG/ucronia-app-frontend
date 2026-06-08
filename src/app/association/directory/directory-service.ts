@@ -19,7 +19,7 @@ export class DirectoryService {
     page: number | undefined = undefined,
     sort: Sorting,
     active: MemberStatus,
-    name: string,
+    name: string | undefined = undefined,
     filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
   ): Observable<Page<ProfileDetails>> {
     const sorting = new Sorting(
