@@ -2,7 +2,7 @@
  * Public API Surface of domain
  */
 
-export * from './lib/activity/activity';
+export * from './lib/activities/activity';
 export * from './lib/fees/fee';
 export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
