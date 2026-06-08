@@ -115,7 +115,7 @@ export class AssociationLayout {
       items.push(
         {
           label: 'Actividad',
-          routerLink: '/association/activity',
+          routerLink: '/association/activities',
           icon: 'pi pi-calendar'
         });
     }
