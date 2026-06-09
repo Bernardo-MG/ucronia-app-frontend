@@ -194,6 +194,13 @@ export class DirectoryView implements OnInit {
       });
   }
 
+  private loadSummary() {
+    this.status.loadingSummary = true;
+    this.directorySummaryService.getSummary()
+      .pipe(finalize(() => this.status.loadingSummary = false))
+      .subscribe(r => this.summary = r);
+  }
+
   // PRIVATE METHODS
 
   private mutation(
@@ -220,13 +227,6 @@ export class DirectoryView implements OnInit {
           return throwError(() => error);
         }
       });
-  }
-
-  private loadSummary() {
-    this.status.loadingSummary = true;
-    this.directorySummaryService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(r => this.summary = r);
   }
 
 }
