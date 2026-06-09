@@ -1,9 +1,9 @@
 import { Component, inject, input, output } from '@angular/core';
-import { MemberStatusTag } from '@app/association/directory/member-status-tag/member-status-tag';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { MemberStatusTag } from '../member-status-tag/member-status-tag';
 import { FullProfile } from '../model/full-profile';
 
 @Component({

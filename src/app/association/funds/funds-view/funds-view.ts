@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
@@ -13,6 +12,7 @@ import { finalize, Observable, throwError } from 'rxjs';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
+import { TransactionCalendar } from '../transaction-calendar/transaction-calendar';
 import { TransactionDisplaySelector } from '../transaction-display-selector/transaction-display-selector';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { TransactionInfo } from '../transaction-info/transaction-info';

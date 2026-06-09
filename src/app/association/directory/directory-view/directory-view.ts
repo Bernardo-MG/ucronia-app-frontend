@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -22,6 +21,7 @@ import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
 import { FullProfile } from '../model/full-profile';
+import { ProfileCreationForm, ProfileCreationFormData } from '../profile-creation-form/profile-creation-form';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
