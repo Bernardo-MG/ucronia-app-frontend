@@ -70,6 +70,7 @@ export class RoleView implements OnInit {
   }
 
   public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;

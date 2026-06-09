@@ -55,6 +55,7 @@ export class MemberView implements OnInit {
 
   public onChangeDirection(sorting: SortingEvent) {
     if (sorting.field === 'fullName') {
+    // TODO: should receive the actual direction, not a number
       const direction = sorting.order === 1
         ? SortingDirection.Ascending
         : SortingDirection.Descending;

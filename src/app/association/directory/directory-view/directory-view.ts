@@ -53,7 +53,7 @@ export class DirectoryView implements OnInit {
   public failures = new FailureStore();
 
   public modalTitle = '';
-  
+
   private sort = new Sorting();
 
 
@@ -92,19 +92,14 @@ export class DirectoryView implements OnInit {
   }
 
   public onChangeDirection(sorting: SortingEvent) {
-    let direction;
+    // TODO: should receive the actual direction, not a number
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
     if (sorting.field === 'fullName') {
-      const direction = sorting.order === 1
-        ? SortingDirection.Ascending
-        : SortingDirection.Descending;
       this.sort.addField(new SortingProperty('name.firstName', direction));
       this.sort.addField(new SortingProperty('name.lastName', direction));
     } else {
-      if (sorting.order == 1) {
-        direction = SortingDirection.Ascending;
-      } else {
-        direction = SortingDirection.Descending;
-      }
       this.sort.addField(new SortingProperty(sorting.field, direction));
     }
 
