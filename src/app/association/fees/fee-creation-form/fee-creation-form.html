@@ -33,7 +33,6 @@
   </div>
 
   <div class="flex items-center w-full justify-between mb-3">
-    <p-button icon="pi pi-arrow-left" [rounded]="true" (onClick)="return.emit()" aria-label="Volver" />
     <!-- Save button -->
     <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
       [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
