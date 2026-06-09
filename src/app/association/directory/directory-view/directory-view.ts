@@ -40,44 +40,32 @@ export class DirectoryView implements OnInit {
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
-
-  public profiles = new Page<ProfileDetails>();
-
-  public activeFilter = MemberStatus.Active;
-  public nameFilter: string | undefined = undefined;
+  public readonly permissions: Permissions;
+  public readonly filter = new DirectoryFilter();
+  public readonly status = new Status();
 
   public selectedData = new ProfileDetails();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
+  public profiles = new Page<ProfileDetails>();
   public summary = new DirectorySummary();
-
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-  public loadingSummary = false;
-  public editing = false;
-  public creating = false;
-  public showing = false;
 
   public failures = new FailureStore();
 
   public modalTitle = '';
-
-  public selectedStatus: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
-
+  
   private sort = new Sorting();
+
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("profile", "create");
-    this.editable = authService.hasPermission("profile", "update");
-    this.deletable = authService.hasPermission("profile", "delete");
+    this.permissions = new Permissions(
+      authService.hasPermission("profile", "create"),
+      authService.hasPermission("profile", "update"),
+      authService.hasPermission("profile", "delete")
+    );
   }
 
   public ngOnInit(): void {
@@ -88,14 +76,14 @@ export class DirectoryView implements OnInit {
   // EVENT HANDLERS
 
   public onShowEdit(profile: ProfileDetails) {
-    this.loading = true;
-    this.editing = true;
+    this.status.loading = true;
+    this.status.editing = true;
     forkJoin({
       profile: this.directoryService.getOne(profile.number),
       contactMethodSelection: this.contactMethodService.getAllAvailable(),
       feeTypes: this.feeTypeService.getAllAvailable()
     })
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
         this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
@@ -104,7 +92,7 @@ export class DirectoryView implements OnInit {
   }
 
   public onChangeActiveFilter(active: MemberStatus) {
-    this.activeFilter = active;
+    this.filter.active = active;
     this.load();
   }
 
@@ -129,10 +117,10 @@ export class DirectoryView implements OnInit {
   }
 
   public onShowInfo(profile: ProfileDetails) {
-    this.loading = true;
-    this.showing = true;
+    this.status.loading = true;
+    this.status.showing = true;
     this.directoryService.getOne(profile.number)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(profile => this.selectedData = profile);
   }
 
@@ -180,27 +168,27 @@ export class DirectoryView implements OnInit {
   }
 
   public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
-    this.selectedStatus = status;
+    this.filter.type = status;
     this.load();
   }
 
   public onChangeMemberStatus(status: MemberStatus) {
-    this.activeFilter = status;
+    this.filter.active = status;
     this.load();
   }
 
   public onFilter(filter: string) {
-    this.nameFilter = filter;
+    this.filter.name = filter;
     this.load();
   }
 
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
-    this.loading = true;
+    this.status.loading = true;
 
-    this.directoryService.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
-      .pipe(finalize(() => this.loading = false))
+    this.directoryService.getAll(page, this.sort, this.filter.active, this.filter.name, this.filter.type)
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => {
         this.profiles = response;
       });
@@ -212,14 +200,14 @@ export class DirectoryView implements OnInit {
     observable: Observable<any>,
     onSuccess: () => void = () => { }
   ) {
-    this.loading = true;
+    this.status.loading = true;
     observable
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.editing = false;
-          this.creating = false;
+          this.status.editing = false;
+          this.status.creating = false;
 
           onSuccess();
         },
@@ -235,10 +223,45 @@ export class DirectoryView implements OnInit {
   }
 
   private loadSummary() {
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
     this.directorySummaryService.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(r => this.summary = r);
   }
+
+}
+
+class Permissions {
+  public readonly create: boolean;
+  public readonly edit: boolean;
+  public readonly delete: boolean;
+
+  constructor(
+    createable: boolean,
+    editable: boolean,
+    deletable: boolean
+  ) {
+    this.create = createable;
+    this.edit = editable;
+    this.delete = deletable;
+  }
+
+}
+
+class DirectoryFilter {
+
+  public active: MemberStatus = MemberStatus.Active;
+  public name: string | undefined = undefined;
+  public type: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
+
+}
+
+class Status {
+
+  public loading = false;
+  public loadingSummary = false;
+  public editing = false;
+  public creating = false;
+  public showing = false;
 
 }
