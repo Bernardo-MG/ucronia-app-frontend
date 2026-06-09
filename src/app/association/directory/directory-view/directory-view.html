@@ -17,7 +17,7 @@
 
   <!-- Buttons -->
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <assoc-profile-status-selector (filter)="onChangeStatusFilter($event)" />
+    <assoc-profile-status-selector (filter)="onChangeType($event)" />
 
     @if(filter.type === 'member') {
       <assoc-member-status-selector [status]="filter.status" (filter)="onChangeMemberStatus($event)" />

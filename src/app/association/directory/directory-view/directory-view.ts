@@ -91,6 +91,14 @@ export class DirectoryView implements OnInit {
       });
   }
 
+  public onShowInfo(profile: FullProfile) {
+    this.status.loading = true;
+    this.status.showing = true;
+    this.directoryService.getOne(profile.number)
+      .pipe(finalize(() => this.status.loading = false))
+      .subscribe(profile => this.selectedData = profile);
+  }
+
   public onChangeDirection(sorting: SortingEvent) {
     // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
@@ -104,14 +112,6 @@ export class DirectoryView implements OnInit {
     }
 
     this.load(this.profiles.page);
-  }
-
-  public onShowInfo(profile: FullProfile) {
-    this.status.loading = true;
-    this.status.showing = true;
-    this.directoryService.getOne(profile.number)
-      .pipe(finalize(() => this.status.loading = false))
-      .subscribe(profile => this.selectedData = profile);
   }
 
   public onCreate(toCreate: ProfileCreationFormData): void {
@@ -153,7 +153,7 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
+  public onChangeType(status: 'all' | 'member' | 'guest' | 'sponsor') {
     this.filter.type = status;
     this.load();
   }
