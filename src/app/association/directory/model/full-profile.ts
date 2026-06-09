@@ -1,36 +1,36 @@
-export class ProfileDetails {
+export class FullProfile {
   public number = -1;
   public identifier = '';
   public birthDate = new Date();
-  public name = new ProfileDetailsName();
-  public contactChannels: ProfileDetailsChannel[] = [];
+  public name = new FullProfileName();
+  public contactChannels: FullProfileChannel[] = [];
   public games?: Date[] = [];
   public years?: number[] = [];
   public types: string[] = [];
   public address = '';
   public comments = '';
-  public feeType? = new ProfileDetailsFeeType();
+  public feeType? = new FullProfileFeeType();
   public active? = false;
   public renew? = false;
 }
 
-export class ProfileDetailsChannel {
-  public method = new ProfileDetailsMethod();
+export class FullProfileChannel {
+  public method = new FullProfileContactMethod();
   public detail = '';
 }
 
-export class ProfileDetailsName {
+export class FullProfileName {
   public fullName = '';
   public firstName = '';
   public lastName = '';
 }
 
-export class ProfileDetailsMethod {
+export class FullProfileContactMethod {
   public number = -1;
   public name = '';
 }
 
-export class ProfileDetailsFeeType {
+export class FullProfileFeeType {
   public number = 0;
   public name = '';
   public amount = 0;

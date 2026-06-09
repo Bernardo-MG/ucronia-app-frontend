@@ -21,7 +21,7 @@ import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
-import { ProfileDetails } from '../model/profile-details';
+import { FullProfile } from '../model/full-profile';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
@@ -44,12 +44,12 @@ export class DirectoryView implements OnInit {
   public readonly editable;
   public readonly deletable;
 
-  public profiles = new Page<ProfileDetails>();
+  public profiles = new Page<FullProfile>();
 
   public activeFilter = MemberStatus.Active;
   public nameFilter: string | undefined = undefined;
 
-  public selectedData = new ProfileDetails();
+  public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
   public summary = new DirectorySummary();
@@ -87,7 +87,7 @@ export class DirectoryView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(profile: ProfileDetails) {
+  public onShowEdit(profile: FullProfile) {
     this.loading = true;
     this.editing = true;
     forkJoin({
@@ -128,7 +128,7 @@ export class DirectoryView implements OnInit {
     this.load(this.profiles.page);
   }
 
-  public onShowInfo(profile: ProfileDetails) {
+  public onShowInfo(profile: FullProfile) {
     this.loading = true;
     this.showing = true;
     this.directoryService.getOne(profile.number)
@@ -150,8 +150,8 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: ProfileDetails): void {
-    const updated: ProfileDetails = {
+  public onUpdate(toUpdate: FullProfile): void {
+    const updated: FullProfile = {
       ...this.selectedData,
       ...toUpdate,
       number: this.selectedData.number
