@@ -114,10 +114,6 @@ export class DirectoryView implements OnInit {
       .subscribe(profile => this.selectedData = profile);
   }
 
-  public onNameFilterChange(): void {
-    this.load();
-  }
-
   public onCreate(toCreate: ProfileCreationFormData): void {
     this.mutation(
       this.directoryService.create(toCreate as any),
