@@ -16,7 +16,7 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { ProfileDetails } from '../model/profile-info';
+import { ProfileDetails } from '../model/profile-details';
 
 @Component({
   selector: 'assoc-profile-info-edition-form',

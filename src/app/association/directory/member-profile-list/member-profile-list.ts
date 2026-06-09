@@ -4,7 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ProfileDetails } from '../model/profile-info';
+import { ProfileDetails } from '../model/profile-details';
 
 @Component({
   selector: 'assoc-member-profile-list',

@@ -10,7 +10,7 @@ import { DirectoryService } from '../directory-service';
 import { FeeTypeService } from '../fee-type-service';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 import { DirectorySummary } from '../model/directory-summary';
-import { ProfileDetails } from '../model/profile-info';
+import { ProfileDetails } from '../model/profile-details';
 import { DirectoryView } from './directory-view';
 
 describe('DirectoryView', () => {

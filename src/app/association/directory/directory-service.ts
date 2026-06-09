@@ -4,7 +4,7 @@ import { GuestPatch, MemberPatch, ProfileCreation, ProfilePatch, SponsorPatch, U
 import { Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
-import { ProfileDetails } from './model/profile-info';
+import { ProfileDetails } from './model/profile-details';
 
 @Injectable({
   providedIn: 'root'
