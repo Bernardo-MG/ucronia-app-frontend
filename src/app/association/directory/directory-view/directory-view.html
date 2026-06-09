@@ -20,7 +20,7 @@
     <assoc-profile-status-selector (filter)="onChangeStatusFilter($event)" />
 
     @if(filter.type === 'member') {
-      <assoc-member-status-selector [status]="filter.active" (filter)="onChangeMemberStatus($event)" />
+      <assoc-member-status-selector [status]="filter.status" (filter)="onChangeMemberStatus($event)" />
     }
 
     <ui-text-filter (filter)="onFilter($event)" />

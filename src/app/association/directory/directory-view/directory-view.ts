@@ -91,11 +91,6 @@ export class DirectoryView implements OnInit {
       });
   }
 
-  public onChangeActiveFilter(active: MemberStatus) {
-    this.filter.active = active;
-    this.load();
-  }
-
   public onChangeDirection(sorting: SortingEvent) {
     let direction;
     if (sorting.field === 'fullName') {
@@ -173,7 +168,7 @@ export class DirectoryView implements OnInit {
   }
 
   public onChangeMemberStatus(status: MemberStatus) {
-    this.filter.active = status;
+    this.filter.status = status;
     this.load();
   }
 
@@ -187,7 +182,7 @@ export class DirectoryView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.status.loading = true;
 
-    this.directoryService.getAll(page, this.sort, this.filter.active, this.filter.name, this.filter.type)
+    this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
       .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => {
         this.profiles = response;
@@ -250,7 +245,7 @@ class Permissions {
 
 class DirectoryFilter {
 
-  public active: MemberStatus = MemberStatus.Active;
+  public status: MemberStatus = MemberStatus.Active;
   public name: string | undefined = undefined;
   public type: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
 
