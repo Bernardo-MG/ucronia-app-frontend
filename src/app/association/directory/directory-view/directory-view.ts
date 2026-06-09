@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -21,7 +20,8 @@ import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
-import { ProfileDetails } from '../model/profile-info';
+import { FullProfile } from '../model/full-profile';
+import { ProfileCreationForm, ProfileCreationFormData } from '../profile-creation-form/profile-creation-form';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
@@ -44,10 +44,10 @@ export class DirectoryView implements OnInit {
   public readonly filter = new DirectoryFilter();
   public readonly status = new Status();
 
-  public selectedData = new ProfileDetails();
+  public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
-  public profiles = new Page<ProfileDetails>();
+  public profiles = new Page<FullProfile>();
   public summary = new DirectorySummary();
 
   public failures = new FailureStore();
@@ -75,7 +75,7 @@ export class DirectoryView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(profile: ProfileDetails) {
+  public onShowEdit(profile: FullProfile) {
     this.status.loading = true;
     this.status.editing = true;
     forkJoin({
@@ -116,7 +116,7 @@ export class DirectoryView implements OnInit {
     this.load(this.profiles.page);
   }
 
-  public onShowInfo(profile: ProfileDetails) {
+  public onShowInfo(profile: FullProfile) {
     this.status.loading = true;
     this.status.showing = true;
     this.directoryService.getOne(profile.number)
@@ -138,8 +138,8 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: ProfileDetails): void {
-    const updated: ProfileDetails = {
+  public onUpdate(toUpdate: FullProfile): void {
+    const updated: FullProfile = {
       ...this.selectedData,
       ...toUpdate,
       number: this.selectedData.number

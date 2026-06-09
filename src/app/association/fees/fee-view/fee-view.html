@@ -32,7 +32,7 @@
   <!-- Fee Info Dialog -->
   <p-dialog header="Cuota" [modal]="true" [(visible)]="showing" class="rounded-lg"
     contentStyleClass="p-4 space-y-4">
-    <assoc-fee-details [data]="selectedData" [loading]="loadingDetail" />
+    <assoc-fee-info [data]="selectedData" [loading]="loadingDetail" />
 
     <div class="flex space-x-2">
       <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"

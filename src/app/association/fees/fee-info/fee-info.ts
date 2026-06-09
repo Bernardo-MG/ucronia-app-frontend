@@ -6,11 +6,11 @@ import { Fee } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 
 @Component({
-  selector: 'assoc-fee-details',
+  selector: 'assoc-fee-info',
   imports: [CardModule, DetailField, StatusDetail, DatePipe],
-  templateUrl: './fee-details.html'
+  templateUrl: './fee-info.html'
 })
-export class FeeDetails {
+export class FeeInfo {
 
   public readonly loading = input(false);
   public readonly data = input(new Fee());

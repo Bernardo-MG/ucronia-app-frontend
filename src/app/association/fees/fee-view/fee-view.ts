@@ -14,7 +14,7 @@ import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
-import { FeeDetails } from '../fee-details/fee-details';
+import { FeeInfo } from '../fee-info/fee-info';
 import { FeeEditionEvent, FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeePaymentsForm, FeesPaymentEvent } from '../fee-payments-form/fee-payments-form';
 import { FeeService } from '../fee-service';
@@ -22,7 +22,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
+  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {

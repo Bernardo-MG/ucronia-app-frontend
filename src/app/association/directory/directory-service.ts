@@ -4,7 +4,7 @@ import { GuestPatch, MemberPatch, ProfileCreation, ProfilePatch, SponsorPatch, U
 import { Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
-import { ProfileDetails } from './model/profile-info';
+import { FullProfile } from './model/full-profile';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,7 @@ export class DirectoryService {
     active: MemberStatus,
     name: string | undefined = undefined,
     type: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
-  ): Observable<Page<ProfileDetails>> {
+  ): Observable<Page<FullProfile>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -64,7 +64,7 @@ export class DirectoryService {
       );
   }
 
-  public update(toUpdate: ProfileDetails, previousTypes: string[], newTypes: string[]): Observable<Profile> {
+  public update(toUpdate: FullProfile, previousTypes: string[], newTypes: string[]): Observable<Profile> {
 
     // Find added types
     const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
@@ -119,7 +119,7 @@ export class DirectoryService {
       );
   }
 
-  public getOne(number: number): Observable<ProfileDetails> {
+  public getOne(number: number): Observable<FullProfile> {
     return this.ucroniaClient.profile
       .get(number)
       .pipe(
@@ -193,7 +193,7 @@ export class DirectoryService {
       );
   }
 
-  private updateProfileInfo(data: ProfileDetails): Observable<Profile> {
+  private updateProfileInfo(data: FullProfile): Observable<Profile> {
     const update = this.updateProfile(data);
     const observables: Observable<any>[] = [update];
 
