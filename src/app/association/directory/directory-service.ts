@@ -22,9 +22,20 @@ export class DirectoryService {
     name: string | undefined = undefined,
     type: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
   ): Observable<Page<FullProfile>> {
+    const correctedProperties = sort.properties.map(p => {
+      if (p.property === 'name') {
+        return [
+          new SortingProperty('name.firstName', p.direction),
+          new SortingProperty('name.lastName', p.direction)
+        ];
+      } else {
+        return p;
+      }
+    }).flat();
+
     const sorting = new Sorting(
       mergeProperties(
-        sort.properties,
+        correctedProperties,
         [
           new SortingProperty('name.firstName'),
           new SortingProperty('name.lastName'),

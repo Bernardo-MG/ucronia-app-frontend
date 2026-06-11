@@ -104,12 +104,7 @@ export class DirectoryView implements OnInit {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
-    if (sorting.field === 'fullName') {
-      this.sort.addField(new SortingProperty('name.firstName', direction));
-      this.sort.addField(new SortingProperty('name.lastName', direction));
-    } else {
       this.sort.addField(new SortingProperty(sorting.field, direction));
-    }
 
     this.load(this.profiles.page);
   }
