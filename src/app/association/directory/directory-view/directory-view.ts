@@ -21,6 +21,7 @@ import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
 import { FullProfile } from '../model/full-profile';
+import { Profiletype } from '../model/profyle-type';
 import { ProfileCreationForm, ProfileCreationFormData } from '../profile-creation-form/profile-creation-form';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileInfo } from '../profile-info/profile-info';
@@ -56,6 +57,7 @@ export class DirectoryView implements OnInit {
 
   private sort = new Sorting();
 
+  protected readonly Profiletype = Profiletype;
 
   constructor() {
     const authService = inject(AuthService);
@@ -148,7 +150,7 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onChangeType(status: 'all' | 'member' | 'guest' | 'sponsor') {
+  public onChangeType(status: Profiletype) {
     this.filter.type = status;
     this.load();
   }
@@ -233,7 +235,7 @@ class DirectoryFilter {
 
   public status: MemberStatus = MemberStatus.Active;
   public name: string | undefined = undefined;
-  public type: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
+  public type: Profiletype = Profiletype.ALL;
 
 }
 
