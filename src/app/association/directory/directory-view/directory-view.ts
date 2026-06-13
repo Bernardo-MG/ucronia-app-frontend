@@ -46,13 +46,12 @@ export class DirectoryView implements OnInit {
     status: MemberStatus.Active,
     type: Profiletype.ALL
   };
-  public status: Status = {
+  public readonly status: Status = {
     loading: false,
-    loadingSummary: false,
-    editing: false,
-    creating: false,
-    showing: false
+    loadingSummary: false
   };
+  protected readonly Profiletype = Profiletype;
+  protected readonly Dialog = Dialog;
 
   public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
@@ -66,7 +65,7 @@ export class DirectoryView implements OnInit {
 
   private sort = new Sorting();
 
-  protected readonly Profiletype = Profiletype;
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
@@ -87,7 +86,7 @@ export class DirectoryView implements OnInit {
   // EVENT HANDLERS
 
   public onShowEdit(profile: FullProfile) {
-    this.status.editing = true;
+    this.dialog = Dialog.EDIT;
     this.withLoading(
       forkJoin({
         profile: this.directoryService.getOne(profile.number),
@@ -103,7 +102,7 @@ export class DirectoryView implements OnInit {
   }
 
   public onShowInfo(profile: FullProfile) {
-    this.status.showing = true;
+    this.dialog = Dialog.INFO;
     this.withLoading(
       this.directoryService.getOne(profile.number)
     )
@@ -194,10 +193,14 @@ export class DirectoryView implements OnInit {
 
   // DIALOGS
 
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.closeDialogs();
+    }
+  }
+
   private closeDialogs(): void {
-    this.status.editing = false;
-    this.status.creating = false;
-    this.status.showing = false;
+    this.dialog = Dialog.NONE;
   }
 
   // PRIVATE METHODS
@@ -249,9 +252,6 @@ interface Permissions {
 interface Status {
   loading: boolean;
   loadingSummary: boolean;
-  editing: boolean;
-  creating: boolean;
-  showing: boolean;
 }
 
 interface Filter {
@@ -260,3 +260,9 @@ interface Filter {
   type: Profiletype;
 }
 
+enum Dialog {
+  NONE = 'list',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create'
+}
