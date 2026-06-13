@@ -66,29 +66,29 @@
   <!-- Fee types -->
   <assoc-fee-type-list-inner-view />
 
-  @switch (dialog) {
-  
-    @case(Dialog.INFO) {
-      <!-- Profile details dialog -->
-      <p-dialog header="Perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-        <assoc-profile-info [data]="selectedData" [loading]="status.loading" />
-      </p-dialog>
-    }
+</div>
 
-    @case(Dialog.CREATE) {
-      <!-- Creation dialog -->
-      <p-dialog header="Crear perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '40rem' }">
-        <assoc-profile-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
-      </p-dialog>
-    }
+@switch (dialog) {
 
-    @case(Dialog.EDIT) {
-      <!-- Edition dialog -->
-      <p-dialog header="Editar perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-        <assoc-profile-info-edition-form [loading]="status.loading" [data]="selectedData" [feeTypes]="feeTypes"
-          [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
-      </p-dialog>
-    }
+  @case(Dialog.INFO) {
+    <!-- Profile details dialog -->
+    <p-dialog header="Perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+      <assoc-profile-info [data]="selectedData" [loading]="status.loading" />
+    </p-dialog>
   }
 
-</div>
+  @case(Dialog.CREATE) {
+    <!-- Creation dialog -->
+    <p-dialog header="Crear perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '40rem' }">
+      <assoc-profile-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+    </p-dialog>
+  }
+
+  @case(Dialog.EDIT) {
+    <!-- Edition dialog -->
+    <p-dialog header="Editar perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+      <assoc-profile-info-edition-form [loading]="status.loading" [data]="selectedData" [feeTypes]="feeTypes"
+        [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
+    </p-dialog>
+  }
+}

@@ -19,9 +19,8 @@ export class FeeTypeListInnerView implements OnInit {
 
   private readonly feeTypeService = inject(FeeTypeService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly permissions: Permissions;
+  protected readonly Dialog = Dialog;
 
   public selectedData = new FeeType();
   public feeTypes: FeeType[] = [];
@@ -31,18 +30,20 @@ export class FeeTypeListInnerView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public editing = false;
-  public creating = false;
 
   public failures = new FailureStore();
+
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("fee_type", "create");
-    this.editable = authService.hasPermission("fee_type", "update");
-    this.deletable = authService.hasPermission("fee_type", "delete");
+    this.permissions = {
+      create: authService.hasPermission("fee_type", "create"),
+      edit: authService.hasPermission("fee_type", "update"),
+      delete: authService.hasPermission("fee_type", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -53,7 +54,7 @@ export class FeeTypeListInnerView implements OnInit {
 
   public onShowEditFeeType(contactMethod: FeeType) {
     this.selectedData = contactMethod;
-    this.editing = true;
+    this.dialog = Dialog.EDIT;
   }
 
   public onCreateFeeType(toCreate: FeeType): void {
@@ -87,6 +88,14 @@ export class FeeTypeListInnerView implements OnInit {
       .subscribe(response => this.feeTypeData = response);
   }
 
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
   // PRIVATE METHODS
 
   private mutation(
@@ -99,20 +108,33 @@ export class FeeTypeListInnerView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.creating = false;
-          this.editing = false;
+          this.dialog = Dialog.NONE;
 
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create'
 }
