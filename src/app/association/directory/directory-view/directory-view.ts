@@ -42,7 +42,7 @@ export class DirectoryView implements OnInit {
   private readonly feeTypeService = inject(FeeTypeService);
 
   public readonly permissions: Permissions;
-  public readonly filter: DirectoryFilter = {
+  public readonly filter: Filter = {
     status: MemberStatus.Active,
     type: Profiletype.ALL
   };
@@ -246,12 +246,6 @@ interface Permissions {
   delete: boolean;
 }
 
-interface DirectoryFilter {
-  status: MemberStatus;
-  name?: string;
-  type: Profiletype;
-}
-
 interface Status {
   loading: boolean;
   loadingSummary: boolean;
@@ -259,3 +253,10 @@ interface Status {
   creating: boolean;
   showing: boolean;
 }
+
+interface Filter {
+  status: MemberStatus;
+  name?: string;
+  type: Profiletype;
+}
+
