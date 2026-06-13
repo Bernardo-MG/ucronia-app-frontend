@@ -20,7 +20,7 @@ export class FeeTypeListInnerView implements OnInit {
   private readonly feeTypeService = inject(FeeTypeService);
 
   public readonly permissions: Permissions;
-  protected readonly Dialog = Dialog;
+  public readonly Dialog = Dialog;
 
   public selectedData = new FeeType();
   public feeTypes: FeeType[] = [];

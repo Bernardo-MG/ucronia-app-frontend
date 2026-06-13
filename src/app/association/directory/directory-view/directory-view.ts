@@ -51,7 +51,7 @@ export class DirectoryView implements OnInit {
     loadingSummary: false
   };
   protected readonly Profiletype = Profiletype;
-  protected readonly Dialog = Dialog;
+  public readonly Dialog = Dialog;
 
   public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];

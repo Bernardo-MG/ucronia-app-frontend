@@ -20,7 +20,7 @@ export class ContactMethodListInnerView implements OnInit {
   private readonly contactMethodService = inject(ContactMethodService);
 
   public readonly permissions: Permissions;
-  protected readonly Dialog = Dialog;
+  public readonly Dialog = Dialog;
 
   public dialog = Dialog.NONE;
 
