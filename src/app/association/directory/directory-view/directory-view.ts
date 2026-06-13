@@ -195,12 +195,8 @@ export class DirectoryView implements OnInit {
 
   public onDialogVisibleChange(visible: boolean) {
     if (!visible) {
-      this.closeDialogs();
+      this.dialog = Dialog.NONE;
     }
-  }
-
-  private closeDialogs(): void {
-    this.dialog = Dialog.NONE;
   }
 
   // PRIVATE METHODS
@@ -215,7 +211,7 @@ export class DirectoryView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.closeDialogs();
+          this.dialog = Dialog.NONE;
 
           onSuccess?.();
         },
@@ -261,7 +257,7 @@ interface Filter {
 }
 
 enum Dialog {
-  NONE = 'list',
+  NONE = 'none',
   INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
