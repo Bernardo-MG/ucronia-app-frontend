@@ -8,8 +8,7 @@ import { Member, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { PanelModule } from 'primeng/panel';
-import { TablePageEvent } from 'primeng/table';
-import { finalize, Subject } from 'rxjs';
+import { finalize } from 'rxjs';
 import { MemberList } from '../member-list/member-list';
 import { MemberService } from '../member-service';
 
@@ -26,25 +25,26 @@ export class MemberView implements OnInit {
 
   public selectedData = new PublicMember();
   public memberContact = new Member();
-  private MemberCount = new MemberCount();
+  private memberCount = new MemberCount();
 
   public get active() {
-    return this.MemberCount.active;
+    return this.memberCount.active;
   }
 
   public get notRenewing() {
-    return this.MemberCount.active - this.MemberCount.renew;
+    return this.memberCount.active - this.memberCount.renew;
   }
 
   private sort = new Sorting();
 
-  public loading = false;
-  public loadingSummary = false;
+  public readonly status: Status = {
+    loading: false,
+    loadingSummary: false
+  };
 
   public failures = new FailureStore();
 
-  public nameFilterSubject = new Subject<string>();
-  public nameFilter = '';
+  private nameFilter = '';
 
   public ngOnInit(): void {
     this.load();
@@ -55,7 +55,7 @@ export class MemberView implements OnInit {
 
   public onChangeDirection(sorting: SortingEvent) {
     if (sorting.field === 'fullName') {
-    // TODO: should receive the actual direction, not a number
+      // TODO: should receive the actual direction, not a number
       const direction = sorting.order === 1
         ? SortingDirection.Ascending
         : SortingDirection.Descending;
@@ -66,11 +66,6 @@ export class MemberView implements OnInit {
     this.load(this.data.page);
   }
 
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / event.rows) + 1;
-    this.load(page);
-  }
-
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
@@ -79,18 +74,24 @@ export class MemberView implements OnInit {
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
-    this.loading = true;
+    this.status.loading = true;
 
     this.service.getAll(page, this.sort, this.nameFilter)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => this.data = response);
   }
 
   private loadSummary() {
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
+
     this.service.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
-      .subscribe(summary => this.MemberCount = summary);
+      .pipe(finalize(() => this.status.loadingSummary = false))
+      .subscribe(summary => this.memberCount = summary);
   }
 
+}
+
+interface Status {
+  loading: boolean;
+  loadingSummary: boolean;
 }
