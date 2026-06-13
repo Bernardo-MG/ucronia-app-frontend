@@ -7,6 +7,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { Dialog } from '../library-view/library-view';
 
 @Component({
   selector: 'assoc-library-book-list',
@@ -29,7 +30,7 @@ export class LibraryBookList {
   public readonly showBook = output<FictionBook | GameBook>();
   public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
-  public readonly show = output<{ view: string, book: FictionBook | GameBook }>();
+  public readonly show = output<{ dialog: Dialog, book: FictionBook | GameBook }>();
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
@@ -65,37 +66,37 @@ export class LibraryBookList {
       this.gameEditionMenuItems.push(
         {
           label: 'Datos',
-          command: () => this.show.emit({ view: 'details', book })
+          command: () => this.show.emit({ dialog: Dialog.DETAILS, book })
         });
       this.gameEditionMenuItems.push(
         {
           label: 'Donantes',
-          command: () => this.show.emit({ view: 'donors', book })
+          command: () => this.show.emit({ dialog: Dialog.DONORS, book })
         });
       this.gameEditionMenuItems.push(
         {
           label: 'Autores',
-          command: () => this.show.emit({ view: 'authors', book })
+          command: () => this.show.emit({ dialog: Dialog.AUTHORS, book })
         });
       this.gameEditionMenuItems.push(
         {
           label: 'Editor',
-          command: () => this.show.emit({ view: 'publishers', book })
+          command: () => this.show.emit({ dialog: Dialog.PUBLISHERS, book })
         });
       this.gameEditionMenuItems.push(
         {
           label: 'Sistema',
-          command: () => this.show.emit({ view: 'gameSystem', book })
+          command: () => this.show.emit({ dialog: Dialog.GAME_SYSTEM, book })
         });
       this.gameEditionMenuItems.push(
         {
           label: 'Tipo',
-          command: () => this.show.emit({ view: 'bookType', book })
+          command: () => this.show.emit({ dialog: Dialog.BOOK_TYPE, book })
         });
       this.gameEditionMenuItems.push(
         {
           label: 'Préstamos',
-          command: () => this.show.emit({ view: 'lendings', book })
+          command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
         });
 
       this.gameEditionMenu.toggle(event);
@@ -104,27 +105,27 @@ export class LibraryBookList {
       this.fictionEditionMenuItems.push(
         {
           label: 'Datos',
-          command: () => this.show.emit({ view: 'details', book })
+          command: () => this.show.emit({ dialog: Dialog.DETAILS, book })
         });
       this.fictionEditionMenuItems.push(
         {
           label: 'Donantes',
-          command: () => this.show.emit({ view: 'donors', book })
+          command: () => this.show.emit({ dialog: Dialog.DONORS, book })
         });
       this.fictionEditionMenuItems.push(
         {
           label: 'Autores',
-          command: () => this.show.emit({ view: 'authors', book })
+          command: () => this.show.emit({ dialog: Dialog.AUTHORS, book })
         });
       this.fictionEditionMenuItems.push(
         {
           label: 'Editor',
-          command: () => this.show.emit({ view: 'publishers', book })
+          command: () => this.show.emit({ dialog: Dialog.PUBLISHERS, book })
         });
       this.fictionEditionMenuItems.push(
         {
           label: 'Préstamos',
-          command: () => this.show.emit({ view: 'lendings', book })
+          command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
         });
 
       this.fictionEditionMenu.toggle(event);

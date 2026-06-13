@@ -66,14 +66,14 @@ export class LibraryView implements OnInit {
   public loading = false;
   public loadingExcel = false;
   public loadingSummary = false;
-  public editing = false;
-  public showing = false;
 
   public readonly permissions: Permissions;
 
-  public readonly dataMenuItems: MenuItem[] = [];
+  public dialog = Dialog.NONE;
 
-  public view: string = '';
+  public readonly Dialog = Dialog;
+
+  public readonly dataMenuItems: MenuItem[] = [];
 
   private sort = new Sorting();
 
@@ -236,7 +236,7 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public downloadExcel() {
@@ -247,15 +247,9 @@ export class LibraryView implements OnInit {
       .subscribe();
   }
 
-  public onStartEditingView(event: { view: string, book: FictionBook | GameBook }): void {
+  public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
     this.selectedData = event.book;
-    this.view = event.view;
-    this.editing = true;
-  }
-
-  public onStartView(view: string): void {
-    this.view = view;
-    this.editing = true;
+    this.dialog = event.dialog;
   }
 
   public onSetAuthors(authors: Author[]) {
@@ -391,7 +385,7 @@ export class LibraryView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
+          this.dialog = Dialog.NONE;
           this.load(this.data.page);
           onSuccess();
         },
@@ -419,6 +413,19 @@ interface Permissions {
   create: boolean;
   edit: boolean;
   delete: boolean;
+}
+
+export enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  DETAILS = 'details',
+  CREATION = 'creation',
+  DONORS = 'donors',
+  AUTHORS = 'authors',
+  GAME_SYSTEM = 'gameSystem',
+  BOOK_TYPE = 'bookType',
+  PUBLISHERS = 'publishers',
+  LENDINGS = 'lendings'
 }
 
 export enum BookSelection {

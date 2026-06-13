@@ -24,7 +24,7 @@
 
       <div class="ml-auto space-x-2">
         @if (permissions.create) {
-          <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!permissions.create"
+          <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATION" [disabled]="!permissions.create"
             aria-label="Nuevo libro" [attr.aria-disabled]="!permissions.create" rounded />
         }
 
@@ -57,13 +57,13 @@
   </p-panel>
 
   <!-- Dialogs -->
-  <p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
+  <p-dialog header="Libro" [modal]="true" [visible]="dialog === Dialog.INFO" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
     <assoc-library-book-info [loading]="loading" [book]="selectedData" />
   </p-dialog>
 
-  @switch (view) {
-    @case ('details') {
-      <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+  @switch (dialog) {
+    @case (Dialog.DETAILS) {
+      <p-dialog header="Editar libro" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '50rem' }">
         <ng-template #header>
           <h2 class="text-xl font-semibold">
             #{{ selectedData.number }}
@@ -78,55 +78,55 @@
       </p-dialog>
     }
 
-    @case ('creation') {
-      <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    @case (Dialog.CREATION) {
+      <p-dialog header="Crear libro" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '50rem' }">
         <assoc-library-book-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </p-dialog>
     }
 
-    @case ('donors') {
-      <p-dialog header="Donantes" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.DONORS) {
+      <p-dialog header="Donantes" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
         <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="loading" [failures]="failures"
           [getSelection]="service.getDonors.bind(service)" (save)="onSetDonation($event)" />
       </p-dialog>
     }
 
-    @case ('authors') {
-      <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.AUTHORS) {
+      <p-dialog header="Autores" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
         <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
           (save)="onSetAuthors($event)" />
       </p-dialog>
     }
 
-    @case ('gameSystem') {
-      <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.GAME_SYSTEM) {
+      <p-dialog header="Sistemas" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
         <shared-form-with-selection [data]="getGameSystem(selectedData)"
           [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" />
       </p-dialog>
     }
 
-    @case ('bookType') {
-      <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.BOOK_TYPE) {
+      <p-dialog header="Tipo" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
         <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
           (save)="onSetBookType($event)" />
       </p-dialog>
     }
 
-    @case ('publishers') {
-      <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.PUBLISHERS) {
+      <p-dialog header="Editores" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
         <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
           (save)="onSetPublishers($event)" />
       </p-dialog>
     }
 
-    @case ('lendings') {
+    @case (Dialog.LENDINGS) {
       @if(selectedData.lent) {
-        <p-dialog header="Devolver libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+        <p-dialog header="Devolver libro" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '25rem' }">
           <assoc-library-book-return-form [loading]="loading" [failures]="failures" [borrower]="borrower"
             [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
         </p-dialog>
       } @else {
-        <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+        <p-dialog header="Prestar libro" [modal]="true" [visible]="true" (onHide)="dialog = Dialog.NONE" [style]="{ width: '50rem' }">
           <assoc-library-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData.number"
             [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
         </p-dialog>
