@@ -23,9 +23,9 @@
       </div>
 
       <div class="ml-auto space-x-2">
-        @if (createable) {
-          <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
-            aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
+        @if (permissions.create) {
+          <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!permissions.create"
+            aria-label="Nuevo libro" [attr.aria-disabled]="!permissions.create" rounded />
         }
 
         <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
@@ -42,7 +42,7 @@
 
     @switch (list) {
       @case ('books') {
-        <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
+        <assoc-library-book-list [editable]="permissions.edit" [deletable]="permissions.delete" [loading]="loading" [books]="data.content"
           [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
           (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (delete)="onDelete($event)"
           (show)="onStartEditingView($event)" />

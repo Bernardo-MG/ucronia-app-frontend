@@ -69,9 +69,7 @@ export class LibraryView implements OnInit {
   public editing = false;
   public showing = false;
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly permissions: Permissions;
 
   public readonly dataMenuItems: MenuItem[] = [];
 
@@ -98,9 +96,11 @@ export class LibraryView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("library_book", "create");
-    this.editable = authService.hasPermission("library_book", "update");
-    this.deletable = authService.hasPermission("library_book", "delete");
+    this.permissions = {
+      create: authService.hasPermission("library_book", "create"),
+      edit: authService.hasPermission("library_book", "update"),
+      delete: authService.hasPermission("library_book", "delete")
+    };
 
     // Initial operations
     this.delete = this.service.deleteGameBook.bind(this.service);
@@ -413,6 +413,12 @@ export class LibraryView implements OnInit {
       .subscribe(r => this.summary = r);
   }
 
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
 }
 
 export enum BookSelection {
