@@ -1,6 +1,6 @@
 <p-panel class="shadow rounded-lg">
-  <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data().content" paginator="true" [rows]="data().size"
-    [totalRecords]="data().totalElements" [first]="first" (onSort)="onChangeDirection($event)"
+  <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data().content" paginator="true"
+    [rows]="data().size" [totalRecords]="data().totalElements" [first]="first" (onSort)="onChangeDirection($event)"
     (onPage)="onPageChange($event)" showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
     <ng-template #header>
       <tr>
@@ -12,8 +12,7 @@
       <tr>
         <td>{{ data.name }}</td>
         <td>
-          <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver"
-            (click)="onShow(data)" rounded text />
+          <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShow(data)" rounded text />
         </td>
       </tr>
     </ng-template>
