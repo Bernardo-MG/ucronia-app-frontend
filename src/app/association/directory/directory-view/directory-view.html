@@ -96,7 +96,7 @@
         Editar perfil
       </ng-template>
       <div class="w-full">
-        <assoc-profile-info-edition-form [loading]="status.loading" [data]="selectedData" [feeTypes]="feeTypes"
+        <assoc-profile-edition-form [loading]="status.loading" [data]="selectedData" [feeTypes]="feeTypes"
           [failures]="failures" [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
