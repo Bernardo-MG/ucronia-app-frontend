@@ -5,11 +5,12 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, forkJoin, Observable, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable } from 'rxjs';
 import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
 import { ContactMethodService } from '../contact-method-service';
 import { DirectoryService } from '../directory-service';
@@ -40,6 +41,7 @@ export class DirectoryView implements OnInit {
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly filter: Filter = {
@@ -149,14 +151,29 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onDelete(number: number) {
-    this.mutation(
-      this.directoryService.delete(number),
-      () => {
-        this.load();
-        this.loadSummary();
-      }
-    );
+  public onDelete(event: Event, id: number): void {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () =>
+        this.mutation(
+          this.directoryService.delete(id),
+          () => {
+            this.load();
+            this.loadSummary();
+          }
+        )
+    });
   }
 
   public onChangeType(status: Profiletype) {

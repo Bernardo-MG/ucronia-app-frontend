@@ -37,24 +37,20 @@
   <p-panel class="bg-white shadow rounded-lg">
 
     @if(filter.type === Profiletype.MEMBER) {
-      <assoc-member-profile-list [loading]="status.loading" [editable]="permissions.edit" [deletable]="permissions.delete"
-        [profiles]="profiles.content" [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements"
-        (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
+      <assoc-member-profile-list [loading]="status.loading" [profiles]="profiles.content" [rows]="profiles.size"
+        [page]="profiles.page" [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)"
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     } @else if(filter.type === Profiletype.SPONSOR) {
-      <assoc-sponsor-list [loading]="status.loading" [editable]="permissions.edit" [deletable]="permissions.delete"
-        [profiles]="profiles.content" [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements"
-        (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
+      <assoc-sponsor-list [loading]="status.loading" [profiles]="profiles.content" [rows]="profiles.size"
+        [page]="profiles.page" [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)"
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     } @else if(filter.type === Profiletype.GUEST) {
-      <assoc-guest-list [loading]="status.loading" [editable]="permissions.edit" [deletable]="permissions.delete"
-        [profiles]="profiles.content" [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements"
-        (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
-        (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+      <assoc-guest-list [loading]="status.loading" [profiles]="profiles.content" [rows]="profiles.size" [page]="profiles.page"
+        [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
     } @else {
-      <assoc-profile-list [loading]="status.loading" [editable]="permissions.edit" [deletable]="permissions.delete"
-        [profiles]="profiles.content" [rows]="profiles.size" [page]="profiles.page" [totalRecords]="profiles.totalElements"
-        (show)="onShowInfo($event)" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
+      <assoc-profile-list [loading]="status.loading" [profiles]="profiles.content" [rows]="profiles.size"
+        [page]="profiles.page" [totalRecords]="profiles.totalElements" (show)="onShowInfo($event)"
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     }
 
@@ -81,6 +77,8 @@
       <ng-template #footer>
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
           [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDIT" rounded text class="!p-2" />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="onDelete($event, infoData.number)" rounded text />
       </ng-template>
     }
 
