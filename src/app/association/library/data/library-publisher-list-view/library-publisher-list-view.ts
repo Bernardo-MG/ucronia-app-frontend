@@ -4,7 +4,7 @@ import { CrudNameList, CrudFormView } from '@app/shared/data/crud-name-list/crud
 import { PublisherCrudService } from '../publisher-crud-service';
 import { DrawerModule } from 'primeng/drawer';
 import { NameForm } from '@app/shared/data/name-form/name-form';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -19,6 +19,7 @@ export class LibraryPublisherListView implements OnInit {
   private readonly auth = inject(AuthService);
   protected service = inject(PublisherCrudService);
   private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public data = new Page<any>();
   public loading = false;
@@ -68,6 +69,24 @@ export class LibraryPublisherListView implements OnInit {
   public onCancelEdit(): void {
     this.view = CrudFormView.VIEW;
     this.failures.clear();
+  }
+
+  public confirmDelete(event: Event, id: number): void {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.onDelete(id)
+    });
   }
 
   public onSave(data: any): void {

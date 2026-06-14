@@ -1,5 +1,9 @@
-<shared-crud-name-list [data]="data" [loading]="loading" [createable]="createable" [editable]="editable" [deletable]="deletable"
-  (startCreating)="openCreate()" (show)="openView($event)" (startEditing)="openEdit($event)" (deleted)="onDelete($event)" (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
+<div class="mb-4">
+  <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!createable" aria-label="Nuevo"
+    [attr.aria-disabled]="!createable" rounded text (click)="openCreate()" />
+</div>
+<shared-crud-name-list [data]="data" [loading]="loading" [editable]="editable" [deletable]="deletable"
+  (show)="openView($event)" (startEditing)="openEdit($event)" (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
 
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (view) {
@@ -12,7 +16,7 @@
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-pencil" [disabled]="!editable" (click)="openEdit(selected)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" (click)="onDelete(selected?.number)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" (click)="confirmDelete($event, selected?.number)" rounded text />
       </ng-template>
     }
     @case (View.CREATION) {
