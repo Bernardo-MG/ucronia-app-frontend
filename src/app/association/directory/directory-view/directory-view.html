@@ -87,7 +87,7 @@
   @case(Dialog.EDIT) {
     <!-- Edition dialog -->
     <p-dialog header="Editar perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-profile-info-edition-form [loading]="status.loading" [data]="editionData" [feeTypes]="feeTypes"
+      <assoc-profile-info-edition-form [loading]="status.loading" [data]="infoData" [feeTypes]="feeTypes"
         [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
     </p-dialog>
   }
