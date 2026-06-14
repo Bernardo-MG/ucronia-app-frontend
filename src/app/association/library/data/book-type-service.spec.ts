@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { BookTypeCrudService } from './book-type-crud-service';
+import { BookTypeService } from './book-type-service';
 
-describe('BookTypeCrudService', () => {
-  let service: BookTypeCrudService;
+describe('BookTypeService', () => {
+  let service: BookTypeService;
 
   const mockUcroniaClient = {
     library: {
@@ -27,11 +28,12 @@ describe('BookTypeCrudService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
 
-    service = TestBed.inject(BookTypeCrudService);
+    service = TestBed.inject(BookTypeService);
   });
 
   it('should be created', () => {

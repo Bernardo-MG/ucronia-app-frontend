@@ -1,1 +1,50 @@
-<shared-crud-name-list entityKey="library_game_system" [service]="service" />
+<div class="flex flex-wrap mb-3 items-center w-full space-x-2">
+  @if (permissions.create) {
+    <div class="ml-auto space-x-2">
+      <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!permissions.create" aria-label="Nuevo"
+        [attr.aria-disabled]="!permissions.create" rounded text (click)="onShowCreate()" />
+    </div>
+  }
+</div>
+<shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (sortChange)="onSort($event)"
+  (pageChange)="load($event)"></shared-name-list>
+
+<p-drawer [visible]="view !== View.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false"
+  position="right">
+  @switch (view) {
+    @case (View.INFO) {
+      <ng-template #header>
+        Sistema
+      </ng-template>
+      <div>
+        <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="confirmDelete($event, selected?.number)" rounded text />
+      </ng-template>
+    }
+    @case (View.CREATION) {
+      <ng-template #header>
+        Crear sistema
+      </ng-template>
+      <div class="w-full">
+        <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
+          (reject)="onReject()"></shared-name-form>
+      </div>
+    }
+    @case (View.EDITION) {
+      <ng-template #header>
+        Modificar sistema
+      </ng-template>
+      <div class="w-full">
+        <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
+          (reject)="onReject()"></shared-name-form>
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
+      </ng-template>
+    }
+  }
+</p-drawer>

@@ -1,14 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { PublisherCrudService } from './publisher-crud-service';
+import { AuthorService } from './author-service';
 
-describe('PublisherCrudService', () => {
-  let service: PublisherCrudService;
+describe('AuthorService', () => {
+  let service: AuthorService;
 
   const mockUcroniaClient = {
     library: {
-      publisher: {
+      author: {
         create: jasmine.createSpy().and.returnValue(of({})),
         update: jasmine.createSpy().and.returnValue(of({})),
         get: jasmine.createSpy().and.returnValue(of({})),
@@ -27,10 +28,12 @@ describe('PublisherCrudService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
-    service = TestBed.inject(PublisherCrudService);
+
+    service = TestBed.inject(AuthorService);
   });
 
   it('should be created', () => {
