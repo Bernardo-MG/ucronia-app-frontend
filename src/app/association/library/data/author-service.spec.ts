@@ -1,7 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { AuthorService as AuthorService } from './author-service';
+import { AuthorService } from './author-service';
 
 describe('AuthorService', () => {
   let service: AuthorService;
@@ -27,6 +28,7 @@ describe('AuthorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
