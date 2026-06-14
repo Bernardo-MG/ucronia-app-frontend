@@ -24,13 +24,8 @@ export class RoleView implements OnInit {
   private readonly service = inject(RoleService);
   private readonly messageService = inject(MessageService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
-
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
 
   public data = new Page<Role>();
 
@@ -40,33 +35,35 @@ export class RoleView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public showing = false;
-  public editing = false;
 
   private sort = new Sorting();
 
-  public view: string = '';
-
   public failures = new FailureStore();
 
-  public permissions: ResourcePermission[] = [];
+  public resourcePermissions: ResourcePermission[] = [];
+
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("role", "create");
-    this.editable = authService.hasPermission("role", "update");
-    this.deletable = authService.hasPermission("role", "delete");
+    this.permissions = {
+      create: authService.hasPermission("role", "create"),
+      edit: authService.hasPermission("role", "update"),
+      delete: authService.hasPermission("role", "delete")
+    };
   }
 
   public ngOnInit(): void {
     this.load();
   }
 
+  // EVENT HANDLERS
+
   public onShowInfo(role: Role) {
     this.selectedData = role;
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -116,25 +113,29 @@ export class RoleView implements OnInit {
 
   public onStartEditing(role: Role, view: string): void {
     this.selectedData = role;
-    this.view = view;
-    this.editing = true;
+    this.dialog = Dialog.EDIT;
   }
 
   public onChangePermissions(role: Role) {
     this.selectedData = role;
-    this.service.getAvailablePermissions(role.name).subscribe(p => this.permissions = p);
-    this.onStartEditingView('permissions');
+    this.service.getAvailablePermissions(role.name).subscribe(p => this.resourcePermissions = p);
+    this.dialog = Dialog.PERMISSIONS;
   }
 
   public onStartCreation(): void {
-    this.service.getAllPermissions().subscribe(p => this.permissions = p);
-    this.onStartEditingView('creation');
+    this.service.getAllPermissions().subscribe(p => this.resourcePermissions = p);
+    this.dialog = Dialog.CREATE;
   }
 
-  private onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
   }
+
+  // PRIVATE METHODS
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
@@ -143,9 +144,7 @@ export class RoleView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.showing = false;
-          this.editing = false;
+          this.dialog = Dialog.NONE;
           this.load();
           onSuccess();
         },
@@ -160,4 +159,18 @@ export class RoleView implements OnInit {
       });
   }
 
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create',
+  PERMISSIONS = 'permissions'
 }
