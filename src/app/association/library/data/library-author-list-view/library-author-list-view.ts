@@ -8,9 +8,10 @@ import { MessageService } from 'primeng/api';
 import { finalize } from 'rxjs';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
-  imports: [CrudNameList, DrawerModule, NameForm],
+  imports: [CrudNameList, DrawerModule, NameForm, ButtonModule],
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {
@@ -41,6 +42,13 @@ export class LibraryAuthorListView implements OnInit {
   public openCreate(): void {
     this.selected = undefined;
     this.view = CrudFormView.CREATION;
+    this.showForm = true;
+    this.failures.clear();
+  }
+
+  public openView(item: any): void {
+    this.selected = item;
+    this.view = CrudFormView.VIEW;
     this.showForm = true;
     this.failures.clear();
   }

@@ -46,6 +46,14 @@ describe('CrudNameList', () => {
     expect(component.startEditing.emit).toHaveBeenCalledWith({ id: 1 });
   });
 
+  it('should emit show event', () => {
+    spyOn(component.show, 'emit' as any);
+
+    component.onShow({ id: 1, name: 'Test' });
+
+    expect(component.show.emit).toHaveBeenCalledWith({ id: 1, name: 'Test' });
+  });
+
   it('should emit page changes', () => {
     spyOn(component.pageChange, 'emit' as any);
 
@@ -67,8 +75,9 @@ describe('CrudNameList', () => {
       (confirmation: Confirmation) => (confirmation as any).accept()
     );
     spyOn(component.deleted, 'emit' as any);
+    const mockEvent = new Event('click');
 
-    component.onDelete(123);
+    component.onDelete(mockEvent, 123);
 
     expect(component.deleted.emit).toHaveBeenCalledWith(123);
   });

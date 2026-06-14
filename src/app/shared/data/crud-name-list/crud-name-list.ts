@@ -8,6 +8,7 @@ import { ConfirmationService } from 'primeng/api';
 
 export enum CrudFormView {
   NONE = 'none',
+  VIEW = 'view',
   CREATION = 'creation',
   EDITION = 'edition'
 }
@@ -28,6 +29,7 @@ export class CrudNameList {
   public readonly deletable = input<boolean>(false);
 
   public readonly startCreating = output<void>();
+  public readonly show = output<any>();
   public readonly startEditing = output<any>();
   public readonly deleted = output<number>();
   public readonly sortChange = output<{ field: string; order: number }>();
@@ -51,12 +53,16 @@ export class CrudNameList {
     this.pageChange.emit(page);
   }
 
-  public onStartEditing(item: any): void {
-    this.startEditing.emit(item);
+  public onShow(item: any): void {
+    this.show.emit(item);
   }
 
   public onStartCreating(): void {
     this.startCreating.emit();
+  }
+
+  public onStartEditing(item: any): void {
+    this.startEditing.emit(item);
   }
 
   public onDelete(event: Event, id: number): void {

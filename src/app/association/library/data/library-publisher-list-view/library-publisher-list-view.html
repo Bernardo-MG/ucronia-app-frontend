@@ -1,8 +1,20 @@
 <shared-crud-name-list [data]="data" [loading]="loading" [createable]="createable" [editable]="editable" [deletable]="deletable"
-  (startCreating)="openCreate()" (startEditing)="openEdit($event)" (deleted)="onDelete($event)" (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
+  (startCreating)="openCreate()" (show)="openView($event)" (startEditing)="openEdit($event)" (deleted)="onDelete($event)" (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
 
 <p-drawer [(visible)]="showForm" [closable]="false" position="right">
   @switch (view) {
+    @case (View.VIEW) {
+      <ng-template #header>
+        Ver editor
+      </ng-template>
+      <div class="mb-4">
+        <p><strong>Nombre:</strong> {{ selected?.name }}</p>
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" [disabled]="!editable" (click)="openEdit(selected)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" (click)="onDelete(selected?.number)" rounded text />
+      </ng-template>
+    }
     @case (View.CREATION) {
       <ng-template #header>
         Crear editor
@@ -16,6 +28,9 @@
       </ng-template>
       <shared-name-form [data]="selected" [loading]="loading" [failures]="failures"
         (save)="onSave($event)" (reject)="onReject()"></shared-name-form>
+      <ng-template #footer>
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" (click)="onDelete(selected?.number)" rounded text />
+      </ng-template>
     }
   }
 </p-drawer>
