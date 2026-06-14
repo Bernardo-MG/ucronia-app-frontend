@@ -26,6 +26,7 @@ import { LibraryBookInfo } from '../library-book-info/library-book-info';
 import { LibraryBookLending } from '../library-book-lending/library-book-lending';
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
+import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
@@ -435,18 +436,7 @@ interface Status {
   loadingExcel: boolean;
 }
 
-export enum Dialog {
-  NONE = 'none',
-  INFO = 'info',
-  DETAILS = 'details',
-  CREATION = 'creation',
-  DONORS = 'donors',
-  AUTHORS = 'authors',
-  GAME_SYSTEM = 'gameSystem',
-  BOOK_TYPE = 'bookType',
-  PUBLISHERS = 'publishers',
-  LENDINGS = 'lendings'
-}
+// Dialog enum moved to ../dialog.ts to avoid circular imports with LibraryBookList
 
 export enum BookSelection {
   ALL = 'all',

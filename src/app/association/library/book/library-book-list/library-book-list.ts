@@ -7,7 +7,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { Dialog } from '../library-view/library-view';
+import { Dialog } from '../library-dialog';
 
 @Component({
   selector: 'assoc-library-book-list',
