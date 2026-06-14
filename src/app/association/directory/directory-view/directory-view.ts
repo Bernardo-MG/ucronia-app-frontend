@@ -87,11 +87,11 @@ export class DirectoryView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(profile: FullProfile) {
+  public onShowEdit() {
     this.dialog = Dialog.EDIT;
     this.withLoading(
       forkJoin({
-        profile: this.directoryService.getOne(profile.number),
+        profile: this.directoryService.getOne(this.selectedData.number),
         contactMethodSelection: this.contactMethodService.getAllAvailable(),
         feeTypes: this.feeTypeService.getAllAvailable()
       })
