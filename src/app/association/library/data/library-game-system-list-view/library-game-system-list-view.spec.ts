@@ -4,14 +4,14 @@ import { Page } from '@bernardo-mg/request';
 import { GameSystem } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { GameSystemCrudService } from '../game-system-crud-service';
+import { GameSystemService } from '../game-system-service';
 import { LibraryGameSystemListView } from './library-game-system-list-view';
 
 describe('LibraryGameSystemListView', () => {
   let component: LibraryGameSystemListView;
   let fixture: ComponentFixture<LibraryGameSystemListView>;
 
-  const gameSystemCrudServiceMock = jasmine.createSpyObj<GameSystemCrudService>(
+  const gameSystemCrudServiceMock = jasmine.createSpyObj<GameSystemService>(
     'GameSystemCrudService',
     ['getAll', 'create', 'update', 'delete']
   );
@@ -30,7 +30,7 @@ describe('LibraryGameSystemListView', () => {
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: GameSystemCrudService, useValue: gameSystemCrudServiceMock }
+        { provide: GameSystemService, useValue: gameSystemCrudServiceMock }
       ]
     })
       .compileComponents();

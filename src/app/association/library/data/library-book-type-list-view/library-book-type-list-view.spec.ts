@@ -4,14 +4,14 @@ import { Page } from '@bernardo-mg/request';
 import { BookType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { BookTypeCrudService } from '../book-type-crud-service';
+import { BookTypeService } from '../book-type-service';
 import { LibraryBookTypeListView } from './library-book-type-list-view';
 
 describe('LibraryBookTypeListView', () => {
   let component: LibraryBookTypeListView;
   let fixture: ComponentFixture<LibraryBookTypeListView>;
 
-  const bookTypeCrudServiceMock = jasmine.createSpyObj<BookTypeCrudService>(
+  const bookTypeCrudServiceMock = jasmine.createSpyObj<BookTypeService>(
     'BookTypeCrudService',
     ['getAll', 'create', 'update', 'delete']
   );
@@ -30,7 +30,7 @@ describe('LibraryBookTypeListView', () => {
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: BookTypeCrudService, useValue: bookTypeCrudServiceMock }
+        { provide: BookTypeService, useValue: bookTypeCrudServiceMock }
       ]
     })
       .compileComponents();
