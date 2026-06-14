@@ -1,14 +1,13 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ConfirmationService } from 'primeng/api';
 
 export enum CrudFormView {
   NONE = 'none',
-  VIEW = 'view',
+  INFO = 'info',
   CREATION = 'creation',
   EDITION = 'edition'
 }

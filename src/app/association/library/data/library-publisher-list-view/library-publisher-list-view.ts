@@ -27,7 +27,6 @@ export class LibraryPublisherListView implements OnInit {
   public createable = false;
   public editable = false;
   public deletable = false;
-  public showForm = false;
   public view: CrudFormView = CrudFormView.NONE;
   public readonly View = CrudFormView;
   public selected: any;
@@ -40,34 +39,31 @@ export class LibraryPublisherListView implements OnInit {
     this.load(1);
   }
 
-  public openCreate(): void {
+  public onShowCreate(): void {
     this.selected = undefined;
     this.view = CrudFormView.CREATION;
-    this.showForm = true;
     this.failures.clear();
   }
 
-  public openView(item: any): void {
+  public onShowInfo(item: any): void {
     this.selected = item;
-    this.view = CrudFormView.VIEW;
-    this.showForm = true;
+    this.view = CrudFormView.INFO;
     this.failures.clear();
   }
 
-  public openEdit(item: any): void {
+  public onShowEdit(item: any): void {
     this.selected = item;
     this.view = CrudFormView.EDITION;
-    this.showForm = true;
     this.failures.clear();
   }
 
   public onReject(): void {
-    this.showForm = false;
+    this.view = CrudFormView.NONE;
     this.failures.clear();
   }
 
   public onCancelEdit(): void {
-    this.view = CrudFormView.VIEW;
+    this.view = CrudFormView.NONE;
     this.failures.clear();
   }
 
@@ -107,7 +103,7 @@ export class LibraryPublisherListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.showForm = false;
+          this.view = CrudFormView.NONE;
           this.load(this.data.page || 1);
           this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
         },
@@ -128,7 +124,7 @@ export class LibraryPublisherListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.showForm = false;
+          this.view = CrudFormView.NONE;
           this.load(this.data.page || 1);
           this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
         },
@@ -148,7 +144,6 @@ export class LibraryPublisherListView implements OnInit {
       .pipe(finalize(() => {
         this.loading = false;
         this.view = CrudFormView.NONE;
-        this.showForm = false;
       }))
       .subscribe({
         complete: () => {
@@ -163,6 +158,14 @@ export class LibraryPublisherListView implements OnInit {
     this.sort = new Sorting();
     this.sort.addField(new SortingProperty(sorting.field, direction));
     this.load(this.data.page || 1);
+  }
+
+  // Drawer
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.view = CrudFormView.NONE;
+    }
   }
 
   public load(page: number): void {

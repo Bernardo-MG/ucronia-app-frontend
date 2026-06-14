@@ -2,16 +2,17 @@
   @if (createable) {
     <div class="ml-auto space-x-2">
       <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!createable" aria-label="Nuevo"
-        [attr.aria-disabled]="!createable" rounded text (click)="openCreate()" />
+        [attr.aria-disabled]="!createable" rounded text (click)="onShowCreate()" />
     </div>
   }
 </div>
-<shared-crud-name-list [data]="data" [loading]="loading"
-  (show)="openView($event)" (startEditing)="openEdit($event)" (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
+<shared-crud-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (sortChange)="onSort($event)"
+  (pageChange)="load($event)"></shared-crud-name-list>
 
-<p-drawer [(visible)]="showForm" [closable]="false" position="right">
+<p-drawer [visible]="view !== View.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false"
+  position="right">
   @switch (view) {
-    @case (View.VIEW) {
+    @case (View.INFO) {
       <ng-template #header>
         Ver tipo
       </ng-template>
@@ -19,23 +20,24 @@
         <p><strong>Nombre:</strong> {{ selected?.name }}</p>
       </div>
       <ng-template #footer>
-        <p-button icon="pi pi-pencil" [disabled]="!editable" (click)="openEdit(selected)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" (click)="confirmDelete($event, selected?.number)" rounded text />
+        <p-button icon="pi pi-pencil" [disabled]="!editable" (click)="onShowEdit(selected)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable"
+          (click)="confirmDelete($event, selected?.number)" rounded text />
       </ng-template>
     }
     @case (View.CREATION) {
       <ng-template #header>
         Crear tipo
       </ng-template>
-      <shared-name-form [loading]="loading" [failures]="failures"
-        (save)="onSave($event)" (reject)="onReject()"></shared-name-form>
+      <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
+        (reject)="onReject()"></shared-name-form>
     }
     @case (View.EDITION) {
       <ng-template #header>
         Modificar tipo
       </ng-template>
-      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures"
-        (save)="onSave($event)" (reject)="onReject()"></shared-name-form>
+      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
+        (reject)="onReject()"></shared-name-form>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
       </ng-template>
