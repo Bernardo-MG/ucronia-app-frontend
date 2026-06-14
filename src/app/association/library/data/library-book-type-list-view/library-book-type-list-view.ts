@@ -16,26 +16,32 @@ import { ButtonModule } from 'primeng/button';
 })
 export class LibraryBookTypeListView implements OnInit {
 
-  private readonly auth = inject(AuthService);
   protected service = inject(BookTypeCrudService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
+  public readonly permissions: Permissions;
+
   public data = new Page<any>();
   public loading = false;
   public failures = new FailureStore();
-  public createable = false;
-  public editable = false;
-  public deletable = false;
   public view: Drawer = Drawer.NONE;
   public readonly View = Drawer;
   public selected: any;
   protected sort = new Sorting();
 
+  constructor() {
+    const authService = inject(AuthService);
+
+    // Check permissions
+    this.permissions = {
+      create: authService.hasPermission('library_book_type', 'create'),
+      edit: authService.hasPermission('library_book_type', 'update'),
+      delete: authService.hasPermission('library_book_type', 'delete')
+    };
+  }
+
   ngOnInit(): void {
-    this.createable = this.auth.hasPermission('library_book_type', 'create');
-    this.editable = this.auth.hasPermission('library_book_type', 'update');
-    this.deletable = this.auth.hasPermission('library_book_type', 'delete');
     this.load();
   }
 
@@ -175,6 +181,12 @@ export class LibraryBookTypeListView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
 }
 
 enum Drawer {

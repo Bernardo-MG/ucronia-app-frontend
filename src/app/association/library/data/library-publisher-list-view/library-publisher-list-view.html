@@ -1,8 +1,8 @@
 <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-  @if (createable) {
+  @if (permissions.create) {
     <div class="ml-auto space-x-2">
-      <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!createable" aria-label="Nuevo"
-        [attr.aria-disabled]="!createable" rounded text (click)="onShowCreate()" />
+      <p-button icon="pi pi-plus-circle" severity="secondary" [disabled]="!permissions.create" aria-label="Nuevo"
+        [attr.aria-disabled]="!permissions.create" rounded text (click)="onShowCreate()" />
     </div>
   }
 </div>
@@ -20,8 +20,8 @@
         <p><strong>Nombre:</strong> {{ selected?.name }}</p>
       </div>
       <ng-template #footer>
-        <p-button icon="pi pi-pencil" [disabled]="!editable" (click)="onShowEdit(selected)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable"
+        <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
           (click)="confirmDelete($event, selected?.number)" rounded text />
       </ng-template>
     }

@@ -16,26 +16,32 @@ import { AuthorCrudService } from '../author-crud-service';
 })
 export class LibraryAuthorListView implements OnInit {
 
-  private readonly auth = inject(AuthService);
   protected service = inject(AuthorCrudService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
+  public readonly permissions: Permissions;
+
   public data = new Page<any>();
   public loading = false;
   public failures = new FailureStore();
-  public createable = false;
-  public editable = false;
-  public deletable = false;
   public view: Drawer = Drawer.NONE;
   public readonly View = Drawer;
   public selected: any;
   protected sort = new Sorting();
 
+  constructor() {
+    const authService = inject(AuthService);
+
+    // Check permissions
+    this.permissions = {
+      create: authService.hasPermission('library_author', 'create'),
+      edit: authService.hasPermission('library_author', 'update'),
+      delete: authService.hasPermission('library_author', 'delete')
+    };
+  }
+
   ngOnInit(): void {
-    this.createable = this.auth.hasPermission('library_author', 'create');
-    this.editable = this.auth.hasPermission('library_author', 'update');
-    this.deletable = this.auth.hasPermission('library_author', 'delete');
     this.load();
   }
 
@@ -172,6 +178,12 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
 }
 
 enum Drawer {
