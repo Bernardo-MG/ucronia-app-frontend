@@ -2,20 +2,20 @@ import { inject, Injectable } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Publisher } from '@ucronia/domain';
+import { BookType } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
-export class PublisherCrudService implements CrudService<Publisher> {
+export class BookTypeService implements CrudService<BookType> {
 
   private readonly ucroniaClient = inject(UcroniaClient);
   private readonly messageService = inject(MessageService);
 
-  public create(data: Publisher): Observable<Publisher> {
-    return this.ucroniaClient.library.publisher.create(data)
+  public create(data: BookType): Observable<BookType> {
+    return this.ucroniaClient.library.bookType.create(data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -28,8 +28,8 @@ export class PublisherCrudService implements CrudService<Publisher> {
       );
   }
 
-  public update(data: Publisher): Observable<Publisher> {
-    return this.ucroniaClient.library.publisher.update(data.number, data)
+  public update(data: BookType): Observable<BookType> {
+    return this.ucroniaClient.library.bookType.update(data.number, data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -42,12 +42,12 @@ export class PublisherCrudService implements CrudService<Publisher> {
       );
   }
 
-  public getOne(number: number): Observable<Publisher> {
-    return this.ucroniaClient.library.publisher.get(number);
+  public getOne(number: number): Observable<BookType> {
+    return this.ucroniaClient.library.bookType.get(number);
   }
 
-  public delete(number: number): Observable<Publisher> {
-    return this.ucroniaClient.library.publisher.delete(number)
+  public delete(number: number): Observable<BookType> {
+    return this.ucroniaClient.library.bookType.delete(number)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -69,7 +69,7 @@ export class PublisherCrudService implements CrudService<Publisher> {
       );
   }
 
-  public getAll(page: number | undefined, sort: Sorting): Observable<Page<Publisher>> {
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<BookType>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -77,7 +77,7 @@ export class PublisherCrudService implements CrudService<Publisher> {
       )
     );
 
-    return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
+    return this.ucroniaClient.library.bookType.page(page, undefined, sorting);
   }
 
 }

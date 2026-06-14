@@ -2,20 +2,20 @@ import { inject, Injectable } from '@angular/core';
 import { CrudService } from '@app/shared/data/services/crud-service';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { GameSystem } from '@ucronia/domain';
+import { Publisher } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
-export class GameSystemCrudService implements CrudService<GameSystem> {
+export class PublisherService implements CrudService<Publisher> {
 
   private readonly ucroniaClient = inject(UcroniaClient);
   private readonly messageService = inject(MessageService);
 
-  public create(data: GameSystem): Observable<GameSystem> {
-    return this.ucroniaClient.library.gameSystem.create(data)
+  public create(data: Publisher): Observable<Publisher> {
+    return this.ucroniaClient.library.publisher.create(data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -28,8 +28,8 @@ export class GameSystemCrudService implements CrudService<GameSystem> {
       );
   }
 
-  public update(data: GameSystem): Observable<GameSystem> {
-    return this.ucroniaClient.library.gameSystem.update(data.number, data)
+  public update(data: Publisher): Observable<Publisher> {
+    return this.ucroniaClient.library.publisher.update(data.number, data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -42,12 +42,12 @@ export class GameSystemCrudService implements CrudService<GameSystem> {
       );
   }
 
-  public getOne(number: number): Observable<GameSystem> {
-    return this.ucroniaClient.library.gameSystem.get(number);
+  public getOne(number: number): Observable<Publisher> {
+    return this.ucroniaClient.library.publisher.get(number);
   }
 
-  public delete(number: number): Observable<GameSystem> {
-    return this.ucroniaClient.library.gameSystem.delete(number)
+  public delete(number: number): Observable<Publisher> {
+    return this.ucroniaClient.library.publisher.delete(number)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -69,7 +69,7 @@ export class GameSystemCrudService implements CrudService<GameSystem> {
       );
   }
 
-  public getAll(page: number | undefined, sort: Sorting): Observable<Page<GameSystem>> {
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<Publisher>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -77,7 +77,7 @@ export class GameSystemCrudService implements CrudService<GameSystem> {
       )
     );
 
-    return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
+    return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
   }
 
 }

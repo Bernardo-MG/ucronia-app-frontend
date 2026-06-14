@@ -1,14 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
 import { of } from 'rxjs';
-import { AuthorCrudService } from './author-crud-service';
+import { GameSystemService } from './game-system-service';
 
-describe('AuthorCrudService', () => {
-  let service: AuthorCrudService;
+describe('GameSystemService', () => {
+  let service: GameSystemService;
 
   const mockUcroniaClient = {
     library: {
-      author: {
+      gameSystem: {
         create: jasmine.createSpy().and.returnValue(of({})),
         update: jasmine.createSpy().and.returnValue(of({})),
         get: jasmine.createSpy().and.returnValue(of({})),
@@ -31,7 +31,7 @@ describe('AuthorCrudService', () => {
       ]
     });
 
-    service = TestBed.inject(AuthorCrudService);
+    service = TestBed.inject(GameSystemService);
   });
 
   it('should be created', () => {

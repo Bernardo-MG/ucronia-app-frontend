@@ -9,7 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { finalize } from 'rxjs';
-import { BookTypeCrudService } from '../book-type-crud-service';
+import { BookTypeService } from '../book-type-service';
 
 @Component({
   imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
@@ -17,7 +17,7 @@ import { BookTypeCrudService } from '../book-type-crud-service';
 })
 export class LibraryBookTypeListView implements OnInit {
 
-  private readonly service = inject(BookTypeCrudService);
+  private readonly service = inject(BookTypeService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;

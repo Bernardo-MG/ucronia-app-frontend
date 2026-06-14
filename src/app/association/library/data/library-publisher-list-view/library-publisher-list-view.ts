@@ -9,7 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { finalize } from 'rxjs';
-import { PublisherCrudService } from '../publisher-crud-service';
+import { PublisherService } from '../publisher-service';
 
 @Component({
   imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
@@ -17,7 +17,7 @@ import { PublisherCrudService } from '../publisher-crud-service';
 })
 export class LibraryPublisherListView implements OnInit {
 
-  private readonly service = inject(PublisherCrudService);
+  private readonly service = inject(PublisherService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;

@@ -9,7 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize } from 'rxjs';
-import { AuthorCrudService } from '../author-crud-service';
+import { AuthorService } from '../author-service';
 
 @Component({
   imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
@@ -17,7 +17,7 @@ import { AuthorCrudService } from '../author-crud-service';
 })
 export class LibraryAuthorListView implements OnInit {
 
-  private readonly service = inject(AuthorCrudService);
+  private readonly service = inject(AuthorService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;

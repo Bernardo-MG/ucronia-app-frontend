@@ -9,7 +9,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { finalize } from 'rxjs';
-import { GameSystemCrudService } from '../game-system-crud-service';
+import { GameSystemService } from '../game-system-service';
 
 @Component({
   imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
@@ -17,7 +17,7 @@ import { GameSystemCrudService } from '../game-system-crud-service';
 })
 export class LibraryGameSystemListView implements OnInit {
 
-  private readonly service = inject(GameSystemCrudService);
+  private readonly service = inject(GameSystemService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
