@@ -36,17 +36,16 @@ export class FundsView implements OnInit {
 
   public months: Date[] = [];
 
-  public loading = false;
-  public loadingCalendar = false;
-  public loadingList = false;
-  public loadingExcel = false;
-  public loadingSummary = false;
-  public editing = false;
-  public showing = false;
-
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly status: Status = {
+    loading: false,
+    loadingCalendar: false,
+    loadingList: false,
+    loadingExcel: false,
+    loadingSummary: false
+  };
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
+  public readonly Display = Display;
 
   public selectedData = new Transaction();
 
@@ -56,18 +55,21 @@ export class FundsView implements OnInit {
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
-  public view: string = '';
-  public selectedView: 'calendar' | 'list' = 'calendar';
+  public display = Display.CALENDAR;
 
   public failures = new FailureStore();
+
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("transaction", "create");
-    this.editable = authService.hasPermission("transaction", "update");
-    this.deletable = authService.hasPermission("transaction", "delete");
+    this.permissions = {
+      create: authService.hasPermission("transaction", "create"),
+      edit: authService.hasPermission("transaction", "update"),
+      delete: authService.hasPermission("transaction", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -80,20 +82,22 @@ export class FundsView implements OnInit {
           .map(m => new Date(m.year, m.month - 1));
         // TODO: then sort the months instead of reversing
         this.months = [...this.months].reverse();
-        if (!this.loadingCalendar) {
+        if (!this.status.loadingCalendar) {
           this.loadCalendar();
         }
-        if (!this.loadingList) {
+        if (!this.status.loadingList) {
           this.loadList();
         }
       });
 
     // Read summary
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
     this.transactionBalanceService.summary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(s => this.summary = s);
   }
+
+  // EVENT HANDLERS
 
   public onCreate(toCreate: Transaction): void {
     this.call(
@@ -129,16 +133,10 @@ export class FundsView implements OnInit {
     });
   }
 
-  public onStartView(view: string): void {
-    this.view = view;
-    this.showing = false;
-    this.editing = true;
-  }
-
   public onShowInfo(transactionId: number) {
     this.service.getOne(transactionId)
       .subscribe(transaction => this.selectedData = transaction);
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onFilter(filter: string) {
@@ -146,30 +144,40 @@ export class FundsView implements OnInit {
     this.loadList();
   }
 
-  public onViewChange(view: 'calendar' | 'list') {
-    this.selectedView = view;
-  }
+  // REPORT
 
   public downloadExcel() {
-    this.loadingExcel = true;
+    this.status.loadingExcel = true;
     this.reportService.downloadExcelReport()
-      .pipe(finalize(() => this.loadingExcel = false))
+      .pipe(finalize(() => this.status.loadingExcel = false))
       .subscribe();
   }
 
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
+
   public loadCalendar(month: Date = this.getDefaultMonth()) {
-    this.loadingCalendar = true;
+    this.status.loadingCalendar = true;
     this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
-      .pipe(finalize(() => this.loadingCalendar = false))
+      .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }
 
   public loadList(page: number = 0) {
-    this.loadingList = true;
+    this.status.loadingList = true;
     this.service.getAll(page, this.descriptionFilter)
-      .pipe(finalize(() => this.loadingList = false))
+      .pipe(finalize(() => this.status.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
   }
+
+  // PRIVATE METHODS
 
   private getDefaultMonth() {
     let month;
@@ -182,26 +190,52 @@ export class FundsView implements OnInit {
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
+    this.status.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.showing = false;
+          this.dialog = Dialog.NONE;
           this.loadCalendar();
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loading: boolean;
+  loadingCalendar: boolean;
+  loadingList: boolean;
+  loadingExcel: boolean;
+  loadingSummary: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create'
+}
+
+export enum Display {
+  CALENDAR = 'calendar',
+  LIST = 'list'
 }

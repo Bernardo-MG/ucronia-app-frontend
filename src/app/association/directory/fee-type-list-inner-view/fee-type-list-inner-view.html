@@ -6,24 +6,32 @@
     </div>
   </ng-template>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" (click)="creating = true" [disabled]="!createable"
-      aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
+    <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
+      aria-label="Nuevo perfil" [attr.aria-disabled]="!permissions.create" rounded text />
   </ng-template>
   <p class="m-0">
-    <assoc-fee-type-list [loading]="loading" [editable]="editable" [deletable]="deletable" [data]="feeTypeData.content"
-      [rows]="feeTypeData.size" [page]="feeTypeData.page" [totalRecords]="feeTypeData.totalElements"
-      (edit)="onShowEditFeeType($event)" (delete)="onDeleteFeeType($event)" (changePage)="load($event)" />
+    <assoc-fee-type-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
+      [data]="feeTypeData.content" [rows]="feeTypeData.size" [page]="feeTypeData.page"
+      [totalRecords]="feeTypeData.totalElements" (edit)="onShowEditFeeType($event)" (delete)="onDeleteFeeType($event)"
+      (changePage)="load($event)" />
   </p>
+</p-panel>
 
-  <!-- Fee type creation dialog -->
-  <p-dialog header="Crear tipo de cuota" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
-    @if(creating) {
+@switch (dialog) {
+
+  @case(Dialog.CREATE) {
+    <!-- Fee type creation dialog -->
+    <p-dialog header="Crear tipo de cuota" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
       <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreateFeeType($event)" />
-    }
-  </p-dialog>
+    </p-dialog>
+  }
 
-  <!-- Fee type edition dialog -->
-  <p-dialog header="Editar tipo de cuota" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-    <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
-      (save)="onUpdateFeeType($event)" />
-  </p-dialog>
+  @case(Dialog.EDIT) {
+    <!-- Fee type edition dialog -->
+    <p-dialog header="Editar tipo de cuota" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+      <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
+        (save)="onUpdateFeeType($event)" />
+    </p-dialog>
+  }
+
+}

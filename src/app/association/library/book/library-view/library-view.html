@@ -5,9 +5,9 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
-    <ui-summary-card [loading]="loadingSummary" [value]="summary.games" label="Juegos" icon="pi pi-book"/>
-    <ui-summary-card [loading]="loadingSummary" [value]="summary.fiction" label="Ficción" icon="pi pi-book"/>
-    <ui-summary-card [loading]="loadingSummary" [value]="summary.lent" label="Prestados" icon="pi pi-bookmark"/>
+    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.games" label="Juegos" icon="pi pi-book"/>
+    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.fiction" label="Ficción" icon="pi pi-book"/>
+    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.lent" label="Prestados" icon="pi pi-bookmark"/>
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
@@ -16,20 +16,20 @@
         aria-labelledby="basic" (onChange)="onChangeList($event)" />
     </div>
 
-    @if(list === 'books') {
+    @if(display === Display.BOOKS) {
       <div class="border border-gray-300 rounded-lg p-1 inline-block">
         <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
           aria-labelledby="basic" (onChange)="onChangeSource($event)" />
       </div>
 
       <div class="ml-auto space-x-2">
-        @if (createable) {
-          <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
-            aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
+        @if (permissions.create) {
+          <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATION" [disabled]="!permissions.create"
+            aria-label="Nuevo libro" [attr.aria-disabled]="!permissions.create" rounded />
         }
 
-        <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
-          [attr.aria-disabled]="loadingExcel" rounded />
+        <p-button icon="pi pi-file-excel" [disabled]="status.loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+          [attr.aria-disabled]="status.loadingExcel" rounded />
 
         @if (dataMenuItems) {
           <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
@@ -40,15 +40,15 @@
 
   <p-panel class="shadow rounded-lg">
 
-    @switch (list) {
-      @case ('books') {
-        <assoc-library-book-list [editable]="editable" [deletable]="deletable" [loading]="loading" [books]="data.content"
+    @switch (display) {
+      @case (Display.BOOKS) {
+        <assoc-library-book-list [editable]="permissions.edit" [deletable]="permissions.delete" [loading]="status.loading" [books]="data.content"
           [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
           (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (delete)="onDelete($event)"
           (show)="onStartEditingView($event)" />
       }
-      @case ('lendings') {
-        <assoc-library-lending-list [loading]="loading" [lendings]="lendings.content" [rows]="lendings.size"
+      @case (Display.LENDINGS) {
+        <assoc-library-lending-list [loading]="status.loading" [lendings]="lendings.content" [rows]="lendings.size"
           [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
           (pageChange)="load($event)" />
       }
@@ -57,13 +57,13 @@
   </p-panel>
 
   <!-- Dialogs -->
-  <p-dialog header="Libro" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <assoc-library-book-info [loading]="loading" [book]="selectedData" />
+  <p-dialog header="Libro" [modal]="true" [visible]="dialog === Dialog.INFO" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
+    <assoc-library-book-info [loading]="status.loading" [book]="selectedData" />
   </p-dialog>
 
-  @switch (view) {
-    @case ('details') {
-      <p-dialog header="Editar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+  @switch (dialog) {
+    @case (Dialog.DETAILS) {
+      <p-dialog header="Editar libro" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
         <ng-template #header>
           <h2 class="text-xl font-semibold">
             #{{ selectedData.number }}
@@ -73,61 +73,61 @@
           </h2>
         </ng-template>
 
-        <assoc-library-book-edition-form [data]="selectedData" [loading]="loading" [failures]="failures"
+        <assoc-library-book-edition-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
           (save)="onSaveBook($event)" />
       </p-dialog>
     }
 
-    @case ('creation') {
-      <p-dialog header="Crear libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <assoc-library-book-creation-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    @case (Dialog.CREATION) {
+      <p-dialog header="Crear libro" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+        <assoc-library-book-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
       </p-dialog>
     }
 
-    @case ('donors') {
-      <p-dialog header="Donantes" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="loading" [failures]="failures"
+    @case (Dialog.DONORS) {
+      <p-dialog header="Donantes" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
+        <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="status.loading" [failures]="failures"
           [getSelection]="service.getDonors.bind(service)" (save)="onSetDonation($event)" />
       </p-dialog>
     }
 
-    @case ('authors') {
-      <p-dialog header="Autores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.AUTHORS) {
+      <p-dialog header="Autores" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
         <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
           (save)="onSetAuthors($event)" />
       </p-dialog>
     }
 
-    @case ('gameSystem') {
-      <p-dialog header="Sistemas" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.GAME_SYSTEM) {
+      <p-dialog header="Sistemas" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
         <shared-form-with-selection [data]="getGameSystem(selectedData)"
           [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" />
       </p-dialog>
     }
 
-    @case ('bookType') {
-      <p-dialog header="Tipo" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.BOOK_TYPE) {
+      <p-dialog header="Tipo" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
         <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
           (save)="onSetBookType($event)" />
       </p-dialog>
     }
 
-    @case ('publishers') {
-      <p-dialog header="Editores" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.PUBLISHERS) {
+      <p-dialog header="Editores" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
         <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
           (save)="onSetPublishers($event)" />
       </p-dialog>
     }
 
-    @case ('lendings') {
+    @case (Dialog.LENDINGS) {
       @if(selectedData.lent) {
-        <p-dialog header="Devolver libro" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-          <assoc-library-book-return-form [loading]="loading" [failures]="failures" [borrower]="borrower"
+        <p-dialog header="Devolver libro" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
+          <assoc-library-book-return-form [loading]="status.loading" [failures]="failures" [borrower]="borrower"
             [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
         </p-dialog>
       } @else {
-        <p-dialog header="Prestar libro" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-          <assoc-library-book-lending [waiting]="loading" [failures]="failures" [book]="selectedData.number"
+        <p-dialog header="Prestar libro" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+          <assoc-library-book-lending [waiting]="status.loading" [failures]="failures" [book]="selectedData.number"
             [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
         </p-dialog>
       }

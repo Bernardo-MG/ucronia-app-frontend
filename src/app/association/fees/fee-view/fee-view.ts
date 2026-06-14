@@ -33,46 +33,42 @@ export class FeeView implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
-
-  public editing = false;
-
-  public activeFilter = MemberStatus.Active;
-
-  public range = new YearsRange();
-
-  public year = new Date().getFullYear();
-
-  /**
-   * Loading flag. Shows the loading visual cue.
-   */
-  public loadingCalendar = false;
-  public loadingSummary = false;
-  public loadingDetail = false;
-  public showing = false;
+  public readonly permissions: Permissions;
+  public readonly status: Status = {
+    loadingCalendar: false,
+    loadingSummary: false,
+    loadingDetail: false,
+    showing: false,
+    editing: false
+  };
+  public readonly filter: Filter = {
+    status: MemberStatus.Active,
+    range: new YearsRange(),
+    year: new Date().getFullYear()
+  };
 
   public selectedData = new Fee();
   public summary = new FeeSummary();
   public members: PublicMember[] = [];
+  public feeCalendar: MemberFees[] = [];
 
   public failures = new FailureStore();
 
-  public feeCalendar: MemberFees[] = [];
+  public dialog = Dialog.NONE;
 
-  public view: string = '';
+  public Dialog = Dialog;
 
   public readonly creationItems: MenuItem[] = [];
-
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("fee", "create");
-    this.editable = authService.hasPermission("fee", "update");
-    this.deletable = authService.hasPermission("fee", "delete");
+    this.permissions = {
+      create: authService.hasPermission("fee", "create"),
+      edit: authService.hasPermission("fee", "update"),
+      delete: authService.hasPermission("fee", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -81,13 +77,15 @@ export class FeeView implements OnInit {
     this.creationItems.push(
       {
         label: 'Pagar cuota',
-        command: () => this.onStartEditingView('pay')
-      });
+        command: () => this.onStartEditingView(Dialog.PAY)
+      }
+    );
     this.creationItems.push(
       {
         label: 'Cuota sin pagar',
-        command: () => this.onStartEditingView('create')
-      });
+        command: () => this.onStartEditingView(Dialog.CREATE)
+      }
+    );
 
     // Load report
     this.loadSummary();
@@ -142,18 +140,18 @@ export class FeeView implements OnInit {
   public onSelectFee(fee: { member: number, date: Date }) {
     this.service.getOne(fee.member, fee.date)
       .subscribe(fee => this.selectedData = fee);
-    this.showing = true;
+    this.status.showing = true;
   }
 
   public onChangeMemberStatus(active: MemberStatus) {
-    this.activeFilter = active;
-    this.loadCalendar(this.year);
+    this.filter.status = active;
+    this.loadCalendar(this.filter.year);
   }
 
-  public onStartEditingView(view: string): void {
-    this.view = view;
-    this.showing = false;
-    this.editing = true;
+  public onStartEditingView(view: Dialog): void {
+    this.dialog = view;
+    this.status.showing = false;
+    this.status.editing = true;
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -164,35 +162,35 @@ export class FeeView implements OnInit {
   }
 
   public loadCalendar(year: number) {
-    this.loadingCalendar = true;
+    this.status.loadingCalendar = true;
 
-    this.year = year;
-    this.feeCalendarService.getCalendar(year, this.activeFilter)
-      .pipe(finalize(() => this.loadingCalendar = false))
+    this.filter.year = year;
+    this.feeCalendarService.getCalendar(year, this.filter.status)
+      .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
   }
 
   private loadSummary() {
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
 
     this.reportService.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(response => this.summary = response);
   }
 
   private loadRange() {
-    this.loadingCalendar = true;
+    this.status.loadingCalendar = true;
 
     this.feeCalendarService.getRange()
       .pipe(
         tap(range => {
-          this.range = range;
+          this.filter.range = range;
           this.loadYear(range);
         }),
         switchMap(() =>
-          this.feeCalendarService.getCalendar(this.year, this.activeFilter)
+          this.feeCalendarService.getCalendar(this.filter.year, this.filter.status)
         ),
-        finalize(() => this.loadingCalendar = false)
+        finalize(() => this.status.loadingCalendar = false)
       )
       .subscribe(data => {
         this.feeCalendar = data;
@@ -204,23 +202,23 @@ export class FeeView implements OnInit {
       const firstYear = Number(range.years[0]);
       const lastYear = Number(range.years[range.years.length - 1]);
       // If the current year is outside the range, set it back
-      if (this.year < firstYear) {
-        this.year = firstYear;
-      } else if (this.year > lastYear) {
-        this.year = lastYear;
+      if (this.filter.year < firstYear) {
+        this.filter.year = firstYear;
+      } else if (this.filter.year > lastYear) {
+        this.filter.year = lastYear;
       }
     }
   }
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loadingDetail = true;
+    this.status.loadingDetail = true;
     action()
-      .pipe(finalize(() => this.loadingDetail = false))
+      .pipe(finalize(() => this.status.loadingDetail = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.showing = false;
+          this.dialog = Dialog.NONE;
+          this.status.showing = false;
           this.loadRange();
           this.loadSummary();
           onSuccess();
@@ -236,4 +234,31 @@ export class FeeView implements OnInit {
       });
   }
 
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loadingCalendar: boolean;
+  loadingSummary: boolean;
+  loadingDetail: boolean;
+  editing: boolean;
+  showing: boolean;
+}
+
+interface Filter {
+  status: MemberStatus;
+  range: YearsRange;
+  year: number;
+}
+
+enum Dialog {
+  NONE = 'list',
+  EDITION = 'edition',
+  CREATE = 'create',
+  PAY = 'pay'
 }

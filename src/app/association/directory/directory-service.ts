@@ -20,11 +20,22 @@ export class DirectoryService {
     sort: Sorting,
     active: MemberStatus,
     name: string | undefined = undefined,
-    filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
+    type: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
   ): Observable<Page<FullProfile>> {
+    const correctedProperties = sort.properties.map(p => {
+      if (p.property === 'name') {
+        return [
+          new SortingProperty('name.firstName', p.direction),
+          new SortingProperty('name.lastName', p.direction)
+        ];
+      } else {
+        return p;
+      }
+    }).flat();
+
     const sorting = new Sorting(
       mergeProperties(
-        sort.properties,
+        correctedProperties,
         [
           new SortingProperty('name.firstName'),
           new SortingProperty('name.lastName'),
@@ -35,11 +46,11 @@ export class DirectoryService {
 
     let query;
 
-    if (filterType === 'guest') {
+    if (type === 'guest') {
       query = this.ucroniaClient.guest.page(page, undefined, sorting, name);
-    } else if (filterType === 'member') {
+    } else if (type === 'member') {
       query = this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, name);
-    } else if (filterType === 'sponsor') {
+    } else if (type === 'sponsor') {
       query = this.ucroniaClient.sponsor.page(page, undefined, sorting, name);
     } else {
       query = this.ucroniaClient.profile.page(page, undefined, sorting, name);

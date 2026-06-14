@@ -1,6 +1,7 @@
 import { Component, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
+import { Profiletype } from '../model/profyle-type';
 
 @Component({
   selector: 'assoc-profile-status-selector',
@@ -9,9 +10,9 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 })
 export class ProfileStatusSelector {
 
-  public readonly filter = output<'all' | 'member' | 'guest' | 'sponsor'>();
+  public readonly filter = output<Profiletype>();
 
-  public statusOptions: any[] = [{ label: 'Todos', value: 'all' }, { label: 'Socios', value: 'member' }, { label: 'Invitados', value: 'guest' }, { label: 'Esponsors', value: 'sponsor' }];
-  public selectedStatus: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
+  public statusOptions: any[] = [{ label: 'Todos', value: Profiletype.ALL }, { label: 'Socios', value: Profiletype.MEMBER }, { label: 'Invitados', value: Profiletype.GUEST }, { label: 'Esponsors', value: Profiletype.SPONSOR }];
+  public selectedStatus: Profiletype = Profiletype.ALL;
 
 }

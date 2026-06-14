@@ -27,9 +27,8 @@ export class UserView implements OnInit {
   private readonly service = inject(UserService);
   private readonly messageService = inject(MessageService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
 
   public data = new Page<User>();
 
@@ -40,10 +39,6 @@ export class UserView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public editing = false;
-  public showing = false;
-
-  public view: string = '';
 
   private sort = new Sorting();
 
@@ -54,20 +49,27 @@ export class UserView implements OnInit {
   public availableMembers: PublicMember[] = [];
   public members: PublicMember[] = [];
 
+  public dialog = Dialog.NONE;
+
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("user", "create");
-    this.editable = authService.hasPermission("user", "update");
-    this.deletable = authService.hasPermission("user", "delete");
+    this.permissions = {
+      create: authService.hasPermission("user", "create"),
+      edit: authService.hasPermission("user", "update"),
+      delete: authService.hasPermission("user", "delete")
+    };
   }
 
   public ngOnInit(): void {
     this.load();
   }
 
+  // EVENT HANDLERS
+
   public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
@@ -117,7 +119,7 @@ export class UserView implements OnInit {
   public onShowUser(user: User) {
     this.selectedData = user;
     this.service.getProfile(user.username).subscribe(member => this.member = member);
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onSetEnabled(status: boolean) {
@@ -144,8 +146,7 @@ export class UserView implements OnInit {
     this.service.getAllRoles()
       .pipe(finalize(() => this.loading = false))
       .subscribe(r => this.roleSelection = r);
-    this.view = 'invite';
-    this.editing = true;
+    this.dialog = Dialog.INVITE;
   }
 
   public onStartEditing(user: User, view: string): void {
@@ -164,8 +165,7 @@ export class UserView implements OnInit {
           .subscribe(r => this.roleSelection = r);
         break;
     }
-    this.view = view;
-    this.editing = true;
+    this.dialog = Dialog.EDIT;
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -175,12 +175,24 @@ export class UserView implements OnInit {
       });
   }
 
+  // DATA LOADING
+
   public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
+
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // PRIVATE METHODS
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
@@ -189,9 +201,7 @@ export class UserView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.editing = false;
-          this.showing = false;
+          this.dialog = Dialog.NONE;
           this.load();
           onSuccess();
         },
@@ -206,4 +216,19 @@ export class UserView implements OnInit {
       });
   }
 
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  INVITE = 'invite',
+  ROLES = 'roles',
+  MEMBER = 'member'
 }

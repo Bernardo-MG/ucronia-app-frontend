@@ -19,9 +19,10 @@ export class ContactMethodListInnerView implements OnInit {
 
   private readonly contactMethodService = inject(ContactMethodService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
+
+  public dialog = Dialog.NONE;
 
   public selectedData = new ContactMethod();
   public contactMethodData = new Page<ContactMethod>();
@@ -31,8 +32,6 @@ export class ContactMethodListInnerView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public editing = false;
-  public creating = false;
 
   public failures = new FailureStore();
 
@@ -40,9 +39,11 @@ export class ContactMethodListInnerView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("contact_method", "create");
-    this.editable = authService.hasPermission("contact_method", "update");
-    this.deletable = authService.hasPermission("contact_method", "delete");
+    this.permissions = {
+      create: authService.hasPermission("contact_method", "create"),
+      edit: authService.hasPermission("contact_method", "update"),
+      delete: authService.hasPermission("contact_method", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -53,7 +54,7 @@ export class ContactMethodListInnerView implements OnInit {
 
   public onShowEditContactMethod(contactMethod: ContactMethod) {
     this.selectedData = contactMethod;
-    this.editing = true;
+    this.dialog = Dialog.EDIT;
   }
 
   public onCreateContactMethod(toCreate: ContactMethod): void {
@@ -87,6 +88,14 @@ export class ContactMethodListInnerView implements OnInit {
       .subscribe(response => this.contactMethodData = response);
   }
 
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
   // PRIVATE METHODS
 
   private mutation(
@@ -99,20 +108,32 @@ export class ContactMethodListInnerView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.creating = false;
-          this.editing = false;
+          this.dialog = Dialog.NONE;
 
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  EDIT = 'edit',
+  CREATE = 'create'
 }
