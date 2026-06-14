@@ -1,1 +1,21 @@
-<shared-crud-name-list entityKey="library_publisher" [service]="service" />
+<shared-crud-name-list [data]="data" [loading]="loading" [createable]="createable" [editable]="editable" [deletable]="deletable"
+  (startCreating)="openCreate()" (startEditing)="openEdit($event)" (deleted)="onDelete($event)" (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
+
+<p-drawer [(visible)]="showForm" [closable]="false" position="right">
+  @switch (view) {
+    @case (View.CREATION) {
+      <ng-template #header>
+        Crear editor
+      </ng-template>
+      <shared-name-form [loading]="loading" [failures]="failures"
+        (save)="onSave($event)" (reject)="onReject()"></shared-name-form>
+    }
+    @case (View.EDITION) {
+      <ng-template #header>
+        Modificar editor
+      </ng-template>
+      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures"
+        (save)="onSave($event)" (reject)="onReject()"></shared-name-form>
+    }
+  }
+</p-drawer>
