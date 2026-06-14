@@ -7,7 +7,7 @@ import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, forkJoin, Observable, throwError } from 'rxjs';
 import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
@@ -31,7 +31,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -194,7 +194,7 @@ export class DirectoryView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

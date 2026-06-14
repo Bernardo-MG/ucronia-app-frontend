@@ -3,7 +3,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
@@ -12,7 +12,7 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-list-inner-view',
-  imports: [PanelModule, ButtonModule, DialogModule, FeeTypeList, FeeTypeForm],
+  imports: [PanelModule, ButtonModule, DrawerModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-list-inner-view.html'
 })
 export class FeeTypeListInnerView implements OnInit {
@@ -90,7 +90,7 @@ export class FeeTypeListInnerView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

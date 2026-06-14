@@ -17,21 +17,30 @@
   </p>
 </p-panel>
 
-@switch (dialog) {
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+  @switch (dialog) {
 
-  @case(Dialog.CREATE) {
-    <!-- Fee type creation dialog -->
-    <p-dialog header="Crear tipo de cuota" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreateFeeType($event)" />
-    </p-dialog>
+    @case(Dialog.CREATE) {
+      <ng-template #header>
+        Crear tipo de cuota
+      </ng-template>
+      <div class="w-full">
+        <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreateFeeType($event)" />
+      </div>
+    }
+
+    @case(Dialog.EDIT) {
+      <ng-template #header>
+        Editar tipo de cuota
+      </ng-template>
+      <div class="w-full">
+        <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
+          (save)="onUpdateFeeType($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    }
+
   }
-
-  @case(Dialog.EDIT) {
-    <!-- Fee type edition dialog -->
-    <p-dialog header="Editar tipo de cuota" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
-        (save)="onUpdateFeeType($event)" />
-    </p-dialog>
-  }
-
-}
+</p-drawer>

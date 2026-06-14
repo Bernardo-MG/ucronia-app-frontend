@@ -68,27 +68,42 @@
 
 </div>
 
-@switch (dialog) {
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+  @switch (dialog) {
 
-  @case(Dialog.INFO) {
-    <!-- Profile details dialog -->
-    <p-dialog header="Perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-profile-info [data]="infoData" [loading]="status.loading" />
-    </p-dialog>
-  }
+    @case(Dialog.INFO) {
+      <ng-template #header>
+        Perfil
+      </ng-template>
+      <div class="w-full">
+        <assoc-profile-info [data]="infoData" [loading]="status.loading" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
+          [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDIT" rounded text class="!p-2" />
+      </ng-template>
+    }
 
-  @case(Dialog.CREATE) {
-    <!-- Creation dialog -->
-    <p-dialog header="Crear perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '40rem' }">
-      <assoc-profile-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
-    </p-dialog>
-  }
+    @case(Dialog.CREATE) {
+      <ng-template #header>
+        Crear perfil
+      </ng-template>
+      <div class="w-full">
+        <assoc-profile-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
+    }
 
-  @case(Dialog.EDIT) {
-    <!-- Edition dialog -->
-    <p-dialog header="Editar perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-profile-info-edition-form [loading]="status.loading" [data]="infoData" [feeTypes]="feeTypes"
-        [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
-    </p-dialog>
+    @case(Dialog.EDIT) {
+      <ng-template #header>
+        Editar perfil
+      </ng-template>
+      <div class="w-full">
+        <assoc-profile-info-edition-form [loading]="status.loading" [data]="infoData" [feeTypes]="feeTypes"
+          [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />
+      </ng-template>
+    }
   }
-}
+</p-drawer>

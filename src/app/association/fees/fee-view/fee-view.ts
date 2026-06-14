@@ -6,7 +6,7 @@ import { SummaryCard } from '@bernardo-mg/ui';
 import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -22,7 +22,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
+  imports: [DrawerModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -90,6 +90,8 @@ export class FeeView implements OnInit {
     // Load report
     this.loadSummary();
   }
+
+  // EVENT HANDLERS
 
   public onUpdate(toUpdate: FeeEditionEvent): void {
     const update = {
@@ -170,6 +172,16 @@ export class FeeView implements OnInit {
       .subscribe(data => this.feeCalendar = data);
   }
 
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
+
   private loadSummary() {
     this.status.loadingSummary = true;
 
@@ -209,6 +221,8 @@ export class FeeView implements OnInit {
       }
     }
   }
+
+  // PRIVATE METHODS
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.status.loadingDetail = true;
@@ -257,7 +271,8 @@ interface Filter {
 }
 
 enum Dialog {
-  NONE = 'list',
+  NONE = 'none',
+  INFO = 'info',
   EDITION = 'edition',
   CREATE = 'create',
   PAY = 'pay'
