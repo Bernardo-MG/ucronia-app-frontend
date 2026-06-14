@@ -2,48 +2,47 @@
   <!-- Buttons -->
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <!-- Add user -->
-    @if (createable) {
+    @if (permissions.create) {
       <div class="ml-auto space-x-2">
-        <p-button icon="pi pi-envelope" (click)="onStartInvitation()" [disabled]="!createable"
-          aria-label="Invitar usuario" [attr.aria-disabled]="!createable" rounded />
+        <p-button icon="pi pi-envelope" (click)="onStartInvitation()" [disabled]="!permissions.create"
+          aria-label="Invitar usuario" [attr.aria-disabled]="!permissions.create" rounded />
       </div>
     }
   </div>
   <p-panel class="shadow rounded-lg">
     <ng-template #icons>
     </ng-template>
-    <access-user-list [loading]="loading" [editable]="editable" [deletable]="deletable" [users]="data.content"
+    <access-user-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [users]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
       (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
       (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
   </p-panel>
 
-  @if (showing) {
-    <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
-      <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
-    </p-dialog>
-  }
-
-  @switch (view) {
-    @case ('invite') {
-      <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <p-dialog header="Usuario" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+        <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
+      </p-dialog>
+    }
+    @case (Dialog.INVITE) {
+      <p-dialog header="Invitar usuario" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
         <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
           (save)="onInvite($event)" />
       </p-dialog>
     }
-    @case ('edition') {
-      <p-dialog header="Editar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.EDIT) {
+      <p-dialog header="Editar usuario" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
         <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
           (save)="onUpdate($event)" />
       </p-dialog>
     }
-    @case ('roles') {
-      <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
+    @case (Dialog.ROLES) {
+      <p-dialog header="Editar roles" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
         <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
       </p-dialog>
     }
-    @case ('member') {
-      <p-dialog header="Asignar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
+    @case (Dialog.MEMBER) {
+      <p-dialog header="Asignar socio" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
         <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
           (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
       </p-dialog>
