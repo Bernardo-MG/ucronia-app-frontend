@@ -23,7 +23,7 @@
 
 @switch (dialog) {
   @case (Dialog.INFO) {
-    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
       <ng-template #header>
         Rol
       </ng-template>
@@ -36,7 +36,7 @@
     </p-drawer>
   }
   @case (Dialog.CREATE) {
-    <p-drawer [visible]="dialog === Dialog.CREATE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+    <p-drawer [visible]="dialog === Dialog.CREATE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
       <ng-template #header>
         Crear rol
       </ng-template>
@@ -49,7 +49,7 @@
     </p-drawer>
   }
   @case (Dialog.PERMISSIONS) {
-    <p-drawer [visible]="dialog === Dialog.PERMISSIONS" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+    <p-drawer [visible]="dialog === Dialog.PERMISSIONS" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
       <ng-template #header>
         Asignar permisos
       </ng-template>

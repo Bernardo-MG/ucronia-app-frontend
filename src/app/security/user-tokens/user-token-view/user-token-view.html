@@ -7,7 +7,7 @@
 </p-card>
 @switch (dialog) {
   @case (Dialog.INFO) {
-    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
       <ng-template #header>
         Token
       </ng-template>
@@ -20,7 +20,7 @@
     </p-drawer>
   }
   @case (Dialog.EXTEND) {
-    <p-drawer [visible]="dialog === Dialog.EXTEND" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+    <p-drawer [visible]="dialog === Dialog.EXTEND" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
       <ng-template #header>
         Extender token
       </ng-template>

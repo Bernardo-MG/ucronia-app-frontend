@@ -17,7 +17,7 @@
   </p>
 </p-panel>
 
-<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
   @switch (dialog) {
 
     @case(Dialog.CREATE) {

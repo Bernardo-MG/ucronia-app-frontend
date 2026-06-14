@@ -30,7 +30,7 @@
   </div>
 
   <!-- Fee Drawer -->
-  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" class="rounded-lg">
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" class="rounded-lg" [style]="{ width: '60vw' }">
     @switch (dialog) {
 
       @case(Dialog.INFO) {

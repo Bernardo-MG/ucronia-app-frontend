@@ -20,7 +20,7 @@
 
   @switch (dialog) {
     @case (Dialog.INFO) {
-      <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+      <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
         <ng-template #header>
           Usuario
         </ng-template>
@@ -33,7 +33,7 @@
       </p-drawer>
     }
     @case (Dialog.INVITE) {
-      <p-drawer [visible]="dialog === Dialog.INVITE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+      <p-drawer [visible]="dialog === Dialog.INVITE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
         <ng-template #header>
           Invitar usuario
         </ng-template>
@@ -47,7 +47,7 @@
       </p-drawer>
     }
     @case (Dialog.EDIT) {
-      <p-drawer [visible]="dialog === Dialog.EDIT" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+      <p-drawer [visible]="dialog === Dialog.EDIT" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
         <ng-template #header>
           Editar usuario
         </ng-template>
@@ -61,7 +61,7 @@
       </p-drawer>
     }
     @case (Dialog.ROLES) {
-      <p-drawer [visible]="dialog === Dialog.ROLES" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+      <p-drawer [visible]="dialog === Dialog.ROLES" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
         <ng-template #header>
           Editar roles
         </ng-template>
@@ -74,7 +74,7 @@
       </p-drawer>
     }
     @case (Dialog.MEMBER) {
-      <p-drawer [visible]="dialog === Dialog.MEMBER" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right">
+      <p-drawer [visible]="dialog === Dialog.MEMBER" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
         <ng-template #header>
           Asignar socio
         </ng-template>
