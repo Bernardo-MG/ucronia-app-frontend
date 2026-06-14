@@ -59,8 +59,9 @@ export class CrudNameList {
     this.startCreating.emit();
   }
 
-  public onDelete(id: number): void {
+  public onDelete(event: Event, id: number): void {
     this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
       message: '¿Quieres borrar estos datos?',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
