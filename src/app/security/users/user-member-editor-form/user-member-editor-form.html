@@ -15,5 +15,6 @@
   <div class="flex items-center w-full justify-between mb-3">
     <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
       [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+    <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemoveMember()" rounded text />
   </div>
 </form>

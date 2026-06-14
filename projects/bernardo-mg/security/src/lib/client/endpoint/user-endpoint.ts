@@ -165,4 +165,14 @@ export class UserProfileEndpoint {
       );
   }
 
+  public delete(
+    username: string
+  ): Observable<Profile> {
+    return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/security/user/${username}/profile`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content)
+      );
+  }
+
 }
