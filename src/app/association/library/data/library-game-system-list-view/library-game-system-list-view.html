@@ -29,7 +29,7 @@
       <shared-name-form [data]="selected" [loading]="loading" [failures]="failures"
         (save)="onSave($event)" (reject)="onReject()"></shared-name-form>
       <ng-template #footer>
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" (click)="onDelete(selected?.number)" rounded text />
+        <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
       </ng-template>
     }
   }

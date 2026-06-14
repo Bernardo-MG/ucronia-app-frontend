@@ -65,6 +65,11 @@ export class LibraryBookTypeListView implements OnInit {
     this.failures.clear();
   }
 
+  public onCancelEdit(): void {
+    this.view = CrudFormView.VIEW;
+    this.failures.clear();
+  }
+
   public onSave(data: any): void {
     if (this.view === CrudFormView.CREATION) {
       this.onCreate(data);
