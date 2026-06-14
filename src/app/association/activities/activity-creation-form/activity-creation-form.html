@@ -1,1 +1,32 @@
-<p>activity-creation-form works!</p>
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+
+  <!-- Title -->
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="titleInput" formControlName="name" class="w-full min-w-0" />
+    <label for="titleInput">Título</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('title'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <!-- Date -->
+  <p-floatlabel variant="in" class="mb-2">
+    <p-datepicker id="dateInput" formControlName="date" [invalid]="isFieldInvalid('date')" dateFormat="yy-mm-dd"
+      appendTo="body" class="w-full" />
+    <label for="dateInput">Fecha</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('date'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

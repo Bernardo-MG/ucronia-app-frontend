@@ -65,7 +65,7 @@ export class ActivityView {
     this.dialog = Dialog.INFO;
   }
 
-  public onCreate(toCreate: any): void {
+  public onCreate(toCreate: Activity): void {
   }
 
   public onUpdate(toUpdate: Activity): void {

@@ -1,8 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Activity } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
