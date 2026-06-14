@@ -32,12 +32,11 @@ export class UserTokenView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public showing = false;
-  public editing = false;
 
   public readonly editable;
+  public readonly Dialog = Dialog;
 
-  public view: string = '';
+  public dialog = Dialog.NONE;
 
   public failures = new FailureStore();
 
@@ -51,6 +50,8 @@ export class UserTokenView implements OnInit {
     this.load();
   }
 
+  // EVENT HANDLERS
+
   public onExtendExpiration(date: Date): void {
     this.call(
       () => this.service.extend(this.selectedData.token, date),
@@ -58,17 +59,13 @@ export class UserTokenView implements OnInit {
     );
   }
 
-  public onStartExtend(): void {
-    this.view = 'extend';
-    this.editing = true;
-  }
-
   public onShowInfo(token: UserToken) {
     this.selectedData = token;
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
@@ -77,12 +74,24 @@ export class UserTokenView implements OnInit {
     this.load(this.data.page);
   }
 
+  // DATA LOADING
+
   public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
   }
+
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // PRIVATE METHODS
 
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.loading = true;
@@ -91,19 +100,26 @@ export class UserTokenView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
+          this.dialog = Dialog.NONE;
           this.load();
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EXTEND = 'extend'
 }

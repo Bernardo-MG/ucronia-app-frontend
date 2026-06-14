@@ -29,7 +29,6 @@ export class FeePaymentsForm {
 
   public readonly save = output<FeesPaymentEvent>();
   public readonly searchMember = output<FeeSearchEvent>();
-  public readonly return = output();
 
   public formStatus: FormStatus;
 

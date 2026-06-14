@@ -1,25 +1,25 @@
 
 <div class="flex items-center justify-center p-4">
-  @switch (status) {
-    @case ('valid_token') {
-      <p-blockui [target]="userActivation" [blocked]="validating">
+  @switch (step) {
+    @case (Step.VALID_TOKEN) {
+      <p-blockui [target]="userActivation" [blocked]="status.validating">
         <div>
           <i class="pi pi-spin pi-spinner" style="font-size: 3rem"></i>
         </div>
       </p-blockui>
       <p-card #userActivation>
         <ng-template #title>
-          Activar usuario {{username}}
+          Activar usuario {{user.username}}
         </ng-template>
-        <access-user-activation-form [failures]="failures" [loading]="waiting" (save)="onActivateUser($event)" />
+        <access-user-activation-form [failures]="failures" [loading]="status.loading" (save)="onActivateUser($event)" />
       </p-card>
     }
-    @case ('invalid_token') {
+    @case (Step.INVALID_TOKEN) {
       <p-card>
         Token inválido
       </p-card>
     }
-    @case ('finished') {
+    @case (Step.FINISHED) {
       <p-card>
         Usuario activado
       </p-card>

@@ -2,11 +2,11 @@ import { Component, input } from '@angular/core';
 import { Profile } from '@ucronia/domain';
 
 @Component({
-  selector: 'account-profile-details',
+  selector: 'account-profile-info',
   imports: [],
-  templateUrl: './account-profile-details.html'
+  templateUrl: './account-profile-info.html'
 })
-export class AccountProfileDetails {
+export class AccountProfileInfo {
 
   readonly data = input(new Profile());
 

@@ -26,6 +26,7 @@ import { LibraryBookInfo } from '../library-book-info/library-book-info';
 import { LibraryBookLending } from '../library-book-lending/library-book-lending';
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
+import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
@@ -51,31 +52,27 @@ export class LibraryView implements OnInit {
   public lendings = new Page<BookLending>();
   public summary = new LibrarySummary();
 
-  public source: BookSelection = BookSelection.Game;
-  public list: 'books' | 'lendings' = 'books';
+  public source: BookSelection = BookSelection.GAME;
+  public display = Display.BOOKS;
 
-  public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
-  public selectedTab: 'books' | 'lendings' = 'books';
+  public stateOptions: any[] = [{ label: 'Libros', value: Display.BOOKS }, { label: 'Préstamos', value: Display.LENDINGS }];
+  public selectedTab = Display.BOOKS;
 
-  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.Game }, { label: 'Ficción', value: BookSelection.Fiction }];
-  public selectedBookView: 'all' | 'game' | 'fiction' = 'game';
+  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.GAME }, { label: 'Ficción', value: BookSelection.FICTION }];
+  public selectedBookView = BookSelection.GAME;
 
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-  public loadingExcel = false;
-  public loadingSummary = false;
-  public editing = false;
-  public showing = false;
+  public readonly permissions: Permissions;
+  public readonly status: Status = {
+    loading: false,
+    loadingSummary: false,
+    loadingExcel: false
+  };
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public dialog = Dialog.NONE;
+
+  public readonly Dialog = Dialog;
 
   public readonly dataMenuItems: MenuItem[] = [];
-
-  public view: string = '';
 
   private sort = new Sorting();
 
@@ -85,6 +82,8 @@ export class LibraryView implements OnInit {
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
+
+  public Display = Display;
 
   public get borrower(): Borrower {
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
@@ -98,9 +97,11 @@ export class LibraryView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("library_book", "create");
-    this.editable = authService.hasPermission("library_book", "update");
-    this.deletable = authService.hasPermission("library_book", "delete");
+    this.permissions = {
+      create: authService.hasPermission("library_book", "create"),
+      edit: authService.hasPermission("library_book", "update"),
+      delete: authService.hasPermission("library_book", "delete")
+    };
 
     // Initial operations
     this.delete = this.service.deleteGameBook.bind(this.service);
@@ -142,6 +143,8 @@ export class LibraryView implements OnInit {
     this.load();
     this.loadSummary();
   }
+
+  // EVENT HANDLERS
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     this.selectedData = book;
@@ -213,7 +216,7 @@ export class LibraryView implements OnInit {
 
   public onChangeSource(event: SelectButtonChangeEvent) {
     this.source = event.value as BookSelection;
-    if (this.source === BookSelection.Game) {
+    if (this.source === BookSelection.GAME) {
       this.delete = this.service.deleteGameBook.bind(this.service);
       this.update = this.service.updateGameBook.bind(this.service);
       this.read = this.service.getAllGameBooks.bind(this.service);
@@ -226,8 +229,8 @@ export class LibraryView implements OnInit {
   }
 
   public onChangeList(event: SelectButtonChangeEvent) {
-    this.list = event.value as 'books' | 'lendings';
-    if (this.list === 'books') {
+    this.display = event.value as Display;
+    if (this.display === Display.BOOKS) {
       this.load();
     } else {
       this.loadLendings();
@@ -236,26 +239,20 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public downloadExcel() {
-    this.loadingExcel = true;
+    this.status.loadingExcel = true;
     this.reportService.downloadExcelReport()
       .pipe(
-        finalize(() => this.loadingExcel = false))
+        finalize(() => this.status.loadingExcel = false))
       .subscribe();
   }
 
-  public onStartEditingView(event: { view: string, book: FictionBook | GameBook }): void {
+  public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
     this.selectedData = event.book;
-    this.view = event.view;
-    this.editing = true;
-  }
-
-  public onStartView(view: string): void {
-    this.view = view;
-    this.editing = true;
+    this.dialog = event.dialog;
   }
 
   public onSetAuthors(authors: Author[]) {
@@ -362,6 +359,16 @@ export class LibraryView implements OnInit {
     this.onUpdate(updateDate as BookUpdate);
   }
 
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
+
   public getGameSystem(book: FictionBook | GameBook): GameSystem {
     return (book as GameBook).gameSystem as GameSystem;
   }
@@ -371,27 +378,29 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
-    this.loading = true;
+    this.status.loading = true;
     this.read(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
-    this.loading = true;
+    this.status.loading = true;
     this.lendingsService.getAll(page, new Sorting([]))
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => this.lendings = response);
   }
 
+  // PRIVATE METHODS
+
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
+    this.status.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
+          this.dialog = Dialog.NONE;
           this.load(this.data.page);
           onSuccess();
         },
@@ -407,15 +416,35 @@ export class LibraryView implements OnInit {
   }
 
   private loadSummary() {
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
     this.service.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(r => this.summary = r);
   }
 
 }
 
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loading: boolean;
+  loadingSummary: boolean;
+  loadingExcel: boolean;
+}
+
+// Dialog enum moved to ../dialog.ts to avoid circular imports with LibraryBookList
+
 export enum BookSelection {
-  Game = 'game',
-  Fiction = 'fiction'
+  ALL = 'all',
+  GAME = 'game',
+  FICTION = 'fiction'
+}
+
+export enum Display {
+  BOOKS = 'books',
+  LENDINGS = 'lendings'
 }
