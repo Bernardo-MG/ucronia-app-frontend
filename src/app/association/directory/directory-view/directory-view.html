@@ -97,7 +97,7 @@
       </ng-template>
       <div class="w-full">
         <assoc-profile-info-edition-form [loading]="status.loading" [data]="infoData" [feeTypes]="feeTypes"
-          [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
+          [failures]="failures" [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />
