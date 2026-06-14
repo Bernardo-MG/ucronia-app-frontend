@@ -15,7 +15,7 @@
     <access-user-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [users]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
       (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
-      (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
+      (active)="onSetEnabled($event)" (edit)="onStartEditing($event)" (editRoles)="onStartEditingRoles($event)" (editMember)="onStartEditingMember($event)" />
   </p-panel>
 
   @switch (dialog) {
