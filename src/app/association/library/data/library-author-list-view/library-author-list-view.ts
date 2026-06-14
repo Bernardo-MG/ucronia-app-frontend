@@ -4,7 +4,7 @@ import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
@@ -18,7 +18,6 @@ import { AuthorCrudService } from '../author-crud-service';
 export class LibraryAuthorListView implements OnInit {
 
   private readonly service = inject(AuthorCrudService);
-  private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -111,7 +110,6 @@ export class LibraryAuthorListView implements OnInit {
           this.failures.clear();
           this.view = Drawer.NONE;
           this.load(this.data.page);
-          this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -132,7 +130,6 @@ export class LibraryAuthorListView implements OnInit {
           this.failures.clear();
           this.view = Drawer.NONE;
           this.load(this.data.page);
-          this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -154,7 +151,6 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe({
         complete: () => {
           this.load(this.data.page);
-          this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
         }
       });
   }

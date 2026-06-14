@@ -5,7 +5,7 @@ import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { finalize } from 'rxjs';
@@ -18,7 +18,6 @@ import { PublisherCrudService } from '../publisher-crud-service';
 export class LibraryPublisherListView implements OnInit {
 
   private readonly service = inject(PublisherCrudService);
-  private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -114,7 +113,6 @@ export class LibraryPublisherListView implements OnInit {
           this.failures.clear();
           this.view = Drawer.NONE;
           this.load(this.data.page);
-          this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -135,7 +133,6 @@ export class LibraryPublisherListView implements OnInit {
           this.failures.clear();
           this.view = Drawer.NONE;
           this.load(this.data.page);
-          this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -157,7 +154,6 @@ export class LibraryPublisherListView implements OnInit {
       .subscribe({
         complete: () => {
           this.load(this.data.page);
-          this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
         }
       });
   }
