@@ -149,23 +149,27 @@ export class UserView implements OnInit {
     this.dialog = Dialog.INVITE;
   }
 
-  public onStartEditing(user: User, view: string): void {
+  public onStartEditing(user: User): void {
     this.selectedData = user;
-    switch (view) {
-      case 'member':
-        this.service.getProfile(user.username).subscribe(member => this.member = member);
-        this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
-        break;
-      case 'roles':
-        this.loading = true;
-        this.service.getAvailableRoles(user.username)
-          .pipe(
-            finalize(() => this.loading = false)
-          )
-          .subscribe(r => this.roleSelection = r);
-        break;
-    }
     this.dialog = Dialog.EDIT;
+  }
+
+  public onStartEditingRoles(user: User): void {
+    this.selectedData = user;
+    this.loading = true;
+    this.service.getAvailableRoles(user.username)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(r => this.roleSelection = r);
+    this.dialog = Dialog.ROLES;
+  }
+
+  public onStartEditingMember(user: User): void {
+    this.selectedData = user;
+    this.service.getProfile(user.username).subscribe(member => this.member = member);
+    this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
+    this.dialog = Dialog.MEMBER;
   }
 
   public onSearchMembers(event: { query: string }) {
