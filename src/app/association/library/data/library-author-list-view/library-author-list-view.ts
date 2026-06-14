@@ -1,14 +1,14 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { NameList, CrudFormView } from '@app/shared/data/name-list/name-list';
-import { AuthorCrudService } from '../author-crud-service';
-import { DrawerModule } from 'primeng/drawer';
 import { NameForm } from '@app/shared/data/name-form/name-form';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
+import { finalize } from 'rxjs';
+import { AuthorCrudService } from '../author-crud-service';
 
 @Component({
   imports: [NameList, DrawerModule, NameForm, ButtonModule],
@@ -27,8 +27,8 @@ export class LibraryAuthorListView implements OnInit {
   public createable = false;
   public editable = false;
   public deletable = false;
-  public view: CrudFormView = CrudFormView.NONE;
-  public readonly View = CrudFormView;
+  public view: Drawer = Drawer.NONE;
+  public readonly View = Drawer;
   public selected: any;
   protected sort = new Sorting();
 
@@ -41,29 +41,29 @@ export class LibraryAuthorListView implements OnInit {
 
   public onShowCreate(): void {
     this.selected = undefined;
-    this.view = CrudFormView.CREATION;
+    this.view = Drawer.CREATION;
     this.failures.clear();
   }
 
   public onShowInfo(item: any): void {
     this.selected = item;
-    this.view = CrudFormView.INFO;
+    this.view = Drawer.INFO;
     this.failures.clear();
   }
 
   public onShowEdit(item: any): void {
     this.selected = item;
-    this.view = CrudFormView.EDITION;
+    this.view = Drawer.EDITION;
     this.failures.clear();
   }
 
   public onReject(): void {
-    this.view = CrudFormView.NONE;
+    this.view = Drawer.NONE;
     this.failures.clear();
   }
 
   public onCancelEdit(): void {
-    this.view = CrudFormView.NONE;
+    this.view = Drawer.NONE;
     this.failures.clear();
   }
 
@@ -86,7 +86,7 @@ export class LibraryAuthorListView implements OnInit {
   }
 
   public onSave(data: any): void {
-    if (this.view === CrudFormView.CREATION) {
+    if (this.view === Drawer.CREATION) {
       this.onCreate(data);
     } else {
       this.onUpdate(data);
@@ -100,7 +100,7 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = CrudFormView.NONE;
+          this.view = Drawer.NONE;
           this.load(this.data.page);
           this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
         },
@@ -121,7 +121,7 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = CrudFormView.NONE;
+          this.view = Drawer.NONE;
           this.load(this.data.page);
           this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
         },
@@ -140,7 +140,7 @@ export class LibraryAuthorListView implements OnInit {
     this.service.delete(id)
       .pipe(finalize(() => {
         this.loading = false;
-        this.view = CrudFormView.NONE;
+        this.view = Drawer.NONE;
       }))
       .subscribe({
         complete: () => {
@@ -161,7 +161,7 @@ export class LibraryAuthorListView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
-      this.view = CrudFormView.NONE;
+      this.view = Drawer.NONE;
     }
   }
 
@@ -172,4 +172,11 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
+}
+
+enum Drawer {
+  NONE = 'none',
+  INFO = 'info',
+  CREATION = 'creation',
+  EDITION = 'edition'
 }

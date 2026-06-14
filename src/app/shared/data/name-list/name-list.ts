@@ -5,13 +5,6 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
-export enum CrudFormView {
-  NONE = 'none',
-  INFO = 'info',
-  CREATION = 'creation',
-  EDITION = 'edition'
-}
-
 @Component({
   selector: 'shared-name-list',
   imports: [TableModule, PanelModule, MenuModule, ButtonModule],
