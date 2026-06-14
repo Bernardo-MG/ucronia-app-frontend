@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NameList } from './name-list';
 import { Confirmation, ConfirmationService } from 'primeng/api';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('NameList', () => {
   let component: NameList;
@@ -9,8 +10,13 @@ describe('NameList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NameList],
-      providers: [ConfirmationService]
+      imports: [
+        NameList
+      ],
+      providers: [
+        provideAnimationsAsync(),
+        ConfirmationService
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(NameList);
