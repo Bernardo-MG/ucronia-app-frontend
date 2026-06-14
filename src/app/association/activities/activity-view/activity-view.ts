@@ -1,14 +1,18 @@
 import { Component, inject } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
-import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { Activity } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
+import { ActivityCreationForm } from '../activity-creation-form/activity-creation-form';
+import { ActivityEditionForm } from '../activity-edition-form/activity-edition-form';
+import { ActivityInfo } from '../activity-info/activity-info';
 import { ActivityList } from '../activity-list/activity-list';
 
 @Component({
-  imports: [PanelModule, ButtonModule, ActivityList],
+  imports: [PanelModule, ButtonModule, DrawerModule, ActivityList, ActivityInfo, ActivityEditionForm, ActivityCreationForm],
   templateUrl: './activity-view.html'
 })
 export class ActivityView {
@@ -21,8 +25,11 @@ export class ActivityView {
 
   public activities = new Page<Activity>();
   private sort = new Sorting();
+  public selectedData = new Activity();
 
   public dialog = Dialog.NONE;
+
+  public failures = new FailureStore();
 
   constructor() {
     const authService = inject(AuthService);
@@ -36,6 +43,13 @@ export class ActivityView {
   }
 
   // EVENT HANDLERS
+
+  public onShowEdit() {
+    this.dialog = Dialog.EDIT;
+  }
+
+  public onDelete(event: Event, id: number): void {
+  }
 
   public onChangeDirection(sorting: SortingEvent) {
     // TODO: should receive the actual direction, not a number
@@ -51,9 +65,23 @@ export class ActivityView {
     this.dialog = Dialog.INFO;
   }
 
+  public onCreate(toCreate: any): void {
+  }
+
+  public onUpdate(toUpdate: Activity): void {
+  }
+
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
+  }
+
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
   }
 
 }

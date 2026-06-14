@@ -1,11 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
+import { Activity } from '@ucronia/domain';
 
 @Component({
-  selector: 'app-activity-info',
+  selector: 'assoc-activity-info',
   imports: [],
-  templateUrl: './activity-info.html',
-  styleUrl: './activity-info.sass',
+  templateUrl: './activity-info.html'
 })
 export class ActivityInfo {
+
+  public readonly data = input(new Activity());
+  public readonly loading = input(false);
 
 }

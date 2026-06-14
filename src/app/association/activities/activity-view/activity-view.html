@@ -7,7 +7,7 @@
     </div>
   }
 </div>
-  
+
 <div class="p-4 space-y-6">
   <p-panel class="bg-white shadow rounded-lg">
     <app-activity-list [loading]="status.loading" [data]="activities.content" [rows]="activities.size"
@@ -15,3 +15,45 @@
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
   </p-panel>
 </div>
+
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+  @switch (dialog) {
+
+    @case(Dialog.INFO) {
+      <ng-template #header>
+        Perfil
+      </ng-template>
+      <div class="w-full">
+        <assoc-activity-info [data]="selectedData" [loading]="status.loading" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
+          [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" rounded text class="!p-2" />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="onDelete($event, selectedData.number)" rounded text />
+      </ng-template>
+    }
+
+    @case(Dialog.CREATE) {
+      <ng-template #header>
+        Crear perfil
+      </ng-template>
+      <div class="w-full">
+        <assoc-activity-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
+    }
+
+    @case(Dialog.EDIT) {
+      <ng-template #header>
+        Editar perfil
+      </ng-template>
+      <div class="w-full">
+        <assoc-activity-edition-form [loading]="status.loading" [data]="selectedData"
+          [failures]="failures"  (save)="onUpdate($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />
+      </ng-template>
+    }
+  }
+</p-drawer>
