@@ -36,7 +36,7 @@ export class LibraryGameSystemListView implements OnInit {
     this.createable = this.auth.hasPermission('library_game_system', 'create');
     this.editable = this.auth.hasPermission('library_game_system', 'update');
     this.deletable = this.auth.hasPermission('library_game_system', 'delete');
-    this.load(1);
+    this.load();
   }
 
   public onShowCreate(): void {
@@ -104,7 +104,7 @@ export class LibraryGameSystemListView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.view = CrudFormView.NONE;
-          this.load(this.data.page || 1);
+          this.load(this.data.page);
           this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
         },
         error: error => {
@@ -125,7 +125,7 @@ export class LibraryGameSystemListView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.view = CrudFormView.NONE;
-          this.load(this.data.page || 1);
+          this.load(this.data.page);
           this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
         },
         error: error => {
@@ -147,7 +147,7 @@ export class LibraryGameSystemListView implements OnInit {
       }))
       .subscribe({
         complete: () => {
-          this.load(this.data.page || 1);
+          this.load(this.data.page);
           this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
         }
       });
@@ -157,7 +157,7 @@ export class LibraryGameSystemListView implements OnInit {
     const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
     this.sort = new Sorting();
     this.sort.addField(new SortingProperty(sorting.field, direction));
-    this.load(this.data.page || 1);
+    this.load(this.data.page);
   }
 
   // Drawer
@@ -168,7 +168,7 @@ export class LibraryGameSystemListView implements OnInit {
     }
   }
 
-  public load(page: number): void {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
