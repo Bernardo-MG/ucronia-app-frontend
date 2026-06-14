@@ -1,5 +1,4 @@
 import { inject, Injectable } from '@angular/core';
-import { CrudService } from '@app/shared/data/services/crud-service';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { BookType } from '@ucronia/domain';
@@ -9,7 +8,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
 @Injectable({
   providedIn: "root"
 })
-export class BookTypeService implements CrudService<BookType> {
+export class BookTypeService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
   private readonly messageService = inject(MessageService);
