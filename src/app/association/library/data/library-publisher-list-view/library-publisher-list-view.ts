@@ -17,7 +17,7 @@ import { PublisherCrudService } from '../publisher-crud-service';
 })
 export class LibraryPublisherListView implements OnInit {
 
-  protected service = inject(PublisherCrudService);
+  private readonly service = inject(PublisherCrudService);
   private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -162,7 +162,6 @@ export class LibraryPublisherListView implements OnInit {
 
   public onSort(sorting: { field: string; order: number }): void {
     const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
-    this.sort = new Sorting();
     this.sort.addField(new SortingProperty(sorting.field, direction));
     this.load(this.data.page);
   }
