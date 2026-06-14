@@ -7,11 +7,12 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize } from 'rxjs';
 import { AuthorCrudService } from '../author-crud-service';
 
 @Component({
-  imports: [NameList, DrawerModule, NameForm, ButtonModule],
+  imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {

@@ -14,10 +14,10 @@
   @switch (view) {
     @case (View.INFO) {
       <ng-template #header>
-        Ver autor
+        Autor
       </ng-template>
-      <div class="mb-4">
-        <p><strong>Nombre:</strong> {{ selected?.name }}</p>
+      <div>
+        <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />

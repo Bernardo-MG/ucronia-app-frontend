@@ -1,17 +1,18 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { NameList } from '@app/shared/data/name-list/name-list';
-import { GameSystemCrudService } from '../game-system-crud-service';
-import { DrawerModule } from 'primeng/drawer';
 import { NameForm } from '@app/shared/data/name-form/name-form';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { finalize } from 'rxjs';
+import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { DetailField } from '@bernardo-mg/ui';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
+import { finalize } from 'rxjs';
+import { GameSystemCrudService } from '../game-system-crud-service';
 
 @Component({
-  imports: [NameList, DrawerModule, NameForm, ButtonModule],
+  imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
   templateUrl: './library-game-system-list-view.html'
 })
 export class LibraryGameSystemListView implements OnInit {
