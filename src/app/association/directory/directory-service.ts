@@ -4,7 +4,7 @@ import { GuestPatch, MemberPatch, ProfileCreation, ProfilePatch, SponsorPatch, U
 import { Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
-import { ProfileDetails } from './model/profile-info';
+import { FullProfile } from './model/full-profile';
 
 @Injectable({
   providedIn: 'root'
@@ -19,12 +19,23 @@ export class DirectoryService {
     page: number | undefined = undefined,
     sort: Sorting,
     active: MemberStatus,
-    name: string,
-    filterType: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
-  ): Observable<Page<ProfileDetails>> {
+    name: string | undefined = undefined,
+    type: 'all' | 'guest' | 'member' | 'sponsor' = 'all'
+  ): Observable<Page<FullProfile>> {
+    const correctedProperties = sort.properties.map(p => {
+      if (p.property === 'name') {
+        return [
+          new SortingProperty('name.firstName', p.direction),
+          new SortingProperty('name.lastName', p.direction)
+        ];
+      } else {
+        return p;
+      }
+    }).flat();
+
     const sorting = new Sorting(
       mergeProperties(
-        sort.properties,
+        correctedProperties,
         [
           new SortingProperty('name.firstName'),
           new SortingProperty('name.lastName'),
@@ -35,11 +46,11 @@ export class DirectoryService {
 
     let query;
 
-    if (filterType === 'guest') {
+    if (type === 'guest') {
       query = this.ucroniaClient.guest.page(page, undefined, sorting, name);
-    } else if (filterType === 'member') {
+    } else if (type === 'member') {
       query = this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, name);
-    } else if (filterType === 'sponsor') {
+    } else if (type === 'sponsor') {
       query = this.ucroniaClient.sponsor.page(page, undefined, sorting, name);
     } else {
       query = this.ucroniaClient.profile.page(page, undefined, sorting, name);
@@ -64,7 +75,7 @@ export class DirectoryService {
       );
   }
 
-  public update(toUpdate: ProfileDetails, previousTypes: string[], newTypes: string[]): Observable<Profile> {
+  public update(toUpdate: FullProfile, previousTypes: string[], newTypes: string[]): Observable<Profile> {
 
     // Find added types
     const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
@@ -119,7 +130,7 @@ export class DirectoryService {
       );
   }
 
-  public getOne(number: number): Observable<ProfileDetails> {
+  public getOne(number: number): Observable<FullProfile> {
     return this.ucroniaClient.profile
       .get(number)
       .pipe(
@@ -193,7 +204,7 @@ export class DirectoryService {
       );
   }
 
-  private updateProfileInfo(data: ProfileDetails): Observable<Profile> {
+  private updateProfileInfo(data: FullProfile): Observable<Profile> {
     const update = this.updateProfile(data);
     const observables: Observable<any>[] = [update];
 

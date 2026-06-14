@@ -7,26 +7,32 @@
     </div>
   </ng-template>
   <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" (click)="creating = true" [disabled]="!createable"
-      aria-label="Nuevo perfil" [attr.aria-disabled]="!createable" rounded text />
+    <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
+      aria-label="Nuevo perfil" [attr.aria-disabled]="!permissions.create" rounded text />
   </ng-template>
   <p class="m-0">
-    <assoc-contact-method-list [loading]="loading" [editable]="editable" [deletable]="deletable"
+    <assoc-contact-method-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
       [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
       [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
       (delete)="onDeleteContactMethod($event)" (changePage)="load($event)" />
   </p>
 </p-panel>
 
-<!-- Contact method creation dialog -->
-<p-dialog header="Crear método de contacto" [modal]="true" [(visible)]="creating" [style]="{ width: '50rem' }">
-  @if(creating) {
-    <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreateContactMethod($event)" />
-  }
-</p-dialog>
+@switch (dialog) {
 
-<!-- Contact method edition dialog -->
-<p-dialog header="Editar método de contacto" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-  <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
-    (save)="onUpdateContactMethod($event)" />
-</p-dialog>
+  @case (Dialog.CREATE) {
+    <!-- Contact method creation dialog -->
+    <p-dialog header="Crear método de contacto" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+      <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreateContactMethod($event)" />
+    </p-dialog>
+  }
+
+  @case (Dialog.EDIT) {
+    <!-- Contact method edition dialog -->
+    <p-dialog header="Editar método de contacto" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
+      <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
+        (save)="onUpdateContactMethod($event)" />
+    </p-dialog>
+  }
+
+}

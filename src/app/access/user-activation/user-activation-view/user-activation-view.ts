@@ -21,35 +21,21 @@ export class UserActivationView {
 
   private readonly service = inject(AccessUserActivateService);
 
-  /**
-   * Token validation flag. If set to true the component is waiting for the token validation to finish.
-   */
-  public validating = false;
+  public status: Status = {
+    validating: false,
+    loading: false
+  };
 
-  /**
-   * Waiting flag. If set to true the component is waiting for the user actiation request to finish.
-   */
-  public waiting = false;
+  public step = Step.VALID_TOKEN;
 
-  /**
-   * View status.
-   */
-  public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
-
-  /**
-   * Username for the user being activated. This is taken from the token validation response.
-   */
-  public username = '';
-
-  /**
-   * Token for identifying the user.
-   */
-  private token = '';
+  public user: { username: string, token: string } = { username: '', token: '' };
 
   /**
    * Failures when activating the user.
    */
   public failures = new FailureStore();
+
+  public Step = Step;
 
   constructor() {
     const route = inject(ActivatedRoute);
@@ -66,29 +52,28 @@ export class UserActivationView {
   /**
    * Activates the user with the received password. The user will be acquired by the backend from the token.
    * 
-   * @param password new password for the user
+   * @param password password for the user
    */
   public onActivateUser(password: string): void {
-    this.waiting = true;
+    this.status.loading = true;
 
     this.failures.clear();
 
-    this.service.activateUser(this.token, password).subscribe({
-      next: response => {
-        this.status = 'finished';
-        this.waiting = false;
+    this.service.activateUser(this.user.token, password).subscribe({
+      complete: () => {
+        this.step = Step.FINISHED;
+        this.status.loading = false;
       },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        this.waiting = false;
-
-        return throwError(() => error);
-      }
+      error: error => this.handleError(error)
     });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   /**
@@ -97,22 +82,34 @@ export class UserActivationView {
    * @param token token to validate
    */
   private validateToken(token: string): void {
-    this.validating = true;
+    this.status.validating = true;
     this.service.validateToken(token)
-      .pipe(finalize(() => this.validating = false))
+      .pipe(finalize(() => this.status.validating = false))
       .subscribe({
         next: response => {
-          if (!response.content.valid) {
-            this.status = 'invalid_token';
+          if (response.content.valid) {
+            this.user.token = token;
+            this.user.username = response.content.username;
           } else {
-            this.token = token;
-            this.username = response.content.username;
+            this.step = Step.INVALID_TOKEN;
           }
         },
         error: response => {
-          this.status = 'invalid_token';
+          this.step = Step.INVALID_TOKEN;
+          this.handleError(response);
         }
       });
   }
 
+}
+
+interface Status {
+  validating: boolean;
+  loading: boolean;
+}
+
+export enum Step {
+  VALID_TOKEN = 'valid_token',
+  INVALID_TOKEN = 'invalid_token',
+  FINISHED = 'finished'
 }

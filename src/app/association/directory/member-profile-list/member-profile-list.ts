@@ -1,10 +1,10 @@
 import { Component, inject, input, output } from '@angular/core';
-import { MemberStatusTag } from '@app/association/directory/member-status-tag/member-status-tag';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { ProfileDetails } from '../model/profile-info';
+import { MemberStatusTag } from '../member-status-tag/member-status-tag';
+import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-member-profile-list',
@@ -18,13 +18,13 @@ export class MemberProfileList {
   public readonly loading = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
-  public readonly profiles = input<ProfileDetails[]>([]);
+  public readonly profiles = input<FullProfile[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly show = output<ProfileDetails>();
-  public readonly edit = output<ProfileDetails>();
+  public readonly show = output<FullProfile>();
+  public readonly edit = output<FullProfile>();
   public readonly delete = output<number>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
@@ -38,7 +38,7 @@ export class MemberProfileList {
     this.changePage.emit(page);
   }
 
-  public confirmDelete(event: Event, profile: ProfileDetails) {
+  public confirmDelete(event: Event, profile: FullProfile) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',

@@ -14,32 +14,27 @@ export class AccountPasswordChangeView {
 
   private readonly service = inject(AccountService);
 
-  public saving = false;
+  public loading = false;
 
   public failures = new FailureStore();
 
   public onChangePassword(data: PasswordChange) {
-    this.saving = true;
+    this.loading = true;
 
     this.service.changePassword(data).subscribe({
-      next: status => {
-        // Succesful request
-
-        // Reactivate form
-        this.saving = false;
+      complete: () => {
+        this.loading = false;
       },
-      error: error => {
-        if (error instanceof FailureResponse) {
-          this.failures = error.failures;
-        } else {
-          this.failures.clear();
-        }
-        // Reactivate view
-        this.saving = false;
-
-        return throwError(() => error);
-      }
+      error: error => this.handleError(error)
     });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

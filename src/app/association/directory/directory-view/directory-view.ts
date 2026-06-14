@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProfileCreationForm, ProfileCreationFormData } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -21,7 +20,9 @@ import { GuestList } from '../guest-list/guest-list';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
-import { ProfileDetails } from '../model/profile-info';
+import { FullProfile } from '../model/full-profile';
+import { Profiletype } from '../model/profyle-type';
+import { ProfileCreationForm, ProfileCreationFormData } from '../profile-creation-form/profile-creation-form';
 import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
 import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
@@ -40,44 +41,41 @@ export class DirectoryView implements OnInit {
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly permissions: Permissions;
+  public readonly filter: Filter = {
+    status: MemberStatus.Active,
+    type: Profiletype.ALL
+  };
+  public readonly status: Status = {
+    loading: false,
+    loadingSummary: false
+  };
+  protected readonly Profiletype = Profiletype;
+  public readonly Dialog = Dialog;
 
-  public profiles = new Page<ProfileDetails>();
-
-  public activeFilter = MemberStatus.Active;
-  public nameFilter = '';
-
-  public selectedData = new ProfileDetails();
+  public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
+  public profiles = new Page<FullProfile>();
   public summary = new DirectorySummary();
-
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-  public loadingSummary = false;
-  public editing = false;
-  public creating = false;
-  public showing = false;
 
   public failures = new FailureStore();
 
   public modalTitle = '';
 
-  public selectedStatus: 'all' | 'member' | 'guest' | 'sponsor' = 'all';
-
   private sort = new Sorting();
+
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("profile", "create");
-    this.editable = authService.hasPermission("profile", "update");
-    this.deletable = authService.hasPermission("profile", "delete");
+    this.permissions = {
+      create: authService.hasPermission("profile", "create"),
+      edit: authService.hasPermission("profile", "update"),
+      delete: authService.hasPermission("profile", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -87,15 +85,15 @@ export class DirectoryView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(profile: ProfileDetails) {
-    this.loading = true;
-    this.editing = true;
-    forkJoin({
-      profile: this.directoryService.getOne(profile.number),
-      contactMethodSelection: this.contactMethodService.getAllAvailable(),
-      feeTypes: this.feeTypeService.getAllAvailable()
-    })
-      .pipe(finalize(() => this.loading = false))
+  public onShowEdit(profile: FullProfile) {
+    this.dialog = Dialog.EDIT;
+    this.withLoading(
+      forkJoin({
+        profile: this.directoryService.getOne(profile.number),
+        contactMethodSelection: this.contactMethodService.getAllAvailable(),
+        feeTypes: this.feeTypeService.getAllAvailable()
+      })
+    )
       .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
         this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
@@ -103,41 +101,22 @@ export class DirectoryView implements OnInit {
       });
   }
 
-  public onChangeActiveFilter(active: MemberStatus) {
-    this.activeFilter = active;
-    this.load();
-  }
-
-  public onChangeDirection(sorting: SortingEvent) {
-    let direction;
-    if (sorting.field === 'fullName') {
-      const direction = sorting.order === 1
-        ? SortingDirection.Ascending
-        : SortingDirection.Descending;
-      this.sort.addField(new SortingProperty('name.firstName', direction));
-      this.sort.addField(new SortingProperty('name.lastName', direction));
-    } else {
-      if (sorting.order == 1) {
-        direction = SortingDirection.Ascending;
-      } else {
-        direction = SortingDirection.Descending;
-      }
-      this.sort.addField(new SortingProperty(sorting.field, direction));
-    }
-
-    this.load(this.profiles.page);
-  }
-
-  public onShowInfo(profile: ProfileDetails) {
-    this.loading = true;
-    this.showing = true;
-    this.directoryService.getOne(profile.number)
-      .pipe(finalize(() => this.loading = false))
+  public onShowInfo(profile: FullProfile) {
+    this.dialog = Dialog.INFO;
+    this.withLoading(
+      this.directoryService.getOne(profile.number)
+    )
       .subscribe(profile => this.selectedData = profile);
   }
 
-  public onNameFilterChange(): void {
-    this.load();
+  public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+    this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.load(this.profiles.page);
   }
 
   public onCreate(toCreate: ProfileCreationFormData): void {
@@ -150,8 +129,8 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onUpdate(toUpdate: ProfileDetails): void {
-    const updated: ProfileDetails = {
+  public onUpdate(toUpdate: FullProfile): void {
+    const updated: FullProfile = {
       ...this.selectedData,
       ...toUpdate,
       number: this.selectedData.number
@@ -179,66 +158,107 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onChangeStatusFilter(status: 'all' | 'member' | 'guest' | 'sponsor') {
-    this.selectedStatus = status;
+  public onChangeType(status: Profiletype) {
+    this.filter.type = status;
     this.load();
   }
 
   public onChangeMemberStatus(status: MemberStatus) {
-    this.activeFilter = status;
+    this.filter.status = status;
     this.load();
   }
 
   public onFilter(filter: string) {
-    this.nameFilter = filter;
+    this.filter.name = filter;
     this.load();
   }
 
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
-    this.loading = true;
-
-    this.directoryService.getAll(page, this.sort, this.activeFilter, this.nameFilter, this.selectedStatus)
-      .pipe(finalize(() => this.loading = false))
+    this.withLoading(
+      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
+    )
       .subscribe(response => {
         this.profiles = response;
       });
+  }
+
+  private loadSummary() {
+    this.status.loadingSummary = true;
+    this.directorySummaryService.getSummary()
+      .pipe(finalize(() => this.status.loadingSummary = false))
+      .subscribe(r => this.summary = r);
+  }
+
+  // DIALOGS
+
+  public onDialogVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
   }
 
   // PRIVATE METHODS
 
   private mutation(
     observable: Observable<any>,
-    onSuccess: () => void = () => { }
+    onSuccess?: () => void
   ) {
-    this.loading = true;
-    observable
-      .pipe(finalize(() => this.loading = false))
+    this.withLoading(
+      observable
+    )
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.editing = false;
-          this.creating = false;
+          this.dialog = Dialog.NONE;
 
-          onSuccess();
+          onSuccess?.();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
-  private loadSummary() {
-    this.loadingSummary = true;
-    this.directorySummaryService.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
-      .subscribe(r => this.summary = r);
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
+  private withLoading<T>(
+    observable: Observable<T>
+  ): Observable<T> {
+    this.status.loading = true;
+
+    return observable.pipe(
+      finalize(() => this.status.loading = false)
+    );
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loading: boolean;
+  loadingSummary: boolean;
+}
+
+interface Filter {
+  status: MemberStatus;
+  name?: string;
+  type: Profiletype;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create'
 }

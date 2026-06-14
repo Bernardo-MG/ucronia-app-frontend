@@ -8,72 +8,83 @@
     </p-card>
   
     <div class="grid grid-cols-1 gap-4">
-      <ui-summary-card [loading]="loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
-      <ui-summary-card [loading]="loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
+      <ui-summary-card [loading]="status.loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
+      <ui-summary-card [loading]="status.loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
     </div>
 
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <assoc-transaction-display-selector (view)="onViewChange($event)" />
+    <assoc-transaction-display-selector (view)="display = $event" />
 
-    @if (selectedView === 'list') {
-      <ui-text-filter (filter)="onFilter($event)" />
+    @switch (display) {
+      @case(Display.LIST) {
+        <ui-text-filter (filter)="onFilter($event)" />
+      }
     }
 
     <div class="ml-auto space-x-2">
-      @if (createable) {
-        <p-button icon="pi pi-plus-circle" (click)="onStartView('creation')" [disabled]="!createable"
-          aria-label="Nuevo libro" [attr.aria-disabled]="!createable" rounded />
+      @if (permissions.create) {
+        <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
+          aria-label="Nuevo libro" [attr.aria-disabled]="!permissions.create" rounded />
       }
 
-      <p-button icon="pi pi-file-excel" [disabled]="loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
-        [attr.aria-disabled]="loadingExcel" rounded />
+      <p-button icon="pi pi-file-excel" [disabled]="status.loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
+        [attr.aria-disabled]="status.loadingExcel" rounded />
     </div>
   </div>
 
   <!-- Transactions -->
   <p-panel class="shadow rounded-lg">
 
-    @if (selectedView === 'calendar') {
-      <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="loadingCalendar"
-        (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
-    } @else if (selectedView === 'list') {
-      <assoc-transaction-list [loading]="loading" [data]="transactionsPage.content" [rows]="transactionsPage.size"
-        [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
-        (changePage)="loadList($event)" />
+    @switch (display) {
+      @case(Display.CALENDAR) {
+        <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="status.loadingCalendar"
+          (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+      }
+      @case (Display.LIST) {
+        <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
+          [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
+          (changePage)="loadList($event)" />
+      }
     }
 
   </p-panel>
 
-  <!-- Info Dialog -->
-  <p-dialog header="Transacción" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }" class="rounded-lg"
-    contentStyleClass="p-4 space-y-4">
-    <assoc-transaction-info [transaction]="selectedData" [loading]="loading" />
-
-    <div class="flex space-x-2">
-      <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable" aria-label="Editar"
-        [attr.aria-disabled]="!editable" (click)="onStartView('edition')" rounded text class="!p-2" />
-
-      <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable" aria-label="Borrar"
-        [attr.aria-disabled]="!deletable" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
-    </div>
-  </p-dialog>
-
   <!-- Creation / Edition Dialogs -->
-  @switch (view) {
+  @switch (dialog) {
 
-    @case('creation') {
-      <p-dialog header="Crear transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
-        class="rounded-lg">
-        <assoc-transaction-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    @case(Dialog.INFO) {
+      <!-- Info Dialog -->
+      <p-dialog header="Transacción" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }" class="rounded-lg"
+        contentStyleClass="p-4 space-y-4">
+        <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
+
+        <div class="flex space-x-2">
+          @if (permissions.edit) {
+            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
+              [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDIT" rounded text class="!p-2" />
+          }
+
+          @if (permissions.delete) {
+            <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" aria-label="Borrar"
+              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
+          }
+        </div>
       </p-dialog>
     }
 
-    @case('edition') {
-      <p-dialog header="Editar transacción" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }"
+    @case(Dialog.CREATE) {
+      <p-dialog header="Crear transacción" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }"
         class="rounded-lg">
-        <assoc-transaction-form [data]="selectedData" [loading]="loading" [failures]="failures" (save)="onUpdate($event)" />
+        <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+      </p-dialog>
+    }
+
+    @case(Dialog.EDIT) {
+      <p-dialog header="Editar transacción" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }"
+        class="rounded-lg">
+        <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures" (save)="onUpdate($event)" />
       </p-dialog>
     }
 

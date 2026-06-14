@@ -3,7 +3,7 @@ import { Component, input } from '@angular/core';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { CardModule } from 'primeng/card';
 import { SkeletonModule } from 'primeng/skeleton';
-import { ProfileDetails } from '../model/profile-info';
+import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-profile-info',
@@ -12,7 +12,7 @@ import { ProfileDetails } from '../model/profile-info';
 })
 export class ProfileInfo {
 
-  public readonly data = input(new ProfileDetails());
+  public readonly data = input(new FullProfile());
   public readonly loading = input(false);
 
   public get isMember(): boolean {
