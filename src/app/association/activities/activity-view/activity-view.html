@@ -3,13 +3,15 @@
   @if (permissions.create) {
     <div class="ml-auto space-x-2">
       <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
-        aria-label="Nuevo perfil" [attr.aria-disabled]="!permissions.create" rounded />
+        aria-label="Nueva actividad" [attr.aria-disabled]="!permissions.create" rounded />
     </div>
   }
 </div>
   
 <div class="p-4 space-y-6">
   <p-panel class="bg-white shadow rounded-lg">
-    <app-activity-list />
+    <app-activity-list [loading]="status.loading" [data]="activities.content" [rows]="activities.size"
+        [page]="activities.page" [totalRecords]="activities.totalElements" (show)="onShowInfo($event)"
+        (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
   </p-panel>
 </div>

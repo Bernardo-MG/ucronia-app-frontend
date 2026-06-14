@@ -1,15 +1,13 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
+  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)">
   <ng-template #body let-activity>
     <tr>
-      <td>{{ activity.title }}</td>
+      <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
       <td>{{ activity.date | date:'yyyy-MM-dd' }}</td>
       <td class="w-40">
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          [attr.aria-disabled]="!editable()" (click)="edit.emit(activity)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-          [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, activity)" rounded text />
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(activity)" rounded text />
       </td>
     </tr>
   </ng-template>
