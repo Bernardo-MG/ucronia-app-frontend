@@ -71,7 +71,7 @@ export class LibraryAuthorListView implements OnInit {
   }
 
   public onCancelEdit(): void {
-    this.view = Drawer.NONE;
+    this.view = Drawer.INFO;
     this.failures.clear();
   }
 
