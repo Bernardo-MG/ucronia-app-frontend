@@ -20,12 +20,8 @@ export enum CrudFormView {
 })
 export class CrudNameList {
 
-  private readonly confirmationService = inject(ConfirmationService);
-
   public readonly data = input<Page<any>>(new Page<any>());
   public readonly loading = input<boolean>(false);
-  public readonly editable = input<boolean>(false);
-  public readonly deletable = input<boolean>(false);
 
   public readonly show = output<any>();
   public readonly sortChange = output<{ field: string; order: number }>();

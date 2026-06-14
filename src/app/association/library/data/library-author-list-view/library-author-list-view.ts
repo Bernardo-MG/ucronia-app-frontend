@@ -142,7 +142,11 @@ export class LibraryAuthorListView implements OnInit {
   public onDelete(id: number): void {
     this.loading = true;
     this.service.delete(id)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.view = CrudFormView.NONE;
+        this.showForm = false;
+      }))
       .subscribe({
         complete: () => {
           this.load(this.data.page || 1);
