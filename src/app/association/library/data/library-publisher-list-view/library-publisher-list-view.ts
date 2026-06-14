@@ -46,6 +46,8 @@ export class LibraryPublisherListView implements OnInit {
     this.load();
   }
 
+  // EVENT HANDLERS
+
   public onShowCreate(): void {
     this.selected = undefined;
     this.view = Drawer.CREATION;
@@ -166,13 +168,15 @@ export class LibraryPublisherListView implements OnInit {
     this.load(this.data.page);
   }
 
-  // Drawer
+  // DRAWER
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.view = Drawer.NONE;
     }
   }
+
+  // DATA LOADING
 
   public load(page: number | undefined = undefined): void {
     this.loading = true;
