@@ -37,9 +37,7 @@ export class FeeView implements OnInit {
   public readonly status: Status = {
     loadingCalendar: false,
     loadingSummary: false,
-    loadingDetail: false,
-    showing: false,
-    editing: false
+    loadingDetail: false
   };
   public readonly filter: Filter = {
     status: MemberStatus.Active,
@@ -77,13 +75,13 @@ export class FeeView implements OnInit {
     this.creationItems.push(
       {
         label: 'Pagar cuota',
-        command: () => this.onStartEditingView(Dialog.PAY)
+        command: () => this.dialog = Dialog.PAY
       }
     );
     this.creationItems.push(
       {
         label: 'Cuota sin pagar',
-        command: () => this.onStartEditingView(Dialog.CREATE)
+        command: () => this.dialog = Dialog.CREATE
       }
     );
 
@@ -142,18 +140,12 @@ export class FeeView implements OnInit {
   public onSelectFee(fee: { member: number, date: Date }) {
     this.service.getOne(fee.member, fee.date)
       .subscribe(fee => this.selectedData = fee);
-    this.status.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeMemberStatus(active: MemberStatus) {
     this.filter.status = active;
     this.loadCalendar(this.filter.year);
-  }
-
-  public onStartEditingView(view: Dialog): void {
-    this.dialog = view;
-    this.status.showing = false;
-    this.status.editing = true;
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -232,7 +224,6 @@ export class FeeView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.status.showing = false;
           this.loadRange();
           this.loadSummary();
           onSuccess();
@@ -260,8 +251,6 @@ interface Status {
   loadingCalendar: boolean;
   loadingSummary: boolean;
   loadingDetail: boolean;
-  editing: boolean;
-  showing: boolean;
 }
 
 interface Filter {
