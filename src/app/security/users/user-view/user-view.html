@@ -15,37 +15,77 @@
     <access-user-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [users]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
       (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
-      (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
+      (active)="onSetEnabled($event)" (edit)="onStartEditing($event)" (editRoles)="onStartEditingRoles($event)" (editMember)="onStartEditingMember($event)" />
   </p-panel>
 
   @switch (dialog) {
     @case (Dialog.INFO) {
-      <p-dialog header="Usuario" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-        <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
-      </p-dialog>
+      <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Usuario
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
     @case (Dialog.INVITE) {
-      <p-dialog header="Invitar usuario" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-        <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
-          (save)="onInvite($event)" />
-      </p-dialog>
+      <p-drawer [visible]="dialog === Dialog.INVITE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Invitar usuario
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
+            (save)="onInvite($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
     @case (Dialog.EDIT) {
-      <p-dialog header="Editar usuario" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
-        <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
-          (save)="onUpdate($event)" />
-      </p-dialog>
+      <p-drawer [visible]="dialog === Dialog.EDIT" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Editar usuario
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
+            (save)="onUpdate($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
     @case (Dialog.ROLES) {
-      <p-dialog header="Editar roles" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-        <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
-      </p-dialog>
+      <p-drawer [visible]="dialog === Dialog.ROLES" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Editar roles
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
     @case (Dialog.MEMBER) {
-      <p-dialog header="Asignar socio" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
-        <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
-          (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
-      </p-dialog>
+      <p-drawer [visible]="dialog === Dialog.MEMBER" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Asignar socio
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
+            (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
   }
 </div>

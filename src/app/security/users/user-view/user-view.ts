@@ -7,7 +7,7 @@ import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
@@ -19,7 +19,7 @@ import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DrawerModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -149,23 +149,27 @@ export class UserView implements OnInit {
     this.dialog = Dialog.INVITE;
   }
 
-  public onStartEditing(user: User, view: string): void {
+  public onStartEditing(user: User): void {
     this.selectedData = user;
-    switch (view) {
-      case 'member':
-        this.service.getProfile(user.username).subscribe(member => this.member = member);
-        this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
-        break;
-      case 'roles':
-        this.loading = true;
-        this.service.getAvailableRoles(user.username)
-          .pipe(
-            finalize(() => this.loading = false)
-          )
-          .subscribe(r => this.roleSelection = r);
-        break;
-    }
     this.dialog = Dialog.EDIT;
+  }
+
+  public onStartEditingRoles(user: User): void {
+    this.selectedData = user;
+    this.loading = true;
+    this.service.getAvailableRoles(user.username)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(r => this.roleSelection = r);
+    this.dialog = Dialog.ROLES;
+  }
+
+  public onStartEditingMember(user: User): void {
+    this.selectedData = user;
+    this.service.getProfile(user.username).subscribe(member => this.member = member);
+    this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
+    this.dialog = Dialog.MEMBER;
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -186,7 +190,7 @@ export class UserView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

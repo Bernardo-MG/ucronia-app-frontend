@@ -27,7 +27,9 @@ export class UserList {
 
   public readonly show = output<User>();
   public readonly delete = output<string>();
-  public readonly edit = output<{ view: string, user: User }>();
+  public readonly edit = output<User>();
+  public readonly editRoles = output<User>();
+  public readonly editMember = output<User>();
   public readonly active = output<boolean>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
@@ -71,17 +73,17 @@ export class UserList {
     this.editionMenuItems.push(
       {
         label: 'Datos',
-        command: () => this.edit.emit({ view: 'edition', user })
+        command: () => this.edit.emit(user)
       });
     this.editionMenuItems.push(
       {
         label: 'Roles',
-        command: () => this.edit.emit({ view: 'roles', user })
+        command: () => this.editRoles.emit(user)
       });
     this.editionMenuItems.push(
       {
         label: 'Socio',
-        command: () => this.edit.emit({ view: 'member', user })
+        command: () => this.editMember.emit(user)
       });
     // Active/Deactivate toggle
     const isActive = user.enabled;
