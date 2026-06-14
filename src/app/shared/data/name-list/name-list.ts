@@ -1,13 +1,12 @@
 import { Component, input, output } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'shared-name-list',
-  imports: [TableModule, PanelModule, MenuModule, ButtonModule],
+  imports: [TableModule, PanelModule, ButtonModule],
   templateUrl: './name-list.html'
 })
 export class NameList {
