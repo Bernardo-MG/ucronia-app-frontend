@@ -28,7 +28,7 @@ export class LibraryService {
     return this.ucroniaClient.library.gameBook.delete(number);
   }
 
-  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting): Observable<Page<GameBook>> {
+  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<GameBook>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -41,7 +41,7 @@ export class LibraryService {
       )
     );
 
-    return this.ucroniaClient.library.gameBook.page(page, undefined, sorting);
+    return this.ucroniaClient.library.gameBook.page(page, undefined, sorting, title);
   }
 
   public createFictionBook(data: BookCreation): Observable<FictionBook> {
@@ -60,7 +60,7 @@ export class LibraryService {
     return this.ucroniaClient.library.fictionBook.delete(number);
   }
 
-  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<Page<FictionBook>> {
+  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<FictionBook>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -73,7 +73,7 @@ export class LibraryService {
       )
     );
 
-    return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting);
+    return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting, title);
   }
 
   public getBookTypes(page: number | undefined = undefined): Observable<Page<BookType>> {

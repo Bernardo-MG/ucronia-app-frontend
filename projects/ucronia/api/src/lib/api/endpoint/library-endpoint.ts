@@ -204,6 +204,7 @@ export class GameBookEndpoint {
     page: number | undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
+    title: string | undefined = undefined
   ): Observable<Page<GameBook>> {
 
     let params = new HttpParams();
@@ -212,6 +213,9 @@ export class GameBookEndpoint {
     }
     if (size) {
       params = params.append('size', size);
+    }
+    if (title) {
+      params = params.append('title', title);
     }
 
     sort?.properties
@@ -286,7 +290,8 @@ export class FictionBookEndpoint {
   public page(
     page: number | undefined,
     size: number | undefined = undefined,
-    sort: Sorting | undefined = undefined
+    sort: Sorting | undefined = undefined,
+    title: string | undefined = undefined
   ): Observable<Page<FictionBook>> {
 
     let params = new HttpParams();
@@ -295,6 +300,9 @@ export class FictionBookEndpoint {
     }
     if (size) {
       params = params.append('size', size);
+    }
+    if (title) {
+      params = params.append('title', title);
     }
 
     sort?.properties

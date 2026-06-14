@@ -16,6 +16,9 @@
         aria-labelledby="basic" (onChange)="onChangeList($event)" />
     </div>
 
+    <!-- Filter by title -->
+    <ui-text-filter (filter)="onFilter($event)" />
+
     @if(display === Display.BOOKS) {
       <div class="border border-gray-300 rounded-lg p-1 inline-block">
         <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
