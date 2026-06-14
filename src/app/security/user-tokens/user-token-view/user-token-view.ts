@@ -6,7 +6,7 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
@@ -14,7 +14,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 
 @Component({
   selector: 'access-user-token-view',
-  imports: [CardModule, DialogModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
+  imports: [CardModule, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
   templateUrl: './user-token-view.html'
 })
 export class UserTokenView implements OnInit {
@@ -85,7 +85,7 @@ export class UserTokenView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

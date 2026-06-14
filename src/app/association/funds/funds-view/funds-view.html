@@ -51,16 +51,18 @@
 
   </p-panel>
 
-  <!-- Creation / Edition Dialogs -->
-  @switch (dialog) {
+  <!-- Creation / Edition Drawer -->
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" class="rounded-lg" [style]="{ width: '60vw' }">
+    @switch (dialog) {
 
-    @case(Dialog.INFO) {
-      <!-- Info Dialog -->
-      <p-dialog header="Transacción" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }" class="rounded-lg"
-        contentStyleClass="p-4 space-y-4">
-        <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
-
-        <div class="flex space-x-2">
+      @case(Dialog.INFO) {
+        <ng-template #header>
+          Transacción
+        </ng-template>
+        <div class="w-full p-4 space-y-4">
+          <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
+        </div>
+        <ng-template #footer>
           @if (permissions.edit) {
             <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
               [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDIT" rounded text class="!p-2" />
@@ -70,23 +72,33 @@
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" aria-label="Borrar"
               [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
           }
+        </ng-template>
+      }
+
+      @case(Dialog.CREATE) {
+        <ng-template #header>
+          Crear transacción
+        </ng-template>
+        <div class="w-full p-4">
+          <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
         </div>
-      </p-dialog>
-    }
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      }
 
-    @case(Dialog.CREATE) {
-      <p-dialog header="Crear transacción" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }"
-        class="rounded-lg">
-        <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
-      </p-dialog>
-    }
+      @case(Dialog.EDIT) {
+        <ng-template #header>
+          Editar transacción
+        </ng-template>
+        <div class="w-full p-4">
+          <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures" (save)="onUpdate($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      }
 
-    @case(Dialog.EDIT) {
-      <p-dialog header="Editar transacción" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }"
-        class="rounded-lg">
-        <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures" (save)="onUpdate($event)" />
-      </p-dialog>
     }
-
-  }
+  </p-drawer>
 </div>

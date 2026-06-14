@@ -6,12 +6,12 @@ import { FormWithListSelection } from '@app/shared/data/form-with-list-selection
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { SummaryCard } from '@bernardo-mg/ui';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
@@ -33,7 +33,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -45,6 +45,8 @@ export class LibraryView implements OnInit {
   private readonly lendingsService = inject(LibraryLendingService);
 
   public failures = new FailureStore();
+
+  private nameFilter = '';
 
   public selectedData: FictionBook | GameBook = new GameBook();
 
@@ -78,7 +80,7 @@ export class LibraryView implements OnInit {
 
   private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
   private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
-  private read: (page: number | undefined, sort: Sorting) => Observable<Page<FictionBook | GameBook>> = (page, sort) => EMPTY;
+  private read: (page: number | undefined, sort: Sorting, title: string | undefined) => Observable<Page<FictionBook | GameBook>> = (page, sort, title) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
@@ -359,9 +361,14 @@ export class LibraryView implements OnInit {
     this.onUpdate(updateDate as BookUpdate);
   }
 
+  public onFilter(filter: string) {
+    this.nameFilter = filter;
+    this.load();
+  }
+
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
@@ -379,7 +386,7 @@ export class LibraryView implements OnInit {
 
   public load(page: number | undefined = undefined) {
     this.status.loading = true;
-    this.read(page, this.sort)
+    this.read(page, this.sort, this.nameFilter)
       .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => this.data = response);
   }

@@ -7,14 +7,30 @@
 </p-card>
 @switch (dialog) {
   @case (Dialog.INFO) {
-    <p-dialog header="Token" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <access-user-token-info [data]="selectedData" [loading]="loading" />
-    </p-dialog>
+    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Token
+      </ng-template>
+      <div class="w-full p-4">
+        <access-user-token-info [data]="selectedData" [loading]="loading" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
   }
   @case (Dialog.EXTEND) {
-    <p-dialog header="Extender token" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '25rem' }">
-      <p>Selecciona una nueva fecha:</p>
-      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
-    </p-dialog>
+    <p-drawer [visible]="dialog === Dialog.EXTEND" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Extender token
+      </ng-template>
+      <div class="w-full p-4">
+        <p>Selecciona una nueva fecha:</p>
+        <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
   }
 }

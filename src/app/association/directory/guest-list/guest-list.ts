@@ -16,16 +16,12 @@ export class GuestList {
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly loading = input(false);
-  public readonly editable = input(false);
-  public readonly deletable = input(false);
   public readonly profiles = input<FullProfile[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
   public readonly show = output<FullProfile>();
-  public readonly edit = output<FullProfile>();
-  public readonly delete = output<number>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
@@ -36,24 +32,6 @@ export class GuestList {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
-  }
-
-  public confirmDelete(event: Event, profile: FullProfile) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => this.delete.emit(profile.number)
-    });
   }
 
 }

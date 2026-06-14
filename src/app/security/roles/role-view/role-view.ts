@@ -4,7 +4,7 @@ import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authenticati
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable, throwError } from 'rxjs';
@@ -16,7 +16,7 @@ import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [PanelModule, TableModule, ButtonModule, DialogModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
+  imports: [PanelModule, TableModule, ButtonModule, DrawerModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
@@ -129,7 +129,7 @@ export class RoleView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
