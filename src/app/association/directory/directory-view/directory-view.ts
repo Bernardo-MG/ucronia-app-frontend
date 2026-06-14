@@ -24,7 +24,7 @@ import { DirectorySummary } from '../model/directory-summary';
 import { FullProfile } from '../model/full-profile';
 import { Profiletype } from '../model/profyle-type';
 import { ProfileCreationForm, ProfileCreationFormData } from '../profile-creation-form/profile-creation-form';
-import { ProfileInfoEditionForm } from '../profile-info-edition-form/profile-info-edition-form';
+import { ProfileEditionForm } from '../profile-edition-form/profile-edition-form';
 import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
@@ -32,7 +32,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
