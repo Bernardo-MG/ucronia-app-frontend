@@ -55,8 +55,7 @@ export class DirectoryView implements OnInit {
   protected readonly Profiletype = Profiletype;
   public readonly Dialog = Dialog;
 
-  public infoData = new FullProfile();
-  public editionData?: FullProfile;
+  public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
   public profiles = new Page<FullProfile>();
@@ -98,7 +97,7 @@ export class DirectoryView implements OnInit {
       })
     )
       .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
-        this.editionData = profile;
+        this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
         this.feeTypes = feeTypes;
       });
@@ -109,7 +108,7 @@ export class DirectoryView implements OnInit {
     this.withLoading(
       this.directoryService.getOne(profile.number)
     )
-      .subscribe(profile => this.infoData = profile);
+      .subscribe(profile => this.selectedData = profile);
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -134,12 +133,12 @@ export class DirectoryView implements OnInit {
 
   public onUpdate(toUpdate: FullProfile): void {
     const updated: FullProfile = {
-      ...this.editionData,
+      ...this.selectedData,
       ...toUpdate,
-      number: this.editionData?.number ?? -1
+      number: this.selectedData?.number ?? -1
     };
 
-    const previousTypes = this.editionData?.types ?? [];
+    const previousTypes = this.selectedData?.types ?? [];
     const newTypes = updated.types ?? [];
 
     this.mutation(

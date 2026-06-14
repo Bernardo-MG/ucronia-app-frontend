@@ -72,13 +72,13 @@
         Perfil
       </ng-template>
       <div class="w-full">
-        <assoc-profile-info [data]="infoData" [loading]="status.loading" />
+        <assoc-profile-info [data]="selectedData" [loading]="status.loading" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
           [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDIT" rounded text class="!p-2" />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-          (click)="onDelete($event, infoData.number)" rounded text />
+          (click)="onDelete($event, selectedData.number)" rounded text />
       </ng-template>
     }
 
@@ -96,7 +96,7 @@
         Editar perfil
       </ng-template>
       <div class="w-full">
-        <assoc-profile-info-edition-form [loading]="status.loading" [data]="infoData" [feeTypes]="feeTypes"
+        <assoc-profile-info-edition-form [loading]="status.loading" [data]="selectedData" [feeTypes]="feeTypes"
           [failures]="failures" [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
