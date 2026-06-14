@@ -3,7 +3,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
@@ -12,7 +12,7 @@ import { ContactMethodService } from '../contact-method-service';
 
 @Component({
   selector: 'assoc-contact-method-list-inner-view',
-  imports: [PanelModule, ButtonModule, DialogModule, ContactMethodList, ContactMethodForm],
+  imports: [PanelModule, ButtonModule, DrawerModule, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-method-list-inner-view.html'
 })
 export class ContactMethodListInnerView implements OnInit {
@@ -90,7 +90,7 @@ export class ContactMethodListInnerView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

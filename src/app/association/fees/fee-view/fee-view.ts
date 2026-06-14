@@ -6,7 +6,7 @@ import { SummaryCard } from '@bernardo-mg/ui';
 import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
@@ -22,7 +22,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
+  imports: [DrawerModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -37,9 +37,7 @@ export class FeeView implements OnInit {
   public readonly status: Status = {
     loadingCalendar: false,
     loadingSummary: false,
-    loadingDetail: false,
-    showing: false,
-    editing: false
+    loadingDetail: false
   };
   public readonly filter: Filter = {
     status: MemberStatus.Active,
@@ -77,19 +75,21 @@ export class FeeView implements OnInit {
     this.creationItems.push(
       {
         label: 'Pagar cuota',
-        command: () => this.onStartEditingView(Dialog.PAY)
+        command: () => this.dialog = Dialog.PAY
       }
     );
     this.creationItems.push(
       {
         label: 'Cuota sin pagar',
-        command: () => this.onStartEditingView(Dialog.CREATE)
+        command: () => this.dialog = Dialog.CREATE
       }
     );
 
     // Load report
     this.loadSummary();
   }
+
+  // EVENT HANDLERS
 
   public onUpdate(toUpdate: FeeEditionEvent): void {
     const update = {
@@ -140,18 +140,12 @@ export class FeeView implements OnInit {
   public onSelectFee(fee: { member: number, date: Date }) {
     this.service.getOne(fee.member, fee.date)
       .subscribe(fee => this.selectedData = fee);
-    this.status.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeMemberStatus(active: MemberStatus) {
     this.filter.status = active;
     this.loadCalendar(this.filter.year);
-  }
-
-  public onStartEditingView(view: Dialog): void {
-    this.dialog = view;
-    this.status.showing = false;
-    this.status.editing = true;
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -169,6 +163,16 @@ export class FeeView implements OnInit {
       .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
   }
+
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
 
   private loadSummary() {
     this.status.loadingSummary = true;
@@ -210,6 +214,8 @@ export class FeeView implements OnInit {
     }
   }
 
+  // PRIVATE METHODS
+
   private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
     this.status.loadingDetail = true;
     action()
@@ -218,7 +224,6 @@ export class FeeView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.status.showing = false;
           this.loadRange();
           this.loadSummary();
           onSuccess();
@@ -246,8 +251,6 @@ interface Status {
   loadingCalendar: boolean;
   loadingSummary: boolean;
   loadingDetail: boolean;
-  editing: boolean;
-  showing: boolean;
 }
 
 interface Filter {
@@ -257,7 +260,8 @@ interface Filter {
 }
 
 enum Dialog {
-  NONE = 'list',
+  NONE = 'none',
+  INFO = 'info',
   EDITION = 'edition',
   CREATE = 'create',
   PAY = 'pay'

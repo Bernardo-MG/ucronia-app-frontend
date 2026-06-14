@@ -7,7 +7,7 @@ import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
@@ -19,7 +19,7 @@ import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DrawerModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -186,7 +186,7 @@ export class UserView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

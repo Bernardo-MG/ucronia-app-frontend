@@ -18,21 +18,30 @@
   </p>
 </p-panel>
 
-@switch (dialog) {
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+  @switch (dialog) {
 
-  @case (Dialog.CREATE) {
-    <!-- Contact method creation dialog -->
-    <p-dialog header="Crear método de contacto" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreateContactMethod($event)" />
-    </p-dialog>
+    @case (Dialog.CREATE) {
+      <ng-template #header>
+        Crear método de contacto
+      </ng-template>
+      <div class="w-full">
+        <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreateContactMethod($event)" />
+      </div>
+    }
+
+    @case (Dialog.EDIT) {
+      <ng-template #header>
+        Editar método de contacto
+      </ng-template>
+      <div class="w-full">
+        <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
+          (save)="onUpdateContactMethod($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    }
+
   }
-
-  @case (Dialog.EDIT) {
-    <!-- Contact method edition dialog -->
-    <p-dialog header="Editar método de contacto" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
-        (save)="onUpdateContactMethod($event)" />
-    </p-dialog>
-  }
-
-}
+</p-drawer>

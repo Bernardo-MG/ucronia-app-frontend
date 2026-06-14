@@ -5,11 +5,12 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, forkJoin, Observable, throwError } from 'rxjs';
+import { finalize, forkJoin, Observable } from 'rxjs';
 import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
 import { ContactMethodService } from '../contact-method-service';
 import { DirectoryService } from '../directory-service';
@@ -31,7 +32,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DialogModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileInfoEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -40,6 +41,7 @@ export class DirectoryView implements OnInit {
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly filter: Filter = {
@@ -53,8 +55,7 @@ export class DirectoryView implements OnInit {
   protected readonly Profiletype = Profiletype;
   public readonly Dialog = Dialog;
 
-  public infoData = new FullProfile();
-  public editionData?: FullProfile;
+  public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
   public profiles = new Page<FullProfile>();
@@ -86,17 +87,17 @@ export class DirectoryView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(profile: FullProfile) {
+  public onShowEdit() {
     this.dialog = Dialog.EDIT;
     this.withLoading(
       forkJoin({
-        profile: this.directoryService.getOne(profile.number),
+        profile: this.directoryService.getOne(this.selectedData.number),
         contactMethodSelection: this.contactMethodService.getAllAvailable(),
         feeTypes: this.feeTypeService.getAllAvailable()
       })
     )
       .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
-        this.editionData = profile;
+        this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
         this.feeTypes = feeTypes;
       });
@@ -107,7 +108,7 @@ export class DirectoryView implements OnInit {
     this.withLoading(
       this.directoryService.getOne(profile.number)
     )
-      .subscribe(profile => this.infoData = profile);
+      .subscribe(profile => this.selectedData = profile);
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -132,12 +133,12 @@ export class DirectoryView implements OnInit {
 
   public onUpdate(toUpdate: FullProfile): void {
     const updated: FullProfile = {
-      ...this.editionData,
+      ...this.selectedData,
       ...toUpdate,
-      number: this.editionData?.number ?? -1
+      number: this.selectedData?.number ?? -1
     };
 
-    const previousTypes = this.editionData?.types ?? [];
+    const previousTypes = this.selectedData?.types ?? [];
     const newTypes = updated.types ?? [];
 
     this.mutation(
@@ -149,14 +150,29 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onDelete(number: number) {
-    this.mutation(
-      this.directoryService.delete(number),
-      () => {
-        this.load();
-        this.loadSummary();
-      }
-    );
+  public onDelete(event: Event, id: number): void {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () =>
+        this.mutation(
+          this.directoryService.delete(id),
+          () => {
+            this.load();
+            this.loadSummary();
+          }
+        )
+    });
   }
 
   public onChangeType(status: Profiletype) {
@@ -194,7 +210,7 @@ export class DirectoryView implements OnInit {
 
   // DIALOGS
 
-  public onDialogVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }

@@ -10,7 +10,7 @@
   (pageChange)="load($event)"></shared-name-list>
 
 <p-drawer [visible]="view !== View.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false"
-  position="right">
+  position="right" [style]="{ width: '60vw' }">
   @switch (view) {
     @case (View.INFO) {
       <ng-template #header>
