@@ -29,15 +29,19 @@
       <ng-template #header>
         Crear editor
       </ng-template>
-      <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
-        (reject)="onReject()"></shared-name-form>
+      <div class="w-full">
+        <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
+          (reject)="onReject()"></shared-name-form>
+      </div>
     }
     @case (View.EDITION) {
       <ng-template #header>
         Modificar editor
       </ng-template>
-      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
-        (reject)="onReject()"></shared-name-form>
+      <div class="w-full">
+        <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
+          (reject)="onReject()"></shared-name-form>
+      </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
       </ng-template>
