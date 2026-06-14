@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { CrudNameList } from './crud-name-list';
+import { NameList } from './name-list';
 import { Confirmation, ConfirmationService } from 'primeng/api';
 
-describe('CrudNameList', () => {
-  let component: CrudNameList;
-  let fixture: ComponentFixture<CrudNameList>;
+describe('NameList', () => {
+  let component: NameList;
+  let fixture: ComponentFixture<NameList>;
   let confirmationService: ConfirmationService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CrudNameList],
+      imports: [NameList],
       providers: [ConfirmationService]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CrudNameList);
+    fixture = TestBed.createComponent(NameList);
     component = fixture.componentInstance;
     confirmationService = TestBed.inject(ConfirmationService);
     fixture.detectChanges();

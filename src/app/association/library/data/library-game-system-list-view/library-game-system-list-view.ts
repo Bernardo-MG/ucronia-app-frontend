@@ -1,6 +1,6 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { CrudNameList, CrudFormView } from '@app/shared/data/crud-name-list/crud-name-list';
+import { NameList, CrudFormView } from '@app/shared/data/name-list/name-list';
 import { GameSystemCrudService } from '../game-system-crud-service';
 import { DrawerModule } from 'primeng/drawer';
 import { NameForm } from '@app/shared/data/name-form/name-form';
@@ -11,7 +11,7 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  imports: [CrudNameList, DrawerModule, NameForm, ButtonModule],
+  imports: [NameList, DrawerModule, NameForm, ButtonModule],
   templateUrl: './library-game-system-list-view.html'
 })
 export class LibraryGameSystemListView implements OnInit {

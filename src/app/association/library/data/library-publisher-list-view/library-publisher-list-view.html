@@ -6,8 +6,8 @@
     </div>
   }
 </div>
-<shared-crud-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (startEditing)="onShowEdit($event)"
-  (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-crud-name-list>
+<shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (startEditing)="onShowEdit($event)"
+  (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-name-list>
 
 <p-drawer [visible]="view !== View.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false"
   position="right">

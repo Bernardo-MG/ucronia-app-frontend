@@ -13,11 +13,11 @@ export enum CrudFormView {
 }
 
 @Component({
-  selector: 'shared-crud-name-list',
+  selector: 'shared-name-list',
   imports: [TableModule, PanelModule, MenuModule, ButtonModule],
-  templateUrl: './crud-name-list.html'
+  templateUrl: './name-list.html'
 })
-export class CrudNameList {
+export class NameList {
 
   public readonly data = input<Page<any>>(new Page<any>());
   public readonly loading = input<boolean>(false);
