@@ -73,7 +73,7 @@
   @case(Dialog.INFO) {
     <!-- Profile details dialog -->
     <p-dialog header="Perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-profile-info [data]="selectedData" [loading]="status.loading" />
+      <assoc-profile-info [data]="infoData" [loading]="status.loading" />
     </p-dialog>
   }
 
@@ -87,7 +87,7 @@
   @case(Dialog.EDIT) {
     <!-- Edition dialog -->
     <p-dialog header="Editar perfil" [modal]="true" [visible]="true" (visibleChange)="onDialogVisibleChange($event)" [style]="{ width: '50rem' }">
-      <assoc-profile-info-edition-form [loading]="status.loading" [data]="selectedData" [feeTypes]="feeTypes"
+      <assoc-profile-info-edition-form [loading]="status.loading" [data]="editionData" [feeTypes]="feeTypes"
         [failures]="failures" [contactMethods]="contactMethodSelection" (save)="onUpdate($event)" />
     </p-dialog>
   }
