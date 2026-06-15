@@ -21,7 +21,7 @@
 
     @case(Dialog.INFO) {
       <ng-template #header>
-        Perfil
+        Actividad
       </ng-template>
       <div class="w-full">
         <assoc-activity-info [data]="selectedData" [loading]="status.loading" />
@@ -36,7 +36,7 @@
 
     @case(Dialog.CREATE) {
       <ng-template #header>
-        Crear perfil
+        Crear actividad
       </ng-template>
       <div class="w-full">
         <assoc-activity-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
@@ -45,7 +45,7 @@
 
     @case(Dialog.EDIT) {
       <ng-template #header>
-        Editar perfil
+        Editar actividad
       </ng-template>
       <div class="w-full">
         <assoc-activity-edition-form [loading]="status.loading" [data]="selectedData"
