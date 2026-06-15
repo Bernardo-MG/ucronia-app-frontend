@@ -1,11 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { Activity } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
+import { Observable, finalize } from 'rxjs';
 import { ActivityCreationForm } from '../activity-creation-form/activity-creation-form';
 import { ActivityEditionForm } from '../activity-edition-form/activity-edition-form';
 import { ActivityInfo } from '../activity-info/activity-info';
@@ -19,6 +21,7 @@ import { ActivityService } from '../activity-service';
 export class ActivityView {
 
   private readonly service = inject(ActivityService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
@@ -47,11 +50,43 @@ export class ActivityView {
 
   // EVENT HANDLERS
 
-  public onShowEdit() {
-    this.dialog = Dialog.EDIT;
+  public onCreate(toCreate: Activity): void {
+    this.call(
+      () => this.service.create(toCreate),
+      () => this.load()
+    );
   }
 
-  public onDelete(event: Event, id: number): void {
+  public onUpdate(toCreate: Activity): void {
+    this.call(
+      () => this.service.update(toCreate),
+      () => this.load()
+    );
+  }
+
+  public onDelete(event: Event, activity: Activity) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.call(
+        () => this.service.delete(activity.number),
+      () => this.load()
+      )
+    });
+  }
+
+  public onShowEdit() {
+    this.dialog = Dialog.EDIT;
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -68,15 +103,13 @@ export class ActivityView {
     this.dialog = Dialog.INFO;
   }
 
-  public onCreate(toCreate: Activity): void {
-  }
-
-  public onUpdate(toUpdate: Activity): void {
-  }
-
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
+    this.status.loading = true;
+    this.service.getAll(page)
+      .pipe(finalize(() => this.status.loading = false))
+      .subscribe(activities => this.activities = activities);
   }
 
   // DIALOGS
@@ -84,6 +117,33 @@ export class ActivityView {
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
+    }
+  }
+
+  // PRIVATE METHODS
+
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
+    this.status.loading = true;
+    action()
+      .pipe(finalize(() => this.status.loading = false))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          onSuccess();
+        },
+        error: error => this.handleError(error)
+      });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
     }
   }
 

@@ -179,16 +179,6 @@ export class FundsView implements OnInit {
 
   // PRIVATE METHODS
 
-  private getDefaultMonth() {
-    let month;
-    if (this.months.length) {
-      month = this.months[0];
-    } else {
-      month = new Date();
-    }
-    return month
-  }
-
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
@@ -212,6 +202,16 @@ export class FundsView implements OnInit {
     } else {
       this.failures.clear();
     }
+  }
+
+  private getDefaultMonth() {
+    let month;
+    if (this.months.length) {
+      month = this.months[0];
+    } else {
+      month = new Date();
+    }
+    return month
   }
 
 }
