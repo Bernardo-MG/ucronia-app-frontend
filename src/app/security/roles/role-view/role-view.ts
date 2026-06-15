@@ -2,12 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { RoleChangePermission } from '../role-change-permission/role-change-permission';
 import { RoleForm } from '../role-form/role-form';
 import { RoleInfo } from '../role-info/role-info';
@@ -22,7 +21,6 @@ import { RoleService } from '../role-service';
 export class RoleView implements OnInit {
 
   private readonly service = inject(RoleService);
-  private readonly messageService = inject(MessageService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
@@ -79,7 +77,7 @@ export class RoleView implements OnInit {
   public onCreate(toCreate: Role): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
@@ -88,14 +86,14 @@ export class RoleView implements OnInit {
 
     this.call(
       () => this.service.update(this.selectedData),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
   public onDelete(role: Role) {
     this.call(
       () => this.service.delete(role.name),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
@@ -137,7 +135,10 @@ export class RoleView implements OnInit {
 
   // PRIVATE METHODS
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -145,18 +146,18 @@ export class RoleView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.load();
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

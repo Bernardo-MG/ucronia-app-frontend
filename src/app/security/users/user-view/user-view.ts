@@ -81,7 +81,10 @@ export class UserView implements OnInit {
   public onInvite(toCreate: UserFormData): void {
     this.call(
       () => this.service.invite(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -92,7 +95,10 @@ export class UserView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.username, user),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -105,14 +111,20 @@ export class UserView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.username, user),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
   public onAssignMember(member: PublicMember): void {
     this.call(
       () => this.service.assignProfile(this.selectedData.username, member.number),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -130,14 +142,20 @@ export class UserView implements OnInit {
     };
     this.call(
       () => this.service.update(this.selectedData.username, userUpdate),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
   public onDelete(id: string) {
     this.call(
       () => this.service.delete(id),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -198,7 +216,10 @@ export class UserView implements OnInit {
 
   // PRIVATE METHODS
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -206,18 +227,18 @@ export class UserView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.load();
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

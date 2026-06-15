@@ -122,8 +122,8 @@ export class DirectoryView implements OnInit {
   }
 
   public onCreate(toCreate: ProfileCreationFormData): void {
-    this.mutation(
-      this.directoryService.create(toCreate as any),
+    this.call(
+      () => this.directoryService.create(toCreate as any),
       () => {
         this.load();
         this.loadSummary();
@@ -141,8 +141,8 @@ export class DirectoryView implements OnInit {
     const previousTypes = this.selectedData?.types ?? [];
     const newTypes = updated.types ?? [];
 
-    this.mutation(
-      this.directoryService.update(updated, previousTypes, newTypes),
+    this.call(
+      () => this.directoryService.update(updated, previousTypes, newTypes),
       () => {
         this.load(this.profiles.page);
         this.loadSummary();
@@ -165,8 +165,8 @@ export class DirectoryView implements OnInit {
         severity: 'danger'
       },
       accept: () =>
-        this.mutation(
-          this.directoryService.delete(id),
+        this.call(
+          () => this.directoryService.delete(id),
           () => {
             this.load();
             this.loadSummary();
@@ -218,19 +218,18 @@ export class DirectoryView implements OnInit {
 
   // PRIVATE METHODS
 
-  private mutation(
-    observable: Observable<any>,
-    onSuccess?: () => void
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
   ) {
-    this.withLoading(
-      observable
-    )
+    this.status.loading = true;
+    action()
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-
-          onSuccess?.();
+          onSuccess();
         },
         error: error => this.handleError(error)
       });

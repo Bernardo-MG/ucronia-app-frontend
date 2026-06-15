@@ -58,22 +58,22 @@ export class ContactMethodListInnerView implements OnInit {
   }
 
   public onCreateContactMethod(toCreate: ContactMethod): void {
-    this.mutation(
-      this.contactMethodService.create(toCreate),
+    this.call(
+      () => this.contactMethodService.create(toCreate),
       () => this.load()
     );
   }
 
   public onUpdateContactMethod(toUpdate: ContactMethod): void {
-    this.mutation(
-      this.contactMethodService.update(toUpdate),
+    this.call(
+      () => this.contactMethodService.update(toUpdate),
       () => this.load(this.contactMethodData.page)
     );
   }
 
   public onDeleteContactMethod(number: number): void {
-    this.mutation(
-      this.contactMethodService.delete(number),
+    this.call(
+      () => this.contactMethodService.delete(number),
       () => this.load()
     );
   }
@@ -98,18 +98,17 @@ export class ContactMethodListInnerView implements OnInit {
 
   // PRIVATE METHODS
 
-  private mutation(
-    observable: Observable<any>,
+  private call(
+    action: () => Observable<any>,
     onSuccess: () => void = () => { }
   ) {
     this.loading = true;
-    observable
+    action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-
           onSuccess();
         },
         error: error => this.handleError(error)

@@ -58,22 +58,22 @@ export class FeeTypeListInnerView implements OnInit {
   }
 
   public onCreateFeeType(toCreate: FeeType): void {
-    this.mutation(
-      this.feeTypeService.create(toCreate),
+    this.call(
+      () => this.feeTypeService.create(toCreate),
       () => this.load()
     );
   }
 
   public onUpdateFeeType(toUpdate: FeeType): void {
-    this.mutation(
-      this.feeTypeService.update(toUpdate),
+    this.call(
+      () => this.feeTypeService.update(toUpdate),
       () => this.load(this.feeTypeData.page)
     );
   }
 
   public onDeleteFeeType(number: number): void {
-    this.mutation(
-      this.feeTypeService.delete(number),
+    this.call(
+      () => this.feeTypeService.delete(number),
       () => this.load()
     );
   }
@@ -98,18 +98,17 @@ export class FeeTypeListInnerView implements OnInit {
 
   // PRIVATE METHODS
 
-  private mutation(
-    observable: Observable<any>,
-    onSuccess: () => void = () => { }
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
   ) {
     this.loading = true;
-    observable
+    action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-
           onSuccess();
         },
         error: error => this.handleError(error)
