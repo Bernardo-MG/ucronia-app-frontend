@@ -101,14 +101,14 @@ export class FundsView implements OnInit {
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.loadCalendar()
+      () => this.load()
     );
   }
 
   public onUpdate(toCreate: Transaction): void {
     this.call(
       () => this.service.update(toCreate),
-      () => this.loadCalendar()
+      () => this.load()
     );
   }
 
@@ -128,7 +128,7 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(transaction.index),
-      () => this.loadCalendar()
+      () => this.load()
       )
     });
   }
@@ -170,11 +170,19 @@ export class FundsView implements OnInit {
       .subscribe(transactions => this.transactions = transactions);
   }
 
-  public loadList(page: number = 0) {
+  public loadList(page: number | undefined = undefined) {
     this.status.loadingList = true;
     this.service.getAll(page, this.descriptionFilter)
       .pipe(finalize(() => this.status.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
+  }
+
+  private load() {
+    if (this.display === Display.CALENDAR) {
+      this.loadCalendar();
+    } else {
+      this.loadList();
+    }
   }
 
   // PRIVATE METHODS
