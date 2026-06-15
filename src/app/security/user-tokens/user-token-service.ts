@@ -3,7 +3,8 @@ import { UserToken } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
-import { Observable } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ import { Observable } from 'rxjs';
 export class UserTokenService {
 
   private readonly securityClient = inject(SecurityClient);
+  private readonly messageService = inject(MessageService);
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<UserToken>> {
     const sorting = new Sorting(
@@ -31,13 +33,24 @@ export class UserTokenService {
   }
 
   public revoke(token: string): Observable<UserToken> {
+    // TODO: is this not being used?
     return this.securityClient.userToken.patch(
       token,
       {
         revoked: true,
         expirationDate: undefined
       }
-    );
+    )
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public extend(token: string, date: Date): Observable<UserToken> {
@@ -47,7 +60,17 @@ export class UserTokenService {
         revoked: undefined,
         expirationDate: date
       }
-    );
+    )
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
 }

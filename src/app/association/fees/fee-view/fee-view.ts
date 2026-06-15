@@ -4,18 +4,18 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
 import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
+import { finalize, Observable, switchMap, tap } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
-import { FeeInfo } from '../fee-info/fee-info';
 import { FeeEditionEvent, FeeEditionForm } from '../fee-edition-form/fee-edition-form';
+import { FeeInfo } from '../fee-info/fee-info';
 import { FeePaymentsForm, FeesPaymentEvent } from '../fee-payments-form/fee-payments-form';
 import { FeeService } from '../fee-service';
 import { FeeSummaryService } from '../fee-summary-service';
@@ -29,7 +29,6 @@ export class FeeView implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
   private readonly reportService = inject(FeeSummaryService);
-  private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
 
@@ -37,7 +36,7 @@ export class FeeView implements OnInit {
   public readonly status: Status = {
     loadingCalendar: false,
     loadingSummary: false,
-    loadingDetail: false
+    loading: false
   };
   public readonly filter: Filter = {
     status: MemberStatus.Active,
@@ -97,21 +96,30 @@ export class FeeView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
     );
   }
 
   public onPay(data: FeesPaymentEvent): void {
     this.call(
       () => this.service.pay(data),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
     );
   }
 
   public onCreateUnpaid(data: FeeCreationEvent): void {
     this.call(
       () => this.service.create(data),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
     );
   }
 
@@ -132,7 +140,10 @@ export class FeeView implements OnInit {
       accept: () =>
         this.call(
           () => this.service.delete(fee.member.number, fee.month),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+          () => {
+            this.loadRange();
+            this.loadSummary();
+          }
         )
     });
   }
@@ -216,27 +227,29 @@ export class FeeView implements OnInit {
 
   // PRIVATE METHODS
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.status.loadingDetail = true;
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
+    this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loadingDetail = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.loadRange();
-          this.loadSummary();
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }
@@ -248,9 +261,9 @@ interface Permissions {
 }
 
 interface Status {
+  loading: boolean;
   loadingCalendar: boolean;
   loadingSummary: boolean;
-  loadingDetail: boolean;
 }
 
 interface Filter {

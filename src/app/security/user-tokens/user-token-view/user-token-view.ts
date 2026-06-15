@@ -3,11 +3,10 @@ import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
 import { UserTokenList } from '../user-token-list/user-token-list';
@@ -20,7 +19,6 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 export class UserTokenView implements OnInit {
 
   private readonly service = inject(UserTokenService);
-  private readonly messageService = inject(MessageService);
 
   public data = new Page<UserToken>();
 
@@ -55,7 +53,7 @@ export class UserTokenView implements OnInit {
   public onExtendExpiration(date: Date): void {
     this.call(
       () => this.service.extend(this.selectedData.token, date),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
@@ -93,7 +91,10 @@ export class UserTokenView implements OnInit {
 
   // PRIVATE METHODS
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
@@ -101,7 +102,6 @@ export class UserTokenView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.load();
           onSuccess();
         },
         error: error => this.handleError(error)

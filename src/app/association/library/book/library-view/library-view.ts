@@ -9,14 +9,14 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
-import { MenuItem, MessageService } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { EMPTY, finalize, Observable, throwError } from 'rxjs';
+import { EMPTY, finalize, Observable } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
@@ -40,7 +40,6 @@ export class LibraryView implements OnInit {
 
   private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);
-  private readonly messageService = inject(MessageService);
   public readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
 
@@ -167,7 +166,7 @@ export class LibraryView implements OnInit {
         }
       },
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -176,7 +175,10 @@ export class LibraryView implements OnInit {
   private onUpdate(toSave: BookUpdate) {
     this.call(
       () => this.update(toSave.number, toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
     );
   }
 
@@ -184,7 +186,7 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.service.lend(toSave),
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -194,7 +196,7 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.service.return(toSave),
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -204,7 +206,7 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.delete(number),
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -400,7 +402,10 @@ export class LibraryView implements OnInit {
 
   // PRIVATE METHODS
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
@@ -408,18 +413,18 @@ export class LibraryView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.load(this.data.page);
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   private loadSummary() {

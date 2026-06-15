@@ -31,7 +31,6 @@ export class FundsView implements OnInit {
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
-  private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public months: Date[] = [];
@@ -102,14 +101,14 @@ export class FundsView implements OnInit {
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.loadCalendar()
     );
   }
 
   public onUpdate(toCreate: Transaction): void {
     this.call(
       () => this.service.update(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.loadCalendar()
     );
   }
 
@@ -129,7 +128,8 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(transaction.index),
-        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+      () => this.loadCalendar()
+      )
     });
   }
 
@@ -189,7 +189,10 @@ export class FundsView implements OnInit {
     return month
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
@@ -197,7 +200,6 @@ export class FundsView implements OnInit {
         complete: () => {
           this.failures.clear();
           this.dialog = Dialog.NONE;
-          this.loadCalendar();
           onSuccess();
         },
         error: error => this.handleError(error)
