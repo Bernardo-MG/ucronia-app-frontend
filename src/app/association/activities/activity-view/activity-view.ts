@@ -10,12 +10,15 @@ import { ActivityCreationForm } from '../activity-creation-form/activity-creatio
 import { ActivityEditionForm } from '../activity-edition-form/activity-edition-form';
 import { ActivityInfo } from '../activity-info/activity-info';
 import { ActivityList } from '../activity-list/activity-list';
+import { ActivityService } from '../activity-service';
 
 @Component({
   imports: [PanelModule, ButtonModule, DrawerModule, ActivityList, ActivityInfo, ActivityEditionForm, ActivityCreationForm],
   templateUrl: './activity-view.html'
 })
 export class ActivityView {
+
+  private readonly service = inject(ActivityService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
