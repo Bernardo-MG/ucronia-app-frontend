@@ -1,6 +1,7 @@
 
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { BookLent, PublicMember } from '@ucronia/domain';
@@ -11,15 +12,17 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-book-lending-form',
-  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, ButtonModule, MemberSearch],
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<BookLent>();
+  public readonly searchMember = output<MemberSearchEvent>();
 
   public readonly today = new Date();
 
@@ -68,6 +71,14 @@ export class LibraryBookLendingForm implements OnChanges {
 
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+  }
+
+  public onSelectMember(member: PublicMember) {
+    if (!member) {
+      return;
+    }
+
+    this.form.get('borrower')?.setValue(member.number);
   }
 
 }
