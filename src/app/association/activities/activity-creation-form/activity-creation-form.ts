@@ -30,8 +30,10 @@ export class ActivityCreationForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
+      date: [null, Validators.required],
       title: [null, Validators.required],
-      date: [null, Validators.required]
+      description: [],
+      image: []
     });
 
     this.formStatus = new FormStatus(this.form);

@@ -4,4 +4,5 @@ export class Activity {
   public date = new Date();
   public title = "";
   public description = "";
+  public image = "";
 }
