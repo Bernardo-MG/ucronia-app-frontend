@@ -64,7 +64,7 @@ export class ActivityView {
     );
   }
 
-  public onDelete(event: Event, activity: Activity) {
+  public onDelete(event: Event, number: number) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -79,7 +79,7 @@ export class ActivityView {
         severity: 'danger'
       },
       accept: () => this.call(
-        () => this.service.delete(activity.number),
+        () => this.service.delete(number),
       () => this.load()
       )
     });
