@@ -38,7 +38,7 @@
           Cuota
         </ng-template>
         <div class="w-full p-4 space-y-4">
-          <assoc-fee-info [data]="selectedData" [loading]="status.loadingDetail" />
+          <assoc-fee-info [data]="selectedData" [loading]="status.loading" />
         </div>
         <ng-template #footer>
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
@@ -54,7 +54,7 @@
           Crear cuota sin pagar
         </ng-template>
         <div class="w-full p-4">
-          <assoc-fee-creation-form [loading]="status.loadingDetail" [failures]="failures" [members]="members"
+          <assoc-fee-creation-form [loading]="status.loading" [failures]="failures" [members]="members"
             (save)="onCreateUnpaid($event)" (searchMember)="onSearchMembers($event)" />
         </div>
         <ng-template #footer>
@@ -67,7 +67,7 @@
           Pagar cuota
         </ng-template>
         <div class="w-full p-4">
-          <assoc-fee-payments-form [loading]="status.loadingDetail" [failures]="failures" [members]="members" (save)="onPay($event)"
+          <assoc-fee-payments-form [loading]="status.loading" [failures]="failures" [members]="members" (save)="onPay($event)"
             (searchMember)="onSearchMembers($event)" />
         </div>
         <ng-template #footer>
@@ -80,7 +80,7 @@
           Editar cuota
         </ng-template>
         <div class="w-full p-4">
-          <assoc-fee-edition-form [loading]="status.loadingDetail" [data]="selectedData" [failures]="failures"
+          <assoc-fee-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
             (save)="onUpdate($event)" />
         </div>
         <ng-template #footer>
