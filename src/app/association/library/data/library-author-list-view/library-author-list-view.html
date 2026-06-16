@@ -9,10 +9,10 @@
 <shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (sortChange)="onSort($event)"
   (pageChange)="load($event)"></shared-name-list>
 
-<p-drawer [visible]="view !== View.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false"
+<p-drawer [visible]="drawer !== Drawer.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false"
   position="right" [style]="{ width: '60vw' }">
-  @switch (view) {
-    @case (View.INFO) {
+  @switch (drawer) {
+    @case (Drawer.INFO) {
       <ng-template #header>
         Autor
       </ng-template>
@@ -22,10 +22,10 @@
       <ng-template #footer>
         <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-          (click)="confirmDelete($event, selected?.number)" rounded text />
+          (click)="onDelete($event)" rounded text />
       </ng-template>
     }
-    @case (View.CREATION) {
+    @case (Drawer.CREATION) {
       <ng-template #header>
         Crear autor
       </ng-template>
@@ -34,7 +34,7 @@
           (reject)="onReject()"></shared-name-form>
       </div>
     }
-    @case (View.EDITION) {
+    @case (Drawer.EDITION) {
       <ng-template #header>
         Modificar autor
       </ng-template>

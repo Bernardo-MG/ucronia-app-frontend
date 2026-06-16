@@ -150,7 +150,7 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onDelete(event: Event, id: number): void {
+  public onDelete(event: Event): void {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -166,7 +166,7 @@ export class DirectoryView implements OnInit {
       },
       accept: () =>
         this.call(
-          () => this.directoryService.delete(id),
+          () => this.directoryService.delete(this.selectedData.number),
           () => {
             this.load();
             this.loadSummary();

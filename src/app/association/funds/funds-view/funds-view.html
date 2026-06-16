@@ -70,7 +70,7 @@
 
           @if (permissions.delete) {
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" aria-label="Borrar"
-              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
+              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event)" rounded text class="!p-2" />
           }
         </ng-template>
       }

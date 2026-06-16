@@ -33,11 +33,6 @@
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
             [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, book)" rounded text />
         }
-
-        @if (deletable()) {
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-            [attr.aria-disabled]="!deletable()" (click)="onDelete($event, book.number)" rounded text />
-        }
       </td>
     </tr>
   </ng-template>

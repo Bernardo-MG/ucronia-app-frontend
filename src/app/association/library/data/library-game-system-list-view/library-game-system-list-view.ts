@@ -5,10 +5,11 @@ import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
+import { GameSystem } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { GameSystemService } from '../game-system-service';
 
 @Component({
@@ -22,13 +23,13 @@ export class LibraryGameSystemListView implements OnInit {
 
   public readonly permissions: Permissions;
 
-  public data = new Page<any>();
+  public data = new Page<GameSystem>();
   public loading = false;
   public failures = new FailureStore();
-  public view: Drawer = Drawer.NONE;
-  public readonly View = Drawer;
-  public selected: any;
-  protected sort = new Sorting();
+  public drawer = Drawer.NONE;
+  public readonly Drawer = Drawer;
+  public selected = new GameSystem();
+  private sort = new Sorting();
 
   constructor() {
     const authService = inject(AuthService);
@@ -48,34 +49,34 @@ export class LibraryGameSystemListView implements OnInit {
   // EVENT HANDLERS
 
   public onShowCreate(): void {
-    this.selected = undefined;
-    this.view = Drawer.CREATION;
+    this.selected = new GameSystem();
+    this.drawer = Drawer.CREATION;
     this.failures.clear();
   }
 
   public onShowInfo(item: any): void {
     this.selected = item;
-    this.view = Drawer.INFO;
+    this.drawer = Drawer.INFO;
     this.failures.clear();
   }
 
   public onShowEdit(item: any): void {
     this.selected = item;
-    this.view = Drawer.EDITION;
+    this.drawer = Drawer.EDITION;
     this.failures.clear();
   }
 
   public onReject(): void {
-    this.view = Drawer.NONE;
+    this.drawer = Drawer.NONE;
     this.failures.clear();
   }
 
   public onCancelEdit(): void {
-    this.view = Drawer.INFO;
+    this.drawer = Drawer.INFO;
     this.failures.clear();
   }
 
-  public confirmDelete(event: Event, id: number): void {
+  public onDelete(event: Event): void {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -89,12 +90,17 @@ export class LibraryGameSystemListView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.onDelete(id)
+      accept: () => this.call(
+        () => this.service.delete(this.selected.number),
+        () => {
+          this.load(this.data.page);
+        }
+      )
     });
   }
 
   public onSave(data: any): void {
-    if (this.view === Drawer.CREATION) {
+    if (this.drawer === Drawer.CREATION) {
       this.onCreate(data);
     } else {
       this.onUpdate(data);
@@ -106,12 +112,12 @@ export class LibraryGameSystemListView implements OnInit {
     this.service.create(data)
       .pipe(finalize(() => {
         this.loading = false;
-        this.view = Drawer.NONE;
+        this.drawer = Drawer.NONE;
       }))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = Drawer.NONE;
+          this.drawer = Drawer.NONE;
           this.load(this.data.page);
         },
         error: error => {
@@ -131,7 +137,7 @@ export class LibraryGameSystemListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = Drawer.NONE;
+          this.drawer = Drawer.NONE;
           this.load(this.data.page);
         },
         error: error => {
@@ -140,20 +146,6 @@ export class LibraryGameSystemListView implements OnInit {
           } else {
             this.failures.clear();
           }
-        }
-      });
-  }
-
-  public onDelete(id: number): void {
-    this.loading = true;
-    this.service.delete(id)
-      .pipe(finalize(() => {
-        this.loading = false;
-        this.view = Drawer.NONE;
-      }))
-      .subscribe({
-        complete: () => {
-          this.load(this.data.page);
         }
       });
   }
@@ -168,7 +160,7 @@ export class LibraryGameSystemListView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
-      this.view = Drawer.NONE;
+      this.drawer = Drawer.NONE;
     }
   }
 
@@ -179,6 +171,33 @@ export class LibraryGameSystemListView implements OnInit {
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.data = response);
+  }
+
+  // PRIVATE METHODS
+
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
+    this.loading = true;
+    action()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.drawer = Drawer.NONE;
+          onSuccess();
+        },
+        error: error => this.handleError(error)
+      });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

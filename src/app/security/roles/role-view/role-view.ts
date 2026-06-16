@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
@@ -21,6 +22,7 @@ import { RoleService } from '../role-service';
 export class RoleView implements OnInit {
 
   private readonly service = inject(RoleService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
@@ -90,11 +92,26 @@ export class RoleView implements OnInit {
     );
   }
 
-  public onDelete(role: Role) {
-    this.call(
-      () => this.service.delete(role.name),
-      () => this.load(this.data.page)
-    );
+  public onDelete(event: Event): void {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () =>
+        this.call(
+          () => this.service.delete(this.selectedData.name),
+          () => this.load(this.data.page)
+        )
+    });
   }
 
   public onPageChange(event: TablePageEvent) {

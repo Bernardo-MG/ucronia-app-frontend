@@ -112,7 +112,7 @@ export class FundsView implements OnInit {
     );
   }
 
-  public onDelete(event: Event, transaction: Transaction) {
+  public onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -127,7 +127,7 @@ export class FundsView implements OnInit {
         severity: 'danger'
       },
       accept: () => this.call(
-        () => this.service.delete(transaction.index),
+        () => this.service.delete(this.selectedData.index),
       () => this.load()
       )
     });
