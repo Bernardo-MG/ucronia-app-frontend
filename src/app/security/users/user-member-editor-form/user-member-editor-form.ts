@@ -6,11 +6,11 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { FormStatus } from 'projects/bernardo-mg/form/src/lib/status/form-status';
 import { FailureStore } from 'projects/bernardo-mg/request/src/lib/models/failure-store';
-import { UserMemberSearch, UserSearchEvent } from '../user-member-search/user-member-search';
+import { MemberSearch, MemberSearchEvent } from '../../../shared/member/member-search/member-search';
 
 @Component({
   selector: 'access-user-member-editor-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, MessageModule, UserMemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, MessageModule, MemberSearch],
   templateUrl: './user-member-editor-form.html'
 })
 export class UserMemberEditorForm implements OnChanges {
@@ -21,7 +21,7 @@ export class UserMemberEditorForm implements OnChanges {
   public readonly failures = input(new FailureStore());
 
   public readonly assignMember = output<PublicMember>();
-  public readonly searchMember = output<UserSearchEvent>();
+  public readonly searchMember = output<MemberSearchEvent>();
 
   public selected: PublicMember[] = [];
 

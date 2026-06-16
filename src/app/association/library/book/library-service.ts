@@ -228,7 +228,7 @@ export class LibraryService {
       );
   }
 
-  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<Page<PublicMember>> {
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -237,7 +237,8 @@ export class LibraryService {
       ]
     );
 
-    return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
+    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
+      .pipe(map(page => page.content as PublicMember[]));
   }
 
   public getSummary(): Observable<LibrarySummary> {

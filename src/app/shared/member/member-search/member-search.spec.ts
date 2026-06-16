@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { AutoComplete } from 'primeng/autocomplete';
 
-import { FeeMemberSearch } from './fee-member-search';
+import { MemberSearch } from './member-search';
 
-describe('FeeMemberSearch', () => {
-  let component: FeeMemberSearch;
-  let fixture: ComponentFixture<FeeMemberSearch>;
+describe('MemberSearch', () => {
+  let component: MemberSearch;
+  let fixture: ComponentFixture<MemberSearch>;
 
   const member: any = {
     number: '1',
@@ -17,10 +17,10 @@ describe('FeeMemberSearch', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FeeMemberSearch]
+      imports: [MemberSearch]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FeeMemberSearch);
+    fixture = TestBed.createComponent(MemberSearch);
     component = fixture.componentInstance;
 
     fixture.componentRef.setInput('members', [member]);
