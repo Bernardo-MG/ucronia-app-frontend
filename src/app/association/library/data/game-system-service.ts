@@ -1,20 +1,20 @@
 import { inject, Injectable } from '@angular/core';
-import { UcroniaClient } from '@ucronia/api';
-import { Transaction } from '@ucronia/domain';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
+import { GameSystem } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { Page } from 'projects/bernardo-mg/request/src/lib/models/page';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
 })
-export class TransactionService {
+export class GameSystemService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
   private readonly messageService = inject(MessageService);
 
-  public create(data: Transaction): Observable<Transaction> {
-    return this.ucroniaClient.transaction.create(data)
+  public create(data: GameSystem): Observable<GameSystem> {
+    return this.ucroniaClient.library.gameSystem.create(data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -27,8 +27,8 @@ export class TransactionService {
       );
   }
 
-  public update(data: Transaction): Observable<Transaction> {
-    return this.ucroniaClient.transaction.update(data.index, data)
+  public update(data: GameSystem): Observable<GameSystem> {
+    return this.ucroniaClient.library.gameSystem.update(data.number, data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -41,8 +41,12 @@ export class TransactionService {
       );
   }
 
-  public delete(index: number): Observable<Transaction> {
-    return this.ucroniaClient.transaction.delete(index)
+  public getOne(number: number): Observable<GameSystem> {
+    return this.ucroniaClient.library.gameSystem.get(number);
+  }
+
+  public delete(number: number): Observable<GameSystem> {
+    return this.ucroniaClient.library.gameSystem.delete(number)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -64,13 +68,15 @@ export class TransactionService {
       );
   }
 
-  public getAll(page: number | undefined = undefined, description: string | undefined = undefined): Observable<Page<Transaction>> {
-    return this.ucroniaClient.transaction
-      .page(page, undefined, undefined, description, undefined, undefined);
-  }
+  public getAll(page: number | undefined, sort: Sorting): Observable<Page<GameSystem>> {
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [new SortingProperty('name'), new SortingProperty('number')]
+      )
+    );
 
-  public getOne(index: number): Observable<Transaction> {
-    return this.ucroniaClient.transaction.get(index);
+    return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
   }
 
 }

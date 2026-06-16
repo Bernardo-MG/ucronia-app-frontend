@@ -2,51 +2,90 @@
   <!-- Buttons -->
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <!-- Add user -->
-    @if (createable) {
+    @if (permissions.create) {
       <div class="ml-auto space-x-2">
-        <p-button icon="pi pi-envelope" (click)="onStartInvitation()" [disabled]="!createable"
-          aria-label="Invitar usuario" [attr.aria-disabled]="!createable" rounded />
+        <p-button icon="pi pi-envelope" (click)="onStartInvitation()" [disabled]="!permissions.create"
+          aria-label="Invitar usuario" [attr.aria-disabled]="!permissions.create" rounded />
       </div>
     }
   </div>
   <p-panel class="shadow rounded-lg">
     <ng-template #icons>
     </ng-template>
-    <access-user-list [loading]="loading" [editable]="editable" [deletable]="deletable" [users]="data.content"
+    <access-user-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [users]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)"
       (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
-      (active)="onSetEnabled($event)" (edit)="onStartEditing($event.user, $event.view)" />
+      (active)="onSetEnabled($event)" (edit)="onStartEditing($event)" (editRoles)="onStartEditingRoles($event)" (editMember)="onStartEditingMember($event)" />
   </p-panel>
 
-  @if (showing) {
-    <p-dialog header="Usuario" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
-      <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
-    </p-dialog>
-  }
-
-  @switch (view) {
-    @case ('invite') {
-      <p-dialog header="Invitar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
-          (save)="onInvite($event)" />
-      </p-dialog>
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Usuario
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
-    @case ('edition') {
-      <p-dialog header="Editar usuario" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
-          (save)="onUpdate($event)" />
-      </p-dialog>
+    @case (Dialog.INVITE) {
+      <p-drawer [visible]="dialog === Dialog.INVITE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Invitar usuario
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures"
+            (save)="onInvite($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
-    @case ('roles') {
-      <p-dialog header="Editar roles" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
-      </p-dialog>
+    @case (Dialog.EDIT) {
+      <p-drawer [visible]="dialog === Dialog.EDIT" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Editar usuario
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-form [create]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
+            (save)="onUpdate($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
-    @case ('member') {
-      <p-dialog header="Asignar socio" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-        <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
-          (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
-      </p-dialog>
+    @case (Dialog.ROLES) {
+      <p-drawer [visible]="dialog === Dialog.ROLES" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Editar roles
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-roles-editor [roles]="selectedData.roles" [selection]="roleSelection" (save)="onSetRoles($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
+    }
+    @case (Dialog.MEMBER) {
+      <p-drawer [visible]="dialog === Dialog.MEMBER" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+        <ng-template #header>
+          Asignar socio
+        </ng-template>
+        <div class="w-full p-4">
+          <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
+            (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      </p-drawer>
     }
   }
 </div>

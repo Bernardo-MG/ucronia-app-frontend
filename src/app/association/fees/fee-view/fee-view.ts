@@ -4,75 +4,68 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
 import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
-import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, switchMap, tap, throwError } from 'rxjs';
+import { finalize, Observable, switchMap, tap } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
-import { FeeDetails } from '../fee-details/fee-details';
 import { FeeEditionEvent, FeeEditionForm } from '../fee-edition-form/fee-edition-form';
+import { FeeInfo } from '../fee-info/fee-info';
 import { FeePaymentsForm, FeesPaymentEvent } from '../fee-payments-form/fee-payments-form';
 import { FeeService } from '../fee-service';
 import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DialogModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeDetails, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
+  imports: [DrawerModule, PanelModule, ButtonModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, SummaryCard],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
   private readonly reportService = inject(FeeSummaryService);
-  private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
-
-  public editing = false;
-
-  public activeFilter = MemberStatus.Active;
-
-  public range = new YearsRange();
-
-  public year = new Date().getFullYear();
-
-  /**
-   * Loading flag. Shows the loading visual cue.
-   */
-  public loadingCalendar = false;
-  public loadingSummary = false;
-  public loadingDetail = false;
-  public showing = false;
+  public readonly permissions: Permissions;
+  public readonly status: Status = {
+    loadingCalendar: false,
+    loadingSummary: false,
+    loading: false
+  };
+  public readonly filter: Filter = {
+    status: MemberStatus.Active,
+    range: new YearsRange(),
+    year: new Date().getFullYear()
+  };
 
   public selectedData = new Fee();
   public summary = new FeeSummary();
   public members: PublicMember[] = [];
+  public feeCalendar: MemberFees[] = [];
 
   public failures = new FailureStore();
 
-  public feeCalendar: MemberFees[] = [];
+  public dialog = Dialog.NONE;
 
-  public view: string = '';
+  public Dialog = Dialog;
 
   public readonly creationItems: MenuItem[] = [];
-
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("fee", "create");
-    this.editable = authService.hasPermission("fee", "update");
-    this.deletable = authService.hasPermission("fee", "delete");
+    this.permissions = {
+      create: authService.hasPermission("fee", "create"),
+      edit: authService.hasPermission("fee", "update"),
+      delete: authService.hasPermission("fee", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -81,17 +74,21 @@ export class FeeView implements OnInit {
     this.creationItems.push(
       {
         label: 'Pagar cuota',
-        command: () => this.onStartEditingView('pay')
-      });
+        command: () => this.dialog = Dialog.PAY
+      }
+    );
     this.creationItems.push(
       {
         label: 'Cuota sin pagar',
-        command: () => this.onStartEditingView('create')
-      });
+        command: () => this.dialog = Dialog.CREATE
+      }
+    );
 
     // Load report
     this.loadSummary();
   }
+
+  // EVENT HANDLERS
 
   public onUpdate(toUpdate: FeeEditionEvent): void {
     const update = {
@@ -99,21 +96,30 @@ export class FeeView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
     );
   }
 
   public onPay(data: FeesPaymentEvent): void {
     this.call(
       () => this.service.pay(data),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
     );
   }
 
   public onCreateUnpaid(data: FeeCreationEvent): void {
     this.call(
       () => this.service.create(data),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
     );
   }
 
@@ -134,7 +140,10 @@ export class FeeView implements OnInit {
       accept: () =>
         this.call(
           () => this.service.delete(fee.member.number, fee.month),
-          () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+          () => {
+            this.loadRange();
+            this.loadSummary();
+          }
         )
     });
   }
@@ -142,18 +151,12 @@ export class FeeView implements OnInit {
   public onSelectFee(fee: { member: number, date: Date }) {
     this.service.getOne(fee.member, fee.date)
       .subscribe(fee => this.selectedData = fee);
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeMemberStatus(active: MemberStatus) {
-    this.activeFilter = active;
-    this.loadCalendar(this.year);
-  }
-
-  public onStartEditingView(view: string): void {
-    this.view = view;
-    this.showing = false;
-    this.editing = true;
+    this.filter.status = active;
+    this.loadCalendar(this.filter.year);
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -164,35 +167,45 @@ export class FeeView implements OnInit {
   }
 
   public loadCalendar(year: number) {
-    this.loadingCalendar = true;
+    this.status.loadingCalendar = true;
 
-    this.year = year;
-    this.feeCalendarService.getCalendar(year, this.activeFilter)
-      .pipe(finalize(() => this.loadingCalendar = false))
+    this.filter.year = year;
+    this.feeCalendarService.getCalendar(year, this.filter.status)
+      .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
   }
 
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
+
   private loadSummary() {
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
 
     this.reportService.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(response => this.summary = response);
   }
 
   private loadRange() {
-    this.loadingCalendar = true;
+    this.status.loadingCalendar = true;
 
     this.feeCalendarService.getRange()
       .pipe(
         tap(range => {
-          this.range = range;
+          this.filter.range = range;
           this.loadYear(range);
         }),
         switchMap(() =>
-          this.feeCalendarService.getCalendar(this.year, this.activeFilter)
+          this.feeCalendarService.getCalendar(this.filter.year, this.filter.status)
         ),
-        finalize(() => this.loadingCalendar = false)
+        finalize(() => this.status.loadingCalendar = false)
       )
       .subscribe(data => {
         this.feeCalendar = data;
@@ -204,36 +217,65 @@ export class FeeView implements OnInit {
       const firstYear = Number(range.years[0]);
       const lastYear = Number(range.years[range.years.length - 1]);
       // If the current year is outside the range, set it back
-      if (this.year < firstYear) {
-        this.year = firstYear;
-      } else if (this.year > lastYear) {
-        this.year = lastYear;
+      if (this.filter.year < firstYear) {
+        this.filter.year = firstYear;
+      } else if (this.filter.year > lastYear) {
+        this.filter.year = lastYear;
       }
     }
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loadingDetail = true;
+  // PRIVATE METHODS
+
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
+    this.status.loading = true;
     action()
-      .pipe(finalize(() => this.loadingDetail = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.showing = false;
-          this.loadRange();
-          this.loadSummary();
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loading: boolean;
+  loadingCalendar: boolean;
+  loadingSummary: boolean;
+}
+
+interface Filter {
+  status: MemberStatus;
+  range: YearsRange;
+  year: number;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDITION = 'edition',
+  CREATE = 'create',
+  PAY = 'pay'
 }

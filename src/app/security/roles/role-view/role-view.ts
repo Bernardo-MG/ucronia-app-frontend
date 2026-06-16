@@ -2,12 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { RoleChangePermission } from '../role-change-permission/role-change-permission';
 import { RoleForm } from '../role-form/role-form';
 import { RoleInfo } from '../role-info/role-info';
@@ -16,21 +15,15 @@ import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [PanelModule, TableModule, ButtonModule, DialogModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
+  imports: [PanelModule, TableModule, ButtonModule, DrawerModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
 
   private readonly service = inject(RoleService);
-  private readonly messageService = inject(MessageService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
-
-  public get first() {
-    return (this.data.page - 1) * this.data.size;
-  }
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
 
   public data = new Page<Role>();
 
@@ -40,36 +33,39 @@ export class RoleView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public showing = false;
-  public editing = false;
 
   private sort = new Sorting();
 
-  public view: string = '';
-
   public failures = new FailureStore();
 
-  public permissions: ResourcePermission[] = [];
+  public resourcePermissions: ResourcePermission[] = [];
+
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("role", "create");
-    this.editable = authService.hasPermission("role", "update");
-    this.deletable = authService.hasPermission("role", "delete");
+    this.permissions = {
+      create: authService.hasPermission("role", "create"),
+      edit: authService.hasPermission("role", "update"),
+      delete: authService.hasPermission("role", "delete")
+    };
   }
 
   public ngOnInit(): void {
     this.load();
   }
 
+  // EVENT HANDLERS
+
   public onShowInfo(role: Role) {
     this.selectedData = role;
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
@@ -81,7 +77,7 @@ export class RoleView implements OnInit {
   public onCreate(toCreate: Role): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
@@ -90,14 +86,14 @@ export class RoleView implements OnInit {
 
     this.call(
       () => this.service.update(this.selectedData),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
   public onDelete(role: Role) {
     this.call(
       () => this.service.delete(role.name),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => this.load(this.data.page)
     );
   }
 
@@ -115,48 +111,67 @@ export class RoleView implements OnInit {
 
   public onStartEditing(role: Role, view: string): void {
     this.selectedData = role;
-    this.view = view;
-    this.editing = true;
+    this.dialog = Dialog.EDIT;
   }
 
   public onChangePermissions(role: Role) {
     this.selectedData = role;
-    this.service.getAvailablePermissions(role.name).subscribe(p => this.permissions = p);
-    this.onStartEditingView('permissions');
+    this.service.getAvailablePermissions(role.name).subscribe(p => this.resourcePermissions = p);
+    this.dialog = Dialog.PERMISSIONS;
   }
 
   public onStartCreation(): void {
-    this.service.getAllPermissions().subscribe(p => this.permissions = p);
-    this.onStartEditingView('creation');
+    this.service.getAllPermissions().subscribe(p => this.resourcePermissions = p);
+    this.dialog = Dialog.CREATE;
   }
 
-  private onStartEditingView(view: string): void {
-    this.view = view;
-    this.editing = true;
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  // PRIVATE METHODS
+
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.showing = false;
-          this.editing = false;
-          this.load();
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create',
+  PERMISSIONS = 'permissions'
 }

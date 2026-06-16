@@ -1,5 +1,4 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { TransactionCalendar } from '@app/association/funds/transaction-calendar/transaction-calendar';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
@@ -7,12 +6,13 @@ import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
+import { TransactionCalendar } from '../transaction-calendar/transaction-calendar';
 import { TransactionDisplaySelector } from '../transaction-display-selector/transaction-display-selector';
 import { TransactionForm } from '../transaction-form/transaction-form';
 import { TransactionInfo } from '../transaction-info/transaction-info';
@@ -22,7 +22,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DialogModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView, SummaryCard],
+  imports: [PanelModule, CardModule, ButtonModule, DrawerModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView, SummaryCard],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -31,22 +31,20 @@ export class FundsView implements OnInit {
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
-  private readonly messageService = inject(MessageService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public months: Date[] = [];
 
-  public loading = false;
-  public loadingCalendar = false;
-  public loadingList = false;
-  public loadingExcel = false;
-  public loadingSummary = false;
-  public editing = false;
-  public showing = false;
-
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly status: Status = {
+    loading: false,
+    loadingCalendar: false,
+    loadingList: false,
+    loadingExcel: false,
+    loadingSummary: false
+  };
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
+  public readonly Display = Display;
 
   public selectedData = new Transaction();
 
@@ -56,18 +54,21 @@ export class FundsView implements OnInit {
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
-  public view: string = '';
-  public selectedView: 'calendar' | 'list' = 'calendar';
+  public display = Display.CALENDAR;
 
   public failures = new FailureStore();
+
+  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("transaction", "create");
-    this.editable = authService.hasPermission("transaction", "update");
-    this.deletable = authService.hasPermission("transaction", "delete");
+    this.permissions = {
+      create: authService.hasPermission("transaction", "create"),
+      edit: authService.hasPermission("transaction", "update"),
+      delete: authService.hasPermission("transaction", "delete")
+    };
   }
 
   public ngOnInit(): void {
@@ -80,32 +81,34 @@ export class FundsView implements OnInit {
           .map(m => new Date(m.year, m.month - 1));
         // TODO: then sort the months instead of reversing
         this.months = [...this.months].reverse();
-        if (!this.loadingCalendar) {
+        if (!this.status.loadingCalendar) {
           this.loadCalendar();
         }
-        if (!this.loadingList) {
+        if (!this.status.loadingList) {
           this.loadList();
         }
       });
 
     // Read summary
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
     this.transactionBalanceService.summary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(s => this.summary = s);
   }
+
+  // EVENT HANDLERS
 
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => this.load()
     );
   }
 
   public onUpdate(toCreate: Transaction): void {
     this.call(
       () => this.service.update(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => this.load()
     );
   }
 
@@ -125,20 +128,15 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(transaction.index),
-        () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 }))
+      () => this.load()
+      )
     });
-  }
-
-  public onStartView(view: string): void {
-    this.view = view;
-    this.showing = false;
-    this.editing = true;
   }
 
   public onShowInfo(transactionId: number) {
     this.service.getOne(transactionId)
       .subscribe(transaction => this.selectedData = transaction);
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onFilter(filter: string) {
@@ -146,30 +144,48 @@ export class FundsView implements OnInit {
     this.loadList();
   }
 
-  public onViewChange(view: 'calendar' | 'list') {
-    this.selectedView = view;
-  }
+  // REPORT
 
   public downloadExcel() {
-    this.loadingExcel = true;
+    this.status.loadingExcel = true;
     this.reportService.downloadExcelReport()
-      .pipe(finalize(() => this.loadingExcel = false))
+      .pipe(finalize(() => this.status.loadingExcel = false))
       .subscribe();
   }
 
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
+
   public loadCalendar(month: Date = this.getDefaultMonth()) {
-    this.loadingCalendar = true;
+    this.status.loadingCalendar = true;
     this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
-      .pipe(finalize(() => this.loadingCalendar = false))
+      .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }
 
-  public loadList(page: number = 0) {
-    this.loadingList = true;
+  public loadList(page: number | undefined = undefined) {
+    this.status.loadingList = true;
     this.service.getAll(page, this.descriptionFilter)
-      .pipe(finalize(() => this.loadingList = false))
+      .pipe(finalize(() => this.status.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
   }
+
+  private load() {
+    if (this.display === Display.CALENDAR) {
+      this.loadCalendar();
+    } else {
+      this.loadList();
+    }
+  }
+
+  // PRIVATE METHODS
 
   private getDefaultMonth() {
     let month;
@@ -181,27 +197,55 @@ export class FundsView implements OnInit {
     return month
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
+    this.status.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.showing = false;
-          this.loadCalendar();
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loading: boolean;
+  loadingCalendar: boolean;
+  loadingList: boolean;
+  loadingExcel: boolean;
+  loadingSummary: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  CREATE = 'create'
+}
+
+export enum Display {
+  CALENDAR = 'calendar',
+  LIST = 'list'
 }

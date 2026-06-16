@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-2">
     <!-- Member -->
     <label class="font-semibold mb-2 block">Socio</label>
-    <assoc-fee-member-search [members]="members()" (selectMember)="onSelectMember($event)"
+    <assoc-member-search [members]="members()" (selectMember)="onSelectMember($event)"
       (searchMember)="searchMember.emit($event)" />
     <div class="mb-2">
       @if (isFieldInvalid('member')) {
@@ -33,7 +33,6 @@
   </div>
 
   <div class="flex items-center w-full justify-between mb-3">
-    <p-button icon="pi pi-arrow-left" [rounded]="true" (onClick)="return.emit()" aria-label="Volver" />
     <!-- Save button -->
     <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
       [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>

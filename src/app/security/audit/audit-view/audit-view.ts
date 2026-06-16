@@ -27,10 +27,11 @@ export class AuditView implements OnInit {
   private sort = new Sorting();
 
   public ngOnInit(): void {
-    this.load(0);
+    this.load();
   }
 
   public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
@@ -39,7 +40,7 @@ export class AuditView implements OnInit {
     this.load(this.data.page);
   }
 
-  public load(page: number) {
+  public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))

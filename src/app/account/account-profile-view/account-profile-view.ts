@@ -1,6 +1,6 @@
 
 import { Component, inject } from '@angular/core';
-import { AccountProfileDetails } from '@app/account/account-profile-details/account-profile-details';
+import { AccountProfileInfo } from '@app/account/account-profile-info/account-profile-info';
 import { AccountService } from '@app/account/account-service';
 import { Account } from '@bernardo-mg/security';
 import { DetailField } from '@bernardo-mg/ui';
@@ -10,7 +10,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { finalize } from 'rxjs';
 
 @Component({
-  imports: [CardModule, SkeletonModule, AccountProfileDetails, DetailField],
+  imports: [CardModule, SkeletonModule, AccountProfileInfo, DetailField],
   templateUrl: './account-profile-view.html'
 })
 export class AccountProfileView {

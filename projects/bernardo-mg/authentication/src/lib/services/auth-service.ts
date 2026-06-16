@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable, ReplaySubject } from 'rxjs';
-import { LoginStatus } from '../models/login-status';
 import { PermissionList } from '../models/permission-list';
 import { SecurityDetails } from '../models/security-details';
 import { TokenData } from '../models/token-data';

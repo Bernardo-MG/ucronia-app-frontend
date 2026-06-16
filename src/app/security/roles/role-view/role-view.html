@@ -2,38 +2,64 @@
   <!-- Buttons -->
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
     <!-- Add role -->
-    @if (createable) {
+    @if (permissions.create) {
       <div class="ml-auto space-x-2">
-        <p-button icon="pi pi-plus-circle" (click)="onStartCreation()" [disabled]="!createable" aria-label="Nuevo libro"
-          [attr.aria-disabled]="!createable" rounded />
+        <p-button icon="pi pi-plus-circle" (click)="onStartCreation()" [disabled]="!permissions.create" aria-label="Nuevo libro"
+          [attr.aria-disabled]="!permissions.create" rounded />
       </div>
     }
   </div>
   <p-panel class="shadow rounded-lg">
 
     <!-- List -->
-    <access-role-list [loading]="loading" [editable]="editable" [deletable]="deletable" [roles]="data.content"
+    <access-role-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [roles]="data.content"
       [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
       (delete)="onDelete($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)"
       (edit)="onStartEditing($event.role, $event.view)" (changePermissions)="onChangePermissions($event)" />
 
   </p-panel>
 
-  <p-dialog header="Rol" [modal]="true" [(visible)]="showing" [style]="{ width: '25rem' }">
-    <access-role-info [data]="selectedData" />
-  </p-dialog>
-
-  @switch (view) {
-    @case ('creation') {
-      <p-dialog header="Crear rol" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <access-role-form [selection]="permissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
-      </p-dialog>
-    }
-    @case ('permissions') {
-      <p-dialog header="Asignar permisos" [modal]="true" [(visible)]="editing" [style]="{ width: '50rem' }">
-        <access-role-change-permission [selection]="permissions" [permissions]="selectedData.permissions"
-          (save)="onSetRolePermissions($event)" />
-      </p-dialog>
-    }
-  }
 </div>
+
+@switch (dialog) {
+  @case (Dialog.INFO) {
+    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Rol
+      </ng-template>
+      <div class="w-full p-4">
+        <access-role-info [data]="selectedData" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
+  }
+  @case (Dialog.CREATE) {
+    <p-drawer [visible]="dialog === Dialog.CREATE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Crear rol
+      </ng-template>
+      <div class="w-full p-4">
+        <access-role-form [selection]="resourcePermissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
+  }
+  @case (Dialog.PERMISSIONS) {
+    <p-drawer [visible]="dialog === Dialog.PERMISSIONS" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Asignar permisos
+      </ng-template>
+      <div class="w-full p-4">
+        <access-role-change-permission [selection]="resourcePermissions" [permissions]="selectedData.permissions"
+          (save)="onSetRolePermissions($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
+  }
+} 

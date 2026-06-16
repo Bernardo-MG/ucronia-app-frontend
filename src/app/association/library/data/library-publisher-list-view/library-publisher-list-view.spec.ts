@@ -4,14 +4,14 @@ import { Page } from '@bernardo-mg/request';
 import { Publisher } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { PublisherCrudService } from '../publisher-crud-service';
+import { PublisherService } from '../publisher-service';
 import { LibraryPublisherListView } from './library-publisher-list-view';
 
 describe('LibraryPublisherListView', () => {
   let component: LibraryPublisherListView;
   let fixture: ComponentFixture<LibraryPublisherListView>;
 
-  const publisherCrudServiceMock = jasmine.createSpyObj<PublisherCrudService>(
+  const publisherCrudServiceMock = jasmine.createSpyObj<PublisherService>(
     'PublisherCrudService',
     ['getAll', 'create', 'update', 'delete']
   );
@@ -30,7 +30,7 @@ describe('LibraryPublisherListView', () => {
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: PublisherCrudService, useValue: publisherCrudServiceMock }
+        { provide: PublisherService, useValue: publisherCrudServiceMock }
       ]
     })
       .compileComponents();

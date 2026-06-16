@@ -2,7 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
 import { Fee, FeePayments, MemberStatus, Profile, PublicMember } from '@ucronia/domain';
-import { map, Observable } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -10,21 +11,71 @@ import { map, Observable } from 'rxjs';
 export class FeeService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
+  private readonly messageService = inject(MessageService);
 
   public create(data: FeeCreation): Observable<Fee> {
-    return this.ucroniaClient.fee.create(data);
+    return this.ucroniaClient.fee.create(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public pay(data: FeePayments): Observable<Fee[]> {
-    return this.ucroniaClient.fee.pay(data);
+    return this.ucroniaClient.fee.pay(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public update(member: number, month: Date, data: FeeUpdate): Observable<Fee> {
-    return this.ucroniaClient.fee.update(member, month, data);
+    return this.ucroniaClient.fee.update(member, month, data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public delete(member: number, month: Date): Observable<Fee> {
-    return this.ucroniaClient.fee.delete(member, month);
+    return this.ucroniaClient.fee.delete(member, month)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
   public getOne(member: number, month: Date): Observable<Fee> {

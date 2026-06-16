@@ -16,14 +16,14 @@ import { SelectModule } from 'primeng/select';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
-import { ProfileDetails } from '../model/profile-info';
+import { FullProfile } from '../model/full-profile';
 
 @Component({
-  selector: 'assoc-profile-info-edition-form',
+  selector: 'assoc-profile-edition-form',
   imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
-  templateUrl: './profile-info-edition-form.html'
+  templateUrl: './profile-edition-form.html'
 })
-export class ProfileInfoEditionForm implements OnChanges {
+export class ProfileEditionForm implements OnChanges {
 
   private readonly fb = inject(FormBuilder);
 
@@ -32,7 +32,7 @@ export class ProfileInfoEditionForm implements OnChanges {
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly feeTypes = input<FeeType[]>([]);
 
-  @Input() public set data(value: ProfileDetails) {
+  @Input() public set data(value: FullProfile) {
     this.form.patchValue(value as any);
 
     this.contactChannels.clear();
@@ -59,7 +59,7 @@ export class ProfileInfoEditionForm implements OnChanges {
     this.selected = [...value.types];
   }
 
-  public readonly save = output<ProfileDetails>();
+  public readonly save = output<FullProfile>();
 
   public today = new Date();
 
@@ -172,7 +172,7 @@ export class ProfileInfoEditionForm implements OnChanges {
 
   public submit() {
     if (this.formStatus.saveEnabled) {
-      const value: ProfileDetails = {
+      const value: FullProfile = {
         ...this.form.value,
         types: [...this.selected]
       };

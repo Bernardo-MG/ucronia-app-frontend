@@ -6,20 +6,20 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { PublicMember } from 'projects/ucronia/domain/src/lib/members/public-member';
 
 @Component({
-  selector: 'assoc-user-member-search',
+  selector: 'assoc-member-search',
   imports: [FormsModule, ReactiveFormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
-  templateUrl: './user-member-search.html'
+  templateUrl: './member-search.html'
 })
-export class UserMemberSearch {
+export class MemberSearch {
 
   public readonly members = input<PublicMember[]>([]);
   public readonly member = input(new PublicMember());
 
-  public readonly searchMember = output<UserSearchEvent>();
+  public readonly searchMember = output<MemberSearchEvent>();
   public readonly selectMember = output<PublicMember>();
 
 }
 
-export class UserSearchEvent {
+export class MemberSearchEvent {
   public query: string = '';
 }

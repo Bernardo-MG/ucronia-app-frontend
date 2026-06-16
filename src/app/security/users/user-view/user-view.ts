@@ -7,7 +7,7 @@ import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable, throwError } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
@@ -19,7 +19,7 @@ import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DialogModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
+  imports: [CardModule, ButtonModule, PanelModule, DrawerModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -27,9 +27,8 @@ export class UserView implements OnInit {
   private readonly service = inject(UserService);
   private readonly messageService = inject(MessageService);
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public readonly permissions: Permissions;
+  public readonly Dialog = Dialog;
 
   public data = new Page<User>();
 
@@ -40,10 +39,6 @@ export class UserView implements OnInit {
    * Loading flag.
    */
   public loading = false;
-  public editing = false;
-  public showing = false;
-
-  public view: string = '';
 
   private sort = new Sorting();
 
@@ -54,20 +49,27 @@ export class UserView implements OnInit {
   public availableMembers: PublicMember[] = [];
   public members: PublicMember[] = [];
 
+  public dialog = Dialog.NONE;
+
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("user", "create");
-    this.editable = authService.hasPermission("user", "update");
-    this.deletable = authService.hasPermission("user", "delete");
+    this.permissions = {
+      create: authService.hasPermission("user", "create"),
+      edit: authService.hasPermission("user", "update"),
+      delete: authService.hasPermission("user", "delete")
+    };
   }
 
   public ngOnInit(): void {
     this.load();
   }
 
+  // EVENT HANDLERS
+
   public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
@@ -79,7 +81,10 @@ export class UserView implements OnInit {
   public onInvite(toCreate: UserFormData): void {
     this.call(
       () => this.service.invite(toCreate),
-      () => this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -90,7 +95,10 @@ export class UserView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.username, user),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -103,21 +111,27 @@ export class UserView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.username, user),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
   public onAssignMember(member: PublicMember): void {
     this.call(
       () => this.service.assignProfile(this.selectedData.username, member.number),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
   public onShowUser(user: User) {
     this.selectedData = user;
     this.service.getProfile(user.username).subscribe(member => this.member = member);
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public onSetEnabled(status: boolean) {
@@ -128,14 +142,20 @@ export class UserView implements OnInit {
     };
     this.call(
       () => this.service.update(this.selectedData.username, userUpdate),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
+        this.load();
+      }
     );
   }
 
   public onDelete(id: string) {
     this.call(
       () => this.service.delete(id),
-      () => this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 })
+      () => {
+        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.load();
+      }
     );
   }
 
@@ -144,28 +164,30 @@ export class UserView implements OnInit {
     this.service.getAllRoles()
       .pipe(finalize(() => this.loading = false))
       .subscribe(r => this.roleSelection = r);
-    this.view = 'invite';
-    this.editing = true;
+    this.dialog = Dialog.INVITE;
   }
 
-  public onStartEditing(user: User, view: string): void {
+  public onStartEditing(user: User): void {
     this.selectedData = user;
-    switch (view) {
-      case 'member':
-        this.service.getProfile(user.username).subscribe(member => this.member = member);
-        this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
-        break;
-      case 'roles':
-        this.loading = true;
-        this.service.getAvailableRoles(user.username)
-          .pipe(
-            finalize(() => this.loading = false)
-          )
-          .subscribe(r => this.roleSelection = r);
-        break;
-    }
-    this.view = view;
-    this.editing = true;
+    this.dialog = Dialog.EDIT;
+  }
+
+  public onStartEditingRoles(user: User): void {
+    this.selectedData = user;
+    this.loading = true;
+    this.service.getAvailableRoles(user.username)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(r => this.roleSelection = r);
+    this.dialog = Dialog.ROLES;
+  }
+
+  public onStartEditingMember(user: User): void {
+    this.selectedData = user;
+    this.service.getProfile(user.username).subscribe(member => this.member = member);
+    this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
+    this.dialog = Dialog.MEMBER;
   }
 
   public onSearchMembers(event: { query: string }) {
@@ -175,6 +197,8 @@ export class UserView implements OnInit {
       });
   }
 
+  // DATA LOADING
+
   public load(page: number | undefined = undefined) {
     this.loading = true;
     this.service.getAll(page, this.sort)
@@ -182,28 +206,54 @@ export class UserView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // PRIVATE METHODS
+
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
     this.loading = true;
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.editing = false;
-          this.showing = false;
-          this.load();
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+}
+
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+enum Dialog {
+  NONE = 'none',
+  INFO = 'info',
+  EDIT = 'edit',
+  INVITE = 'invite',
+  ROLES = 'roles',
+  MEMBER = 'member'
 }

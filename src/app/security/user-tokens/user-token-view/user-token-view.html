@@ -1,18 +1,36 @@
 <p-card>
   <access-user-token-list [loading]="loading" [editable]="editable" [tokens]="data.content"
     [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-    (extend)="onStartExtend()"
+    (extend)="dialog = Dialog.EXTEND"
     (changeDirection)="onChangeDirection($event)"
     (changePage)="load($event)" />
 </p-card>
-<p-dialog header="Token" [modal]="true" [(visible)]="showing" [style]="{ width: '50rem' }">
-  <access-user-token-info [data]="selectedData" [loading]="loading" />
-</p-dialog>
-@switch (view) {
-  @case ('extend') {
-    <p-dialog header="Extender token" [modal]="true" [(visible)]="editing" [style]="{ width: '25rem' }">
-      <p>Selecciona una nueva fecha:</p>
-      <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
-    </p-dialog>
+@switch (dialog) {
+  @case (Dialog.INFO) {
+    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Token
+      </ng-template>
+      <div class="w-full p-4">
+        <access-user-token-info [data]="selectedData" [loading]="loading" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
+  }
+  @case (Dialog.EXTEND) {
+    <p-drawer [visible]="dialog === Dialog.EXTEND" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
+      <ng-template #header>
+        Extender token
+      </ng-template>
+      <div class="w-full p-4">
+        <p>Selecciona una nueva fecha:</p>
+        <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    </p-drawer>
   }
 }

@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
-import { forkJoin, map, Observable } from 'rxjs';
+import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from '../model/library-summary';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: "root"
@@ -11,13 +12,34 @@ import { LibrarySummary } from '../model/library-summary';
 export class LibraryService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
+  private readonly messageService = inject(MessageService);
 
   public createGameBook(data: BookCreation): Observable<BookCreation> {
-    return this.ucroniaClient.library.gameBook.create(data);
+    return this.ucroniaClient.library.gameBook.create(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public updateGameBook(number: number, data: GameBookUpdate): Observable<GameBook> {
-    return this.ucroniaClient.library.gameBook.update(number, data);
+    return this.ucroniaClient.library.gameBook.update(number, data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public getOneGameBook(number: number): Observable<GameBook> {
@@ -25,10 +47,29 @@ export class LibraryService {
   }
 
   public deleteGameBook(number: number): Observable<GameBook> {
-    return this.ucroniaClient.library.gameBook.delete(number);
+    return this.ucroniaClient.library.gameBook.delete(number)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
-  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting): Observable<Page<GameBook>> {
+  public getAllGameBooks(page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<GameBook>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -41,15 +82,35 @@ export class LibraryService {
       )
     );
 
-    return this.ucroniaClient.library.gameBook.page(page, undefined, sorting);
+    return this.ucroniaClient.library.gameBook.page(page, undefined, sorting, title);
   }
 
   public createFictionBook(data: BookCreation): Observable<FictionBook> {
-    return this.ucroniaClient.library.fictionBook.create(data);
+    return this.ucroniaClient.library.fictionBook.create(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public updateFictionBook(number: number, data: BookUpdate): Observable<FictionBook> {
-    return this.ucroniaClient.library.fictionBook.update(number, data);
+    return this.ucroniaClient.library.fictionBook.update(number, data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public getOneFictionBook(number: number): Observable<FictionBook> {
@@ -57,10 +118,29 @@ export class LibraryService {
   }
 
   public deleteFictionBook(number: number): Observable<FictionBook> {
-    return this.ucroniaClient.library.fictionBook.delete(number);
+    return this.ucroniaClient.library.fictionBook.delete(number)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
-  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting): Observable<Page<FictionBook>> {
+  public getAllFictionBooks(page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<FictionBook>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
@@ -73,7 +153,7 @@ export class LibraryService {
       )
     );
 
-    return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting);
+    return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting, title);
   }
 
   public getBookTypes(page: number | undefined = undefined): Observable<Page<BookType>> {
@@ -121,14 +201,34 @@ export class LibraryService {
   }
 
   public lend(data: BookLent): Observable<BookLending> {
-    return this.ucroniaClient.library.lending.lend(data);
+    return this.ucroniaClient.library.lending.lend(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Prestado',
+            detail: 'Libro prestado',
+            life: 3000
+          });
+        })
+      );
   }
 
   public return(data: BookReturned): Observable<BookLending> {
-    return this.ucroniaClient.library.lending.return(data);
+    return this.ucroniaClient.library.lending.return(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Devuelto',
+            detail: 'Libro devuelto',
+            life: 3000
+          });
+        })
+      );
   }
 
-  public getMembers(page: number | undefined = undefined, active: MemberStatus): Observable<Page<PublicMember>> {
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -137,7 +237,8 @@ export class LibraryService {
       ]
     );
 
-    return this.ucroniaClient.memberProfile.page(page, undefined, sorting, active, undefined);
+    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
+      .pipe(map(page => page.content as PublicMember[]));
   }
 
   public getSummary(): Observable<LibrarySummary> {

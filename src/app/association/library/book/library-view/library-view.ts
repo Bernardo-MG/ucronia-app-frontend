@@ -6,85 +6,86 @@ import { FormWithListSelection } from '@app/shared/data/form-with-list-selection
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
-import { SummaryCard } from '@bernardo-mg/ui';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
-import { MenuItem, MessageService } from 'primeng/api';
+import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
+import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { EMPTY, finalize, Observable, throwError } from 'rxjs';
+import { EMPTY, finalize, Observable } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
-import { LibraryBookLending } from '../library-book-lending/library-book-lending';
+import { LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
+import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DialogModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
 
   private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);
-  private readonly messageService = inject(MessageService);
   public readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
 
   public failures = new FailureStore();
 
+  private nameFilter = '';
+
   public selectedData: FictionBook | GameBook = new GameBook();
+  public members: PublicMember[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
   public summary = new LibrarySummary();
 
-  public source: BookSelection = BookSelection.Game;
-  public list: 'books' | 'lendings' = 'books';
+  public source: BookSelection = BookSelection.GAME;
+  public display = Display.BOOKS;
 
-  public stateOptions: any[] = [{ label: 'Libros', value: 'books' }, { label: 'Préstamos', value: 'lendings' }];
-  public selectedTab: 'books' | 'lendings' = 'books';
+  public stateOptions: any[] = [{ label: 'Libros', value: Display.BOOKS }, { label: 'Préstamos', value: Display.LENDINGS }];
+  public selectedTab = Display.BOOKS;
 
-  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.Game }, { label: 'Ficción', value: BookSelection.Fiction }];
-  public selectedBookView: 'all' | 'game' | 'fiction' = 'game';
+  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.GAME }, { label: 'Ficción', value: BookSelection.FICTION }];
+  public selectedBookView = BookSelection.GAME;
 
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-  public loadingExcel = false;
-  public loadingSummary = false;
-  public editing = false;
-  public showing = false;
+  public readonly permissions: Permissions;
+  public readonly status: Status = {
+    loading: false,
+    loadingSummary: false,
+    loadingExcel: false
+  };
 
-  public readonly createable;
-  public readonly editable;
-  public readonly deletable;
+  public dialog = Dialog.NONE;
+
+  public readonly Dialog = Dialog;
 
   public readonly dataMenuItems: MenuItem[] = [];
-
-  public view: string = '';
 
   private sort = new Sorting();
 
   private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
   private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
-  private read: (page: number | undefined, sort: Sorting) => Observable<Page<FictionBook | GameBook>> = (page, sort) => EMPTY;
+  private read: (page: number | undefined, sort: Sorting, title: string | undefined) => Observable<Page<FictionBook | GameBook>> = (page, sort, title) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
+
+  public Display = Display;
 
   public get borrower(): Borrower {
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
@@ -98,9 +99,11 @@ export class LibraryView implements OnInit {
     const authService = inject(AuthService);
 
     // Check permissions
-    this.createable = authService.hasPermission("library_book", "create");
-    this.editable = authService.hasPermission("library_book", "update");
-    this.deletable = authService.hasPermission("library_book", "delete");
+    this.permissions = {
+      create: authService.hasPermission("library_book", "create"),
+      edit: authService.hasPermission("library_book", "update"),
+      delete: authService.hasPermission("library_book", "delete")
+    };
 
     // Initial operations
     this.delete = this.service.deleteGameBook.bind(this.service);
@@ -143,6 +146,8 @@ export class LibraryView implements OnInit {
     this.loadSummary();
   }
 
+  // EVENT HANDLERS
+
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     this.selectedData = book;
     if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
@@ -162,7 +167,7 @@ export class LibraryView implements OnInit {
         }
       },
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -171,7 +176,10 @@ export class LibraryView implements OnInit {
   private onUpdate(toSave: BookUpdate) {
     this.call(
       () => this.update(toSave.number, toSave),
-      () => this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 })
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
     );
   }
 
@@ -179,7 +187,7 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.service.lend(toSave),
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Prestado', detail: 'Libro prestado', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -189,7 +197,7 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.service.return(toSave),
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Devuelto', detail: 'Libro devuelto', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -199,7 +207,7 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.delete(number),
       () => {
-        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
+        this.load(this.data.page);
         this.loadSummary();
       }
     );
@@ -213,7 +221,7 @@ export class LibraryView implements OnInit {
 
   public onChangeSource(event: SelectButtonChangeEvent) {
     this.source = event.value as BookSelection;
-    if (this.source === BookSelection.Game) {
+    if (this.source === BookSelection.GAME) {
       this.delete = this.service.deleteGameBook.bind(this.service);
       this.update = this.service.updateGameBook.bind(this.service);
       this.read = this.service.getAllGameBooks.bind(this.service);
@@ -226,8 +234,8 @@ export class LibraryView implements OnInit {
   }
 
   public onChangeList(event: SelectButtonChangeEvent) {
-    this.list = event.value as 'books' | 'lendings';
-    if (this.list === 'books') {
+    this.display = event.value as Display;
+    if (this.display === Display.BOOKS) {
       this.load();
     } else {
       this.loadLendings();
@@ -236,26 +244,20 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
-    this.showing = true;
+    this.dialog = Dialog.INFO;
   }
 
   public downloadExcel() {
-    this.loadingExcel = true;
+    this.status.loadingExcel = true;
     this.reportService.downloadExcelReport()
       .pipe(
-        finalize(() => this.loadingExcel = false))
+        finalize(() => this.status.loadingExcel = false))
       .subscribe();
   }
 
-  public onStartEditingView(event: { view: string, book: FictionBook | GameBook }): void {
+  public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
     this.selectedData = event.book;
-    this.view = event.view;
-    this.editing = true;
-  }
-
-  public onStartView(view: string): void {
-    this.view = view;
-    this.editing = true;
+    this.dialog = event.dialog;
   }
 
   public onSetAuthors(authors: Author[]) {
@@ -362,6 +364,28 @@ export class LibraryView implements OnInit {
     this.onUpdate(updateDate as BookUpdate);
   }
 
+  public onFilter(filter: string) {
+    this.nameFilter = filter;
+    this.load();
+  }
+
+  public onSearchMembers(event: { query: string }) {
+    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+      .subscribe(members => {
+        this.members = members;
+      });
+  }
+
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  // DATA LOADING
+
   public getGameSystem(book: FictionBook | GameBook): GameSystem {
     return (book as GameBook).gameSystem as GameSystem;
   }
@@ -371,51 +395,76 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
-    this.loading = true;
-    this.read(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
+    this.status.loading = true;
+    this.read(page, this.sort, this.nameFilter)
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
-    this.loading = true;
+    this.status.loading = true;
     this.lendingsService.getAll(page, new Sorting([]))
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe(response => this.lendings = response);
   }
 
-  private call(action: () => Observable<any>, onSuccess: () => void = () => { }) {
-    this.loading = true;
+  // PRIVATE METHODS
+
+  private call(
+    action: () => Observable<any>,
+    onSuccess: () => void
+  ) {
+    this.status.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.view = 'none';
-          this.load(this.data.page);
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-          return throwError(() => error);
-        }
+        error: error => this.handleError(error)
       });
   }
 
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
   private loadSummary() {
-    this.loadingSummary = true;
+    this.status.loadingSummary = true;
     this.service.getSummary()
-      .pipe(finalize(() => this.loadingSummary = false))
+      .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(r => this.summary = r);
   }
 
 }
 
+interface Permissions {
+  create: boolean;
+  edit: boolean;
+  delete: boolean;
+}
+
+interface Status {
+  loading: boolean;
+  loadingSummary: boolean;
+  loadingExcel: boolean;
+}
+
+// Dialog enum moved to ../dialog.ts to avoid circular imports with LibraryBookList
+
 export enum BookSelection {
-  Game = 'game',
-  Fiction = 'fiction'
+  ALL = 'all',
+  GAME = 'game',
+  FICTION = 'fiction'
+}
+
+export enum Display {
+  BOOKS = 'books',
+  LENDINGS = 'lendings'
 }

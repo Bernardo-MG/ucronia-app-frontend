@@ -2,8 +2,8 @@
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center">
-    <ui-summary-card [loading]="loadingSummary" [value]="active" label="Socios" icon="pi pi-user"/>
-    <ui-summary-card [loading]="loadingSummary" [value]="notRenewing" label="No renuevan" icon="pi pi-times-circle"/>
+    <ui-summary-card [loading]="status.loadingSummary" [value]="active" label="Socios" icon="pi pi-user"/>
+    <ui-summary-card [loading]="status.loadingSummary" [value]="notRenewing" label="No renuevan" icon="pi pi-times-circle"/>
   </div>
 
   <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
@@ -11,10 +11,9 @@
     <ui-text-filter (filter)="onFilter($event)" />
   </div>
 
-  <!-- Table Panel -->
   <p-panel class="shadow bg-white rounded-lg">
 
-    <assoc-member-list [loading]="loading" [members]="data.content" [rows]="data.size" [page]="data.page"
+    <assoc-member-list [loading]="status.loading" [members]="data.content" [rows]="data.size" [page]="data.page"
       [totalRecords]="data.totalElements" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
 
   </p-panel>

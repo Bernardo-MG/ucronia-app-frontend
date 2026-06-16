@@ -5,7 +5,7 @@ import { FailureResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { of, throwError } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
-import { UserActivationView } from './user-activation-view';
+import { UserActivationView, Step } from './user-activation-view';
 
 describe('UserActivationView', () => {
   let component: UserActivationView;
@@ -52,7 +52,7 @@ describe('UserActivationView', () => {
 
       component['validateToken']('token');
 
-      expect(component.username).toBe('testuser');
+      expect(component.user.username).toBe('testuser');
     });
 
     it('should set status to valid_token on successful token validation', () => {
@@ -63,7 +63,7 @@ describe('UserActivationView', () => {
 
       component['validateToken']('token');
 
-      expect(component.status).toBe('valid_token');
+      expect(component.step).toBe(Step.VALID_TOKEN);
     });
 
     it('should set status to invalid_token on failed token validation', () => {
@@ -74,7 +74,7 @@ describe('UserActivationView', () => {
 
       component['validateToken']('token');
 
-      expect(component.status).toBe('invalid_token');
+      expect(component.step).toBe(Step.INVALID_TOKEN);
     });
 
     it('should set status to invalid_token on token validation error', () => {
@@ -83,7 +83,7 @@ describe('UserActivationView', () => {
 
       component['validateToken']('token');
 
-      expect(component.status).toBe('invalid_token');
+      expect(component.step).toBe(Step.INVALID_TOKEN);
     });
 
   });
@@ -94,11 +94,11 @@ describe('UserActivationView', () => {
       const service = TestBed.inject(AccessUserActivateService);
       spyOn(service, 'activateUser').and.returnValue(of({ content: new User() }));
 
-      component['token'] = 'token';
+      component.user.token = 'token';
       component.onActivateUser('password');
 
-      expect(component.status).toBe('finished');
-      expect(component.waiting).toBeFalse();
+      expect(component.step).toBe(Step.FINISHED);
+      expect(component.status.loading).toBeFalse();
     });
 
     it('should store failures on activation error with FailureResponse', () => {
@@ -107,7 +107,7 @@ describe('UserActivationView', () => {
 
       spyOn(service, 'activateUser').and.returnValue(throwError(() => failureResponse));
 
-      component['token'] = 'token';
+      component.user.token = 'token';
       component.onActivateUser('password');
 
       expect(component.failures.getFailures('field').length).toBeGreaterThan(0);
@@ -117,7 +117,7 @@ describe('UserActivationView', () => {
       const service = TestBed.inject(AccessUserActivateService);
       spyOn(service, 'activateUser').and.returnValue(throwError(() => new Error('Generic error')));
 
-      component['token'] = 'test-token';
+      component.user.token = 'test-token';
       component.onActivateUser('badPassword');
 
       expect(Object.keys(component.failures.getAllFailures()).length).toBe(0);
