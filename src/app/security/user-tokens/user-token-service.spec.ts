@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SecurityClient } from '@bernardo-mg/security';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { UserTokenService } from './user-token-service';
 
@@ -22,6 +23,7 @@ describe('UserTokenService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: SecurityClient, useValue: securityClientMock }
       ]
     });

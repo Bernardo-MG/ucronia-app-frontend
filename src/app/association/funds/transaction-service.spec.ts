@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { TransactionService } from './transaction-service';
 
@@ -25,6 +26,7 @@ describe('TransactionService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });

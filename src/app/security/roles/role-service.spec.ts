@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SecurityClient } from '@bernardo-mg/security';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { RoleService } from './role-service';
 
@@ -25,6 +26,7 @@ describe('RoleService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: SecurityClient, useValue: securityClientMock }
       ]
     });
