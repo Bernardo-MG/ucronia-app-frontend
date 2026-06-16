@@ -5,7 +5,6 @@ import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-searc
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PublicMember } from '@ucronia/domain';
-import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -16,7 +15,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm implements OnChanges {

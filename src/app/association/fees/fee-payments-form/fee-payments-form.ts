@@ -6,7 +6,6 @@ import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PublicMember } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
-import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -16,7 +15,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
