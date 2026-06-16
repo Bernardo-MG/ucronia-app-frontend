@@ -8,7 +8,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -23,7 +23,7 @@ import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library
 import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
-import { LibraryBookLending } from '../library-book-lending/library-book-lending';
+import { LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
@@ -33,7 +33,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookLending, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -48,6 +48,7 @@ export class LibraryView implements OnInit {
   private nameFilter = '';
 
   public selectedData: FictionBook | GameBook = new GameBook();
+  public members: PublicMember[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
@@ -366,6 +367,13 @@ export class LibraryView implements OnInit {
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
+  }
+
+  public onSearchMembers(event: { query: string }) {
+    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+      .subscribe(members => {
+        this.members = members;
+      });
   }
 
   // DIALOGS

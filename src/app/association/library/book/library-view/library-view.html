@@ -183,8 +183,8 @@
             Prestar libro
           </ng-template>
           <div class="w-full p-4">
-            <assoc-library-book-lending [waiting]="status.loading" [failures]="failures" [book]="selectedData.number"
-              [getMemberSelection]="service.getMembers.bind(service)" (save)="onLend($event)" />
+            <assoc-library-book-lending-form [loading]="status.loading" [failures]="failures" [book]="selectedData.number"
+              [members]="members" (save)="onLend($event)" (searchMember)="onSearchMembers($event)" />
           </div>
         }
         <ng-template #footer>
