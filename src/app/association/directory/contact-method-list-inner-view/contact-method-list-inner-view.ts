@@ -52,26 +52,26 @@ export class ContactMethodListInnerView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEditContactMethod(contactMethod: ContactMethod) {
+  public onShowEdit(contactMethod: ContactMethod) {
     this.selectedData = contactMethod;
     this.dialog = Dialog.EDIT;
   }
 
-  public onCreateContactMethod(toCreate: ContactMethod): void {
+  public onCreate(toCreate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.create(toCreate),
       () => this.load()
     );
   }
 
-  public onUpdateContactMethod(toUpdate: ContactMethod): void {
+  public onUpdate(toUpdate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.update(toUpdate),
       () => this.load(this.contactMethodData.page)
     );
   }
 
-  public onDeleteContactMethod(number: number): void {
+  public onDelete(number: number): void {
     this.call(
       () => this.contactMethodService.delete(number),
       () => this.load()

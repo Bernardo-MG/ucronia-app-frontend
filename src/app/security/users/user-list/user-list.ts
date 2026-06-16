@@ -26,7 +26,7 @@ export class UserList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<User>();
-  public readonly delete = output<string>();
+  public readonly delete = output<Event>();
   public readonly edit = output<User>();
   public readonly editRoles = output<User>();
   public readonly editMember = output<User>();
@@ -46,24 +46,6 @@ export class UserList {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
-  }
-
-  public onDelete(event: Event, username: string) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => this.delete.emit(username)
-    });
   }
 
   public openEditionMenu(event: Event, user: User) {

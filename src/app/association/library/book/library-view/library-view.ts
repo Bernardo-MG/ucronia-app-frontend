@@ -9,7 +9,7 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
-import { MenuItem } from 'primeng/api';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -42,6 +42,7 @@ export class LibraryView implements OnInit {
   private readonly reportService = inject(BookReportService);
   public readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public failures = new FailureStore();
 
@@ -203,14 +204,28 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onDelete(number: number) {
-    this.call(
-      () => this.delete(number),
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
+  public onDelete(event: Event) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.call(
+        () => this.delete(this.selectedData.number),
+        () => {
+          this.load(this.data.page);
+          this.loadSummary();
+        }
+      )
+    });
   }
 
   public onChangeDirection(sorting: SortingProperty) {

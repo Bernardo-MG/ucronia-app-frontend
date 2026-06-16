@@ -123,7 +123,7 @@ export class FeeView implements OnInit {
     );
   }
 
-  public onDelete(event: Event, fee: Fee) {
+  public onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -139,7 +139,7 @@ export class FeeView implements OnInit {
       },
       accept: () =>
         this.call(
-          () => this.service.delete(fee.member.number, fee.month),
+          () => this.service.delete(this.selectedData.member.number, this.selectedData.month),
           () => {
             this.loadRange();
             this.loadSummary();

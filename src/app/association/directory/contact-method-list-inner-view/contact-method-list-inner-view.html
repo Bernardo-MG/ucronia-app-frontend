@@ -13,8 +13,8 @@
   <p class="m-0">
     <assoc-contact-method-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
       [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
-      [totalRecords]="contactMethodData.totalElements" (edit)="onShowEditContactMethod($event)"
-      (delete)="onDeleteContactMethod($event)" (changePage)="load($event)" />
+      [totalRecords]="contactMethodData.totalElements" (edit)="onShowEdit($event)"
+      (delete)="onDelete($event)" (changePage)="load($event)" />
   </p>
 </p-panel>
 
@@ -26,7 +26,7 @@
         Crear método de contacto
       </ng-template>
       <div class="w-full">
-        <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreateContactMethod($event)" />
+        <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
     }
 
@@ -36,7 +36,7 @@
       </ng-template>
       <div class="w-full">
         <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
-          (save)="onUpdateContactMethod($event)" />
+          (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />

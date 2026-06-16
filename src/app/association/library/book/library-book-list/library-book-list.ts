@@ -19,14 +19,12 @@ export class LibraryBookList {
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly editable = input(false);
-  public readonly deletable = input(false);
   public readonly loading = input(false);
   public readonly books = input<FictionBook[] | GameBook[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly delete = output<number>();
   public readonly showBook = output<FictionBook | GameBook>();
   public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
@@ -40,24 +38,6 @@ export class LibraryBookList {
 
   public get first() {
     return (this.page() - 1) * this.rows();
-  }
-
-  public onDelete(event: Event, number: number) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => this.delete.emit(number)
-    });
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
