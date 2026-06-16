@@ -1,8 +1,0 @@
-<p-inputgroup>
-  <p-inputgroup-addon>
-    <i class="pi pi-user"></i>
-  </p-inputgroup-addon>
-  <p-autocomplete name="memberSearch" [suggestions]="members()" optionLabel="name.fullName" dataKey="number"
-    [forceSelection]="true" placeholder="Buscar socio..." (completeMethod)="searchMember.emit({ query: $event.query })"
-    (onSelect)="selectMember.emit($event.value)" appendTo="body" />
-</p-inputgroup>

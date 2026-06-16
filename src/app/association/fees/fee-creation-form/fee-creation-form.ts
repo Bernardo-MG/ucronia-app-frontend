@@ -1,6 +1,7 @@
 
 import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PublicMember } from '@ucronia/domain';
@@ -12,11 +13,10 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { FeeMemberSearch, FeeSearchEvent } from '../fee-member-search/fee-member-search';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, FeeMemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm implements OnChanges {
@@ -26,7 +26,7 @@ export class FeeCreationForm implements OnChanges {
   public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
-  public readonly searchMember = output<FeeSearchEvent>();
+  public readonly searchMember = output<MemberSearchEvent>();
 
   public formStatus: FormStatus;
 

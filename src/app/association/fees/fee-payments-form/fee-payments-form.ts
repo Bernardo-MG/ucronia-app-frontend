@@ -1,6 +1,7 @@
 
 import { Component, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PublicMember } from '@ucronia/domain';
@@ -12,11 +13,10 @@ import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MessageModule } from 'primeng/message';
-import { FeeMemberSearch, FeeSearchEvent } from '../fee-member-search/fee-member-search';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, FeeMemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
@@ -28,7 +28,7 @@ export class FeePaymentsForm {
   public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
-  public readonly searchMember = output<FeeSearchEvent>();
+  public readonly searchMember = output<MemberSearchEvent>();
 
   public formStatus: FormStatus;
 

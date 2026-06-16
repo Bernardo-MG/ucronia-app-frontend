@@ -2,7 +2,7 @@
   <div class="mb-4">
     <!-- Member -->
     <label class="font-semibold mb-2 block">Socio</label>
-    <assoc-user-member-search [member]="member()" [members]="members()" (selectMember)="onSelectMember($event)"
+    <assoc-member-search [member]="member()" [members]="members()" (selectMember)="onSelectMember($event)"
       (searchMember)="searchMember.emit($event)" />
     <div class="mb-2">
       @if (isFieldInvalid('member')) {
