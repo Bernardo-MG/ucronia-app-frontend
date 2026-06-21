@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -7,7 +7,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { Observable, finalize } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { ActivityCreationForm } from '../activity-creation-form/activity-creation-form';
 import { ActivityEditionForm } from '../activity-edition-form/activity-edition-form';
 import { ActivityInfo } from '../activity-info/activity-info';
@@ -18,7 +18,7 @@ import { ActivityService } from '../activity-service';
   imports: [PanelModule, ButtonModule, DrawerModule, ActivityList, ActivityInfo, ActivityEditionForm, ActivityCreationForm],
   templateUrl: './activity-view.html'
 })
-export class ActivityView {
+export class ActivityView implements OnInit {
 
   private readonly service = inject(ActivityService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -46,6 +46,10 @@ export class ActivityView {
       edit: authService.hasPermission("activity", "update"),
       delete: authService.hasPermission("activity", "delete")
     };
+  }
+
+  public ngOnInit(): void {
+    this.load();
   }
 
   // EVENT HANDLERS
@@ -80,7 +84,7 @@ export class ActivityView {
       },
       accept: () => this.call(
         () => this.service.delete(this.selectedData.number),
-      () => this.load()
+        () => this.load()
       )
     });
   }

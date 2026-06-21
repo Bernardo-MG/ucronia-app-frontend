@@ -2,10 +2,24 @@
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)">
+  <ng-template #header>
+    <tr class="border-b bg-gray-100">
+      <th pSortableColumn="data">
+        Fecha
+        <p-sortIcon field="data" />
+      </th>
+      <th pSortableColumn="title">
+        Título
+        <p-sortIcon field="title" />
+      </th>
+      <th>
+      </th>
+    </tr>
+  </ng-template>
   <ng-template #body let-activity>
     <tr>
-      <th pSortableColumn="title">Título <p-sortIcon field="title" /></th>
       <td>{{ activity.date | date:'yyyy-MM-dd' }}</td>
+      <td>{{ activity.title }}</td>
       <td class="w-40">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(activity)" rounded text />
       </td>
