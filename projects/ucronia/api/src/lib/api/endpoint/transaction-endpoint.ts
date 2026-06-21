@@ -15,6 +15,20 @@ export class TransactionEndpoint {
     private apiUrl: string
   ) { }
 
+  private mapTransaction(transaction: Transaction): Transaction {
+    transaction.date = new Date(transaction.date);
+    return transaction;
+  }
+
+  private mapTransactions(page: PaginatedResponse<Transaction>): PaginatedResponse<Transaction> {
+    page.content = page.content.map(t => {
+      t.date = new Date(t.date);
+      return t;
+    });
+
+    return page;
+  }
+
   public page(
     page: number | undefined = undefined,
     size: number | undefined = undefined,
@@ -46,7 +60,8 @@ export class TransactionEndpoint {
 
     return this.http.get<PaginatedResponse<Transaction>>(`${this.apiUrl}/transaction`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(r => this.mapTransactions(r))
       );
   }
 
@@ -56,7 +71,12 @@ export class TransactionEndpoint {
     return this.http.get<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(t => {
+          t.date = new Date(t.date);
+          return t;
+        }),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -66,7 +86,8 @@ export class TransactionEndpoint {
     return this.http.post<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -77,7 +98,8 @@ export class TransactionEndpoint {
     return this.http.put<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -87,7 +109,8 @@ export class TransactionEndpoint {
     return this.http.delete<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapTransaction(r))
       );
   }
 

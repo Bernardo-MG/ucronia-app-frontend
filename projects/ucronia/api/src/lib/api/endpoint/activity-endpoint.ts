@@ -13,6 +13,20 @@ export class ActivityEndpoint {
     private apiUrl: string
   ) { }
 
+  private mapActivity(activity: Activity): Activity {
+    activity.date = new Date(activity.date);
+    return activity;
+  }
+
+  private mapActivities(page: PaginatedResponse<Activity>): PaginatedResponse<Activity> {
+    page.content = page.content.map(a => {
+      a.date = new Date(a.date);
+      return a;
+    });
+
+    return page;
+  }
+
   public page(
     page: number | undefined = undefined,
     size: number | undefined = undefined,
@@ -31,7 +45,8 @@ export class ActivityEndpoint {
 
     return this.http.get<PaginatedResponse<Activity>>(`${this.apiUrl}/activity`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(r => this.mapActivities(r))
       );
   }
 
@@ -41,7 +56,8 @@ export class ActivityEndpoint {
     return this.http.get<SimpleResponse<Activity>>(`${this.apiUrl}/activity/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapActivity(r))
       );
   }
 
@@ -51,7 +67,8 @@ export class ActivityEndpoint {
     return this.http.post<SimpleResponse<Activity>>(`${this.apiUrl}/activity`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapActivity(r))
       );
   }
 
@@ -62,7 +79,8 @@ export class ActivityEndpoint {
     return this.http.put<SimpleResponse<Activity>>(`${this.apiUrl}/activity/${index}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapActivity(r))
       );
   }
 
@@ -72,7 +90,8 @@ export class ActivityEndpoint {
     return this.http.delete<SimpleResponse<Activity>>(`${this.apiUrl}/activity/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapActivity(r))
       );
   }
 
