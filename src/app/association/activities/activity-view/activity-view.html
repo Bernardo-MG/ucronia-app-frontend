@@ -39,7 +39,7 @@
         Crear actividad
       </ng-template>
       <div class="w-full">
-        <assoc-activity-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-activity-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
     }
 
@@ -48,7 +48,7 @@
         Editar actividad
       </ng-template>
       <div class="w-full">
-        <assoc-activity-edition-form [loading]="status.loading" [data]="selectedData"
+        <assoc-activity-form [loading]="status.loading" [data]="selectedData"
           [failures]="failures"  (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

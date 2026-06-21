@@ -8,14 +8,13 @@ import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable } from 'rxjs';
-import { ActivityCreationForm } from '../activity-creation-form/activity-creation-form';
-import { ActivityEditionForm } from '../activity-edition-form/activity-edition-form';
+import { ActivityForm } from '../activity-form/activity-form';
 import { ActivityInfo } from '../activity-info/activity-info';
 import { ActivityList } from '../activity-list/activity-list';
 import { ActivityService } from '../activity-service';
 
 @Component({
-  imports: [PanelModule, ButtonModule, DrawerModule, ActivityList, ActivityInfo, ActivityEditionForm, ActivityCreationForm],
+  imports: [PanelModule, ButtonModule, DrawerModule, ActivityList, ActivityInfo, ActivityForm],
   templateUrl: './activity-view.html'
 })
 export class ActivityView implements OnInit {
@@ -70,9 +69,9 @@ export class ActivityView implements OnInit {
     );
   }
 
-  public onUpdate(toCreate: Activity): void {
+  public onUpdate(toUpdate: Activity): void {
     this.call(
-      () => this.service.update(toCreate),
+      () => this.service.update(toUpdate),
       () => this.load()
     );
   }

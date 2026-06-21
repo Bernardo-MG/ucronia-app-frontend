@@ -105,9 +105,9 @@ export class FundsView implements OnInit {
     );
   }
 
-  public onUpdate(toCreate: Transaction): void {
+  public onUpdate(toUpdate: Transaction): void {
     this.call(
-      () => this.service.update(toCreate),
+      () => this.service.update(toUpdate),
       () => this.load()
     );
   }
