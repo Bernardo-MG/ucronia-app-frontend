@@ -11,8 +11,8 @@
 <div class="p-4 space-y-6">
   <p-panel class="bg-white shadow rounded-lg">
     <app-activity-list [loading]="status.loading" [data]="activities.content" [rows]="activities.size"
-        [page]="activities.page" [totalRecords]="activities.totalElements" (show)="onShowInfo($event)"
-        (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+      [page]="activities.page" [totalRecords]="activities.totalElements" (show)="onShowInfo($event)"
+      (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
   </p-panel>
 </div>
 

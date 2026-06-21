@@ -61,6 +61,11 @@ export class MemberView implements OnInit {
         : SortingDirection.Descending;
       this.sort.addField(new SortingProperty('name.firstName', direction));
       this.sort.addField(new SortingProperty('name.lastName', direction));
+    } else {
+      const direction = sorting.order === 1
+        ? SortingDirection.Ascending
+        : SortingDirection.Descending;
+      this.sort.addField(new SortingProperty(sorting.field, direction));
     }
 
     this.load(this.data.page);

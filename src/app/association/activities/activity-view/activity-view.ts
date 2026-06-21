@@ -54,6 +54,15 @@ export class ActivityView implements OnInit {
 
   // EVENT HANDLERS
 
+  public onChangeDirection(sorting: SortingEvent) {
+      const direction = sorting.order === 1
+        ? SortingDirection.Ascending
+        : SortingDirection.Descending;
+      this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.load(this.activities.page);
+  }
+
   public onCreate(toCreate: Activity): void {
     this.call(
       () => this.service.create(toCreate),
@@ -93,16 +102,6 @@ export class ActivityView implements OnInit {
     this.dialog = Dialog.EDIT;
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
-    // TODO: should receive the actual direction, not a number
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
-
-    this.load(this.activities.page);
-  }
-
   public onShowInfo(activity: Activity) {
     this.dialog = Dialog.INFO;
   }
@@ -111,7 +110,7 @@ export class ActivityView implements OnInit {
 
   public load(page: number | undefined = undefined) {
     this.status.loading = true;
-    this.service.getAll(page)
+    this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.status.loading = false))
       .subscribe(activities => this.activities = activities);
   }

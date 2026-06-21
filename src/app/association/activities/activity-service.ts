@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Page } from '@bernardo-mg/request';
-import { UcroniaClient } from '@ucronia/api';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Activity } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
@@ -64,9 +64,22 @@ export class ActivityService {
       );
   }
 
-  public getAll(page: number | undefined = undefined): Observable<Page<Activity>> {
+  public getAll(
+    page: number | undefined = undefined,
+    sort: Sorting
+  ): Observable<Page<Activity>> {
+    const sorting = new Sorting(
+      mergeProperties(
+        sort.properties,
+        [
+          new SortingProperty('date'),
+          new SortingProperty('title')
+        ]
+      )
+    );
+
     return this.ucroniaClient.activity
-      .page(page, undefined, undefined);
+      .page(page, undefined, sorting);
   }
 
   public getOne(index: number): Observable<Activity> {
