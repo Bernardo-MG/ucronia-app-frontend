@@ -1,1 +1,18 @@
-<p>activity-info works!</p>
+<div class="ms-3 space-y-5">
+
+  <!-- Date -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha" [value]="data().date | date:'yyyy-MM-dd'" />
+  </div>
+
+  <!-- Title -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-tag" name="Título" [value]="data().title" />
+  </div>
+
+  <!-- Description -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-align-left" name="Descripción" [value]="data().description" />
+  </div>
+
+</div>

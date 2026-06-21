@@ -103,6 +103,7 @@ export class ActivityView implements OnInit {
   }
 
   public onShowInfo(activity: Activity) {
+    this.selectedData = activity;
     this.dialog = Dialog.INFO;
   }
 
