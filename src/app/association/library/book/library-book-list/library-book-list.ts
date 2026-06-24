@@ -1,8 +1,8 @@
-import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FictionBook, GameBook } from '@ucronia/domain';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -15,8 +15,6 @@ import { Dialog } from '../library-dialog';
   templateUrl: './library-book-list.html'
 })
 export class LibraryBookList {
-
-  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly editable = input(false);
   public readonly loading = input(false);

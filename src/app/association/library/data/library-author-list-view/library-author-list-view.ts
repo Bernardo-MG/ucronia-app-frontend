@@ -42,7 +42,7 @@ export class LibraryAuthorListView implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.load();
   }
 

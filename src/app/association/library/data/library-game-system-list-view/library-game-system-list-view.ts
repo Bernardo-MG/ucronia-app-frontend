@@ -42,7 +42,7 @@ export class LibraryGameSystemListView implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.load();
   }
 

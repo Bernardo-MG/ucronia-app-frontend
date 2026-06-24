@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -14,7 +14,7 @@ import { MessageModule } from 'primeng/message';
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputGroupModule, InputGroupAddonModule, MessageModule],
   templateUrl: './fee-type-form.html'
 })
-export class FeeTypeForm {
+export class FeeTypeForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());

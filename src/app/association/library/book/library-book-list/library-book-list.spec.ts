@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { LibraryBookList } from './library-book-list';
 
 describe('LibraryBookList', () => {
@@ -9,12 +8,9 @@ describe('LibraryBookList', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [LibraryBookList],
-      providers: [
-        MessageService,
-        ConfirmationService
-      ]
+      providers: []
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(LibraryBookList);
     component = fixture.componentInstance;
