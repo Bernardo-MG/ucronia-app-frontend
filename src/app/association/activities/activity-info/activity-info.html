@@ -10,14 +10,17 @@
     <ui-detail-field [loading]="loading()" icon="pi pi-align-left" name="Descripción" [value]="data().description" />
   </div>
 
-  <!-- Start -->
+  <!-- Dates -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Inicio" [value]="data().start | date:'yyyy-MM-dd HH:mm:ss'" />
-  </div>
-
-  <!-- End -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fin" [value]="data().end | date:'yyyy-MM-dd HH:mm:ss'" />
+    @for (date of data().dates; track date; let i = $index) {
+      <div class="mb-3">
+        <ui-detail-field
+          [loading]="loading()"
+          icon="pi pi-calendar"
+          [name]="'Fecha ' + (i + 1)"
+          [value]="(date.start | date:'yyyy-MM-dd HH:mm') + ' - ' + (date.end | date:'HH:mm')" />
+      </div>
+    }
   </div>
 
 </div>
