@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Activity } from '@ucronia/domain';
+import { Activity, ActivityDate } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
@@ -13,16 +13,19 @@ export class ActivityEndpoint {
     private apiUrl: string
   ) { }
 
+  private mapActivityDate(date: ActivityDate): ActivityDate {
+    date.start = new Date(date.start);
+    date.end = new Date(date.end);
+    return date;
+  }
+
   private mapActivity(activity: Activity): Activity {
-    activity.start = new Date(activity.start);
-    activity.end = new Date(activity.end);
+    activity.dates = activity.dates.map(d => this.mapActivityDate(d));
     return activity;
   }
 
   private mapActivities(page: PaginatedResponse<Activity>): PaginatedResponse<Activity> {
-    page.content = page.content.map(a => {
-      return this.mapActivity(a);
-    });
+    page.content = page.content.map(a => this.mapActivity(a));
 
     return page;
   }

@@ -5,6 +5,10 @@ export class Activity {
   public description = "";
   public location = "";
   public image = "";
+  public dates: ActivityDate[] = [];
+}
+
+export class ActivityDate {
   public start = new Date();
   public end = new Date();
 }
