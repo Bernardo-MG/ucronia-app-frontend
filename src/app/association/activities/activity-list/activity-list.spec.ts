@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationService } from 'primeng/api';
-import { FeeTypeList } from './fee-type-list';
+import { ActivityList } from './activity-list';
 
-describe('FeeTypeList', () => {
-  let component: FeeTypeList;
-  let fixture: ComponentFixture<FeeTypeList>;
+describe('ActivityList', () => {
+  let component: ActivityList;
+  let fixture: ComponentFixture<ActivityList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        FeeTypeList
+        ActivityList
       ],
       providers: [
         ConfirmationService
@@ -17,7 +17,7 @@ describe('FeeTypeList', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeTypeList);
+    fixture = TestBed.createComponent(ActivityList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

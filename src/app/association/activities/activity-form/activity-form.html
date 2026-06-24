@@ -1,0 +1,75 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+
+  <!-- Title -->
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="titleInput" formControlName="title" class="w-full min-w-0" />
+    <label for="titleInput">Título</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('title'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <!-- Description -->
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="descriptionInput" formControlName="description" class="w-full min-w-0" />
+    <label for="descriptionInput">Descripción</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('description'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <!-- Image -->
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="imageInput" formControlName="image" class="w-full min-w-0" />
+    <label for="imageInput">Imagen</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('image'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <div formArrayName="dates">
+    @for (dateGroup of dates.controls; track dateGroup; let i = $index) {
+      <div [formGroupName]="i" class="mb-4">
+
+        <p-floatlabel variant="in" class="mb-2">
+          <p-datepicker [id]="'dayInput' + i" formControlName="day" dateFormat="yy-mm-dd" appendTo="body"
+            class="w-full" />
+          <label [for]="'dayInput' + i">Día</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="in" class="mb-2">
+          <p-datepicker [id]="'startHourInput' + i" formControlName="startHour" [timeOnly]="true" appendTo="body"
+            class="w-full" />
+          <label [for]="'startHourInput' + i">Hora de inicio</label>
+        </p-floatlabel>
+
+        <p-floatlabel variant="in" class="mb-2">
+          <p-datepicker [id]="'endHourInput' + i" formControlName="endHour" [timeOnly]="true" appendTo="body"
+            class="w-full" />
+          <label [for]="'endHourInput' + i">Hora de fin</label>
+        </p-floatlabel>
+
+        @if (dates.length > 1) {
+          <p-button type="button" severity="danger" label="Eliminar día" (onClick)="removeDate(i)" />
+        }
+      </div>
+    }
+  </div>
+
+  <p-button type="button" label="Añadir día" severity="secondary" (onClick)="addDate()" />
+
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

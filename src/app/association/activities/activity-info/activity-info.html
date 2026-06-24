@@ -1,0 +1,26 @@
+<div class="ms-3 space-y-5">
+
+  <!-- Title -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-tag" name="Título" [value]="data().title" />
+  </div>
+
+  <!-- Description -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-align-left" name="Descripción" [value]="data().description" />
+  </div>
+
+  <!-- Dates -->
+  <div>
+    @for (date of data().dates; track date; let i = $index) {
+      <div class="mb-3">
+        <ui-detail-field
+          [loading]="loading()"
+          icon="pi pi-calendar"
+          [name]="'Fecha ' + (i + 1)"
+          [value]="(date.start | date:'yyyy-MM-dd HH:mm') + ' - ' + (date.end | date:'HH:mm')" />
+      </div>
+    }
+  </div>
+
+</div>
