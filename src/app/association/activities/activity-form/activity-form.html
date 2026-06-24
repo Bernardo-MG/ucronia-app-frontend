@@ -26,19 +26,6 @@
     }
   </div>
 
-  <!-- Image -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="imageInput" formControlName="image" [invalid]="isFieldInvalid('image')" maxlength="200" class="w-full min-w-0" />
-    <label for="imageInput">Imagen</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('image'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
-
   <!-- Location -->
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
     <input pInputText type="text" id="locationInput" formControlName="location" [invalid]="isFieldInvalid('location')" maxlength="200" class="w-full min-w-0" />
@@ -52,6 +39,20 @@
     }
   </div>
 
+  <!-- Image -->
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="imageInput" formControlName="image" [invalid]="isFieldInvalid('image')" maxlength="200" class="w-full min-w-0" />
+    <label for="imageInput">Imagen</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('image'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <!-- Dates -->
   <div formArrayName="dates">
     @for (dateGroup of dates.controls; track dateGroup; let i = $index) {
       <div [formGroupName]="i" class="mb-4">
