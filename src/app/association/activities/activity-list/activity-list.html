@@ -5,7 +5,7 @@
   <ng-template #header>
     <tr class="border-b bg-gray-100">
       <th pSortableColumn="date">
-        Fecha
+        Fechas
         <p-sortIcon field="date" />
       </th>
       <th pSortableColumn="title">
@@ -18,7 +18,12 @@
   </ng-template>
   <ng-template #body let-activity>
     <tr>
-      <td>{{ activity.date | date:'yyyy-MM-dd' }}</td>
+      @for (date of activity.dates; track date) {
+        <div>
+          {{ date.start | date:'yyyy-MM-dd' }}
+          ({{ date.start | date:'HH:mm' }} - {{ date.end | date:'HH:mm' }})
+        </div>
+      }
       <td>{{ activity.title }}</td>
       <td class="w-40">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(activity)" rounded text />
