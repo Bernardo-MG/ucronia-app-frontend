@@ -1,4 +1,4 @@
-import { ProfileName } from "../profile/profile-name";
+import { MemberName } from "../members/member";
 
 export class MemberFees {
   public member = new MemberFeesMember();
@@ -12,6 +12,6 @@ export class MemberFeesFee {
 
 export class MemberFeesMember {
   public number = -1;
-  public name = new ProfileName();
+  public name = new MemberName();
   public active = false;
 }
