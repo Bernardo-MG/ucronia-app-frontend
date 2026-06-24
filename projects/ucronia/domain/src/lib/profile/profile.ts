@@ -1,5 +1,4 @@
 import { ContactMethod } from "./contact-method";
-import { ProfileName } from "./profile-name";
 
 export class Profile {
   public number = -1;
@@ -15,4 +14,10 @@ export class Profile {
 export class ContactChannel {
   public method = new ContactMethod();
   public detail = '';
+}
+
+export class ProfileName {
+  public fullName = '';
+  public firstName = '';
+  public lastName = '';
 }

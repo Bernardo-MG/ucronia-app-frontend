@@ -1,10 +1,10 @@
-import { ProfileName } from "@ucronia/domain";
+import { MemberName } from "@ucronia/domain";
 import { ProfilePatchChannel } from "../profile/profile-patch";
 
 export class MemberPatch {
   public identifier?: string;
   public feeType = 0;
-  public name?: ProfileName;
+  public name?: MemberName;
   public birthDate?: Date;
   public contactChannels?: ProfilePatchChannel[] = [];
   public address?: string;
