@@ -14,14 +14,14 @@ export class ActivityEndpoint {
   ) { }
 
   private mapActivity(activity: Activity): Activity {
-    activity.date = new Date(activity.date);
+    activity.start = new Date(activity.start);
+    activity.end = new Date(activity.end);
     return activity;
   }
 
   private mapActivities(page: PaginatedResponse<Activity>): PaginatedResponse<Activity> {
     page.content = page.content.map(a => {
-      a.date = new Date(a.date);
-      return a;
+      return this.mapActivity(a);
     });
 
     return page;
