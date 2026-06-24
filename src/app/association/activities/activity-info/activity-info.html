@@ -7,7 +7,17 @@
 
   <!-- Description -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-align-left" name="Descripción" [value]="data().description" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-file-edit" name="Descripción" [value]="data().description" />
+  </div>
+
+  <!-- Location -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-map-marker" name="Lugar" [value]="data().location" />
+  </div>
+
+  <!-- Image -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-image" name="Imagen" [value]="data().image" />
   </div>
 
   <!-- Dates -->
@@ -16,7 +26,7 @@
       <div class="mb-3">
         <ui-detail-field
           [loading]="loading()"
-          icon="pi pi-calendar"
+          icon="pi pi-clock"
           [name]="'Fecha ' + (i + 1)"
           [value]="(date.start | date:'yyyy-MM-dd HH:mm') + ' - ' + (date.end | date:'HH:mm')" />
       </div>
