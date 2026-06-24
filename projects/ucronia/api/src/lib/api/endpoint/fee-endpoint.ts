@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Fee, FeePayments, FeeSummary, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeePayments, FeeSummary, MemberFees, MemberFeesFee, MemberStatus, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
@@ -23,12 +23,14 @@ export class FeeEndpoint {
     return fee;
   }
 
+  private mapMemberFee(fee: MemberFeesFee): MemberFeesFee {
+    fee.month = new Date(fee.month);
+    return fee;
+  }
+
   private mapMemberFees(list: MemberFees[]): MemberFees[] {
     return list.map(mf => {
-      mf.fees = mf.fees.map(f => {
-        f.month = new Date(f.month);
-        return f;
-      });
+      mf.fees = mf.fees.map(f => this.mapMemberFee(f));
       return mf;
     });
   }
