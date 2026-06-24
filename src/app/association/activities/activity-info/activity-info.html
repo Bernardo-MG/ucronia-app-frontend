@@ -12,12 +12,12 @@
 
   <!-- Start -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Inicio" [value]="data().start | date:'yyyy-MM-dd'" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Inicio" [value]="data().start | date:'yyyy-MM-dd HH:mm:ss'" />
   </div>
 
   <!-- End -->
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fin" [value]="data().end | date:'yyyy-MM-dd'" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fin" [value]="data().end | date:'yyyy-MM-dd HH:mm:ss'" />
   </div>
 
 </div>

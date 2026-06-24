@@ -17,12 +17,20 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './activity-form.html'
 })
 export class ActivityForm {
-
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: Activity) {
-    this.form.patchValue(value as any);
+    this.form.patchValue({
+      number: value.number,
+      title: value.title,
+      description: value.description,
+      location: value.location,
+      image: value.image,
+      day: value.start,
+      startHour: value.start,
+      endHour: value.end
+    });
   }
 
   public readonly save = output<Activity>();
@@ -35,10 +43,13 @@ export class ActivityForm {
 
     this.form = fb.group({
       number: [null],
-      date: [null, Validators.required],
+      day: [null, Validators.required],
+      startHour: [null, Validators.required],
+      endHour: [null, Validators.required],
       title: [null, Validators.required],
-      description: [],
-      image: []
+      description: [''],
+      location: [''],
+      image: ['']
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -50,18 +61,34 @@ export class ActivityForm {
     }
   }
 
-  /**
-   * Handler for the save event.
-   */
-  public onSave() {
-    if (this.formStatus.saveEnabled) {
-      // Valid form, can emit data
-      this.save.emit(this.form.value);
+  public onSave(): void {
+    if (!this.formStatus.saveEnabled) {
+      return;
     }
+
+    const value = this.form.value;
+
+    const start = this.mergeDayAndTime(value.day, value.startHour);
+    const end = this.mergeDayAndTime(value.day, value.endHour);
+
+    this.save.emit({
+      number: value.number ?? 0,
+      title: value.title,
+      description: value.description ?? '',
+      location: value.location ?? '',
+      image: value.image ?? '',
+      start,
+      end
+    });
+  }
+
+  private mergeDayAndTime(day: Date, time: Date): Date {
+    const result = new Date(day);
+    result.setHours(time.getHours(), time.getMinutes(), 0, 0);
+    return result;
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
-
 }

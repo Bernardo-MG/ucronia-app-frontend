@@ -1,19 +1,5 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
 
-  <!-- Date -->
-  <p-floatlabel variant="in" class="mb-2">
-    <p-datepicker id="dateInput" formControlName="date" [invalid]="isFieldInvalid('date')" dateFormat="yy-mm-dd"
-      appendTo="body" class="w-full" />
-    <label for="dateInput">Fecha</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('date'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
-
   <!-- Title -->
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
     <input pInputText type="text" id="titleInput" formControlName="title" class="w-full min-w-0" />
@@ -47,6 +33,41 @@
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
     @for (failure of failures().getFailures('image'); track failure) {
+    <p-message severity="error" size="small" variant="simple">
+      {{ failure.message }}
+    </p-message>
+    }
+  </div>
+
+  <!-- Day -->
+  <p-floatlabel variant="in" class="mb-2">
+    <p-datepicker id="dayInput" formControlName="day" [invalid]="isFieldInvalid('day')" dateFormat="yy-mm-dd"
+      appendTo="body" class="w-full" />
+    <label for="dayInput">Día</label>
+  </p-floatlabel>
+
+  <!-- Start hour -->
+  <p-floatlabel variant="in" class="mb-2">
+    <p-datepicker id="startHourInput" formControlName="startHour" [timeOnly]="true"
+      [invalid]="isFieldInvalid('startHour')" appendTo="body" class="w-full" />
+    <label for="startHourInput">Hora de inicio</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('start'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <!-- End hour -->
+  <p-floatlabel variant="in" class="mb-2">
+    <p-datepicker id="endHourInput" formControlName="endHour" [timeOnly]="true" [invalid]="isFieldInvalid('endHour')"
+      appendTo="body" class="w-full" />
+    <label for="endHourInput">Hora de fin</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('end'); track failure) {
       <p-message severity="error" size="small" variant="simple">
         {{ failure.message }}
       </p-message>
