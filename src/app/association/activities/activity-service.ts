@@ -72,7 +72,6 @@ export class ActivityService {
       mergeProperties(
         sort.properties,
         [
-          new SortingProperty('date'),
           new SortingProperty('title')
         ]
       )
