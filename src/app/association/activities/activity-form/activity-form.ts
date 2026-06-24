@@ -19,6 +19,7 @@ import { MessageModule } from 'primeng/message';
 export class ActivityForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  private readonly fb = inject(FormBuilder);
 
   @Input() public set data(value: Activity) {
     this.form.patchValue({
@@ -46,15 +47,13 @@ export class ActivityForm implements OnChanges {
   public form: FormGroup;
 
   constructor() {
-    const fb = inject(FormBuilder);
-
-    this.form = fb.group({
+    this.form = this.fb.group({
       number: [null],
       title: [null, Validators.required],
       description: [''],
       location: [''],
       image: [''],
-      dates: fb.array([])
+      dates: this.fb.array([])
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -72,9 +71,7 @@ export class ActivityForm implements OnChanges {
   }
 
   private createDateGroup(start?: Date, end?: Date): FormGroup {
-    const fb = inject(FormBuilder);
-
-    return fb.group({
+    return this.fb.group({
       day: [start ?? null, Validators.required],
       startHour: [start ?? null, Validators.required],
       endHour: [end ?? null, Validators.required]
