@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { Page } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { PublicSettings } from '@ucronia/domain';
+import { Activity, PublicSettings } from '@ucronia/domain';
 import { Observable, map } from 'rxjs';
 
 @Injectable({
@@ -12,6 +13,10 @@ export class FrontpageService {
 
   public getSettings(): Observable<PublicSettings> {
     return this.ucroniaClient.setting.public.get();
+  }
+
+  public getActivities(): Observable<Page<Activity>> {
+    return this.ucroniaClient.activity.page();
   }
 
 }
