@@ -160,10 +160,7 @@ export class TransactionEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
-        map(r => r.map(b => {
-          b.month = new Date(b.month);
-          return b;
-        }))
+        map(r => r.map(b => this.mapTransactionMonthlyBalance(b)))
       );
   }
 
@@ -172,11 +169,20 @@ export class TransactionEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
-        map(r => r.months.map(m => {
-          const date = new Date(m);
-          return new Month(date.getFullYear(), date.getMonth() + 1);
-        }))
+        map(r => this.mapTransactionMonthsRange(r))
       );
+  }
+
+  private mapTransactionMonthlyBalance(balance: TransactionMonthlyBalance): TransactionMonthlyBalance {
+    balance.month = new Date(balance.month);
+    return balance;
+  }
+
+  private mapTransactionMonthsRange(range: TransactionMonthsRange): Month[] {
+    return range.months.map(m => {
+      const date = new Date(m);
+      return new Month(date.getFullYear(), date.getMonth() + 1);
+    });
   }
 
 }

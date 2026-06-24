@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { GuestPatch, MemberPatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
-import { Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
+import { ContactChannel, Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { FullProfile } from './model/full-profile';
@@ -252,12 +252,7 @@ export class DirectoryService {
   private updateProfile(data: Profile): Observable<Profile> {
     const patch: ProfilePatch = {
       ...data,
-      contactChannels: data.contactChannels.map(c => {
-        return {
-          method: c.method.number,
-          detail: c.detail
-        }
-      })
+      contactChannels: this.toContactChannelPatch(data)
     };
     return this.ucroniaClient.profile.patch(data.number, patch);
   }
@@ -265,12 +260,7 @@ export class DirectoryService {
   private updateGuest(data: Guest): Observable<Guest> {
     const patch: GuestPatch = {
       ...data,
-      contactChannels: data.contactChannels.map(c => {
-        return {
-          method: c.method.number,
-          detail: c.detail
-        }
-      })
+      contactChannels: this.toContactChannelPatch(data)
     };
     return this.ucroniaClient.guest.patch(data.number, patch);
   }
@@ -278,12 +268,7 @@ export class DirectoryService {
   private updateSponsor(data: Sponsor): Observable<Sponsor> {
     const patch: SponsorPatch = {
       ...data,
-      contactChannels: data.contactChannels.map(c => {
-        return {
-          method: c.method.number,
-          detail: c.detail
-        }
-      })
+      contactChannels: this.toContactChannelPatch(data)
     };
     return this.ucroniaClient.sponsor.patch(data.number, patch);
   }
@@ -292,14 +277,18 @@ export class DirectoryService {
     const patch: MemberPatch = {
       ...data,
       feeType: data.feeType.number,
-      contactChannels: data.contactChannels.map(c => {
-        return {
-          method: c.method.number,
-          detail: c.detail
-        }
-      })
+      contactChannels: this.toContactChannelPatch(data)
     };
     return this.ucroniaClient.memberProfile.patch(data.number, patch);
+  }
+
+  private toContactChannelPatch(data: { contactChannels: ContactChannel[] }) {
+    return data.contactChannels.map(c => {
+      return {
+        method: c.method.number,
+        detail: c.detail
+      }
+    });
   }
 
 }
