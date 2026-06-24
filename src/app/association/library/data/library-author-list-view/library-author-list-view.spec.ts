@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { Author } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { AuthorService } from '../author-service';
 import { LibraryAuthorListView } from './library-author-list-view';
@@ -27,7 +27,6 @@ describe('LibraryAuthorListView', () => {
         LibraryAuthorListView
       ],
       providers: [
-        MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
         { provide: AuthorService, useValue: authorCrudServiceMock }

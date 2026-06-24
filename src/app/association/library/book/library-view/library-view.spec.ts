@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { GameBook } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
@@ -54,7 +54,6 @@ describe('LibraryView', () => {
         LibraryView
       ],
       providers: [
-        MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
         { provide: LibraryService, useValue: libraryServiceMock },

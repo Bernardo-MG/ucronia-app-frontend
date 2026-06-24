@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FeeSummary } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { FeeCalendarService } from '../fee-calendar-service';
-import { FeeSummaryService } from '../fee-summary-service';
 import { FeeService } from '../fee-service';
+import { FeeSummaryService } from '../fee-summary-service';
 import { FeeView } from './fee-view';
 
 describe('FeeView', () => {
@@ -45,7 +45,6 @@ describe('FeeView', () => {
         FeeView
       ],
       providers: [
-        MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
         { provide: FeeCalendarService, useValue: feeCalendarMock },
