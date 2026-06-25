@@ -1,20 +1,12 @@
-<p-carousel
-  [value]="data()"
-  [numVisible]="3"
-  [numScroll]="1"
-  [circular]="false"
-  [showIndicators]="true"
+<p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [circular]="false" [showIndicators]="true"
   [showNavigators]="true">
 
   <ng-template #item let-activity>
-    <p-card class="mx-2 h-full">
+    <p-card class="mx-2 h-full overflow-hidden">
 
-      <ng-template #header>
+      <ng-template pTemplate="header">
         @if (activity.image) {
-          <img
-            [src]="activity.image"
-            [alt]="activity.title"
-            class="h-48 w-full object-cover rounded-t" />
+          <img [src]="activity.image" [alt]="activity.title" class="w-full h-48 object-cover rounded-t-xl" />
         }
       </ng-template>
 
@@ -39,18 +31,15 @@
         <div class="text-sm space-y-1">
           @for (date of activity.dates; track date) {
             <div>
-              <i class="pi pi-calendar mr-1"></i>
-              {{ date.start | date:'yyyy-MM-dd' }}
-              ({{ date.start | date:'HH:mm' }} - {{ date.end | date:'HH:mm' }})
+              <i class="pi pi-calendar-clock mr-1"></i>
+              {{ date.start | date:'yyyy-MM-dd HH:mm' }}
+              -
+              {{ date.end | date:'HH:mm' }}
             </div>
           }
         </div>
 
-        <p-button
-          label="Ver"
-          icon="pi pi-eye"
-          severity="secondary"
-          (onClick)="show.emit(activity)" />
+        <p-button label="Ver" icon="pi pi-eye" severity="secondary" (onClick)="show.emit(activity)" />
       </div>
 
     </p-card>
