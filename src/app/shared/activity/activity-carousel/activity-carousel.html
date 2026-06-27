@@ -69,25 +69,17 @@
                 </div>
 
                 <div class="flex-1">
-
-                  <div class="font-medium">
-                    @if ((first.start | date:'yyyy-MM-dd') === (last.end | date:'yyyy-MM-dd')) {
-                      {{ first.start | date:'yyyy-MM-dd' }}
-                    } @else {
-                      {{ first.start | date:'yyyy-MM-dd' }}
-                      -
-                      {{ last.end | date:'yyyy-MM-dd' }}
-                    }
+                  <div class="text-lg font-bold tracking-wide">
+                    {{ first.start | date:'yyyy' }}
                   </div>
 
                   <div class="flex items-center gap-2 text-sm text-color-secondary">
                     <i class="pi pi-calendar-clock"></i>
                     <span>
                       {{ activity.dates.length }}
-                      {{ activity.dates.length === 1 ? 'fecha' : 'fechas' }}
+                      {{ activity.dates.length === 1 ? 'sesión' : 'sesiones' }}
                     </span>
                   </div>
-
                 </div>
 
                 @if (activity.dates.length > 1) {
