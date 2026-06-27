@@ -6,7 +6,7 @@ import { FrontpageService } from './frontpage-service';
 describe('FrontpageService', () => {
   let service: FrontpageService;
 
-  const ucroniaClienttMock = {
+  const ucroniaClientMock = {
     setting: {
       public: {
         get: jasmine.createSpy().and.returnValue(of({}))
@@ -17,7 +17,7 @@ describe('FrontpageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: UcroniaClient, useValue: ucroniaClienttMock }
+        { provide: UcroniaClient, useValue: ucroniaClientMock }
       ]
     });
     service = TestBed.inject(FrontpageService);
