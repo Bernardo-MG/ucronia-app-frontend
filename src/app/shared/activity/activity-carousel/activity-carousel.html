@@ -32,9 +32,7 @@
           @for (date of activity.dates; track date) {
             <div>
               <i class="pi pi-calendar-clock mr-1"></i>
-              {{ date.start | date:'yyyy-MM-dd HH:mm' }}
-              -
-              {{ date.end | date:'HH:mm' }}
+              {{ date.start | date:'yyyy-MM-dd' }} ({{ date.start | date:'HH:mm' }} - {{ date.end | date:'HH:mm' }})
             </div>
           }
         </div>
