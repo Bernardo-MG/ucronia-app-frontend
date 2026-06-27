@@ -11,6 +11,9 @@ describe('Frontpage', () => {
     setting: {
       public: {
         get: jasmine.createSpy().and.returnValue(of({}))
+      },
+      activity: {
+        page: jasmine.createSpy().and.returnValue(of({}))
       }
     }
   };
