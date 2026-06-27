@@ -15,8 +15,6 @@ export class ActivityCarousel {
   public readonly loading = input(false);
   public readonly data = input<Activity[]>([]);
 
-  public readonly show = output<Activity>();
-
   public readonly expanded = new Set<number>();
 
   public toggleDates(activity: Activity): void {
