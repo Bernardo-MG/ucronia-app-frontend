@@ -12,7 +12,9 @@
 
       <ng-template pTemplate="header">
         @if (activity.image) {
-          <img [src]="activity.image" [alt]="activity.title" class="h-48 object-cover" />
+          <div class="flex justify-center bg-surface-50 p-4">
+            <img [src]="activity.image" [alt]="activity.title" class="max-h-48 max-w-full object-contain" />
+          </div>
         }
       </ng-template>
 
