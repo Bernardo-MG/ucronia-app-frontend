@@ -10,15 +10,16 @@ describe('ErrorRequestInterceptor', () => {
   });
 
   it('should handle client-side or network error', (done) => {
-    const errorEvent = new ErrorEvent('Network error');
     const errorResponse = new HttpErrorResponse({
-      error: errorEvent,
+      error: new ProgressEvent('Network error'),
       status: 0
     });
 
     interceptor.handle(errorResponse).subscribe({
       error: (error) => {
-        expect(error).toEqual(new Error(errorEvent as any));
+        expect(error).toEqual(
+          new Error('A client-side or network error occurred.')
+        );
         done();
       }
     });

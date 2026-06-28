@@ -22,9 +22,9 @@ export class ErrorRequestInterceptor {
       const message =
         error.error instanceof ProgressEvent
           ? `A client-side or network error occurred.`
-          : `An error occurred: ${error.error?.message ?? error.error}`;
+          : `An error occurred: ${error.error?.message ?? JSON.stringify(error.error)}`;
 
-      console.error(message, error.error);
+      console.error(message);
       response = new Error(message);
     } else if (error.error?.failures) {
       // Failures response
