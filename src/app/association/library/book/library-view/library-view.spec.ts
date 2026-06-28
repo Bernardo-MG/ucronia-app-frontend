@@ -19,6 +19,10 @@ describe('LibraryView', () => {
     [
       'getAllGameBooks',
       'getAllFictionBooks',
+      'getGameSystems',
+      'getBookTypes',
+      'searchAuthors',
+      'searchPublishers',
       'createGameBook',
       'createFictionBook',
       'updateGameBook',

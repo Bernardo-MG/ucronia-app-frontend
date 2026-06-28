@@ -2,18 +2,19 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
-import { FormWithListSelection } from './form-with-list-selection';
+import { of } from 'rxjs';
+import { SelectionListForm } from './selection-list-form';
 
-describe('FormWithListSelection', () => {
-  let component: FormWithListSelection;
-  let fixture: ComponentFixture<FormWithListSelection>;
+describe('SelectionListForm', () => {
+  let component: SelectionListForm;
+  let fixture: ComponentFixture<SelectionListForm>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormWithListSelection, FormsModule, ReactiveFormsModule, ButtonModule, TableModule]
+      imports: [SelectionListForm, FormsModule, ReactiveFormsModule, ButtonModule, TableModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FormWithListSelection);
+    fixture = TestBed.createComponent(SelectionListForm);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,7 +23,6 @@ describe('FormWithListSelection', () => {
     expect(component).toBeTruthy();
     expect(component.form).toBeDefined();
     expect(component.rows).toEqual([]);
-    expect(component.selecting).toBeFalse();
   });
 
   it('should load rows when the data is set', () => {
@@ -33,22 +33,14 @@ describe('FormWithListSelection', () => {
   });
 
   describe('selection', () => {
-
-    it('should enter selecting mode when starts selecting', () => {
-      component.onStartSelecting();
-      expect(component.selecting).toBeTrue();
-    });
-
     it('should add new row when selected and exit selecting mode', () => {
       const row1 = { name: 'name 1', number: 1 };
       const row2 = { name: 'name 2', number: 2 };
       component.data = [row1];
 
-      component.onStartSelecting();
       component.onChoose(row2);
 
       expect(component.rows).toEqual([row1, row2]);
-      expect(component.selecting).toBeFalse();
     });
 
     it('should not add duplicate row when already selected', () => {
@@ -58,7 +50,15 @@ describe('FormWithListSelection', () => {
       component.onChoose(row);
 
       expect(component.rows).toEqual([row]);
-      expect(component.selecting).toBeFalse();
+    });
+
+    it('should search and load suggestions', () => {
+      const response = [{ name: 'author', number: 10 }];
+      fixture.componentRef.setInput('searchSelection', (query: string) => of(response));
+
+      component.onSearch({ query: 'auth' });
+
+      expect(component.searchResults).toEqual(response);
     });
 
   });

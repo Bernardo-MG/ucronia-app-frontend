@@ -1,23 +1,16 @@
-@switch (selecting) {
-  @case (false) {
-    <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-      <div class="row">
-        <div class="col-sm-3 text-primary">Tipo</div>
-        <div class="col-sm-9">
-            {{name}}
-        </div>
-      </div>
-      <div>
-        <p-button icon="pi pi-plus" aria-label="Borrar" (click)="onStartSelecting()" aria-label="Add row" rounded text />
-      </div>
-      <div uiJustifyBetween>
-        <!-- Save button -->
-        <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled"
-          [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
-      </div>
-    </form>
-  }
-  @case (true) {
-    <shared-selection-list heading="Nombre" [getSelection]="getSelection()" (choose)="onChoose($event)" />
-  }
-}
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="row mb-3">
+    <div class="col-sm-3 text-primary">{{fieldLabel()}}</div>
+    <div class="col-sm-9">{{name}}</div>
+  </div>
+
+  <div class="mb-3">
+    <p-select [options]="options" formControlName="number" optionLabel="name" optionValue="number"
+      [placeholder]="placeholder()" [loading]="loadingOptions" (onChange)="onChoose($event.value)" appendTo="body" />
+  </div>
+
+  <div uiJustifyBetween>
+    <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled"
+      [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  </div>
+</form>

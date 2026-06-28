@@ -1,9 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
+import { Page } from '@bernardo-mg/request';
 import { FormWithSelection } from './form-with-selection';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 describe('FormWithSelection', () => {
   let component: FormWithSelection;
@@ -11,10 +12,11 @@ describe('FormWithSelection', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FormWithSelection, FormsModule, ReactiveFormsModule, ButtonModule, TableModule]
+      imports: [FormWithSelection, FormsModule, ReactiveFormsModule, ButtonModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(FormWithSelection);
+    fixture.componentRef.setInput('getSelection', () => of(new Page<any>()));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,7 +24,6 @@ describe('FormWithSelection', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
     expect(component.form).toBeDefined();
-    expect(component.selecting).toBeFalse();
   });
 
   it('should load data when the data is set', () => {
@@ -34,19 +35,27 @@ describe('FormWithSelection', () => {
   });
 
   describe('selection', () => {
-
-    it('should enter selecting mode when starts selecting', () => {
-      component.onStartSelecting();
-      expect(component.selecting).toBeTrue();
-    });
-
-    it('should load data when selected and exit selecting mode', () => {
-      component.onStartSelecting();
+    it('should load data when selected', () => {
       const selection = { number: 2, name: 'Selected' };
-      component.onChoose(selection);
+      component.options = [selection];
+      component.onChoose(selection.number);
 
       expect(component.form.value as any).toEqual(selection);
-      expect(component.selecting).toBeFalse();
+    });
+
+    it('should load all options from selection endpoint', () => {
+      const page = new Page<any>();
+      page.content = [{ number: 1, name: 'A' }];
+      page.last = true;
+      page.totalPages = 1;
+
+      fixture.componentRef.setInput('getSelection', () => of(page));
+      fixture = TestBed.createComponent(FormWithSelection);
+      fixture.componentRef.setInput('getSelection', () => of(page));
+      component = fixture.componentInstance;
+      fixture.detectChanges();
+
+      expect(component.options).toEqual(page.content);
     });
 
   });

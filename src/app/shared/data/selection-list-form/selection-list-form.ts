@@ -1,20 +1,21 @@
 
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SelectionList } from '@app/shared/data/selection-list/selection-list';
 import { FormStatus } from '@bernardo-mg/form';
-import { Page } from '@bernardo-mg/request';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
-import { EMPTY, Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { NameNumber } from '../model/name-number';
 
 @Component({
   selector: 'shared-selection-list-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, TableModule, SelectionList],
-  templateUrl: './form-with-list-selection.html'
+  imports: [FormsModule, ReactiveFormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, ButtonModule, TableModule],
+  templateUrl: './selection-list-form.html'
 })
-export class FormWithListSelection {
+export class SelectionListForm {
 
   @Input() public set data(value: NameNumber[]) {
     if (value) {
@@ -22,13 +23,15 @@ export class FormWithListSelection {
     }
   }
 
-  public readonly getSelection = input<(page: number) => Observable<Page<NameNumber>>>((page: number) => EMPTY);
+  public readonly searchSelection = input<(query: string) => Observable<NameNumber[]>>((query: string) => of([]));
+  public readonly searchPlaceholder = input('Buscar...');
 
   public readonly save = output<NameNumber[]>();
 
   public readonly formStatus;
 
-  public selecting = false;
+  public searchValue: NameNumber | undefined;
+  public searchResults: NameNumber[] = [];
 
   public get rows(): NameNumber[] {
     return (this.form as any).get('rows').value;
@@ -46,16 +49,19 @@ export class FormWithListSelection {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onStartSelecting() {
-    this.selecting = true;
-  }
-
   public onChoose(selected: NameNumber) {
     if (!this.rows.find(r => r.number === selected.number)) {
       this.form.get('rows')?.setValue([...this.rows, selected]);
       this.form.markAsDirty();
     }
-    this.selecting = false;
+
+    this.searchValue = undefined;
+    this.searchResults = [];
+  }
+
+  public onSearch(event: { query: string }) {
+    this.searchSelection()(event.query?.trim())
+      .subscribe(response => this.searchResults = response);
   }
 
   public onRemove(row: NameNumber) {
