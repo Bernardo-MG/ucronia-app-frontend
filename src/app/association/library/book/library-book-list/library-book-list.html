@@ -1,5 +1,4 @@
-<p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
-<p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="books()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
   showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">

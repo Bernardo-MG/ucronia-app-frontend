@@ -28,36 +28,23 @@ export class LibraryBookList {
   public readonly pageChange = output<number>();
   public readonly show = output<{ dialog: Dialog, book: FictionBook | GameBook }>();
 
-  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
-  @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
+  @ViewChild('editionMenu') editionMenu!: Menu;
 
-  public fictionEditionMenuItems: MenuItem[] = [];
-  public gameEditionMenuItems: MenuItem[] = [];
+  public editionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.page() - 1) * this.rows();
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
-      this.gameEditionMenuItems = [];
-      this.gameEditionMenuItems.push(
+      this.editionMenuItems = [];
+      this.editionMenuItems.push(
         {
           label: 'Préstamos',
           command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
         });
 
-      this.gameEditionMenu.toggle(event);
-    } else {
-      this.fictionEditionMenuItems = [];
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Préstamos',
-          command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
-        });
-
-      this.fictionEditionMenu.toggle(event);
-    }
+      this.editionMenu.toggle(event);
   }
 
   public onChangeDirection(sorting: SortingEvent) {
