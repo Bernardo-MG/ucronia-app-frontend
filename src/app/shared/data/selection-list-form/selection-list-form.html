@@ -6,8 +6,8 @@
       </p-inputgroup-addon>
       <p-autocomplete name="selectionSearch" [ngModel]="searchValue" [suggestions]="searchResults" optionLabel="name"
         [ngModelOptions]="{ standalone: true }" dataKey="number" [forceSelection]="true"
-        [placeholder]="searchPlaceholder()"
-        (completeMethod)="onSearch($event)" (onSelect)="onChoose($event.value)" appendTo="body" />
+        [placeholder]="searchPlaceholder()" (completeMethod)="onSearch($event)" (onSelect)="onChoose($event.value)"
+        appendTo="body" />
     </p-inputgroup>
   </div>
 
