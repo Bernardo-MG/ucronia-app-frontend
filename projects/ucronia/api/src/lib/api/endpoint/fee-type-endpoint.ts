@@ -1,9 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeTypeUpdate } from '../../fees/fee-type-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class FeeTypeEndpoint {
 

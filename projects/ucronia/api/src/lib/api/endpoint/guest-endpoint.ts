@@ -1,9 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Guest } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { GuestPatch } from '../../guests/guest-patch';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class GuestEndpoint {
 

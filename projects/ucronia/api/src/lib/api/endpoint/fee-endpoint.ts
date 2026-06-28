@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Fee, FeePayments, FeeSummary, MemberFees, MemberFeesFee, MemberStatus, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class FeeEndpoint {
 

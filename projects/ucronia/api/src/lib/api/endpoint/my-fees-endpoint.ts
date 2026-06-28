@@ -1,8 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
 import { catchError, Observable } from 'rxjs';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class MyFeesEndpoint {
 
