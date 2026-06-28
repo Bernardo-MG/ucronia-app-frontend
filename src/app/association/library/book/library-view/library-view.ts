@@ -345,43 +345,30 @@ export class LibraryView implements OnInit {
   }
 
   public onSetDonation(donation: Donation | undefined) {
-    let update;
-    if (this.selectedData instanceof GameBook) {
-      update = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: this.selectedData.authors.map(a => a.number),
-        donation: donation
-      };
-    } else {
-      update = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        authors: this.selectedData.authors.map(a => a.number),
-        donation: donation
-      };
+    let update: any = {
+      ...this.selectedData,
+      authors: this.selectedData.authors.map(a => a.number),
+      publishers: this.selectedData.publishers.map(p => p.number),
+      donation: donation
+    };
+
+    if ('bookType' in this.selectedData) {
+      update.bookType = this.selectedData.bookType?.number;
+      update.gameSystem = this.selectedData.gameSystem?.number;
     }
     this.onUpdate(update as BookUpdate);
   }
 
   public onSaveBook(book: FictionBook | GameBook) {
-    let update;
-    if (book instanceof GameBook) {
-      update = {
-        ...book,
-        publishers: book.publishers.map(p => p.number),
-        bookType: book.bookType?.number,
-        gameSystem: book.gameSystem?.number,
-        authors: book.authors.map(a => a.number)
-      };
-    } else {
-      update = {
-        ...book,
-        publishers: book.publishers.map(p => p.number),
-        authors: book.authors.map(a => a.number)
-      };
+    let update: any = {
+      ...book,
+      publishers: book.publishers.map(p => p.number),
+      authors: book.authors.map(a => a.number)
+    };
+
+    if ('bookType' in book) {
+      update.bookType = book.bookType?.number;
+      update.gameSystem = book.gameSystem?.number;
     }
     this.onUpdate(update as BookUpdate);
   }
