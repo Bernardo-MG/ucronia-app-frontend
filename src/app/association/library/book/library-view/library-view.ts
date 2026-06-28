@@ -83,6 +83,7 @@ export class LibraryView implements OnInit {
   private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
   private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
   private read: (page: number | undefined, sort: Sorting, title: string | undefined) => Observable<Page<FictionBook | GameBook>> = (page, sort, title) => EMPTY;
+  private readOne: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
 
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
@@ -235,16 +236,26 @@ export class LibraryView implements OnInit {
     this.load(this.data.page);
   }
 
+  public onShowEdit() {
+    this.dialog = Dialog.EDIT;
+    this.withLoading(
+      this.readOne(this.selectedData.number)
+    )
+      .subscribe((book) => this.selectedData = book);
+  }
+
   public onChangeSource(event: SelectButtonChangeEvent) {
     this.source = event.value as BookSelection;
     if (this.source === BookSelection.GAME) {
       this.delete = this.service.deleteGameBook.bind(this.service);
       this.update = this.service.updateGameBook.bind(this.service);
       this.read = this.service.getAllGameBooks.bind(this.service);
+      this.readOne = this.service.getOneGameBook.bind(this.service);
     } else {
       this.delete = this.service.deleteFictionBook.bind(this.service);
       this.update = this.service.updateFictionBook.bind(this.service);
       this.read = this.service.getAllFictionBooks.bind(this.service);
+      this.readOne = this.service.getOneFictionBook.bind(this.service);
     }
     this.load();
   }
@@ -294,8 +305,8 @@ export class LibraryView implements OnInit {
   public onSetPublishers(publishers: Publisher[]) {
     let update: any = {
       ...this.selectedData,
-        authors: this.selectedData.authors.map(a => a.number),
-        publishers: publishers.map(a => a.number)
+      authors: this.selectedData.authors.map(a => a.number),
+      publishers: publishers.map(a => a.number)
     };
 
     if ('bookType' in this.selectedData) {
@@ -413,17 +424,15 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
-    this.status.loading = true;
-    this.read(page, this.sort, this.nameFilter)
-      .pipe(finalize(() => this.status.loading = false))
-      .subscribe(response => this.data = response);
+    this.withLoading(
+      this.read(page, this.sort, this.nameFilter)
+    ).subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
-    this.status.loading = true;
-    this.lendingsService.getAll(page, new Sorting([]))
-      .pipe(finalize(() => this.status.loading = false))
-      .subscribe(response => this.lendings = response);
+    this.withLoading(
+      this.lendingsService.getAll(page, new Sorting([]))
+    ).subscribe(response => this.lendings = response);
   }
 
   // PRIVATE METHODS
@@ -458,6 +467,16 @@ export class LibraryView implements OnInit {
     this.service.getSummary()
       .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(r => this.summary = r);
+  }
+
+  private withLoading<T>(
+    observable: Observable<T>
+  ): Observable<T> {
+    this.status.loading = true;
+
+    return observable.pipe(
+      finalize(() => this.status.loading = false)
+    );
   }
 
 }

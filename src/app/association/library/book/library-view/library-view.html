@@ -68,13 +68,15 @@
         <div class="w-full p-4">
           <assoc-library-book-info [loading]="status.loading" [book]="selectedData" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-            (click)="onDelete($event)" rounded text />
-        </ng-template>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
+          [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" rounded text class="!p-2" />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="onDelete($event)" rounded text />
+      </ng-template>
       }
 
-      @case (Dialog.DETAILS) {
+      @case (Dialog.EDIT) {
         <ng-template #header>
           <h2 class="text-xl font-semibold">
             #{{ selectedData.number }}
