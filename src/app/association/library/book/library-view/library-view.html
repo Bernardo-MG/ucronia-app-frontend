@@ -106,19 +106,6 @@
         </ng-template>
       }
 
-      @case (Dialog.DONORS) {
-        <ng-template #header>
-          Donantes
-        </ng-template>
-        <div class="w-full p-4">
-          <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="status.loading" [failures]="failures"
-            [donors]="donors" (searchDonor)="onSearchDonors($event)" (save)="onSetDonation($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
       @case (Dialog.LENDINGS) {
         @if(selectedData.lent) {
           <ng-template #header>

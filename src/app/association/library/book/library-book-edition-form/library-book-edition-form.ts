@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { Page } from '@bernardo-mg/request';
 import { FailureStore } from '@bernardo-mg/request';
-import { Author, BookLending, BookType, Donation, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
+import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -58,8 +58,10 @@ export class LibraryBookEditionForm implements OnChanges {
 
   public authorSearchValue: Author | undefined;
   public publisherSearchValue: Publisher | undefined;
+  public donorSearchValue: Donor | undefined;
   public authorSearchResults: Author[] = [];
   public publisherSearchResults: Publisher[] = [];
+  public donorSearchResults: Donor[] = [];
 
   public isGameBook = false;
 
@@ -69,6 +71,10 @@ export class LibraryBookEditionForm implements OnChanges {
 
   public get selectedPublishers(): Publisher[] {
     return this.form.get('publishers')?.value ?? [];
+  }
+
+  public get selectedDonors(): Donor[] {
+    return this.form.get('donation')?.get('donors')?.value ?? [];
   }
 
   public get selectedGameSystemNumber(): number | undefined {
@@ -139,8 +145,16 @@ export class LibraryBookEditionForm implements OnChanges {
    */
   public onSave() {
     if (this.form.valid) {
+      const donation = this.form.get('donation')?.value as Donation;
+      const hasDonationDate = !!donation?.date;
+      const hasDonors = !!donation?.donors?.length;
+      const value: any = {
+        ...this.form.value,
+        donation: hasDonationDate || hasDonors ? donation : undefined
+      };
+
       // Valid form, can emit data
-      this.save.emit(this.form.value);
+      this.save.emit(value as FictionBook | GameBook);
     }
   }
 
@@ -193,6 +207,33 @@ export class LibraryBookEditionForm implements OnChanges {
   public onRemovePublisher(publisher: Publisher): void {
     const publishers = this.form.get('publishers')?.value ?? [];
     this.form.get('publishers')?.setValue(publishers.filter((selected: Publisher) => selected.number !== publisher.number));
+    this.form.markAsDirty();
+  }
+
+  public onSearchDonors(event: { query: string }): void {
+    this.service.searchDonors(event.query?.trim())
+      .subscribe(donors => this.donorSearchResults = donors);
+  }
+
+  public onSelectDonor(donor: Donor): void {
+    if (!donor) {
+      return;
+    }
+
+    const donors = this.selectedDonors;
+    if (!donors.find((selected: Donor) => selected.number === donor.number)) {
+      this.form.get('donation')?.get('donors')?.setValue([...donors, donor]);
+      this.form.markAsDirty();
+    }
+
+    this.donorSearchValue = undefined;
+    this.donorSearchResults = [];
+  }
+
+  public onRemoveDonor(donor: Donor): void {
+    this.form.get('donation')?.get('donors')?.setValue(
+      this.selectedDonors.filter((selected: Donor) => selected.number !== donor.number)
+    );
     this.form.markAsDirty();
   }
 

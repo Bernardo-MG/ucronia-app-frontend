@@ -3,6 +3,5 @@ export enum Dialog {
   INFO = 'info',
   EDIT = 'edit',
   CREATION = 'creation',
-  DONORS = 'donors',
   LENDINGS = 'lendings'
 }

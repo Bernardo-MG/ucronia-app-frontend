@@ -43,11 +43,6 @@ export class LibraryBookList {
       this.gameEditionMenuItems = [];
       this.gameEditionMenuItems.push(
         {
-          label: 'Donantes',
-          command: () => this.show.emit({ dialog: Dialog.DONORS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
           label: 'Préstamos',
           command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
         });
@@ -55,11 +50,6 @@ export class LibraryBookList {
       this.gameEditionMenu.toggle(event);
     } else {
       this.fictionEditionMenuItems = [];
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Donantes',
-          command: () => this.show.emit({ dialog: Dialog.DONORS, book })
-        });
       this.fictionEditionMenuItems.push(
         {
           label: 'Préstamos',
