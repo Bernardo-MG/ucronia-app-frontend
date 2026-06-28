@@ -4,9 +4,5 @@ export enum Dialog {
   EDIT = 'edit',
   CREATION = 'creation',
   DONORS = 'donors',
-  AUTHORS = 'authors',
-  GAME_SYSTEM = 'gameSystem',
-  BOOK_TYPE = 'bookType',
-  PUBLISHERS = 'publishers',
   LENDINGS = 'lendings'
 }

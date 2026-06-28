@@ -48,26 +48,6 @@ export class LibraryBookList {
         });
       this.gameEditionMenuItems.push(
         {
-          label: 'Autores',
-          command: () => this.show.emit({ dialog: Dialog.AUTHORS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Editor',
-          command: () => this.show.emit({ dialog: Dialog.PUBLISHERS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Sistema',
-          command: () => this.show.emit({ dialog: Dialog.GAME_SYSTEM, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Tipo',
-          command: () => this.show.emit({ dialog: Dialog.BOOK_TYPE, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
           label: 'Préstamos',
           command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
         });
@@ -79,16 +59,6 @@ export class LibraryBookList {
         {
           label: 'Donantes',
           command: () => this.show.emit({ dialog: Dialog.DONORS, book })
-        });
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Autores',
-          command: () => this.show.emit({ dialog: Dialog.AUTHORS, book })
-        });
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Editor',
-          command: () => this.show.emit({ dialog: Dialog.PUBLISHERS, book })
         });
       this.fictionEditionMenuItems.push(
         {

@@ -119,60 +119,6 @@
         </ng-template>
       }
 
-      @case (Dialog.AUTHORS) {
-        <ng-template #header>
-          Autores
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-selection-list-form [data]="selectedData.authors" [searchSelection]="service.searchAuthors.bind(service)"
-            searchPlaceholder="Buscar autor..."
-            (save)="onSetAuthors($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.GAME_SYSTEM) {
-        <ng-template #header>
-          Sistemas
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
-            placeholder="Seleccione un sistema" (save)="onSetGameSystem($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.BOOK_TYPE) {
-        <ng-template #header>
-          Tipo
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
-            placeholder="Seleccione un tipo" (save)="onSetBookType($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.PUBLISHERS) {
-        <ng-template #header>
-          Editores
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-selection-list-form [data]="selectedData.publishers" [searchSelection]="service.searchPublishers.bind(service)"
-            searchPlaceholder="Buscar editor..."
-            (save)="onSetPublishers($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
       @case (Dialog.LENDINGS) {
         @if(selectedData.lent) {
           <ng-template #header>
