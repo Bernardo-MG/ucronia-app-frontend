@@ -1,8 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ResourcePermission } from '@bernardo-mg/authentication';
-import { Page, PaginatedResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, Observable } from 'rxjs';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class PermissionEndpoint {
 

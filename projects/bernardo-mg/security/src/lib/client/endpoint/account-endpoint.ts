@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { SimpleResponse } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, SimpleResponse } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { Account } from '../../domain/account';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class AccountEndpoint {
 

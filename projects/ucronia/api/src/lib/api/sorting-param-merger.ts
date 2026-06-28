@@ -1,4 +1,4 @@
-import { SortingDirection, SortingProperty } from "@bernardo-mg/request";
+import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 
 export function mergeProperties(properties: SortingProperty[], defaultProperties: SortingProperty[]): SortingProperty[] {
   let sortFields;

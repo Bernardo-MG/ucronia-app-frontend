@@ -1,6 +1,6 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { FailureResponse } from "@bernardo-mg/request";
-import { ErrorRequestInterceptor } from "./error-request-interceptor";
+import { HttpErrorResponse } from '@angular/common/http';
+import { FailureResponse } from '../../public-api';
+import { ErrorRequestInterceptor } from './error-request-interceptor';
 
 describe('ErrorRequestInterceptor', () => {
   let interceptor: ErrorRequestInterceptor;
@@ -10,21 +10,27 @@ describe('ErrorRequestInterceptor', () => {
   });
 
   it('should handle client-side or network error', (done) => {
+    const errorEvent = new ErrorEvent('Network error');
     const errorResponse = new HttpErrorResponse({
-      error: new ErrorEvent('Network error'),
+      error: errorEvent,
       status: 0
     });
 
     interceptor.handle(errorResponse).subscribe({
       error: (error) => {
-        expect(error).toEqual(new Error('Something bad happened; please try again later.'));
+        expect(error).toEqual(new Error(errorEvent as any));
         done();
       }
     });
   });
 
   it('should handle failure response', (done) => {
-    const failureData = { field1: [{ code: 'error', field: 'field', message: 'Invalid input', value: 'abc' }] };
+    const failureData = {
+      field1: [
+        { code: 'error', field: 'field', message: 'Invalid input', value: 'abc' }
+      ]
+    };
+
     const errorResponse = new HttpErrorResponse({
       error: { failures: failureData },
       status: 400
@@ -39,14 +45,17 @@ describe('ErrorRequestInterceptor', () => {
   });
 
   it('should handle generic backend error', (done) => {
+    const backendError = { message: 'Server error' };
+
     const errorResponse = new HttpErrorResponse({
-      error: { message: 'Server error' },
+      error: backendError,
       status: 500
     });
 
     interceptor.handle(errorResponse).subscribe({
       error: (error) => {
-        expect(error).toEqual(new Error('Something bad happened; please try again later.'));
+        const expectedMessage = `Backend returned code 500, with body: ${backendError}`;
+        expect(error).toEqual(new Error(expectedMessage));
         done();
       }
     });

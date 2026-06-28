@@ -1,5 +1,5 @@
 import { HttpErrorResponse } from "@angular/common/http";
-import { FailureResponse } from "@bernardo-mg/request";
+import { FailureResponse } from '@bernardo-mg/request';
 import { ErrorRequestInterceptor } from "./error-request-interceptor";
 
 describe('ErrorRequestInterceptor', () => {

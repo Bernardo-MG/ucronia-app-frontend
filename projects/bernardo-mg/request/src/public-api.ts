@@ -2,7 +2,7 @@
  * Public API Surface of request
  */
 
-export * from './lib/interceptors/angular-error-request-interceptor';
+export * from './lib/interceptors/error-request-interceptor';
 export * from './lib/interceptors/error-message-interceptor';
 export * from './lib/models/array-page';
 export * from './lib/models/failure-store';

@@ -1,12 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, UserTokenStatus } from '@bernardo-mg/authentication';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { UserActivation } from '../../request/user-activation';
 import { UserCreation } from '../../request/user-creation';
 import { UserUpdate } from '../../request/user-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class UserEndpoint {
 
