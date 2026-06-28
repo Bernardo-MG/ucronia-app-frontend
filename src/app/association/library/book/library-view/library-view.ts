@@ -15,7 +15,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { EMPTY, finalize, Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
@@ -79,10 +79,6 @@ export class LibraryView implements OnInit {
 
   private sort = new Sorting();
 
-  private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
-  private read: (page: number | undefined, sort: Sorting, title: string | undefined) => Observable<Page<FictionBook | GameBook>> = (page, sort, title) => EMPTY;
-  private readOne: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
-
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
@@ -105,10 +101,6 @@ export class LibraryView implements OnInit {
       edit: authService.hasPermission("library_book", "update"),
       delete: authService.hasPermission("library_book", "delete")
     };
-
-    // Initial operations
-    this.delete = this.service.deleteGameBook.bind(this.service);
-    this.read = this.service.getAllGameBooks.bind(this.service);
 
     // Load data menu
     if (authService.hasPermission('library_author', 'view')) {
@@ -208,7 +200,7 @@ export class LibraryView implements OnInit {
         severity: 'danger'
       },
       accept: () => this.call(
-        () => this.delete(this.selectedData.number),
+        () => this.service.deleteBook(this.getSelectedSource(), this.selectedData.number),
         () => {
           this.load(this.data.page);
           this.loadSummary();
@@ -226,22 +218,14 @@ export class LibraryView implements OnInit {
   public onShowEdit() {
     this.dialog = Dialog.EDIT;
     this.withLoading(
-      this.readOne(this.selectedData.number)
+      this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
     )
       .subscribe((book) => this.selectedData = book);
   }
 
   public onChangeSource(event: SelectButtonChangeEvent) {
     this.source = event.value as BookSelection;
-    if (this.source === BookSelection.GAME) {
-      this.delete = this.service.deleteGameBook.bind(this.service);
-      this.read = this.service.getAllGameBooks.bind(this.service);
-      this.readOne = this.service.getOneGameBook.bind(this.service);
-    } else {
-      this.delete = this.service.deleteFictionBook.bind(this.service);
-      this.read = this.service.getAllFictionBooks.bind(this.service);
-      this.readOne = this.service.getOneFictionBook.bind(this.service);
-    }
+
     this.load();
   }
 
@@ -371,7 +355,7 @@ export class LibraryView implements OnInit {
 
   public load(page: number | undefined = undefined) {
     this.withLoading(
-      this.read(page, this.sort, this.nameFilter)
+      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.nameFilter)
     ).subscribe(response => this.data = response);
   }
 
@@ -423,6 +407,14 @@ export class LibraryView implements OnInit {
     return observable.pipe(
       finalize(() => this.status.loading = false)
     );
+  }
+
+  private getSelectedSource(): 'game' | 'fiction' {
+    if (this.source === BookSelection.FICTION) {
+      return 'fiction';
+    }
+
+    return 'game';
   }
 
 }

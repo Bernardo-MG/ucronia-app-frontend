@@ -46,6 +46,14 @@ export class LibraryService {
     return this.ucroniaClient.library.gameBook.get(number);
   }
 
+  public getOneBook(source: LibraryBookSource, number: number): Observable<GameBook | FictionBook> {
+    if (source === 'fiction') {
+      return this.getOneFictionBook(number);
+    }
+
+    return this.getOneGameBook(number);
+  }
+
   public deleteGameBook(number: number): Observable<GameBook> {
     return this.ucroniaClient.library.gameBook.delete(number)
       .pipe(
@@ -69,6 +77,14 @@ export class LibraryService {
       );
   }
 
+  public deleteBook(source: LibraryBookSource, number: number): Observable<GameBook | FictionBook> {
+    if (source === 'fiction') {
+      return this.deleteFictionBook(number);
+    }
+
+    return this.deleteGameBook(number);
+  }
+
   public getAllGameBooks(page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<GameBook>> {
     const sorting = new Sorting(
       mergeProperties(
@@ -83,6 +99,14 @@ export class LibraryService {
     );
 
     return this.ucroniaClient.library.gameBook.page(page, undefined, sorting, title);
+  }
+
+  public getAllBooks(source: LibraryBookSource, page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<FictionBook | GameBook>> {
+    if (source === 'fiction') {
+      return this.getAllFictionBooks(page, sort, title);
+    }
+
+    return this.getAllGameBooks(page, sort, title);
   }
 
   public createFictionBook(data: BookCreation): Observable<FictionBook> {
@@ -378,3 +402,5 @@ export class LibraryService {
   }
 
 }
+
+export type LibraryBookSource = 'game' | 'fiction';
