@@ -1,62 +1,52 @@
 
-import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NameNumber } from '@app/shared/data/model/name-number';
-import { SelectionList } from '@app/shared/data/selection-list/selection-list';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
-import { FailureStore, Page } from '@bernardo-mg/request';
+import { FailureStore } from '@bernardo-mg/request';
 import { Donation, Donor } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { EMPTY, Observable } from 'rxjs';
 
 @Component({
   selector: 'assoc-library-book-donors-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, FloatLabelModule, MessageModule, ButtonModule, SelectionList],
+  imports: [FormsModule, ReactiveFormsModule, DatePickerModule, FloatLabelModule, MessageModule, ButtonModule, MemberSearch],
   templateUrl: './library-book-donors-form.html'
 })
-export class LibraryBookDonorsForm implements OnInit, OnChanges {
-
+export class LibraryBookDonorsForm implements OnChanges {
   public readonly loading = input(false);
-
   public readonly failures = input(new FailureStore());
 
-  public readonly getSelection = input<(page: number) => Observable<Page<Donor>>>((page: number) => EMPTY);
-
-  @Input() public set data(value: Donation | undefined) {
-    this.form.patchValue(value as any);
-  }
+  public readonly donors = input<Donor[]>([]);
 
   public readonly save = output<Donation>();
+  public readonly searchDonor = output<MemberSearchEvent>();
+  public donorSearchValue = new Donor();
 
-  public formStatus: FormStatus;
-
-  public form: FormGroup;
-
-  public get donors(): Donor[] {
-    return this.form.get('donors')?.value;
+  @Input() public set data(value: Donation | undefined) {
+    if (value) {
+      this.form.patchValue(value as any);
+    }
   }
 
-  public selectingDonor = false;
+  public formStatus: FormStatus;
+  public form: FormGroup;
 
-  public selection = new Page<Donor>();
+  public get selectedDonors(): Donor[] {
+    return this.form.get('donors')?.value ?? [];
+  }
 
   constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      date: ["", Validators.required],
+      date: ['', Validators.required],
       donors: [[], Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnInit(): void {
-    this.onGoToSelectionPage(0);
   }
 
   public ngOnChanges({ loading }: SimpleChanges): void {
@@ -65,41 +55,32 @@ export class LibraryBookDonorsForm implements OnInit, OnChanges {
     }
   }
 
-  public onGoToSelectionPage(page: number) {
-    this.getSelection()(page)
-      .subscribe(response => this.selection = response);
-  }
-
-  public onStartSelectingDonor() {
-    this.selectingDonor = true;
-  }
-
-  public onSelect(donor: NameNumber) {
-    if (!this.donors.find(d => d.number === donor.number)) {
-      this.form.get('donors')?.setValue([...this.donors, donor]);
+  public onSelectMember(member: Donor): void {
+    if (!member) {
+      return;
     }
-    this.selectingDonor = false;
+
+    if (!this.selectedDonors.find(d => d.number === member.number)) {
+      this.form.get('donors')?.setValue([...this.selectedDonors, member]);
+    }
+
+    this.donorSearchValue = new Donor();
   }
 
-  public onRemoveDonor(donor: Donor) {
-    const filteredDonors = this.donors.filter(d => d.number !== donor.number);
-    this.form.get('donors')?.setValue(filteredDonors);
+  public onRemoveDonor(donor: Donor): void {
+    this.form.get('donors')?.setValue(
+      this.selectedDonors.filter(d => d.number !== donor.number)
+    );
   }
 
-  public readonly nameRenderer = (row: Donor): string => row.name.fullName;
-
-  /**
-   * Handler for the save event.
-   */
-  public onSave() {
+  public onSave(): void {
     if (this.form.valid) {
-      // Valid form, can emit data
       this.save.emit(this.form.value);
     }
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
-
 }

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from '../model/library-summary';
 import { MessageService } from 'primeng/api';
@@ -239,6 +239,19 @@ export class LibraryService {
 
     return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
       .pipe(map(page => page.content as PublicMember[]));
+  }
+
+  public searchDonors(query: string): Observable<Donor[]> {
+    const sorting = new Sorting(
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.profile.page(undefined, 10, sorting, query)
+      .pipe(map(page => page.content as Donor[]));
   }
 
   public getSummary(): Observable<LibrarySummary> {

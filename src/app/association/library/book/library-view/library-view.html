@@ -110,7 +110,7 @@
         </ng-template>
         <div class="w-full p-4">
           <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="status.loading" [failures]="failures"
-            [getSelection]="service.getDonors.bind(service)" (save)="onSetDonation($event)" />
+            [donors]="donors" (searchDonor)="onSearchDonors($event)" (save)="onSetDonation($event)" />
         </div>
         <ng-template #footer>
           <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />

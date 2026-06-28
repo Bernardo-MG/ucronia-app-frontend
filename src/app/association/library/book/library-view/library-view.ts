@@ -8,7 +8,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookUpdate } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -50,6 +50,7 @@ export class LibraryView implements OnInit {
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public members: PublicMember[] = [];
+  public donors: Donor[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
@@ -388,6 +389,13 @@ export class LibraryView implements OnInit {
     this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
+      });
+  }
+
+  public onSearchDonors(event: { query: string }) {
+    this.service.searchDonors(event.query?.trim())
+      .subscribe(donors => {
+        this.donors = donors;
       });
   }
 
