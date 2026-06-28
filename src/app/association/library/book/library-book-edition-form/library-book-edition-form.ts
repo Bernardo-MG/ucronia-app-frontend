@@ -53,6 +53,9 @@ export class LibraryBookEditionForm implements OnChanges {
   public gameSystems: GameSystem[] = [];
   public bookTypes: BookType[] = [];
 
+  public readonly noGameSystemOption = { number: undefined, name: 'Sin sistema' };
+  public readonly noBookTypeOption = { number: undefined, name: 'Sin tipo' };
+
   public authorSearchValue: Author | undefined;
   public publisherSearchValue: Publisher | undefined;
   public authorSearchResults: Author[] = [];
@@ -74,6 +77,14 @@ export class LibraryBookEditionForm implements OnChanges {
 
   public get selectedBookTypeNumber(): number | undefined {
     return this.form.get('bookType')?.value?.number;
+  }
+
+  public get gameSystemOptions(): Array<{ number: number | undefined; name: string }> {
+    return [this.noGameSystemOption, ...this.gameSystems];
+  }
+
+  public get bookTypeOptions(): Array<{ number: number | undefined; name: string }> {
+    return [this.noBookTypeOption, ...this.bookTypes];
   }
 
   public view = 'form';
@@ -186,6 +197,12 @@ export class LibraryBookEditionForm implements OnChanges {
   }
 
   public onSelectGameSystem(number: number | undefined): void {
+    if (number === undefined || number === null) {
+      this.form.get('gameSystem')?.setValue(undefined);
+      this.form.markAsDirty();
+      return;
+    }
+
     const gameSystem = this.gameSystems.find(system => system.number === number);
     if (!gameSystem) {
       return;
@@ -196,6 +213,12 @@ export class LibraryBookEditionForm implements OnChanges {
   }
 
   public onSelectBookType(number: number | undefined): void {
+    if (number === undefined || number === null) {
+      this.form.get('bookType')?.setValue(undefined);
+      this.form.markAsDirty();
+      return;
+    }
+
     const bookType = this.bookTypes.find(type => type.number === number);
     if (!bookType) {
       return;

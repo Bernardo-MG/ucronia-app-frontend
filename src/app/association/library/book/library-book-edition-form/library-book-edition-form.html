@@ -142,14 +142,14 @@
   @if (isGameBook) {
     <div class="border-t pt-4 mb-3">
       <label class="font-semibold mb-2 block">Sistema</label>
-      <p-select [options]="gameSystems" optionLabel="name" optionValue="number" [ngModel]="selectedGameSystemNumber"
+      <p-select [options]="gameSystemOptions" optionLabel="name" optionValue="number" [ngModel]="selectedGameSystemNumber"
         [ngModelOptions]="{ standalone: true }" placeholder="Seleccione un sistema" (onChange)="onSelectGameSystem($event.value)"
         appendTo="body" />
     </div>
 
     <div class="border-t pt-4 mb-3">
       <label class="font-semibold mb-2 block">Tipo</label>
-      <p-select [options]="bookTypes" optionLabel="name" optionValue="number" [ngModel]="selectedBookTypeNumber"
+      <p-select [options]="bookTypeOptions" optionLabel="name" optionValue="number" [ngModel]="selectedBookTypeNumber"
         [ngModelOptions]="{ standalone: true }" placeholder="Seleccione un tipo" (onChange)="onSelectBookType($event.value)"
         appendTo="body" />
     </div>
