@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { SimpleResponse } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, SimpleResponse } from '@bernardo-mg/request';
 import { PublicSettings, Setting } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { SettingUpdate } from '../../setting/setting-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class SettingEndpoint {
 

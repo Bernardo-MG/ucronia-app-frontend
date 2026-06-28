@@ -1,8 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Activity, ActivityDate } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class ActivityEndpoint {
 

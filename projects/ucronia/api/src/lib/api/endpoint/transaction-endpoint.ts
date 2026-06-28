@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { Transaction, TransactionMonthlyBalance, TransactionMonthsRange, TransactionSummary } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { TransactionUpdate } from '../../transaction/transaction-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class TransactionEndpoint {
 

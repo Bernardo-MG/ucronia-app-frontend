@@ -54,7 +54,7 @@ describe('ErrorRequestInterceptor', () => {
 
     interceptor.handle(errorResponse).subscribe({
       error: (error) => {
-        const expectedMessage = `Backend returned code 500, with body: ${backendError}`;
+        const expectedMessage = `Backend returned code 500, with body: {"message":"Server error"}`;
         expect(error).toEqual(new Error(expectedMessage));
         done();
       }

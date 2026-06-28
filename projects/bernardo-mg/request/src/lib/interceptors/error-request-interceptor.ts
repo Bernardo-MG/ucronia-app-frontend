@@ -19,8 +19,13 @@ export class ErrorRequestInterceptor {
 
     if (error.status === 0) {
       // A client-side or network error occurred. Handle it accordingly.
-      console.error('An error occurred:', error.error);
-      response = new Error(error.error);
+      const message =
+        error.error instanceof ProgressEvent
+          ? `A client-side or network error occurred.`
+          : `An error occurred: ${error.error?.message ?? error.error}`;
+
+      console.error(message, error.error);
+      response = new Error(message);
     } else if (error.error?.failures) {
       // Failures response
       console.error(
@@ -29,7 +34,7 @@ export class ErrorRequestInterceptor {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
-      const message = `Backend returned code ${error.status}, with body: ${error.error}`;
+      const message = `Backend returned code ${error.status}, with body: ${JSON.stringify(error.error)}`;
       console.error(message);
       response = new Error(message);
     }
