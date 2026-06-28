@@ -17,8 +17,21 @@ describe('LibraryView', () => {
   const libraryServiceMock = jasmine.createSpyObj<LibraryService>(
     'LibraryService',
     [
+      'getAllBooks',
+      'getOneBook',
+      'deleteBook',
       'getAllGameBooks',
       'getAllFictionBooks',
+      'getGameSystems',
+      'getBookTypes',
+      'searchAuthors',
+      'searchPublishers',
+      'setAuthors',
+      'setPublishers',
+      'setGameSystem',
+      'setBookType',
+      'setDonation',
+      'saveBook',
       'createGameBook',
       'createFictionBook',
       'updateGameBook',
@@ -42,6 +55,9 @@ describe('LibraryView', () => {
   );
 
   beforeEach(async () => {
+    libraryServiceMock.getAllBooks.and.returnValue(
+      of(new Page<GameBook>())
+    );
     libraryServiceMock.getAllGameBooks.and.returnValue(
       of(new Page<GameBook>())
     );
