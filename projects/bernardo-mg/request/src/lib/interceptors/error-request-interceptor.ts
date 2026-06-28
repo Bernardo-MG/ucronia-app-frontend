@@ -29,7 +29,7 @@ export class ErrorRequestInterceptor {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong.
-      const message = `Backend returned code ${error.status}, with body: ${error.error}`;
+      const message = `Backend returned code ${error.status}, with body: ${JSON.stringify(error.error)}`;
       console.error(message);
       response = new Error(message);
     }
