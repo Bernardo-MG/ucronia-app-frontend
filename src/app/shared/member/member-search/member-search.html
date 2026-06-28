@@ -1,6 +1,6 @@
 <p-inputgroup>
   <p-inputgroup-addon>
-    <i class="pi pi-user"></i>
+    <i class="pi pi-search"></i>
   </p-inputgroup-addon>
   <p-autocomplete name="memberSearch" [ngModel]="member()" [suggestions]="members()" optionLabel="name.fullName" dataKey="number"
     [forceSelection]="true" placeholder="Buscar socio..." (completeMethod)="searchMember.emit({ query: $event.query })"
