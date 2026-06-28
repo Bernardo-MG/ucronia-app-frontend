@@ -30,7 +30,7 @@ export class SelectionListForm {
 
   public readonly formStatus;
 
-  public searchValue: NameNumber | undefined;
+  public searchValue: NameNumber = { name: '', number: 0 };
   public searchResults: NameNumber[] = [];
 
   public get rows(): NameNumber[] {
@@ -55,7 +55,7 @@ export class SelectionListForm {
       this.form.markAsDirty();
     }
 
-    this.searchValue = undefined;
+    this.searchValue = { name: '', number: 0 };
     this.searchResults = [];
   }
 
