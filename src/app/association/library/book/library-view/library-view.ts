@@ -2,8 +2,8 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { SelectionListForm } from '@app/shared/data/selection-list-form/selection-list-form';
 import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
+import { SelectionListForm } from '@app/shared/data/selection-list-form/selection-list-form';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
@@ -277,71 +277,66 @@ export class LibraryView implements OnInit {
   }
 
   public onSetAuthors(authors: Author[]) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: authors.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        authors: authors.map(a => a.number)
-      };
+    let update: any = {
+      ...this.selectedData,
+      publishers: this.selectedData.publishers.map(p => p.number),
+      authors: authors.map(a => a.number)
+    };
+
+    if ('bookType' in this.selectedData) {
+      update.bookType = this.selectedData.bookType?.number;
+      update.gameSystem = this.selectedData.gameSystem?.number;
     }
-    this.onUpdate(updateDate as BookUpdate);
+
+    this.onUpdate(update as BookUpdate);
   }
 
   public onSetPublishers(publishers: Publisher[]) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
+    let update: any = {
+      ...this.selectedData,
         authors: this.selectedData.authors.map(a => a.number),
         publishers: publishers.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        authors: this.selectedData.authors.map(a => a.number),
-        publishers: publishers.map(a => a.number)
-      };
+    };
+
+    if ('bookType' in this.selectedData) {
+      update.bookType = this.selectedData.bookType?.number;
+      update.gameSystem = this.selectedData.gameSystem?.number;
     }
-    this.onUpdate(updateDate as BookUpdate);
+    this.onUpdate(update as BookUpdate);
   }
 
   public onSetGameSystem(gameSystem: GameSystem) {
-    const updateDate = {
+    let update: any = {
       ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      bookType: (this.selectedData as GameBook).bookType?.number,
       authors: this.selectedData.authors.map(a => a.number),
+      publishers: this.selectedData.publishers.map(p => p.number),
       gameSystem: gameSystem.number
     };
-    this.onUpdate(updateDate as BookUpdate);
+
+    if ('bookType' in this.selectedData) {
+      update.bookType = this.selectedData.bookType?.number;
+    }
+    this.onUpdate(update as BookUpdate);
   }
 
   public onSetBookType(bookType: BookType) {
-    const updateDate = {
+    let update: any = {
       ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      gameSystem: (this.selectedData as GameBook).gameSystem?.number,
       authors: this.selectedData.authors.map(a => a.number),
+      publishers: this.selectedData.publishers.map(p => p.number),
       bookType: bookType.number
     };
-    this.onUpdate(updateDate as BookUpdate);
+
+    if ('bookType' in this.selectedData) {
+      update.gameSystem = this.selectedData.gameSystem?.number;
+    }
+    this.onUpdate(update as BookUpdate);
   }
 
   public onSetDonation(donation: Donation | undefined) {
-    let updateDate;
+    let update;
     if (this.selectedData instanceof GameBook) {
-      updateDate = {
+      update = {
         ...this.selectedData,
         publishers: this.selectedData.publishers.map(p => p.number),
         bookType: this.selectedData.bookType?.number,
@@ -350,20 +345,20 @@ export class LibraryView implements OnInit {
         donation: donation
       };
     } else {
-      updateDate = {
+      update = {
         ...this.selectedData,
         publishers: this.selectedData.publishers.map(p => p.number),
         authors: this.selectedData.authors.map(a => a.number),
         donation: donation
       };
     }
-    this.onUpdate(updateDate as BookUpdate);
+    this.onUpdate(update as BookUpdate);
   }
 
   public onSaveBook(book: FictionBook | GameBook) {
-    let updateDate;
+    let update;
     if (book instanceof GameBook) {
-      updateDate = {
+      update = {
         ...book,
         publishers: book.publishers.map(p => p.number),
         bookType: book.bookType?.number,
@@ -371,13 +366,13 @@ export class LibraryView implements OnInit {
         authors: book.authors.map(a => a.number)
       };
     } else {
-      updateDate = {
+      update = {
         ...book,
         publishers: book.publishers.map(p => p.number),
         authors: book.authors.map(a => a.number)
       };
     }
-    this.onUpdate(updateDate as BookUpdate);
+    this.onUpdate(update as BookUpdate);
   }
 
   public onFilter(filter: string) {
