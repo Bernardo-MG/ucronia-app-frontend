@@ -136,8 +136,7 @@
           Sistemas
         </ng-template>
         <div class="w-full p-4">
-          <shared-form-with-selection [data]="getGameSystem(selectedData)"
-            [getSelection]="service.getGameSystems.bind(service)" fieldLabel="Sistema"
+          <shared-form-with-selection [data]="getGameSystem(selectedData)" [getSelection]="service.getGameSystems.bind(service)"
             placeholder="Seleccione un sistema" (save)="onSetGameSystem($event)" />
         </div>
         <ng-template #footer>
@@ -151,8 +150,7 @@
         </ng-template>
         <div class="w-full p-4">
           <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
-            fieldLabel="Tipo" placeholder="Seleccione un tipo"
-            (save)="onSetBookType($event)" />
+            placeholder="Seleccione un tipo" (save)="onSetBookType($event)" />
         </div>
         <ng-template #footer>
           <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />

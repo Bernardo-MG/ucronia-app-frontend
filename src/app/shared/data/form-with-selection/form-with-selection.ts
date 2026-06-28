@@ -20,7 +20,6 @@ export class FormWithSelection implements OnInit {
   }
 
   public readonly getSelection = input<(page: number) => Observable<Page<NameNumber>>>((page: number) => of(new Page<NameNumber>()));
-  public readonly fieldLabel = input('Tipo');
   public readonly placeholder = input('Seleccione una opción');
 
   public readonly save = output<NameNumber>();
