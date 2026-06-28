@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookLent, BookReturned, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from '../model/library-summary';
 import { MessageService } from 'primeng/api';
@@ -111,6 +111,55 @@ export class LibraryService {
           });
         })
       );
+  }
+
+  public setAuthors(book: FictionBook | GameBook, authors: Author[]): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      authors: authors.map(author => author.number)
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setPublishers(book: FictionBook | GameBook, publishers: Publisher[]): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      publishers: publishers.map(publisher => publisher.number)
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setGameSystem(book: FictionBook | GameBook, gameSystem: GameSystem): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      gameSystem: gameSystem.number
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setBookType(book: FictionBook | GameBook, bookType: BookType): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      bookType: bookType.number
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setDonation(book: FictionBook | GameBook, donation: Donation | undefined): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      donation: donation
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public saveBook(book: FictionBook | GameBook): Observable<FictionBook | GameBook> {
+    return this.updateBook(book, this.buildBookUpdate(book));
   }
 
   public getOneFictionBook(number: number): Observable<FictionBook> {
@@ -299,6 +348,33 @@ export class LibraryService {
           }
         })
       )
+  }
+
+  private updateBook(book: FictionBook | GameBook, update: BookUpdate | GameBookUpdate): Observable<FictionBook | GameBook> {
+    if (this.isGameBook(book)) {
+      return this.updateGameBook(book.number, update as GameBookUpdate);
+    }
+
+    return this.updateFictionBook(book.number, update as BookUpdate);
+  }
+
+  private buildBookUpdate(book: FictionBook | GameBook): BookUpdate | GameBookUpdate {
+    const update: any = {
+      ...book,
+      authors: book.authors.map(author => author.number),
+      publishers: book.publishers.map(publisher => publisher.number)
+    };
+
+    if (this.isGameBook(book)) {
+      update.bookType = book.bookType?.number;
+      update.gameSystem = book.gameSystem?.number;
+    }
+
+    return update as BookUpdate | GameBookUpdate;
+  }
+
+  private isGameBook(book: FictionBook | GameBook): book is GameBook {
+    return 'bookType' in book || 'gameSystem' in book;
   }
 
 }

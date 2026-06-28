@@ -7,7 +7,6 @@ import { SelectionListForm } from '@app/shared/data/selection-list-form/selectio
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
-import { BookUpdate } from '@ucronia/api';
 import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -81,7 +80,6 @@ export class LibraryView implements OnInit {
   private sort = new Sorting();
 
   private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
-  private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
   private read: (page: number | undefined, sort: Sorting, title: string | undefined) => Observable<Page<FictionBook | GameBook>> = (page, sort, title) => EMPTY;
   private readOne: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
 
@@ -110,7 +108,6 @@ export class LibraryView implements OnInit {
 
     // Initial operations
     this.delete = this.service.deleteGameBook.bind(this.service);
-    this.update = this.service.updateGameBook.bind(this.service);
     this.read = this.service.getAllGameBooks.bind(this.service);
 
     // Load data menu
@@ -169,16 +166,6 @@ export class LibraryView implements OnInit {
           return this.service.createFictionBook(toCreate.book);
         }
       },
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
-  }
-
-  private onUpdate(toSave: BookUpdate) {
-    this.call(
-      () => this.update(toSave.number, toSave),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -248,12 +235,10 @@ export class LibraryView implements OnInit {
     this.source = event.value as BookSelection;
     if (this.source === BookSelection.GAME) {
       this.delete = this.service.deleteGameBook.bind(this.service);
-      this.update = this.service.updateGameBook.bind(this.service);
       this.read = this.service.getAllGameBooks.bind(this.service);
       this.readOne = this.service.getOneGameBook.bind(this.service);
     } else {
       this.delete = this.service.deleteFictionBook.bind(this.service);
-      this.update = this.service.updateFictionBook.bind(this.service);
       this.read = this.service.getAllFictionBooks.bind(this.service);
       this.readOne = this.service.getOneFictionBook.bind(this.service);
     }
@@ -288,89 +273,63 @@ export class LibraryView implements OnInit {
   }
 
   public onSetAuthors(authors: Author[]) {
-    let update: any = {
-      ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      authors: authors.map(a => a.number)
-    };
-
-    if ('bookType' in this.selectedData) {
-      update.bookType = this.selectedData.bookType?.number;
-      update.gameSystem = this.selectedData.gameSystem?.number;
-    }
-
-    this.onUpdate(update as BookUpdate);
+    this.call(
+      () => this.service.setAuthors(this.selectedData, authors),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetPublishers(publishers: Publisher[]) {
-    let update: any = {
-      ...this.selectedData,
-      authors: this.selectedData.authors.map(a => a.number),
-      publishers: publishers.map(a => a.number)
-    };
-
-    if ('bookType' in this.selectedData) {
-      update.bookType = this.selectedData.bookType?.number;
-      update.gameSystem = this.selectedData.gameSystem?.number;
-    }
-    this.onUpdate(update as BookUpdate);
+    this.call(
+      () => this.service.setPublishers(this.selectedData, publishers),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetGameSystem(gameSystem: GameSystem) {
-    let update: any = {
-      ...this.selectedData,
-      authors: this.selectedData.authors.map(a => a.number),
-      publishers: this.selectedData.publishers.map(p => p.number),
-      gameSystem: gameSystem.number
-    };
-
-    if ('bookType' in this.selectedData) {
-      update.bookType = this.selectedData.bookType?.number;
-    }
-    this.onUpdate(update as BookUpdate);
+    this.call(
+      () => this.service.setGameSystem(this.selectedData, gameSystem),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetBookType(bookType: BookType) {
-    let update: any = {
-      ...this.selectedData,
-      authors: this.selectedData.authors.map(a => a.number),
-      publishers: this.selectedData.publishers.map(p => p.number),
-      bookType: bookType.number
-    };
-
-    if ('bookType' in this.selectedData) {
-      update.gameSystem = this.selectedData.gameSystem?.number;
-    }
-    this.onUpdate(update as BookUpdate);
+    this.call(
+      () => this.service.setBookType(this.selectedData, bookType),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetDonation(donation: Donation | undefined) {
-    let update: any = {
-      ...this.selectedData,
-      authors: this.selectedData.authors.map(a => a.number),
-      publishers: this.selectedData.publishers.map(p => p.number),
-      donation: donation
-    };
-
-    if ('bookType' in this.selectedData) {
-      update.bookType = this.selectedData.bookType?.number;
-      update.gameSystem = this.selectedData.gameSystem?.number;
-    }
-    this.onUpdate(update as BookUpdate);
+    this.call(
+      () => this.service.setDonation(this.selectedData, donation),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSaveBook(book: FictionBook | GameBook) {
-    let update: any = {
-      ...book,
-      publishers: book.publishers.map(p => p.number),
-      authors: book.authors.map(a => a.number)
-    };
-
-    if ('bookType' in book) {
-      update.bookType = book.bookType?.number;
-      update.gameSystem = book.gameSystem?.number;
-    }
-    this.onUpdate(update as BookUpdate);
+    this.call(
+      () => this.service.saveBook(book),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onFilter(filter: string) {
