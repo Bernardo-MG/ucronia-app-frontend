@@ -18,12 +18,14 @@
   </ng-template>
   <ng-template #body let-activity>
     <tr>
-      @for (date of activity.dates; track date) {
-        <div>
-          {{ date.start | date:'yyyy-MM-dd' }}
-          ({{ date.start | date:'HH:mm' }} - {{ date.end | date:'HH:mm' }})
-        </div>
-      }
+      <td>
+        @for (date of activity.dates; track date) {
+          <div>
+            {{ date.start | date:'yyyy-MM-dd' }}
+            ({{ date.start | date:'HH:mm' }} - {{ date.end | date:'HH:mm' }})
+          </div>
+        }
+      </td>
       <td>{{ activity.title }}</td>
       <td class="w-40">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(activity)" rounded text />
