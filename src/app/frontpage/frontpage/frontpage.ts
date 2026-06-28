@@ -1,11 +1,11 @@
 
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivityCarousel } from '@app/shared/activity/activity-carousel/activity-carousel';
+import { ActivityCarousel } from '@app/frontpage/activity-carousel/activity-carousel';
+import { Page } from '@bernardo-mg/request';
 import { GoogleMaps, TeamupCalendar } from '@bernardo-mg/ui';
 import { Activity, PublicSettings } from '@ucronia/domain';
-import { FrontpageService } from '../frontpage-service';
-import { Page } from '@bernardo-mg/request';
 import { finalize } from 'rxjs';
+import { FrontpageService } from '../frontpage-service';
 
 @Component({
   selector: 'app-frontpage-frontpage',
