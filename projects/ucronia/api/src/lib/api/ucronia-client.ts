@@ -10,6 +10,7 @@ import { MemberEndpoint } from './endpoint/member-endpoint';
 import { MyFeesEndpoint } from './endpoint/my-fees-endpoint';
 import { ProfileEndpoint } from './endpoint/profile-endpoint';
 import { PublicMemberEndpoint } from './endpoint/public-member-endpoint';
+import { ScheduledGameEndpoint } from './endpoint/scheduled-game-endpoint';
 import { SettingEndpoint } from './endpoint/setting-endpoint';
 import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
@@ -67,6 +68,10 @@ export class UcroniaClient {
 
   public get activity() {
     return new ActivityEndpoint(this.http, this.base_url);
+  }
+
+  public get scheduledGame() {
+    return new ScheduledGameEndpoint(this.http, this.base_url);
   }
 
   public get setting() {
