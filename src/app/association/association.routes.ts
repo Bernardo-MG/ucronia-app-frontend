@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { activityRoutes } from './activities/activity.routes';
+import { scheduledGameRoutes } from './activities/scheduled-game.routes';
 import { directoryRoutes } from './directory/directory.routes';
 import { feesRoutes } from './fees/fees.routes';
 import { fundsRoutes } from './funds/funds.routes';
@@ -10,6 +11,7 @@ import { myFeesRoutes } from './my-fees/my-fees.routes';
 
 export const associationRoutes: Routes = [
   ...activityRoutes,
+  ...scheduledGameRoutes,
   ...membersRoutes,
   ...myFeesRoutes,
   ...libraryRoutes,

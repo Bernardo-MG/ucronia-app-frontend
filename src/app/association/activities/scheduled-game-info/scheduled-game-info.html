@@ -1,0 +1,35 @@
+<div class="ms-3 space-y-5">
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-tag" name="Titulo" [value]="data().title" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-file-edit" name="Descripcion" [value]="data().description" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-map-marker" name="Lugar" [value]="data().location" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Plazas" [value]="data().maxPlayers" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-image" name="Imagen" [value]="data().image" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-clock" name="Inicio" [value]="data().start | date:'yyyy-MM-dd HH:mm'" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Recurrencia" [value]="(data().recurrence.interval || 0) + ' ' + (data().recurrence.unit || '-')" />
+  </div>
+
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Director" [value]="(data().master.firstName || '') + ' ' + (data().master.lastName || '')" />
+  </div>
+
+</div>

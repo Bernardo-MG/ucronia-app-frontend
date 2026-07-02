@@ -119,6 +119,14 @@ export class AssociationLayout {
           icon: 'pi pi-calendar'
         });
     }
+    if (authService.hasPermission('scheduled_game', 'view')) {
+      items.push(
+        {
+          label: 'Partidas programadas',
+          routerLink: '/association/scheduled-games',
+          icon: 'pi pi-clock'
+        });
+    }
 
     return items;
   }

@@ -4,6 +4,7 @@
 
 export * from './lib/api/sorting-param-merger';
 export * from './lib/api/ucronia-client';
+export * from './lib/calendar/scheduled-game-edition';
 export * from './lib/fees/fee-calendar-selection';
 export * from './lib/fees/fee-creation';
 export * from './lib/fees/fee-update';
