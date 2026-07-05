@@ -52,8 +52,10 @@ export class ScheduledGameForm implements OnChanges {
       image: [''],
       day: [null, Validators.required],
       startHour: [null, Validators.required],
-      recurrenceInterval: [0, [Validators.required, Validators.min(0)]],
-      recurrenceUnit: [RecurrenceUnit.WEEKLY, Validators.required],
+      recurrence: this.fb.group({
+        interval: [0, [Validators.required, Validators.min(0)]],
+        unit: [RecurrenceUnit.WEEKLY, Validators.required]
+      }),
       master: [null]
     });
 

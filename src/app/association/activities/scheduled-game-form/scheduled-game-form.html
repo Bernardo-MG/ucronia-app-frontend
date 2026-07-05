@@ -70,13 +70,15 @@
     <label for="startHourInput">Hora de inicio</label>
   </p-floatlabel>
 
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="number" id="recurrenceIntervalInput" formControlName="recurrenceInterval" [invalid]="isFieldInvalid('recurrenceInterval')" class="w-full min-w-0" />
-    <label for="recurrenceIntervalInput">Intervalo de recurrencia</label>
-  </p-floatlabel>
+  <div formGroupName="recurrence">
+    <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+      <input pInputText type="number" id="recurrenceIntervalInput" formControlName="interval" [invalid]="isFieldInvalid('recurrence.interval')" class="w-full min-w-0" />
+      <label for="recurrenceIntervalInput">Intervalo de recurrencia</label>
+    </p-floatlabel>
 
-  <div class="mb-3 w-full min-w-0">
-    <p-select id="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value" formControlName="recurrenceUnit" placeholder="Unidad de recurrencia" appendTo="body" class="w-full" [invalid]="isFieldInvalid('recurrenceUnit')" />
+    <div class="mb-3 w-full min-w-0">
+      <p-select id="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value" formControlName="unit" placeholder="Unidad de recurrencia" appendTo="body" class="w-full" [invalid]="isFieldInvalid('recurrence.unit')" />
+    </div>
   </div>
 
   <div class="flex flex-col gap-2 mb-3">
