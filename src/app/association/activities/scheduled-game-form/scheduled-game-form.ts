@@ -50,8 +50,7 @@ export class ScheduledGameForm implements OnChanges {
       location: [''],
       maxPlayers: [0, [Validators.required, Validators.min(1)]],
       image: [''],
-      day: [null, Validators.required],
-      startHour: [null, Validators.required],
+      start: [null, Validators.required],
       recurrence: this.fb.group({
         interval: [0, [Validators.required, Validators.min(0)]],
         unit: [RecurrenceUnit.WEEKLY, Validators.required]
@@ -83,11 +82,7 @@ export class ScheduledGameForm implements OnChanges {
       return;
     }
 
-    this.form.get('master')?.setValue({
-      number: member.number,
-      firstName: member.name.firstName,
-      lastName: member.name.lastName
-    });
+    this.form.get('master')?.setValue(member);
   }
 
   public isFieldInvalid(property: string): boolean {

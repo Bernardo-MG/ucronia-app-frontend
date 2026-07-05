@@ -61,13 +61,8 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2">
-    <p-datepicker id="dayInput" formControlName="day" dateFormat="yy-mm-dd" appendTo="body" class="w-full" />
-    <label for="dayInput">Dia</label>
-  </p-floatlabel>
-
-  <p-floatlabel variant="in" class="mb-2">
-    <p-datepicker id="startHourInput" formControlName="startHour" [timeOnly]="true" appendTo="body" class="w-full" />
-    <label for="startHourInput">Hora de inicio</label>
+    <p-datepicker id="startInput" formControlName="start" [showTime]="true" dateFormat="yy-mm-dd" appendTo="body" class="w-full" />
+    <label for="startInput">Fecha de inicio</label>
   </p-floatlabel>
 
   <div formGroupName="recurrence">
