@@ -38,7 +38,8 @@
         Crear partida programada
       </ng-template>
       <div class="w-full">
-        <assoc-scheduled-game-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-scheduled-game-form [loading]="status.loading" [failures]="failures" [members]="members"
+          (save)="onCreate($event)" (searchMember)="onSearchMembers($event)" />
       </div>
     }
 
@@ -47,8 +48,8 @@
         Editar partida programada
       </ng-template>
       <div class="w-full">
-        <assoc-scheduled-game-form [loading]="status.loading" [data]="selectedData"
-          [failures]="failures" (save)="onUpdate($event)" />
+        <assoc-scheduled-game-form [loading]="status.loading" [data]="selectedData" [members]="members"
+          [failures]="failures" (save)="onUpdate($event)" (searchMember)="onSearchMembers($event)" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />

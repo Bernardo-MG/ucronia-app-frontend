@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { ScheduledGame } from '@ucronia/domain';
+import { MemberStatus, PublicMember, ScheduledGame } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +91,19 @@ export class ScheduledGameService {
 
   public getOne(index: number): Observable<ScheduledGame> {
     return this.ucroniaClient.scheduledGame.get(index);
+  }
+
+  public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
+    const sorting = new Sorting(
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, status, query)
+      .pipe(map(page => page.content as PublicMember[]));
   }
 
 }

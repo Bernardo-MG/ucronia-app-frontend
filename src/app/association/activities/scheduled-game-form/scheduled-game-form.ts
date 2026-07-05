@@ -1,8 +1,9 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
+import { PublicMember, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -12,16 +13,26 @@ import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'assoc-scheduled-game-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, SelectModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, SelectModule, MemberSearch],
   templateUrl: './scheduled-game-form.html'
 })
 export class ScheduledGameForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
+  public readonly members = input<PublicMember[]>([]);
   private readonly fb = inject(FormBuilder);
 
   @Input() public set data(value: ScheduledGame) {
+    this.selectedMaster = {
+      number: value.master.number,
+      name: {
+        fullName: `${value.master.firstName} ${value.master.lastName}`.trim(),
+        firstName: value.master.firstName,
+        lastName: value.master.lastName
+      }
+    };
+
     this.form.patchValue({
       number: value.number,
       title: value.title,
@@ -38,9 +49,11 @@ export class ScheduledGameForm implements OnChanges {
   }
 
   public readonly save = output<ScheduledGame>();
+  public readonly searchMember = output<MemberSearchEvent>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
+  public selectedMaster = new PublicMember();
 
   public readonly recurrenceUnits = [
     { name: 'Diaria', value: RecurrenceUnit.DAILY },
@@ -97,6 +110,19 @@ export class ScheduledGameForm implements OnChanges {
         lastName: ''
       },
       published: false
+    });
+  }
+
+  public onSelectMember(member: PublicMember): void {
+    if (!member) {
+      return;
+    }
+
+    this.selectedMaster = member;
+    this.form.get('master')?.setValue({
+      number: member.number,
+      firstName: member.name.firstName,
+      lastName: member.name.lastName
     });
   }
 

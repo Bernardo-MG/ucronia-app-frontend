@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { ScheduledGame } from '@ucronia/domain';
+import { PublicMember, ScheduledGame } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -29,6 +29,7 @@ export class ScheduledGameView implements OnInit {
   };
 
   public scheduledGames = new Page<ScheduledGame>();
+  public members: PublicMember[] = [];
   private sort = new Sorting();
   public selectedData = new ScheduledGame();
 
@@ -114,6 +115,13 @@ export class ScheduledGameView implements OnInit {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
+  }
+
+  public onSearchMembers(event: { query: string }) {
+    this.service.searchMembers(event.query?.trim())
+      .subscribe(members => {
+        this.members = members;
+      });
   }
 
   private call(
