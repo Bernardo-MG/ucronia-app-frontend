@@ -18,34 +18,15 @@ import { SelectModule } from 'primeng/select';
 })
 export class ScheduledGameForm implements OnChanges {
 
+  private readonly fb = inject(FormBuilder);
+
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly members = input<PublicMember[]>([]);
-  private readonly fb = inject(FormBuilder);
 
   @Input() public set data(value: ScheduledGame) {
-    this.selectedMaster = {
-      number: value.master.number,
-      name: {
-        fullName: `${value.master.firstName} ${value.master.lastName}`.trim(),
-        firstName: value.master.firstName,
-        lastName: value.master.lastName
-      }
-    };
-
-    this.form.patchValue({
-      number: value.number,
-      title: value.title,
-      description: value.description,
-      location: value.location,
-      maxPlayers: value.maxPlayers,
-      image: value.image,
-      day: value.start ?? null,
-      startHour: value.start ?? null,
-      recurrenceInterval: value.recurrence.interval,
-      recurrenceUnit: value.recurrence.unit,
-      master: value.master
-    });
+    this.selectedMaster = value.master;
+    this.form.patchValue(value as any);
   }
 
   public readonly save = output<ScheduledGame>();
@@ -92,25 +73,7 @@ export class ScheduledGameForm implements OnChanges {
 
     const value = this.form.value;
 
-    this.save.emit({
-      number: value.number ?? 0,
-      title: value.title,
-      description: value.description ?? '',
-      location: value.location ?? '',
-      maxPlayers: Number(value.maxPlayers ?? 0),
-      image: value.image ?? '',
-      start: this.mergeDayAndTime(value.day, value.startHour),
-      recurrence: {
-        interval: Number(value.recurrenceInterval ?? 0),
-        unit: value.recurrenceUnit
-      },
-      master: value.master ?? {
-        number: 0,
-        firstName: '',
-        lastName: ''
-      },
-      published: false
-    });
+    this.save.emit(this.form.value);
   }
 
   public onSelectMember(member: PublicMember): void {
@@ -118,18 +81,11 @@ export class ScheduledGameForm implements OnChanges {
       return;
     }
 
-    this.selectedMaster = member;
     this.form.get('master')?.setValue({
       number: member.number,
       firstName: member.name.firstName,
       lastName: member.name.lastName
     });
-  }
-
-  private mergeDayAndTime(day: Date, time: Date): Date {
-    const result = new Date(day);
-    result.setHours(time.getHours(), time.getMinutes(), 0, 0);
-    return result;
   }
 
   public isFieldInvalid(property: string): boolean {

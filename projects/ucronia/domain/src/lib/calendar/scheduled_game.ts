@@ -1,3 +1,4 @@
+import { ProfileName } from "../profile/profile";
 
 export class ScheduledGame {
   public number = 0;
@@ -14,8 +15,7 @@ export class ScheduledGame {
 
 export class ScheduledGameMember {
   public number = 0;
-  public firstName = "";
-  public lastName = "";
+  public name = new ProfileName();
 }
 
 export class Recurrence {
