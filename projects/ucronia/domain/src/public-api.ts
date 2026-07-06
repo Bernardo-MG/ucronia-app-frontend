@@ -13,7 +13,6 @@ export * from './lib/fees/years-range';
 export * from './lib/guests/guest';
 export * from './lib/library/author';
 export * from './lib/library/book-lending';
-export * from './lib/library/book-lent';
 export * from './lib/library/book-returned';
 export * from './lib/library/book-type';
 export * from './lib/library/donation';
