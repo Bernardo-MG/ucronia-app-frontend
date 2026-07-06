@@ -21,11 +21,13 @@
   </div>
 
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-clock" name="Inicio" [value]="data().start | date:'yyyy-MM-dd HH:mm'" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-clock" name="Inicio"
+      [value]="data().start | date:'yyyy-MM-dd HH:mm'" />
   </div>
 
   <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Recurrencia" [value]="(data().recurrence.interval || 0) + ' ' + (data().recurrence.unit || '-')" />
+    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Recurrencia"
+      [value]="(data().recurrence.interval || 0) + ' ' + (data().recurrence.unit || '-')" />
   </div>
 
   <div>

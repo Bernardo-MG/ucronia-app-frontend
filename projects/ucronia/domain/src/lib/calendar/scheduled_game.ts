@@ -1,4 +1,3 @@
-import { ProfileName } from "../profile/profile";
 
 export class ScheduledGame {
   public number = 0;

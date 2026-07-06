@@ -1,7 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
 
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="titleInput" formControlName="title" [invalid]="isFieldInvalid('title')" maxlength="100" class="w-full min-w-0" />
+    <input pInputText type="text" id="titleInput" formControlName="title" [invalid]="isFieldInvalid('title')"
+      maxlength="100" class="w-full min-w-0" />
     <label for="titleInput">Titulo</label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
@@ -13,7 +14,8 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="descriptionInput" formControlName="description" [invalid]="isFieldInvalid('description')" maxlength="200" class="w-full min-w-0" />
+    <input pInputText type="text" id="descriptionInput" formControlName="description"
+      [invalid]="isFieldInvalid('description')" maxlength="200" class="w-full min-w-0" />
     <label for="descriptionInput">Descripcion</label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
@@ -25,7 +27,8 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="locationInput" formControlName="location" [invalid]="isFieldInvalid('location')" maxlength="200" class="w-full min-w-0" />
+    <input pInputText type="text" id="locationInput" formControlName="location" [invalid]="isFieldInvalid('location')"
+      maxlength="200" class="w-full min-w-0" />
     <label for="locationInput">Lugar</label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
@@ -37,7 +40,8 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="number" min="1" max="100" id="maxPlayersInput" formControlName="maxPlayers" [invalid]="isFieldInvalid('maxPlayers')" class="w-full min-w-0" />
+    <input pInputText type="number" min="1" max="100" id="maxPlayersInput" formControlName="maxPlayers"
+      [invalid]="isFieldInvalid('maxPlayers')" class="w-full min-w-0" />
     <label for="maxPlayersInput">Plazas maximas</label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
@@ -49,7 +53,8 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="imageInput" formControlName="image" [invalid]="isFieldInvalid('image')" maxlength="200" class="w-full min-w-0" />
+    <input pInputText type="text" id="imageInput" formControlName="image" [invalid]="isFieldInvalid('image')"
+      maxlength="200" class="w-full min-w-0" />
     <label for="imageInput">Imagen</label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
@@ -61,18 +66,22 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2">
-    <p-datepicker id="startInput" formControlName="start" [showTime]="true" dateFormat="yy-mm-dd" appendTo="body" class="w-full" />
+    <p-datepicker id="startInput" formControlName="start" [showTime]="true" dateFormat="yy-mm-dd" appendTo="body"
+      class="w-full" />
     <label for="startInput">Fecha de inicio</label>
   </p-floatlabel>
 
   <div formGroupName="recurrence">
     <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-      <input pInputText type="number" min="0" max="365" id="recurrenceIntervalInput" formControlName="interval" [invalid]="isFieldInvalid('recurrence.interval')" class="w-full min-w-0" />
+      <input pInputText type="number" min="0" max="365" id="recurrenceIntervalInput" formControlName="interval"
+        [invalid]="isFieldInvalid('recurrence.interval')" class="w-full min-w-0" />
       <label for="recurrenceIntervalInput">Intervalo de recurrencia</label>
     </p-floatlabel>
 
     <div class="mb-3 w-full min-w-0">
-      <p-select id="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value" formControlName="unit" placeholder="Unidad de recurrencia" appendTo="body" class="w-full" [invalid]="isFieldInvalid('recurrence.unit')" />
+      <p-select id="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value"
+        formControlName="unit" placeholder="Unidad de recurrencia" appendTo="body" class="w-full"
+        [invalid]="isFieldInvalid('recurrence.unit')" />
     </div>
   </div>
 
