@@ -2,12 +2,12 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { PublicMember, ScheduledGame } from '@ucronia/domain';
+import { Profile, PublicMember, ScheduledGame } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, Observable } from 'rxjs';
+import { finalize, map, Observable, switchMap } from 'rxjs';
 import { ScheduledGameForm } from '../scheduled-game-form/scheduled-game-form';
 import { ScheduledGameInfo } from '../scheduled-game-info/scheduled-game-info';
 import { ScheduledGameList } from '../scheduled-game-list/scheduled-game-list';
@@ -32,6 +32,7 @@ export class ScheduledGameView implements OnInit {
   public members: PublicMember[] = [];
   private sort = new Sorting();
   public selectedData = new ScheduledGame();
+  public selectedMaster = new Profile();
 
   public dialog = Dialog.NONE;
 
@@ -100,14 +101,31 @@ export class ScheduledGameView implements OnInit {
   }
 
   public onShowInfo(scheduledGame: ScheduledGame) {
-    this.selectedData = scheduledGame;
     this.dialog = Dialog.INFO;
+
+    this.withLoading(
+      this.service.getOne(scheduledGame.number)
+        .pipe(
+          switchMap((loadedGame) => this.service.getMaster(loadedGame.master)
+            .pipe(
+              map((master) => ({
+                loadedGame,
+                master
+              }))
+            )
+          )
+        )
+    )
+      .subscribe(({ loadedGame, master }) => {
+        this.selectedData = loadedGame;
+        this.selectedMaster = master;
+      });
   }
 
   public load(page: number | undefined = undefined) {
-    this.status.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.status.loading = false))
+    this.withLoading(
+      this.service.getAll(page, this.sort)
+    )
       .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
   }
 
@@ -147,6 +165,16 @@ export class ScheduledGameView implements OnInit {
     } else {
       this.failures.clear();
     }
+  }
+
+  private withLoading<T>(
+    observable: Observable<T>
+  ): Observable<T> {
+    this.status.loading = true;
+
+    return observable.pipe(
+      finalize(() => this.status.loading = false)
+    );
   }
 
 }

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { MemberStatus, PublicMember, ScheduledGame } from '@ucronia/domain';
+import { MemberStatus, Profile, PublicMember, ScheduledGame } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -14,11 +14,7 @@ export class ScheduledGameService {
   private readonly messageService = inject(MessageService);
 
   public create(data: ScheduledGame): Observable<ScheduledGame> {
-    const toCreate = {
-      ...data,
-      master: data.master.number
-    };
-    return this.ucroniaClient.scheduledGame.create(toCreate)
+    return this.ucroniaClient.scheduledGame.create(data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -32,11 +28,7 @@ export class ScheduledGameService {
   }
 
   public update(data: ScheduledGame): Observable<ScheduledGame> {
-    const toUpdate = {
-      ...data,
-      master: data.master.number
-    };
-    return this.ucroniaClient.scheduledGame.update(data.number, toUpdate)
+    return this.ucroniaClient.scheduledGame.update(data.number, data)
       .pipe(
         tap(() => {
           this.messageService.add({
@@ -91,6 +83,10 @@ export class ScheduledGameService {
 
   public getOne(index: number): Observable<ScheduledGame> {
     return this.ucroniaClient.scheduledGame.get(index);
+  }
+
+  public getMaster(number: number): Observable<Profile> {
+    return this.ucroniaClient.profile.get(number);
   }
 
   public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {

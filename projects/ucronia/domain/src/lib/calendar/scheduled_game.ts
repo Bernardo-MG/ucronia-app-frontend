@@ -5,17 +5,12 @@ export class ScheduledGame {
   public title = "";
   public description = "";
   public location = "";
-  public master = new ScheduledGameMember();
+  public master = 0;
   public maxPlayers = 0;
   public image = "";
   public start = new Date();
   public recurrence = new Recurrence();
   public published = false;
-}
-
-export class ScheduledGameMember {
-  public number = 0;
-  public name = new ProfileName();
 }
 
 export class Recurrence {

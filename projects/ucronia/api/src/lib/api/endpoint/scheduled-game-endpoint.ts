@@ -2,7 +2,6 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { ScheduledGame } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
-import { ScheduledGameEdition } from '../../calendar/scheduled-game-edition';
 
 export class ScheduledGameEndpoint {
 
@@ -59,7 +58,7 @@ export class ScheduledGameEndpoint {
   }
 
   public create(
-    data: ScheduledGameEdition
+    data: ScheduledGame
   ): Observable<ScheduledGame> {
     return this.http.post<SimpleResponse<ScheduledGame>>(`${this.apiUrl}/game`, data)
       .pipe(
@@ -71,7 +70,7 @@ export class ScheduledGameEndpoint {
 
   public update(
     index: number,
-    data: ScheduledGameEdition
+    data: ScheduledGame
   ): Observable<ScheduledGame> {
     return this.http.put<SimpleResponse<ScheduledGame>>(`${this.apiUrl}/game/${index}`, data)
       .pipe(

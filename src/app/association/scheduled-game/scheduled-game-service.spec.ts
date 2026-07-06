@@ -20,6 +20,9 @@ describe('ScheduledGameService', () => {
         totalElements: 0,
         totalPages: 0
       }))
+    },
+    profile: {
+      get: jasmine.createSpy().and.returnValue(of({}))
     }
   };
 

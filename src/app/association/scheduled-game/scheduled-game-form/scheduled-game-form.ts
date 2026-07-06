@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { PublicMember, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
+import { Profile, PublicMember, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -23,9 +23,9 @@ export class ScheduledGameForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly members = input<PublicMember[]>([]);
+  public readonly selectedMaster = input(new Profile());
 
   @Input() public set data(value: ScheduledGame) {
-    this.selectedMaster = value.master;
     this.form.patchValue(value as any);
   }
 
@@ -34,7 +34,6 @@ export class ScheduledGameForm implements OnChanges {
 
   public formStatus: FormStatus;
   public form: FormGroup;
-  public selectedMaster = new PublicMember();
 
   public readonly recurrenceUnits = [
     { name: 'Diaria', value: RecurrenceUnit.DAILY },

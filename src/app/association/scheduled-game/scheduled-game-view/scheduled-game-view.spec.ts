@@ -13,7 +13,7 @@ describe('ScheduledGameView', () => {
 
   const scheduledGameServiceMock = jasmine.createSpyObj<ScheduledGameService>(
     'ScheduledGameService',
-    ['create', 'update', 'delete', 'getAll', 'getOne']
+    ['create', 'update', 'delete', 'getAll', 'getOne', 'getMaster']
   );
 
   beforeEach(async () => {

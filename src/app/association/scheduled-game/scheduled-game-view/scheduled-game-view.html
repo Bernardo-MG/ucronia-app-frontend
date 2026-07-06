@@ -23,7 +23,7 @@
         Partida programada
       </ng-template>
       <div class="w-full">
-        <assoc-scheduled-game-info [data]="selectedData" [loading]="status.loading" />
+        <assoc-scheduled-game-info [data]="selectedData" [master]="selectedMaster" [loading]="status.loading" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
@@ -49,7 +49,8 @@
       </ng-template>
       <div class="w-full">
         <assoc-scheduled-game-form [loading]="status.loading" [data]="selectedData" [members]="members"
-          [failures]="failures" (save)="onUpdate($event)" (searchMember)="onSearchMembers($event)" />
+          [selectedMaster]="selectedMaster" [failures]="failures" (save)="onUpdate($event)"
+          (searchMember)="onSearchMembers($event)" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />
