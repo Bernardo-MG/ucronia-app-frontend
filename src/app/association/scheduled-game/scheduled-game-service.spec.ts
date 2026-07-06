@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ScheduledGameService } from './scheduled-game-service';
+import { ScheduledGameService } from '../activities/scheduled-game-service';
 
 describe('ScheduledGameService', () => {
   let service: ScheduledGameService;
