@@ -48,14 +48,16 @@ export class ScheduledGameForm implements OnChanges {
       title: [null, Validators.required],
       description: [''],
       location: [''],
-      maxPlayers: [0, [Validators.required, Validators.min(1)]],
+      maxPlayers: [null, [Validators.required, Validators.min(1)]],
       image: [''],
       start: [null, Validators.required],
       recurrence: this.fb.group({
         interval: [0, [Validators.required, Validators.min(0)]],
         unit: [RecurrenceUnit.WEEKLY, Validators.required]
       }),
-      master: [null]
+      master: this.fb.group({
+        number: [null, Validators.required]
+      }),
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -71,8 +73,6 @@ export class ScheduledGameForm implements OnChanges {
     if (!this.formStatus.saveEnabled) {
       return;
     }
-
-    const value = this.form.value;
 
     this.save.emit(this.form.value);
   }

@@ -37,7 +37,7 @@
   </div>
 
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="number" id="maxPlayersInput" formControlName="maxPlayers" [invalid]="isFieldInvalid('maxPlayers')" class="w-full min-w-0" />
+    <input pInputText type="number" min="1" max="100" id="maxPlayersInput" formControlName="maxPlayers" [invalid]="isFieldInvalid('maxPlayers')" class="w-full min-w-0" />
     <label for="maxPlayersInput">Plazas maximas</label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
@@ -67,7 +67,7 @@
 
   <div formGroupName="recurrence">
     <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-      <input pInputText type="number" id="recurrenceIntervalInput" formControlName="interval" [invalid]="isFieldInvalid('recurrence.interval')" class="w-full min-w-0" />
+      <input pInputText type="number" min="0" max="365" id="recurrenceIntervalInput" formControlName="interval" [invalid]="isFieldInvalid('recurrence.interval')" class="w-full min-w-0" />
       <label for="recurrenceIntervalInput">Intervalo de recurrencia</label>
     </p-floatlabel>
 
