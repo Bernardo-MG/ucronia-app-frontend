@@ -1,0 +1,39 @@
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)">
+  <ng-template #header>
+    <tr class="border-b bg-gray-100">
+      <th pSortableColumn="start">
+        Inicio
+        <p-sortIcon field="start" />
+      </th>
+      <th pSortableColumn="title">
+        Titulo
+        <p-sortIcon field="title" />
+      </th>
+      <th pSortableColumn="location">
+        Lugar
+        <p-sortIcon field="location" />
+      </th>
+      <th pSortableColumn="maxPlayers">
+        Plazas
+        <p-sortIcon field="maxPlayers" />
+      </th>
+      <th>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-scheduledGame>
+    <tr>
+      <td>{{ scheduledGame.start | date:'yyyy-MM-dd HH:mm' }}</td>
+      <td>{{ scheduledGame.title }}</td>
+      <td>{{ scheduledGame.location }}</td>
+      <td>{{ scheduledGame.maxPlayers }}</td>
+      <td class="w-40">
+        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(scheduledGame)" rounded
+          text />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
