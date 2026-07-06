@@ -82,7 +82,7 @@ export class ScheduledGameForm implements OnChanges {
       return;
     }
 
-    this.form.get('master')?.setValue(member);
+    this.form.get('master')?.get('number')?.setValue(member.number);
   }
 
   public isFieldInvalid(property: string): boolean {
