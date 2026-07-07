@@ -6,7 +6,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { BookLent, BookReturned } from '@ucronia/api';
-import { Author, BookLending, BookType, Borrower, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -14,7 +14,7 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { finalize, Observable } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
@@ -46,10 +46,12 @@ export class LibraryView implements OnInit {
   private nameFilter = '';
 
   public selectedData: FictionBook | GameBook = new GameBook();
+  public selectedBorrower = new Profile();
   public members: PublicMember[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
+  public lendingBorrowerNames: Record<number, string> = {};
   public summary = new LibrarySummary();
 
   public source: BookSelection = BookSelection.GAME;
@@ -81,7 +83,11 @@ export class LibraryView implements OnInit {
 
   public Display = Display;
 
-  public get borrower(): Borrower {
+  public get borrower(): number {
+    if (!this.selectedData.lendings.length) {
+      return -1;
+    }
+
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
   }
 
@@ -255,6 +261,25 @@ export class LibraryView implements OnInit {
       return;
     }
 
+    if (event.dialog === Dialog.LENDINGS && event.book.lent) {
+      const borrower = this.borrower;
+
+      if (borrower > 0) {
+        this.withLoading(
+          this.service.getBorrower(borrower)
+        )
+          .subscribe((profile) => {
+            this.selectedBorrower = profile;
+            this.dialog = event.dialog;
+          });
+      } else {
+        this.selectedBorrower = new Profile();
+        this.dialog = event.dialog;
+      }
+
+      return;
+    }
+
     this.dialog = event.dialog;
   }
 
@@ -347,7 +372,17 @@ export class LibraryView implements OnInit {
   public loadLendings(page: number | undefined = undefined) {
     this.withLoading(
       this.lendingsService.getAll(page, new Sorting([]))
-    ).subscribe(response => this.lendings = response);
+        .pipe(
+          switchMap((response) => this.resolveBorrowerNames(response.content)
+            .pipe(
+              map((lendingBorrowerNames) => ({ response, lendingBorrowerNames }))
+            )
+          )
+        )
+    ).subscribe(({ response, lendingBorrowerNames }) => {
+      this.lendings = response;
+      this.lendingBorrowerNames = lendingBorrowerNames;
+    });
   }
 
   // PRIVATE METHODS
@@ -400,6 +435,32 @@ export class LibraryView implements OnInit {
     }
 
     return 'game';
+  }
+
+  private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
+    const borrowerNumbers = [...new Set(lendings.map(lending => lending.borrower).filter(number => number > 0))];
+
+    if (borrowerNumbers.length === 0) {
+      return of({});
+    }
+
+    return forkJoin(
+      borrowerNumbers.map(number =>
+        this.service.getBorrower(number)
+          .pipe(
+            map(profile => ({ number, name: profile.name.fullName })),
+            catchError(() => of({ number, name: `${number}` }))
+          )
+      )
+    )
+      .pipe(
+        map((borrowers) =>
+          borrowers.reduce((accumulator, borrower) => {
+            accumulator[borrower.number] = borrower.name;
+            return accumulator;
+          }, {} as Record<number, string>)
+        )
+      );
   }
 
 }

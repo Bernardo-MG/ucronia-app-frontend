@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { BookReturned } from '@ucronia/api';
-import { Borrower, Fee } from '@ucronia/domain';
+import { Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -22,9 +22,12 @@ export class LibraryBookReturnForm implements OnChanges {
   public readonly lentDate = input(new Date());
   public readonly failures = input(new FailureStore());
 
-  @Input() public set borrower(value: Borrower) {
-    this.form.get('borrower')?.setValue(value.number);
-    this.memberName = value.name.fullName;
+  @Input() public set borrower(value: number) {
+    this.form.get('borrower')?.setValue(value);
+  }
+
+  @Input() public set borrowerName(value: string) {
+    this.memberName = value;
   }
 
   @Input() public set book(value: number) {

@@ -51,7 +51,7 @@
       }
       @case (Display.LENDINGS) {
         <assoc-library-lending-list [loading]="status.loading" [lendings]="lendings.content" [rows]="lendings.size"
-          [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
+          [borrowerNames]="lendingBorrowerNames" [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
           (pageChange)="load($event)" />
       }
     }
@@ -113,6 +113,7 @@
           </ng-template>
           <div class="w-full p-4">
             <assoc-library-book-return-form [loading]="status.loading" [failures]="failures" [borrower]="borrower"
+              [borrowerName]="selectedBorrower.name.fullName"
               [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
           </div>
         } @else {

@@ -357,6 +357,10 @@ export class LibraryService {
       .pipe(map(page => page.content as Donor[]));
   }
 
+  public getBorrower(number: number): Observable<Profile> {
+    return this.ucroniaClient.profile.get(number);
+  }
+
   public getSummary(): Observable<LibrarySummary> {
     return forkJoin({
       games: this.ucroniaClient.library.gameBook.page(undefined, 0),
