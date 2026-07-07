@@ -11,7 +11,7 @@
   },
   "include": [
     "src/**/*.ts"
-, "../api/src/lib/library/book-lent.ts", "../api/src/lib/library/book-returned.ts"  ],
+  ],
   "exclude": [
     "**/*.spec.ts"
   ]
