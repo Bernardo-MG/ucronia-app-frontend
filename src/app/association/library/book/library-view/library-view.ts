@@ -277,11 +277,9 @@ export class LibraryView implements OnInit {
     }
 
     if (event.dialog === Dialog.LENDINGS && event.book.lent) {
-      const borrower = this.borrower;
-
-      if (borrower > 0) {
+      if (this.borrower > 0) {
         this.withLoading(
-          this.service.getBorrower(borrower)
+          this.service.getBorrower(this.borrower)
         )
           .subscribe((profile) => {
             this.selectedBorrower = profile;
