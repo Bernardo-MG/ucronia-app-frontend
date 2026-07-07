@@ -223,10 +223,17 @@ export class LibraryView implements OnInit {
     this.dialog = Dialog.EDIT;
     this.withLoading(
       this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
+        .pipe(
+          switchMap((book) => this.loadSelectedBookBorrowerNames(book.lendings)
+            .pipe(
+              map((borrowerNames) => ({ book, borrowerNames }))
+            )
+          )
+        )
     )
-      .subscribe((book) => {
+      .subscribe(({ book, borrowerNames }) => {
         this.selectedData = book;
-        this.loadSelectedBookBorrowerNames(book.lendings);
+        this.selectedBookBorrowerNames = borrowerNames;
       });
   }
 
@@ -247,7 +254,10 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
-    this.loadSelectedBookBorrowerNames(book.lendings);
+    this.loadSelectedBookBorrowerNames(book.lendings)
+      .subscribe((borrowerNames) => {
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
     this.dialog = Dialog.INFO;
   }
 
@@ -468,11 +478,8 @@ export class LibraryView implements OnInit {
       );
   }
 
-  private loadSelectedBookBorrowerNames(lendings: BookLending[]): void {
-    this.resolveBorrowerNames(lendings)
-      .subscribe((borrowerNames) => {
-        this.selectedBookBorrowerNames = borrowerNames;
-      });
+  private loadSelectedBookBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
+    return this.resolveBorrowerNames(lendings);
   }
 
 }

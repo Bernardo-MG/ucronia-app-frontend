@@ -30,8 +30,8 @@ describe('LibraryBookLendings', () => {
       { book: new LentBook(), borrower: 2, lendingDate: new Date('2024-02-01'), returnDate: new Date('2024-02-10'), days: 9 },
     ];
 
-    component.lendings = lendings;
-    component.borrowerNames = { 1: 'John Doe', 2: 'Jane Smith' };
+    fixture.componentRef.setInput('lendings', lendings);
+    fixture.componentRef.setInput('borrowerNames', { 1: 'John Doe', 2: 'Jane Smith' });
     fixture.detectChanges();
 
     const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
@@ -43,8 +43,8 @@ describe('LibraryBookLendings', () => {
       { book: new LentBook(), borrower: 1, lendingDate: new Date('2024-01-01'), returnDate: new Date('2024-01-05'), days: 4 },
     ];
 
-    component.lendings = lendings;
-    component.borrowerNames = { 1: 'John Doe' };
+    fixture.componentRef.setInput('lendings', lendings);
+    fixture.componentRef.setInput('borrowerNames', { 1: 'John Doe' });
     fixture.detectChanges();
 
     const dates = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
@@ -63,7 +63,7 @@ describe('LibraryBookLendings', () => {
   });
 
   it('should not show anything when there is no data', () => {
-    component.lendings = [];
+    fixture.componentRef.setInput('lendings', []);
     fixture.detectChanges();
 
     const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
