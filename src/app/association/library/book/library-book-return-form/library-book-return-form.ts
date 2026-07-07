@@ -20,13 +20,10 @@ export class LibraryBookReturnForm implements OnChanges {
   public readonly loading = input(false);
   public readonly lentDate = input(new Date());
   public readonly failures = input(new FailureStore());
+  public readonly borrowerName = input('');
 
   @Input() public set borrower(value: number) {
     this.form.get('borrower')?.setValue(value);
-  }
-
-  @Input() public set borrowerName(value: string) {
-    this.memberName = value;
   }
 
   @Input() public set book(value: number) {
