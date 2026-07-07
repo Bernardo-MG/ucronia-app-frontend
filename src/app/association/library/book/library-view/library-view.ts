@@ -52,6 +52,7 @@ export class LibraryView implements OnInit {
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
   public lendingBorrowerNames: Record<number, string> = {};
+  public selectedBookBorrowerNames: Record<number, string> = {};
   public summary = new LibrarySummary();
 
   public source: BookSelection = BookSelection.GAME;
@@ -223,7 +224,10 @@ export class LibraryView implements OnInit {
     this.withLoading(
       this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
     )
-      .subscribe((book) => this.selectedData = book);
+      .subscribe((book) => {
+        this.selectedData = book;
+        this.loadSelectedBookBorrowerNames(book.lendings);
+      });
   }
 
   public onChangeSource(event: SelectButtonChangeEvent) {
@@ -243,6 +247,7 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
+    this.loadSelectedBookBorrowerNames(book.lendings);
     this.dialog = Dialog.INFO;
   }
 
@@ -461,6 +466,13 @@ export class LibraryView implements OnInit {
           }, {} as Record<number, string>)
         )
       );
+  }
+
+  private loadSelectedBookBorrowerNames(lendings: BookLending[]): void {
+    this.resolveBorrowerNames(lendings)
+      .subscribe((borrowerNames) => {
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
   }
 
 }

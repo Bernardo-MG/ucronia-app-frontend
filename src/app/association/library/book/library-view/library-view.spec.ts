@@ -41,7 +41,7 @@ describe('LibraryView', () => {
       'lend',
       'return',
       'getSummary',
-      'getProfile'
+      'getBorrower'
     ]
   );
 
@@ -65,7 +65,7 @@ describe('LibraryView', () => {
     libraryServiceMock.getSummary.and.returnValue(
       of(new LibrarySummary())
     );
-    libraryServiceMock.getProfile.and.returnValue(
+    libraryServiceMock.getBorrower.and.returnValue(
       of(new Profile())
     );
     lendingServiceMock.getAll.and.returnValue(

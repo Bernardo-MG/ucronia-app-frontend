@@ -1,31 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BookLending, LentBook } from '@ucronia/domain';
-import { of } from 'rxjs';
-import { LibraryService } from '../library-service';
 import { LibraryBookLendings } from './library-book-lendings';
 
 describe('LibraryBookLendings', () => {
   let component: LibraryBookLendings;
   let fixture: ComponentFixture<LibraryBookLendings>;
-  let libraryServiceMock: jasmine.SpyObj<LibraryService>;
 
   beforeEach(async () => {
-    libraryServiceMock = jasmine.createSpyObj<LibraryService>(
-      'LibraryService',
-      ['getProfile']
-    );
-
-    libraryServiceMock.getProfile.and.callFake((number: number) =>
-      of({ number, name: { firstName: '', lastName: '', fullName: number === 1 ? 'John Doe' : 'Jane Smith' } } as any)
-    );
-
     await TestBed.configureTestingModule({
       imports: [
         LibraryBookLendings
-      ],
-      providers: [
-        { provide: LibraryService, useValue: libraryServiceMock }
       ]
     })
       .compileComponents();
@@ -46,6 +31,7 @@ describe('LibraryBookLendings', () => {
     ];
 
     component.lendings = lendings;
+    component.borrowerNames = { 1: 'John Doe', 2: 'Jane Smith' };
     fixture.detectChanges();
 
     const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
@@ -58,6 +44,7 @@ describe('LibraryBookLendings', () => {
     ];
 
     component.lendings = lendings;
+    component.borrowerNames = { 1: 'John Doe' };
     fixture.detectChanges();
 
     const dates = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));

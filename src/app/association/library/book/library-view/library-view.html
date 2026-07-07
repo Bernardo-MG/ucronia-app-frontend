@@ -66,7 +66,7 @@
           Libro
         </ng-template>
         <div class="w-full p-4">
-          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" />
+          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
         </div>
       <ng-template #footer>
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
