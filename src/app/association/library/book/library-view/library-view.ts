@@ -224,7 +224,7 @@ export class LibraryView implements OnInit {
     this.withLoading(
       this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
         .pipe(
-          switchMap((book) => this.loadSelectedBookBorrowerNames(book.lendings)
+          switchMap((book) => this.resolveBorrowerNames(book.lendings)
             .pipe(
               map((borrowerNames) => ({ book, borrowerNames }))
             )
@@ -254,7 +254,7 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
-    this.loadSelectedBookBorrowerNames(book.lendings)
+    this.resolveBorrowerNames(book.lendings)
       .subscribe((borrowerNames) => {
         this.selectedBookBorrowerNames = borrowerNames;
       });
@@ -451,7 +451,8 @@ export class LibraryView implements OnInit {
   }
 
   private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
-    const borrowerNumbers = [...new Set(lendings.map(lending => lending.borrower).filter(number => number > 0))];
+    const lendingBorrowers = lendings.map(lending => lending.borrower).filter(number => number > 0);
+    const borrowerNumbers = [...new Set(lendingBorrowers)];
 
     if (borrowerNumbers.length === 0) {
       return of({});
@@ -468,16 +469,12 @@ export class LibraryView implements OnInit {
     )
       .pipe(
         map((borrowers) =>
-          borrowers.reduce((accumulator, borrower) => {
-            accumulator[borrower.number] = borrower.name;
-            return accumulator;
+          borrowers.reduce((names, borrower) => {
+            names[borrower.number] = borrower.name;
+            return names;
           }, {} as Record<number, string>)
         )
       );
-  }
-
-  private loadSelectedBookBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
-    return this.resolveBorrowerNames(lendings);
   }
 
 }
