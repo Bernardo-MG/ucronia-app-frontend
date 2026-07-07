@@ -170,7 +170,7 @@ export class LibraryView implements OnInit {
 
   public onLend(toSave: BookLendingEvent) {
     this.call(
-      () => this.service.lend(toSave),
+      () => this.service.lend(toSave.lendingDate, toSave.borrower, toSave.book),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -180,7 +180,7 @@ export class LibraryView implements OnInit {
 
   public onReturn(toSave: BookReturnedEvent) {
     this.call(
-      () => this.service.return(toSave),
+      () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
       () => {
         this.load(this.data.page);
         this.loadSummary();
