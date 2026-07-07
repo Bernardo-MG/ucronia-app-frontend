@@ -3,7 +3,6 @@ import { Component, Input, OnChanges, SimpleChanges, inject, input, output } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookReturned } from '@ucronia/api';
 import { Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -34,7 +33,7 @@ export class LibraryBookReturnForm implements OnChanges {
     this.form.get('book')?.setValue(value);
   }
 
-  public readonly save = output<BookReturned>();
+  public readonly save = output<BookReturnedEvent>();
 
   public formStatus: FormStatus;
 
@@ -78,4 +77,12 @@ export class LibraryBookReturnForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class BookReturnedEvent {
+  constructor(
+    public returnDate: Date,
+    public borrower: number,
+    public book: number
+  ) { }
 }

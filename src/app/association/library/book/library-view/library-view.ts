@@ -5,7 +5,6 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
-import { BookLent, BookReturned } from '@ucronia/api';
 import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -20,9 +19,9 @@ import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
-import { LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
+import { BookLendingEvent, LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
 import { LibraryBookList } from '../library-book-list/library-book-list';
-import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
+import { BookReturnedEvent, LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
@@ -169,7 +168,7 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onLend(toSave: BookLent) {
+  public onLend(toSave: BookLendingEvent) {
     this.call(
       () => this.service.lend(toSave),
       () => {
@@ -179,7 +178,7 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onReturn(toSave: BookReturned) {
+  public onReturn(toSave: BookReturnedEvent) {
     this.call(
       () => this.service.return(toSave),
       () => {
