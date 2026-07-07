@@ -92,6 +92,7 @@ export class LibraryView implements OnInit {
   }
 
   public get lentDate(): Date {
+    // TODO: handle empty lendings
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
 
