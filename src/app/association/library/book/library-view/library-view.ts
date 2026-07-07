@@ -5,7 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
-import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -13,15 +13,15 @@ import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { finalize, Observable } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
-import { LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
+import { BookLendingEvent, LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
 import { LibraryBookList } from '../library-book-list/library-book-list';
-import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
+import { BookReturnedEvent, LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
@@ -45,10 +45,13 @@ export class LibraryView implements OnInit {
   private nameFilter = '';
 
   public selectedData: FictionBook | GameBook = new GameBook();
+  public selectedBorrower = new Profile();
   public members: PublicMember[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
+  public lendingBorrowerNames: Record<number, string> = {};
+  public selectedBookBorrowerNames: Record<number, string> = {};
   public summary = new LibrarySummary();
 
   public source: BookSelection = BookSelection.GAME;
@@ -80,11 +83,16 @@ export class LibraryView implements OnInit {
 
   public Display = Display;
 
-  public get borrower(): Borrower {
+  public get borrower(): number {
+    if (!this.selectedData.lendings.length) {
+      return -1;
+    }
+
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
   }
 
   public get lentDate(): Date {
+    // TODO: handle empty lendings
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
 
@@ -161,9 +169,9 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onLend(toSave: BookLent) {
+  public onLend(toSave: BookLendingEvent) {
     this.call(
-      () => this.service.lend(toSave),
+      () => this.service.lend(toSave.lendingDate, toSave.borrower, toSave.book),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -171,9 +179,9 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onReturn(toSave: BookReturned) {
+  public onReturn(toSave: BookReturnedEvent) {
     this.call(
-      () => this.service.return(toSave),
+      () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -215,8 +223,18 @@ export class LibraryView implements OnInit {
     this.dialog = Dialog.EDIT;
     this.withLoading(
       this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
+        .pipe(
+          switchMap((book) => this.resolveBorrowerNames(book.lendings)
+            .pipe(
+              map((borrowerNames) => ({ book, borrowerNames }))
+            )
+          )
+        )
     )
-      .subscribe((book) => this.selectedData = book);
+      .subscribe(({ book, borrowerNames }) => {
+        this.selectedData = book;
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
   }
 
   public onChangeSource(event: SelectButtonChangeEvent) {
@@ -236,6 +254,10 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
+    this.resolveBorrowerNames(book.lendings)
+      .subscribe((borrowerNames) => {
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
     this.dialog = Dialog.INFO;
   }
 
@@ -251,6 +273,23 @@ export class LibraryView implements OnInit {
     this.selectedData = event.book;
     if (event.dialog === Dialog.EDIT) {
       this.onShowEdit();
+      return;
+    }
+
+    if (event.dialog === Dialog.LENDINGS && event.book.lent) {
+      if (this.borrower > 0) {
+        this.withLoading(
+          this.service.getBorrower(this.borrower)
+        )
+          .subscribe((profile) => {
+            this.selectedBorrower = profile;
+            this.dialog = event.dialog;
+          });
+      } else {
+        this.selectedBorrower = new Profile();
+        this.dialog = event.dialog;
+      }
+
       return;
     }
 
@@ -346,7 +385,17 @@ export class LibraryView implements OnInit {
   public loadLendings(page: number | undefined = undefined) {
     this.withLoading(
       this.lendingsService.getAll(page, new Sorting([]))
-    ).subscribe(response => this.lendings = response);
+        .pipe(
+          switchMap((response) => this.resolveBorrowerNames(response.content)
+            .pipe(
+              map((lendingBorrowerNames) => ({ response, lendingBorrowerNames }))
+            )
+          )
+        )
+    ).subscribe(({ response, lendingBorrowerNames }) => {
+      this.lendings = response;
+      this.lendingBorrowerNames = lendingBorrowerNames;
+    });
   }
 
   // PRIVATE METHODS
@@ -399,6 +448,33 @@ export class LibraryView implements OnInit {
     }
 
     return 'game';
+  }
+
+  private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
+    const lendingBorrowers = lendings.map(lending => lending.borrower).filter(number => number > 0);
+    const borrowerNumbers = [...new Set(lendingBorrowers)];
+
+    if (borrowerNumbers.length === 0) {
+      return of({});
+    }
+
+    return forkJoin(
+      borrowerNumbers.map(number =>
+        this.service.getBorrower(number)
+          .pipe(
+            map(profile => ({ number, name: profile.name.fullName })),
+            catchError(() => of({ number, name: `${number}` }))
+          )
+      )
+    )
+      .pipe(
+        map((borrowers) =>
+          borrowers.reduce((names, borrower) => {
+            names[borrower.number] = borrower.name;
+            return names;
+          }, {} as Record<number, string>)
+        )
+      );
   }
 
 }

@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { MessageService } from 'primeng/api';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from '../model/library-summary';
-import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: "root"
@@ -303,7 +303,8 @@ export class LibraryService {
     return this.ucroniaClient.profile.page(page, undefined, sorting, undefined);
   }
 
-  public lend(data: BookLent): Observable<BookLending> {
+  public lend(lendingDate: Date, borrower: number, book: number): Observable<BookLending> {
+    const data = { lendingDate, borrower, book };
     return this.ucroniaClient.library.lending.lend(data)
       .pipe(
         tap(() => {
@@ -317,7 +318,8 @@ export class LibraryService {
       );
   }
 
-  public return(data: BookReturned): Observable<BookLending> {
+  public return(returnDate: Date, borrower: number, book: number): Observable<BookLending> {
+    const data = { returnDate, borrower, book };
     return this.ucroniaClient.library.lending.return(data)
       .pipe(
         tap(() => {
@@ -355,6 +357,10 @@ export class LibraryService {
 
     return this.ucroniaClient.profile.page(undefined, 10, sorting, query)
       .pipe(map(page => page.content as Donor[]));
+  }
+
+  public getBorrower(number: number): Observable<Profile> {
+    return this.ucroniaClient.profile.get(number);
   }
 
   public getSummary(): Observable<LibrarySummary> {

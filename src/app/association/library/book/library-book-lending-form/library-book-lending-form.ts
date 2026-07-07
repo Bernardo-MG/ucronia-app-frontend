@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookLent, PublicMember } from '@ucronia/domain';
+import { PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -21,7 +21,7 @@ export class LibraryBookLendingForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly members = input<PublicMember[]>([]);
 
-  public readonly save = output<BookLent>();
+  public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public readonly today = new Date();
@@ -81,4 +81,12 @@ export class LibraryBookLendingForm implements OnChanges {
     this.form.get('borrower')?.setValue(member.number);
   }
 
+}
+
+export class BookLendingEvent {
+  constructor(
+    public lendingDate: Date,
+    public borrower: number,
+    public book: number
+  ) { }
 }

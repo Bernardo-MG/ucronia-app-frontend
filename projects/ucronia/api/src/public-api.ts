@@ -11,6 +11,8 @@ export * from './lib/guests/guest-patch';
 export * from './lib/library/author-creation';
 export * from './lib/library/author-update';
 export * from './lib/library/book-creation';
+export * from './lib/library/book-lent';
+export * from './lib/library/book-returned';
 export * from './lib/library/book-type-creation';
 export * from './lib/library/book-type-update';
 export * from './lib/library/book-update';
