@@ -2,6 +2,7 @@
 export class ScheduledGame {
   public number = 0;
   public title = "";
+  public gameType = ScheduledGameType.ONESHOT;
   public description = "";
   public location = "";
   public master = 0;
@@ -21,4 +22,9 @@ export enum RecurrenceUnit {
   DAILY = 'daily',
   WEEKLY = 'weekly',
   MONTHLY = 'monthly'
+}
+
+export enum ScheduledGameType {
+  CAMPAIGN = 'campaign',
+  ONESHOT = 'oneshot'
 }

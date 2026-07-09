@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Profile, PublicMember, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
+import { Profile, PublicMember, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -41,10 +41,16 @@ export class ScheduledGameForm implements OnChanges {
     { name: 'Mensual', value: RecurrenceUnit.MONTHLY }
   ];
 
+  public readonly gameTypes = [
+    { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
+    { name: 'Oneshot', value: ScheduledGameType.ONESHOT }
+  ];
+
   constructor() {
     this.form = this.fb.group({
       number: [null],
       title: [null, Validators.required],
+      gameType: [ScheduledGameType.ONESHOT, Validators.required],
       description: [''],
       location: [''],
       maxPlayers: [null, [Validators.required, Validators.min(1)]],

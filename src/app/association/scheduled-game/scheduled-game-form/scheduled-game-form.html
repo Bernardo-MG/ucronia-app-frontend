@@ -26,6 +26,18 @@
     }
   </div>
 
+  <div class="mb-2 w-full min-w-0">
+    <p-select id="gameTypeInput" [options]="gameTypes" optionLabel="name" optionValue="value" formControlName="gameType"
+      placeholder="Tipo de partida" appendTo="body" class="w-full" [invalid]="isFieldInvalid('gameType')" />
+  </div>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('gameType'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
     <input pInputText type="text" id="locationInput" formControlName="location" [invalid]="isFieldInvalid('location')"
       maxlength="200" class="w-full min-w-0" />
