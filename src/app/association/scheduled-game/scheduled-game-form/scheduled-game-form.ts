@@ -60,9 +60,7 @@ export class ScheduledGameForm implements OnChanges {
         interval: [0, [Validators.required, Validators.min(0)]],
         unit: [RecurrenceUnit.WEEKLY, Validators.required]
       }),
-      master: this.fb.group({
-        number: [null, Validators.required]
-      }),
+      master: [null, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -82,12 +80,8 @@ export class ScheduledGameForm implements OnChanges {
     this.save.emit(this.form.value);
   }
 
-  public onSelectMember(member: PublicMember): void {
-    if (!member) {
-      return;
-    }
-
-    this.form.get('master')?.get('number')?.setValue(member.number);
+  public onSelectMaster(member: PublicMember): void {
+    this.form.get('master')?.setValue(member.number);
   }
 
   public isFieldInvalid(property: string): boolean {
