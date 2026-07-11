@@ -1,3 +1,5 @@
+import { CalendarStatus } from "./calendar-status";
+import { Recurrence } from "./recurrence";
 
 export class ScheduledGame {
   public number = 0;
@@ -10,18 +12,7 @@ export class ScheduledGame {
   public image = "";
   public start = new Date();
   public recurrence = new Recurrence();
-  public published = false;
-}
-
-export class Recurrence {
-  public interval = 0;
-  public unit = "";
-}
-
-export enum RecurrenceUnit {
-  DAILY = 'daily',
-  WEEKLY = 'weekly',
-  MONTHLY = 'monthly'
+  public status = CalendarStatus.DRAFT;
 }
 
 export enum ScheduledGameType {
