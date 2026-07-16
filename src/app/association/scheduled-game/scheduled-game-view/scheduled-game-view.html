@@ -27,6 +27,8 @@
         <assoc-scheduled-game-info [data]="selectedData" [master]="selectedMaster" [loading]="status.loading" />
       </div>
       <ng-template #footer>
+        <p-button icon="pi pi-send" severity="success" [disabled]="status.loading" aria-label="Publicar"
+          [attr.aria-disabled]="status.loading" (click)="onPublish($event)" rounded text class="!p-2" />
         <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
           [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" rounded text class="!p-2" />
         <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" (click)="onDelete($event)" rounded
