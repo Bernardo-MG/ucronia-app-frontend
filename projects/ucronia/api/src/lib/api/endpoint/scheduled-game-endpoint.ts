@@ -91,4 +91,15 @@ export class ScheduledGameEndpoint {
       );
   }
 
+  public publish(
+    index: number
+  ): Observable<ScheduledGame> {
+    return this.http.put<SimpleResponse<ScheduledGame>>(`${this.apiUrl}/game/${index}/publish`, undefined)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => response.content),
+        map(r => this.mapScheduledGame(r))
+      );
+  }
+
 }
