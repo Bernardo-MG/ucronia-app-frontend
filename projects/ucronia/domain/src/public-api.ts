@@ -3,6 +3,7 @@
  */
 
 export * from './lib/calendar/activity';
+export * from './lib/calendar/recurrence';
 export * from './lib/calendar/scheduled_game';
 export * from './lib/fees/fee';
 export * from './lib/fees/fee-payment';
