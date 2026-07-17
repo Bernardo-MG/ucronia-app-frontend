@@ -4,13 +4,17 @@
   (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr class="border-b bg-gray-100">
-      <th pSortableColumn="start">
-        Inicio
-        <p-sortIcon field="start" />
-      </th>
       <th pSortableColumn="title">
         Titulo
         <p-sortIcon field="title" />
+      </th>
+      <th pSortableColumn="status">
+        Estado
+        <p-sortIcon field="status" />
+      </th>
+      <th pSortableColumn="start">
+        Inicio
+        <p-sortIcon field="start" />
       </th>
       <th pSortableColumn="location">
         Lugar
@@ -26,8 +30,9 @@
   </ng-template>
   <ng-template #body let-scheduledGame>
     <tr>
-      <td>{{ scheduledGame.start | date:'yyyy-MM-dd HH:mm' }}</td>
       <td>{{ scheduledGame.title }}</td>
+      <td>{{ getName(scheduledGame.status) }}</td>
+      <td>{{ scheduledGame.start | date:'yyyy-MM-dd HH:mm' }}</td>
       <td>{{ scheduledGame.location }}</td>
       <td>{{ scheduledGame.maxPlayers }}</td>
       <td class="w-40">
