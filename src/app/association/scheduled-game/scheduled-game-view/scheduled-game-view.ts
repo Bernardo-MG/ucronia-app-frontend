@@ -142,6 +142,27 @@ export class ScheduledGameView implements OnInit {
       });
   }
 
+  public onPublish(event: Event): void {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de que quieres publicar esta partida?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Publicar',
+        severity: 'success'
+      },
+      accept: () => this.call(
+        () => this.service.publish(this.selectedData.number),
+        () => this.load()
+      )
+    });
+  }
+
   private call(
     action: () => Observable<any>,
     onSuccess: () => void

@@ -4,6 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ScheduledGame } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
 
 @Component({
   selector: 'app-scheduled-game-list',
@@ -29,6 +30,17 @@ export class ScheduledGameList {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
+  }
+
+  public getName(status: CalendarStatus): string {
+    switch (status) {
+      case CalendarStatus.DRAFT:
+        return 'Borrador';
+      case CalendarStatus.PUBLISHED:
+        return 'Publicado';
+      default:
+        return status;
+    }
   }
 
 }

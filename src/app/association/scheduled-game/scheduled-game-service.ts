@@ -85,6 +85,20 @@ export class ScheduledGameService {
     return this.ucroniaClient.scheduledGame.get(index);
   }
 
+  public publish(index: number): Observable<ScheduledGame> {
+    return this.ucroniaClient.scheduledGame.publish(index)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
+  }
+
   public getMaster(number: number): Observable<Profile> {
     return this.ucroniaClient.profile.get(number);
   }

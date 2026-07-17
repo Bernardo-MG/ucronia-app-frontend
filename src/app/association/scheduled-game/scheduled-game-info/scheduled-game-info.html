@@ -5,6 +5,10 @@
   </div>
 
   <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-send" name="Estado" [value]="getName(data().status)" />
+  </div>
+
+  <div>
     <ui-detail-field [loading]="loading()" icon="pi pi-file-edit" name="Descripcion" [value]="data().description" />
   </div>
 
