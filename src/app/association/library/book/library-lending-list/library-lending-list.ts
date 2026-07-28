@@ -14,6 +14,7 @@ export class LibraryLendingList {
 
   public readonly loading = input(false);
   public readonly lendings = input<BookLending[]>([]);
+  public readonly borrowerNames = input<Record<number, string>>({});
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
@@ -37,6 +38,10 @@ export class LibraryLendingList {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.pageChange.emit(page);
+  }
+
+  public getBorrowerName(number: number): string {
+    return this.borrowerNames()[number] ?? `${number}`;
   }
 
 }

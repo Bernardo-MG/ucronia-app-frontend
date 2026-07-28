@@ -4,7 +4,7 @@ import { ResourceGuard } from '@bernardo-mg/authentication';
 export const libraryRoutes: Routes = [
   {
     path: 'library',
-    canActivate: [ResourceGuard('library', 'view')],
+    canActivate: [ResourceGuard('LIBRARY', 'VIEW')],
     children: [
       {
         path: '',
@@ -17,7 +17,7 @@ export const libraryRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('./data/library-author-list-view/library-author-list-view').then(m => m.LibraryAuthorListView),
-            canActivate: [ResourceGuard('library_author', 'view')]
+            canActivate: [ResourceGuard('LIBRARY_AUTHOR', 'VIEW')]
           }
         ]
       },
@@ -27,7 +27,7 @@ export const libraryRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('./book/library-view/library-view').then(m => m.LibraryView),
-            canActivate: [ResourceGuard('library_book', 'view')]
+            canActivate: [ResourceGuard('LIBRARY_BOOK', 'VIEW')]
           }
         ]
       },
@@ -37,7 +37,7 @@ export const libraryRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('./data/library-publisher-list-view/library-publisher-list-view').then(m => m.LibraryPublisherListView),
-            canActivate: [ResourceGuard('library_publisher', 'view')]
+            canActivate: [ResourceGuard('LIBRARY_PUBLISHER', 'VIEW')]
           }
         ]
       },
@@ -47,7 +47,7 @@ export const libraryRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('./data/library-book-type-list-view/library-book-type-list-view').then(m => m.LibraryBookTypeListView),
-            canActivate: [ResourceGuard('library_book_type', 'view')]
+            canActivate: [ResourceGuard('LIBRARY_BOOK_TYPE', 'VIEW')]
           }
         ]
       },
@@ -57,7 +57,7 @@ export const libraryRoutes: Routes = [
           {
             path: '',
             loadComponent: () => import('./data/library-game-system-list-view/library-game-system-list-view').then(m => m.LibraryGameSystemListView),
-            canActivate: [ResourceGuard('library_game_system', 'view')]
+            canActivate: [ResourceGuard('LIBRARY_GAME_SYSTEM', 'VIEW')]
           }
         ]
       }

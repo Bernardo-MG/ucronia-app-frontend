@@ -41,9 +41,9 @@ export class ActivityView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("activity", "create"),
-      edit: authService.hasPermission("activity", "update"),
-      delete: authService.hasPermission("activity", "delete")
+      create: authService.hasPermission('ACTIVITY', 'CREATE'),
+      edit: authService.hasPermission('ACTIVITY', 'UPDATE'),
+      delete: authService.hasPermission('ACTIVITY', 'DELETE')
     };
   }
 

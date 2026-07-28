@@ -29,7 +29,7 @@ export class SettingsView implements OnInit {
 
     // Check permissions
     // TODO: apply this permission
-    this.editable = authService.hasPermission("association_settings", "update");
+    this.editable = authService.hasPermission('ASSOCIATION_SETTINGS', 'UPDATE');
   }
 
   public ngOnInit(): void {

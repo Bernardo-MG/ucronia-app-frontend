@@ -49,9 +49,9 @@ export class RoleView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("role", "create"),
-      edit: authService.hasPermission("role", "update"),
-      delete: authService.hasPermission("role", "delete")
+      create: authService.hasPermission('ROLE', 'CREATE'),
+      edit: authService.hasPermission('ROLE', 'UPDATE'),
+      delete: authService.hasPermission('ROLE', 'DELETE')
     };
   }
 

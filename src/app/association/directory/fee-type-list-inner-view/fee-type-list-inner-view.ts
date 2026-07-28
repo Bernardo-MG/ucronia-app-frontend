@@ -40,9 +40,9 @@ export class FeeTypeListInnerView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("fee_type", "create"),
-      edit: authService.hasPermission("fee_type", "update"),
-      delete: authService.hasPermission("fee_type", "delete")
+      create: authService.hasPermission('FEE_TYPE', 'CREATE'),
+      edit: authService.hasPermission('FEE_TYPE', 'UPDATE'),
+      delete: authService.hasPermission('FEE_TYPE', 'DELETE')
     };
   }
 

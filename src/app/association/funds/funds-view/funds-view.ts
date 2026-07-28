@@ -65,9 +65,9 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("transaction", "create"),
-      edit: authService.hasPermission("transaction", "update"),
-      delete: authService.hasPermission("transaction", "delete")
+      create: authService.hasPermission('TRANSACTION', 'CREATE'),
+      edit: authService.hasPermission('TRANSACTION', 'UPDATE'),
+      delete: authService.hasPermission('TRANSACTION', 'DELETE')
     };
   }
 

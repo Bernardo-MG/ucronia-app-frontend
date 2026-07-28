@@ -36,9 +36,9 @@ export class LibraryAuthorListView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('library_author', 'create'),
-      edit: authService.hasPermission('library_author', 'update'),
-      delete: authService.hasPermission('library_author', 'delete')
+      create: authService.hasPermission('LIBRARY_AUTHOR', 'CREATE'),
+      edit: authService.hasPermission('LIBRARY_AUTHOR', 'UPDATE'),
+      delete: authService.hasPermission('LIBRARY_AUTHOR', 'DELETE')
     };
   }
 

@@ -1,0 +1,115 @@
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="titleInput" formControlName="title" [invalid]="isFieldInvalid('title')"
+      maxlength="100" class="w-full min-w-0" />
+    <label for="titleInput">Titulo</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('title'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="descriptionInput" formControlName="description"
+      [invalid]="isFieldInvalid('description')" maxlength="200" class="w-full min-w-0" />
+    <label for="descriptionInput">Descripcion</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('description'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <div class="mb-2 w-full min-w-0">
+    <p-select id="gameTypeInput" [options]="gameTypes" optionLabel="name" optionValue="value" formControlName="gameType"
+      placeholder="Tipo de partida" appendTo="body" class="w-full" [invalid]="isFieldInvalid('gameType')" />
+  </div>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('gameType'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="locationInput" formControlName="location" [invalid]="isFieldInvalid('location')"
+      maxlength="200" class="w-full min-w-0" />
+    <label for="locationInput">Lugar</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('location'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="number" min="1" max="100" id="maxPlayersInput" formControlName="maxPlayers"
+      [invalid]="isFieldInvalid('maxPlayers')" class="w-full min-w-0" />
+    <label for="maxPlayersInput">Plazas maximas</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('maxPlayers'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+    <input pInputText type="text" id="imageInput" formControlName="image" [invalid]="isFieldInvalid('image')"
+      maxlength="200" class="w-full min-w-0" />
+    <label for="imageInput">Imagen</label>
+  </p-floatlabel>
+  <div class="mb-2 w-full min-w-0">
+    @for (failure of failures().getFailures('image'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+  </div>
+
+  <p-floatlabel variant="in" class="mb-2">
+    <p-datepicker id="startInput" formControlName="start" [showTime]="true" dateFormat="yy-mm-dd" appendTo="body"
+      class="w-full" />
+    <label for="startInput">Fecha de inicio</label>
+  </p-floatlabel>
+
+  <div formGroupName="recurrence">
+    <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+      <input pInputText type="number" min="0" max="365" id="recurrenceIntervalInput" formControlName="interval"
+        [invalid]="isFieldInvalid('recurrence.interval')" class="w-full min-w-0" />
+      <label for="recurrenceIntervalInput">Intervalo de recurrencia</label>
+    </p-floatlabel>
+
+    <div class="mb-3 w-full min-w-0">
+      <p-select id="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value"
+        formControlName="unit" placeholder="Unidad de recurrencia" appendTo="body" class="w-full"
+        [invalid]="isFieldInvalid('recurrence.unit')" />
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 mb-3">
+    <label class="font-semibold mb-2 block">Director</label>
+    <assoc-member-search [members]="members()" [member]="selectedMaster()" (selectMember)="onSelectMaster($event)"
+      (searchMember)="searchMember.emit($event)" />
+    <div class="mb-2">
+      @if (isFieldInvalid('master')) {
+        <p-message severity="error" size="small" variant="simple">
+          Seleccione un director valido
+        </p-message>
+      }
+    </div>
+  </div>
+
+  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+</form>

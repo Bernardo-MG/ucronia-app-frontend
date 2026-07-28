@@ -36,9 +36,9 @@ export class LibraryGameSystemListView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('library_game_system', 'create'),
-      edit: authService.hasPermission('library_game_system', 'update'),
-      delete: authService.hasPermission('library_game_system', 'delete')
+      create: authService.hasPermission('LIBRARY_GAME_SYSTEM', 'CREATE'),
+      edit: authService.hasPermission('LIBRARY_GAME_SYSTEM', 'UPDATE'),
+      delete: authService.hasPermission('LIBRARY_GAME_SYSTEM', 'DELETE')
     };
   }
 
