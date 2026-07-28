@@ -42,9 +42,9 @@ export class ScheduledGameView implements OnInit {
     const authService = inject(AuthService);
 
     this.permissions = {
-      create: authService.hasPermission('scheduled_game', 'create'),
-      edit: authService.hasPermission('scheduled_game', 'update'),
-      delete: authService.hasPermission('scheduled_game', 'delete')
+      create: authService.hasPermission('SCHEDULED_GAME', 'CREATE'),
+      edit: authService.hasPermission('SCHEDULED_GAME', 'UPDATE'),
+      delete: authService.hasPermission('SCHEDULED_GAME', 'DELETE')
     };
   }
 

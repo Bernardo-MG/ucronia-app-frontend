@@ -4,7 +4,7 @@ import { ResourceGuard } from '@bernardo-mg/authentication';
 export const feesRoutes: Routes = [
   {
     path: 'fees',
-    canActivate: [ResourceGuard('fee', 'view')],
+    canActivate: [ResourceGuard('FEE', 'VIEW')],
     loadComponent: () => import('./fee-view/fee-view').then(m => m.FeeView)
   }
 ];

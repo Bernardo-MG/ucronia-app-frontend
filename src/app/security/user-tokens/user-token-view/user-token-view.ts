@@ -41,7 +41,7 @@ export class UserTokenView implements OnInit {
   public constructor() {
     const authService = inject(AuthService);
 
-    this.editable = authService.hasPermission("user_token", "update");
+    this.editable = authService.hasPermission('USER_TOKEN', 'UPDATE');
   }
 
   public ngOnInit(): void {

@@ -56,9 +56,9 @@ export class UserView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("user", "create"),
-      edit: authService.hasPermission("user", "update"),
-      delete: authService.hasPermission("user", "delete")
+      create: authService.hasPermission('USER', 'CREATE'),
+      edit: authService.hasPermission('USER', 'UPDATE'),
+      delete: authService.hasPermission('USER', 'DELETE')
     };
   }
 

@@ -62,9 +62,9 @@ export class FeeView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("fee", "create"),
-      edit: authService.hasPermission("fee", "update"),
-      delete: authService.hasPermission("fee", "delete")
+      create: authService.hasPermission('FEE', 'CREATE'),
+      edit: authService.hasPermission('FEE', 'UPDATE'),
+      delete: authService.hasPermission('FEE', 'DELETE')
     };
   }
 

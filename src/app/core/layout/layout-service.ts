@@ -42,8 +42,8 @@ export class LayoutService {
   }
 
   private loadPermissions() {
-    this.showSettingsLinkFlag = this.authService.hasPermission('association_settings', 'view');
-    this.showSecurityLinkFlag = this.authService.hasPermission('security', 'view');
+    this.showSettingsLinkFlag = this.authService.hasPermission('ASSOCIATION_SETTINGS', 'VIEW');
+    this.showSecurityLinkFlag = this.authService.hasPermission('SECURITY', 'VIEW');
   }
 
 }

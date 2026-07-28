@@ -74,9 +74,9 @@ export class DirectoryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("profile", "create"),
-      edit: authService.hasPermission("profile", "update"),
-      delete: authService.hasPermission("profile", "delete")
+      create: authService.hasPermission('PROFILE', 'CREATE'),
+      edit: authService.hasPermission('PROFILE', 'UPDATE'),
+      delete: authService.hasPermission('PROFILE', 'DELETE')
     };
   }
 

@@ -4,7 +4,7 @@ import { ResourceGuard } from '@bernardo-mg/authentication';
 export const scheduledGameRoutes: Routes = [
   {
     path: 'scheduled-games',
-    canActivate: [ResourceGuard('scheduled_game', 'view')],
+    canActivate: [ResourceGuard('SCHEDULED_GAME', 'VIEW')],
     loadComponent: () => import('./scheduled-game-view/scheduled-game-view').then(m => m.ScheduledGameView)
   }
 ];

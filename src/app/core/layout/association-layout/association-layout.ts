@@ -58,7 +58,7 @@ export class AssociationLayout {
 
   private getAssociationItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('member', 'view')) {
+    if (authService.hasPermission('MEMBER', 'VIEW')) {
       items.push(
         {
           label: 'Socios',
@@ -66,7 +66,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('my_fees', 'view')) {
+    if (authService.hasPermission('MY_FEES', 'VIEW')) {
       items.push(
         {
           label: 'Mis cuotas',
@@ -74,7 +74,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('library', 'view')) {
+    if (authService.hasPermission('LIBRARY', 'VIEW')) {
       items.push(
         {
           label: 'Biblioteca',
@@ -87,7 +87,7 @@ export class AssociationLayout {
 
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('profile', 'view')) {
+    if (authService.hasPermission('PROFILE', 'VIEW')) {
       items.push(
         {
           label: 'Directorio',
@@ -95,7 +95,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('member', 'view')) {
+    if (authService.hasPermission('MEMBER', 'VIEW')) {
       items.push(
         {
           label: 'Cuotas',
@@ -103,7 +103,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('my_fees', 'view')) {
+    if (authService.hasPermission('MY_FEES', 'VIEW')) {
       items.push(
         {
           label: 'Fondos',
@@ -111,7 +111,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('activity', 'view')) {
+    if (authService.hasPermission('ACTIVITY', 'VIEW')) {
       items.push(
         {
           label: 'Actividad',
@@ -119,7 +119,7 @@ export class AssociationLayout {
           icon: 'pi pi-calendar'
         });
     }
-    if (authService.hasPermission('scheduled_game', 'view')) {
+    if (authService.hasPermission('SCHEDULED_GAME', 'VIEW')) {
       items.push(
         {
           label: 'Partidas programadas',

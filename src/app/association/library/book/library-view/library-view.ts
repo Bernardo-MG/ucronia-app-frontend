@@ -101,34 +101,34 @@ export class LibraryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("library_book", "create"),
-      edit: authService.hasPermission("library_book", "update"),
-      delete: authService.hasPermission("library_book", "delete")
+      create: authService.hasPermission('LIBRARY_BOOK', 'CREATE'),
+      edit: authService.hasPermission('LIBRARY_BOOK', 'UPDATE'),
+      delete: authService.hasPermission('LIBRARY_BOOK', 'DELETE')
     };
 
     // Load data menu
-    if (authService.hasPermission('library_author', 'view')) {
+    if (authService.hasPermission('LIBRARY_AUTHOR', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Autores',
           command: () => this.router.navigate(['/association/library/authors'])
         });
     }
-    if (authService.hasPermission('library_publisher', 'view')) {
+    if (authService.hasPermission('LIBRARY_PUBLISHER', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Editores',
           command: () => this.router.navigate(['/association/library/publishers'])
         });
     }
-    if (authService.hasPermission('library_book_type', 'view')) {
+    if (authService.hasPermission('LIBRARY_BOOK_TYPE', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Tipos',
           command: () => this.router.navigate(['/association/library/types'])
         });
     }
-    if (authService.hasPermission('library_game_system', 'view')) {
+    if (authService.hasPermission('LIBRARY_GAME_SYSTEM', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Sistemas',
