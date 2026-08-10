@@ -107,6 +107,7 @@ export class ProfileEditionForm implements OnChanges {
       birthDate: [new Date()],
       name: this.fb.group({
         firstName: [null, Validators.required],
+        nickname: [''],
         lastName: ['']
       }),
       contactChannels: this.fb.array([]),

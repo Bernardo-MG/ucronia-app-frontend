@@ -22,6 +22,7 @@ export class FullProfileChannel {
 export class FullProfileName {
   public fullName = '';
   public firstName = '';
+  public nickname = '';
   public lastName = '';
 }
 

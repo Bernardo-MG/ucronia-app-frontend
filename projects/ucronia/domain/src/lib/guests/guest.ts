@@ -15,5 +15,6 @@ export class Guest {
 export class GuestName {
   public fullName = '';
   public firstName = '';
+  public nickname = '';
   public lastName = '';
 }

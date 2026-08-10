@@ -70,10 +70,33 @@
         <input pInputText type="text" id="firstNameInput" formControlName="firstName"
           [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
 
+        <input pInputText type="text" id="nicknameInput" formControlName="nickname"
+          [invalid]="isFieldInvalid('name.nickname')" maxlength="50" placeholder="Apodo" />
+
         <input pInputText type="text" id="lastNameInput" formControlName="lastName"
           [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
       </p-inputgroup>
     </div>
+  </div>
+
+  <div class="mb-2">
+    @for (failure of failures().getFailures('name.firstName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+
+    @for (failure of failures().getFailures('name.nickname'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+
+    @for (failure of failures().getFailures('name.lastName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
   </div>
 
   <!-- Birth date -->

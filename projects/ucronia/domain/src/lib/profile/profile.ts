@@ -19,5 +19,6 @@ export class ContactChannel {
 export class ProfileName {
   public fullName = '';
   public firstName = '';
+  public nickname = '';
   public lastName = '';
 }

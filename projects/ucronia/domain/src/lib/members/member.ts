@@ -23,5 +23,6 @@ export class MemberFeeType {
 export class MemberName {
   public fullName = '';
   public firstName = '';
+  public nickname = '';
   public lastName = '';
 }
