@@ -9,12 +9,10 @@
   </ng-template>
   <ng-template #body let-key>
     <tr>
-      <td>{{ key.number }}</td>
       <td>
+        {{ key.number }}
         @if (key.missing) {
           <p-tag value="Perdida" severity="danger" />
-        } @else {
-          <p-tag value="Disponible" severity="success" />
         }
       </td>
       <td>{{ key.description }}</td>
