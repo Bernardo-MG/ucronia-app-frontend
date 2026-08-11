@@ -20,7 +20,7 @@ describe('DirectoryView', () => {
 
   const keyServiceMock = jasmine.createSpyObj<KeyService>(
     'KeyService',
-    ['getOne', 'getAll', 'create', 'update', 'delete']
+    ['getAll', 'create', 'update', 'delete']
   );
 
   const directoryServiceMock = jasmine.createSpyObj<DirectoryService>(
