@@ -4,7 +4,7 @@ import { Component, inject, Input, input, OnChanges, output, SimpleChanges } fro
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod, FeeType } from '@ucronia/domain';
+import { ContactMethod, FeeType, Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -31,6 +31,7 @@ export class ProfileEditionForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly feeTypes = input<FeeType[]>([]);
+  public readonly keys = input<Key[]>([]);
 
   @Input() public set data(value: FullProfile) {
     this.form.patchValue(value as any);
@@ -118,6 +119,7 @@ export class ProfileEditionForm implements OnChanges {
       feeType: this.fb.group({
         number: [null]
       }),
+      keyNumber: [null],
       active: [false],
       renew: [false]
     });

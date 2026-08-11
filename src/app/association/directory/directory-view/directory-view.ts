@@ -4,7 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
-import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
+import { ContactMethod, FeeType, Key, MemberStatus } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -29,10 +29,12 @@ import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
 import { SponsorList } from '../sponsor-list/sponsor-list';
+import { KeyListInnerView } from '../key-list-inner-view/key-list-inner-view';
+import { KeyService } from '../key-service';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView],
+  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView, KeyListInnerView],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -41,6 +43,7 @@ export class DirectoryView implements OnInit {
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
+  private readonly keyService = inject(KeyService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -58,6 +61,7 @@ export class DirectoryView implements OnInit {
   public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
+  public keys: Key[] = [];
   public profiles = new Page<FullProfile>();
   public summary = new DirectorySummary();
 
@@ -93,13 +97,15 @@ export class DirectoryView implements OnInit {
       forkJoin({
         profile: this.directoryService.getOne(this.selectedData.number),
         contactMethodSelection: this.contactMethodService.getAllAvailable(),
-        feeTypes: this.feeTypeService.getAllAvailable()
+        feeTypes: this.feeTypeService.getAllAvailable(),
+        keys: this.keyService.getAll()
       })
     )
-      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
+      .subscribe(({ profile, contactMethodSelection, feeTypes, keys }) => {
         this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
         this.feeTypes = feeTypes;
+        this.keys = keys;
       });
   }
 

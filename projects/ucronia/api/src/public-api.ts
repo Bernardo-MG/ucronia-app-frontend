@@ -23,6 +23,8 @@ export * from './lib/library/publisher-creation';
 export * from './lib/library/publisher-update';
 export * from './lib/members/member-patch';
 export * from './lib/members/member-summary';
+export * from './lib/members/key-creation';
+export * from './lib/members/key-update';
 export * from './lib/members/profile-membership-conversion';
 export * from './lib/profile/contact-method-update';
 export * from './lib/profile/profile-creation';

@@ -1,0 +1,29 @@
+<p-table dataKey="number" [loading]="loading()" [value]="data()" [sortField]="'number'" [sortOrder]="1">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="number">Numero <p-sortIcon field="number" /></th>
+      <th>Estado</th>
+      <th>Descripcion</th>
+      <th class="w-40"></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-key>
+    <tr>
+      <td>{{ key.number }}</td>
+      <td>
+        @if (key.missing) {
+          <p-tag value="Perdida" severity="danger" />
+        } @else {
+          <p-tag value="Disponible" severity="success" />
+        }
+      </td>
+      <td>{{ key.description }}</td>
+      <td class="w-40">
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
+          [attr.aria-disabled]="!editable()" (click)="edit.emit(key)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
+          [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, key)" rounded text />
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

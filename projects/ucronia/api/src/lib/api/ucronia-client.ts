@@ -5,6 +5,7 @@ import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint';
+import { KeyEndpoint } from './endpoint/key-endpoint';
 import { LibraryEndpoint } from './endpoint/library-endpoint';
 import { MemberEndpoint } from './endpoint/member-endpoint';
 import { MyFeesEndpoint } from './endpoint/my-fees-endpoint';
@@ -40,6 +41,10 @@ export class UcroniaClient {
 
   public get memberProfile() {
     return new MemberEndpoint(this.http, this.base_url);
+  }
+
+  public get key() {
+    return new KeyEndpoint(this.http, this.base_url);
   }
 
   public get fee() {
