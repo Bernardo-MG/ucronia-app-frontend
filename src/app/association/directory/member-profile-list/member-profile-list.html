@@ -12,6 +12,9 @@
     <tr>
       <td>
         {{ profile.name.fullName }}
+        @if (profile.keyNumber) {
+          <i class="pi pi-key ml-2 text-amber-600" title="Llave asignada"></i>
+        }
         <assoc-member-status-tag [member]="profile" />
       </td>
       <td class="w-40">
