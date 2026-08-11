@@ -10,7 +10,7 @@ export class FullProfile {
   public address = '';
   public comments = '';
   public feeType? = new FullProfileFeeType();
-  public keyNumber?: number;
+  public key?: number;
   public active? = false;
   public renew? = false;
 }

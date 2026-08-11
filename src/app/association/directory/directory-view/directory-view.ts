@@ -18,6 +18,8 @@ import { DirectorySummaryService } from '../directory-summary-service';
 import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 import { FeeTypeService } from '../fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
+import { KeyListInnerView } from '../key-list-inner-view/key-list-inner-view';
+import { KeyService } from '../key-service';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
@@ -29,8 +31,6 @@ import { ProfileInfo } from '../profile-info/profile-info';
 import { ProfileList } from '../profile-list/profile-list';
 import { ProfileStatusSelector } from '../profile-type-selector/profile-status-selector';
 import { SponsorList } from '../sponsor-list/sponsor-list';
-import { KeyListInnerView } from '../key-list-inner-view/key-list-inner-view';
-import { KeyService } from '../key-service';
 
 @Component({
   selector: 'assoc-directory-view',

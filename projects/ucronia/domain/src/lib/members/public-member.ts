@@ -3,5 +3,5 @@ import { MemberName } from "./member";
 export class PublicMember {
   public number = -1;
   public name = new MemberName();
-  public keyNumber?: number;
+  public key?: number;
 }

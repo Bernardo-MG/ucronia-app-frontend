@@ -119,7 +119,7 @@ export class ProfileEditionForm implements OnChanges {
       feeType: this.fb.group({
         number: [null]
       }),
-      keyNumber: [null],
+      key: [null],
       active: [false],
       renew: [false]
     });

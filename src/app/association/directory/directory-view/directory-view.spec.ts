@@ -5,9 +5,10 @@ import { ContactMethod, FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';
-import { DirectorySummaryService } from '../directory-summary-service';
 import { DirectoryService } from '../directory-service';
+import { DirectorySummaryService } from '../directory-summary-service';
 import { FeeTypeService } from '../fee-type-service';
+import { KeyService } from '../key-service';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 import { DirectorySummary } from '../model/directory-summary';
 import { FullProfile } from '../model/full-profile';
@@ -16,6 +17,11 @@ import { DirectoryView } from './directory-view';
 describe('DirectoryView', () => {
   let component: DirectoryView;
   let fixture: ComponentFixture<DirectoryView>;
+
+  const keyServiceMock = jasmine.createSpyObj<KeyService>(
+    'KeyService',
+    ['getOne', 'getAll', 'create', 'update', 'delete']
+  );
 
   const directoryServiceMock = jasmine.createSpyObj<DirectoryService>(
     'DirectoryService',
@@ -70,6 +76,7 @@ describe('DirectoryView', () => {
         ConfirmationService,
         MessageService,
         provideAnimationsAsync(),
+        { provide: KeyService, useValue: keyServiceMock },
         { provide: DirectoryService, useValue: directoryServiceMock },
         { provide: DirectorySummaryService, useValue: directorySummaryServiceMock },
         { provide: ContactMethodService, useValue: contactMethodServiceMock },
