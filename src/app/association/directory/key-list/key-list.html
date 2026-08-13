@@ -1,4 +1,6 @@
-<p-table dataKey="number" [loading]="loading()" [value]="data()" [sortField]="'number'" [sortOrder]="1">
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr>
       <th pSortableColumn="number">Numero <p-sortIcon field="number" /></th>

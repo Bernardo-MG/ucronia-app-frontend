@@ -10,8 +10,9 @@
       aria-label="Nueva llave" [attr.aria-disabled]="!permissions.create" rounded text />
   </ng-template>
   <p class="m-0">
-    <assoc-key-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [data]="keys"
-      (edit)="onShowEdit($event)" (delete)="onDelete($event)" />
+    <assoc-key-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete" [data]="keys.content"
+      [rows]="keys.size" [page]="keys.page" [totalRecords]="keys.totalElements" (edit)="onShowEdit($event)"
+      (delete)="onDelete($event)" (changePage)="load($event)" />
   </p>
 </p-panel>
 

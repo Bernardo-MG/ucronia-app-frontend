@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ErrorRequestInterceptor, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Key } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { KeyCreation } from '../../members/key-creation';
@@ -18,7 +18,7 @@ export class KeyEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined
-  ): Observable<Key[]> {
+  ): Observable<Page<Key>> {
     let params = new HttpParams();
     if (page) {
       params = params.append('page', page);
@@ -30,10 +30,9 @@ export class KeyEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
-    return this.http.get<SimpleResponse<Key[]>>(`${this.apiUrl}/profile/key`, { params })
+    return this.http.get<PaginatedResponse<Key>>(`${this.apiUrl}/profile/key`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        catchError(this.errorInterceptor.handle)
       );
   }
 

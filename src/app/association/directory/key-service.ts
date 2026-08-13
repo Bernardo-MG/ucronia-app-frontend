@@ -1,5 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { Sorting, SortingProperty } from '@bernardo-mg/request';
+import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { KeyCreation, KeyUpdate, UcroniaClient } from '@ucronia/api';
 import { Key } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
@@ -14,12 +15,17 @@ export class KeyService {
 
   private readonly messageService = inject(MessageService);
 
-  public getAll(page: number | undefined = undefined): Observable<Key[]> {
+  public getAllAvailable(): Observable<Key[]> {
     const sorting = new Sorting(
-      [
-        new SortingProperty('number'),
-        new SortingProperty('description')
-      ]
+      [new SortingProperty('name')]
+    );
+
+    return getAllPages((page, size) => this.ucroniaClient.key.page(page, size, sorting));
+  }
+
+  public getAll(page: number | undefined = undefined): Observable<Page<Key>> {
+    const sorting = new Sorting(
+      [new SortingProperty('name')]
     );
 
     return this.ucroniaClient.key.page(page, undefined, sorting);

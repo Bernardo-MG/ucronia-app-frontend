@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -23,7 +23,7 @@ export class KeyListInnerView implements OnInit {
   public readonly Dialog = Dialog;
 
   public selectedData = new Key();
-  public keys: Key[] = [];
+  public keys = new Page<Key>();
 
   public loading = false;
 
@@ -71,10 +71,10 @@ export class KeyListInnerView implements OnInit {
     );
   }
 
-  public load(): void {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
 
-    this.keyService.getAll()
+    this.keyService.getAll(page)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => this.keys = response);
   }

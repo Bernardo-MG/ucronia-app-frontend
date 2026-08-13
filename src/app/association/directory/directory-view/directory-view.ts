@@ -98,7 +98,7 @@ export class DirectoryView implements OnInit {
         profile: this.directoryService.getOne(this.selectedData.number),
         contactMethodSelection: this.contactMethodService.getAllAvailable(),
         feeTypes: this.feeTypeService.getAllAvailable(),
-        keys: this.keyService.getAll()
+        keys: this.keyService.getAllAvailable()
       })
     )
       .subscribe(({ profile, contactMethodSelection, feeTypes, keys }) => {

@@ -2,7 +2,7 @@ import { Component, inject, input, output } from '@angular/core';
 import { Key } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { TableModule } from 'primeng/table';
+import { TableModule, TablePageEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 
 @Component({
@@ -18,14 +18,27 @@ export class KeyList {
   public readonly editable = input(false);
   public readonly deletable = input(false);
   public readonly data = input<Key[]>([]);
-
+  public readonly rows = input(0);
+  public readonly page = input(0);
+  public readonly totalRecords = input(0);
+  
   public readonly edit = output<Key>();
   public readonly delete = output<number>();
+  public readonly changePage = output<number>();
+
+  public get first() {
+    return (this.page() - 1) * this.rows();
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.changePage.emit(page);
+  }
 
   public confirmDelete(event: Event, key: Key) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: '¿Estas seguro de querer borrar? Esta accion no es revertible',
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancelar',
