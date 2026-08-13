@@ -11,7 +11,7 @@
     <tr>
       <td>
         {{ key.number }}
-        @if (key.missing) {
+        @if (!key.available) {
           <p-tag value="Perdida" severity="danger" />
         }
       </td>

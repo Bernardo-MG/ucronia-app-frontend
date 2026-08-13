@@ -36,7 +36,7 @@ export class KeyForm implements OnChanges {
       this.form.patchValue(value as any);
       this.isEdit = true;
     } else {
-      this.form.reset({ number: null, missing: false, description: '' });
+      this.form.reset({ number: null, available: true, description: '' });
       this.isEdit = false;
     }
   }
@@ -53,7 +53,7 @@ export class KeyForm implements OnChanges {
 
     this.form = fb.group({
       number: [null, Validators.required],
-      missing: [false],
+      available: [false],
       description: ['']
     });
 

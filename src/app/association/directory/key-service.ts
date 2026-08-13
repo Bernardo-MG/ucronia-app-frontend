@@ -20,7 +20,7 @@ export class KeyService {
   public create(data: Key): Observable<Key> {
     const create: KeyCreation = {
       number: data.number,
-      missing: data.missing,
+      available: data.available,
       description: data.description
     };
 
@@ -39,7 +39,7 @@ export class KeyService {
 
   public update(data: Key): Observable<Key> {
     const update: KeyUpdate = {
-      missing: data.missing,
+      available: data.available,
       description: data.description
     };
 

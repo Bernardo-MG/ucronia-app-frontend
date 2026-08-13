@@ -34,7 +34,7 @@
         <ng-template let-key pTemplate="item">
           <div class="flex items-center gap-2">
             <span>#{{ key.number }}</span>
-            @if (key.missing) {
+            @if (!key.available) {
               <span class="text-red-600">(Perdida)</span>
             }
           </div>

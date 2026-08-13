@@ -1,4 +1,4 @@
 export class KeyUpdate {
-  public missing = false;
+  public available = false;
   public description = '';
 }

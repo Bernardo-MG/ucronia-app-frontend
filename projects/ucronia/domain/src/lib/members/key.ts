@@ -1,5 +1,5 @@
 export class Key {
   public number = 0;
-  public missing = false;
+  public available = true;
   public description = '';
 }
