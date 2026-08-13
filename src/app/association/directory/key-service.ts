@@ -17,7 +17,10 @@ export class KeyService {
 
   public getAllAvailable(): Observable<Key[]> {
     const sorting = new Sorting(
-      [new SortingProperty('name')]
+      [
+        new SortingProperty('number'),
+        new SortingProperty('description')
+      ]
     );
 
     return getAllPages((page, size) => this.ucroniaClient.key.page(page, size, sorting));
@@ -25,7 +28,10 @@ export class KeyService {
 
   public getAll(page: number | undefined = undefined): Observable<Page<Key>> {
     const sorting = new Sorting(
-      [new SortingProperty('name')]
+      [
+        new SortingProperty('number'),
+        new SortingProperty('description')
+      ]
     );
 
     return this.ucroniaClient.key.page(page, undefined, sorting);
