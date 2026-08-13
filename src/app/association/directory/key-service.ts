@@ -19,7 +19,6 @@ export class KeyService {
 
   public create(data: Key): Observable<Key> {
     const create: KeyCreation = {
-      number: data.number,
       available: data.available,
       description: data.description
     };
