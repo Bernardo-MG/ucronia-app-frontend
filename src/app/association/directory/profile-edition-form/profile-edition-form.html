@@ -33,7 +33,7 @@
         placeholder="Sin llave" class="w-64" [showClear]="true" appendTo="body">
         <ng-template let-key pTemplate="item">
           <div class="flex items-center gap-2">
-            <span>#{{ key.number }}</span>
+            <span>#{{ key.number }} - {{ key.description }}</span>
             @if (!key.available) {
               <span class="text-red-600">(Perdida)</span>
             }
