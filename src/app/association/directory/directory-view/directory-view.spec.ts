@@ -67,6 +67,9 @@ describe('DirectoryView', () => {
     membershipEvolutionServiceMock.monthly.and.returnValue(
       of([])
     );
+    keyServiceMock.getAll.and.returnValue(
+      of(new Page<Key>())
+    );
 
     await TestBed.configureTestingModule({
       imports: [
