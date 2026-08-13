@@ -52,7 +52,7 @@ export class KeyForm implements OnChanges {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
-      number: [null, Validators.required],
+      number: [null],
       available: [false],
       description: ['']
     });

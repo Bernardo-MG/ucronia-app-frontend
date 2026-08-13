@@ -1,19 +1,4 @@
 <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <p-inputgroup class="mb-2 d-flex">
-    <p-inputgroup-addon>
-      <i class="pi pi-key"></i>
-    </p-inputgroup-addon>
-    <p-inputnumber inputId="numberInput" [min]="1" [useGrouping]="false" formControlName="number"
-      [invalid]="isFieldInvalid('number')" placeholder="Numero de llave" styleClass="w-full" [readonly]="isEdit" />
-  </p-inputgroup>
-
-  <div class="mb-2">
-    @for (failure of failures().getFailures('number'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
 
   <div class="mb-4">
     <label for="availableInput" class="select-none font-medium">Disponible</label>
