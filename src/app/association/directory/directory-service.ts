@@ -277,6 +277,7 @@ export class DirectoryService {
     const patch: MemberPatch = {
       ...data,
       feeType: data.feeType.number,
+      key: data.key,
       contactChannels: this.toContactChannelPatch(data)
     };
     return this.ucroniaClient.memberProfile.patch(data.number, patch);

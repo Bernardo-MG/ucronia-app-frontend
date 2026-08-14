@@ -10,6 +10,7 @@ export class Member {
   public comments = '';
   public types: string[] = [];
   public feeType = new MemberFeeType();
+  public key?: number;
   public active = false;
   public renew = false;
 }

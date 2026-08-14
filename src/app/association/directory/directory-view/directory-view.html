@@ -62,6 +62,9 @@
   <!-- Fee types -->
   <assoc-fee-type-list-inner-view />
 
+  <!-- Keys -->
+  <assoc-key-list-inner-view />
+
 </div>
 
 <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
@@ -97,7 +100,7 @@
       </ng-template>
       <div class="w-full">
         <assoc-profile-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
-          [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" (save)="onUpdate($event)" />
+          [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" [keys]="keys" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />

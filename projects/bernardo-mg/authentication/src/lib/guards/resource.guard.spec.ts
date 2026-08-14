@@ -46,7 +46,7 @@ describe('ResourceGuard', () => {
   });
 
   it('should redirect to root when user lacks the required permission', () => {
-    authService.setPermission('MEMBER', ['edit']); // missing 'VIEW'
+    authService.setPermission('MEMBER', ['edit']);
 
     const guardFn = ResourceGuard('MEMBER', 'VIEW');
     const result = TestBed.runInInjectionContext(() => guardFn());
