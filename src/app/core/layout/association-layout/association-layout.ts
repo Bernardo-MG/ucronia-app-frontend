@@ -103,7 +103,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('MY_FEES', 'VIEW')) {
+    if (authService.hasPermission('FUNDS', 'VIEW')) {
       items.push(
         {
           label: 'Fondos',

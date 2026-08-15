@@ -15,5 +15,6 @@ export class Sponsor {
 export class SponsorName {
   public fullName = '';
   public firstName = '';
+  public nickname = '';
   public lastName = '';
 }

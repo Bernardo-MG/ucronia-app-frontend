@@ -26,6 +26,21 @@
         placeholder="Tipo de cuota" class="w-64">
       </p-select>
     </div>
+
+    <div class="mb-2 flex flex-col gap-2">
+      <label for="keyInput" class="font-medium">Llave</label>
+      <p-select id="keyInput" [options]="keys()" optionLabel="number" optionValue="number" formControlName="key"
+        placeholder="Sin llave" class="w-64" [showClear]="true" appendTo="body">
+        <ng-template let-key pTemplate="item">
+          <div class="flex items-center gap-2">
+            <span>#{{ key.number }} - {{ key.description }}</span>
+            @if (!key.available) {
+              <span class="text-red-600">(Perdida)</span>
+            }
+          </div>
+        </ng-template>
+      </p-select>
+    </div>
     
     <!-- Status toggles -->
     <div class="flex flex-col gap-4 mb-4">
@@ -70,10 +85,33 @@
         <input pInputText type="text" id="firstNameInput" formControlName="firstName"
           [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
 
+        <input pInputText type="text" id="nicknameInput" formControlName="nickname"
+          [invalid]="isFieldInvalid('name.nickname')" maxlength="50" placeholder="Apodo" />
+
         <input pInputText type="text" id="lastNameInput" formControlName="lastName"
           [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
       </p-inputgroup>
     </div>
+  </div>
+
+  <div class="mb-2">
+    @for (failure of failures().getFailures('name.firstName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+
+    @for (failure of failures().getFailures('name.nickname'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
+
+    @for (failure of failures().getFailures('name.lastName'); track failure) {
+      <p-message severity="error" size="small" variant="simple">
+        {{ failure.message }}
+      </p-message>
+    }
   </div>
 
   <!-- Birth date -->
