@@ -40,9 +40,9 @@ export class ContactMethodListInnerView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('CONTAC_METHOD', 'CREATE'),
-      edit: authService.hasPermission('CONTAC_METHOD', 'UPDATE'),
-      delete: authService.hasPermission('CONTAC_METHOD', 'DELETE')
+      create: authService.hasPermission('CONTACT_METHOD', 'CREATE'),
+      edit: authService.hasPermission('CONTACT_METHOD', 'UPDATE'),
+      delete: authService.hasPermission('CONTACT_METHOD', 'DELETE')
     };
   }
 
