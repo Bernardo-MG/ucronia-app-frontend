@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Fee, FeePayments, FeeSummary, MemberFees, MemberStatus, YearsRange } from '@ucronia/domain';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Fee, FeePayments, FeeSummary, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class FeeEndpoint {
 
@@ -15,22 +14,41 @@ export class FeeEndpoint {
     private apiUrl: string
   ) { }
 
-  private mapFee(fee: Fee): Fee {
-    fee.month = new Date(fee.month);
-    if (fee.transaction?.date) {
-      fee.transaction.date = new Date(fee.transaction.date);
+  public page(
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
+    from: Date | undefined,
+    to: Date | undefined
+  ): Observable<Page<Fee>> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', page);
     }
-    return fee;
-  }
+    if (size) {
+      params = params.append('size', size);
+    }
 
-  private mapMemberFees(list: MemberFees[]): MemberFees[] {
-    return list.map(mf => {
-      mf.fees = mf.fees.map(f => {
-        f.month = new Date(f.month);
-        return f;
-      });
-      return mf;
-    });
+    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+
+    if (from) {
+      params = params.append('from', from.toISOString());
+    }
+    if (to) {
+      params = params.append('to', to.toISOString());
+    }
+
+  return this.http
+    .get<PaginatedResponse<Fee>>(`${this.apiUrl}/fee`, { params })
+    .pipe(
+      catchError(this.errorInterceptor.handle),
+      map(response => {
+        response.content = response.content.map(fee =>
+          this.mapFee(fee)
+        );
+        return response;
+      })
+    );
   }
 
   public get(
@@ -42,30 +60,6 @@ export class FeeEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(r => this.mapFee(r.content))
-      );
-  }
-
-  public year(
-    year: number,
-    active: MemberStatus,
-    sort: Sorting | undefined = undefined
-  ): Observable<MemberFees[]> {
-    let status;
-    if (active) {
-      status = active.toString().toUpperCase();
-    } else {
-      status = '';
-    }
-
-    let params = new HttpParams();
-    params = params.append('status', status);
-
-    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
-
-    return this.http.get<SimpleResponse<MemberFees[]>>(`${this.apiUrl}/fee/${year}`, { params })
-      .pipe(
-        catchError(this.errorInterceptor.handle),
-        map(r => this.mapMemberFees(r.content))
       );
   }
 
@@ -135,6 +129,14 @@ export class FeeEndpoint {
         catchError(this.errorInterceptor.handle),
         map(r => r.content)
       );
+  }
+
+  private mapFee(fee: Fee): Fee {
+    fee.month = new Date(fee.month);
+    if (fee.transaction?.date) {
+      fee.transaction.date = new Date(fee.transaction.date);
+    }
+    return fee;
   }
 
 }

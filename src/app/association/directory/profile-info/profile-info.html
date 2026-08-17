@@ -17,6 +17,11 @@
       </div>
     </p-card>
   </div>
+
+  <div class="ms-3 pb-4">
+    <ui-detail-field [loading]="loading()" icon="pi pi-key" name="Llave"
+      [value]="data().key ? ('#' + data().key) : 'Sin llave'" />
+  </div>
 }
 
 <h3 class="text-sm font-semibold text-gray-600 mb-3">Datos personales</h3>
@@ -31,6 +36,11 @@
   <!-- Last name -->
   <div>
     <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Apellidos" [value]="data().name.lastName" />
+  </div>
+
+  <!-- Apodo -->
+  <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Apodo" [value]="data().name.nickname" />
   </div>
 
   <!-- Identifier -->

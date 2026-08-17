@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { LoginStatus } from '@bernardo-mg/authentication';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { LoginRegister } from '../../domain/login-register';
 import { LoginRequest } from '../../request/login-request';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class LoginEndpoint {
 

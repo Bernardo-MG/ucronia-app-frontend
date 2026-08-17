@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { MemberFees, MemberFeesFee, YearsRange } from '@ucronia/domain';
+import { YearsRange } from '@ucronia/domain';
 import { getMonth } from 'date-fns';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { MemberFees, MemberFeesFee } from '../domain/member-fees';
 
 @Component({
   selector: 'assoc-fee-calendar',

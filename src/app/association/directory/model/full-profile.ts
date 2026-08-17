@@ -10,6 +10,7 @@ export class FullProfile {
   public address = '';
   public comments = '';
   public feeType? = new FullProfileFeeType();
+  public key?: number;
   public active? = false;
   public renew? = false;
 }
@@ -22,6 +23,7 @@ export class FullProfileChannel {
 export class FullProfileName {
   public fullName = '';
   public firstName = '';
+  public nickname = '';
   public lastName = '';
 }
 

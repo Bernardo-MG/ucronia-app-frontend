@@ -60,7 +60,6 @@ export class PasswordResetView {
       .subscribe({
         complete: () => {
           this.status = 'finished';
-          console.log('Password reset successfully');
         },
         error: error => {
           if (error instanceof FailureResponse) {

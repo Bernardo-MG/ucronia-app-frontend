@@ -18,7 +18,7 @@
     <assoc-transaction-display-selector (view)="display = $event" />
 
     @switch (display) {
-      @case(Display.LIST) {
+      @case(FundsDisplay.LIST) {
         <ui-text-filter (filter)="onFilter($event)" />
       }
     }
@@ -38,11 +38,11 @@
   <p-panel class="shadow rounded-lg">
 
     @switch (display) {
-      @case(Display.CALENDAR) {
+      @case(FundsDisplay.CALENDAR) {
         <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="status.loadingCalendar"
           (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
       }
-      @case (Display.LIST) {
+      @case (FundsDisplay.LIST) {
         <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
           [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
           (changePage)="loadList($event)" />
@@ -70,7 +70,7 @@
 
           @if (permissions.delete) {
             <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" aria-label="Borrar"
-              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event, selectedData)" rounded text class="!p-2" />
+              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event)" rounded text class="!p-2" />
           }
         </ng-template>
       }

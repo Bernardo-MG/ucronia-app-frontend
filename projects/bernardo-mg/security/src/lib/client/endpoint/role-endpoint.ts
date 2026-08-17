@@ -1,10 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Role } from '@bernardo-mg/authentication';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { catchError, map, Observable } from 'rxjs';
 import { RoleChange } from '../../request/role-change';
 import { RoleCreation } from '../../request/role-creation';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class RoleEndpoint {
 

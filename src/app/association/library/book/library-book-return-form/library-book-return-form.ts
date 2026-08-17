@@ -3,7 +3,7 @@ import { Component, Input, OnChanges, SimpleChanges, inject, input, output } fro
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { BookReturned, Borrower, Fee } from '@ucronia/domain';
+import { Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -20,17 +20,17 @@ export class LibraryBookReturnForm implements OnChanges {
   public readonly loading = input(false);
   public readonly lentDate = input(new Date());
   public readonly failures = input(new FailureStore());
+  public readonly borrowerName = input('');
 
-  @Input() public set borrower(value: Borrower) {
-    this.form.get('borrower')?.setValue(value.number);
-    this.memberName = value.name.fullName;
+  @Input() public set borrower(value: number) {
+    this.form.get('borrower')?.setValue(value);
   }
 
   @Input() public set book(value: number) {
     this.form.get('book')?.setValue(value);
   }
 
-  public readonly save = output<BookReturned>();
+  public readonly save = output<BookReturnedEvent>();
 
   public formStatus: FormStatus;
 
@@ -74,4 +74,12 @@ export class LibraryBookReturnForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export class BookReturnedEvent {
+  constructor(
+    public returnDate: Date,
+    public borrower: number,
+    public book: number
+  ) { }
 }

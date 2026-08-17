@@ -1,5 +1,4 @@
-<p-menu #fictionEditionMenu [model]="fictionEditionMenuItems" [popup]="true" />
-<p-menu #gameEditionMenu [model]="gameEditionMenuItems" [popup]="true" />
+<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="books()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
   showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
@@ -32,11 +31,6 @@
         @if (editable()) {
           <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
             [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, book)" rounded text />
-        }
-
-        @if (deletable()) {
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-            [attr.aria-disabled]="!deletable()" (click)="onDelete($event, book.number)" rounded text />
         }
       </td>
     </tr>

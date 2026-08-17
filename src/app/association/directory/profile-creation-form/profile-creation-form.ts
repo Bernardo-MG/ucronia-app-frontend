@@ -30,6 +30,7 @@ export class ProfileCreationForm implements OnChanges {
     this.form = fb.group({
       name: fb.group({
         firstName: [null, Validators.required],
+        nickname: [''],
         lastName: ['']
       })
     });
@@ -63,6 +64,7 @@ export class ProfileCreationFormData {
   constructor(
     public name: {
       firstName: string,
+      nickname?: string,
       lastName: string
     }
   ) { }

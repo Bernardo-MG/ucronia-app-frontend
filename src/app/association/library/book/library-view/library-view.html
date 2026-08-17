@@ -45,14 +45,13 @@
 
     @switch (display) {
       @case (Display.BOOKS) {
-        <assoc-library-book-list [editable]="permissions.edit" [deletable]="permissions.delete" [loading]="status.loading" [books]="data.content"
+        <assoc-library-book-list [editable]="permissions.edit" [loading]="status.loading" [books]="data.content"
           [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
-          (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (delete)="onDelete($event)"
-          (show)="onStartEditingView($event)" />
+          (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (show)="onStartEditingView($event)" />
       }
       @case (Display.LENDINGS) {
         <assoc-library-lending-list [loading]="status.loading" [lendings]="lendings.content" [rows]="lendings.size"
-          [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
+          [borrowerNames]="lendingBorrowerNames" [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
           (pageChange)="load($event)" />
       }
     }
@@ -67,14 +66,17 @@
           Libro
         </ng-template>
         <div class="w-full p-4">
-          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" />
+          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
+          [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" rounded text class="!p-2" />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="onDelete($event)" rounded text />
+      </ng-template>
       }
 
-      @case (Dialog.DETAILS) {
+      @case (Dialog.EDIT) {
         <ng-template #header>
           <h2 class="text-xl font-semibold">
             #{{ selectedData.number }}
@@ -88,7 +90,7 @@
             (save)="onSaveBook($event)" />
         </div>
         <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />
         </ng-template>
       }
 
@@ -104,71 +106,6 @@
         </ng-template>
       }
 
-      @case (Dialog.DONORS) {
-        <ng-template #header>
-          Donantes
-        </ng-template>
-        <div class="w-full p-4">
-          <assoc-library-book-donors-form [data]="selectedData.donation" [loading]="status.loading" [failures]="failures"
-            [getSelection]="service.getDonors.bind(service)" (save)="onSetDonation($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.AUTHORS) {
-        <ng-template #header>
-          Autores
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-selection-list-form [data]="selectedData.authors" [getSelection]="service.getAuthors.bind(service)"
-            (save)="onSetAuthors($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.GAME_SYSTEM) {
-        <ng-template #header>
-          Sistemas
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-form-with-selection [data]="getGameSystem(selectedData)"
-            [getSelection]="service.getGameSystems.bind(service)" (save)="onSetGameSystem($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.BOOK_TYPE) {
-        <ng-template #header>
-          Tipo
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-form-with-selection [data]="getBookType(selectedData)" [getSelection]="service.getBookTypes.bind(service)"
-            (save)="onSetBookType($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
-      @case (Dialog.PUBLISHERS) {
-        <ng-template #header>
-          Editores
-        </ng-template>
-        <div class="w-full p-4">
-          <shared-selection-list-form [data]="selectedData.publishers" [getSelection]="service.getPublishers.bind(service)"
-            (save)="onSetPublishers($event)" />
-        </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
-      }
-
       @case (Dialog.LENDINGS) {
         @if(selectedData.lent) {
           <ng-template #header>
@@ -176,6 +113,7 @@
           </ng-template>
           <div class="w-full p-4">
             <assoc-library-book-return-form [loading]="status.loading" [failures]="failures" [borrower]="borrower"
+              [borrowerName]="selectedBorrower.name.fullName"
               [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
           </div>
         } @else {

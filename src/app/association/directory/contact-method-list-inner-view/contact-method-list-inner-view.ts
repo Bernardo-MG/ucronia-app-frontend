@@ -5,7 +5,7 @@ import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
@@ -40,9 +40,9 @@ export class ContactMethodListInnerView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("contact_method", "create"),
-      edit: authService.hasPermission("contact_method", "update"),
-      delete: authService.hasPermission("contact_method", "delete")
+      create: authService.hasPermission('CONTACT_METHOD', 'CREATE'),
+      edit: authService.hasPermission('CONTACT_METHOD', 'UPDATE'),
+      delete: authService.hasPermission('CONTACT_METHOD', 'DELETE')
     };
   }
 
@@ -52,26 +52,26 @@ export class ContactMethodListInnerView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEditContactMethod(contactMethod: ContactMethod) {
+  public onShowEdit(contactMethod: ContactMethod) {
     this.selectedData = contactMethod;
     this.dialog = Dialog.EDIT;
   }
 
-  public onCreateContactMethod(toCreate: ContactMethod): void {
+  public onCreate(toCreate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.create(toCreate),
       () => this.load()
     );
   }
 
-  public onUpdateContactMethod(toUpdate: ContactMethod): void {
+  public onUpdate(toUpdate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.update(toUpdate),
       () => this.load(this.contactMethodData.page)
     );
   }
 
-  public onDeleteContactMethod(number: number): void {
+  public onDelete(number: number): void {
     this.call(
       () => this.contactMethodService.delete(number),
       () => this.load()

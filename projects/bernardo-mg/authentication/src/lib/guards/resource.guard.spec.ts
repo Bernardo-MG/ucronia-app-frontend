@@ -37,18 +37,18 @@ describe('ResourceGuard', () => {
   });
 
   it('should allow access when user has the required permission', () => {
-    authService.setPermission('member', ['view']);
+    authService.setPermission('MEMBER', ['VIEW']);
 
-    const guardFn = ResourceGuard('member', 'view');
+    const guardFn = ResourceGuard('MEMBER', 'VIEW');
     const result = TestBed.runInInjectionContext(() => guardFn());
 
     expect(result).toBe(true);
   });
 
   it('should redirect to root when user lacks the required permission', () => {
-    authService.setPermission('member', ['edit']); // missing 'view'
+    authService.setPermission('MEMBER', ['edit']);
 
-    const guardFn = ResourceGuard('member', 'view');
+    const guardFn = ResourceGuard('MEMBER', 'VIEW');
     const result = TestBed.runInInjectionContext(() => guardFn());
 
     expect(result instanceof UrlTree).toBeTrue();
@@ -56,7 +56,7 @@ describe('ResourceGuard', () => {
   });
 
   it('should redirect to root when user has no permissions at all', () => {
-    const guardFn = ResourceGuard('member', 'view');
+    const guardFn = ResourceGuard('MEMBER', 'VIEW');
     const result = TestBed.runInInjectionContext(() => guardFn());
 
     expect(result instanceof UrlTree).toBeTrue();

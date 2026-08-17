@@ -1,7 +1,7 @@
-import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Role } from '@bernardo-mg/authentication';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -13,8 +13,6 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 })
 export class RoleList {
 
-  private readonly confirmationService = inject(ConfirmationService);
-
   public readonly loading = input(false);
   public readonly readProfile = input(false);
   public readonly editable = input(false);
@@ -25,7 +23,7 @@ export class RoleList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<Role>();
-  public readonly delete = output<Role>();
+  public readonly delete = output<Event>();
   public readonly edit = output<{ view: string, role: Role }>();
   public readonly changePermissions = output<Role>();
   public readonly changeDirection = output<SortingEvent>();
@@ -44,24 +42,6 @@ export class RoleList {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
-  }
-
-  public onDelete(event: Event, role: Role) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => this.delete.emit(role)
-    });
   }
 
   public onShowInfo(role: Role) {

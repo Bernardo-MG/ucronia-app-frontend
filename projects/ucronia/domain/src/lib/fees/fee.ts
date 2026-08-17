@@ -1,4 +1,4 @@
-import { ProfileName } from "../profile/profile-name";
+import { MemberName } from "../members/member";
 
 export class Fee {
   public month = new Date();
@@ -15,7 +15,7 @@ export class FeeTransaction {
 
 export class FeeMember {
   public number = -1;
-  public name = new ProfileName();
+  public name = new MemberName();
 }
 
 export class FeeFeeType {

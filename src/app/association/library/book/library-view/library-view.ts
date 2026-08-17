@@ -2,30 +2,26 @@
 import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { FormWithListSelection } from '@app/shared/data/form-with-list-selection/form-with-list-selection';
-import { FormWithSelection } from '@app/shared/data/form-with-selection/form-with-selection';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
-import { BookUpdate } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, Borrower, Donation, FictionBook, GameBook, GameSystem, MemberStatus, PublicMember, Publisher } from '@ucronia/domain';
-import { MenuItem } from 'primeng/api';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { EMPTY, finalize, Observable } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
-import { LibraryBookDonorsForm } from '../library-book-donors-form/library-book-donors-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
 import { LibraryBookInfo } from '../library-book-info/library-book-info';
-import { LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
+import { BookLendingEvent, LibraryBookLendingForm } from '../library-book-lending-form/library-book-lending-form';
 import { LibraryBookList } from '../library-book-list/library-book-list';
-import { LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
+import { BookReturnedEvent, LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
@@ -33,7 +29,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookDonorsForm, LibraryBookReturnForm, LibraryBookInfo, FormWithListSelection, FormWithSelection, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -42,16 +38,20 @@ export class LibraryView implements OnInit {
   private readonly reportService = inject(BookReportService);
   public readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public failures = new FailureStore();
 
   private nameFilter = '';
 
   public selectedData: FictionBook | GameBook = new GameBook();
+  public selectedBorrower = new Profile();
   public members: PublicMember[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
+  public lendingBorrowerNames: Record<number, string> = {};
+  public selectedBookBorrowerNames: Record<number, string> = {};
   public summary = new LibrarySummary();
 
   public source: BookSelection = BookSelection.GAME;
@@ -78,20 +78,21 @@ export class LibraryView implements OnInit {
 
   private sort = new Sorting();
 
-  private delete: (number: number) => Observable<GameBook | FictionBook> = (number) => EMPTY;
-  private update: (number: number, data: BookUpdate) => Observable<GameBook | FictionBook> = (data) => EMPTY;
-  private read: (page: number | undefined, sort: Sorting, title: string | undefined) => Observable<Page<FictionBook | GameBook>> = (page, sort, title) => EMPTY;
-
   @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
   @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
   public Display = Display;
 
-  public get borrower(): Borrower {
+  public get borrower(): number {
+    if (!this.selectedData.lendings.length) {
+      return -1;
+    }
+
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
   }
 
   public get lentDate(): Date {
+    // TODO: handle empty lendings
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
 
@@ -100,39 +101,34 @@ export class LibraryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("library_book", "create"),
-      edit: authService.hasPermission("library_book", "update"),
-      delete: authService.hasPermission("library_book", "delete")
+      create: authService.hasPermission('LIBRARY_BOOK', 'CREATE'),
+      edit: authService.hasPermission('LIBRARY_BOOK', 'UPDATE'),
+      delete: authService.hasPermission('LIBRARY_BOOK', 'DELETE')
     };
 
-    // Initial operations
-    this.delete = this.service.deleteGameBook.bind(this.service);
-    this.update = this.service.updateGameBook.bind(this.service);
-    this.read = this.service.getAllGameBooks.bind(this.service);
-
     // Load data menu
-    if (authService.hasPermission('library_author', 'view')) {
+    if (authService.hasPermission('LIBRARY_AUTHOR', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Autores',
           command: () => this.router.navigate(['/association/library/authors'])
         });
     }
-    if (authService.hasPermission('library_publisher', 'view')) {
+    if (authService.hasPermission('LIBRARY_PUBLISHER', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Editores',
           command: () => this.router.navigate(['/association/library/publishers'])
         });
     }
-    if (authService.hasPermission('library_book_type', 'view')) {
+    if (authService.hasPermission('LIBRARY_BOOK_TYPE', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Tipos',
           command: () => this.router.navigate(['/association/library/types'])
         });
     }
-    if (authService.hasPermission('library_game_system', 'view')) {
+    if (authService.hasPermission('LIBRARY_GAME_SYSTEM', 'VIEW')) {
       this.dataMenuItems.push(
         {
           label: 'Sistemas',
@@ -173,9 +169,9 @@ export class LibraryView implements OnInit {
     );
   }
 
-  private onUpdate(toSave: BookUpdate) {
+  public onLend(toSave: BookLendingEvent) {
     this.call(
-      () => this.update(toSave.number, toSave),
+      () => this.service.lend(toSave.lendingDate, toSave.borrower, toSave.book),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -183,9 +179,9 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onLend(toSave: BookLent) {
+  public onReturn(toSave: BookReturnedEvent) {
     this.call(
-      () => this.service.lend(toSave),
+      () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -193,24 +189,28 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onReturn(toSave: BookReturned) {
-    this.call(
-      () => this.service.return(toSave),
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onDelete(number: number) {
-    this.call(
-      () => this.delete(number),
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
+  public onDelete(event: Event) {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => this.call(
+        () => this.service.deleteBook(this.getSelectedSource(), this.selectedData.number),
+        () => {
+          this.load(this.data.page);
+          this.loadSummary();
+        }
+      )
+    });
   }
 
   public onChangeDirection(sorting: SortingProperty) {
@@ -219,17 +219,27 @@ export class LibraryView implements OnInit {
     this.load(this.data.page);
   }
 
+  public onShowEdit() {
+    this.dialog = Dialog.EDIT;
+    this.withLoading(
+      this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
+        .pipe(
+          switchMap((book) => this.resolveBorrowerNames(book.lendings)
+            .pipe(
+              map((borrowerNames) => ({ book, borrowerNames }))
+            )
+          )
+        )
+    )
+      .subscribe(({ book, borrowerNames }) => {
+        this.selectedData = book;
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
+  }
+
   public onChangeSource(event: SelectButtonChangeEvent) {
     this.source = event.value as BookSelection;
-    if (this.source === BookSelection.GAME) {
-      this.delete = this.service.deleteGameBook.bind(this.service);
-      this.update = this.service.updateGameBook.bind(this.service);
-      this.read = this.service.getAllGameBooks.bind(this.service);
-    } else {
-      this.delete = this.service.deleteFictionBook.bind(this.service);
-      this.update = this.service.updateFictionBook.bind(this.service);
-      this.read = this.service.getAllFictionBooks.bind(this.service);
-    }
+
     this.load();
   }
 
@@ -244,6 +254,10 @@ export class LibraryView implements OnInit {
 
   public onShowBook(book: FictionBook | GameBook) {
     this.selectedData = book;
+    this.resolveBorrowerNames(book.lendings)
+      .subscribe((borrowerNames) => {
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
     this.dialog = Dialog.INFO;
   }
 
@@ -257,111 +271,79 @@ export class LibraryView implements OnInit {
 
   public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
     this.selectedData = event.book;
+    if (event.dialog === Dialog.EDIT) {
+      this.onShowEdit();
+      return;
+    }
+
+    if (event.dialog === Dialog.LENDINGS && event.book.lent) {
+      if (this.borrower > 0) {
+        this.withLoading(
+          this.service.getBorrower(this.borrower)
+        )
+          .subscribe((profile) => {
+            this.selectedBorrower = profile;
+            this.dialog = event.dialog;
+          });
+      } else {
+        this.selectedBorrower = new Profile();
+        this.dialog = event.dialog;
+      }
+
+      return;
+    }
+
     this.dialog = event.dialog;
   }
 
   public onSetAuthors(authors: Author[]) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: authors.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        authors: authors.map(a => a.number)
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
+    this.call(
+      () => this.service.setAuthors(this.selectedData, authors),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetPublishers(publishers: Publisher[]) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: this.selectedData.authors.map(a => a.number),
-        publishers: publishers.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        authors: this.selectedData.authors.map(a => a.number),
-        publishers: publishers.map(a => a.number)
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
+    this.call(
+      () => this.service.setPublishers(this.selectedData, publishers),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetGameSystem(gameSystem: GameSystem) {
-    const updateDate = {
-      ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      bookType: (this.selectedData as GameBook).bookType?.number,
-      authors: this.selectedData.authors.map(a => a.number),
-      gameSystem: gameSystem.number
-    };
-    this.onUpdate(updateDate as BookUpdate);
+    this.call(
+      () => this.service.setGameSystem(this.selectedData, gameSystem),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSetBookType(bookType: BookType) {
-    const updateDate = {
-      ...this.selectedData,
-      publishers: this.selectedData.publishers.map(p => p.number),
-      gameSystem: (this.selectedData as GameBook).gameSystem?.number,
-      authors: this.selectedData.authors.map(a => a.number),
-      bookType: bookType.number
-    };
-    this.onUpdate(updateDate as BookUpdate);
-  }
-
-  public onSetDonation(donation: Donation | undefined) {
-    let updateDate;
-    if (this.selectedData instanceof GameBook) {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        bookType: this.selectedData.bookType?.number,
-        gameSystem: this.selectedData.gameSystem?.number,
-        authors: this.selectedData.authors.map(a => a.number),
-        donation: donation
-      };
-    } else {
-      updateDate = {
-        ...this.selectedData,
-        publishers: this.selectedData.publishers.map(p => p.number),
-        authors: this.selectedData.authors.map(a => a.number),
-        donation: donation
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
+    this.call(
+      () => this.service.setBookType(this.selectedData, bookType),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onSaveBook(book: FictionBook | GameBook) {
-    let updateDate;
-    if (book instanceof GameBook) {
-      updateDate = {
-        ...book,
-        publishers: book.publishers.map(p => p.number),
-        bookType: book.bookType?.number,
-        gameSystem: book.gameSystem?.number,
-        authors: book.authors.map(a => a.number)
-      };
-    } else {
-      updateDate = {
-        ...book,
-        publishers: book.publishers.map(p => p.number),
-        authors: book.authors.map(a => a.number)
-      };
-    }
-    this.onUpdate(updateDate as BookUpdate);
+    this.call(
+      () => this.service.saveBook(book),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
   public onFilter(filter: string) {
@@ -395,17 +377,25 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
-    this.status.loading = true;
-    this.read(page, this.sort, this.nameFilter)
-      .pipe(finalize(() => this.status.loading = false))
-      .subscribe(response => this.data = response);
+    this.withLoading(
+      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.nameFilter)
+    ).subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
-    this.status.loading = true;
-    this.lendingsService.getAll(page, new Sorting([]))
-      .pipe(finalize(() => this.status.loading = false))
-      .subscribe(response => this.lendings = response);
+    this.withLoading(
+      this.lendingsService.getAll(page, new Sorting([]))
+        .pipe(
+          switchMap((response) => this.resolveBorrowerNames(response.content)
+            .pipe(
+              map((lendingBorrowerNames) => ({ response, lendingBorrowerNames }))
+            )
+          )
+        )
+    ).subscribe(({ response, lendingBorrowerNames }) => {
+      this.lendings = response;
+      this.lendingBorrowerNames = lendingBorrowerNames;
+    });
   }
 
   // PRIVATE METHODS
@@ -440,6 +430,51 @@ export class LibraryView implements OnInit {
     this.service.getSummary()
       .pipe(finalize(() => this.status.loadingSummary = false))
       .subscribe(r => this.summary = r);
+  }
+
+  private withLoading<T>(
+    observable: Observable<T>
+  ): Observable<T> {
+    this.status.loading = true;
+
+    return observable.pipe(
+      finalize(() => this.status.loading = false)
+    );
+  }
+
+  private getSelectedSource(): 'game' | 'fiction' {
+    if (this.source === BookSelection.FICTION) {
+      return 'fiction';
+    }
+
+    return 'game';
+  }
+
+  private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
+    const lendingBorrowers = lendings.map(lending => lending.borrower).filter(number => number > 0);
+    const borrowerNumbers = [...new Set(lendingBorrowers)];
+
+    if (borrowerNumbers.length === 0) {
+      return of({});
+    }
+
+    return forkJoin(
+      borrowerNumbers.map(number =>
+        this.service.getBorrower(number)
+          .pipe(
+            map(profile => ({ number, name: profile.name.fullName })),
+            catchError(() => of({ number, name: `${number}` }))
+          )
+      )
+    )
+      .pipe(
+        map((borrowers) =>
+          borrowers.reduce((names, borrower) => {
+            names[borrower.number] = borrower.name;
+            return names;
+          }, {} as Record<number, string>)
+        )
+      );
   }
 
 }

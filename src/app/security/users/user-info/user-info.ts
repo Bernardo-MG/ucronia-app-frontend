@@ -1,5 +1,5 @@
 
-import { Component, input, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Role, User } from '@bernardo-mg/authentication';
 import { arrayPage } from '@bernardo-mg/request';
@@ -14,7 +14,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, CardModule, DetailField, StatusDetail, TableModule],
   templateUrl: './user-info.html'
 })
-export class UserInfo {
+export class UserInfo implements OnChanges {
 
   public readonly user = input(new User());
   public readonly member = input(new PublicMember());

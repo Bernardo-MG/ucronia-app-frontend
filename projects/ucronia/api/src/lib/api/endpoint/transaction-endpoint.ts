@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { Transaction, TransactionMonthlyBalance, TransactionMonthsRange, TransactionSummary } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { TransactionUpdate } from '../../transaction/transaction-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class TransactionEndpoint {
 
@@ -14,6 +13,20 @@ export class TransactionEndpoint {
     private http: HttpClient,
     private apiUrl: string
   ) { }
+
+  private mapTransaction(transaction: Transaction): Transaction {
+    transaction.date = new Date(transaction.date);
+    return transaction;
+  }
+
+  private mapTransactions(page: PaginatedResponse<Transaction>): PaginatedResponse<Transaction> {
+    page.content = page.content.map(t => {
+      t.date = new Date(t.date);
+      return t;
+    });
+
+    return page;
+  }
 
   public page(
     page: number | undefined = undefined,
@@ -46,7 +59,8 @@ export class TransactionEndpoint {
 
     return this.http.get<PaginatedResponse<Transaction>>(`${this.apiUrl}/transaction`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(r => this.mapTransactions(r))
       );
   }
 
@@ -56,7 +70,12 @@ export class TransactionEndpoint {
     return this.http.get<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(t => {
+          t.date = new Date(t.date);
+          return t;
+        }),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -66,7 +85,8 @@ export class TransactionEndpoint {
     return this.http.post<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -77,7 +97,8 @@ export class TransactionEndpoint {
     return this.http.put<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -87,7 +108,8 @@ export class TransactionEndpoint {
     return this.http.delete<SimpleResponse<Transaction>>(`${this.apiUrl}/transaction/${index}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content),
+        map(r => this.mapTransaction(r))
       );
   }
 
@@ -137,10 +159,7 @@ export class TransactionEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
-        map(r => r.map(b => {
-          b.month = new Date(b.month);
-          return b;
-        }))
+        map(r => r.map(b => this.mapTransactionMonthlyBalance(b)))
       );
   }
 
@@ -149,11 +168,20 @@ export class TransactionEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content),
-        map(r => r.months.map(m => {
-          const date = new Date(m);
-          return new Month(date.getFullYear(), date.getMonth() + 1);
-        }))
+        map(r => this.mapTransactionMonthsRange(r))
       );
+  }
+
+  private mapTransactionMonthlyBalance(balance: TransactionMonthlyBalance): TransactionMonthlyBalance {
+    balance.month = new Date(balance.month);
+    return balance;
+  }
+
+  private mapTransactionMonthsRange(range: TransactionMonthsRange): Month[] {
+    return range.months.map(m => {
+      const date = new Date(m);
+      return new Month(date.getFullYear(), date.getMonth() + 1);
+    });
   }
 
 }

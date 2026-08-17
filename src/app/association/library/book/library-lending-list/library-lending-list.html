@@ -12,7 +12,7 @@
   <ng-template #body let-lending>
     <tr>
       <td>{{ lending.book.title.fullTitle }}</td>
-      <td>{{ lending.borrower.name.fullName }}</td>
+      <td>{{ getBorrowerName(lending.borrower) }}</td>
       <td>{{ lending.lendingDate | date:'yyyy-MM-dd' }}</td>
       <td>{{ lending.days }}</td>
     </tr>

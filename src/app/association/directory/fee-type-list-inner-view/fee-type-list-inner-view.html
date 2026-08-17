@@ -12,7 +12,7 @@
   <p class="m-0">
     <assoc-fee-type-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
       [data]="feeTypeData.content" [rows]="feeTypeData.size" [page]="feeTypeData.page"
-      [totalRecords]="feeTypeData.totalElements" (edit)="onShowEditFeeType($event)" (delete)="onDeleteFeeType($event)"
+      [totalRecords]="feeTypeData.totalElements" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
       (changePage)="load($event)" />
   </p>
 </p-panel>
@@ -25,7 +25,7 @@
         Crear tipo de cuota
       </ng-template>
       <div class="w-full">
-        <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreateFeeType($event)" />
+        <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
     }
 
@@ -35,7 +35,7 @@
       </ng-template>
       <div class="w-full">
         <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
-          (save)="onUpdateFeeType($event)" />
+          (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
         <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />

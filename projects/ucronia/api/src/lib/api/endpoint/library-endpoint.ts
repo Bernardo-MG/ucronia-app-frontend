@@ -1,10 +1,12 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { AuthorCreation } from '../../library/author-creation';
 import { AuthorUpdate } from '../../library/author-update';
 import { BookCreation } from '../../library/book-creation';
+import { BookLent } from '../../library/book-lent';
+import { BookReturned } from '../../library/book-returned';
 import { BookTypeCreation } from '../../library/book-type-creation';
 import { BookTypeUpdate } from '../../library/book-type-update';
 import { FictionBookUpdate } from '../../library/fiction-book-update';
@@ -13,7 +15,6 @@ import { GameSystemCreation } from '../../library/game-system-creation';
 import { GameSystemUpdate } from '../../library/game-system-update';
 import { PublisherCreation } from '../../library/publisher-creation';
 import { PublisherUpdate } from '../../library/publisher-update';
-import { ErrorRequestInterceptor } from '../error-request-interceptor';
 
 export class LibraryEndpoint {
 

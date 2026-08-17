@@ -1,18 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UcroniaClient } from '@ucronia/api';
 import { of } from 'rxjs';
+import { FrontpageService } from '../frontpage-service';
 import { Frontpage } from './frontpage';
 
 describe('Frontpage', () => {
   let component: Frontpage;
   let fixture: ComponentFixture<Frontpage>;
 
-  const ucroniaClienttMock = {
-    setting: {
-      public: {
-        get: jasmine.createSpy().and.returnValue(of({}))
-      }
-    }
+  const frontpageServiceMock = {
+    getSettings: jasmine.createSpy().and.returnValue(of({})),
+    getActivities: jasmine.createSpy().and.returnValue(of({}))
   };
 
   beforeEach(async () => {
@@ -21,7 +18,7 @@ describe('Frontpage', () => {
         Frontpage
       ],
       providers: [
-        { provide: UcroniaClient, useValue: ucroniaClienttMock }
+        { provide: FrontpageService, useValue: frontpageServiceMock }
       ]
     })
       .compileComponents();

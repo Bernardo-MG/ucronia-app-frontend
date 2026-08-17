@@ -1,16 +1,9 @@
-import { ProfileName } from "../profile/profile-name";
 import { LentBook } from "./lent-book";
-
 
 export class BookLending {
   public book = new LentBook();
-  public borrower = new Borrower();
+  public borrower = 0;
   public lendingDate = new Date();
   public returnDate: Date | undefined;
   public days = 0;
-}
-
-export class Borrower {
-  public number = -1;
-  public name = new ProfileName();
 }

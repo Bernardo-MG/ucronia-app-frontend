@@ -40,9 +40,9 @@ export class FeeTypeListInnerView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("fee_type", "create"),
-      edit: authService.hasPermission("fee_type", "update"),
-      delete: authService.hasPermission("fee_type", "delete")
+      create: authService.hasPermission('FEE_TYPE', 'CREATE'),
+      edit: authService.hasPermission('FEE_TYPE', 'UPDATE'),
+      delete: authService.hasPermission('FEE_TYPE', 'DELETE')
     };
   }
 
@@ -52,26 +52,26 @@ export class FeeTypeListInnerView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEditFeeType(contactMethod: FeeType) {
+  public onShowEdit(contactMethod: FeeType) {
     this.selectedData = contactMethod;
     this.dialog = Dialog.EDIT;
   }
 
-  public onCreateFeeType(toCreate: FeeType): void {
+  public onCreate(toCreate: FeeType): void {
     this.call(
       () => this.feeTypeService.create(toCreate),
       () => this.load()
     );
   }
 
-  public onUpdateFeeType(toUpdate: FeeType): void {
+  public onUpdate(toUpdate: FeeType): void {
     this.call(
       () => this.feeTypeService.update(toUpdate),
       () => this.load(this.feeTypeData.page)
     );
   }
 
-  public onDeleteFeeType(number: number): void {
+  public onDelete(number: number): void {
     this.call(
       () => this.feeTypeService.delete(number),
       () => this.load()

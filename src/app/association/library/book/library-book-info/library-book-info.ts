@@ -15,6 +15,7 @@ export class LibraryBookInfo {
 
   public readonly loading = input(false);
   public readonly book = input<FictionBook | GameBook>(new GameBook());
+  public readonly borrowerNames = input<Record<number, string>>({});
 
   public languages: Language[] = [];
 

@@ -4,12 +4,12 @@ import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UserUpdate } from '@bernardo-mg/security';
 import { MemberStatus, PublicMember } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
 import { UserList } from '../user-list/user-list';
@@ -25,7 +25,7 @@ import { UserService } from '../user-service';
 export class UserView implements OnInit {
 
   private readonly service = inject(UserService);
-  private readonly messageService = inject(MessageService);
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
@@ -56,9 +56,9 @@ export class UserView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("user", "create"),
-      edit: authService.hasPermission("user", "update"),
-      delete: authService.hasPermission("user", "delete")
+      create: authService.hasPermission('USER', 'CREATE'),
+      edit: authService.hasPermission('USER', 'UPDATE'),
+      delete: authService.hasPermission('USER', 'DELETE')
     };
   }
 
@@ -81,10 +81,7 @@ export class UserView implements OnInit {
   public onInvite(toCreate: UserFormData): void {
     this.call(
       () => this.service.invite(toCreate),
-      () => {
-        this.messageService.add({ severity: 'info', summary: 'Creado', detail: 'Datos creados', life: 3000 });
-        this.load();
-      }
+      () => this.load()
     );
   }
 
@@ -95,10 +92,7 @@ export class UserView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.username, user),
-      () => {
-        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-        this.load();
-      }
+      () => this.load()
     );
   }
 
@@ -111,20 +105,14 @@ export class UserView implements OnInit {
     }
     this.call(
       () => this.service.update(this.selectedData.username, user),
-      () => {
-        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-        this.load();
-      }
+      () => this.load()
     );
   }
 
   public onAssignMember(member: PublicMember): void {
     this.call(
       () => this.service.assignProfile(this.selectedData.username, member.number),
-      () => {
-        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-        this.load();
-      }
+      () => this.load()
     );
   }
 
@@ -142,21 +130,30 @@ export class UserView implements OnInit {
     };
     this.call(
       () => this.service.update(this.selectedData.username, userUpdate),
-      () => {
-        this.messageService.add({ severity: 'info', summary: 'Actualizado', detail: 'Datos actualizados', life: 3000 });
-        this.load();
-      }
+      () => this.load()
     );
   }
 
-  public onDelete(id: string) {
-    this.call(
-      () => this.service.delete(id),
-      () => {
-        this.messageService.add({ severity: 'info', summary: 'Borrado', detail: 'Datos borrados', life: 3000 });
-        this.load();
-      }
-    );
+  public onDelete(event: Event): void {
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () =>
+        this.call(
+          () => this.service.delete(this.selectedData.username),
+          () => this.load()
+        )
+    });
   }
 
   public onStartInvitation(): void {

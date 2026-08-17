@@ -1,6 +1,7 @@
-import { ProfileName } from "../profile/profile-name";
+import { MemberName } from "./member";
 
 export class PublicMember {
   public number = -1;
-  public name = new ProfileName();
+  public name = new MemberName();
+  public key?: number;
 }

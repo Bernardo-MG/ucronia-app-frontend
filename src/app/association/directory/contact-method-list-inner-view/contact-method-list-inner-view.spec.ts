@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { ContactMethod } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';
 import { ContactMethodListInnerView } from './contact-method-list-inner-view';
@@ -27,7 +27,6 @@ describe('ContactMethodListInnerView', () => {
       ],
       providers: [
         ConfirmationService,
-        MessageService,
         provideAnimationsAsync(),
         { provide: ContactMethodService, useValue: contactMethodServiceMock }
       ]

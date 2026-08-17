@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookLending, BookLent, BookReturned, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { MessageService } from 'primeng/api';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from '../model/library-summary';
-import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: "root"
@@ -46,6 +46,14 @@ export class LibraryService {
     return this.ucroniaClient.library.gameBook.get(number);
   }
 
+  public getOneBook(source: LibraryBookSource, number: number): Observable<GameBook | FictionBook> {
+    if (source === 'fiction') {
+      return this.getOneFictionBook(number);
+    }
+
+    return this.getOneGameBook(number);
+  }
+
   public deleteGameBook(number: number): Observable<GameBook> {
     return this.ucroniaClient.library.gameBook.delete(number)
       .pipe(
@@ -69,6 +77,14 @@ export class LibraryService {
       );
   }
 
+  public deleteBook(source: LibraryBookSource, number: number): Observable<GameBook | FictionBook> {
+    if (source === 'fiction') {
+      return this.deleteFictionBook(number);
+    }
+
+    return this.deleteGameBook(number);
+  }
+
   public getAllGameBooks(page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<GameBook>> {
     const sorting = new Sorting(
       mergeProperties(
@@ -83,6 +99,14 @@ export class LibraryService {
     );
 
     return this.ucroniaClient.library.gameBook.page(page, undefined, sorting, title);
+  }
+
+  public getAllBooks(source: LibraryBookSource, page: number | undefined = undefined, sort: Sorting, title: string | undefined): Observable<Page<FictionBook | GameBook>> {
+    if (source === 'fiction') {
+      return this.getAllFictionBooks(page, sort, title);
+    }
+
+    return this.getAllGameBooks(page, sort, title);
   }
 
   public createFictionBook(data: BookCreation): Observable<FictionBook> {
@@ -111,6 +135,55 @@ export class LibraryService {
           });
         })
       );
+  }
+
+  public setAuthors(book: FictionBook | GameBook, authors: Author[]): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      authors: authors.map(author => author.number)
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setPublishers(book: FictionBook | GameBook, publishers: Publisher[]): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      publishers: publishers.map(publisher => publisher.number)
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setGameSystem(book: FictionBook | GameBook, gameSystem: GameSystem): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      gameSystem: gameSystem.number
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setBookType(book: FictionBook | GameBook, bookType: BookType): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      bookType: bookType.number
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public setDonation(book: FictionBook | GameBook, donation: Donation | undefined): Observable<FictionBook | GameBook> {
+    const update = {
+      ...this.buildBookUpdate(book),
+      donation: donation
+    };
+
+    return this.updateBook(book, update);
+  }
+
+  public saveBook(book: FictionBook | GameBook): Observable<FictionBook | GameBook> {
+    return this.updateBook(book, this.buildBookUpdate(book));
   }
 
   public getOneFictionBook(number: number): Observable<FictionBook> {
@@ -180,12 +253,42 @@ export class LibraryService {
     return this.ucroniaClient.library.author.page(page, undefined, sorting);
   }
 
+  public searchAuthors(query: string): Observable<Author[]> {
+    const sorting = new Sorting(
+      [new SortingProperty('name')]
+    );
+
+    const search = query?.trim().toLowerCase();
+
+    return this.ucroniaClient.library.author.page(undefined, 1000, sorting)
+      .pipe(
+        map(page => page.content as Author[]),
+        map(authors => authors.filter(author => author.name.toLowerCase().includes(search))),
+        map(authors => authors.slice(0, 10))
+      );
+  }
+
   public getPublishers(page: number | undefined = undefined): Observable<Page<Publisher>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
     return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
+  }
+
+  public searchPublishers(query: string): Observable<Publisher[]> {
+    const sorting = new Sorting(
+      [new SortingProperty('name')]
+    );
+
+    const search = query?.trim().toLowerCase();
+
+    return this.ucroniaClient.library.publisher.page(undefined, 1000, sorting)
+      .pipe(
+        map(page => page.content as Publisher[]),
+        map(publishers => publishers.filter(publisher => publisher.name.toLowerCase().includes(search))),
+        map(publishers => publishers.slice(0, 10))
+      );
   }
 
   public getDonors(page: number | undefined = undefined): Observable<Page<Profile>> {
@@ -200,7 +303,8 @@ export class LibraryService {
     return this.ucroniaClient.profile.page(page, undefined, sorting, undefined);
   }
 
-  public lend(data: BookLent): Observable<BookLending> {
+  public lend(lendingDate: Date, borrower: number, book: number): Observable<BookLending> {
+    const data = { lendingDate, borrower, book };
     return this.ucroniaClient.library.lending.lend(data)
       .pipe(
         tap(() => {
@@ -214,7 +318,8 @@ export class LibraryService {
       );
   }
 
-  public return(data: BookReturned): Observable<BookLending> {
+  public return(returnDate: Date, borrower: number, book: number): Observable<BookLending> {
+    const data = { returnDate, borrower, book };
     return this.ucroniaClient.library.lending.return(data)
       .pipe(
         tap(() => {
@@ -241,6 +346,23 @@ export class LibraryService {
       .pipe(map(page => page.content as PublicMember[]));
   }
 
+  public searchDonors(query: string): Observable<Donor[]> {
+    const sorting = new Sorting(
+      [
+        new SortingProperty('name.firstName'),
+        new SortingProperty('name.lastName'),
+        new SortingProperty('number')
+      ]
+    );
+
+    return this.ucroniaClient.profile.page(undefined, 10, sorting, query)
+      .pipe(map(page => page.content as Donor[]));
+  }
+
+  public getBorrower(number: number): Observable<Profile> {
+    return this.ucroniaClient.profile.get(number);
+  }
+
   public getSummary(): Observable<LibrarySummary> {
     return forkJoin({
       games: this.ucroniaClient.library.gameBook.page(undefined, 0),
@@ -258,4 +380,33 @@ export class LibraryService {
       )
   }
 
+  private updateBook(book: FictionBook | GameBook, update: BookUpdate | GameBookUpdate): Observable<FictionBook | GameBook> {
+    if (this.isGameBook(book)) {
+      return this.updateGameBook(book.number, update as GameBookUpdate);
+    }
+
+    return this.updateFictionBook(book.number, update as BookUpdate);
+  }
+
+  private buildBookUpdate(book: FictionBook | GameBook): BookUpdate | GameBookUpdate {
+    const update: any = {
+      ...book,
+      authors: book.authors.map(author => author.number),
+      publishers: book.publishers.map(publisher => publisher.number)
+    };
+
+    if (this.isGameBook(book)) {
+      update.bookType = book.bookType?.number;
+      update.gameSystem = book.gameSystem?.number;
+    }
+
+    return update as BookUpdate | GameBookUpdate;
+  }
+
+  private isGameBook(book: FictionBook | GameBook): book is GameBook {
+    return 'bookType' in book || 'gameSystem' in book;
+  }
+
 }
+
+export type LibraryBookSource = 'game' | 'fiction';

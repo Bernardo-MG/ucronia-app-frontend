@@ -1,8 +1,8 @@
-import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FictionBook, GameBook } from '@ucronia/domain';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
@@ -16,120 +16,35 @@ import { Dialog } from '../library-dialog';
 })
 export class LibraryBookList {
 
-  private readonly confirmationService = inject(ConfirmationService);
-
   public readonly editable = input(false);
-  public readonly deletable = input(false);
   public readonly loading = input(false);
   public readonly books = input<FictionBook[] | GameBook[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly delete = output<number>();
   public readonly showBook = output<FictionBook | GameBook>();
   public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
   public readonly show = output<{ dialog: Dialog, book: FictionBook | GameBook }>();
 
-  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
-  @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
+  @ViewChild('editionMenu') editionMenu!: Menu;
 
-  public fictionEditionMenuItems: MenuItem[] = [];
-  public gameEditionMenuItems: MenuItem[] = [];
+  public editionMenuItems: MenuItem[] = [];
 
   public get first() {
     return (this.page() - 1) * this.rows();
   }
 
-  public onDelete(event: Event, number: number) {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => this.delete.emit(number)
-    });
-  }
-
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
-      this.gameEditionMenuItems = [];
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Datos',
-          command: () => this.show.emit({ dialog: Dialog.DETAILS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Donantes',
-          command: () => this.show.emit({ dialog: Dialog.DONORS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Autores',
-          command: () => this.show.emit({ dialog: Dialog.AUTHORS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Editor',
-          command: () => this.show.emit({ dialog: Dialog.PUBLISHERS, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Sistema',
-          command: () => this.show.emit({ dialog: Dialog.GAME_SYSTEM, book })
-        });
-      this.gameEditionMenuItems.push(
-        {
-          label: 'Tipo',
-          command: () => this.show.emit({ dialog: Dialog.BOOK_TYPE, book })
-        });
-      this.gameEditionMenuItems.push(
+      this.editionMenuItems = [];
+      this.editionMenuItems.push(
         {
           label: 'Préstamos',
           command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
         });
 
-      this.gameEditionMenu.toggle(event);
-    } else {
-      this.fictionEditionMenuItems = [];
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Datos',
-          command: () => this.show.emit({ dialog: Dialog.DETAILS, book })
-        });
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Donantes',
-          command: () => this.show.emit({ dialog: Dialog.DONORS, book })
-        });
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Autores',
-          command: () => this.show.emit({ dialog: Dialog.AUTHORS, book })
-        });
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Editor',
-          command: () => this.show.emit({ dialog: Dialog.PUBLISHERS, book })
-        });
-      this.fictionEditionMenuItems.push(
-        {
-          label: 'Préstamos',
-          command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
-        });
-
-      this.fictionEditionMenu.toggle(event);
-    }
+      this.editionMenu.toggle(event);
   }
 
   public onChangeDirection(sorting: SortingEvent) {

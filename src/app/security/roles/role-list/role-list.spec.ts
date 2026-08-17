@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { RoleList } from './role-list';
 
 describe('RoleList', () => {
@@ -9,10 +8,7 @@ describe('RoleList', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [RoleList],
-      providers: [
-        ConfirmationService,
-        MessageService
-      ]
+      providers: []
     })
     .compileComponents();
 

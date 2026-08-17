@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SecurityClient } from '@bernardo-mg/security';
 import { UcroniaClient } from '@ucronia/api';
+import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { UserService } from './user-service';
 
@@ -38,6 +39,7 @@ describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
+        MessageService,
         { provide: SecurityClient, useValue: securityClientMock },
         { provide: UcroniaClient, useValue: ucroniaClientMock }
       ]

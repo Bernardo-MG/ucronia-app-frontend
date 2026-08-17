@@ -3,12 +3,13 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
+import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
@@ -44,7 +45,7 @@ export class FundsView implements OnInit {
   };
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
-  public readonly Display = Display;
+  public readonly FundsDisplay = FundsDisplay;
 
   public selectedData = new Transaction();
 
@@ -54,7 +55,7 @@ export class FundsView implements OnInit {
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
-  public display = Display.CALENDAR;
+  public display = FundsDisplay.CALENDAR;
 
   public failures = new FailureStore();
 
@@ -65,9 +66,9 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("transaction", "create"),
-      edit: authService.hasPermission("transaction", "update"),
-      delete: authService.hasPermission("transaction", "delete")
+      create: authService.hasPermission('TRANSACTION', 'CREATE'),
+      edit: authService.hasPermission('TRANSACTION', 'UPDATE'),
+      delete: authService.hasPermission('TRANSACTION', 'DELETE')
     };
   }
 
@@ -105,14 +106,14 @@ export class FundsView implements OnInit {
     );
   }
 
-  public onUpdate(toCreate: Transaction): void {
+  public onUpdate(toUpdate: Transaction): void {
     this.call(
-      () => this.service.update(toCreate),
+      () => this.service.update(toUpdate),
       () => this.load()
     );
   }
 
-  public onDelete(event: Event, transaction: Transaction) {
+  public onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -127,7 +128,7 @@ export class FundsView implements OnInit {
         severity: 'danger'
       },
       accept: () => this.call(
-        () => this.service.delete(transaction.index),
+        () => this.service.delete(this.selectedData.index),
       () => this.load()
       )
     });
@@ -178,7 +179,7 @@ export class FundsView implements OnInit {
   }
 
   private load() {
-    if (this.display === Display.CALENDAR) {
+    if (this.display === FundsDisplay.CALENDAR) {
       this.loadCalendar();
     } else {
       this.loadList();
@@ -186,16 +187,6 @@ export class FundsView implements OnInit {
   }
 
   // PRIVATE METHODS
-
-  private getDefaultMonth() {
-    let month;
-    if (this.months.length) {
-      month = this.months[0];
-    } else {
-      month = new Date();
-    }
-    return month
-  }
 
   private call(
     action: () => Observable<any>,
@@ -222,6 +213,16 @@ export class FundsView implements OnInit {
     }
   }
 
+  private getDefaultMonth() {
+    let month;
+    if (this.months.length) {
+      month = this.months[0];
+    } else {
+      month = new Date();
+    }
+    return month
+  }
+
 }
 
 interface Permissions {
@@ -243,9 +244,4 @@ enum Dialog {
   INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
-}
-
-export enum Display {
-  CALENDAR = 'calendar',
-  LIST = 'list'
 }

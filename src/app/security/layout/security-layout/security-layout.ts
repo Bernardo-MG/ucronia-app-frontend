@@ -16,7 +16,7 @@ export class SecurityLayout {
   constructor() {
     const authService = inject(AuthService);
     const items = [];
-    if (authService.hasPermission('user', 'view')) {
+    if (authService.hasPermission('USER', 'VIEW')) {
       items.push(
         {
           label: 'Usuarios',
@@ -24,7 +24,7 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('role', 'view')) {
+    if (authService.hasPermission('ROLE', 'VIEW')) {
       items.push(
         {
           label: 'Roles',
@@ -32,7 +32,7 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('user_token', 'view')) {
+    if (authService.hasPermission('USER_TOKEN', 'VIEW')) {
       items.push(
         {
           label: 'Tokens de usuario',
@@ -40,7 +40,7 @@ export class SecurityLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('user', 'view')) {
+    if (authService.hasPermission('USER', 'VIEW')) {
       items.push(
         {
           label: 'Auditoría',

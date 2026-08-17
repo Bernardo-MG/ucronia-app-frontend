@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
-import { GameBook } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { BookLending, GameBook, Profile } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { LibrarySummary } from '../../model/library-summary';
 import { BookReportService } from '../book-report-service';
@@ -17,8 +17,21 @@ describe('LibraryView', () => {
   const libraryServiceMock = jasmine.createSpyObj<LibraryService>(
     'LibraryService',
     [
+      'getAllBooks',
+      'getOneBook',
+      'deleteBook',
       'getAllGameBooks',
       'getAllFictionBooks',
+      'getGameSystems',
+      'getBookTypes',
+      'searchAuthors',
+      'searchPublishers',
+      'setAuthors',
+      'setPublishers',
+      'setGameSystem',
+      'setBookType',
+      'setDonation',
+      'saveBook',
       'createGameBook',
       'createFictionBook',
       'updateGameBook',
@@ -27,7 +40,8 @@ describe('LibraryView', () => {
       'deleteFictionBook',
       'lend',
       'return',
-      'getSummary'
+      'getSummary',
+      'getBorrower'
     ]
   );
 
@@ -42,11 +56,20 @@ describe('LibraryView', () => {
   );
 
   beforeEach(async () => {
+    libraryServiceMock.getAllBooks.and.returnValue(
+      of(new Page<GameBook>())
+    );
     libraryServiceMock.getAllGameBooks.and.returnValue(
       of(new Page<GameBook>())
     );
     libraryServiceMock.getSummary.and.returnValue(
       of(new LibrarySummary())
+    );
+    libraryServiceMock.getBorrower.and.returnValue(
+      of(new Profile())
+    );
+    lendingServiceMock.getAll.and.returnValue(
+      of(new Page<BookLending>())
     );
 
     await TestBed.configureTestingModule({
@@ -54,7 +77,6 @@ describe('LibraryView', () => {
         LibraryView
       ],
       providers: [
-        MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
         { provide: LibraryService, useValue: libraryServiceMock },

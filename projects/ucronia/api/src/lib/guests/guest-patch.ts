@@ -1,9 +1,9 @@
-import { ProfileName } from "@ucronia/domain";
+import { GuestName } from "@ucronia/domain";
 import { ProfilePatchChannel } from "../profile/profile-patch";
 
 export class GuestPatch {
   public identifier?: string;
-  public name?: ProfileName;
+  public name?: GuestName;
   public birthDate?: Date;
   public contactChannels?: ProfilePatchChannel[] = [];
   public games?: Date[] = [];

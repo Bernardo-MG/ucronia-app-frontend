@@ -3,7 +3,7 @@ import { MemberStatusSelector } from '@app/shared/member/member-status-selector/
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
-import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -11,6 +11,7 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable, switchMap, tap } from 'rxjs';
+import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
@@ -62,9 +63,9 @@ export class FeeView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission("fee", "create"),
-      edit: authService.hasPermission("fee", "update"),
-      delete: authService.hasPermission("fee", "delete")
+      create: authService.hasPermission('FEE', 'CREATE'),
+      edit: authService.hasPermission('FEE', 'UPDATE'),
+      delete: authService.hasPermission('FEE', 'DELETE')
     };
   }
 
@@ -123,7 +124,7 @@ export class FeeView implements OnInit {
     );
   }
 
-  public onDelete(event: Event, fee: Fee) {
+  public onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -139,7 +140,7 @@ export class FeeView implements OnInit {
       },
       accept: () =>
         this.call(
-          () => this.service.delete(fee.member.number, fee.month),
+          () => this.service.delete(this.selectedData.member.number, this.selectedData.month),
           () => {
             this.loadRange();
             this.loadSummary();

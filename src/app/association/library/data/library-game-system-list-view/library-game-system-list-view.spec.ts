@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { GameSystem } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { GameSystemService } from '../game-system-service';
 import { LibraryGameSystemListView } from './library-game-system-list-view';
@@ -27,7 +27,6 @@ describe('LibraryGameSystemListView', () => {
         LibraryGameSystemListView
       ],
       providers: [
-        MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
         { provide: GameSystemService, useValue: gameSystemCrudServiceMock }

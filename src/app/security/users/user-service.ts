@@ -4,7 +4,8 @@ import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus, Profile } from '@ucronia/domain';
-import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
+import { MessageService } from 'primeng/api';
+import { catchError, combineLatest, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -12,8 +13,8 @@ import { combineLatest, expand, map, Observable, of, reduce } from 'rxjs';
 export class UserService {
 
   private readonly securityClient = inject(SecurityClient);
-
   private readonly ucroniaClient = inject(UcroniaClient);
+  private readonly messageService = inject(MessageService);
 
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<User>> {
     const sorting = new Sorting(
@@ -29,15 +30,54 @@ export class UserService {
   }
 
   public invite(data: UserCreation): Observable<User> {
-    return this.securityClient.user.onboarding.invite(data);
+    return this.securityClient.user.onboarding.invite(data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Creado',
+            detail: 'Datos creados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public update(username: string, data: UserUpdate): Observable<User> {
-    return this.securityClient.user.update(username, data);
+    return this.securityClient.user.update(username, data)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public delete(username: string): Observable<User> {
-    return this.securityClient.user.delete(username);
+    return this.securityClient.user.delete(username)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Datos borrados',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar el registro',
+            life: 5000
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
   public getOne(username: string): Observable<User> {
@@ -86,11 +126,24 @@ export class UserService {
   }
 
   public assignProfile(username: string, profile: number): Observable<Profile> {
+    let obs: Observable<Profile>;
     if (profile && profile > 0) {
-      return this.securityClient.user.profile.set(username, profile);
+      obs = this.securityClient.user.profile.set(username, profile);
     } else {
-      return this.securityClient.user.profile.delete(username);
+      obs = this.securityClient.user.profile.delete(username);
     }
+
+    return obs
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Datos actualizados',
+            life: 3000
+          });
+        })
+      );
   }
 
   public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<Member[]> {

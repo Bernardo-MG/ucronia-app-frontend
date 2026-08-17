@@ -11,7 +11,11 @@ export class MemberService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<Page<PublicMember>> {
+  public getAll(
+    page: number | undefined = undefined,
+    sort: Sorting,
+    name: string
+  ): Observable<Page<PublicMember>> {
     const sorting = new Sorting(
       mergeProperties(
         sort.properties,
