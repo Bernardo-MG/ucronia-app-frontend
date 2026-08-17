@@ -9,6 +9,7 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, Observable } from 'rxjs';
+import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
@@ -44,7 +45,7 @@ export class FundsView implements OnInit {
   };
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
-  public readonly Display = Display;
+  public readonly FundsDisplay = FundsDisplay;
 
   public selectedData = new Transaction();
 
@@ -54,7 +55,7 @@ export class FundsView implements OnInit {
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
-  public display = Display.CALENDAR;
+  public display = FundsDisplay.CALENDAR;
 
   public failures = new FailureStore();
 
@@ -178,7 +179,7 @@ export class FundsView implements OnInit {
   }
 
   private load() {
-    if (this.display === Display.CALENDAR) {
+    if (this.display === FundsDisplay.CALENDAR) {
       this.loadCalendar();
     } else {
       this.loadList();
@@ -243,9 +244,4 @@ enum Dialog {
   INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
-}
-
-export enum Display {
-  CALENDAR = 'calendar',
-  LIST = 'list'
 }
