@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ErrorRequestInterceptor, SimpleResponse, Sorting } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Fee, FeePayments, FeeSummary, MemberFees, MemberFeesFee, MemberStatus, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
@@ -13,6 +13,36 @@ export class FeeEndpoint {
     private http: HttpClient,
     private apiUrl: string
   ) { }
+
+  public page(
+    page: number | undefined = undefined,
+    size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined,
+    from: Date | undefined,
+    to: Date | undefined
+  ): Observable<Page<Fee>> {
+    let params = new HttpParams();
+    if (page) {
+      params = params.append('page', page);
+    }
+    if (size) {
+      params = params.append('size', size);
+    }
+
+    sort?.properties.forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+
+    if (from) {
+      params = params.append('from', from.toISOString());
+    }
+    if (to) {
+      params = params.append('to', to.toISOString());
+    }
+
+    return this.http.get<PaginatedResponse<Fee>>(`${this.apiUrl}/fee`, { params })
+      .pipe(
+        catchError(this.errorInterceptor.handle)
+      );
+  }
 
   private mapFee(fee: Fee): Fee {
     fee.month = new Date(fee.month);
