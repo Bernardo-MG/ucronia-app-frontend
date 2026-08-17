@@ -12,7 +12,7 @@ export class TransactionDisplaySelector {
 
   public readonly view = output<FundsDisplay>();
 
-  public statusOptions: any[] = [{ label: 'Calendario', value: FundsDisplay.CALENDAR }, { label: 'Lista', value: Display.LIST }];
+  public statusOptions: any[] = [{ label: 'Calendario', value: FundsDisplay.CALENDAR }, { label: 'Lista', value: FundsDisplay.LIST }];
   public selectedStatus = FundsDisplay.CALENDAR;
 
 }
