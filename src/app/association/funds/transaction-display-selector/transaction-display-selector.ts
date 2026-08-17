@@ -1,7 +1,7 @@
 import { Component, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { Display } from '../funds-view/funds-view';
+import { FundsDisplay } from '../funds-display';
 
 @Component({
   selector: 'assoc-transaction-display-selector',
@@ -10,9 +10,9 @@ import { Display } from '../funds-view/funds-view';
 })
 export class TransactionDisplaySelector {
 
-  public readonly view = output<Display>();
+  public readonly view = output<FundsDisplay>();
 
-  public statusOptions: any[] = [{ label: 'Calendario', value: Display.CALENDAR }, { label: 'Lista', value: Display.LIST }];
-  public selectedStatus = Display.CALENDAR;
+  public statusOptions: any[] = [{ label: 'Calendario', value: FundsDisplay.CALENDAR }, { label: 'Lista', value: Display.LIST }];
+  public selectedStatus = FundsDisplay.CALENDAR;
 
 }
