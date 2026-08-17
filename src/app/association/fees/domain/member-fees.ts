@@ -1,4 +1,4 @@
-import { MemberName } from "../members/member";
+import { MemberName } from "@ucronia/domain";
 
 export class MemberFees {
   public member = new MemberFeesMember();
