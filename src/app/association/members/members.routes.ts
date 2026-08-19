@@ -1,10 +1,11 @@
 import { Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
 
 export const membersRoutes: Routes = [
   {
     path: 'members',
-    canActivate: [ResourceGuard('MEMBER', 'VIEW')],
+    canActivate: [ResourceGuard(UcroniaPermissions.member.read)],
     loadComponent: () => import('./member-view/member-view').then(m => m.MemberView)
   }
 ];

@@ -28,6 +28,9 @@
       "@ucronia/api": [
         "./dist/ucronia/api"
       ],
+      "@ucronia/auth": [
+        "./dist/ucronia/auth"
+      ],
       "@bernardo-mg/request": [
         "./dist/bernardo-mg/request"
       ],
@@ -87,6 +90,12 @@
     },
     {
       "path": "./projects/bernardo-mg/login/tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ucronia/auth/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ucronia/auth/tsconfig.spec.json"
     }
   ]
 }

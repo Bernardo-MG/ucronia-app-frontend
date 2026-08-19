@@ -5,6 +5,7 @@ import { Observable, ReplaySubject } from 'rxjs';
 import { PermissionList } from '../models/permission-list';
 import { SecurityDetails } from '../models/security-details';
 import { TokenData } from '../models/token-data';
+import { Permission } from '../models/permission';
 
 /**
  * Manages authentication details, including security tokens and permissions.
@@ -119,6 +120,12 @@ export class AuthService {
    */
   public hasPermission(resource: string, action: string): boolean {
     return this.containsPermission(this.details, resource, action);
+  }
+
+  public hasAnyPermission(permissions: readonly Permission[]): boolean {
+    return permissions.some((permission) =>
+      this.hasPermission(permission.resource, permission.action)
+    );
   }
 
   /**

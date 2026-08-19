@@ -500,6 +500,45 @@
           }
         }
       }
+    },
+    "@ucronia/auth": {
+      "projectType": "library",
+      "root": "projects/ucronia/auth",
+      "sourceRoot": "projects/ucronia/auth/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:ng-packagr",
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ucronia/auth/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ucronia/auth/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular/build:karma",
+          "options": {
+            "tsConfig": "projects/ucronia/auth/tsconfig.spec.json",
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/ucronia/auth/**/*.ts",
+              "projects/ucronia/auth/**/*.html"
+            ]
+          }
+        }
+      }
     }
   },
   "cli": {
