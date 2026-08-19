@@ -7,6 +7,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { Navbar } from '../navbar/navbar';
+import { UcroniaPermissions } from '@ucronia/auth';
 
 @Component({
   selector: 'app-association-layout',
@@ -58,7 +59,7 @@ export class AssociationLayout {
 
   private getAssociationItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('MEMBER', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.member.read)) {
       items.push(
         {
           label: 'Socios',
@@ -66,7 +67,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('MY_FEES', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.myFees.read)) {
       items.push(
         {
           label: 'Mis cuotas',
@@ -74,7 +75,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('LIBRARY', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.library.book.read)) {
       items.push(
         {
           label: 'Biblioteca',
@@ -87,7 +88,7 @@ export class AssociationLayout {
 
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('PROFILE', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.profile.read)) {
       items.push(
         {
           label: 'Directorio',
@@ -95,7 +96,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('MEMBER', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.member.read)) {
       items.push(
         {
           label: 'Cuotas',
@@ -103,7 +104,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('FUNDS', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.transaction.read)) {
       items.push(
         {
           label: 'Fondos',
@@ -111,7 +112,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('ACTIVITY', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.activity.read)) {
       items.push(
         {
           label: 'Actividad',
@@ -119,7 +120,7 @@ export class AssociationLayout {
           icon: 'pi pi-calendar'
         });
     }
-    if (authService.hasPermission('SCHEDULED_GAME', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.scheduledGame.read)) {
       items.push(
         {
           label: 'Partidas programadas',

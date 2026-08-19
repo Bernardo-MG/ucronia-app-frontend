@@ -37,7 +37,7 @@ describe('ResourceGuard', () => {
   });
 
   it('should allow access when user has the required permission', () => {
-    authService.setPermission('MEMBER', ['VIEW']);
+    authService.setPermission('MEMBER', ['READ']);
 
     const guardFn = ResourceGuard({ resource: 'MEMBER', action: 'READ' });
     const result = TestBed.runInInjectionContext(() => guardFn());

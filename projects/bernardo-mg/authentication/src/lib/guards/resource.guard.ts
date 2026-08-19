@@ -14,7 +14,7 @@ export const ResourceGuard = (permission: Permission) => {
     const rootRoute = '/';
     let response: boolean | UrlTree;
 
-    if (authService.hasPermission(permission.resource, permission.action)) {
+    if (authService.hasPermission(permission)) {
       response = true;
     } else {
       // Redirect to root
