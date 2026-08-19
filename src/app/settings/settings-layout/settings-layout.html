@@ -1,23 +1,33 @@
-<div class="settings-layout">
-  <aside class="settings-sidebar">
-    <header class="settings-sidebar__header">
-      <span class="settings-sidebar__eyebrow">Configuración</span>
-      <h1 class="settings-sidebar__title">Asociación</h1>
-    </header>
+<div class="settings-page">
+  <div class="settings-layout">
+    <aside class="settings-sidebar">
+      <header class="settings-sidebar__header">
+        <span class="settings-sidebar__eyebrow">
+          Configuración
+        </span>
 
-    <nav class="settings-nav" aria-label="Configuración de la asociación">
-      @for (item of menuItems; track item.routerLink) {
-      <a class="settings-nav__item" [routerLink]="item.routerLink" routerLinkActive="settings-nav__item--active"
-        #activeLink="routerLinkActive" [attr.aria-current]="activeLink.isActive ? 'page' : null">
-        <i class="settings-nav__icon" [class]="item.icon" aria-hidden="true"></i>
+        <h1 class="settings-sidebar__title">
+          Asociación
+        </h1>
+      </header>
 
-        <span>{{ item.label }}</span>
-      </a>
-      }
-    </nav>
-  </aside>
+      <nav class="settings-nav" aria-label="Configuración de la asociación">
+        @for (item of menuItems; track item.routerLink) {
+        <a pRipple class="settings-nav__item" [routerLink]="item.routerLink"
+          routerLinkActive="settings-nav__item--active" #activeLink="routerLinkActive"
+          [attr.aria-current]="activeLink.isActive ? 'page' : null">
+          <i class="settings-nav__icon" [class]="item.icon" aria-hidden="true"></i>
 
-  <main class="settings-content">
-    <router-outlet />
-  </main>
+          <span>{{ item.label }}</span>
+        </a>
+        }
+      </nav>
+    </aside>
+
+    <main class="settings-content">
+      <p-card styleClass="h-full">
+        <router-outlet />
+      </p-card>
+    </main>
+  </div>
 </div>

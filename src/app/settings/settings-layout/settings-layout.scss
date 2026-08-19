@@ -3,6 +3,12 @@
   min-height: 100%;
 }
 
+.settings-page {
+  min-height: 100vh;
+  padding: 1.5rem;
+  background: var(--p-surface-50, #f6f8fa);
+}
+
 .settings-layout {
   display: grid;
   grid-template-columns: 240px minmax(0, 1fr);
@@ -10,15 +16,20 @@
   width: 100%;
   max-width: 1280px;
   margin-inline: auto;
-  padding: 1.5rem;
 }
 
 .settings-sidebar {
-  min-width: 0;
+  align-self: start;
+  padding: 1rem 0.5rem;
+  background: var(--p-content-background, #fff);
+  border: 1px solid var(--p-content-border-color, #d0d7de);
+  border-radius: var(--p-border-radius-lg, 0.5rem);
+  box-shadow: 0 1px 2px rgb(31 35 40 / 4%);
 }
 
 .settings-sidebar__header {
-  padding: 0 0.5rem 1rem;
+  margin: 0 0.5rem;
+  padding: 0 0 1rem;
   border-bottom: 1px solid var(--p-content-border-color, #d0d7de);
 }
 
@@ -58,12 +69,11 @@
   color: var(--p-text-color, #1f2328);
   font-size: 0.875rem;
   font-weight: 500;
-  line-height: 1.25rem;
   text-decoration: none;
-  border-radius: 0.375rem;
+  border-radius: var(--p-border-radius-md, 0.375rem);
   transition:
-    background-color 120ms ease,
-    color 120ms ease;
+    color 120ms ease,
+    background-color 120ms ease;
 }
 
 .settings-nav__item::before {
@@ -118,10 +128,13 @@
 }
 
 @media (max-width: 767px) {
+  .settings-page {
+    padding: 1rem;
+  }
+
   .settings-layout {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;
-    padding: 1rem;
   }
 
   .settings-nav {
@@ -148,39 +161,4 @@
   .settings-nav__item--active::before {
     transform: scaleX(1);
   }
-}
-
-:host {
-  display: block;
-  min-height: 100%;
-  background-color: var(--p-surface-50, #f6f8fa);
-}
-
-.settings-layout {
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 2rem;
-  width: 100%;
-  max-width: 1280px;
-  min-height: 100vh;
-  margin-inline: auto;
-  padding: 1.5rem;
-}
-
-.settings-sidebar,
-.settings-content {
-  background-color: var(--p-content-background, #ffffff);
-  border: 1px solid var(--p-content-border-color, #d0d7de);
-  border-radius: 0.5rem;
-  box-shadow: 0 1px 2px rgb(31 35 40 / 4%);
-}
-
-.settings-sidebar {
-  align-self: start;
-  padding: 1rem 0.5rem;
-}
-
-.settings-content {
-  min-width: 0;
-  padding: 1.5rem;
 }

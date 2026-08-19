@@ -3,10 +3,16 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { MenuItem } from 'primeng/api';
+import { CardModule } from 'primeng/card';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'assoc-settings-layout',
-  imports: [RouterModule],
+  imports: [
+    RouterModule,
+    CardModule,
+    RippleModule
+  ],
   templateUrl: './settings-layout.html',
   styleUrl: './settings-layout.scss'
 })
