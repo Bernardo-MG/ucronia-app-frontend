@@ -521,6 +521,13 @@
         },
         "test": {
           "builder": "@angular/build:karma",
+          "configurations": {
+            "ci": {
+              "watch": false,
+              "progress": false,
+              "browsers": "ChromeHeadless"
+            }
+          },
           "options": {
             "tsConfig": "projects/ucronia/auth/tsconfig.spec.json",
             "polyfills": [
