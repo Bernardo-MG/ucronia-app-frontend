@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -40,9 +41,9 @@ export class ContactMethodListInnerView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('CONTACT_METHOD', 'CREATE'),
-      edit: authService.hasPermission('CONTACT_METHOD', 'UPDATE'),
-      delete: authService.hasPermission('CONTACT_METHOD', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.directory.contactMethod.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.contactMethod.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.contactMethod.delete)
     };
   }
 

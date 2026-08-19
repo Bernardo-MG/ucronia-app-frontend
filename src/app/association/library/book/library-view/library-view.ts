@@ -26,6 +26,7 @@ import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
+import { UcroniaPermissions } from '@ucronia/auth';
 
 @Component({
   selector: 'assoc-library-view',
@@ -36,7 +37,7 @@ export class LibraryView implements OnInit {
 
   private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);
-  public readonly service = inject(LibraryService);
+  private readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -101,34 +102,34 @@ export class LibraryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('LIBRARY_BOOK', 'CREATE'),
-      edit: authService.hasPermission('LIBRARY_BOOK', 'UPDATE'),
-      delete: authService.hasPermission('LIBRARY_BOOK', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.library.book.create),
+      edit: authService.hasPermission(UcroniaPermissions.library.book.update),
+      delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
     };
 
     // Load data menu
-    if (authService.hasPermission('LIBRARY_AUTHOR', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.library.author.read)) {
       this.dataMenuItems.push(
         {
           label: 'Autores',
           command: () => this.router.navigate(['/association/library/authors'])
         });
     }
-    if (authService.hasPermission('LIBRARY_PUBLISHER', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.library.publisher.read)) {
       this.dataMenuItems.push(
         {
           label: 'Editores',
           command: () => this.router.navigate(['/association/library/publishers'])
         });
     }
-    if (authService.hasPermission('LIBRARY_BOOK_TYPE', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.library.type.read)) {
       this.dataMenuItems.push(
         {
           label: 'Tipos',
           command: () => this.router.navigate(['/association/library/types'])
         });
     }
-    if (authService.hasPermission('LIBRARY_GAME_SYSTEM', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.library.system.read)) {
       this.dataMenuItems.push(
         {
           label: 'Sistemas',

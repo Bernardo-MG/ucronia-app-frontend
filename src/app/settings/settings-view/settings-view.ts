@@ -2,6 +2,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
@@ -29,7 +30,7 @@ export class SettingsView implements OnInit {
 
     // Check permissions
     // TODO: apply this permission
-    this.editable = authService.hasPermission('ASSOCIATION_SETTINGS', 'UPDATE');
+    this.editable = authService.hasPermission(UcroniaPermissions.associationSettings.update);
   }
 
   public ngOnInit(): void {

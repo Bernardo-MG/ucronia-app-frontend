@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { Activity } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -41,9 +42,9 @@ export class ActivityView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('ACTIVITY', 'CREATE'),
-      edit: authService.hasPermission('ACTIVITY', 'UPDATE'),
-      delete: authService.hasPermission('ACTIVITY', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.activity.create),
+      edit: authService.hasPermission(UcroniaPermissions.activity.update),
+      delete: authService.hasPermission(UcroniaPermissions.activity.delete)
     };
   }
 

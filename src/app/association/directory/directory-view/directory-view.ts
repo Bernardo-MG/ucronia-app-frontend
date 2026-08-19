@@ -4,6 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod, FeeType, Key, MemberStatus } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -78,9 +79,9 @@ export class DirectoryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('PROFILE', 'CREATE'),
-      edit: authService.hasPermission('PROFILE', 'UPDATE'),
-      delete: authService.hasPermission('PROFILE', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.directory.profile.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.profile.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.profile.delete)
     };
   }
 

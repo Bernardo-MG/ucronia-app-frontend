@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -66,9 +67,9 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('TRANSACTION', 'CREATE'),
-      edit: authService.hasPermission('TRANSACTION', 'UPDATE'),
-      delete: authService.hasPermission('TRANSACTION', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.transaction.create),
+      edit: authService.hasPermission(UcroniaPermissions.transaction.update),
+      delete: authService.hasPermission(UcroniaPermissions.transaction.delete)
     };
   }
 

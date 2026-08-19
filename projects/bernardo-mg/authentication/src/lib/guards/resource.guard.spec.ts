@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree, provideRouter } from '@angular/router';
+import { Permission } from '../models/permission';
 import { AuthService } from '../services/auth-service';
 import { ResourceGuard } from './resource.guard';
 
 class AuthServiceStub {
   private permissions: Record<string, string[]> = {};
 
-  setPermission(resource: string, actions: string[]) {
+  setPermission(resource: string, actions: string[]): void {
     this.permissions[resource] = actions;
   }
 
-  hasPermission(resource: string, action: string): boolean {
-    return this.permissions[resource]?.includes(action) ?? false;
+  hasPermission(permission: Permission): boolean {
+    return (
+      this.permissions[permission.resource]?.includes(permission.action) ?? false
+    );
   }
 }
 
@@ -37,9 +40,9 @@ describe('ResourceGuard', () => {
   });
 
   it('should allow access when user has the required permission', () => {
-    authService.setPermission('MEMBER', ['VIEW']);
+    authService.setPermission('MEMBER', ['READ']);
 
-    const guardFn = ResourceGuard('MEMBER', 'VIEW');
+    const guardFn = ResourceGuard({ resource: 'MEMBER', action: 'READ' });
     const result = TestBed.runInInjectionContext(() => guardFn());
 
     expect(result).toBe(true);
@@ -48,7 +51,7 @@ describe('ResourceGuard', () => {
   it('should redirect to root when user lacks the required permission', () => {
     authService.setPermission('MEMBER', ['edit']);
 
-    const guardFn = ResourceGuard('MEMBER', 'VIEW');
+    const guardFn = ResourceGuard({ resource: 'MEMBER', action: 'READ' });
     const result = TestBed.runInInjectionContext(() => guardFn());
 
     expect(result instanceof UrlTree).toBeTrue();
@@ -56,7 +59,7 @@ describe('ResourceGuard', () => {
   });
 
   it('should redirect to root when user has no permissions at all', () => {
-    const guardFn = ResourceGuard('MEMBER', 'VIEW');
+    const guardFn = ResourceGuard({ resource: 'MEMBER', action: 'READ' });
     const result = TestBed.runInInjectionContext(() => guardFn());
 
     expect(result instanceof UrlTree).toBeTrue();

@@ -11,19 +11,7 @@ Frontend app for the Ucronía association.
 First build the libraries:
 
 ```
-ng build @bernardo-mg/authentication --configuration development
-```
-
-```
-ng build @bernardo-mg/request --configuration development
-```
-
-```
-ng build @bernardo-mg/ui --configuration development
-```
-
-```
-ng build @bernardo-mg/form --configuration development
+npm run build-libs
 ```
 
 Then build the development version:
