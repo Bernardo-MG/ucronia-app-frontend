@@ -6,6 +6,17 @@ export const settingsRoutes: Routes = [
   {
     path: 'settings',
     canActivate: [ResourceGuard(UcroniaPermissions.associationSettings.read)],
-    loadComponent: () => import('./settings-view/settings-view').then(m => m.SettingsView)
+    loadComponent: () => import('./settings-layout/settings-layout').then(m => m.SettingsLayout),
+    children: [
+      {
+        path: '',
+        redirectTo: 'properties',
+        pathMatch: 'full'
+      },
+      {
+        path: 'properties',
+        loadComponent: () => import('./settings-view/settings-view').then(m => m.SettingsView)
+      }
+    ]
   }
 ];

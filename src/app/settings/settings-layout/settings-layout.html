@@ -1,0 +1,9 @@
+<div class="p-4 flex flex-col md:flex-row gap-6">
+  <aside class="w-full md:w-64 shrink-0">
+    <p-panelMenu [model]="menuItems" [multiple]="false" />
+  </aside>
+
+  <div class="flex-1 min-w-0">
+    <router-outlet />
+  </div>
+</div>
