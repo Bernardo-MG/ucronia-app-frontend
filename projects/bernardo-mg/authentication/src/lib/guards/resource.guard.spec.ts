@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree, provideRouter } from '@angular/router';
+import { Permission } from '../models/permission';
 import { AuthService } from '../services/auth-service';
 import { ResourceGuard } from './resource.guard';
 
 class AuthServiceStub {
   private permissions: Record<string, string[]> = {};
 
-  setPermission(resource: string, actions: string[]) {
+  setPermission(resource: string, actions: string[]): void {
     this.permissions[resource] = actions;
   }
 
-  hasPermission(resource: string, action: string): boolean {
-    return this.permissions[resource]?.includes(action) ?? false;
+  hasPermission(permission: Permission): boolean {
+    return (
+      this.permissions[permission.resource]?.includes(permission.action) ?? false
+    );
   }
 }
 
