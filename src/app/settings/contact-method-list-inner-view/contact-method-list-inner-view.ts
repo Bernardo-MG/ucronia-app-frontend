@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -17,6 +17,11 @@ import { ContactMethodService } from '../contact-method-service';
   templateUrl: './contact-method-list-inner-view.html'
 })
 export class ContactMethodListInnerView implements OnInit {
+
+  /**
+   * Whether the list is shown inside a collapsible panel, or shown directly.
+   */
+  public readonly collapsible = input(true);
 
   private readonly contactMethodService = inject(ContactMethodService);
 

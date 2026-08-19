@@ -33,6 +33,22 @@ export class SettingsLayout {
       });
     }
 
+    if (authService.hasPermission(UcroniaPermissions.directory.memberProfile.read)) {
+      items.push({
+        label: 'Llaves',
+        icon: 'pi pi-key',
+        routerLink: 'keys'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.directory.contactMethod.read)) {
+      items.push({
+        label: 'Métodos de contacto',
+        icon: 'pi pi-phone',
+        routerLink: 'contact-methods'
+      });
+    }
+
     this.menuItems = items;
   }
 
