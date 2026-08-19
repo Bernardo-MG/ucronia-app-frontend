@@ -5,7 +5,7 @@ import { UcroniaPermissions } from '@ucronia/auth';
 export const directoryRoutes: Routes = [
   {
     path: 'directory',
-    canActivate: [ResourceGuard(UcroniaPermissions.profile.read)],
+    canActivate: [ResourceGuard(UcroniaPermissions.directory.profile.read)],
     loadComponent: () => import('./directory-view/directory-view').then(m => m.DirectoryView)
   }
 ];

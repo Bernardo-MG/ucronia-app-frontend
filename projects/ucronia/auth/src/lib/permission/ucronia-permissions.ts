@@ -17,6 +17,12 @@ export const UcroniaPermissions = {
     update: { resource: 'FEE', action: 'UPDATE' },
     delete: { resource: 'FEE', action: 'DELETE' }
   },
+  feeType: {
+    read: { resource: 'FEE_TYPE', action: 'READ' },
+    create: { resource: 'FEE_TYPE', action: 'CREATE' },
+    update: { resource: 'FEE_TYPE', action: 'UPDATE' },
+    delete: { resource: 'FEE_TYPE', action: 'DELETE' }
+  },
   library: {
     book: {
       read: { resource: 'LIBRARY_BOOK', action: 'READ' },
@@ -49,23 +55,37 @@ export const UcroniaPermissions = {
       delete: { resource: 'LIBRARY_GAME_SYSTEM', action: 'DELETE' }
     }
   },
-  member: {
-    read: { resource: 'MEMBER', action: 'READ' },
-    create: { resource: 'MEMBER', action: 'CREATE' },
-    update: { resource: 'MEMBER', action: 'UPDATE' },
-    delete: { resource: 'MEMBER', action: 'DELETE' }
+  directory: {
+    contactMethod: {
+      read: { resource: 'CONTACT_METHOD', action: 'READ' },
+      create: { resource: 'CONTACT_METHOD', action: 'CREATE' },
+      update: { resource: 'CONTACT_METHOD', action: 'UPDATE' },
+      delete: { resource: 'CONTACT_METHOD', action: 'DELETE' }
+    },
+    member: {
+      read: { resource: 'MEMBER', action: 'READ' },
+      create: { resource: 'MEMBER', action: 'CREATE' },
+      update: { resource: 'MEMBER', action: 'UPDATE' },
+      delete: { resource: 'MEMBER', action: 'DELETE' }
+    },
+    memberProfile: {
+      read: { resource: 'MEMBER_PROFILE', action: 'READ' },
+      create: { resource: 'MEMBER_PROFILE', action: 'CREATE' },
+      update: { resource: 'MEMBER_PROFILE', action: 'UPDATE' },
+      delete: { resource: 'MEMBER_PROFILE', action: 'DELETE' }
+    },
+    profile: {
+      read: { resource: 'PROFILE', action: 'READ' },
+      create: { resource: 'PROFILE', action: 'CREATE' },
+      update: { resource: 'PROFILE', action: 'UPDATE' },
+      delete: { resource: 'PROFILE', action: 'DELETE' }
+    }
   },
   myFees: {
     read: { resource: 'MY_FEES', action: 'READ' },
     create: { resource: 'MY_FEES', action: 'CREATE' },
     update: { resource: 'MY_FEES', action: 'UPDATE' },
     delete: { resource: 'MY_FEES', action: 'DELETE' }
-  },
-  profile: {
-    read: { resource: 'PROFILE', action: 'READ' },
-    create: { resource: 'PROFILE', action: 'CREATE' },
-    update: { resource: 'PROFILE', action: 'UPDATE' },
-    delete: { resource: 'PROFILE', action: 'DELETE' }
   },
   scheduledGame: {
     read: { resource: 'SCHEDULED_GAME', action: 'READ' },

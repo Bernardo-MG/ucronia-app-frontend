@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { UserUpdate } from '@bernardo-mg/security';
+import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
 import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -56,9 +56,9 @@ export class UserView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('USER', 'CREATE'),
-      edit: authService.hasPermission('USER', 'UPDATE'),
-      delete: authService.hasPermission('USER', 'DELETE')
+      create: authService.hasPermission(SecurityPermissions.user.create),
+      edit: authService.hasPermission(SecurityPermissions.user.update),
+      delete: authService.hasPermission(SecurityPermissions.user.delete)
     };
   }
 

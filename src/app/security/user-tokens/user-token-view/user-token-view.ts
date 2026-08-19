@@ -3,6 +3,7 @@ import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { SecurityPermissions } from '@bernardo-mg/security';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
@@ -41,7 +42,7 @@ export class UserTokenView implements OnInit {
   public constructor() {
     const authService = inject(AuthService);
 
-    this.editable = authService.hasPermission('USER_TOKEN', 'UPDATE');
+    this.editable = authService.hasPermission(SecurityPermissions.userToken.update);
   }
 
   public ngOnInit(): void {

@@ -5,6 +5,7 @@ import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { BookType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -36,9 +37,9 @@ export class LibraryBookTypeListView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('LIBRARY_BOOK_TYPE', 'CREATE'),
-      edit: authService.hasPermission('LIBRARY_BOOK_TYPE', 'UPDATE'),
-      delete: authService.hasPermission('LIBRARY_BOOK_TYPE', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.library.type.create),
+      edit: authService.hasPermission(UcroniaPermissions.library.type.update),
+      delete: authService.hasPermission(UcroniaPermissions.library.type.delete)
     };
   }
 

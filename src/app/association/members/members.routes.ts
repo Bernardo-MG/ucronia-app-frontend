@@ -5,7 +5,7 @@ import { UcroniaPermissions } from '@ucronia/auth';
 export const membersRoutes: Routes = [
   {
     path: 'members',
-    canActivate: [ResourceGuard(UcroniaPermissions.member.read)],
+    canActivate: [ResourceGuard(UcroniaPermissions.directory.member.read)],
     loadComponent: () => import('./member-view/member-view').then(m => m.MemberView)
   }
 ];

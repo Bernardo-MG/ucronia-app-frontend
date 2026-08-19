@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -35,9 +36,9 @@ export class KeyListInnerView implements OnInit {
     const authService = inject(AuthService);
 
     this.permissions = {
-      create: authService.hasPermission('MEMBER_PROFILE', 'CREATE'),
-      edit: authService.hasPermission('MEMBER_PROFILE', 'UPDATE'),
-      delete: authService.hasPermission('MEMBER_PROFILE', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete)
     };
   }
 

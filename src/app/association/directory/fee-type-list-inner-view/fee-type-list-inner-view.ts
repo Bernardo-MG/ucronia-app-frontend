@@ -1,11 +1,12 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
-import { finalize, Observable, throwError } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
 import { FeeTypeList } from '../fee-type-list/fee-type-list';
 import { FeeTypeService } from '../fee-type-service';
@@ -40,9 +41,9 @@ export class FeeTypeListInnerView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('FEE_TYPE', 'CREATE'),
-      edit: authService.hasPermission('FEE_TYPE', 'UPDATE'),
-      delete: authService.hasPermission('FEE_TYPE', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.feeType.create),
+      edit: authService.hasPermission(UcroniaPermissions.feeType.update),
+      delete: authService.hasPermission(UcroniaPermissions.feeType.delete)
     };
   }
 

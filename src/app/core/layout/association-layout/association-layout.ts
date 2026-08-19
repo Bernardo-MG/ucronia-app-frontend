@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { Navbar } from '../navbar/navbar';
-import { UcroniaPermissions } from '@ucronia/auth';
 
 @Component({
   selector: 'app-association-layout',
@@ -59,7 +59,7 @@ export class AssociationLayout {
 
   private getAssociationItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission(UcroniaPermissions.member.read)) {
+    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
       items.push(
         {
           label: 'Socios',
@@ -88,7 +88,7 @@ export class AssociationLayout {
 
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission(UcroniaPermissions.profile.read)) {
+    if (authService.hasPermission(UcroniaPermissions.directory.profile.read)) {
       items.push(
         {
           label: 'Directorio',
@@ -96,7 +96,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission(UcroniaPermissions.member.read)) {
+    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
       items.push(
         {
           label: 'Cuotas',
