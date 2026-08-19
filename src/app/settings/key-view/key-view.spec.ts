@@ -1,40 +1,38 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
-import { FeeType } from '@ucronia/domain';
+import { Key } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { FeeTypeService } from '../fee-type-service';
-import { FeeTypeListInnerView } from './fee-type-list-inner-view';
+import { KeyService } from '../key-service';
+import { KeyView } from './key-view';
 
-describe('FeeTypeListInnerView', () => {
-  let component: FeeTypeListInnerView;
-  let fixture: ComponentFixture<FeeTypeListInnerView>;
+describe('KeyView', () => {
+  let component: KeyView;
+  let fixture: ComponentFixture<KeyView>;
 
-  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>(
-    'FeeTypeService',
+  const keyServiceMock = jasmine.createSpyObj<KeyService>(
+    'KeyService',
     ['getAll', 'create', 'update', 'delete']
   );
 
   beforeEach(async () => {
-    feeTypeServiceMock.getAll.and.returnValue(
-      of(new Page<FeeType>())
+    keyServiceMock.getAll.and.returnValue(
+      of(new Page<Key>())
     );
 
     await TestBed.configureTestingModule({
-      imports: [
-        FeeTypeListInnerView
-      ],
+      imports: [KeyView],
       providers: [
         ConfirmationService,
         MessageService,
         provideAnimationsAsync(),
-        { provide: FeeTypeService, useValue: feeTypeServiceMock }
+        { provide: KeyService, useValue: keyServiceMock }
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(FeeTypeListInnerView);
+    fixture = TestBed.createComponent(KeyView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

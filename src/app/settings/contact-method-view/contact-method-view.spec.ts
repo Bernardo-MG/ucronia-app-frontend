@@ -2,14 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { ContactMethod } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';
-import { ContactMethodListInnerView } from './contact-method-list-inner-view';
+import { ContactMethodView } from './contact-method-view';
 
-describe('ContactMethodListInnerView', () => {
-  let component: ContactMethodListInnerView;
-  let fixture: ComponentFixture<ContactMethodListInnerView>;
+describe('ContactMethodView', () => {
+  let component: ContactMethodView;
+  let fixture: ComponentFixture<ContactMethodView>;
 
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>(
     'ContactMethodService',
@@ -22,18 +22,17 @@ describe('ContactMethodListInnerView', () => {
     );
 
     await TestBed.configureTestingModule({
-      imports: [
-        ContactMethodListInnerView
-      ],
+      imports: [ContactMethodView],
       providers: [
         ConfirmationService,
+        MessageService,
         provideAnimationsAsync(),
         { provide: ContactMethodService, useValue: contactMethodServiceMock }
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ContactMethodListInnerView);
+    fixture = TestBed.createComponent(ContactMethodView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

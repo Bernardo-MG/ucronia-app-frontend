@@ -1,6 +1,12 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="name">Método <p-sortIcon field="name" /></th>
+      <th class="w-40"></th>
+    </tr>
+  </ng-template>
   <ng-template #body let-profile>
     <tr>
       <td>{{ profile.name }}</td>

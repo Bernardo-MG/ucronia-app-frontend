@@ -12,15 +12,12 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { PanelModule } from 'primeng/panel';
 import { finalize, forkJoin, Observable } from 'rxjs';
-import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
-import { ContactMethodService } from '../contact-method-service';
+import { ContactMethodService } from '@app/settings/contact-method-service';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';
-import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
-import { FeeTypeService } from '../fee-type-service';
+import { FeeTypeService } from '@app/settings/fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
-import { KeyListInnerView } from '../key-list-inner-view/key-list-inner-view';
-import { KeyService } from '../key-service';
+import { KeyService } from '@app/settings/key-service';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
@@ -35,7 +32,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView, KeyListInnerView],
+  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {

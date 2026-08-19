@@ -1,22 +1,19 @@
-<!-- Contact methods -->
-<p-panel [toggleable]="true" [collapsed]="true">
-  <ng-template #header>
-    <div class="flex items-center gap-2 px-2">
-      <span class="pi pi-phone"></span>
-      <span class="font-bold">Métodos de contacto</span>
-    </div>
-  </ng-template>
-  <ng-template #icons>
-    <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
-      aria-label="Nuevo perfil" [attr.aria-disabled]="!permissions.create" rounded text />
-  </ng-template>
-  <p class="m-0">
+<div class="p-4 space-y-6">
+  <header class="flex items-center justify-between">
+    <h1 class="text-4xl font-bold">Métodos de contacto</h1>
+    @if (permissions.create) {
+      <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
+        aria-label="Nuevo método de contacto" [attr.aria-disabled]="!permissions.create" rounded />
+    }
+  </header>
+
+  <div class="max-w-3xl mx-auto space-y-6">
     <assoc-contact-method-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
       [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
       [totalRecords]="contactMethodData.totalElements" (edit)="onShowEdit($event)"
       (delete)="onDelete($event)" (changePage)="load($event)" />
-  </p>
-</p-panel>
+  </div>
+</div>
 
 <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
   @switch (dialog) {

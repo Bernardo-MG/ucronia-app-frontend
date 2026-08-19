@@ -2,48 +2,42 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { ContactMethod } from '@ucronia/domain';
+import { Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
 import { finalize, Observable } from 'rxjs';
-import { ContactMethodForm } from '../contact-method-form/contact-method-form';
-import { ContactMethodList } from '../contact-method-list/contact-method-list';
-import { ContactMethodService } from '../contact-method-service';
+import { KeyForm } from '../key-form/key-form';
+import { KeyList } from '../key-list/key-list';
+import { KeyService } from '../key-service';
 
 @Component({
-  selector: 'assoc-contact-method-list-inner-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, ContactMethodList, ContactMethodForm],
-  templateUrl: './contact-method-list-inner-view.html'
+  selector: 'assoc-key-view',
+  imports: [ButtonModule, DrawerModule, KeyList, KeyForm],
+  templateUrl: './key-view.html'
 })
-export class ContactMethodListInnerView implements OnInit {
+export class KeyView implements OnInit {
 
-  private readonly contactMethodService = inject(ContactMethodService);
+  private readonly keyService = inject(KeyService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
 
-  public dialog = Dialog.NONE;
+  public selectedData = new Key();
+  public keys = new Page<Key>();
 
-  public selectedData = new ContactMethod();
-  public contactMethodData = new Page<ContactMethod>();
-  public contactMethodSelection: ContactMethod[] = [];
-
-  /**
-   * Loading flag.
-   */
   public loading = false;
 
   public failures = new FailureStore();
 
+  public dialog = Dialog.NONE;
+
   constructor() {
     const authService = inject(AuthService);
 
-    // Check permissions
     this.permissions = {
-      create: authService.hasPermission(UcroniaPermissions.directory.contactMethod.create),
-      edit: authService.hasPermission(UcroniaPermissions.directory.contactMethod.update),
-      delete: authService.hasPermission(UcroniaPermissions.directory.contactMethod.delete)
+      create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete)
     };
   }
 
@@ -51,53 +45,45 @@ export class ContactMethodListInnerView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowEdit(contactMethod: ContactMethod) {
-    this.selectedData = contactMethod;
+  public onShowEdit(key: Key) {
+    this.selectedData = key;
     this.dialog = Dialog.EDIT;
   }
 
-  public onCreate(toCreate: ContactMethod): void {
+  public onCreate(toCreate: Key): void {
     this.call(
-      () => this.contactMethodService.create(toCreate),
+      () => this.keyService.create(toCreate),
       () => this.load()
     );
   }
 
-  public onUpdate(toUpdate: ContactMethod): void {
+  public onUpdate(toUpdate: Key): void {
     this.call(
-      () => this.contactMethodService.update(toUpdate),
-      () => this.load(this.contactMethodData.page)
+      () => this.keyService.update(toUpdate),
+      () => this.load()
     );
   }
 
   public onDelete(number: number): void {
     this.call(
-      () => this.contactMethodService.delete(number),
+      () => this.keyService.delete(number),
       () => this.load()
     );
   }
 
-  // DATA LOADING
-
   public load(page: number | undefined = undefined): void {
     this.loading = true;
 
-    this.contactMethodService.getAll(page)
+    this.keyService.getAll(page)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodData = response);
+      .subscribe(response => this.keys = response);
   }
-
-  // DIALOGS
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
   }
-
-  // PRIVATE METHODS
 
   private call(
     action: () => Observable<any>,

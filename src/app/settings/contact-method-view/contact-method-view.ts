@@ -2,30 +2,30 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { FeeType } from '@ucronia/domain';
+import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
 import { finalize, Observable } from 'rxjs';
-import { FeeTypeForm } from '../fee-type-form/fee-type-form';
-import { FeeTypeList } from '../fee-type-list/fee-type-list';
-import { FeeTypeService } from '../fee-type-service';
+import { ContactMethodForm } from '../contact-method-form/contact-method-form';
+import { ContactMethodList } from '../contact-method-list/contact-method-list';
+import { ContactMethodService } from '../contact-method-service';
 
 @Component({
-  selector: 'assoc-fee-type-list-inner-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, FeeTypeList, FeeTypeForm],
-  templateUrl: './fee-type-list-inner-view.html'
+  selector: 'assoc-contact-method-view',
+  imports: [ButtonModule, DrawerModule, ContactMethodList, ContactMethodForm],
+  templateUrl: './contact-method-view.html'
 })
-export class FeeTypeListInnerView implements OnInit {
+export class ContactMethodView implements OnInit {
 
-  private readonly feeTypeService = inject(FeeTypeService);
+  private readonly contactMethodService = inject(ContactMethodService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
 
-  public selectedData = new FeeType();
-  public feeTypes: FeeType[] = [];
-  public feeTypeData = new Page<FeeType>();
+  public dialog = Dialog.NONE;
+
+  public selectedData = new ContactMethod();
+  public contactMethodData = new Page<ContactMethod>();
 
   /**
    * Loading flag.
@@ -34,16 +34,14 @@ export class FeeTypeListInnerView implements OnInit {
 
   public failures = new FailureStore();
 
-  public dialog = Dialog.NONE;
-
   constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission(UcroniaPermissions.feeType.create),
-      edit: authService.hasPermission(UcroniaPermissions.feeType.update),
-      delete: authService.hasPermission(UcroniaPermissions.feeType.delete)
+      create: authService.hasPermission(UcroniaPermissions.directory.contactMethod.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.contactMethod.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.contactMethod.delete)
     };
   }
 
@@ -53,28 +51,28 @@ export class FeeTypeListInnerView implements OnInit {
 
   // EVENT HANDLERS
 
-  public onShowEdit(contactMethod: FeeType) {
+  public onShowEdit(contactMethod: ContactMethod) {
     this.selectedData = contactMethod;
     this.dialog = Dialog.EDIT;
   }
 
-  public onCreate(toCreate: FeeType): void {
+  public onCreate(toCreate: ContactMethod): void {
     this.call(
-      () => this.feeTypeService.create(toCreate),
+      () => this.contactMethodService.create(toCreate),
       () => this.load()
     );
   }
 
-  public onUpdate(toUpdate: FeeType): void {
+  public onUpdate(toUpdate: ContactMethod): void {
     this.call(
-      () => this.feeTypeService.update(toUpdate),
-      () => this.load(this.feeTypeData.page)
+      () => this.contactMethodService.update(toUpdate),
+      () => this.load(this.contactMethodData.page)
     );
   }
 
   public onDelete(number: number): void {
     this.call(
-      () => this.feeTypeService.delete(number),
+      () => this.contactMethodService.delete(number),
       () => this.load()
     );
   }
@@ -84,9 +82,9 @@ export class FeeTypeListInnerView implements OnInit {
   public load(page: number | undefined = undefined): void {
     this.loading = true;
 
-    this.feeTypeService.getAll(page)
+    this.contactMethodService.getAll(page)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.feeTypeData = response);
+      .subscribe(response => this.contactMethodData = response);
   }
 
   // DIALOGS
@@ -101,7 +99,7 @@ export class FeeTypeListInnerView implements OnInit {
 
   private call(
     action: () => Observable<any>,
-    onSuccess: () => void
+    onSuccess: () => void = () => { }
   ) {
     this.loading = true;
     action()
@@ -134,7 +132,6 @@ interface Permissions {
 
 enum Dialog {
   NONE = 'none',
-  INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
 }

@@ -2,30 +2,32 @@ import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Key } from '@ucronia/domain';
+import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
 import { finalize, Observable } from 'rxjs';
-import { KeyForm } from '../key-form/key-form';
-import { KeyList } from '../key-list/key-list';
-import { KeyService } from '../key-service';
+import { FeeTypeForm } from '../fee-type-form/fee-type-form';
+import { FeeTypeList } from '../fee-type-list/fee-type-list';
+import { FeeTypeService } from '../fee-type-service';
 
 @Component({
-  selector: 'assoc-key-list-inner-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, KeyList, KeyForm],
-  templateUrl: './key-list-inner-view.html'
+  selector: 'assoc-fee-type-view',
+  imports: [ButtonModule, DrawerModule, FeeTypeList, FeeTypeForm],
+  templateUrl: './fee-type-view.html'
 })
-export class KeyListInnerView implements OnInit {
+export class FeeTypeView implements OnInit {
 
-  private readonly keyService = inject(KeyService);
+  private readonly feeTypeService = inject(FeeTypeService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
 
-  public selectedData = new Key();
-  public keys = new Page<Key>();
+  public selectedData = new FeeType();
+  public feeTypeData = new Page<FeeType>();
 
+  /**
+   * Loading flag.
+   */
   public loading = false;
 
   public failures = new FailureStore();
@@ -35,10 +37,11 @@ export class KeyListInnerView implements OnInit {
   constructor() {
     const authService = inject(AuthService);
 
+    // Check permissions
     this.permissions = {
-      create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
-      edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
-      delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete)
+      create: authService.hasPermission(UcroniaPermissions.feeType.create),
+      edit: authService.hasPermission(UcroniaPermissions.feeType.update),
+      delete: authService.hasPermission(UcroniaPermissions.feeType.delete)
     };
   }
 
@@ -46,39 +49,45 @@ export class KeyListInnerView implements OnInit {
     this.load();
   }
 
-  public onShowEdit(key: Key) {
-    this.selectedData = key;
+  // EVENT HANDLERS
+
+  public onShowEdit(feeType: FeeType) {
+    this.selectedData = feeType;
     this.dialog = Dialog.EDIT;
   }
 
-  public onCreate(toCreate: Key): void {
+  public onCreate(toCreate: FeeType): void {
     this.call(
-      () => this.keyService.create(toCreate),
+      () => this.feeTypeService.create(toCreate),
       () => this.load()
     );
   }
 
-  public onUpdate(toUpdate: Key): void {
+  public onUpdate(toUpdate: FeeType): void {
     this.call(
-      () => this.keyService.update(toUpdate),
-      () => this.load()
+      () => this.feeTypeService.update(toUpdate),
+      () => this.load(this.feeTypeData.page)
     );
   }
 
   public onDelete(number: number): void {
     this.call(
-      () => this.keyService.delete(number),
+      () => this.feeTypeService.delete(number),
       () => this.load()
     );
   }
 
+  // DATA LOADING
+
   public load(page: number | undefined = undefined): void {
     this.loading = true;
 
-    this.keyService.getAll(page)
+    this.feeTypeService.getAll(page)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.keys = response);
+      .subscribe(response => this.feeTypeData = response);
   }
+
+  // DIALOGS
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
@@ -86,9 +95,11 @@ export class KeyListInnerView implements OnInit {
     }
   }
 
+  // PRIVATE METHODS
+
   private call(
     action: () => Observable<any>,
-    onSuccess: () => void = () => { }
+    onSuccess: () => void
   ) {
     this.loading = true;
     action()
@@ -121,6 +132,7 @@ interface Permissions {
 
 enum Dialog {
   NONE = 'none',
+  INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
 }
