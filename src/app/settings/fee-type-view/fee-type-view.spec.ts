@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FeeTypeService } from '@app/association/directory/fee-type-service';
+import { FeeTypeService } from '../fee-type-service';
 import { Page } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';

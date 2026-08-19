@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FeeTypeListInnerView } from '@app/association/directory/fee-type-list-inner-view/fee-type-list-inner-view';
+import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
 
 @Component({
   selector: 'assoc-fee-type-view',

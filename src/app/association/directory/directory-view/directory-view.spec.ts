@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { ContactMethodService } from '../contact-method-service';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';
-import { FeeTypeService } from '../fee-type-service';
+import { FeeTypeService } from '@app/settings/fee-type-service';
 import { KeyService } from '../key-service';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 import { DirectorySummary } from '../model/directory-summary';
