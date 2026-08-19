@@ -16,6 +16,11 @@ export const settingsRoutes: Routes = [
       {
         path: 'properties',
         loadComponent: () => import('./settings-view/settings-view').then(m => m.SettingsView)
+      },
+      {
+        path: 'fee-types',
+        canActivate: [ResourceGuard(UcroniaPermissions.feeType.read)],
+        loadComponent: () => import('./fee-type-view/fee-type-view').then(m => m.FeeTypeView)
       }
     ]
   }
