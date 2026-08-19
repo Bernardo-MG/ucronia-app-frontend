@@ -96,7 +96,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
+    if (authService.hasPermission(UcroniaPermissions.fee.read)) {
       items.push(
         {
           label: 'Cuotas',
