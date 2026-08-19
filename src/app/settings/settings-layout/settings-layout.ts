@@ -6,6 +6,11 @@ import { MenuItem } from 'primeng/api';
 import { CardModule } from 'primeng/card';
 import { RippleModule } from 'primeng/ripple';
 
+interface MenuSection {
+  label: string;
+  items: MenuItem[];
+}
+
 @Component({
   selector: 'assoc-settings-layout',
   imports: [
@@ -18,41 +23,61 @@ import { RippleModule } from 'primeng/ripple';
 })
 export class SettingsLayout {
 
-  protected readonly menuItems: MenuItem[];
+  protected readonly menuSections: MenuSection[];
 
   constructor() {
     const authService = inject(AuthService);
 
-    this.menuItems = [
-      {
-        label: 'Propiedades',
-        icon: 'pi pi-sliders-h',
-        routerLink: 'properties'
-      },
-      ...(authService.hasPermission(UcroniaPermissions.feeType.read)
-        ? [{
-          label: 'Tipos de cuota',
-          icon: 'pi pi-money-bill',
-          routerLink: 'fee-types'
-        }]
-        : []),
-      ...(authService.hasPermission(
+    const catalogItems: MenuItem[] = [];
+
+    if (authService.hasPermission(UcroniaPermissions.feeType.read)) {
+      catalogItems.push({
+        label: 'Tipos de cuota',
+        icon: 'pi pi-money-bill',
+        routerLink: 'fee-types'
+      });
+    }
+
+    if (
+      authService.hasPermission(
         UcroniaPermissions.directory.memberProfile.read
       )
-        ? [{
-          label: 'Llaves',
-          icon: 'pi pi-key',
-          routerLink: 'keys'
-        }]
-        : []),
-      ...(authService.hasPermission(
+    ) {
+      catalogItems.push({
+        label: 'Llaves',
+        icon: 'pi pi-key',
+        routerLink: 'keys'
+      });
+    }
+
+    if (
+      authService.hasPermission(
         UcroniaPermissions.directory.contactMethod.read
       )
+    ) {
+      catalogItems.push({
+        label: 'Métodos de contacto',
+        icon: 'pi pi-phone',
+        routerLink: 'contact-methods'
+      });
+    }
+
+    this.menuSections = [
+      {
+        label: 'Configuración',
+        items: [
+          {
+            label: 'Propiedades',
+            icon: 'pi pi-sliders-h',
+            routerLink: 'properties'
+          }
+        ]
+      },
+      ...(catalogItems.length > 0
         ? [{
-          label: 'Métodos de contacto',
-          icon: 'pi pi-phone',
-          routerLink: 'contact-methods'
-        }]
+            label: 'Catálogos',
+            items: catalogItems
+          }]
         : [])
     ];
   }
