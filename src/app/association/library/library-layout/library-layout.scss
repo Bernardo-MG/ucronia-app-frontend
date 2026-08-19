@@ -1,0 +1,115 @@
+.library-page {
+  padding: 1rem;
+}
+
+.library-layout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: 100rem;
+  margin: 0 auto;
+}
+
+.library-sidebar {
+  align-self: start;
+  position: sticky;
+  top: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-border-radius-xl);
+  background: var(--p-content-background);
+  box-shadow: 0 0.25rem 1rem rgb(0 0 0 / 6%);
+}
+
+.library-sidebar__header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--p-content-border-color);
+  background: var(--p-surface-50);
+}
+
+.library-sidebar__eyebrow {
+  color: var(--p-primary-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.library-sidebar__title {
+  margin: 0.25rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.library-nav {
+  padding: 1rem;
+}
+
+.library-nav__section--divided {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--p-content-border-color);
+}
+
+.library-nav__section-title {
+  margin: 0 0 0.5rem 0.75rem;
+  color: var(--p-text-muted-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.library-nav__items {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.library-nav__item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: var(--p-border-radius-lg);
+  color: var(--p-text-color);
+  text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.library-nav__item:hover {
+  background: var(--p-content-hover-background);
+}
+
+.library-nav__item--active {
+  color: var(--p-primary-color);
+  background: var(--p-primary-50);
+  font-weight: 600;
+}
+
+.library-nav__icon {
+  width: 1.25rem;
+  text-align: center;
+}
+
+.library-content {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .library-page {
+    padding: 0.75rem;
+  }
+
+  .library-layout {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .library-sidebar {
+    position: static;
+  }
+
+  .library-nav__items {
+    grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  }
+}

@@ -1,15 +1,14 @@
 
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
@@ -30,12 +29,11 @@ import { UcroniaPermissions } from '@ucronia/auth';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
 
-  private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
@@ -75,12 +73,7 @@ export class LibraryView implements OnInit {
 
   public readonly Dialog = Dialog;
 
-  public readonly dataMenuItems: MenuItem[] = [];
-
   private sort = new Sorting();
-
-  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
-  @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
   public Display = Display;
 
@@ -107,35 +100,6 @@ export class LibraryView implements OnInit {
       delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
     };
 
-    // Load data menu
-    if (authService.hasPermission(UcroniaPermissions.library.author.read)) {
-      this.dataMenuItems.push(
-        {
-          label: 'Autores',
-          command: () => this.router.navigate(['/association/library/authors'])
-        });
-    }
-    if (authService.hasPermission(UcroniaPermissions.library.publisher.read)) {
-      this.dataMenuItems.push(
-        {
-          label: 'Editores',
-          command: () => this.router.navigate(['/association/library/publishers'])
-        });
-    }
-    if (authService.hasPermission(UcroniaPermissions.library.type.read)) {
-      this.dataMenuItems.push(
-        {
-          label: 'Tipos',
-          command: () => this.router.navigate(['/association/library/types'])
-        });
-    }
-    if (authService.hasPermission(UcroniaPermissions.library.system.read)) {
-      this.dataMenuItems.push(
-        {
-          label: 'Sistemas',
-          command: () => this.router.navigate(['/association/library/systems'])
-        });
-    }
   }
 
   public ngOnInit(): void {
@@ -144,15 +108,6 @@ export class LibraryView implements OnInit {
   }
 
   // EVENT HANDLERS
-
-  public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-    this.selectedData = book;
-    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
-      this.gameEditionMenu.toggle(event);
-    } else {
-      this.fictionEditionMenu.toggle(event);
-    }
-  }
 
   public onCreate(toCreate: LibraryBookCreationFormData): void {
     this.call(

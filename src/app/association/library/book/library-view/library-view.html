@@ -1,7 +1,8 @@
-<p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
-
-<div class="p-4 space-y-6">
-  <h1 class="text-4xl font-bold">Biblioteca</h1>
+<div class="space-y-6">
+  <header>
+    <p class="text-sm font-semibold uppercase tracking-wide text-primary">Colección</p>
+    <h1 class="text-3xl font-bold">Libros</h1>
+  </header>
 
   <!-- Summary Cards -->
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
@@ -34,9 +35,6 @@
         <p-button icon="pi pi-file-excel" [disabled]="status.loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
           [attr.aria-disabled]="status.loadingExcel" rounded />
 
-        @if (dataMenuItems) {
-          <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
-        }
       </div>
     }
   </div>
@@ -68,12 +66,18 @@
         <div class="w-full p-4">
           <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
         </div>
-      <ng-template #footer>
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
-          [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" rounded text class="!p-2" />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-          (click)="onDelete($event)" rounded text />
-      </ng-template>
+      @if (permissions.edit || permissions.delete) {
+        <ng-template #footer>
+          @if (permissions.edit) {
+            <p-button icon="pi pi-pencil" severity="secondary" aria-label="Editar"
+              (click)="onShowEdit()" rounded text class="!p-2" />
+          }
+          @if (permissions.delete) {
+            <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar"
+              (click)="onDelete($event)" rounded text />
+          }
+        </ng-template>
+      }
       }
 
       @case (Dialog.EDIT) {
@@ -132,4 +136,4 @@
 
     }
   </p-drawer>
-</div> 
+</div>
