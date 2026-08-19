@@ -1,9 +1,23 @@
-<div class="p-4 flex flex-col md:flex-row gap-6">
-  <aside class="w-full md:w-64 shrink-0">
-    <p-panelMenu [model]="menuItems" [multiple]="false" />
+<div class="settings-layout">
+  <aside class="settings-sidebar">
+    <header class="settings-sidebar__header">
+      <span class="settings-sidebar__eyebrow">Configuración</span>
+      <h1 class="settings-sidebar__title">Asociación</h1>
+    </header>
+
+    <nav class="settings-nav" aria-label="Configuración de la asociación">
+      @for (item of menuItems; track item.routerLink) {
+      <a class="settings-nav__item" [routerLink]="item.routerLink" routerLinkActive="settings-nav__item--active"
+        #activeLink="routerLinkActive" [attr.aria-current]="activeLink.isActive ? 'page' : null">
+        <i class="settings-nav__icon" [class]="item.icon" aria-hidden="true"></i>
+
+        <span>{{ item.label }}</span>
+      </a>
+      }
+    </nav>
   </aside>
 
-  <div class="flex-1 min-w-0">
+  <main class="settings-content">
     <router-outlet />
-  </div>
+  </main>
 </div>

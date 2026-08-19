@@ -3,53 +3,51 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { MenuItem } from 'primeng/api';
-import { PanelMenuModule } from 'primeng/panelmenu';
 
 @Component({
   selector: 'assoc-settings-layout',
-  imports: [RouterModule, PanelMenuModule],
-  templateUrl: './settings-layout.html'
+  imports: [RouterModule],
+  templateUrl: './settings-layout.html',
+  styleUrl: './settings-layout.scss'
 })
 export class SettingsLayout {
 
-  public menuItems: MenuItem[] = [];
+  protected readonly menuItems: MenuItem[];
 
   constructor() {
     const authService = inject(AuthService);
 
-    const items: MenuItem[] = [
+    this.menuItems = [
       {
         label: 'Propiedades',
         icon: 'pi pi-sliders-h',
         routerLink: 'properties'
-      }
+      },
+      ...(authService.hasPermission(UcroniaPermissions.feeType.read)
+        ? [{
+          label: 'Tipos de cuota',
+          icon: 'pi pi-money-bill',
+          routerLink: 'fee-types'
+        }]
+        : []),
+      ...(authService.hasPermission(
+        UcroniaPermissions.directory.memberProfile.read
+      )
+        ? [{
+          label: 'Llaves',
+          icon: 'pi pi-key',
+          routerLink: 'keys'
+        }]
+        : []),
+      ...(authService.hasPermission(
+        UcroniaPermissions.directory.contactMethod.read
+      )
+        ? [{
+          label: 'Métodos de contacto',
+          icon: 'pi pi-phone',
+          routerLink: 'contact-methods'
+        }]
+        : [])
     ];
-
-    if (authService.hasPermission(UcroniaPermissions.feeType.read)) {
-      items.push({
-        label: 'Tipos de cuota',
-        icon: 'pi pi-money-bill',
-        routerLink: 'fee-types'
-      });
-    }
-
-    if (authService.hasPermission(UcroniaPermissions.directory.memberProfile.read)) {
-      items.push({
-        label: 'Llaves',
-        icon: 'pi pi-key',
-        routerLink: 'keys'
-      });
-    }
-
-    if (authService.hasPermission(UcroniaPermissions.directory.contactMethod.read)) {
-      items.push({
-        label: 'Métodos de contacto',
-        icon: 'pi pi-phone',
-        routerLink: 'contact-methods'
-      });
-    }
-
-    this.menuItems = items;
   }
-
 }
