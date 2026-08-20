@@ -1,15 +1,17 @@
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PublicMember } from '@ucronia/domain';
+import { BadgeModule } from 'primeng/badge';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { MemberRenewTag } from '../member-renew-tag/member-renew-tag';
+import { PublicMemberRenewTag } from '../public-member-renew-tag/public-member-renew-tag';
 
 @Component({
-  selector: 'assoc-member-list',
-  imports: [TableModule, MemberRenewTag],
-  templateUrl: './member-list.html'
+  selector: 'assoc-public-member-list',
+  imports: [TableModule, ButtonModule, BadgeModule, PublicMemberRenewTag],
+  templateUrl: './public-member-list.html'
 })
-export class MemberList {
+export class PublicMemberList {
 
   public readonly loading = input(false);
   public readonly members = input<PublicMember[]>([]);

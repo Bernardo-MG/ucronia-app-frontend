@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
 import { of } from 'rxjs';
-import { MemberService } from './member-service';
+import { PublicMemberService } from './public-member-service';
 
-describe('MemberService', () => {
-  let service: MemberService;
+describe('PublicMemberService', () => {
+  let service: PublicMemberService;
 
   const mockUcroniaClient = {
     member: {
@@ -24,7 +24,7 @@ describe('MemberService', () => {
         { provide: UcroniaClient, useValue: mockUcroniaClient }
       ]
     });
-    service = TestBed.inject(MemberService);
+    service = TestBed.inject(PublicMemberService);
   });
 
   it('should be created', () => {

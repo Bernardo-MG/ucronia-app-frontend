@@ -1,26 +1,25 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { MemberCount } from '@ucronia/api';
 import { Member, PublicMember } from '@ucronia/domain';
-import { CardModule } from 'primeng/card';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
-import { debounceTime, distinctUntilChanged, finalize, Subject } from 'rxjs';
-import { MemberList } from '../member-list/member-list';
-import { MemberService } from '../member-service';
+import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { PanelModule } from 'primeng/panel';
+import { finalize } from 'rxjs';
+import { PublicMemberList } from '../public-member-list/public-member-list';
+import { PublicMemberService } from '../public-member-service';
 
 @Component({
-  selector: 'assoc-member-view',
-  imports: [FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, MemberList],
-  templateUrl: './member-view.html'
+  selector: 'assoc-public-member-view',
+  imports: [FormsModule, PanelModule, DialogModule, ButtonModule, PublicMemberList, SummaryCard, TextFilter],
+  templateUrl: './public-member-view.html'
 })
-export class MemberView implements OnInit {
+export class PublicMemberView implements OnInit {
 
-  private readonly service = inject(MemberService);
+  private readonly service = inject(PublicMemberService);
 
   public data = new Page<PublicMember>();
 
@@ -46,20 +45,6 @@ export class MemberView implements OnInit {
   public failures = new FailureStore();
 
   private nameFilter = '';
-  public filterValue = '';
-  private readonly filterSubject = new Subject<string>();
-
-  constructor() {
-    const destroyRef = inject(DestroyRef);
-
-    this.filterSubject
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        takeUntilDestroyed(destroyRef)
-      )
-      .subscribe(filter => this.onFilter(filter));
-  }
 
   public ngOnInit(): void {
     this.load();
@@ -89,10 +74,6 @@ export class MemberView implements OnInit {
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
-  }
-
-  public onFilterChange(filter: string): void {
-    this.filterSubject.next(filter);
   }
 
   // DATA LOADING

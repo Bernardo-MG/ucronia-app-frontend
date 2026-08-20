@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { PublicMember } from '@ucronia/domain';
+import { Profile } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -22,7 +22,7 @@ export class FeeCreationForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
-  public readonly members = input<PublicMember[]>([]);
+  public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
@@ -62,7 +62,7 @@ export class FeeCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
-  public onSelectMember(member: PublicMember) {
+  public onSelectMember(member: Profile) {
     if (!member) {
       return;
     }

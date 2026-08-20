@@ -1,20 +1,19 @@
 
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
+import { OverlayBadgeModule } from 'primeng/overlaybadge';
+import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, switchMap } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -30,7 +29,7 @@ import { LibrarySummary } from '../model/library-summary';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -43,12 +42,10 @@ export class LibraryView implements OnInit {
   public failures = new FailureStore();
 
   private nameFilter = '';
-  public filterValue = '';
-  private readonly filterSubject = new Subject<string>();
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedBorrower = new Profile();
-  public members: PublicMember[] = [];
+  public members: Profile[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();
@@ -95,7 +92,6 @@ export class LibraryView implements OnInit {
 
   constructor() {
     const authService = inject(AuthService);
-    const destroyRef = inject(DestroyRef);
 
     // Check permissions
     this.permissions = {
@@ -103,14 +99,6 @@ export class LibraryView implements OnInit {
       edit: authService.hasPermission(UcroniaPermissions.library.book.update),
       delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
     };
-
-    this.filterSubject
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        takeUntilDestroyed(destroyRef)
-      )
-      .subscribe(filter => this.onFilter(filter));
 
   }
 
@@ -160,7 +148,7 @@ export class LibraryView implements OnInit {
   public onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
+      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancelar',
@@ -317,10 +305,6 @@ export class LibraryView implements OnInit {
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
-  }
-
-  public onFilterChange(filter: string): void {
-    this.filterSubject.next(filter);
   }
 
   public onSearchMembers(event: { query: string }) {

@@ -4,7 +4,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Fee, FeeSummary, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, MemberStatus, Profile, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -48,7 +48,7 @@ export class FeeView implements OnInit {
 
   public selectedData = new Fee();
   public summary = new FeeSummary();
-  public members: PublicMember[] = [];
+  public members: Profile[] = [];
   public feeCalendar: MemberFees[] = [];
 
   public failures = new FailureStore();

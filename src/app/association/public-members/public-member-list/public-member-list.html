@@ -1,0 +1,27 @@
+<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="members()" paginator="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)">
+
+  <ng-template #header>
+    <tr class="border-b bg-gray-100">
+      <th pSortableColumn="fullName" class="py-3 px-4 text-left font-medium text-gray-700">
+        Nombre
+        <p-sortIcon field="fullName" />
+      </th>
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-member>
+    <tr class="hover:bg-gray-50 transition-colors">
+      <td class="py-2 px-4">
+        {{ member.name.fullName }}
+        @if (member.key) {
+          <i class="pi pi-key ml-2 text-amber-600" title="Llave asignada"></i>
+        }
+        <assoc-public-member-renew-tag [renew]="member.renew" />
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>
