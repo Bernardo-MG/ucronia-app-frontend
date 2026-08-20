@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MemberRenewTag } from './member-renew-tag';
+import { PublicMemberRenewTag } from './public-member-renew-tag';
 
-describe('MemberRenewTag', () => {
-  let component: MemberRenewTag;
-  let fixture: ComponentFixture<MemberRenewTag>;
+describe('PublicMemberRenewTag', () => {
+  let component: PublicMemberRenewTag;
+  let fixture: ComponentFixture<PublicMemberRenewTag>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MemberRenewTag]
+      imports: [PublicMemberRenewTag]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberRenewTag);
+    fixture = TestBed.createComponent(PublicMemberRenewTag);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

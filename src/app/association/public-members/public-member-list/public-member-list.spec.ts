@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { MemberList } from './member-list';
+import { PublicMemberList } from './public-member-list';
 
-describe('MemberList', () => {
-  let component: MemberList;
-  let fixture: ComponentFixture<MemberList>;
+describe('PublicMemberList', () => {
+  let component: PublicMemberList;
+  let fixture: ComponentFixture<PublicMemberList>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MemberList],
+      imports: [PublicMemberList],
       providers: [
         MessageService,
         ConfirmationService
@@ -16,7 +16,7 @@ describe('MemberList', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MemberList);
+    fixture = TestBed.createComponent(PublicMemberList);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

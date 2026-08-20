@@ -5,14 +5,14 @@ import { MemberCount } from '@ucronia/api';
 import { PublicMember } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of } from 'rxjs';
-import { MemberService } from '../member-service';
-import { MemberView } from './member-view';
+import { PublicMemberService } from '../public-member-service';
+import { PublicMemberView } from './public-member-view';
 
-describe('MemberView', () => {
-  let component: MemberView;
-  let fixture: ComponentFixture<MemberView>;
+describe('PublicMemberView', () => {
+  let component: PublicMemberView;
+  let fixture: ComponentFixture<PublicMemberView>;
 
-  const memberServiceMock = jasmine.createSpyObj<MemberService>(
+  const memberServiceMock = jasmine.createSpyObj<PublicMemberService>(
     'MemberService',
     ['getAll', 'getSummary']
   );
@@ -27,18 +27,18 @@ describe('MemberView', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        MemberView
+        PublicMemberView
       ],
       providers: [
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
-        { provide: MemberService, useValue: memberServiceMock }
+        { provide: PublicMemberService, useValue: memberServiceMock }
       ]
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MemberView);
+    fixture = TestBed.createComponent(PublicMemberView);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
