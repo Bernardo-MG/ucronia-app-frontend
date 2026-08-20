@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MemberService {
+export class PublicMemberService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 

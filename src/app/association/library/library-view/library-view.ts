@@ -5,7 +5,8 @@ import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
-import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { UcroniaPermissions } from '@ucronia/auth';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -13,7 +14,6 @@ import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
 import { catchError, finalize, forkJoin, map, Observable, of, switchMap } from 'rxjs';
-import { LibrarySummary } from '../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -25,7 +25,7 @@ import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
-import { UcroniaPermissions } from '@ucronia/auth';
+import { LibrarySummary } from '../model/library-summary';
 
 @Component({
   selector: 'assoc-library-view',
@@ -45,7 +45,7 @@ export class LibraryView implements OnInit {
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedBorrower = new Profile();
-  public members: PublicMember[] = [];
+  public members: Profile[] = [];
 
   public data = new Page<FictionBook | GameBook>();
   public lendings = new Page<BookLending>();

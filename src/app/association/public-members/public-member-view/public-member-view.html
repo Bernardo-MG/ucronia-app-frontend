@@ -13,7 +13,7 @@
 
   <p-panel class="shadow bg-white rounded-lg">
 
-    <assoc-member-list [loading]="status.loading" [members]="data.content" [rows]="data.size" [page]="data.page"
+    <assoc-public-member-list [loading]="status.loading" [members]="data.content" [rows]="data.size" [page]="data.page"
       [totalRecords]="data.totalElements" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
 
   </p-panel>

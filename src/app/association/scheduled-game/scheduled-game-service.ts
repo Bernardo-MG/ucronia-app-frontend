@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { MemberStatus, Profile, PublicMember, ScheduledGame } from '@ucronia/domain';
+import { MemberStatus, Profile, ScheduledGame } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -103,7 +103,7 @@ export class ScheduledGameService {
     return this.ucroniaClient.profile.get(number);
   }
 
-  public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
+  public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<Profile[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -113,7 +113,7 @@ export class ScheduledGameService {
     );
 
     return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, status, query)
-      .pipe(map(page => page.content as PublicMember[]));
+      .pipe(map(page => page.content));
   }
 
 }

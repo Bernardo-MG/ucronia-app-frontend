@@ -2,11 +2,11 @@ import { Component, input } from '@angular/core';
 import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'assoc-member-renew-tag',
+  selector: 'assoc-public-member-renew-tag',
   imports: [TagModule],
-  templateUrl: './member-renew-tag.html'
+  templateUrl: './public-member-renew-tag.html'
 })
-export class MemberRenewTag {
+export class PublicMemberRenewTag {
 
   public readonly renew = input(true);
 

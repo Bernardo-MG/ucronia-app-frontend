@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { GuestPatch, MemberPatch, ProfileCreation, ProfilePatch, SponsorPatch, UcroniaClient, mergeProperties } from '@ucronia/api';
-import { ContactChannel, Guest, Member, MemberFeeType, MemberStatus, Profile, PublicMember, Sponsor } from '@ucronia/domain';
+import { ContactChannel, Guest, Member, MemberFeeType, MemberStatus, Profile, Sponsor } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, catchError, concat, forkJoin, last, map, of, switchMap, tap, throwError } from 'rxjs';
 import { FullProfile } from './model/full-profile';
@@ -162,7 +162,7 @@ export class DirectoryService {
       );
   }
 
-  private convertToMember(number: number, feeType: number): Observable<PublicMember> {
+  private convertToMember(number: number, feeType: number): Observable<Member> {
     return this.ucroniaClient.profile.transform.toMember(number, feeType)
       .pipe(
         tap(() => {

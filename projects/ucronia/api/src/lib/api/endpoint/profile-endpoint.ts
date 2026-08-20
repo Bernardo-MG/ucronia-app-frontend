@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Guest, Profile, PublicMember, Sponsor } from '@ucronia/domain';
+import { Guest, Member, Profile, Sponsor } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { ProfileMembershipConversion } from '../../members/profile-membership-conversion';
 import { ProfileCreation } from '../../profile/profile-creation';
@@ -107,12 +107,12 @@ export class TransformProfileEndpoint {
   public toMember(
     number: number,
     feeType: number
-  ): Observable<PublicMember> {
+  ): Observable<Member> {
     const conversion: ProfileMembershipConversion = {
       feeType
     };
 
-    return this.http.put<SimpleResponse<PublicMember>>(`${this.apiUrl}/profile/${number}/member`, conversion)
+    return this.http.put<SimpleResponse<Member>>(`${this.apiUrl}/profile/${number}/member`, conversion)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => response.content)
