@@ -4,7 +4,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { PublicMember } from '@ucronia/domain';
+import { Profile } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -24,7 +24,7 @@ export class FeePaymentsForm {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
-  public readonly members = input<PublicMember[]>([]);
+  public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
@@ -49,7 +49,7 @@ export class FeePaymentsForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onSelectMember(member: PublicMember) {
+  public onSelectMember(member: Profile) {
     if (!member) {
       return;
     }

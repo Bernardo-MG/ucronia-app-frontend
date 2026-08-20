@@ -80,7 +80,7 @@
         </ng-template>
         <div class="w-full p-4">
           <access-user-member-editor-form [member]="member" [members]="members" [loading]="loading"
-            (assignMember)="onAssignMember($event)" (searchMember)="onSearchMembers($event)" />
+            (assignMember)="onAssignMember($event.number)" (searchMember)="onSearchMembers($event)" />
         </div>
         <ng-template #footer>
           <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />

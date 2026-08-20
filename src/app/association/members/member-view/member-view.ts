@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { MemberCount } from '@ucronia/api';
 import { Member, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
@@ -14,7 +13,7 @@ import { MemberService } from '../member-service';
 
 @Component({
   selector: 'assoc-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, ButtonModule, MemberList, TextFilter, SummaryCard],
+  imports: [FormsModule, PanelModule, DialogModule, ButtonModule, MemberList],
   templateUrl: './member-view.html'
 })
 export class MemberView implements OnInit {

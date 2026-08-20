@@ -3,7 +3,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Profile, PublicMember, ScheduledGame } from '@ucronia/domain';
+import { Profile, ScheduledGame } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -30,7 +30,7 @@ export class ScheduledGameView implements OnInit {
   };
 
   public scheduledGames = new Page<ScheduledGame>();
-  public members: PublicMember[] = [];
+  public members: Profile[] = [];
   private sort = new Sorting();
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();

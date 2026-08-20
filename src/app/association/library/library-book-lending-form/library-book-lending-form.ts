@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { PublicMember } from '@ucronia/domain';
+import { Profile } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { FloatLabelModule } from 'primeng/floatlabel';
@@ -19,14 +19,14 @@ export class LibraryBookLendingForm implements OnChanges {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
-  public readonly members = input<PublicMember[]>([]);
+  public readonly members = input<Profile[]>([]);
 
   public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public readonly today = new Date();
 
-  @Input() public set borrower(value: PublicMember) {
+  @Input() public set borrower(value: Profile) {
     this.form.get('borrower')?.setValue(value.number);
     this.memberName = value.name.fullName;
   }
@@ -73,7 +73,7 @@ export class LibraryBookLendingForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
-  public onSelectMember(member: PublicMember) {
+  public onSelectMember(member: Profile) {
     if (!member) {
       return;
     }
