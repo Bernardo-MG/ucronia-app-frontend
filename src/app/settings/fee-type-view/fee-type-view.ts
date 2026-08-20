@@ -4,7 +4,6 @@ import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
 import { FeeTypeList } from '../fee-type-list/fee-type-list';
@@ -12,7 +11,7 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-view',
-  imports: [ButtonModule, DrawerModule, FeeTypeList, FeeTypeForm],
+  imports: [ButtonModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {

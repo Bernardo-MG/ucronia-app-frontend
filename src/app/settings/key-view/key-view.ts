@@ -4,7 +4,6 @@ import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { KeyForm } from '../key-form/key-form';
 import { KeyList } from '../key-list/key-list';
@@ -12,7 +11,7 @@ import { KeyService } from '../key-service';
 
 @Component({
   selector: 'assoc-key-view',
-  imports: [ButtonModule, DrawerModule, KeyList, KeyForm],
+  imports: [ButtonModule, KeyList, KeyForm],
   templateUrl: './key-view.html'
 })
 export class KeyView implements OnInit {

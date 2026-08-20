@@ -4,32 +4,31 @@ import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { DetailField } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Publisher } from '@ucronia/domain';
+import { Author } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
-import { PublisherService } from '../publisher-service';
+import { AuthorService } from '../author-service';
 
 @Component({
-  imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
-  templateUrl: './library-publisher-list-view.html'
+  imports: [NameList, ButtonModule, NameForm, DetailField],
+  templateUrl: './library-author-list-view.html'
 })
-export class LibraryPublisherListView implements OnInit {
+export class LibraryAuthorListView implements OnInit {
 
-  private readonly service = inject(PublisherService);
+  private readonly service = inject(AuthorService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
 
-  public data = new Page<Publisher>();
+  public data = new Page<Author>();
   public loading = false;
   public failures = new FailureStore();
   public drawer = Drawer.NONE;
   public readonly Drawer = Drawer;
-  public selected = new Publisher();
+  public selected = new Author();
   private sort = new Sorting();
 
   constructor() {
@@ -37,9 +36,9 @@ export class LibraryPublisherListView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission(UcroniaPermissions.library.publisher.create),
-      edit: authService.hasPermission(UcroniaPermissions.library.publisher.update),
-      delete: authService.hasPermission(UcroniaPermissions.library.publisher.delete)
+      create: authService.hasPermission(UcroniaPermissions.library.author.create),
+      edit: authService.hasPermission(UcroniaPermissions.library.author.update),
+      delete: authService.hasPermission(UcroniaPermissions.library.author.delete)
     };
   }
 
@@ -50,7 +49,7 @@ export class LibraryPublisherListView implements OnInit {
   // EVENT HANDLERS
 
   public onShowCreate(): void {
-    this.selected = new Publisher();
+    this.selected = new Author();
     this.drawer = Drawer.CREATION;
     this.failures.clear();
   }
@@ -111,10 +110,7 @@ export class LibraryPublisherListView implements OnInit {
   public onCreate(data: any): void {
     this.loading = true;
     this.service.create(data)
-      .pipe(finalize(() => {
-        this.loading = false;
-        this.drawer = Drawer.NONE;
-      }))
+      .pipe(finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
