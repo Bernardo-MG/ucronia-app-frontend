@@ -6,7 +6,6 @@ export const libraryRoutes: Routes = [
   {
     path: 'library',
     canActivate: [ResourceGuard(UcroniaPermissions.library.book.read)],
-    loadComponent: () => import('./library-layout/library-layout').then(m => m.LibraryLayout),
     children: [
       {
         path: '',
