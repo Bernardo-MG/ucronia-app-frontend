@@ -1,25 +1,41 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="members()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
-  (onPage)="onPageChange($event)">
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)" responsiveLayout="scroll" styleClass="p-datatable-striped">
 
   <ng-template #header>
-    <tr class="border-b bg-gray-100">
-      <th pSortableColumn="fullName" class="py-3 px-4 text-left font-medium text-gray-700">
+    <tr>
+      <th pSortableColumn="fullName">
         Nombre
         <p-sortIcon field="fullName" />
       </th>
+      <th pSortableColumn="number" class="w-40">
+        N.º socio
+        <p-sortIcon field="number" />
+      </th>
+      <th class="w-48">Llave</th>
     </tr>
   </ng-template>
 
   <ng-template #body let-member>
-    <tr class="hover:bg-gray-50 transition-colors">
-      <td class="py-2 px-4">
-        {{ member.name.fullName }}
-        @if (member.key) {
-          <i class="pi pi-key ml-2 text-amber-600" title="Llave asignada"></i>
-        }
+    <tr class="transition-colors hover:bg-primary-50/40">
+      <td>
+        <span class="font-semibold text-gray-950">{{ member.name.fullName }}</span>
         <assoc-member-renew-tag [renew]="member.renew" />
+        @if (member.name.nickname) {
+          <span class="mt-1 block text-xs text-gray-500">{{ member.name.nickname }}</span>
+        }
+      </td>
+      <td class="font-mono text-sm text-gray-600">#{{ member.number }}</td>
+      <td>
+        @if (member.key) {
+          <span class="inline-flex items-center gap-2 text-gray-700">
+            <i class="pi pi-key" aria-hidden="true"></i>
+            Llave {{ member.key }}
+          </span>
+        } @else {
+          <span class="text-gray-400">—</span>
+        }
       </td>
     </tr>
   </ng-template>
