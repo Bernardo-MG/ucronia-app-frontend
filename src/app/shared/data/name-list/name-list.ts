@@ -6,7 +6,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'shared-name-list',
-  imports: [TableModule, PanelModule, ButtonModule],
+  imports: [TableModule, ButtonModule],
   templateUrl: './name-list.html'
 })
 export class NameList {

@@ -15,30 +15,27 @@
   </div>
 </div>
 
-<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
-  @switch (dialog) {
+@switch (dialog) {
 
-    @case(Dialog.CREATE) {
-      <ng-template #header>
-        Crear tipo de cuota
-      </ng-template>
-      <div class="w-full">
-        <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
-      </div>
-    }
-
-    @case(Dialog.EDIT) {
-      <ng-template #header>
-        Editar tipo de cuota
-      </ng-template>
-      <div class="w-full">
-        <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures"
-          (save)="onUpdate($event)" />
-      </div>
-      <ng-template #footer>
-        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-      </ng-template>
-    }
-
+  @case(Dialog.CREATE) {
+    <ng-template #header>
+      Crear tipo de cuota
+    </ng-template>
+    <div class="w-full">
+      <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+    </div>
   }
-</p-drawer>
+
+  @case(Dialog.EDIT) {
+    <ng-template #header>
+      Editar tipo de cuota
+    </ng-template>
+    <div class="w-full">
+      <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+    </div>
+    <ng-template #footer>
+      <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+    </ng-template>
+  }
+
+}

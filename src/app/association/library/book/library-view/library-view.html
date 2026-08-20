@@ -1,5 +1,3 @@
-<p-menu #dataMenu [model]="dataMenuItems" [popup]="true" />
-
 <div class="p-4 space-y-6">
   <h1 class="text-4xl font-bold">Biblioteca</h1>
 
@@ -33,10 +31,6 @@
 
         <p-button icon="pi pi-file-excel" [disabled]="status.loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
           [attr.aria-disabled]="status.loadingExcel" rounded />
-
-        @if (dataMenuItems) {
-          <p-button icon="pi pi-cog" rounded (click)="dataMenu.toggle($event)" aria-label="Editar datos" />
-        }
       </div>
     }
   </div>
