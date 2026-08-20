@@ -1,15 +1,14 @@
 
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { Menu, MenuModule } from 'primeng/menu';
 import { OverlayBadgeModule } from 'primeng/overlaybadge';
 import { PanelModule } from 'primeng/panel';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
@@ -26,17 +25,17 @@ import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
+import { UcroniaPermissions } from '@ucronia/auth';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, MenuModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
+  imports: [FormsModule, ReactiveFormsModule, RouterModule, PanelModule, ButtonModule, OverlayBadgeModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, SummaryCard, TextFilter, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
 
-  private readonly router = inject(Router);
   private readonly reportService = inject(BookReportService);
-  public readonly service = inject(LibraryService);
+  private readonly service = inject(LibraryService);
   private readonly lendingsService = inject(LibraryLendingService);
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -74,12 +73,7 @@ export class LibraryView implements OnInit {
 
   public readonly Dialog = Dialog;
 
-  public readonly dataMenuItems: MenuItem[] = [];
-
   private sort = new Sorting();
-
-  @ViewChild('fictionEditionMenu') fictionEditionMenu!: Menu;
-  @ViewChild('gameEditionMenu') gameEditionMenu!: Menu;
 
   public Display = Display;
 
@@ -101,40 +95,11 @@ export class LibraryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('LIBRARY_BOOK', 'CREATE'),
-      edit: authService.hasPermission('LIBRARY_BOOK', 'UPDATE'),
-      delete: authService.hasPermission('LIBRARY_BOOK', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.library.book.create),
+      edit: authService.hasPermission(UcroniaPermissions.library.book.update),
+      delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
     };
 
-    // Load data menu
-    if (authService.hasPermission('LIBRARY_AUTHOR', 'VIEW')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Autores',
-          command: () => this.router.navigate(['/association/library/authors'])
-        });
-    }
-    if (authService.hasPermission('LIBRARY_PUBLISHER', 'VIEW')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Editores',
-          command: () => this.router.navigate(['/association/library/publishers'])
-        });
-    }
-    if (authService.hasPermission('LIBRARY_BOOK_TYPE', 'VIEW')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Tipos',
-          command: () => this.router.navigate(['/association/library/types'])
-        });
-    }
-    if (authService.hasPermission('LIBRARY_GAME_SYSTEM', 'VIEW')) {
-      this.dataMenuItems.push(
-        {
-          label: 'Sistemas',
-          command: () => this.router.navigate(['/association/library/systems'])
-        });
-    }
   }
 
   public ngOnInit(): void {
@@ -143,15 +108,6 @@ export class LibraryView implements OnInit {
   }
 
   // EVENT HANDLERS
-
-  public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-    this.selectedData = book;
-    if (Object.prototype.hasOwnProperty.call(book, 'gameSystem')) {
-      this.gameEditionMenu.toggle(event);
-    } else {
-      this.fictionEditionMenu.toggle(event);
-    }
-  }
 
   public onCreate(toCreate: LibraryBookCreationFormData): void {
     this.call(

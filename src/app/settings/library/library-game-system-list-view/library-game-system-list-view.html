@@ -1,0 +1,48 @@
+<div class="p-4 space-y-6">
+  <header class="flex items-center justify-between">
+    <h1 class="text-4xl font-bold">Sistemas de juego</h1>
+    @if (permissions.create) {
+      <p-button icon="pi pi-plus-circle" (click)="drawer = Drawer.CREATION" [disabled]="!permissions.create"
+        aria-label="Nuevo sistema de juego" [attr.aria-disabled]="!permissions.create" rounded />
+    }
+  </header>
+  <shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (sortChange)="onSort($event)"
+    (pageChange)="load($event)"></shared-name-list>
+</div>
+
+@switch (drawer) {
+  @case (Drawer.INFO) {
+    <ng-template #header>
+      Sistema
+    </ng-template>
+    <div>
+      <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
+    </div>
+    <ng-template #footer>
+      <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
+      <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+        (click)="onDelete($event)" rounded text />
+    </ng-template>
+  }
+  @case (Drawer.CREATION) {
+    <ng-template #header>
+      Crear sistema
+    </ng-template>
+    <div class="w-full">
+      <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
+        (reject)="onReject()"></shared-name-form>
+    </div>
+  }
+  @case (Drawer.EDITION) {
+    <ng-template #header>
+      Modificar sistema
+    </ng-template>
+    <div class="w-full">
+      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
+        (reject)="onReject()"></shared-name-form>
+    </div>
+    <ng-template #footer>
+      <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
+    </ng-template>
+  }
+}

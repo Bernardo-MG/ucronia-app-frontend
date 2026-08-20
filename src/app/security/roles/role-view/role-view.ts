@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { SecurityPermissions } from '@bernardo-mg/security';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -49,9 +50,9 @@ export class RoleView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('ROLE', 'CREATE'),
-      edit: authService.hasPermission('ROLE', 'UPDATE'),
-      delete: authService.hasPermission('ROLE', 'DELETE')
+      create: authService.hasPermission(SecurityPermissions.role.create),
+      edit: authService.hasPermission(SecurityPermissions.role.update),
+      delete: authService.hasPermission(SecurityPermissions.role.delete)
     };
   }
 

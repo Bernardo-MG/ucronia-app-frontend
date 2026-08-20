@@ -1,0 +1,43 @@
+<div class="settings-page">
+  <div class="settings-layout">
+    <aside class="settings-sidebar">
+      <header class="settings-sidebar__header">
+        <span class="settings-sidebar__eyebrow">
+          Administración
+        </span>
+
+        <h1 class="settings-sidebar__title">
+          Asociación
+        </h1>
+      </header>
+
+      <nav class="settings-nav" aria-label="Administración de la asociación">
+        @for (section of menuSections; track section.label; let first = $first) {
+        <section class="settings-nav__section" [class.settings-nav__section--divided]="!first">
+          <h2 class="settings-nav__section-title">
+            {{ section.label }}
+          </h2>
+
+          <div class="settings-nav__items">
+            @for (item of section.items; track item.routerLink) {
+            <a pRipple class="settings-nav__item" [routerLink]="item.routerLink"
+              routerLinkActive="settings-nav__item--active" #activeLink="routerLinkActive"
+              [attr.aria-current]="activeLink.isActive ? 'page' : null">
+              <i class="settings-nav__icon" [class]="item.icon" aria-hidden="true"></i>
+
+              <span>{{ item.label }}</span>
+            </a>
+            }
+          </div>
+        </section>
+        }
+      </nav>
+    </aside>
+
+    <main class="settings-content">
+      <p-card styleClass="h-full">
+        <router-outlet />
+      </p-card>
+    </main>
+  </div>
+</div>

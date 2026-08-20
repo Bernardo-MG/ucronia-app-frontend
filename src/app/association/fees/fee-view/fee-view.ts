@@ -3,7 +3,8 @@ import { MemberStatusSelector } from '@app/shared/member/member-status-selector/
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { SummaryCard } from '@bernardo-mg/ui';
-import { Fee, FeeSummary, MemberFees, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
+import { UcroniaPermissions } from '@ucronia/auth';
+import { Fee, FeeSummary, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -11,6 +12,7 @@ import { MenuModule } from 'primeng/menu';
 import { PanelModule } from 'primeng/panel';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable, switchMap, tap } from 'rxjs';
+import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
@@ -62,9 +64,9 @@ export class FeeView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('FEE', 'CREATE'),
-      edit: authService.hasPermission('FEE', 'UPDATE'),
-      delete: authService.hasPermission('FEE', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.fee.create),
+      edit: authService.hasPermission(UcroniaPermissions.fee.update),
+      delete: authService.hasPermission(UcroniaPermissions.fee.delete)
     };
   }
 

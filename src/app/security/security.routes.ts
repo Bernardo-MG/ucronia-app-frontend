@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { LoggedInGuard, ResourceGuard } from '@bernardo-mg/authentication';
+import { SecurityPermissions } from '@bernardo-mg/security';
 
 export const securityRoutes: Routes = [
   {
@@ -17,25 +18,25 @@ export const securityRoutes: Routes = [
       {
         // Roles
         path: 'roles',
-        canActivate: [ResourceGuard('ROLE', 'VIEW')],
+        canActivate: [ResourceGuard(SecurityPermissions.role.read)],
         loadComponent: () => import('./roles/role-view/role-view').then(m => m.RoleView)
       },
       {
         // Users
         path: 'users',
-        canActivate: [ResourceGuard('USER', 'VIEW')],
+        canActivate: [ResourceGuard(SecurityPermissions.user.read)],
         loadComponent: () => import('./users/user-view/user-view').then(m => m.UserView)
       },
       {
         // User tokens
         path: 'user-tokens',
-        canActivate: [ResourceGuard('USER_TOKEN', 'VIEW')],
+        canActivate: [ResourceGuard(SecurityPermissions.userToken.read)],
         loadComponent: () => import('./user-tokens/user-token-view/user-token-view').then(m => m.UserTokenView)
       },
       {
         // Security audit
         path: 'audit',
-        canActivate: [ResourceGuard('USER', 'VIEW')],
+        canActivate: [ResourceGuard(SecurityPermissions.loginRegister.read)],
         loadComponent: () => import('./audit/audit-view/audit-view').then(m => m.AuditView)
       }
     ]
