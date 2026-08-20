@@ -4,7 +4,7 @@ import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClien
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
-import { LibrarySummary } from '../model/library-summary';
+import { LibrarySummary } from './model/library-summary';
 
 @Injectable({
   providedIn: "root"

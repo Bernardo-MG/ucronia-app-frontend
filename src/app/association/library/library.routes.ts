@@ -17,7 +17,7 @@ export const libraryRoutes: Routes = [
         children: [
           {
             path: '',
-            loadComponent: () => import('./book/library-view/library-view').then(m => m.LibraryView),
+            loadComponent: () => import('./library-view/library-view').then(m => m.LibraryView),
             canActivate: [ResourceGuard(UcroniaPermissions.library.book.read)]
           }
         ]

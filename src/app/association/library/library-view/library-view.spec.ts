@@ -4,7 +4,7 @@ import { Page } from '@bernardo-mg/request';
 import { BookLending, GameBook, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
-import { LibrarySummary } from '../../model/library-summary';
+import { LibrarySummary } from '../model/library-summary';
 import { BookReportService } from '../book-report-service';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
