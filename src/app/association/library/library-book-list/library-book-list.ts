@@ -62,7 +62,7 @@ export class LibraryBookList {
   }
 
   public getType(book: FictionBook | GameBook): string {
-    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'FicciÃ³n';
+    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'Ficción';
   }
 
   public getSystem(book: FictionBook | GameBook): string {
