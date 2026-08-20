@@ -28,39 +28,8 @@ export class SettingsLayout {
   constructor() {
     const authService = inject(AuthService);
 
-    const catalogItems: MenuItem[] = [];
-
-    if (authService.hasPermission(UcroniaPermissions.feeType.read)) {
-      catalogItems.push({
-        label: 'Tipos de cuota',
-        icon: 'pi pi-money-bill',
-        routerLink: 'fee-types'
-      });
-    }
-
-    if (
-      authService.hasPermission(
-        UcroniaPermissions.directory.memberProfile.read
-      )
-    ) {
-      catalogItems.push({
-        label: 'Llaves',
-        icon: 'pi pi-key',
-        routerLink: 'keys'
-      });
-    }
-
-    if (
-      authService.hasPermission(
-        UcroniaPermissions.directory.contactMethod.read
-      )
-    ) {
-      catalogItems.push({
-        label: 'Métodos de contacto',
-        icon: 'pi pi-phone',
-        routerLink: 'contact-methods'
-      });
-    }
+    const catalogItems = this.catalogItems(authService);
+    const libraryItems = this.libraryItems(authService);
 
     this.menuSections = [
       {
@@ -75,10 +44,87 @@ export class SettingsLayout {
       },
       ...(catalogItems.length > 0
         ? [{
-            label: 'Catálogos',
-            items: catalogItems
-          }]
+          label: 'Catálogos',
+          items: catalogItems
+        }]
+        : []),
+      ...(libraryItems.length > 0
+        ? [{
+          label: 'Biblioteca',
+          items: libraryItems
+        }]
         : [])
     ];
   }
+
+  private catalogItems(authService: AuthService): MenuItem[] {
+    const catalogItems: MenuItem[] = [];
+
+    if (authService.hasPermission(UcroniaPermissions.feeType.read)) {
+      catalogItems.push({
+        label: 'Tipos de cuota',
+        icon: 'pi pi-money-bill',
+        routerLink: 'fee-types'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.directory.memberProfile.read)
+    ) {
+      catalogItems.push({
+        label: 'Llaves',
+        icon: 'pi pi-key',
+        routerLink: 'keys'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.directory.contactMethod.read)
+    ) {
+      catalogItems.push({
+        label: 'Métodos de contacto',
+        icon: 'pi pi-phone',
+        routerLink: 'contact-methods'
+      });
+    }
+
+    return catalogItems;
+  }
+
+  private libraryItems(authService: AuthService): MenuItem[] {
+    const libraryItems: MenuItem[] = [];
+
+    if (authService.hasPermission(UcroniaPermissions.library.author.read)) {
+      libraryItems.push({
+        label: 'Autores',
+        icon: 'pi pi-user',
+        routerLink: 'library/author'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.library.publisher.read)) {
+      libraryItems.push({
+        label: 'Editoriales',
+        icon: 'pi pi-building',
+        routerLink: 'library/publisher'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.library.system.read)) {
+      libraryItems.push({
+        label: 'Sistemas',
+        icon: 'pi pi-cog',
+        routerLink: 'library/system'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.library.type.read)) {
+      libraryItems.push({
+        label: 'Tipos',
+        icon: 'pi pi-cog',
+        routerLink: 'library/type'
+      });
+    }
+
+    return libraryItems;
+  }
+
 }

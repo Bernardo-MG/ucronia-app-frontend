@@ -6,30 +6,29 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { GameSystem } from '@ucronia/domain';
+import { BookType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
-import { GameSystemService } from '../game-system-service';
+import { BookTypeService } from '../book-type-service';
 
 @Component({
-  imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
-  templateUrl: './library-game-system-list-view.html'
+  imports: [NameList, ButtonModule, NameForm, DetailField],
+  templateUrl: './library-book-type-list-view.html'
 })
-export class LibraryGameSystemListView implements OnInit {
+export class LibraryBookTypeListView implements OnInit {
 
-  private readonly service = inject(GameSystemService);
+  private readonly service = inject(BookTypeService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
 
-  public data = new Page<GameSystem>();
+  public data = new Page<BookType>();
   public loading = false;
   public failures = new FailureStore();
   public drawer = Drawer.NONE;
   public readonly Drawer = Drawer;
-  public selected = new GameSystem();
+  public selected = new BookType();
   private sort = new Sorting();
 
   constructor() {
@@ -37,9 +36,9 @@ export class LibraryGameSystemListView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission(UcroniaPermissions.library.system.create),
-      edit: authService.hasPermission(UcroniaPermissions.library.system.update),
-      delete: authService.hasPermission(UcroniaPermissions.library.system.delete)
+      create: authService.hasPermission(UcroniaPermissions.library.type.create),
+      edit: authService.hasPermission(UcroniaPermissions.library.type.update),
+      delete: authService.hasPermission(UcroniaPermissions.library.type.delete)
     };
   }
 
@@ -50,7 +49,7 @@ export class LibraryGameSystemListView implements OnInit {
   // EVENT HANDLERS
 
   public onShowCreate(): void {
-    this.selected = new GameSystem();
+    this.selected = new BookType();
     this.drawer = Drawer.CREATION;
     this.failures.clear();
   }

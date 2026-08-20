@@ -6,30 +6,29 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { BookType } from '@ucronia/domain';
+import { Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
-import { BookTypeService } from '../book-type-service';
+import { PublisherService } from '../publisher-service';
 
 @Component({
-  imports: [NameList, DrawerModule, ButtonModule, NameForm, DetailField],
-  templateUrl: './library-book-type-list-view.html'
+  imports: [NameList, ButtonModule, NameForm, DetailField],
+  templateUrl: './library-publisher-list-view.html'
 })
-export class LibraryBookTypeListView implements OnInit {
+export class LibraryPublisherListView implements OnInit {
 
-  private readonly service = inject(BookTypeService);
+  private readonly service = inject(PublisherService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
 
-  public data = new Page<BookType>();
+  public data = new Page<Publisher>();
   public loading = false;
   public failures = new FailureStore();
   public drawer = Drawer.NONE;
   public readonly Drawer = Drawer;
-  public selected = new BookType();
+  public selected = new Publisher();
   private sort = new Sorting();
 
   constructor() {
@@ -37,9 +36,9 @@ export class LibraryBookTypeListView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission(UcroniaPermissions.library.type.create),
-      edit: authService.hasPermission(UcroniaPermissions.library.type.update),
-      delete: authService.hasPermission(UcroniaPermissions.library.type.delete)
+      create: authService.hasPermission(UcroniaPermissions.library.publisher.create),
+      edit: authService.hasPermission(UcroniaPermissions.library.publisher.update),
+      delete: authService.hasPermission(UcroniaPermissions.library.publisher.delete)
     };
   }
 
@@ -50,7 +49,7 @@ export class LibraryBookTypeListView implements OnInit {
   // EVENT HANDLERS
 
   public onShowCreate(): void {
-    this.selected = new BookType();
+    this.selected = new Publisher();
     this.drawer = Drawer.CREATION;
     this.failures.clear();
   }
