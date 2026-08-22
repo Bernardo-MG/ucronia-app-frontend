@@ -1,11 +1,38 @@
-<canvas id="balanceChart"></canvas>
+<div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+  <div>
+    <h2 class="text-xl font-semibold text-gray-950">
+      Evolución del saldo
+    </h2>
 
-<div class="row pt-2">
-  <div class="col-4">
-    Meses atrás
+    <p class="mt-1 text-sm text-gray-500">
+      Saldo y resultado de los últimos meses
+    </p>
   </div>
-  <div class="col-8">
-    <p-select [ngModel]="selectedRange" [options]="ranges" (onChange)="selectedRange = $event.value" optionLabel="label"
-      optionValue="value" placeholder="Seleccionar rango" />
-  </div>
+
+  <p-select
+    [ngModel]="selectedRange"
+    [options]="ranges"
+    optionLabel="label"
+    optionValue="value"
+    aria-label="Rango del gráfico"
+    (onChange)="selectedRange = $event.value"
+  />
 </div>
+
+<div
+  class="relative h-64 w-full"
+  [attr.aria-busy]="loading"
+>
+  <canvas id="balanceChart"></canvas>
+</div>
+
+@if (balance.length) {
+  <div
+    class="ml-8 grid text-center text-xs capitalize text-gray-500"
+    [style.grid-template-columns]="'repeat(' + balance.length + ', minmax(0, 1fr))'"
+  >
+    @for (entry of balance; track entry.month) {
+      <span>{{ entry.month | date:'MMM' }}</span>
+    }
+  </div>
+}
