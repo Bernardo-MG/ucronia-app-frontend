@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, input } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
@@ -20,5 +20,7 @@ export class GoogleMaps {
   }
 
   public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+
+  public readonly height = input('400px');
 
 }
