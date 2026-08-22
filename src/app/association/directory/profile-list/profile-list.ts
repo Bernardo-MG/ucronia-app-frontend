@@ -3,12 +3,13 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { FullProfile } from '../model/full-profile';
 import { ProfileTypeTag } from '../profile-type-tag/profile-type-tag';
 
 @Component({
   selector: 'assoc-profile-list',
-  imports: [ButtonModule, TableModule, ProfileTypeTag],
+  imports: [ButtonModule, TableModule, TagModule, ProfileTypeTag],
   templateUrl: './profile-list.html'
 })
 export class ProfileList {
@@ -26,7 +27,7 @@ export class ProfileList {
   public readonly changePage = output<number>();
 
   public get first() {
-    return (this.page() - 1) * this.rows();
+    return Math.max(0, (this.page() - 1) * this.rows());
   }
 
   public onPageChange(event: TablePageEvent) {

@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -11,6 +11,8 @@ import { debounceTime, Subject } from 'rxjs';
 })
 export class TextFilter {
 
+  public readonly label = input('Filtrar');
+  public readonly placeholder = input('');
   public readonly filter = output<string>();
 
   public filterSubject = new Subject<string>();
