@@ -6,12 +6,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'app-my-fees-list',
-  imports: [
-    CurrencyPipe,
-    DatePipe,
-    TableModule,
-    TagModule
-  ],
+  imports: [CurrencyPipe, DatePipe, TableModule, TagModule],
   templateUrl: './my-fees-list.html'
 })
 export class MyFeesList {
