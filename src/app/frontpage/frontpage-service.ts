@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { Activity, PublicSettings } from '@ucronia/domain';
-import { Observable, map } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

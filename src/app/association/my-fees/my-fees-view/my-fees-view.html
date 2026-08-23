@@ -1,12 +1,29 @@
-<div class="p-4">
+<div class="mx-auto max-w-screen-2xl space-y-8 p-4 md:p-6">
+  <header>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-950">Mis cuotas</h1>
+    <p class="mt-1 text-sm text-gray-500">Consulta el estado y el historial de tus cuotas de socio</p>
+  </header>
 
   @if(hasFees || loading) {
-    <p-card>
+    <section>
+      <div class="mb-5">
+        <h2 class="text-xl font-semibold text-gray-950">Historial de cuotas</h2>
+        <p class="mt-1 text-sm text-gray-500">Todos tus pagos y cuotas pendientes</p>
+      </div>
+
+      <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       <app-my-fees-list [loading]="loading" [fees]="data.content" [rows]="data.size" [page]="data.page"
         [totalRecords]="data.totalElements" (changePage)="load($event)" />
-    </p-card>
+      </div>
+    </section>
   } @else {
-    <p class="text-center text-gray-500">No tienes un perfil de socio asignado</p>
+    <section class="rounded-xl border border-gray-200 bg-white px-6 py-16 text-center shadow-sm">
+      <span class="mx-auto flex size-14 items-center justify-center rounded-full bg-gray-100 text-gray-500">
+        <i class="pi pi-user text-xl" aria-hidden="true"></i>
+      </span>
+      <h2 class="mt-4 text-lg font-semibold text-gray-900">Sin perfil de socio</h2>
+      <p class="mx-auto mt-2 max-w-md text-sm text-gray-500">No tienes un perfil de socio asignado y no podemos mostrar tus cuotas.</p>
+    </section>
   }
 
 </div>

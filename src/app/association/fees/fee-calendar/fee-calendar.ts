@@ -1,18 +1,17 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { YearsRange } from '@ucronia/domain';
 import { getMonth } from 'date-fns';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
+import { TooltipModule } from 'primeng/tooltip';
 import { MemberFees, MemberFeesFee } from '../domain/member-fees';
 
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, CommonModule, RouterModule, SelectModule, TableModule, ButtonModule, BadgeModule],
+  imports: [FormsModule, SelectModule, TableModule, ButtonModule, BadgeModule, TooltipModule],
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar implements OnChanges {
@@ -29,9 +28,11 @@ export class FeeCalendar implements OnChanges {
   public readonly goToYear = output<number>();
   public readonly selectFee = output<{ member: number, date: Date }>();
 
-  public monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  public readonly monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
-  public monthNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+  public readonly monthNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+  public readonly currentMonth = new Date().getMonth() + 1;
 
   public currentYear = new Date().getFullYear();
 

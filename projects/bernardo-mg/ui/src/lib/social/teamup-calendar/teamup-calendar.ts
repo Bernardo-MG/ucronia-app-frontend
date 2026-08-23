@@ -39,6 +39,8 @@ export class TeamupCalendar {
 
   public readonly showYearViewHeader = input(false);
 
+  public readonly height = input('800px');
+
   public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 
   private parseBoolean(flag: boolean): string {

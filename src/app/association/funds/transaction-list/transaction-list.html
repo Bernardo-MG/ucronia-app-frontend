@@ -1,33 +1,30 @@
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
-  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
-
+<p-table [lazy]="true" dataKey="index" [loading]="loading()" [value]="data()" [paginator]="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onPage)="onPageChange($event)" responsiveLayout="scroll">
   <ng-template #header>
-    <tr class="border-b bg-gray-100">
-      <th pSortableColumn="description" class="py-3 px-4 text-left font-medium text-gray-700">
-        Descripción
-        <p-sortIcon field="description"></p-sortIcon>
-      </th>
-      <th pSortableColumn="amount" class="py-3 px-4 text-left font-medium text-gray-700">
-        Importe
-        <p-sortIcon field="amount"></p-sortIcon>
-      </th>
-      <th pSortableColumn="amount" class="py-3 px-4 text-left font-medium text-gray-700">
-        Fecha
-        <p-sortIcon field="amount"></p-sortIcon>
-      </th>
-      <th></th>
+    <tr>
+      <th class="min-w-72">Descripción</th>
+      <th class="min-w-28">Tipo</th>
+      <th class="min-w-36 text-right">Importe</th>
+      <th class="min-w-36">Fecha</th>
+      <th class="w-16"><span class="sr-only">Acciones</span></th>
     </tr>
   </ng-template>
-
   <ng-template #body let-transaction>
     <tr>
-      <td>{{ transaction.description }}</td>
-      <td>{{ transaction.amount }}</td>
-      <td>{{ transaction.date | date:'yyyy-MM-dd' }}</td>
-      <td class="w-40">
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(transaction.index)" rounded
-          text />
+      <td class="font-medium text-gray-950">{{ transaction.description }}</td>
+      <td>
+        <p-tag [value]="transaction.amount >= 0 ? 'Ingreso' : 'Gasto'"
+          [severity]="transaction.amount >= 0 ? 'success' : 'danger'" />
+      </td>
+      <td class="text-right font-semibold tabular-nums" [class.text-green-600]="transaction.amount >= 0"
+        [class.text-gray-950]="transaction.amount < 0">
+        {{ transaction.amount | currency:'EUR':'symbol':'1.2-2' }}
+      </td>
+      <td class="text-gray-600">{{ transaction.date | date:'d MMM y' }}</td>
+      <td class="text-right">
+        <p-button icon="pi pi-ellipsis-v" severity="secondary" aria-label="Ver detalles de la transacción"
+          (click)="show.emit(transaction.index)" rounded text />
       </td>
     </tr>
   </ng-template>

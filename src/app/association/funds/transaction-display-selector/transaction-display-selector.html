@@ -1,4 +1,9 @@
-<div class="border border-gray-300 rounded-lg p-1 inline-block">
-  <p-selectbutton [options]="statusOptions" [(ngModel)]="selectedStatus" optionLabel="label" optionValue="value"
-    aria-labelledby="basic" (onChange)="view.emit($event.value)" />
-</div>
+<p-selectbutton [options]="statusOptions" [(ngModel)]="selectedStatus" optionLabel="label" optionValue="value"
+  aria-label="Vista de movimientos" (onChange)="view.emit($event.value)">
+  <ng-template #item let-item>
+    <span class="inline-flex items-center gap-2">
+      <i [class]="item.icon" aria-hidden="true"></i>
+      <span>{{ item.label }}</span>
+    </span>
+  </ng-template>
+</p-selectbutton>

@@ -1,20 +1,21 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
 import { MemberCount } from '@ucronia/api';
 import { Member, PublicMember } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { PanelModule } from 'primeng/panel';
-import { finalize } from 'rxjs';
+import { CardModule } from 'primeng/card';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { debounceTime, distinctUntilChanged, finalize, Subject } from 'rxjs';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [FormsModule, PanelModule, DialogModule, ButtonModule, PublicMemberList, SummaryCard, TextFilter],
+  imports: [FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
@@ -45,6 +46,20 @@ export class PublicMemberView implements OnInit {
   public failures = new FailureStore();
 
   private nameFilter = '';
+  public filterValue = '';
+  private readonly filterSubject = new Subject<string>();
+
+  constructor() {
+    const destroyRef = inject(DestroyRef);
+
+    this.filterSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        takeUntilDestroyed(destroyRef)
+      )
+      .subscribe(filter => this.onFilter(filter));
+  }
 
   public ngOnInit(): void {
     this.load();
@@ -74,6 +89,10 @@ export class PublicMemberView implements OnInit {
   public onFilter(filter: string) {
     this.nameFilter = filter;
     this.load();
+  }
+
+  public onFilterChange(filter: string): void {
+    this.filterSubject.next(filter);
   }
 
   // DATA LOADING
