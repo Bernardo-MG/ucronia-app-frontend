@@ -29,4 +29,12 @@ describe('AssociationLayout', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should open and close the menu', () => {
+    component.onToggleMenu(true);
+    expect(component.menuActive).toBeTrue();
+
+    component.closeMenu();
+    expect(component.menuActive).toBeFalse();
+  });
 });
