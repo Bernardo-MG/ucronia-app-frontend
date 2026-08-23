@@ -1,41 +1,57 @@
-<div class="p-4 space-y-6">
-  <h1 class="text-4xl font-bold">Biblioteca</h1>
-
-  <!-- Summary Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center">
-    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.games" label="Juegos" icon="pi pi-book"/>
-    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.fiction" label="Ficción" icon="pi pi-book"/>
-    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.lent" label="Prestados" icon="pi pi-bookmark"/>
-  </div>
-
-  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <div class="border border-gray-300 rounded-lg p-1 inline-block">
-      <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTab" optionLabel="label" optionValue="value"
-        aria-labelledby="basic" (onChange)="onChangeList($event)" />
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-950">Biblioteca</h1>
+      <p class="mt-1 text-sm text-gray-500">Gestiona el catálogo y los préstamos de la asociación</p>
     </div>
 
-    <!-- Filter by title -->
-    <ui-text-filter (filter)="onFilter($event)" />
-
-    @if(display === Display.BOOKS) {
-      <div class="border border-gray-300 rounded-lg p-1 inline-block">
-        <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
-          aria-labelledby="basic" (onChange)="onChangeSource($event)" />
-      </div>
-
-      <div class="ml-auto space-x-2">
-        @if (permissions.create) {
-          <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATION" [disabled]="!permissions.create"
-            aria-label="Nuevo libro" [attr.aria-disabled]="!permissions.create" rounded />
-        }
-
-        <p-button icon="pi pi-file-excel" [disabled]="status.loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
-          [attr.aria-disabled]="status.loadingExcel" rounded />
-      </div>
+    @if (permissions.create && display === Display.BOOKS) {
+      <p-button label="Nuevo libro" icon="pi pi-plus" (click)="dialog = Dialog.CREATION" />
     }
+  </header>
+
+  <p-card styleClass="overflow-hidden">
+    <div class="grid grid-cols-2 divide-x divide-y divide-gray-200 md:grid-cols-4 md:divide-y-0">
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary"><i class="pi pi-book"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.games + summary.fiction }}</strong><span class="text-sm text-gray-500">libros</span></div>
+      </div>
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary"><i class="pi pi-box"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.games }}</strong><span class="text-sm text-gray-500">juegos</span></div>
+      </div>
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary"><i class="pi pi-book"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.fiction }}</strong><span class="text-sm text-gray-500">ficción</span></div>
+      </div>
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600"><i class="pi pi-bookmark"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.lent }}</strong><span class="text-sm text-gray-500">prestados</span></div>
+      </div>
+    </div>
+  </p-card>
+
+  <div class="border-b border-gray-200">
+    <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTab" optionLabel="label" optionValue="value"
+      aria-label="Vista de biblioteca" (onChange)="onChangeList($event)" />
   </div>
 
-  <p-panel class="shadow rounded-lg">
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
+      <p-iconfield class="w-full lg:max-w-xl">
+        <p-inputicon class="pi pi-search" />
+        <input pInputText type="search" [(ngModel)]="filterValue" (ngModelChange)="onFilterChange($event)"
+          placeholder="Buscar por título…" aria-label="Buscar en la biblioteca" class="w-full" maxlength="50" />
+      </p-iconfield>
+
+      @if(display === Display.BOOKS) {
+        <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
+          aria-label="Tipo de libro" (onChange)="onChangeSource($event)" />
+
+        <p-button class="lg:ml-auto" label="Exportar" icon="pi pi-file-excel" severity="secondary" outlined
+          [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (click)="downloadExcel()" />
+      }
+    </div>
 
     @switch (display) {
       @case (Display.BOOKS) {
@@ -50,23 +66,29 @@
       }
     }
 
-  </p-panel>
+  </section>
 
   <!-- Book Drawer -->
-  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" class="rounded-lg" [style]="{ width: '60vw' }">
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+    position="right" [style]="{ width: 'min(44rem, 100vw)' }">
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          Libro
+          <div>
+            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Libro #{{ selectedData.number }}</span>
+            <h2 class="mt-1 text-xl font-semibold">{{ selectedData.title.fullTitle }}</h2>
+          </div>
         </ng-template>
         <div class="w-full p-4">
           <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
         </div>
       <ng-template #footer>
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
-          [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" rounded text class="!p-2" />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-          (click)="onDelete($event)" rounded text />
+        <div class="flex w-full justify-between gap-2">
+          <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+            (click)="onDelete($event)" text />
+          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
+            [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" />
+        </div>
       </ng-template>
       }
 
@@ -126,4 +148,4 @@
 
     }
   </p-drawer>
-</div> 
+</div>

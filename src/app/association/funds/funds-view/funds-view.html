@@ -1,104 +1,126 @@
-<div class="p-4 space-y-6">
-  <div class="pb-2 grid grid-cols-2 gap-4">
-  
-    <!-- Evolución -->
-    <p-card class="pb-2 max-w-md">
-      <ng-template #title>Evolución</ng-template>
-      <assoc-transaction-balance-chart-view />
-    </p-card>
-  
-    <div class="grid grid-cols-1 gap-4">
-      <ui-summary-card [loading]="status.loadingSummary" [value]="summary.total" label="Saldo actual" icon="pi pi-euro" />
-      <ui-summary-card [loading]="status.loadingSummary" [value]="summary.results" label="Resultados" icon="pi pi-euro" />
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-950">Fondos</h1>
+      <p class="mt-1 text-sm text-gray-500">Controla los ingresos, gastos y saldo de la asociación</p>
     </div>
-
-  </div>
-
-  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <assoc-transaction-display-selector (view)="display = $event" />
-
-    @switch (display) {
-      @case(FundsDisplay.LIST) {
-        <ui-text-filter (filter)="onFilter($event)" />
-      }
-    }
-
-    <div class="ml-auto space-x-2">
+    <div class="flex flex-wrap gap-2">
+      <p-button label="Exportar Excel" icon="pi pi-download" severity="secondary" outlined
+        [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (click)="downloadExcel()" />
       @if (permissions.create) {
-        <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
-          aria-label="Nuevo libro" [attr.aria-disabled]="!permissions.create" rounded />
+        <p-button label="Nueva transacción" icon="pi pi-plus" (click)="dialog = Dialog.CREATE"
+          [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
       }
-
-      <p-button icon="pi pi-file-excel" [disabled]="status.loadingExcel" (click)="downloadExcel()" aria-label="Descargar excel"
-        [attr.aria-disabled]="status.loadingExcel" rounded />
     </div>
-  </div>
+  </header>
 
-  <!-- Transactions -->
-  <p-panel class="shadow rounded-lg">
+  <p-card styleClass="overflow-hidden">
+    <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+        <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700">
+          <i class="pi pi-wallet text-2xl" aria-hidden="true"></i>
+        </span>
+        <div class="min-w-0">
+          <span class="block text-sm text-gray-500">Saldo actual</span>
+          @if (status.loadingSummary) {
+            <p-skeleton width="9rem" height="2rem" />
+          } @else {
+            <strong class="block truncate text-2xl text-gray-950 md:text-3xl">
+              {{ summary.total | currency:'EUR':'symbol':'1.2-2' }}
+            </strong>
+          }
+        </div>
+      </div>
+      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+        <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
+          <i class="pi pi-chart-line text-2xl" aria-hidden="true"></i>
+        </span>
+        <div class="min-w-0">
+          <span class="block text-sm text-gray-500">Resultado acumulado</span>
+          @if (status.loadingSummary) {
+            <p-skeleton width="9rem" height="2rem" />
+          } @else {
+            <strong class="block truncate text-2xl md:text-3xl"
+              [class.text-green-600]="summary.results >= 0" [class.text-red-600]="summary.results < 0">
+              {{ summary.results | currency:'EUR':'symbol':'1.2-2' }}
+            </strong>
+          }
+        </div>
+      </div>
+    </div>
+  </p-card>
 
-    @switch (display) {
-      @case(FundsDisplay.CALENDAR) {
-        <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="status.loadingCalendar"
-          (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+  <p-card>
+    <assoc-transaction-balance-chart-view />
+  </p-card>
+
+  <section>
+    <div class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-950">Movimientos</h2>
+      <p class="mt-1 text-sm text-gray-500">Consulta y gestiona las transacciones de la asociación</p>
+    </div>
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
+        <assoc-transaction-display-selector [display]="display" (view)="display = $event" />
+        @if (display === FundsDisplay.LIST) {
+          <div class="min-w-0 flex-1">
+            <ui-text-filter (filter)="onFilter($event)" />
+          </div>
+        }
+      </div>
+      @switch (display) {
+        @case(FundsDisplay.CALENDAR) {
+          <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="status.loadingCalendar"
+            (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+        }
+        @case (FundsDisplay.LIST) {
+          <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
+            [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
+            (changePage)="loadList($event)" />
+        }
       }
-      @case (FundsDisplay.LIST) {
-        <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
-          [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
-          (changePage)="loadList($event)" />
-      }
-    }
+    </div>
+  </section>
 
-  </p-panel>
-
-  <!-- Creation / Edition Drawer -->
-  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" class="rounded-lg" [style]="{ width: '60vw' }">
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+    position="right" [style]="{ width: 'min(44rem, 100vw)' }">
     @switch (dialog) {
-
       @case(Dialog.INFO) {
         <ng-template #header>
-          Transacción
+          <div>
+            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Movimiento</span>
+            <h2 class="mt-1 text-xl font-semibold">Detalle de la transacción</h2>
+          </div>
         </ng-template>
-        <div class="w-full p-4 space-y-4">
+        <div class="w-full space-y-4 p-4">
           <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
         </div>
         <ng-template #footer>
-          @if (permissions.edit) {
-            <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
-              [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDIT" rounded text class="!p-2" />
-          }
-
-          @if (permissions.delete) {
-            <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" aria-label="Borrar"
-              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event)" rounded text class="!p-2" />
-          }
+          <div class="flex w-full justify-between gap-2">
+            @if (permissions.delete) {
+              <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+                (click)="onDelete($event)" text />
+            }
+            @if (permissions.edit) {
+              <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
+                (click)="dialog = Dialog.EDIT" />
+            }
+          </div>
         </ng-template>
       }
-
       @case(Dialog.CREATE) {
-        <ng-template #header>
-          Crear transacción
-        </ng-template>
+        <ng-template #header><h2 class="text-xl font-semibold">Nueva transacción</h2></ng-template>
         <div class="w-full p-4">
           <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
       }
-
       @case(Dialog.EDIT) {
-        <ng-template #header>
-          Editar transacción
-        </ng-template>
+        <ng-template #header><h2 class="text-xl font-semibold">Editar transacción</h2></ng-template>
         <div class="w-full p-4">
-          <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures" (save)="onUpdate($event)" />
+          <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
+            (save)="onUpdate($event)" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
       }
-
     }
   </p-drawer>
 </div>

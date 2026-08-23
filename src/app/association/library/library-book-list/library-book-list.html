@@ -1,37 +1,47 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="books()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
-  showCurrentPageReport="true" currentPageReportTemplate="Total: {totalRecords}">
+  showCurrentPageReport="true" currentPageReportTemplate="{first}–{last} de {totalRecords}"
+  responsiveLayout="scroll" styleClass="p-datatable-striped">
 
   <!-- Header -->
   <ng-template #header>
     <tr>
-      <th pSortableColumn="title.title">Título <p-sortIcon field="title" /></th>
-      <th class="w-24"></th>
+      <th pSortableColumn="title.title">Título <p-sortIcon field="title.title" /></th>
+      <th class="hidden md:table-cell">Autor / sistema</th>
+      <th class="hidden lg:table-cell">Tipo</th>
+      <th class="hidden sm:table-cell w-28" pSortableColumn="number">N.º <p-sortIcon field="number" /></th>
+      <th class="w-32">Estado</th>
+      <th class="w-16"><span class="sr-only">Acciones</span></th>
     </tr>
   </ng-template>
 
   <!-- Body rows -->
   <ng-template #body let-book>
-    <tr>
-      <td class="align-top">
-        <sup>{{book.title.supertitle}}</sup>
-        {{book.title.title}}
-        <sub>{{book.title.subtitle}}</sub>
-
+    <tr class="cursor-pointer transition-colors hover:bg-primary-50/40" tabindex="0"
+      (click)="showBook.emit(book)" (keydown.enter)="showBook.emit(book)">
+      <td>
+        <span class="block font-semibold text-gray-950">
+          <sup>{{book.title.supertitle}}</sup>{{book.title.title}}<sub>{{book.title.subtitle}}</sub>
+        </span>
+        <span class="mt-1 block text-xs text-gray-500 md:hidden">{{ getAuthors(book) }}</span>
+      </td>
+      <td class="hidden md:table-cell">
+        <span class="block">{{ getAuthors(book) }}</span>
+        @if (getSystem(book)) { <span class="mt-1 block text-xs text-gray-500">{{ getSystem(book) }}</span> }
+      </td>
+      <td class="hidden lg:table-cell text-gray-600">{{ getType(book) }}</td>
+      <td class="hidden sm:table-cell font-mono text-sm text-gray-600">{{ book.number }}</td>
+      <td>
         @if (book.lent) {
           <p-badge value="Prestado" severity="danger" badgeSize="small" />
+        } @else {
+          <p-badge value="Disponible" severity="success" badgeSize="small" />
         }
       </td>
-
-      <!-- ACTIONS: Tailwind small column -->
-      <td class="w-24 text-right space-x-1 whitespace-nowrap">
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="showBook.emit(book)" rounded text />
-
-        @if (editable()) {
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-            [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, book)" rounded text />
-        }
+      <td class="text-right">
+        <p-button icon="pi pi-ellipsis-v" severity="secondary" aria-label="Acciones del libro"
+          (click)="openEditionMenu($event, book)" rounded text />
       </td>
     </tr>
   </ng-template>

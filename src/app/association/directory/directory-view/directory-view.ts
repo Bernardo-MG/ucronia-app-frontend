@@ -3,14 +3,14 @@ import { MemberStatusSelector } from '@app/shared/member/member-status-selector/
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
+import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod, FeeType, Key, MemberStatus } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
+import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, forkJoin, Observable } from 'rxjs';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { DirectoryService } from '../directory-service';
@@ -32,7 +32,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard],
+  imports: [ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -157,7 +157,7 @@ export class DirectoryView implements OnInit {
   public onDelete(event: Event): void {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancelar',

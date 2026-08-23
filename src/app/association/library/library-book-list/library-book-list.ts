@@ -37,14 +37,36 @@ export class LibraryBookList {
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
-      this.editionMenuItems = [];
-      this.editionMenuItems.push(
-        {
-          label: 'Préstamos',
-          command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
-        });
+    event.stopPropagation();
+    this.editionMenuItems = [
+      {
+        label: 'Ver detalles',
+        icon: 'pi pi-eye',
+        command: () => this.showBook.emit(book)
+      }
+    ];
 
-      this.editionMenu.toggle(event);
+    if (this.editable()) {
+      this.editionMenuItems.push({
+        label: book.lent ? 'Devolver' : 'Prestar',
+        icon: book.lent ? 'pi pi-undo' : 'pi pi-arrow-right',
+        command: () => this.show.emit({ dialog: Dialog.LENDINGS, book })
+      });
+    }
+
+    this.editionMenu.toggle(event);
+  }
+
+  public getAuthors(book: FictionBook | GameBook): string {
+    return book.authors.map(author => author.name).join(', ') || 'Autor desconocido';
+  }
+
+  public getType(book: FictionBook | GameBook): string {
+    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'Ficción';
+  }
+
+  public getSystem(book: FictionBook | GameBook): string {
+    return 'gameSystem' in book ? book.gameSystem?.name || '' : '';
   }
 
   public onChangeDirection(sorting: SortingEvent) {
