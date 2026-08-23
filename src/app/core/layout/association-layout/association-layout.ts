@@ -32,7 +32,7 @@ export class AssociationLayout {
         if (items.length) {
           this.menus.push(
             {
-              label: 'AsociaciÃ³n',
+              label: 'Asociación',
               items: items
             }
           );
@@ -40,7 +40,7 @@ export class AssociationLayout {
         if (adminItems.length) {
           this.menus.push(
             {
-              label: 'AdministraciÃ³n',
+              label: 'Administración',
               items: adminItems
             }
           );
