@@ -66,17 +66,17 @@ describe('AuthService', () => {
 
   it('should validate the user has an existing resource and action', () => {
     service.setDetails(true, token, false);
-    expect(service.hasPermission('resource', 'action')).toBeTrue();
+    expect(service.hasPermission({ resource: 'resource', action: 'action' })).toBeTrue();
   });
 
   it('should validate the user does not have an existing resource with a not existing action', () => {
     service.setDetails(true, token, false);
-    expect(service.hasPermission('resource', 'invalidAction')).toBeFalse();
+    expect(service.hasPermission({ resource: 'resource', action: 'invalidAction' })).toBeFalse();
   });
 
   it('should validate the user does not have an existing resource and action', () => {
     service.setDetails(true, token, false);
-    expect(service.hasPermission('invalidResource', 'action')).toBeFalse();
+    expect(service.hasPermission({ resource: 'invalidResource', action: 'action' })).toBeFalse();
   });
 
   it('should load details from local storage', () => {

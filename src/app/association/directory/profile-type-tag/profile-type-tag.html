@@ -1,3 +1,16 @@
 @for (type of types(); track type) {
-  <p-tag class="ml-2" [value]="getName(type)" severity="info" rounded></p-tag>
+  @switch (type) {
+    @case ('member') {
+      <p-tag class="mr-1" value="Socio" severity="success" />
+    }
+    @case ('guest') {
+      <p-tag class="mr-1" value="Invitado" severity="info" />
+    }
+    @case ('sponsor') {
+      <p-tag class="mr-1" value="Patrocinador" severity="warn" />
+    }
+    @default {
+      <p-tag class="mr-1" [value]="type" severity="secondary" />
+    }
+  }
 }

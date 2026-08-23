@@ -1,17 +1,17 @@
 
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, inject, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { MembershipEvolutionMonth } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
-import { format } from 'date-fns';
-import { SelectModule } from 'primeng/select';
+import { Select } from 'primeng/select';
 import { BehaviorSubject, finalize, switchMap } from 'rxjs';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 
 @Component({
   selector: 'assoc-membership-evolution-chart-view',
-  imports: [FormsModule, SelectModule],
+  imports: [CommonModule, FormsModule, Select],
   templateUrl: './membership-evolution-chart-view.component.html'
 })
 export class MembershipEvolutionChartView implements OnInit, OnDestroy {
@@ -30,7 +30,7 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
     { label: '2 años', value: 24 }
   ];
 
-  private readonly selectedRange$ = new BehaviorSubject<number>(3);
+  private readonly selectedRange$ = new BehaviorSubject<number>(12);
 
   public get selectedRange(): number {
     return this.selectedRange$.value;
@@ -58,7 +58,7 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
       this.chart.destroy();
     }
 
-    const labels = this.balance.map(b => format(b.month, 'yyyy-MM'))
+    const labels = this.balance.map(() => '');
     const totals = this.balance.map(b => b.total);
 
     const data = {
@@ -67,8 +67,13 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
         {
           label: 'Socios',
           data: totals,
-          borderColor: 'rgba(200, 99, 132, .7)',
+          borderColor: '#4338ca',
+          backgroundColor: 'rgba(79, 70, 229, 0.08)',
           borderWidth: 2,
+          fill: true,
+          tension: 0.35,
+          pointRadius: 3,
+          pointHoverRadius: 5
         },
       ],
     };
@@ -77,6 +82,19 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
       data,
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            display: false,
+            grid: { display: false }
+          },
+          y: {
+            grid: { color: '#e5e7eb' }
+          }
+        }
       }
     });
   }

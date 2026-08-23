@@ -2,7 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { Profile, PublicMember, ScheduledGame } from '@ucronia/domain';
+import { UcroniaPermissions } from '@ucronia/auth';
+import { Profile, ScheduledGame } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -29,7 +30,7 @@ export class ScheduledGameView implements OnInit {
   };
 
   public scheduledGames = new Page<ScheduledGame>();
-  public members: PublicMember[] = [];
+  public members: Profile[] = [];
   private sort = new Sorting();
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();
@@ -42,9 +43,9 @@ export class ScheduledGameView implements OnInit {
     const authService = inject(AuthService);
 
     this.permissions = {
-      create: authService.hasPermission('SCHEDULED_GAME', 'CREATE'),
-      edit: authService.hasPermission('SCHEDULED_GAME', 'UPDATE'),
-      delete: authService.hasPermission('SCHEDULED_GAME', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.scheduledGame.create),
+      edit: authService.hasPermission(UcroniaPermissions.scheduledGame.update),
+      delete: authService.hasPermission(UcroniaPermissions.scheduledGame.delete)
     };
   }
 

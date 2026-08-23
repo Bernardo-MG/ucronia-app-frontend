@@ -3,23 +3,21 @@ import { MemberStatusSelector } from '@app/shared/member/member-status-selector/
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
+import { TextFilter } from '@bernardo-mg/ui';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod, FeeType, Key, MemberStatus } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
+import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, forkJoin, Observable } from 'rxjs';
-import { ContactMethodListInnerView } from '../contact-method-list-inner-view/contact-method-list-inner-view';
-import { ContactMethodService } from '../contact-method-service';
+import { ContactMethodService } from '@app/settings/contact-method-service';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';
-import { FeeTypeListInnerView } from '../fee-type-list-inner-view/fee-type-list-inner-view';
-import { FeeTypeService } from '../fee-type-service';
+import { FeeTypeService } from '@app/settings/fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
-import { KeyListInnerView } from '../key-list-inner-view/key-list-inner-view';
-import { KeyService } from '../key-service';
+import { KeyService } from '@app/settings/key-service';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
@@ -34,7 +32,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [PanelModule, ButtonModule, DrawerModule, CardModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector, SummaryCard, ContactMethodListInnerView, FeeTypeListInnerView, KeyListInnerView],
+  imports: [ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -78,9 +76,9 @@ export class DirectoryView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('PROFILE', 'CREATE'),
-      edit: authService.hasPermission('PROFILE', 'UPDATE'),
-      delete: authService.hasPermission('PROFILE', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.directory.profile.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.profile.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.profile.delete)
     };
   }
 
@@ -159,7 +157,7 @@ export class DirectoryView implements OnInit {
   public onDelete(event: Event): void {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
+      message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancelar',

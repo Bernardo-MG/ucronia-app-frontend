@@ -1,51 +1,86 @@
-<div class="p-4 space-y-6">
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
   <p-menu #feeCreationMenu [model]="creationItems" [popup]="true" />
 
-  <!-- Summary Cards -->
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 place-items-center">
-    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.paid" label="Cuotas pagadas" icon="pi pi-check-circle"/>
-    <ui-summary-card [loading]="status.loadingSummary" [value]="summary.unpaid" label="Sin pagar" icon="pi pi-times-circle"/>
-  </div>
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-950">Cuotas</h1>
+      <p class="mt-1 text-sm text-gray-500">Gestiona las cuotas y pagos de los socios</p>
+    </div>
 
-  <!-- Buttons -->
-  <div class="flex flex-wrap mb-3 items-center w-full space-x-2">
-    <assoc-member-status-selector [status]="filter.status" (filter)="onChangeMemberStatus($event)" />
     @if (permissions.create) {
-      <div class="ml-auto space-x-2">
-        <p-button icon="pi pi-plus-circle" (click)="feeCreationMenu.toggle($event)" [disabled]="!permissions.create"
-          aria-label="Nueva cuota" [attr.aria-disabled]="!permissions.create" rounded />
-      </div>
+      <p-button label="Nueva cuota" icon="pi pi-plus" (click)="feeCreationMenu.toggle($event)"
+        [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
-  </div>
+  </header>
 
-  <!-- Fee Calendar Panel -->
-  <div class="w-full">
-    <p-panel class="shadow rounded-lg">
+  <p-card styleClass="overflow-hidden">
+    <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
+          <i class="pi pi-check-circle text-xl" aria-hidden="true"></i>
+        </span>
+        <div>
+          @if (status.loadingSummary) {
+            <p-skeleton width="5rem" height="1.75rem" />
+          } @else {
+            <strong class="block text-2xl leading-none">{{ summary.paid }}</strong>
+          }
+          <span class="text-sm text-gray-500">Cuotas pagadas</span>
+        </div>
+      </div>
+      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+          <i class="pi pi-exclamation-circle text-xl" aria-hidden="true"></i>
+        </span>
+        <div>
+          @if (status.loadingSummary) {
+            <p-skeleton width="5rem" height="1.75rem" />
+          } @else {
+            <strong class="block text-2xl leading-none">{{ summary.unpaid }}</strong>
+          }
+          <span class="text-sm text-gray-500">Sin pagar</span>
+        </div>
+      </div>
+    </div>
+  </p-card>
 
-      <!-- Calendar -->
+  <section>
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-gray-950">Calendario de cuotas</h2>
+      <p class="mt-1 text-sm text-gray-500">Consulta el estado mensual de cada socio</p>
+    </div>
+
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <div class="border-b border-gray-200 p-4">
+        <assoc-member-status-selector [status]="filter.status" (filter)="onChangeMemberStatus($event)" />
+      </div>
       <assoc-fee-calendar [year]="filter.year" [range]="filter.range" [loading]="status.loadingCalendar" [feeCalendar]="feeCalendar"
         (goToYear)="loadCalendar($event)" (selectFee)="onSelectFee($event)" />
-
-    </p-panel>
-  </div>
+    </div>
+  </section>
 
   <!-- Fee Drawer -->
-  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" class="rounded-lg" [style]="{ width: '60vw' }">
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+    position="right" [style]="{ width: 'min(44rem, 100vw)' }">
     @switch (dialog) {
 
       @case(Dialog.INFO) {
         <ng-template #header>
-          Cuota
+          <div>
+            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Cuota</span>
+            <h2 class="mt-1 text-xl font-semibold">{{ selectedData.member.name.fullName }}</h2>
+          </div>
         </ng-template>
         <div class="w-full p-4 space-y-4">
           <assoc-fee-info [data]="selectedData" [loading]="status.loading" />
         </div>
         <ng-template #footer>
-          <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit" aria-label="Editar"
-            [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDITION" rounded text class="!p-2" />
-
-          <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" aria-label="Borrar"
-            [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event)" rounded text class="!p-2" />
+          <div class="flex w-full justify-between gap-2">
+            <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+              [attr.aria-disabled]="!permissions.delete" (click)="onDelete($event)" text />
+            <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
+              [attr.aria-disabled]="!permissions.edit" (click)="dialog = Dialog.EDITION" />
+          </div>
         </ng-template>
       }
 

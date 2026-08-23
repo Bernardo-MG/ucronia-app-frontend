@@ -1,13 +1,15 @@
+import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
-import { SummaryCard, TextFilter } from '@bernardo-mg/ui';
+import { TextFilter } from '@bernardo-mg/ui';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
+import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, Observable } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
@@ -23,7 +25,7 @@ import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [PanelModule, CardModule, ButtonModule, DrawerModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView, SummaryCard],
+  imports: [CurrencyPipe, CardModule, ButtonModule, DrawerModule, SkeletonModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -55,7 +57,7 @@ export class FundsView implements OnInit {
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
-  public display = FundsDisplay.CALENDAR;
+  public display = FundsDisplay.LIST;
 
   public failures = new FailureStore();
 
@@ -66,9 +68,9 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('TRANSACTION', 'CREATE'),
-      edit: authService.hasPermission('TRANSACTION', 'UPDATE'),
-      delete: authService.hasPermission('TRANSACTION', 'DELETE')
+      create: authService.hasPermission(UcroniaPermissions.transaction.create),
+      edit: authService.hasPermission(UcroniaPermissions.transaction.update),
+      delete: authService.hasPermission(UcroniaPermissions.transaction.delete)
     };
   }
 

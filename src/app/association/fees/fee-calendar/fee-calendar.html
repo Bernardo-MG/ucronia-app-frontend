@@ -1,41 +1,50 @@
-<!-- Controls -->
-<div class="pb-2">
-  <!-- To previous year button -->
-  <p-button id="previousYearButton" icon="pi pi-caret-left" (click)="onGoPrevious()" [disabled]="!canGoPrevious"
-    [attr.aria-disabled]="!canGoPrevious" aria-label="Previous year" rounded text />
-  <!-- Current year -->
-  <p-select [(ngModel)]="currentYear" [disabled]="selectionDisabled" [options]="years" (onChange)="onGoTo($event)" />
-  <!-- To next year button -->
-  <p-button id="nextYearButton" icon="pi pi-caret-right" (click)="onGoNext()" [disabled]="!canGoNext"
-    [attr.aria-disabled]="!canGoNext" aria-label="Previous year" rounded text />
+<div class="flex flex-col gap-4 border-b border-gray-200 p-4 md:flex-row md:items-center md:justify-between">
+  <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600" aria-label="Leyenda">
+    <span class="inline-flex items-center gap-2"><i class="pi pi-check-circle text-green-600"></i> Pagada</span>
+    <span class="inline-flex items-center gap-2"><i class="pi pi-exclamation-circle text-amber-600"></i> Sin pagar</span>
+    <span class="inline-flex items-center gap-2"><i class="pi pi-minus-circle text-gray-400"></i> Sin cuota</span>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <p-button id="previousYearButton" icon="pi pi-chevron-left" (click)="onGoPrevious()" [disabled]="!canGoPrevious"
+      [attr.aria-disabled]="!canGoPrevious" aria-label="Año anterior" severity="secondary" outlined />
+    <p-select [(ngModel)]="currentYear" [disabled]="selectionDisabled" [options]="years" (onChange)="onGoTo($event)"
+      aria-label="Año" />
+    <p-button id="nextYearButton" icon="pi pi-chevron-right" (click)="onGoNext()" [disabled]="!canGoNext"
+      [attr.aria-disabled]="!canGoNext" aria-label="Año siguiente" severity="secondary" outlined />
+  </div>
 </div>
-<!-- Table -->
-<p-table [loading]="loading()" [value]="feeCalendar()">
+
+<p-table [loading]="loading()" [value]="feeCalendar()" responsiveLayout="scroll">
   <ng-template #header>
     <tr>
-      <th>Socio</th>
-      @for (monthName of monthNames; track monthName) {
-        <th> {{monthName}}</th>
+      <th class="min-w-56">Socio</th>
+      @for (monthName of monthNames; track monthName; let monthIndex = $index) {
+        <th class="min-w-16 text-center" [class.bg-primary-50]="monthIndex + 1 === currentMonth">{{ monthName }}</th>
       }
     </tr>
   </ng-template>
   <ng-template #body let-memberFees>
     <tr>
       <td>
-        {{memberFees.member.name.fullName}}
+        <span class="block font-medium text-gray-950">{{ memberFees.member.name.fullName }}</span>
+        <span class="mt-1 text-xs text-gray-500">#{{ memberFees.member.number }}</span>
         @if (!memberFees.member.active) {
-          <p-badge value="Inactivo" severity="warn" badgeSize="small" />
+          <p-badge class="ml-2" value="Inactivo" severity="warn" badgeSize="small" />
         }
       </td>
-      <!-- Month fees -->
       @for (monthNumber of monthNumbers; track monthNumber) {
-        <td>
+        <td class="text-center" [class.bg-primary-50]="monthNumber === currentMonth">
           @if (hasMonth(memberFees.fees, monthNumber)) {
             @if(isPaid(memberFees.fees, monthNumber)) {
-              <p-button icon="pi pi-check text-green-500" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
+              <p-button icon="pi pi-check" severity="success" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)"
+                [attr.aria-label]="'Cuota pagada de ' + monthNames[monthNumber - 1]" [pTooltip]="'Pagada · ' + monthNames[monthNumber - 1]" rounded text />
             } @else {
-              <p-button icon="pi pi-times text-danger" severity="warn" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)" rounded text />
+              <p-button icon="pi pi-exclamation-circle" severity="warn" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)"
+                [attr.aria-label]="'Cuota sin pagar de ' + monthNames[monthNumber - 1]" [pTooltip]="'Sin pagar · ' + monthNames[monthNumber - 1]" rounded text />
             }
+          } @else {
+            <i class="pi pi-minus text-gray-300" aria-label="Sin cuota"></i>
           }
         </td>
       }

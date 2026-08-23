@@ -1,21 +1,59 @@
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="profiles()" paginator="true" [rows]="rows()"
-  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
-  (onPage)="onPageChange($event)">
+<p-table [lazy]="true" dataKey="number" [loading]="loading()" [value]="profiles()" [paginator]="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)" responsiveLayout="scroll">
   <ng-template #header>
     <tr>
-      <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
-      <th class="w-40"></th>
+      <th pSortableColumn="fullName" class="min-w-64">
+        Nombre <p-sortIcon field="fullName" />
+      </th>
+      <th class="min-w-40">Tipo</th>
+      <th class="min-w-56">Contacto</th>
+      <th class="min-w-32">Estado</th>
+      <th class="min-w-32">Llave</th>
+      <th class="w-16"><span class="sr-only">Acciones</span></th>
     </tr>
   </ng-template>
   <ng-template #body let-profile>
     <tr>
       <td>
-        {{ profile.name.fullName }}
-        <assoc-profile-type-tag [types]="profile.types" />
+        <span class="block font-medium text-gray-950">{{ profile.name.fullName }}</span>
+        @if (profile.name.nickname) {
+          <span class="mt-1 block text-xs text-gray-500">{{ profile.name.nickname }}</span>
+        }
       </td>
-      <td class="w-40">
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(profile)" rounded text />
+      <td><assoc-profile-type-tag [types]="profile.types" /></td>
+      <td class="text-gray-600">
+        @if (profile.contactChannels.length) {
+          {{ profile.contactChannels[0].detail }}
+        } @else {
+          <span aria-label="Sin contacto">—</span>
+        }
+      </td>
+      <td>
+        @if (profile.types.includes('member')) {
+          @if (profile.active) {
+            <p-tag value="Activo" severity="success" />
+          } @else {
+            <p-tag value="Inactivo" severity="secondary" />
+          }
+        } @else {
+          <span aria-label="No aplicable">—</span>
+        }
+      </td>
+      <td>
+        @if (profile.key) {
+          <span class="inline-flex items-center gap-2 text-gray-700">
+            <i class="pi pi-key text-primary-600" aria-hidden="true"></i>
+            Llave {{ profile.key }}
+          </span>
+        } @else {
+          <span aria-label="Sin llave">—</span>
+        }
+      </td>
+      <td class="text-right">
+        <p-button icon="pi pi-ellipsis-v" severity="secondary" aria-label="Ver detalles del perfil"
+          (click)="show.emit(profile)" rounded text />
       </td>
     </tr>
   </ng-template>

@@ -1,17 +1,19 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
-import { MenuModule } from 'primeng/menu';
+import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-association-layout',
-  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, ConfirmPopupModule, Navbar],
+  imports: [RouterModule, ToastModule, DrawerModule, RippleModule, ConfirmPopupModule, Navbar],
   templateUrl: './association-layout.html',
+  styleUrl: './association-layout.scss',
   providers: [ConfirmationService]
 })
 export class AssociationLayout {
@@ -43,12 +45,6 @@ export class AssociationLayout {
             }
           );
         }
-        // Add close command to every item
-        this.menus.forEach(group =>
-          group.items?.forEach(item =>
-            item.command = () => this.menuActive = false
-          )
-        );
       });
   }
 
@@ -56,9 +52,13 @@ export class AssociationLayout {
     this.menuActive = status;
   }
 
+  public closeMenu() {
+    this.menuActive = false;
+  }
+
   private getAssociationItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('MEMBER', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
       items.push(
         {
           label: 'Socios',
@@ -66,7 +66,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('MY_FEES', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.myFees.read)) {
       items.push(
         {
           label: 'Mis cuotas',
@@ -74,7 +74,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('LIBRARY', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.library.book.read)) {
       items.push(
         {
           label: 'Biblioteca',
@@ -87,7 +87,7 @@ export class AssociationLayout {
 
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
-    if (authService.hasPermission('PROFILE', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.directory.profile.read)) {
       items.push(
         {
           label: 'Directorio',
@@ -95,7 +95,7 @@ export class AssociationLayout {
           icon: 'pi pi-users'
         });
     }
-    if (authService.hasPermission('MEMBER', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.fee.read)) {
       items.push(
         {
           label: 'Cuotas',
@@ -103,7 +103,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('FUNDS', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.transaction.read)) {
       items.push(
         {
           label: 'Fondos',
@@ -111,7 +111,7 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission('ACTIVITY', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.activity.read)) {
       items.push(
         {
           label: 'Actividad',
@@ -119,7 +119,7 @@ export class AssociationLayout {
           icon: 'pi pi-calendar'
         });
     }
-    if (authService.hasPermission('SCHEDULED_GAME', 'VIEW')) {
+    if (authService.hasPermission(UcroniaPermissions.scheduledGame.read)) {
       items.push(
         {
           label: 'Partidas programadas',

@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { UserUpdate } from '@bernardo-mg/security';
-import { MemberStatus, PublicMember } from '@ucronia/domain';
+import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
+import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -33,7 +33,7 @@ export class UserView implements OnInit {
   public data = new Page<User>();
 
   public selectedData = new User();
-  public member = new PublicMember();
+  public member = new Profile();
 
   /**
    * Loading flag.
@@ -46,8 +46,8 @@ export class UserView implements OnInit {
 
   public roleSelection: Role[] = [];
 
-  public availableMembers: PublicMember[] = [];
-  public members: PublicMember[] = [];
+  public availableMembers: Profile[] = [];
+  public members: Profile[] = [];
 
   public dialog = Dialog.NONE;
 
@@ -56,9 +56,9 @@ export class UserView implements OnInit {
 
     // Check permissions
     this.permissions = {
-      create: authService.hasPermission('USER', 'CREATE'),
-      edit: authService.hasPermission('USER', 'UPDATE'),
-      delete: authService.hasPermission('USER', 'DELETE')
+      create: authService.hasPermission(SecurityPermissions.user.create),
+      edit: authService.hasPermission(SecurityPermissions.user.update),
+      delete: authService.hasPermission(SecurityPermissions.user.delete)
     };
   }
 
@@ -109,9 +109,9 @@ export class UserView implements OnInit {
     );
   }
 
-  public onAssignMember(member: PublicMember): void {
+  public onAssignMember(member: number): void {
     this.call(
-      () => this.service.assignProfile(this.selectedData.username, member.number),
+      () => this.service.assignProfile(this.selectedData.username, member),
       () => this.load()
     );
   }

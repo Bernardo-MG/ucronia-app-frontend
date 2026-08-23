@@ -1,23 +1,22 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
-import { format } from 'date-fns';
-import { SelectModule } from 'primeng/select';
+import { Select } from 'primeng/select';
 import { BehaviorSubject, finalize, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 
 @Component({
   selector: 'assoc-transaction-balance-chart-view',
-  imports: [FormsModule, SelectModule],
+  imports: [CommonModule, FormsModule, Select],
   templateUrl: './transaction-balance-chart-view.html'
 })
 export class TransactionBalanceChartView implements OnInit, OnDestroy {
 
   private readonly service = inject(TransactionBalanceService);
-
-  public balance: TransactionMonthlyBalance[] = [];
+  private readonly selectedRange$ = new BehaviorSubject<number>(6);
 
   public readonly ranges = [
     { label: '3 meses', value: 3 },
@@ -26,84 +25,127 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
     { label: '2 años', value: 24 }
   ];
 
-  private readonly selectedRange$ = new BehaviorSubject<number>(3);
+  public balance: TransactionMonthlyBalance[] = [];
+  public loading = false;
+
+  private chart?: Chart;
 
   public get selectedRange(): number {
     return this.selectedRange$.value;
   }
+
   public set selectedRange(value: number) {
     this.selectedRange$.next(value);
   }
-
-  public loading = false;
-
-  public chart: any;
 
   public ngOnInit(): void {
     this.setupBalanceReload();
   }
 
   public ngOnDestroy(): void {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+    this.chart?.destroy();
   }
 
-  private loadChart() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+  private loadChart(): void {
+    this.chart?.destroy();
 
-    const labels = this.balance.map(b => format(b.month, 'yyyy-MM'))
-    const totals = this.balance.map(b => b.total)
-    const results = this.balance.map(b => b.results)
+    const labels = this.balance.map(() => '');
+    const totals = this.balance.map(balance => balance.total);
+    const results = this.balance.map(balance => balance.results);
 
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Balance',
-          data: totals,
-          borderColor: 'rgba(200, 99, 132, .7)',
-          borderWidth: 2,
-        },
-        {
-          label: 'Month results',
-          data: results,
-          borderColor: 'rgba(15, 10, 222, .7)',
-          borderWidth: 2,
-        }
-      ],
-    };
     this.chart = new Chart('balanceChart', {
       type: 'line',
-      data,
+      data: {
+        labels,
+        datasets: [
+          {
+            label: 'Saldo',
+            data: totals,
+            borderColor: '#4338ca',
+            backgroundColor: 'rgba(79, 70, 229, 0.10)',
+            borderWidth: 2,
+            fill: true,
+            tension: 0.35,
+            pointRadius: 3,
+            pointHoverRadius: 5
+          },
+          {
+            label: 'Resultado',
+            data: results,
+            borderColor: '#16a34a',
+            backgroundColor: '#16a34a',
+            borderWidth: 2,
+            tension: 0.35,
+            pointRadius: 3,
+            pointHoverRadius: 5
+          }
+        ]
+      },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          intersect: false,
+          mode: 'index'
+        },
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              usePointStyle: true,
+              boxWidth: 8,
+              padding: 24
+            }
+          }
+        },
+        scales: {
+          x: {
+            display: false,
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            beginAtZero: true,
+            grid: {
+              color: '#e5e7eb'
+            }
+          }
+        }
       }
     });
   }
 
-  private setupBalanceReload() {
+  private setupBalanceReload(): void {
     this.selectedRange$
       .pipe(
         switchMap(range => {
           const now = new Date();
-          const end = new Month(now.getFullYear(), now.getMonth() + 1);
+          const end = new Month(
+            now.getFullYear(),
+            now.getMonth() + 1
+          );
+
           const startDate = new Date(now);
           startDate.setMonth(startDate.getMonth() - range);
-          const start = new Month(startDate.getFullYear(), startDate.getMonth() + 1);
+
+          const start = new Month(
+            startDate.getFullYear(),
+            startDate.getMonth() + 1
+          );
 
           this.loading = true;
 
-          return this.service.monthly(start, end)
-            .pipe(finalize(() => (this.loading = false)));
+          return this.service
+            .monthly(start, end)
+            .pipe(
+              finalize(() => this.loading = false)
+            );
         })
       )
-      .subscribe(data => {
-        this.balance = data;
+      .subscribe(balance => {
+        this.balance = balance;
         this.loadChart();
       });
   }
-
 }
