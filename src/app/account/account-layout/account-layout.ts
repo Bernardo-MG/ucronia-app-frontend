@@ -1,38 +1,86 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { MenuItem } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
+import { Component, inject } from '@angular/core';
+import { AccountChangePasswordForm } from
+  '@app/account/account-change-password-form/account-change-password-form';
+import { AccountService } from '@app/account/account-service';
+import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { Account, PasswordChange } from '@bernardo-mg/security';
+import { DetailField } from '@bernardo-mg/ui';
+import { finalize } from 'rxjs';
+
+type AccountSection = 'profile' | 'member' | 'password';
 
 @Component({
   selector: 'account-layout',
-  imports: [RouterModule, MenuModule],
+  imports: [AccountChangePasswordForm, DetailField],
   templateUrl: './account-layout.html'
 })
 export class AccountLayout {
 
-  public readonly menus: MenuItem[];
+  private readonly service = inject(AccountService);
 
-  constructor() {
-    const items = [];
-    items.push(
-      {
-        label: 'Perfil',
-        routerLink: '/account/profile',
-        icon: 'pi pi-user'
-      });
-    items.push(
-      {
-        label: 'Contraseña',
-        routerLink: '/account/password',
-        icon: 'pi pi-user'
-      });
-    this.menus =
-      [
-        {
-          label: 'Seguridad',
-          items: items
-        }
-      ]
+  public account = new Account();
+
+  public accountLoading = false;
+
+  public passwordLoading = false;
+
+  public failures = new FailureStore();
+
+  public activeSection: AccountSection = 'profile';
+
+  public get memberName(): string {
+    const name = this.account.profile?.name;
+
+    return name?.fullName
+      || [name?.firstName, name?.lastName]
+        .filter(Boolean)
+        .join(' ');
   }
 
+  constructor() {
+    this.accountLoading = true;
+
+    this.service.getAccount()
+      .pipe(finalize(() => this.accountLoading = false))
+      .subscribe(response => this.account = response);
+  }
+
+  public scrollTo(section: AccountSection): void {
+    this.activeSection = section;
+
+    const target = document.getElementById(section);
+    if (!target) {
+      return;
+    }
+
+    const headerOffset = 96;
+    const top =
+      window.scrollY
+      + target.getBoundingClientRect().top
+      - headerOffset;
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth'
+    });
+  }
+
+  public onChangePassword(data: PasswordChange): void {
+    this.passwordLoading = true;
+
+    this.service.changePassword(data).subscribe({
+      complete: () => this.passwordLoading = false,
+      error: error => this.handleError(error)
+    });
+  }
+
+  private handleError(error: unknown): void {
+    this.passwordLoading = false;
+
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
 }
