@@ -1,7 +1,7 @@
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="members()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
-  (onPage)="onPageChange($event)" responsiveLayout="scroll" styleClass="p-datatable-striped">
+  (onPage)="onPageChange($event)" class="p-datatable-striped">
 
   <ng-template #header>
     <tr>

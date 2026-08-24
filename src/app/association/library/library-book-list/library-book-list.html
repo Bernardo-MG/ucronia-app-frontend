@@ -1,8 +1,7 @@
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="books()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" (onSort)="onChangeDirection($event)" (onPage)="onPageChange($event)"
-  showCurrentPageReport="true" currentPageReportTemplate="{first}–{last} de {totalRecords}"
-  responsiveLayout="scroll" styleClass="p-datatable-striped">
+  showCurrentPageReport="true" currentPageReportTemplate="{first}–{last} de {totalRecords}" class="p-datatable-striped">
 
   <!-- Header -->
   <ng-template #header>
@@ -18,8 +17,8 @@
 
   <!-- Body rows -->
   <ng-template #body let-book>
-    <tr class="cursor-pointer transition-colors hover:bg-primary-50/40" tabindex="0"
-      (click)="showBook.emit(book)" (keydown.enter)="showBook.emit(book)">
+    <tr class="cursor-pointer transition-colors hover:bg-primary-50/40" tabindex="0" (click)="showBook.emit(book)"
+      (keydown.enter)="showBook.emit(book)">
       <td>
         <span class="block font-semibold text-gray-950">
           <sup>{{book.title.supertitle}}</sup>{{book.title.title}}<sub>{{book.title.subtitle}}</sub>
@@ -28,7 +27,9 @@
       </td>
       <td class="hidden md:table-cell">
         <span class="block">{{ getAuthors(book) }}</span>
-        @if (getSystem(book)) { <span class="mt-1 block text-xs text-gray-500">{{ getSystem(book) }}</span> }
+        @if (getSystem(book)) {
+          <span class="mt-1 block text-xs text-gray-500">{{ getSystem(book) }}</span>
+        }
       </td>
       <td class="hidden lg:table-cell text-gray-600">{{ getType(book) }}</td>
       <td class="hidden sm:table-cell font-mono text-sm text-gray-600">{{ book.number }}</td>

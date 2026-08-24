@@ -1,17 +1,7 @@
-<p-table
-  lazy="true"
-  dataKey="month"
-  [loading]="loading()"
-  [value]="fees()"
-  paginator="true"
-  [rows]="rows()"
-  [totalRecords]="totalRecords()"
-  [first]="first"
-  showCurrentPageReport="true"
-  currentPageReportTemplate="{first}–{last} de {totalRecords}"
-  (onPage)="onPageChange($event)"
-  responsiveLayout="scroll"
-  styleClass="p-datatable-striped">
+<p-table lazy="true" dataKey="month" [loading]="loading()" [value]="fees()" paginator="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onPage)="onPageChange($event)"
+  class="p-datatable-striped">
 
   <ng-template #header>
     <tr>
@@ -39,19 +29,19 @@
 
       <td>
         @if (fee.paid) {
-          <p-tag value="Pagada" severity="success" />
+        <p-tag value="Pagada" severity="success" />
         } @else {
-          <p-tag value="Pendiente" severity="warn" />
+        <p-tag value="Pendiente" severity="warn" />
         }
       </td>
 
       <td>
         @if (fee.paid) {
-          <span class="text-gray-700">
-            {{ fee.transaction?.date | date:'d MMM y' }}
-          </span>
+        <span class="text-gray-700">
+          {{ fee.transaction?.date | date:'d MMM y' }}
+        </span>
         } @else {
-          <span class="text-gray-400">—</span>
+        <span class="text-gray-400">—</span>
         }
       </td>
     </tr>
