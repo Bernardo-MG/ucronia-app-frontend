@@ -10,11 +10,13 @@ import { finalize } from 'rxjs';
 type AccountSection = 'profile' | 'member' | 'password';
 
 @Component({
-  selector: 'account-layout',
-  imports: [AccountChangePasswordForm, DetailField],
-  templateUrl: './account-layout.html'
+  imports: [
+    AccountChangePasswordForm,
+    DetailField
+  ],
+  templateUrl: './account-view.html'
 })
-export class AccountLayout {
+export class AccountView {
 
   private readonly service = inject(AccountService);
 
@@ -41,8 +43,21 @@ export class AccountLayout {
     this.accountLoading = true;
 
     this.service.getAccount()
-      .pipe(finalize(() => this.accountLoading = false))
+      .pipe(
+        finalize(() => this.accountLoading = false)
+      )
       .subscribe(response => this.account = response);
+  }
+
+  public onChangePassword(data: PasswordChange): void {
+    this.passwordLoading = true;
+
+    this.service.changePassword(data).subscribe({
+      complete: () => {
+        this.passwordLoading = false;
+      },
+      error: error => this.handleError(error)
+    });
   }
 
   public scrollTo(section: AccountSection): void {
@@ -62,15 +77,6 @@ export class AccountLayout {
     window.scrollTo({
       top,
       behavior: 'smooth'
-    });
-  }
-
-  public onChangePassword(data: PasswordChange): void {
-    this.passwordLoading = true;
-
-    this.service.changePassword(data).subscribe({
-      complete: () => this.passwordLoading = false,
-      error: error => this.handleError(error)
     });
   }
 

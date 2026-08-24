@@ -4,7 +4,7 @@ export const accountRoutes: Routes = [
   {
     path: 'account',
     loadComponent: () =>
-      import('./account-layout/account-layout')
-        .then(module => module.AccountLayout)
+      import('./account-view/account-view')
+        .then(module => module.AccountView)
   }
 ];
