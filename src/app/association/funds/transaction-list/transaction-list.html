@@ -1,6 +1,6 @@
 <p-table [lazy]="true" dataKey="index" [loading]="loading()" [value]="data()" [paginator]="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
-  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onPage)="onPageChange($event)">
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onPage)="onPageChange($event)" responsiveLayout="scroll">
   <ng-template #header>
     <tr>
       <th class="min-w-72">Descripción</th>
