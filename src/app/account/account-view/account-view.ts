@@ -1,20 +1,18 @@
 import { Component, inject } from '@angular/core';
-import { AccountChangePasswordForm } from
-  '@app/account/account-change-password-form/account-change-password-form';
+import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
 import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Account, PasswordChange } from '@bernardo-mg/security';
 import { DetailField } from '@bernardo-mg/ui';
+import { RippleModule } from 'primeng/ripple';
 import { finalize } from 'rxjs';
 
 type AccountSection = 'profile' | 'member' | 'password';
 
 @Component({
-  imports: [
-    AccountChangePasswordForm,
-    DetailField
-  ],
-  templateUrl: './account-view.html'
+  imports: [AccountChangePasswordForm, DetailField, RippleModule],
+  templateUrl: './account-view.html',
+  styleUrl: './account-view.scss'
 })
 export class AccountView {
 
@@ -43,9 +41,7 @@ export class AccountView {
     this.accountLoading = true;
 
     this.service.getAccount()
-      .pipe(
-        finalize(() => this.accountLoading = false)
-      )
+      .pipe(finalize(() => this.accountLoading = false))
       .subscribe(response => this.account = response);
   }
 
@@ -53,9 +49,7 @@ export class AccountView {
     this.passwordLoading = true;
 
     this.service.changePassword(data).subscribe({
-      complete: () => {
-        this.passwordLoading = false;
-      },
+      complete: () => this.passwordLoading = false,
       error: error => this.handleError(error)
     });
   }
@@ -69,10 +63,7 @@ export class AccountView {
     }
 
     const headerOffset = 96;
-    const top =
-      window.scrollY
-      + target.getBoundingClientRect().top
-      - headerOffset;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerOffset;
 
     window.scrollTo({
       top,
