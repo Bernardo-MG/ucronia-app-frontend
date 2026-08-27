@@ -34,7 +34,7 @@
               (click)="scrollTo('profile')"
             >
               <i class="account-nav__icon pi pi-user" aria-hidden="true"></i>
-              <span>Perfil</span>
+              <span>Cuenta</span>
             </button>
 
             <button
@@ -72,7 +72,7 @@
         </h1>
 
         <p class="mt-1 text-sm text-gray-500">
-          Gestiona tu perfil y la seguridad de tu cuenta
+          Gestiona la información y la seguridad de tu cuenta
         </p>
       </header>
 
@@ -82,11 +82,11 @@
 
           <div>
             <h2 id="profile-title" class="text-xl font-semibold text-gray-950">
-              Perfil
+              Información de la cuenta
             </h2>
 
             <p class="text-sm text-gray-500">
-              Información personal de la cuenta
+              Datos utilizados para identificar tu cuenta
             </p>
           </div>
         </header>
@@ -104,7 +104,7 @@
           <div class="py-4">
             <ui-detail-field
               [loading]="accountLoading"
-              icon="pi pi-user"
+              icon="pi pi-id-card"
               name="Nombre"
               [value]="account.name"
             />
@@ -122,14 +122,18 @@
       </section>
 
       <section id="member" class="scroll-mt-24" aria-labelledby="member-title">
-        <header class="mb-3">
-          <h2 id="member-title" class="text-xl font-semibold text-gray-950">
-            Miembro asociado
-          </h2>
+        <header class="mb-4 flex items-start gap-3">
+          <i class="pi pi-id-card mt-1 text-2xl text-violet-600" aria-hidden="true"></i>
 
-          <p class="text-sm text-gray-500">
-            Perfil de socio vinculado a esta cuenta
-          </p>
+          <div>
+            <h2 id="member-title" class="text-xl font-semibold text-gray-950">
+              Miembro asociado
+            </h2>
+
+            <p class="text-sm text-gray-500">
+              Perfil de socio vinculado a esta cuenta
+            </p>
+          </div>
         </header>
 
         <div class="flex items-center gap-4 rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
@@ -142,14 +146,14 @@
               <div class="h-5 w-40 animate-pulse rounded bg-gray-200"></div>
               <div class="h-4 w-56 animate-pulse rounded bg-gray-100"></div>
             </div>
-          } @else if (account.profile) {
+          } @else if (profile) {
             <div>
               <p class="font-semibold text-gray-950">
                 {{ memberName }}
               </p>
 
               <p class="text-sm text-gray-500">
-                Socio número {{ account.profile.number }}
+                Socio número {{ profile.number }}
               </p>
             </div>
           } @else {
@@ -167,14 +171,18 @@
       </section>
 
       <section id="password" class="scroll-mt-24 border-t border-gray-200 pt-6" aria-labelledby="password-title">
-        <header class="mb-4">
-          <h2 id="password-title" class="text-xl font-semibold text-gray-950">
-            Cambiar contraseña
-          </h2>
+        <header class="mb-4 flex items-start gap-3">
+          <i class="pi pi-lock mt-1 text-2xl text-violet-600" aria-hidden="true"></i>
 
-          <p class="text-sm text-gray-500">
-            Actualiza la contraseña utilizada para acceder a tu cuenta
-          </p>
+          <div>
+            <h2 id="password-title" class="text-xl font-semibold text-gray-950">
+              Cambiar contraseña
+            </h2>
+
+            <p class="text-sm text-gray-500">
+              Actualiza la contraseña utilizada para acceder a tu cuenta
+            </p>
+          </div>
         </header>
 
         <div class="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">

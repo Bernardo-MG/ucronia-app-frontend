@@ -4,8 +4,9 @@ import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Account, PasswordChange } from '@bernardo-mg/security';
 import { DetailField } from '@bernardo-mg/ui';
+import { Profile } from '@ucronia/domain';
 import { RippleModule } from 'primeng/ripple';
-import { finalize } from 'rxjs';
+import { finalize, switchMap, tap } from 'rxjs';
 
 type AccountSection = 'profile' | 'member' | 'password';
 
@@ -20,6 +21,8 @@ export class AccountView {
 
   public account = new Account();
 
+  public profile?: Profile;
+
   public accountLoading = false;
 
   public passwordLoading = false;
@@ -29,29 +32,31 @@ export class AccountView {
   public activeSection: AccountSection = 'profile';
 
   public get memberName(): string {
-    const name = this.account.profile?.name;
+    const name = this.profile?.name;
 
-    return name?.fullName
-      || [name?.firstName, name?.lastName]
+    if (!name) {
+      return '';
+    }
+
+    return name.fullName
+      || [name.firstName, name.lastName]
         .filter(Boolean)
         .join(' ');
   }
 
   constructor() {
-    this.accountLoading = true;
-
-    this.service.getAccount()
-      .pipe(finalize(() => this.accountLoading = false))
-      .subscribe(response => this.account = response);
+    this.loadAccount();
   }
 
   public onChangePassword(data: PasswordChange): void {
     this.passwordLoading = true;
+    this.failures.clear();
 
-    this.service.changePassword(data).subscribe({
-      complete: () => this.passwordLoading = false,
-      error: error => this.handleError(error)
-    });
+    this.service.changePassword(data)
+      .pipe(finalize(() => this.passwordLoading = false))
+      .subscribe({
+        error: error => this.handleError(error)
+      });
   }
 
   public scrollTo(section: AccountSection): void {
@@ -71,9 +76,20 @@ export class AccountView {
     });
   }
 
-  private handleError(error: unknown): void {
-    this.passwordLoading = false;
+  private loadAccount(): void {
+    this.accountLoading = true;
+    this.profile = undefined;
 
+    this.service.getAccount()
+      .pipe(
+        tap(account => this.account = account),
+        switchMap(account => this.service.getProfile(account.username)),
+        finalize(() => this.accountLoading = false)
+      )
+      .subscribe(profile => this.profile = profile);
+  }
+
+  private handleError(error: unknown): void {
     if (error instanceof FailureResponse) {
       this.failures = error.failures;
     } else {
