@@ -3,16 +3,16 @@ import { AccountChangePasswordForm } from '@app/account/account-change-password-
 import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Account, PasswordChange } from '@bernardo-mg/security';
-import { DetailField } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
 import { RippleModule } from 'primeng/ripple';
 import { finalize, switchMap, tap } from 'rxjs';
+import { AccountInfo } from '../account-info/account-info';
 import { AccountProfileInfo } from '../account-profile-info/account-profile-info';
 
 type AccountSection = 'profile' | 'member' | 'password';
 
 @Component({
-  imports: [AccountChangePasswordForm, AccountProfileInfo, DetailField, RippleModule],
+  imports: [AccountChangePasswordForm, AccountInfo, AccountProfileInfo, RippleModule],
   templateUrl: './account-view.html',
   styleUrl: './account-view.scss'
 })

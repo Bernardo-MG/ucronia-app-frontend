@@ -63,32 +63,19 @@
       <section id="profile" class="scroll-mt-24" aria-labelledby="profile-title">
         <header class="mb-4 flex items-start gap-3">
           <i class="pi pi-user mt-1 text-2xl text-violet-600" aria-hidden="true"></i>
-
+      
           <div>
             <h2 id="profile-title" class="text-xl font-semibold text-gray-950">
               Información de la cuenta
             </h2>
-
+      
             <p class="text-sm text-gray-500">
               Datos utilizados para identificar tu cuenta
             </p>
           </div>
         </header>
-
-        <div class="divide-y divide-gray-200 rounded-lg border border-gray-200 bg-white px-5 shadow-sm">
-          <div class="py-4">
-            <ui-detail-field [loading]="accountLoading" icon="pi pi-user" name="Nombre de usuario"
-              [value]="account.username" />
-          </div>
-
-          <div class="py-4">
-            <ui-detail-field [loading]="accountLoading" icon="pi pi-id-card" name="Nombre" [value]="account.name" />
-          </div>
-
-          <div class="py-4">
-            <ui-detail-field [loading]="accountLoading" icon="pi pi-envelope" name="E-mail" [value]="account.email" />
-          </div>
-        </div>
+      
+        <account-info [data]="account" [loading]="accountLoading" />
       </section>
 
       <section id="member" class="scroll-mt-24" aria-labelledby="member-title">
