@@ -7,11 +7,12 @@ import { DetailField } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
 import { RippleModule } from 'primeng/ripple';
 import { finalize, switchMap, tap } from 'rxjs';
+import { AccountProfileInfo } from '../account-profile-info/account-profile-info';
 
 type AccountSection = 'profile' | 'member' | 'password';
 
 @Component({
-  imports: [AccountChangePasswordForm, DetailField, RippleModule],
+  imports: [AccountChangePasswordForm, AccountProfileInfo, DetailField, RippleModule],
   templateUrl: './account-view.html',
   styleUrl: './account-view.scss'
 })
