@@ -9,20 +9,11 @@ import { Profile } from '@ucronia/domain';
 })
 export class AccountProfileInfo {
 
-  public readonly data = input<Profile>();
-
+  public readonly data = input<Profile | undefined>(undefined);
   public readonly loading = input(false);
 
   public get memberName(): string {
-    const name = this.data()?.name;
-
-    if (!name) {
-      return '';
-    }
-
-    return name.fullName
-      || [name.firstName, name.lastName]
-        .filter(Boolean)
-        .join(' ');
+    return this.data()?.name.fullName ?? '';
   }
+
 }

@@ -25,22 +25,22 @@
 
           <div class="account-nav__items">
             <button pRipple type="button" class="account-nav__item"
-              [class.account-nav__item--active]="activeSection === 'profile'"
-              [attr.aria-current]="activeSection === 'profile' ? 'location' : null" (click)="scrollTo('profile')">
+              [class.account-nav__item--active]="activeSection === AccountSection.Profile"
+              [attr.aria-current]="activeSection === AccountSection.Profile ? 'location' : null" (click)="scrollTo(AccountSection.Profile)">
               <i class="account-nav__icon pi pi-user" aria-hidden="true"></i>
               <span>Cuenta</span>
             </button>
 
             <button pRipple type="button" class="account-nav__item"
-              [class.account-nav__item--active]="activeSection === 'member'"
-              [attr.aria-current]="activeSection === 'member' ? 'location' : null" (click)="scrollTo('member')">
+              [class.account-nav__item--active]="activeSection === AccountSection.Member"
+              [attr.aria-current]="activeSection === AccountSection.Member ? 'location' : null" (click)="scrollTo(AccountSection.Member)">
               <i class="account-nav__icon pi pi-id-card" aria-hidden="true"></i>
               <span>Miembro</span>
             </button>
 
             <button pRipple type="button" class="account-nav__item"
-              [class.account-nav__item--active]="activeSection === 'password'"
-              [attr.aria-current]="activeSection === 'password' ? 'location' : null" (click)="scrollTo('password')">
+              [class.account-nav__item--active]="activeSection === AccountSection.Password"
+              [attr.aria-current]="activeSection === AccountSection.Password ? 'location' : null" (click)="scrollTo(AccountSection.Password)">
               <i class="account-nav__icon pi pi-lock" aria-hidden="true"></i>
               <span>Contraseña</span>
             </button>
