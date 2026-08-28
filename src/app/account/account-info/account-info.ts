@@ -12,4 +12,5 @@ export class AccountInfo {
   public readonly data = input(new Account());
 
   public readonly loading = input(false);
+
 }

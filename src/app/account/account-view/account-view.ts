@@ -9,7 +9,11 @@ import { finalize, switchMap, tap } from 'rxjs';
 import { AccountInfo } from '../account-info/account-info';
 import { AccountProfileInfo } from '../account-profile-info/account-profile-info';
 
-type AccountSection = 'profile' | 'member' | 'password';
+export enum AccountSection {
+  Profile = 'profile',
+  Member = 'member',
+  Password = 'password'
+}
 
 @Component({
   imports: [AccountChangePasswordForm, AccountInfo, AccountProfileInfo, RippleModule],
@@ -20,9 +24,11 @@ export class AccountView {
 
   private readonly service = inject(AccountService);
 
+  public readonly AccountSection = AccountSection;
+
   public account = new Account();
 
-  public profile?: Profile;
+  public profile: Profile | undefined;
 
   public accountLoading = false;
 
@@ -30,20 +36,7 @@ export class AccountView {
 
   public failures = new FailureStore();
 
-  public activeSection: AccountSection = 'profile';
-
-  public get memberName(): string {
-    const name = this.profile?.name;
-
-    if (!name) {
-      return '';
-    }
-
-    return name.fullName
-      || [name.firstName, name.lastName]
-        .filter(Boolean)
-        .join(' ');
-  }
+  public activeSection = AccountSection.Profile;
 
   constructor() {
     this.loadAccount();
@@ -79,7 +72,7 @@ export class AccountView {
 
   private loadAccount(): void {
     this.accountLoading = true;
-    this.profile = undefined;
+    this.profile = new Profile();
 
     this.service.getAccount()
       .pipe(
