@@ -1,23 +1,56 @@
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="roles()" paginator="true" [rows]="rows()"
-  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+<p-menu #actionsMenu [model]="actions" [popup]="true" />
+
+<p-table [lazy]="true" dataKey="name" [loading]="loading()" [value]="roles()" [paginator]="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr>
-      <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
-      <th></th>
+      <th pSortableColumn="name">
+        Rol
+        <p-sortIcon field="name" />
+      </th>
+
+      <th class="w-14">
+        <span class="sr-only">Acciones</span>
+      </th>
     </tr>
   </ng-template>
+
   <ng-template #body let-role>
     <tr>
-      <td>{{ role.name }}</td>
-      <td>
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="onShowInfo(role)" rounded text />
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, role)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!editable()" aria-label="Borrar"
-          [attr.aria-disabled]="!editable()" (click)="this.delete.emit($event)" rounded text />
+      <td class="min-w-0">
+        <button type="button" class="group block w-full min-w-0 border-0 bg-transparent p-0 text-left"
+          (click)="show.emit(role)">
+          <span class="block truncate font-medium text-gray-950 group-hover:text-primary">
+            {{ role.name }}
+          </span>
+        </button>
+      </td>
+
+      <td class="text-right">
+        <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text aria-label="Acciones del rol"
+          (click)="openActionsMenu($event, role)" />
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="2">
+        <div class="flex flex-col items-center px-4 py-12 text-center">
+          <span class="mb-3 flex size-12 items-center justify-center rounded-full bg-gray-100 text-gray-500">
+            <i class="pi pi-id-card text-xl" aria-hidden="true"></i>
+          </span>
+
+          <strong class="text-gray-950">
+            No hay roles
+          </strong>
+
+          <span class="mt-1 text-sm text-gray-500">
+            Los roles creados aparecerán aquí
+          </span>
+        </div>
       </td>
     </tr>
   </ng-template>
