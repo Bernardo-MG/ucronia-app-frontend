@@ -5,7 +5,6 @@ import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
@@ -14,7 +13,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 
 @Component({
   selector: 'access-user-token-view',
-  imports: [CardModule, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
+  imports: [DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
   templateUrl: './user-token-view.html'
 })
 export class UserTokenView implements OnInit {
