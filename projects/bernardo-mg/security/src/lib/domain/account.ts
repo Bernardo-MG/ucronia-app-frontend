@@ -16,8 +16,4 @@ export class Account {
    * User email.
    */
   email = '';
-  /**
-   * User profile.
-   */
-  profile: Profile | undefined = undefined;
 }

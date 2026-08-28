@@ -1,0 +1,121 @@
+<div class="account-page">
+  <div class="account-layout">
+    <aside class="account-sidebar">
+      <header class="account-sidebar__header">
+        <span class="account-sidebar__eyebrow">Cuenta</span>
+        @if (accountLoading) {
+          <div class="h-5 w-28 animate-pulse rounded bg-gray-200"></div>
+          <div class="mt-2 h-4 w-40 animate-pulse rounded bg-gray-100"></div>
+        } @else {
+          <h1 class="account-sidebar__title">
+            {{ account.name || account.username }}
+          </h1>
+
+          <span class="account-sidebar__subtitle">
+            {{ account.email }}
+          </span>
+        }
+      </header>
+
+      <nav class="account-nav" aria-label="Configuración de la cuenta">
+        <section class="account-nav__section">
+          <h2 class="account-nav__section-title">
+            Configuración
+          </h2>
+
+          <div class="account-nav__items">
+            <button pRipple type="button" class="account-nav__item"
+              [class.account-nav__item--active]="activeSection === 'profile'"
+              [attr.aria-current]="activeSection === 'profile' ? 'location' : null" (click)="scrollTo('profile')">
+              <i class="account-nav__icon pi pi-user" aria-hidden="true"></i>
+              <span>Cuenta</span>
+            </button>
+
+            <button pRipple type="button" class="account-nav__item"
+              [class.account-nav__item--active]="activeSection === 'member'"
+              [attr.aria-current]="activeSection === 'member' ? 'location' : null" (click)="scrollTo('member')">
+              <i class="account-nav__icon pi pi-id-card" aria-hidden="true"></i>
+              <span>Miembro</span>
+            </button>
+
+            <button pRipple type="button" class="account-nav__item"
+              [class.account-nav__item--active]="activeSection === 'password'"
+              [attr.aria-current]="activeSection === 'password' ? 'location' : null" (click)="scrollTo('password')">
+              <i class="account-nav__icon pi pi-lock" aria-hidden="true"></i>
+              <span>Contraseña</span>
+            </button>
+          </div>
+        </section>
+      </nav>
+    </aside>
+
+    <main class="account-content space-y-7 pb-[60vh]">
+      <header>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-950">
+          Configuración de la cuenta
+        </h1>
+
+        <p class="mt-1 text-sm text-gray-500">
+          Gestiona la información y la seguridad de tu cuenta
+        </p>
+      </header>
+
+      <section id="profile" class="scroll-mt-24" aria-labelledby="profile-title">
+        <header class="mb-4 flex items-start gap-3">
+          <i class="pi pi-user mt-1 text-2xl text-violet-600" aria-hidden="true"></i>
+      
+          <div>
+            <h2 id="profile-title" class="text-xl font-semibold text-gray-950">
+              Información de la cuenta
+            </h2>
+      
+            <p class="text-sm text-gray-500">
+              Datos utilizados para identificar tu cuenta
+            </p>
+          </div>
+        </header>
+      
+        <account-info [data]="account" [loading]="accountLoading" />
+      </section>
+
+      <section id="member" class="scroll-mt-24" aria-labelledby="member-title">
+        <header class="mb-4 flex items-start gap-3">
+          <i class="pi pi-id-card mt-1 text-2xl text-violet-600" aria-hidden="true"></i>
+
+          <div>
+            <h2 id="member-title" class="text-xl font-semibold text-gray-950">
+              Miembro asociado
+            </h2>
+
+            <p class="text-sm text-gray-500">
+              Perfil de socio vinculado a esta cuenta
+            </p>
+          </div>
+        </header>
+
+        <account-profile-info [data]="profile" [loading]="accountLoading" />
+      </section>
+
+      <section id="password" class="scroll-mt-24 border-t border-gray-200 pt-6" aria-labelledby="password-title">
+        <header class="mb-4 flex items-start gap-3">
+          <i class="pi pi-lock mt-1 text-2xl text-violet-600" aria-hidden="true"></i>
+
+          <div>
+            <h2 id="password-title" class="text-xl font-semibold text-gray-950">
+              Cambiar contraseña
+            </h2>
+
+            <p class="text-sm text-gray-500">
+              Actualiza la contraseña utilizada para acceder a tu cuenta
+            </p>
+          </div>
+        </header>
+
+        <div class="rounded-lg border border-gray-200 bg-white p-5 shadow-sm">
+          <account-change-password-form [loading]="passwordLoading" [failures]="failures"
+            (save)="onChangePassword($event)" />
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
