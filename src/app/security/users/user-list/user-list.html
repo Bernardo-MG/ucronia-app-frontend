@@ -1,25 +1,76 @@
-<p-menu #infoMenu [model]="infoMenuItems" [popup]="true" />
 <p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="users()" paginator="true" [rows]="rows()"
-  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+
+<p-table [lazy]="true" dataKey="username" [loading]="loading()" [value]="users()" [paginator]="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr>
-      <th pSortableColumn="name">Nombre <p-sortIcon field="name" /></th>
-      <th></th>
+      <th pSortableColumn="name">
+        Usuario
+        <p-sortIcon field="name" />
+      </th>
+
+      <th class="hidden xl:table-cell">
+        Contacto
+      </th>
+
+      <th class="hidden lg:table-cell">
+        Roles
+      </th>
+
+      <th class="hidden sm:table-cell">
+        Estado
+      </th>
+
+      <th class="w-14">
+        <span class="sr-only">Acciones</span>
+      </th>
     </tr>
   </ng-template>
+
   <ng-template #body let-user>
     <tr>
-      <td>{{ user.name }} <assoc-user-status-tag [user]="user" /></td>
-      <td>
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" [attr.aria-disabled]="!editable()"
-          (click)="show.emit(user)" rounded text />
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, user)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-          [attr.aria-disabled]="!deletable()" (click)="this.delete.emit($event)" rounded text />
+      <td class="min-w-0">
+        <button type="button" class="group block w-full min-w-0 border-0 bg-transparent p-0 text-left"
+          (click)="show.emit(user)">
+          <span class="block truncate font-medium text-gray-950 group-hover:text-primary">
+            {{ user.name || user.username }}
+          </span>
+
+          <span class="block truncate text-sm text-gray-500">
+            {{ user.username }}
+          </span>
+        </button>
+
+        <div class="mt-2 sm:hidden">
+          <assoc-user-status-tag [user]="user" />
+        </div>
+      </td>
+
+      <td class="hidden min-w-0 xl:table-cell">
+        {{ user.email }}
+      </td>
+
+      <td class="hidden lg:table-cell">
+        <div class="flex flex-wrap gap-1">
+          @for (role of user.roles; track role.name) {
+            <p-tag [value]="role.name" severity="secondary" />
+          } @empty {
+            <span class="text-sm text-gray-500">
+              Sin roles
+            </span>
+          }
+        </div>
+      </td>
+
+      <td class="hidden sm:table-cell">
+        <assoc-user-status-tag [user]="user" />
+      </td>
+
+      <td class="text-right">
+        <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text aria-label="Acciones del usuario"
+          (click)="openEditionMenu($event, user)" />
       </td>
     </tr>
   </ng-template>

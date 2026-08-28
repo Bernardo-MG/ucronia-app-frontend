@@ -1,23 +1,37 @@
-import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { User } from '@bernardo-mg/authentication';
-import { ConfirmationService, MenuItem } from 'primeng/api';
+import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 import { UserStatusTag } from '../user-status-tag/user-status-tag';
+
+export interface UserStatusChange {
+  user: User;
+  enabled: boolean;
+}
+
+export interface UserDeleteEvent {
+  event: Event;
+  user: User;
+}
 
 @Component({
   selector: 'access-user-list',
-  imports: [TableModule, ButtonModule, MenuModule, UserStatusTag],
+  imports: [
+    TableModule,
+    ButtonModule,
+    MenuModule,
+    TagModule,
+    UserStatusTag
+  ],
   templateUrl: './user-list.html'
 })
 export class UserList {
 
-  private readonly confirmationService = inject(ConfirmationService);
-
   public readonly loading = input(false);
-  public readonly readProfile = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
   public readonly users = input<User[]>([]);
@@ -26,81 +40,82 @@ export class UserList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<User>();
-  public readonly delete = output<Event>();
+  public readonly delete = output<UserDeleteEvent>();
   public readonly edit = output<User>();
   public readonly editRoles = output<User>();
   public readonly editMember = output<User>();
-  public readonly active = output<boolean>();
+  public readonly active = output<UserStatusChange>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  @ViewChild('editionMenu') private editionMenu!: Menu;
+  @ViewChild('editionMenu')
+  private editionMenu!: Menu;
 
-  public infoMenuItems: MenuItem[] = [];
   public editionMenuItems: MenuItem[] = [];
 
-  public get first() {
+  public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
-  public onPageChange(event: TablePageEvent) {
+  public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 
-  public openEditionMenu(event: Event, user: User) {
-    this.editionMenuItems = [];
-
-    // Load edition menu
-    this.editionMenuItems.push(
+  public openEditionMenu(event: Event, user: User): void {
+    this.editionMenuItems = [
       {
-        label: 'Datos',
+        label: 'Ver detalles',
+        icon: 'pi pi-eye',
+        command: () => this.show.emit(user)
+      },
+      {
+        label: 'Editar datos',
+        icon: 'pi pi-pencil',
+        disabled: !this.editable(),
         command: () => this.edit.emit(user)
-      });
-    this.editionMenuItems.push(
+      },
       {
-        label: 'Roles',
+        label: 'Editar roles',
+        icon: 'pi pi-id-card',
+        disabled: !this.editable(),
         command: () => this.editRoles.emit(user)
-      });
-    this.editionMenuItems.push(
+      },
       {
-        label: 'Socio',
+        label: 'Vincular socio',
+        icon: 'pi pi-link',
+        disabled: !this.editable(),
         command: () => this.editMember.emit(user)
-      });
-    // Active/Deactivate toggle
-    const isActive = user.enabled;
-    this.editionMenuItems.push({
-      label: isActive ? 'Desactivar' : 'Activar',
-      command: (method) => this.onConfirmSetActive(method.originalEvent as Event, !isActive)
-    });
+      },
+      {
+        separator: true
+      },
+      {
+        label: user.enabled ? 'Desactivar' : 'Activar',
+        icon: user.enabled
+          ? 'pi pi-ban'
+          : 'pi pi-check-circle',
+        disabled: !this.editable(),
+        command: () => {
+          this.active.emit({
+            user,
+            enabled: !user.enabled
+          });
+        }
+      },
+      {
+        label: 'Eliminar',
+        icon: 'pi pi-trash',
+        disabled: !this.deletable(),
+        command: menuEvent => {
+          this.delete.emit({
+            event: menuEvent.originalEvent as Event,
+            user
+          });
+        }
+      }
+    ];
 
     this.editionMenu.toggle(event);
   }
-
-  private onConfirmSetActive(event: Event, status: boolean) {
-    let message;
-    if (status) {
-      message = '¿Estás seguro de querer activar el usuario?';
-    } else {
-      message = '¿Estás seguro de querer desactivar el usuario?';
-    }
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message,
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () => {
-        this.active.emit(status);
-      }
-    });
-  }
-
 }
