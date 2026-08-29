@@ -6,20 +6,18 @@ import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
 import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
 import { finalize, Observable } from 'rxjs';
 import { UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
-import { UserList } from '../user-list/user-list';
+import { UserDeleteEvent, UserList, UserStatusChange } from '../user-list/user-list';
 import { UserMemberEditorForm } from '../user-member-editor-form/user-member-editor-form';
 import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
 import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [CardModule, ButtonModule, PanelModule, DrawerModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
+  imports: [ButtonModule, DrawerModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -122,37 +120,43 @@ export class UserView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
-  public onSetEnabled(status: boolean) {
+  public onSetEnabled(change: UserStatusChange): void {
+    this.selectedData = change.user;
+
     const userUpdate: UserUpdate = {
-      ...this.selectedData,
-      roles: this.selectedData.roles.map(r => r.name),
-      enabled: status
+      ...change.user,
+      roles: change.user.roles.map(role => role.name),
+      enabled: change.enabled
     };
+
     this.call(
-      () => this.service.update(this.selectedData.username, userUpdate),
-      () => this.load()
+      () => this.service.update(change.user.username, userUpdate),
+      () => this.load(this.data.page)
     );
   }
 
-  public onDelete(event: Event): void {
+  public onDelete(data: UserDeleteEvent): void {
+    this.selectedData = data.user;
+
     this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
+      target: data.event.currentTarget as EventTarget,
+      message: `¿Quieres eliminar al usuario “${data.user.username}”? Esta acción no se puede deshacer.`,
+      icon: 'pi pi-exclamation-triangle',
       rejectButtonProps: {
         label: 'Cancelar',
         severity: 'secondary',
         outlined: true
       },
       acceptButtonProps: {
-        label: 'Borrar',
+        label: 'Eliminar',
         severity: 'danger'
       },
-      accept: () =>
+      accept: () => {
         this.call(
-          () => this.service.delete(this.selectedData.username),
+          () => this.service.delete(data.user.username),
           () => this.load()
-        )
+        );
+      }
     });
   }
 

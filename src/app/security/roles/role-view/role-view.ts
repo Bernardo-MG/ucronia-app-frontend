@@ -6,18 +6,23 @@ import { SecurityPermissions } from '@bernardo-mg/security';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
-import { TableModule, TablePageEvent } from 'primeng/table';
 import { finalize, Observable } from 'rxjs';
 import { RoleChangePermission } from '../role-change-permission/role-change-permission';
 import { RoleForm } from '../role-form/role-form';
 import { RoleInfo } from '../role-info/role-info';
-import { RoleList } from '../role-list/role-list';
+import { RoleDeleteEvent, RoleList } from '../role-list/role-list';
 import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [PanelModule, TableModule, ButtonModule, DrawerModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
+  imports: [
+    ButtonModule,
+    DrawerModule,
+    RoleForm,
+    RoleInfo,
+    RoleChangePermission,
+    RoleList
+  ],
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
@@ -29,30 +34,27 @@ export class RoleView implements OnInit {
   public readonly Dialog = Dialog;
 
   public data = new Page<Role>();
-
   public selectedData = new Role();
-
-  /**
-   * Loading flag.
-   */
   public loading = false;
+  public failures = new FailureStore();
+  public resourcePermissions: ResourcePermission[] = [];
+  public dialog = Dialog.NONE;
 
   private sort = new Sorting();
-
-  public failures = new FailureStore();
-
-  public resourcePermissions: ResourcePermission[] = [];
-
-  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
-    // Check permissions
     this.permissions = {
-      create: authService.hasPermission(SecurityPermissions.role.create),
-      edit: authService.hasPermission(SecurityPermissions.role.update),
-      delete: authService.hasPermission(SecurityPermissions.role.delete)
+      create: authService.hasPermission(
+        SecurityPermissions.role.create
+      ),
+      edit: authService.hasPermission(
+        SecurityPermissions.role.update
+      ),
+      delete: authService.hasPermission(
+        SecurityPermissions.role.delete
+      )
     };
   }
 
@@ -60,106 +62,124 @@ export class RoleView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowInfo(role: Role) {
+  public onShowInfo(role: Role): void {
     this.selectedData = role;
     this.dialog = Dialog.INFO;
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
-    // TODO: should receive the actual direction, not a number
+  public onChangeDirection(sorting: SortingEvent): void {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
 
     this.load(this.data.page);
   }
 
-  public onCreate(toCreate: Role): void {
+  public onCreate(role: Role): void {
     this.call(
-      () => this.service.create(toCreate),
+      () => this.service.create(role),
+      () => this.load()
+    );
+  }
+
+  public onSetRolePermissions(
+    permissions: ResourcePermission[]
+  ): void {
+    const updatedRole = new Role(
+      this.selectedData.name,
+      permissions
+    );
+
+    this.call(
+      () => this.service.update(updatedRole),
       () => this.load(this.data.page)
     );
   }
 
-  public onSetRolePermissions(permissions: ResourcePermission[]) {
-    this.selectedData.permissions = permissions;
+  public onDelete(data: RoleDeleteEvent): void {
+    this.selectedData = data.role;
 
-    this.call(
-      () => this.service.update(this.selectedData),
-      () => this.load(this.data.page)
-    );
-  }
-
-  public onDelete(event: Event): void {
     this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-      icon: 'pi pi-info-circle',
+      target: data.event.currentTarget as EventTarget,
+      message: `¿Quieres eliminar el rol “${data.role.name}”? Esta acción no se puede deshacer.`,
+      icon: 'pi pi-exclamation-triangle',
       rejectButtonProps: {
         label: 'Cancelar',
         severity: 'secondary',
         outlined: true
       },
       acceptButtonProps: {
-        label: 'Borrar',
+        label: 'Eliminar',
         severity: 'danger'
       },
-      accept: () =>
+      accept: () => {
         this.call(
-          () => this.service.delete(this.selectedData.name),
-          () => this.load(this.data.page)
-        )
+          () => this.service.delete(data.role.name),
+          () => this.load()
+        );
+      }
     });
   }
 
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / event.rows) + 1;
-    this.load(page);
-  }
-
-  public load(page: number | undefined = undefined) {
+  public onChangePermissions(role: Role): void {
+    this.selectedData = role;
     this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
-  }
 
-  public onStartEditing(role: Role, view: string): void {
-    this.selectedData = role;
-    this.dialog = Dialog.EDIT;
-  }
-
-  public onChangePermissions(role: Role) {
-    this.selectedData = role;
-    this.service.getAvailablePermissions(role.name).subscribe(p => this.resourcePermissions = p);
-    this.dialog = Dialog.PERMISSIONS;
+    this.service.getAvailablePermissions(role.name)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(permissions => {
+        this.resourcePermissions = permissions;
+        this.dialog = Dialog.PERMISSIONS;
+      });
   }
 
   public onStartCreation(): void {
-    this.service.getAllPermissions().subscribe(p => this.resourcePermissions = p);
-    this.dialog = Dialog.CREATE;
+    this.loading = true;
+
+    this.service.getAllPermissions()
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(permissions => {
+        this.resourcePermissions = permissions;
+        this.dialog = Dialog.CREATE;
+      });
   }
 
-  // DIALOGS
+  public load(page: number | undefined = undefined): void {
+    this.loading = true;
 
-  public onDrawerVisibleChange(visible: boolean) {
+    this.service.getAll(page, this.sort)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
+  }
+
+  public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
   }
 
-  // PRIVATE METHODS
-
   private call(
-    action: () => Observable<any>,
+    action: () => Observable<unknown>,
     onSuccess: () => void
-  ) {
+  ): void {
     this.loading = true;
+
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -177,7 +197,6 @@ export class RoleView implements OnInit {
       this.failures.clear();
     }
   }
-
 }
 
 interface Permissions {
@@ -189,7 +208,6 @@ interface Permissions {
 enum Dialog {
   NONE = 'none',
   INFO = 'info',
-  EDIT = 'edit',
   CREATE = 'create',
   PERMISSIONS = 'permissions'
 }
