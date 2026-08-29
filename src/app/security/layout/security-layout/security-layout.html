@@ -1,17 +1,41 @@
-<div class="flex">
+<div class="security-page">
+  <div class="security-layout">
+    <aside class="security-sidebar">
+      <header class="security-sidebar__header">
+        <span class="security-sidebar__eyebrow">
+          Administración
+        </span>
 
-  <!-- Sidebar -->
-  <aside class="w-60 bg-white border-r border-gray-200 shadow-sm p-2">
-    <h5 class="px-2 py-3 font-bold text-lg">
-      Seguridad
-    </h5>
+        <h1 class="security-sidebar__title">
+          Seguridad
+        </h1>
+      </header>
 
-    <p-menu [model]="menus" styleClass="border-0 w-full"></p-menu>
-  </aside>
+      <nav class="security-nav" aria-label="Administración de seguridad">
+        <section class="security-nav__section">
+          <h2 class="security-nav__section-title">
+            Seguridad
+          </h2>
 
-  <!-- Main content -->
-  <main class="flex-1 p-4 overflow-auto bg-gray-50">
-    <router-outlet></router-outlet>
-  </main>
+          <div class="security-nav__items">
+            @for (item of menus; track item.routerLink) {
+              <a pRipple class="security-nav__item" [routerLink]="item.routerLink"
+                routerLinkActive="security-nav__item--active" #activeLink="routerLinkActive"
+                [attr.aria-current]="activeLink.isActive ? 'page' : null">
+                <i class="security-nav__icon" [class]="item.icon" aria-hidden="true"></i>
 
+                <span>{{ item.label }}</span>
+              </a>
+            }
+          </div>
+        </section>
+      </nav>
+    </aside>
+
+    <main class="security-content">
+      <p-card class="h-full">
+        <router-outlet />
+      </p-card>
+    </main>
+  </div>
 </div>

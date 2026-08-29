@@ -1,11 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { Fee } from '@ucronia/domain';
+import { TagModule } from 'primeng/tag';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'app-my-fees-list',
-  imports: [CommonModule, TableModule],
+  imports: [CurrencyPipe, DatePipe, TableModule, TagModule],
   templateUrl: './my-fees-list.html'
 })
 export class MyFeesList {
@@ -18,11 +19,11 @@ export class MyFeesList {
 
   public readonly changePage = output<number>();
 
-  public get first() {
+  public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
-  public onPageChange(event: TablePageEvent) {
+  public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }

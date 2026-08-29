@@ -3,8 +3,32 @@
     <layout-navbar (toggleMenu)="onToggleMenu($event)" />
   </header>
 
-  <p-drawer [(visible)]="menuActive" header="Ucronía">
-    <p-menu [model]="menus" [style]="{ border: 0 }" />
+  <p-drawer [(visible)]="menuActive" styleClass="main-menu-drawer">
+    <ng-template #header>
+      <div class="main-menu__header">
+        <span class="main-menu__eyebrow">Navegación</span>
+        <span class="main-menu__title">Ucronía</span>
+      </div>
+    </ng-template>
+
+    <nav class="main-menu" aria-label="Navegación principal">
+      @for (section of menus; track section.label; let first = $first) {
+      <section class="main-menu__section" [class.main-menu__section--divided]="!first">
+        <h2 class="main-menu__section-title">{{ section.label }}</h2>
+
+        <div class="main-menu__items">
+          @for (item of section.items; track item.routerLink) {
+          <a pRipple class="main-menu__item" [routerLink]="item.routerLink"
+            routerLinkActive="main-menu__item--active" #activeLink="routerLinkActive"
+            [attr.aria-current]="activeLink.isActive ? 'page' : null" (click)="closeMenu()">
+            <i class="main-menu__icon" [class]="item.icon" aria-hidden="true"></i>
+            <span>{{ item.label }}</span>
+          </a>
+          }
+        </div>
+      </section>
+      }
+    </nav>
   </p-drawer>
 
   <div class="m-1">

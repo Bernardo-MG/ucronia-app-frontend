@@ -5,7 +5,6 @@ import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
@@ -14,42 +13,45 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 
 @Component({
   selector: 'access-user-token-view',
-  imports: [CardModule, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
+  imports: [DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
   templateUrl: './user-token-view.html'
 })
 export class UserTokenView implements OnInit {
 
   private readonly service = inject(UserTokenService);
 
-  public data = new Page<UserToken>();
-
-  public selectedData = new UserToken();
-
-  private sort = new Sorting();
-
-  /**
-   * Loading flag.
-   */
-  public loading = false;
-
-  public readonly editable;
+  public readonly editable: boolean;
   public readonly Dialog = Dialog;
 
+  public data = new Page<UserToken>();
+  public selectedData = new UserToken();
+  public loading = false;
   public dialog = Dialog.NONE;
-
   public failures = new FailureStore();
+
+  private sort = new Sorting();
 
   public constructor() {
     const authService = inject(AuthService);
 
-    this.editable = authService.hasPermission(SecurityPermissions.userToken.update);
+    this.editable = authService.hasPermission(
+      SecurityPermissions.userToken.update
+    );
   }
 
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
+  public onShowInfo(token: UserToken): void {
+    this.selectedData = token;
+    this.dialog = Dialog.INFO;
+  }
+
+  public onStartExtend(token: UserToken): void {
+    this.selectedData = token;
+    this.dialog = Dialog.EXTEND;
+  }
 
   public onExtendExpiration(date: Date): void {
     this.call(
@@ -58,45 +60,49 @@ export class UserTokenView implements OnInit {
     );
   }
 
-  public onShowInfo(token: UserToken) {
+  public onRevoke(token: UserToken): void {
     this.selectedData = token;
-    this.dialog = Dialog.INFO;
+
+    this.call(
+      () => this.service.revoke(token.token),
+      () => this.load(this.data.page)
+    );
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
-    // TODO: should receive the actual direction, not a number
+  public onChangeDirection(sorting: SortingEvent): void {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
 
     this.load(this.data.page);
   }
 
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined) {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
+
     this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
+      .subscribe(response => {
+        this.data = response;
+      });
   }
 
-  // DIALOGS
-
-  public onDrawerVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
   }
 
-  // PRIVATE METHODS
-
   private call(
-    action: () => Observable<any>,
+    action: () => Observable<unknown>,
     onSuccess: () => void
-  ) {
+  ): void {
     this.loading = true;
+
     action()
       .pipe(finalize(() => this.loading = false))
       .subscribe({
@@ -116,7 +122,6 @@ export class UserTokenView implements OnInit {
       this.failures.clear();
     }
   }
-
 }
 
 enum Dialog {

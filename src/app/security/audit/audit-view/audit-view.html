@@ -1,4 +1,35 @@
-<p-card>
-  <access-audit-login-list [loading]="loading" [logins]="data.content" [rows]="data.size" [page]="data.page"
-    [totalRecords]="data.totalElements" (changePage)="this.load($event)" />
-</p-card>
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-950">
+      Auditoría
+    </h1>
+
+    <p class="mt-1 text-sm text-gray-500">
+      Consulta el historial de accesos a la aplicación
+    </p>
+  </header>
+
+  <section>
+    <header class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-950">
+        Historial de accesos
+      </h2>
+
+      <p class="mt-1 text-sm text-gray-500">
+        Revisa los intentos de inicio de sesión de los usuarios
+      </p>
+    </header>
+
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <access-audit-login-list
+        [loading]="loading"
+        [logins]="data.content"
+        [rows]="data.size"
+        [page]="data.page"
+        [totalRecords]="data.totalElements"
+        (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)"
+      />
+    </div>
+  </section>
+</div>

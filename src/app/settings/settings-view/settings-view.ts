@@ -3,14 +3,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { CardModule } from 'primeng/card';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
 import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
 
 @Component({
   selector: 'assoc-settings-view',
-  imports: [CardModule, ReactiveFormsModule, FormsModule, ContactSettingsForm],
+  imports: [ReactiveFormsModule, FormsModule, ContactSettingsForm],
   templateUrl: './settings-view.html'
 })
 export class SettingsView implements OnInit {

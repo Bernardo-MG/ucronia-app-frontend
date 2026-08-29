@@ -4,7 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Role, User } from '@bernardo-mg/authentication';
 import { arrayPage } from '@bernardo-mg/request';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
-import { PublicMember } from '@ucronia/domain';
+import { Profile } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -17,7 +17,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 export class UserInfo implements OnChanges {
 
   public readonly user = input(new User());
-  public readonly member = input(new PublicMember());
+  public readonly member = input(new Profile());
   public readonly loading = input(false);
 
   private readonly pageSize = 10;

@@ -5,14 +5,15 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
 import { DrawerModule } from 'primeng/drawer';
-import { MenuModule } from 'primeng/menu';
+import { RippleModule } from 'primeng/ripple';
 import { ToastModule } from 'primeng/toast';
 import { Navbar } from '../navbar/navbar';
 
 @Component({
   selector: 'app-association-layout',
-  imports: [RouterModule, ToastModule, DrawerModule, MenuModule, ConfirmPopupModule, Navbar],
+  imports: [RouterModule, ToastModule, DrawerModule, RippleModule, ConfirmPopupModule, Navbar],
   templateUrl: './association-layout.html',
+  styleUrl: './association-layout.scss',
   providers: [ConfirmationService]
 })
 export class AssociationLayout {
@@ -44,17 +45,15 @@ export class AssociationLayout {
             }
           );
         }
-        // Add close command to every item
-        this.menus.forEach(group =>
-          group.items?.forEach(item =>
-            item.command = () => this.menuActive = false
-          )
-        );
       });
   }
 
   public onToggleMenu(status: boolean) {
     this.menuActive = status;
+  }
+
+  public closeMenu() {
+    this.menuActive = false;
   }
 
   private getAssociationItems(authService: AuthService): MenuItem[] {

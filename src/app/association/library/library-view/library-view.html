@@ -1,0 +1,151 @@
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-950">Biblioteca</h1>
+      <p class="mt-1 text-sm text-gray-500">Gestiona el catálogo y los préstamos de la asociación</p>
+    </div>
+
+    @if (permissions.create && display === Display.BOOKS) {
+      <p-button label="Nuevo libro" icon="pi pi-plus" (click)="dialog = Dialog.CREATION" />
+    }
+  </header>
+
+  <p-card styleClass="overflow-hidden">
+    <div class="grid grid-cols-2 divide-x divide-y divide-gray-200 md:grid-cols-4 md:divide-y-0">
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary"><i class="pi pi-book"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.games + summary.fiction }}</strong><span class="text-sm text-gray-500">libros</span></div>
+      </div>
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary"><i class="pi pi-box"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.games }}</strong><span class="text-sm text-gray-500">juegos</span></div>
+      </div>
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary-50 text-primary"><i class="pi pi-book"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.fiction }}</strong><span class="text-sm text-gray-500">ficción</span></div>
+      </div>
+      <div class="flex items-center gap-3 p-3 md:px-5">
+        <span class="flex size-11 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600"><i class="pi pi-bookmark"></i></span>
+        <div><strong class="block text-2xl leading-none">{{ summary.lent }}</strong><span class="text-sm text-gray-500">prestados</span></div>
+      </div>
+    </div>
+  </p-card>
+
+  <div class="border-b border-gray-200">
+    <p-selectbutton [options]="stateOptions" [(ngModel)]="selectedTab" optionLabel="label" optionValue="value"
+      aria-label="Vista de biblioteca" (onChange)="onChangeList($event)" />
+  </div>
+
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
+      <p-iconfield class="w-full lg:max-w-xl">
+        <p-inputicon class="pi pi-search" />
+        <input pInputText type="search" [(ngModel)]="filterValue" (ngModelChange)="onFilterChange($event)"
+          placeholder="Buscar por título…" aria-label="Buscar en la biblioteca" class="w-full" maxlength="50" />
+      </p-iconfield>
+
+      @if(display === Display.BOOKS) {
+        <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
+          aria-label="Tipo de libro" (onChange)="onChangeSource($event)" />
+
+        <p-button class="lg:ml-auto" label="Exportar" icon="pi pi-file-excel" severity="secondary" outlined
+          [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (click)="downloadExcel()" />
+      }
+    </div>
+
+    @switch (display) {
+      @case (Display.BOOKS) {
+        <assoc-library-book-list [editable]="permissions.edit" [loading]="status.loading" [books]="data.content"
+          [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (pageChange)="load($event)"
+          (sort)="onChangeDirection($event)" (showBook)="onShowBook($event)" (show)="onStartEditingView($event)" />
+      }
+      @case (Display.LENDINGS) {
+        <assoc-library-lending-list [loading]="status.loading" [lendings]="lendings.content" [rows]="lendings.size"
+          [borrowerNames]="lendingBorrowerNames" [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
+          (pageChange)="load($event)" />
+      }
+    }
+
+  </section>
+
+  <!-- Book Drawer -->
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+    position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+    @switch (dialog) {
+      @case (Dialog.INFO) {
+        <ng-template #header>
+          <div>
+            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Libro #{{ selectedData.number }}</span>
+            <h2 class="mt-1 text-xl font-semibold">{{ selectedData.title.fullTitle }}</h2>
+          </div>
+        </ng-template>
+        <div class="w-full p-4">
+          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
+        </div>
+      <ng-template #footer>
+        <div class="flex w-full justify-between gap-2">
+          <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+            (click)="onDelete($event)" text />
+          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
+            [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" />
+        </div>
+      </ng-template>
+      }
+
+      @case (Dialog.EDIT) {
+        <ng-template #header>
+          <h2 class="text-xl font-semibold">
+            #{{ selectedData.number }}
+            @if (selectedData.title.supertitle) { <sup>{{selectedData.title.supertitle}}</sup> }
+            {{selectedData.title.title}}
+            @if (selectedData.title.subtitle) { <sub>{{selectedData.title.subtitle}}</sub> }
+          </h2>
+        </ng-template>
+        <div class="w-full p-4">
+          <assoc-library-book-edition-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
+            (save)="onSaveBook($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" rounded text class="!p-2" />
+        </ng-template>
+      }
+
+      @case (Dialog.CREATION) {
+        <ng-template #header>
+          Crear libro
+        </ng-template>
+        <div class="w-full p-4">
+          <assoc-library-book-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        </div>
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      }
+
+      @case (Dialog.LENDINGS) {
+        @if(selectedData.lent) {
+          <ng-template #header>
+            Devolver libro
+          </ng-template>
+          <div class="w-full p-4">
+            <assoc-library-book-return-form [loading]="status.loading" [failures]="failures" [borrower]="borrower"
+              [borrowerName]="selectedBorrower.name.fullName"
+              [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
+          </div>
+        } @else {
+          <ng-template #header>
+            Prestar libro
+          </ng-template>
+          <div class="w-full p-4">
+            <assoc-library-book-lending-form [loading]="status.loading" [failures]="failures" [book]="selectedData.number"
+              [members]="members" (save)="onLend($event)" (searchMember)="onSearchMembers($event)" />
+          </div>
+        }
+        <ng-template #footer>
+          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+        </ng-template>
+      }
+
+    }
+  </p-drawer>
+</div>
