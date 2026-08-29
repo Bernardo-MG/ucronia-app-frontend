@@ -1,4 +1,3 @@
-
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -17,10 +16,6 @@ export class AuditView implements OnInit {
   private readonly service = inject(AccessAuditLoginService);
 
   public data = new Page<LoginRegister>();
-
-  /**
-   * Loading flag.
-   */
   public loading = false;
 
   private sort = new Sorting();
@@ -29,21 +24,31 @@ export class AuditView implements OnInit {
     this.load();
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
-    // TODO: should receive the actual direction, not a number
+  public onChangeDirection(sorting: SortingEvent): void {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
+
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
 
     this.load(this.data.page);
   }
 
-  public load(page: number | undefined = undefined) {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
+
+    this.service.getAll(
+      page,
+      this.sort
+    )
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
   }
 
 }
