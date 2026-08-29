@@ -15,6 +15,8 @@ import { ScheduledGameEndpoint } from './endpoint/scheduled-game-endpoint';
 import { SettingEndpoint } from './endpoint/setting-endpoint';
 import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
+import { AccountEndpoint } from './endpoint/account-endpoint';
+import { UserEndpoint } from './endpoint/user-profile-endpoint';
 
 export const UCRONIA_API_BASE_URL = new InjectionToken<string>('UCRONIA_API_BASE_URL');
 
@@ -81,6 +83,14 @@ export class UcroniaClient {
 
   public get setting() {
     return new SettingEndpoint(this.http, this.base_url);
+  }
+
+  public get account() {
+    return new AccountEndpoint(this.http, this.base_url);
+  }
+
+  public get user() {
+    return new UserEndpoint(this.http, this.base_url);
   }
 
 }
