@@ -1,34 +1,84 @@
-<access-user-token-list [loading]="loading" [editable]="editable" [tokens]="data.content"
-  [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-  (extend)="dialog = Dialog.EXTEND"
-  (changeDirection)="onChangeDirection($event)"
-  (changePage)="load($event)" />
-@switch (dialog) {
-  @case (Dialog.INFO) {
-    <p-drawer [visible]="dialog === Dialog.INFO" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
-      <ng-template #header>
-        Token
-      </ng-template>
-      <div class="w-full p-4">
-        <access-user-token-info [data]="selectedData" [loading]="loading" />
-      </div>
-      <ng-template #footer>
-        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-      </ng-template>
-    </p-drawer>
-  }
-  @case (Dialog.EXTEND) {
-    <p-drawer [visible]="dialog === Dialog.EXTEND" (visibleChange)="onDrawerVisibleChange($event)" [closable]="false" position="right" [style]="{ width: '60vw' }">
-      <ng-template #header>
-        Extender token
-      </ng-template>
-      <div class="w-full p-4">
-        <p>Selecciona una nueva fecha:</p>
-        <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures" (save)="onExtendExpiration($event)" />
-      </div>
-      <ng-template #footer>
-        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-      </ng-template>
-    </p-drawer>
-  }
-}
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header>
+    <h1 class="text-3xl font-bold tracking-tight text-gray-950">
+      Tokens de usuario
+    </h1>
+    <p class="mt-1 text-sm text-gray-500">
+      Consulta y gestiona los tokens de acceso emitidos a los usuarios
+    </p>
+  </header>
+
+  <section>
+    <header class="mb-4">
+      <h2 class="text-xl font-semibold text-gray-950">
+        Tokens emitidos
+      </h2>
+      <p class="mt-1 text-sm text-gray-500">
+        Revisa su finalidad, vigencia y estado de uso
+      </p>
+    </header>
+
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <access-user-token-list [loading]="loading" [editable]="editable" [tokens]="data.content" [rows]="data.size"
+        [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
+        (extend)="onStartExtend($event)" (revoke)="onRevoke($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
+    </div>
+  </section>
+
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+    position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+    @switch (dialog) {
+      @case (Dialog.INFO) {
+        <ng-template #header>
+          <div>
+            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
+              Token de usuario
+            </span>
+            <h2 class="mt-1 text-xl font-semibold">
+              {{ selectedData.name || selectedData.scope }}
+            </h2>
+            <span class="text-sm text-gray-500">
+              {{ selectedData.username }}
+            </span>
+          </div>
+        </ng-template>
+
+        <div class="w-full p-4">
+          <access-user-token-info [data]="selectedData" [loading]="loading" />
+        </div>
+
+        @if (editable && !selectedData.revoked && !selectedData.consumed) {
+          <ng-template #footer>
+            <div class="flex w-full justify-end">
+              <p-button label="Extender expiración" icon="pi pi-calendar-plus" severity="secondary"
+                (click)="onStartExtend(selectedData)" />
+            </div>
+          </ng-template>
+        }
+      }
+
+      @case (Dialog.EXTEND) {
+        <ng-template #header>
+          <div>
+            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
+              {{ selectedData.username }}
+            </span>
+            <h2 class="mt-1 text-xl font-semibold">
+              Extender token
+            </h2>
+          </div>
+        </ng-template>
+
+        <div class="w-full space-y-4 p-4">
+          <p class="text-sm text-gray-500">
+            Selecciona la nueva fecha de expiración del token.
+          </p>
+
+          <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures"
+            (save)="onExtendExpiration($event)" />
+        </div>
+      }
+    }
+  </p-drawer>
+</div>
