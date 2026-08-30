@@ -120,15 +120,20 @@
 
       @case(Dialog.PAY) {
         <ng-template #header>
-          Pagar cuota
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700">
+              <i class="pi pi-euro" aria-hidden="true"></i>
+            </span>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Registrar pago</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Marca una o varias cuotas como pagadas</p>
+            </div>
+          </div>
         </ng-template>
-        <div class="w-full p-4">
-          <assoc-fee-payments-form [loading]="status.loading" [failures]="failures" [members]="members" (save)="onPay($event)"
-            (searchMember)="onSearchMembers($event)" />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <assoc-fee-payments-form [loading]="status.loading" [failures]="failures" [members]="members"
+            (save)="onPay($event)" (cancel)="dialog = Dialog.NONE" (searchMember)="onSearchMembers($event)" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
       }
 
       @case(Dialog.EDITION) {
