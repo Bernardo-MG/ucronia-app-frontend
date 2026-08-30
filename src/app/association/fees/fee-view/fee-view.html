@@ -84,17 +84,38 @@
         </ng-template>
       }
 
-      @case(Dialog.CREATE) {
+      @case (Dialog.CREATE) {
         <ng-template #header>
-          Crear cuota sin pagar
+          <div class="flex items-center gap-3">
+            <span
+              class="flex size-10 shrink-0 items-center justify-center
+                    rounded-full bg-blue-100 text-blue-700"
+            >
+              <i class="pi pi-credit-card" aria-hidden="true"></i>
+            </span>
+
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">
+                Crear cuota
+              </h2>
+
+              <p class="mt-0.5 text-sm font-normal text-gray-500">
+                Registra una cuota pendiente para un socio
+              </p>
+            </div>
+          </div>
         </ng-template>
-        <div class="w-full p-4">
-          <assoc-fee-creation-form [loading]="status.loading" [failures]="failures" [members]="members"
-            (save)="onCreateUnpaid($event)" (searchMember)="onSearchMembers($event)" />
+
+        <div class="w-full px-2 py-4 sm:px-4">
+          <assoc-fee-creation-form
+            [loading]="status.loading"
+            [failures]="failures"
+            [members]="members"
+            (save)="onCreateUnpaid($event)"
+            (cancel)="dialog = Dialog.NONE"
+            (searchMember)="onSearchMembers($event)"
+          />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
       }
 
       @case(Dialog.PAY) {
