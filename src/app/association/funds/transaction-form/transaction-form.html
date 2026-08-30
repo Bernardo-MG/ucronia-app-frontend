@@ -1,50 +1,113 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1">
+    <section class="space-y-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <!-- Transaction type -->
+      <div>
+        <label class="block font-semibold text-gray-950">
+          Tipo de movimiento <span class="text-red-600" aria-hidden="true">*</span>
+        </label>
+        <p class="mb-3 mt-1 text-sm text-gray-500">Indica cómo afecta al saldo</p>
+        <div class="grid grid-cols-2 gap-3" role="group" aria-label="Tipo de movimiento">
+          <button type="button"
+            class="flex items-center justify-center gap-2 rounded-lg border px-4 py-4 font-medium transition-colors"
+            [class.border-green-600]="form.get('type')?.value === TransactionType.INCOME"
+            [class.bg-green-50]="form.get('type')?.value === TransactionType.INCOME"
+            [class.text-green-700]="form.get('type')?.value === TransactionType.INCOME"
+            [class.border-gray-300]="form.get('type')?.value !== TransactionType.INCOME"
+            [class.text-gray-700]="form.get('type')?.value !== TransactionType.INCOME"
+            [attr.aria-pressed]="form.get('type')?.value === TransactionType.INCOME"
+            (click)="setTransactionType(TransactionType.INCOME)">
+            <i class="pi pi-arrow-down" aria-hidden="true"></i>
+            Ingreso
+          </button>
+          <button type="button"
+            class="flex items-center justify-center gap-2 rounded-lg border px-4 py-4 font-medium transition-colors"
+            [class.border-red-500]="form.get('type')?.value === TransactionType.EXPENSE"
+            [class.bg-red-50]="form.get('type')?.value === TransactionType.EXPENSE"
+            [class.text-red-700]="form.get('type')?.value === TransactionType.EXPENSE"
+            [class.border-gray-300]="form.get('type')?.value !== TransactionType.EXPENSE"
+            [class.text-gray-700]="form.get('type')?.value !== TransactionType.EXPENSE"
+            [attr.aria-pressed]="form.get('type')?.value === TransactionType.EXPENSE"
+            (click)="setTransactionType(TransactionType.EXPENSE)">
+            <i class="pi pi-arrow-up" aria-hidden="true"></i>
+            Gasto
+          </button>
+        </div>
+      </div>
 
-  <!-- Description -->
-  <p-floatlabel variant="in" class="mb-2">
-    <textarea pTextarea id="descriptionInput" formControlName="description" maxlength="200" rows="4"
-      class="w-full"></textarea>
-    <label for="descriptionInput">Descripción</label>
-  </p-floatlabel>
+      <!-- Description -->
+      <div>
+        <label for="descriptionInput" class="block font-semibold text-gray-950">
+          Descripción <span class="text-red-600" aria-hidden="true">*</span>
+        </label>
+        <p class="mb-2 mt-1 text-sm text-gray-500">Explica brevemente el concepto del movimiento</p>
+        <textarea pTextarea id="descriptionInput" formControlName="description" maxlength="200" rows="5" class="w-full"
+          [invalid]="isFieldInvalid('description')" placeholder="Introduce una descripción"></textarea>
+        <div class="mt-1 flex justify-between gap-3">
+          <div>
+            @for (failure of failures().getFailures('description'); track failure) {
+              <p-message severity="error" size="small" variant="simple">
+                {{ failure.message }}
+              </p-message>
+            }
+          </div>
+          <span class="shrink-0 text-xs text-gray-400">
+            {{ form.get('description')?.value?.length || 0 }} / 200
+          </span>
+        </div>
+      </div>
 
-  <div class="mb-2">
-    @for (failure of failures().getFailures('description'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{ failure.message }}
-    </p-message>
-    }
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <!-- Date -->
+        <div>
+          <label for="dateInput" class="block font-semibold text-gray-950">
+            Fecha <span class="text-red-600" aria-hidden="true">*</span>
+          </label>
+          <p class="mb-2 mt-1 text-sm text-gray-500">Fecha del movimiento</p>
+          <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
+            dateFormat="dd MM yy" placeholder="Selecciona una fecha" appendTo="body" class="w-full" />
+          @for (failure of failures().getFailures('date'); track failure) {
+            <p-message class="mt-2 block" severity="error" size="small" variant="simple">
+              {{ failure.message }}
+            </p-message>
+          }
+        </div>
+
+        <!-- Amount -->
+        <div>
+          <label for="amountInput" class="block font-semibold text-gray-950">
+            Importe <span class="text-red-600" aria-hidden="true">*</span>
+          </label>
+          <p class="mb-2 mt-1 text-sm text-gray-500">Importe del movimiento</p>
+          <p-inputnumber inputId="amountInput" formControlName="amount" mode="currency" currency="EUR" locale="es-ES"
+            [min]="0" [minFractionDigits]="2" [maxFractionDigits]="2" [invalid]="isFieldInvalid('amount')" class="w-full" />
+          @for (failure of failures().getFailures('amount'); track failure) {
+            <p-message class="mt-2 block" severity="error" size="small" variant="simple">
+              {{ failure.message }}
+            </p-message>
+          }
+        </div>
+      </div>
+
+      <p class="flex items-center gap-2 rounded-lg p-3 text-sm"
+        [class.bg-green-50]="form.get('type')?.value === TransactionType.INCOME"
+        [class.text-green-700]="form.get('type')?.value === TransactionType.INCOME"
+        [class.bg-red-50]="form.get('type')?.value === TransactionType.EXPENSE"
+        [class.text-red-700]="form.get('type')?.value === TransactionType.EXPENSE">
+        <i class="pi pi-info-circle" aria-hidden="true"></i>
+        @if (form.get('type')?.value === TransactionType.INCOME) {
+          Este importe se sumará al saldo de la asociación.
+        } @else {
+          Este importe se restará del saldo de la asociación.
+        }
+      </p>
+    </section>
   </div>
 
-  <!-- Date -->
-  <p-floatlabel variant="in" class="mb-2">
-    <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
-      dateFormat="yy-mm-dd" appendTo="body" class="w-full" />
-    <label for="dateInput">Fecha</label>
-  </p-floatlabel>
-
-  <div class="mb-2">
-    @for (failure of failures().getFailures('date'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{ failure.message }}
-    </p-message>
-    }
+  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancel.emit()" />
+    <p-button type="submit" [label]="form.get('type')?.value === TransactionType.INCOME ? 'Crear ingreso' : 'Crear gasto'"
+      icon="pi pi-plus" [severity]="form.get('type')?.value === TransactionType.INCOME ? 'success' : 'danger'"
+      [disabled]="!formStatus.saveEnabled" [loading]="loading()" />
   </div>
-
-  <!-- Amount -->
-  <p-floatlabel variant="in" class="mb-2">
-    <input pInputText type="number" id="amountInput" formControlName="amount" class="w-full" />
-    <label for="amountInput">Importe</label>
-  </p-floatlabel>
-
-  <div class="mb-2">
-    @for (failure of failures().getFailures('amount'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{ failure.message }}
-    </p-message>
-    }
-  </div>
-
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()" class="w-full"
-    label="Guardar" />
-
 </form>
