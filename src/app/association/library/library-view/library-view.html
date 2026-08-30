@@ -112,14 +112,20 @@
 
       @case (Dialog.CREATION) {
         <ng-template #header>
-          Crear libro
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-book" aria-hidden="true"></i>
+            </span>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Nuevo libro</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Añade una obra al catálogo de la biblioteca</p>
+            </div>
+          </div>
         </ng-template>
-        <div class="w-full p-4">
-          <assoc-library-book-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <assoc-library-book-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+            (cancel)="dialog = Dialog.NONE" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
       }
 
       @case (Dialog.LENDINGS) {

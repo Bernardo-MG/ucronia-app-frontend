@@ -1,89 +1,112 @@
-<div class="mb-4">
-  <p-select [(ngModel)]="kind" [options]="options" optionLabel="name" optionValue="value" placeholder="Tipo"
-    appendTo="body" class="w-full" />
-</div>
-
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="space-y-4">
-
-  <!-- Title block -->
-  <div class="flex flex-col sm:flex-row sm:gap-4 gap-2">
-
-    <!-- Supertitle -->
-    <div formGroupName="title" class="flex-1">
-      <p-floatlabel variant="in">
-        <input pInputText formControlName="supertitle" [invalid]="isFieldInvalid('supertitle')" maxlength="100" id="supertitleInput"
-          class="w-full" />
-        <label for="supertitleInput">Supertítulo</label>
-      </p-floatlabel>
-
-      <div class="mt-1">
-        @for (failure of failures().getFailures('title.supertitle'); track failure) {
-          <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
-        }
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-5">
+    <!-- Book kind -->
+    <div>
+      <label class="block font-semibold text-gray-950">
+        Tipo de obra <span class="text-red-600" aria-hidden="true">*</span>
+      </label>
+      <p class="mb-3 mt-1 text-sm text-gray-500">Selecciona cómo se clasificará en el catálogo</p>
+      <div class="grid grid-cols-2 gap-3" role="group" aria-label="Tipo de obra">
+        <button type="button" class="flex items-center justify-center gap-2 rounded-lg border px-4 py-4 font-medium transition-colors"
+          [class.border-blue-600]="kind === 'game'" [class.bg-blue-50]="kind === 'game'"
+          [class.text-blue-700]="kind === 'game'" [class.border-gray-300]="kind !== 'game'"
+          [class.text-gray-700]="kind !== 'game'" [attr.aria-pressed]="kind === 'game'" (click)="kind = 'game'">
+          <i class="pi pi-box" aria-hidden="true"></i>
+          Juego
+        </button>
+        <button type="button" class="flex items-center justify-center gap-2 rounded-lg border px-4 py-4 font-medium transition-colors"
+          [class.border-blue-600]="kind === 'fiction'" [class.bg-blue-600]="kind === 'fiction'"
+          [class.text-white]="kind === 'fiction'" [class.border-gray-300]="kind !== 'fiction'"
+          [class.text-gray-700]="kind !== 'fiction'" [attr.aria-pressed]="kind === 'fiction'" (click)="kind = 'fiction'">
+          <i class="pi pi-book" aria-hidden="true"></i>
+          Ficción
+        </button>
       </div>
     </div>
 
     <!-- Title -->
-    <div formGroupName="title" class="flex-1">
-      <p-floatlabel variant="in">
-        <input pInputText formControlName="title" [invalid]="isFieldInvalid('title')" maxlength="100" id="titleInput" class="w-full" />
-        <label for="titleInput">Título</label>
-      </p-floatlabel>
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm" formGroupName="title">
+      <h3 class="font-semibold text-gray-950">Información principal</h3>
 
-      <div class="mt-1">
+      <!-- Supertitle -->
+      <div class="mt-5">
+        <label for="supertitleInput" class="block font-medium text-gray-950">Supertítulo</label>
+        <input pInputText id="supertitleInput" formControlName="supertitle" maxlength="100" placeholder="Opcional"
+          class="mt-2 w-full" [invalid]="isFieldInvalid('title.supertitle')" />
+        @for (failure of failures().getFailures('title.supertitle'); track failure) {
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
+          </p-message>
+        }
+      </div>
+
+      <!-- Main title -->
+      <div class="mt-4">
+        <label for="titleInput" class="block font-medium text-gray-950">
+          Título <span class="text-red-600" aria-hidden="true">*</span>
+        </label>
+        <p class="mb-2 mt-1 text-sm text-gray-500">Nombre principal de la obra</p>
+        <input pInputText id="titleInput" formControlName="title" maxlength="100" placeholder="Introduce el título"
+          class="w-full" [invalid]="isFieldInvalid('title.title')" />
         @for (failure of failures().getFailures('title.title'); track failure) {
-          <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
+          </p-message>
         }
       </div>
-    </div>
 
-    <!-- Subtitle -->
-    <div formGroupName="title" class="flex-1">
-      <p-floatlabel variant="in">
-        <input pInputText formControlName="subtitle" [invalid]="isFieldInvalid('subtitle')" maxlength="100" id="subtitleInput"
-          class="w-full" />
-        <label for="subtitleInput">Subtítulo</label>
-      </p-floatlabel>
-
-      <div class="mt-1">
+      <!-- Subtitle -->
+      <div class="mt-4">
+        <label for="subtitleInput" class="block font-medium text-gray-950">Subtítulo</label>
+        <input pInputText id="subtitleInput" formControlName="subtitle" maxlength="100" placeholder="Opcional"
+          class="mt-2 w-full" [invalid]="isFieldInvalid('title.subtitle')" />
         @for (failure of failures().getFailures('title.subtitle'); track failure) {
-          <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
+          </p-message>
         }
       </div>
-    </div>
 
+      <p class="mt-3 text-xs text-gray-500">Puedes completar estos campos si forman parte del título editorial.</p>
+    </section>
+
+    <!-- Bibliographic details -->
+    <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 class="font-semibold text-gray-950">Detalles bibliográficos</h3>
+
+      <!-- ISBN -->
+      <div>
+        <label for="isbnInput" class="block font-medium text-gray-950">ISBN</label>
+        <p class="mb-2 mt-1 text-sm text-gray-500">Opcional · ISBN-10 o ISBN-13</p>
+        <input pInputText id="isbnInput" formControlName="isbn" maxlength="17" placeholder="Introduce el ISBN"
+          class="w-full" [invalid]="isFieldInvalid('isbn')" />
+        @for (failure of failures().getFailures('isbn'); track failure) {
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
+          </p-message>
+        }
+      </div>
+
+      <!-- Language -->
+      <div>
+        <label for="languageInput" class="block font-medium text-gray-950">
+          Idioma <span class="text-red-600" aria-hidden="true">*</span>
+        </label>
+        <p-select inputId="languageInput" [options]="languages" formControlName="language" optionLabel="name"
+          optionValue="code" placeholder="Selecciona un idioma" appendTo="body" class="mt-2 w-full"
+          [invalid]="isFieldInvalid('language')" />
+        @for (failure of failures().getFailures('language'); track failure) {
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
+          </p-message>
+        }
+      </div>
+    </section>
   </div>
 
-  <!-- ISBN -->
-  <div>
-    <p-floatlabel variant="in">
-      <input pInputText formControlName="isbn" [invalid]="isFieldInvalid('isbn')" maxlength="17" id="isbnInput" class="w-full" />
-      <label for="isbnInput">ISBN</label>
-      </p-floatlabel>
-
-    <div class="mt-1">
-      @for (failure of failures().getFailures('isbn'); track failure) {
-        <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
-      }
-    </div>
+  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancel.emit()" />
+    <p-button type="submit" label="Crear libro" icon="pi pi-plus" [loading]="loading()"
+      [disabled]="!formStatus.saveEnabled" [attr.aria-disabled]="!formStatus.saveEnabled" />
   </div>
-
-  <!-- Language -->
-  <div>
-    <p-select [options]="languages" formControlName="language" optionLabel="name" optionValue="code" placeholder="Idioma"
-      appendTo="body" class="w-full" [invalid]="isFieldInvalid('language')" />
-
-    <div class="mt-1">
-      @for (failure of failures().getFailures('language'); track failure) {
-        <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
-      }
-    </div>
-  </div>
-
-  <!-- Save button -->
-  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
-    [attr.aria-disabled]="!formStatus.saveEnabled">
-    Guardar
-  </p-button>
-
 </form>

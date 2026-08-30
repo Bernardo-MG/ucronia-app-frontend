@@ -1,11 +1,9 @@
-
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Language, Title } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -13,7 +11,7 @@ import { LibraryConfig } from '../library-config';
 
 @Component({
   selector: 'assoc-library-book-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, ButtonModule, MessageModule, SelectModule],
+  imports: [ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, SelectModule],
   templateUrl: './library-book-creation-form.html'
 })
 export class LibraryBookCreationForm implements OnChanges {
@@ -23,6 +21,7 @@ export class LibraryBookCreationForm implements OnChanges {
   public readonly failures = input(new FailureStore());
 
   public readonly save = output<LibraryBookCreationFormData>();
+  public readonly cancel = output<void>();
 
   public formStatus: FormStatus;
 
@@ -30,18 +29,11 @@ export class LibraryBookCreationForm implements OnChanges {
 
   public readonly languages: Language[] = [];
 
-  public options: { name: string, value: string }[] = [];
-
   public kind: 'fiction' | 'game' = 'game';
 
   constructor() {
     const fb = inject(FormBuilder);
     const config = inject(LibraryConfig);
-
-    this.options = [
-      { name: 'Juego', value: 'game' },
-      { name: 'Ficción', value: 'fiction' }
-    ];
 
     this.languages = config.getLanguages();
 
@@ -69,13 +61,12 @@ export class LibraryBookCreationForm implements OnChanges {
    */
   public onSave() {
     if (this.form.valid) {
-      // Valid form, can emit data
       this.save.emit({ book: this.form.value, kind: this.kind });
     }
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
 }
