@@ -1,105 +1,60 @@
 import { Component, inject } from '@angular/core';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CardModule } from 'primeng/card';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { LoginEvent, LoginForm } from '../login-form/login-form';
 import { LoginService } from '../login-service';
 
-/**
- * Login view component. Smart component for building the login UI. Wraps the login component.
- * 
- * ## Failure message
- * 
- * If the login request fails the failed flag will be set to true. This will show the error
- * message.
- * 
- * ## Return URL
- * 
- * If the URL contains the returnUrl property, then the client will be redirected to it on a 
- * succesful login. This property should contain a route valid for the app. If no route is set
- * then the app will be redirected to the root route.
- * 
- * This is done as the user may be redirected to the login at any point in the app.
- */
 @Component({
-  imports: [RouterModule, CardModule, LoginForm],
-  templateUrl: './login-view.html'
+  imports: [LoginForm],
+  templateUrl: './login-view.html',
+  styleUrl: './login-view.sass'
 })
 export class LoginView {
 
   private readonly service = inject(LoginService);
-
   private readonly router = inject(Router);
 
-  /**
-   * Failed login flag.
-   */
   public failedLogin = false;
-
-  /**
-   * Waiting flag. Shows the loading visual cue and disables the form. Its status depends on the login request.
-   */
   public waiting = false;
 
-  /**
-   * Remember me flag.
-   */
   private rememberMe = false;
-
-  /**
-   * Return route. Used to redirect after login.
-   */
   private readonly returnRoute: string;
 
-  constructor() {
+  public constructor() {
     const route = inject(ActivatedRoute);
 
-    // get return url from route parameters or default to '/'
-    this.returnRoute = route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnRoute =
+      route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  /**
-   * Handler for the login event, fired by the form.
-   * 
-   * @param login user login info
-   */
-  public onLogin(login: LoginEvent) {
+  public onLogin(login: LoginEvent): void {
     this.waiting = true;
     this.failedLogin = false;
 
     this.service.login(login, this.rememberMe)
-      .pipe(finalize(() => this.waiting = false))
+      .pipe(
+        finalize(() => this.waiting = false)
+      )
       .subscribe({
         next: user => {
           if (user.logged) {
-            // Redirects to the return route
             this.router.navigate([this.returnRoute]);
+            return;
           }
 
-          // Set status
-          this.failedLogin = !user.logged;
+          this.failedLogin = true;
         },
         error: () => {
-          // Failed request
           this.failedLogin = true;
         }
       });
   }
 
-  /**
-   * Handler for the remember me event, fired by the form.
-   * 
-   * @param remember remember me flag
-   */
-  public onRememberMe(remember: boolean) {
+  public onRememberMe(remember: boolean): void {
     this.rememberMe = remember;
   }
 
-  /**
-   * Handler for the lost password event, fired by the form.
-   */
-  public onLostPassword() {
+  public onLostPassword(): void {
     this.router.navigate(['/password/reset']);
   }
-
 }

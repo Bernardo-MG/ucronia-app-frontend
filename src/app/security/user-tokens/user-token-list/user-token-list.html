@@ -1,41 +1,100 @@
-<p-menu #editionMenu [model]="editionMenuItems" [popup]="true" />
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="tokens()" paginator="true" [rows]="rows()"
-  [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
-  currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
+<p-menu #actionsMenu [model]="actions" [popup]="true" />
+
+<p-table [lazy]="true" dataKey="token" [loading]="loading()" [value]="tokens()" [paginator]="true" [rows]="rows()"
+  [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr>
-      <th pSortableColumn="username">Usuario <p-sortIcon field="username" /></th>
-      <th pSortableColumn="scope">Alcance <p-sortIcon field="scope" /></th>
-      <th pSortableColumn="creationDate">Creado <p-sortIcon field="creationDate" /></th>
-      <th pSortableColumn="consumed">Consumido <p-sortIcon field="consumed" /></th>
-      <th pSortableColumn="revoked">Revocado <p-sortIcon field="revoked" /></th>
-      <th></th>
+      <th pSortableColumn="username">
+        Usuario
+        <p-sortIcon field="username" />
+      </th>
+
+      <th class="hidden sm:table-cell">
+        Token
+      </th>
+
+      <th pSortableColumn="scope" class="hidden lg:table-cell">
+        Alcance
+        <p-sortIcon field="scope" />
+      </th>
+
+      <th pSortableColumn="expirationDate" class="hidden md:table-cell">
+        Expira
+        <p-sortIcon field="expirationDate" />
+      </th>
+
+      <th class="w-36">
+        Estado
+      </th>
+
+      <th class="w-14">
+        <span class="sr-only">Acciones</span>
+      </th>
     </tr>
   </ng-template>
+
   <ng-template #body let-token>
     <tr>
-      <td>{{ token.username }}</td>
-      <td>{{ token.scope }}</td>
-      <td>{{ token.creationDate | date:'yyyy-MM-dd HH:mm:ss' }}</td>
-      <td>
-        @if (token.consumed) {
-          <span class="pi pi-check text-yellow-500"></span>
-        } @else {
-          <span class="pi pi-times text-green-500"></span>
-        }
+      <td class="min-w-0">
+        <button type="button" class="group block w-full min-w-0 border-0 bg-transparent p-0 text-left"
+          (click)="show.emit(token)">
+          <span class="block truncate font-medium text-gray-950 group-hover:text-primary">
+            {{ token.username }}
+          </span>
+
+          <span class="block truncate text-sm text-gray-500 sm:hidden">
+            {{ token.name || token.scope }}
+          </span>
+        </button>
       </td>
-      <td>
-        @if (token.revoked) {
-          <span class="pi pi-check text-yellow-500"></span>
-        } @else {
-          <span class="pi pi-times text-green-500"></span>
-        }
+
+      <td class="hidden min-w-0 sm:table-cell">
+        <span class="block truncate text-gray-950">
+          {{ token.name || 'Sin nombre' }}
+        </span>
       </td>
+
+      <td class="hidden min-w-0 lg:table-cell">
+        <code
+          class="block w-fit max-w-full truncate rounded-md border border-gray-200 bg-gray-50 px-2 py-1 text-xs text-gray-700"
+          [title]="token.scope">
+          {{ token.scope }}
+        </code>
+      </td>
+
+      <td class="hidden whitespace-nowrap text-gray-600 md:table-cell">
+        {{ token.expirationDate | date:'d MMM y' }}
+      </td>
+
       <td>
-        <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(token)" rounded text />
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable() || token.revoked || token.consumed"
-          aria-label="Editar" [attr.aria-disabled]="!editable()" (click)="openEditionMenu($event, token)" rounded text />
+        <p-tag [value]="statusLabel(token)" [severity]="statusSeverity(token)" />
+      </td>
+
+      <td class="text-right">
+        <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text aria-label="Acciones del token"
+          (click)="openActionsMenu($event, token)" />
+      </td>
+    </tr>
+  </ng-template>
+
+  <ng-template #emptymessage>
+    <tr>
+      <td colspan="6">
+        <div class="flex flex-col items-center px-4 py-12 text-center">
+          <span class="mb-3 flex size-12 items-center justify-center rounded-full bg-gray-100 text-gray-500">
+            <i class="pi pi-key text-xl" aria-hidden="true"></i>
+          </span>
+
+          <strong class="text-gray-950">
+            No hay tokens
+          </strong>
+
+          <span class="mt-1 text-sm text-gray-500">
+            Los tokens emitidos aparecerán aquí
+          </span>
+        </div>
       </td>
     </tr>
   </ng-template>

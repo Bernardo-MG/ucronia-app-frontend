@@ -1,12 +1,13 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { TableModule, TablePageEvent } from 'primeng/table';
 import { LoginRegister } from '@bernardo-mg/security';
+import { TableModule, TablePageEvent } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'access-audit-login-list',
-  imports: [TableModule, DatePipe],
+  imports: [TableModule, TagModule, DatePipe],
   templateUrl: './audit-login-list.html'
 })
 export class AuditLoginList {
@@ -20,11 +21,11 @@ export class AuditLoginList {
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  public get first() {
+  public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
-  public onPageChange(event: TablePageEvent) {
+  public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }

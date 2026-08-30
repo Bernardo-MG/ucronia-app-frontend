@@ -6,6 +6,11 @@ import { ButtonModule } from 'primeng/button';
 import { Menu, MenuModule } from 'primeng/menu';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
+export interface RoleDeleteEvent {
+  event: Event;
+  role: Role;
+}
+
 @Component({
   selector: 'access-role-list',
   imports: [TableModule, ButtonModule, MenuModule],
@@ -14,7 +19,6 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 export class RoleList {
 
   public readonly loading = input(false);
-  public readonly readProfile = input(false);
   public readonly editable = input(false);
   public readonly deletable = input(false);
   public readonly roles = input<Role[]>([]);
@@ -23,41 +27,55 @@ export class RoleList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<Role>();
-  public readonly delete = output<Event>();
-  public readonly edit = output<{ view: string, role: Role }>();
+  public readonly delete = output<RoleDeleteEvent>();
   public readonly changePermissions = output<Role>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  @ViewChild('infoMenu') private infoMenu!: Menu;
-  @ViewChild('editionMenu') private editionMenu!: Menu;
+  @ViewChild('actionsMenu')
+  private actionsMenu!: Menu;
 
-  public infoMenuItems: MenuItem[] = [];
-  public editionMenuItems: MenuItem[] = [];
+  public actions: MenuItem[] = [];
 
-  public get first() {
+  public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
-  public onPageChange(event: TablePageEvent) {
+  public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 
-  public onShowInfo(role: Role) {
-    this.show.emit(role)
-  }
-
-  public openEditionMenu(event: Event, role: Role) {
-    this.editionMenuItems = [];
-
-    // Load edition menu
-    this.editionMenuItems.push(
+  public openActionsMenu(event: Event, role: Role): void {
+    this.actions = [
       {
-        label: 'Cambiar permisos',
+        label: 'Ver detalles',
+        icon: 'pi pi-eye',
+        command: () => this.show.emit(role)
+      },
+      {
+        label: 'Editar permisos',
+        icon: 'pi pi-key',
+        disabled: !this.editable(),
         command: () => this.changePermissions.emit(role)
-      });
-    this.editionMenu.toggle(event);
+      },
+      {
+        separator: true
+      },
+      {
+        label: 'Eliminar',
+        icon: 'pi pi-trash',
+        disabled: !this.deletable(),
+        command: menuEvent => {
+          this.delete.emit({
+            event: menuEvent.originalEvent as Event,
+            role
+          });
+        }
+      }
+    ];
+
+    this.actionsMenu.toggle(event);
   }
 
 }
