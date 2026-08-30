@@ -4,22 +4,6 @@ import { finalize } from 'rxjs';
 import { LoginEvent, LoginForm } from '../login-form/login-form';
 import { LoginService } from '../login-service';
 
-/**
- * Login view component. Smart component for building the login UI. Wraps the login component.
- * 
- * ## Failure message
- * 
- * If the login request fails the failed flag will be set to true. This will show the error
- * message.
- * 
- * ## Return URL
- * 
- * If the URL contains the returnUrl property, then the client will be redirected to it on a 
- * succesful login. This property should contain a route valid for the app. If no route is set
- * then the app will be redirected to the root route.
- * 
- * This is done as the user may be redirected to the login at any point in the app.
- */
 @Component({
   imports: [LoginForm],
   templateUrl: './login-view.html',
@@ -48,14 +32,17 @@ export class LoginView {
     this.failedLogin = false;
 
     this.service.login(login, this.rememberMe)
-      .pipe(finalize(() => this.waiting = false))
+      .pipe(
+        finalize(() => this.waiting = false)
+      )
       .subscribe({
         next: user => {
           if (user.logged) {
-            this.router.navigateByUrl(this.returnRoute);
-          } else {
-            this.failedLogin = true;
+            this.router.navigate([this.returnRoute]);
+            return;
           }
+
+          this.failedLogin = true;
         },
         error: () => {
           this.failedLogin = true;
@@ -70,5 +57,4 @@ export class LoginView {
   public onLostPassword(): void {
     this.router.navigate(['/password/reset']);
   }
-
 }

@@ -6,13 +6,12 @@
 
     <p-iconfield class="block w-full">
       <p-inputicon class="pi pi-envelope" />
-    
+
       <input pInputText id="usernameInput" type="text" formControlName="username" autocomplete="username"
-        placeholder="usuario@ejemplo.com" class="w-full"
-        [attr.aria-invalid]="form.controls['username'].invalid && form.controls['username'].touched" />
+        placeholder="usuario@ejemplo.com" class="w-full" [attr.aria-invalid]="form.controls['username'].invalid && form.controls['username'].touched" />
     </p-iconfield>
 
-    @if ( form.controls['username'].invalid && form.controls['username'].touched ) {
+    @if (form.controls['username'].invalid && form.controls['username'].touched) {
       <small class="mt-1 block text-red-600">
         Introduce tu usuario o correo electrónico
       </small>
@@ -40,7 +39,7 @@
       </button>
     </div>
 
-    @if ( form.controls['password'].invalid && form.controls['password'].touched ) {
+    @if (form.controls['password'].invalid && form.controls['password'].touched) {
       <small class="mt-1 block text-red-600">
         Introduce tu contraseña
       </small>
@@ -62,7 +61,7 @@
       </label>
     </div>
 
-    <button type="button"
+    <button id="lostPassword" type="button"
       class="border-0 bg-transparent p-0 text-left text-sm font-medium text-primary hover:underline sm:ml-auto"
       [disabled]="waiting" (click)="onLostPassword()">
       ¿Has olvidado tu contraseña?
