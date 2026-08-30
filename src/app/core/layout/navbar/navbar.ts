@@ -1,4 +1,3 @@
-
 import { Component, inject, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -19,11 +18,17 @@ export class Navbar {
 
   private readonly authService = inject(AuthService);
 
+  private readonly layoutService = inject(LayoutService);
+
   public readonly title;
 
-  public readonly showSettings;
+  public get showSettings() {
+    return this.layoutService.showSettingsLink();
+  }
 
-  public readonly showSecurity;
+  public get showSecurity() {
+    return this.layoutService.showSecurityLink();
+  }
 
   public get loggedIn() {
     return this.authService.logged;
@@ -34,14 +39,8 @@ export class Navbar {
   }
 
   constructor() {
-    const layoutService = inject(LayoutService);
-
     // App title
-    this.title = layoutService.getTitle();
-
-    // Show sections flags
-    this.showSettings = layoutService.showSettingsLink();
-    this.showSecurity = layoutService.showSecurityLink();
+    this.title = this.layoutService.getTitle();
   }
 
 }
