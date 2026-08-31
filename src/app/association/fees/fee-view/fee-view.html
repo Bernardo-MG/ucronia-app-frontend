@@ -143,15 +143,22 @@
 
       @case(Dialog.EDITION) {
         <ng-template #header>
-          Editar cuota
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-pencil" aria-hidden="true"></i>
+            </span>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Editar cuota</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">
+                {{ selectedData.month | date:'MMMM y' }} · {{ selectedData.member.name.fullName }}
+              </p>
+            </div>
+          </div>
         </ng-template>
-        <div class="w-full p-4">
+        <div class="w-full px-2 py-4 sm:px-4">
           <assoc-fee-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
-            (save)="onUpdate($event)" />
+            (save)="onUpdate($event)" (cancel)="dialog = Dialog.NONE" />
         </div>
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
       }
 
     }
