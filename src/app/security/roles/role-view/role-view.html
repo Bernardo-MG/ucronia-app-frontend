@@ -39,31 +39,30 @@
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              Rol de seguridad
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-shield" aria-hidden="true"></i>
             </span>
-
-            <h2 class="mt-1 text-xl font-semibold">
-              {{ selectedData.name }}
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Detalle del rol</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Rol de seguridad</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
-          <access-role-info [data]="selectedData" />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <access-role-info [data]="selectedData" [loading]="loading" />
         </div>
 
         <ng-template #footer>
           <div class="flex w-full justify-between gap-2">
             @if (permissions.delete) {
-            <p-button label="Eliminar" icon="pi pi-trash" severity="danger" text
-              (click)="onDelete({ event: $event, role: selectedData })" />
+              <p-button label="Eliminar rol" icon="pi pi-trash" severity="danger" outlined
+                (click)="onDelete({ event: $event, role: selectedData })" />
             }
 
             @if (permissions.edit) {
-            <p-button label="Editar permisos" icon="pi pi-key" severity="secondary"
-              (click)="onChangePermissions(selectedData)" />
+              <p-button label="Editar permisos" icon="pi pi-key" (click)="onChangePermissions(selectedData)" />
             }
           </div>
         </ng-template>
