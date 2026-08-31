@@ -1,23 +1,147 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Name -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="nameInput" formControlName="name" class="w-100" />
-    <label for="nameInput">Nombre</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('name'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-5">
+    <!-- Role name -->
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <label for="nameInput" class="block font-medium text-gray-950">
+        Nombre del rol
+        <span class="text-red-600" aria-hidden="true">*</span>
+      </label>
+
+      <p class="mb-2 mt-1 text-sm text-gray-500">
+        Usa un nombre claro que describa su responsabilidad
+      </p>
+
+      <input pInputText type="text" id="nameInput" formControlName="name" class="w-full"
+        [invalid]="isFieldInvalid('name')" placeholder="Introduce el nombre del rol" />
+
+      @for (failure of failures().getFailures('name'); track failure) {
+        <p-message class="mt-2 block" severity="error" size="small" variant="simple">
+          {{ failure.message }}
+        </p-message>
+      }
+    </section>
+
+    <!-- Permissions -->
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h3 class="font-semibold text-gray-950">
+            Permisos
+          </h3>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Selecciona las acciones que podrá realizar este rol
+          </p>
+        </div>
+
+        <span class="shrink-0 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+          {{ permissions.length }}
+          {{ permissions.length === 1 ? 'seleccionado' : 'seleccionados' }}
+        </span>
+      </div>
+
+      <!-- Search -->
+      <div class="relative mt-4">
+        <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+
+        <input type="search" class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
+          placeholder="Buscar recurso o acción..." aria-label="Buscar permisos" [value]="filterValue"
+          (input)="filterValue = $any($event.target).value" />
+      </div>
+
+      <!-- Bulk selection -->
+      <div class="mt-3 flex items-center justify-between gap-3 rounded-lg border border-gray-200 px-3 py-2.5">
+        <label class="flex cursor-pointer items-center gap-2 text-sm text-gray-700">
+          <input type="checkbox" class="size-4 rounded border-gray-300 text-blue-600"
+            [checked]="allVisibleSelected" [indeterminate]="visibleSelectionIndeterminate"
+            (change)="$any($event.target).checked ? selectAllVisible() : clearVisibleSelection()" />
+
+          Seleccionar todos los visibles
+        </label>
+
+        <button type="button" class="text-sm font-medium text-blue-700 hover:text-blue-900"
+          (click)="clearSelection()">
+          Limpiar selección
+        </button>
+      </div>
+
+      <!-- Permission groups -->
+      <div class="mt-3 space-y-2">
+        @for (group of permissionGroups; track group.resource) {
+          <details class="overflow-hidden rounded-xl border border-gray-200 bg-white" open>
+            <summary class="flex cursor-pointer list-none items-center gap-3 px-4 py-3">
+              <input type="checkbox" class="size-4 shrink-0 rounded border-gray-300 text-blue-600"
+                [checked]="isGroupSelected(group)" [indeterminate]="isGroupPartiallySelected(group)"
+                (click)="$event.stopPropagation()"
+                (change)="toggleGroup(group, $any($event.target).checked)" />
+
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700">
+                <i class="pi pi-folder" aria-hidden="true"></i>
+              </span>
+
+              <div class="min-w-0 flex-1">
+                <strong class="block truncate text-sm text-gray-950">
+                  {{ formatLabel(group.resource) }}
+                </strong>
+
+                <span class="text-xs text-gray-500">
+                  {{ selectedInGroup(group) }} de
+                  {{ group.permissions.length }} seleccionados
+                </span>
+              </div>
+
+              <i class="pi pi-chevron-down text-xs text-gray-500" aria-hidden="true"></i>
+            </summary>
+
+            <div class="grid grid-cols-1 gap-2 border-t border-gray-100 p-3 sm:grid-cols-2">
+              @for (permission of group.permissions; track permission.name) {
+                <label class="flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2.5 text-sm transition-colors"
+                  [class.border-blue-300]="isSelected(permission)"
+                  [class.bg-blue-50]="isSelected(permission)"
+                  [class.text-blue-800]="isSelected(permission)"
+                  [class.border-gray-200]="!isSelected(permission)"
+                  [class.text-gray-700]="!isSelected(permission)"
+                  [title]="permission.name">
+
+                  <input type="checkbox" class="size-4 rounded border-gray-300 text-blue-600"
+                    [checked]="isSelected(permission)"
+                    (change)="togglePermission(permission, $any($event.target).checked)" />
+
+                  {{ formatLabel(permission.action) }}
+                </label>
+              }
+            </div>
+          </details>
+        } @empty {
+          <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center">
+            <i class="pi pi-search text-xl text-gray-400" aria-hidden="true"></i>
+
+            <p class="mt-2 text-sm font-medium text-gray-700">
+              No se encontraron permisos
+            </p>
+
+            <p class="mt-1 text-xs text-gray-500">
+              Prueba con otro recurso o acción.
+            </p>
+          </div>
+        }
+      </div>
+
+      <p class="mt-4 flex items-start gap-2 rounded-lg bg-blue-50 p-3 text-xs text-blue-700">
+        <i class="pi pi-info-circle mt-0.5" aria-hidden="true"></i>
+
+        Puedes asignar cualquier acción disponible; los permisos no se limitan a crear, consultar, editar o eliminar.
+      </p>
+    </section>
   </div>
-  <div class="mb-2">
-    <p-picklist [source]="selection()" [target]="permissions" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
-      <ng-template let-item #item>
-        {{ item.resource }}:{{ item.action }}
-      </ng-template>
-    </p-picklist>
+
+  <!-- Actions -->
+  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true"
+      (click)="cancel.emit()" />
+
+    <p-button type="submit" label="Crear rol" icon="pi pi-plus"
+      [disabled]="!formStatus.saveEnabled" [loading]="loading()"
+      [attr.aria-disabled]="!formStatus.saveEnabled" />
   </div>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

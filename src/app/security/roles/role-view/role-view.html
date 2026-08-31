@@ -70,20 +70,20 @@
 
       @case (Dialog.CREATE) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              Nuevo acceso
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-shield" aria-hidden="true"></i>
             </span>
-
-            <h2 class="mt-1 text-xl font-semibold">
-              Crear rol
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Crear rol</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Define el nombre y los permisos del nuevo rol</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
+        <div class="w-full px-2 py-4 sm:px-4">
           <access-role-form [selection]="resourcePermissions" [loading]="loading" [failures]="failures"
-            (save)="onCreate($event)" />
+            (save)="onCreate($event)" (cancel)="dialog = Dialog.NONE" />
         </div>
       }
 
