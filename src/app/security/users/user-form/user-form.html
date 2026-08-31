@@ -1,51 +1,101 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Username -->
-  @if(create()) {
-    <p-floatlabel variant="in" class="mb-2 d-flex">
-      <input pInputText type="text" id="usernameInput" formControlName="username" class="w-100" />
-      <label for="usernameInput">Usuario</label>
-    </p-floatlabel>
-    <div class="mb-2">
-      @for (failure of failures().getFailures('username'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
-      }
-    </div>
-  } @else {
-    <h2>{{username}}</h2>
-  }
-  <!-- Name -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="nameInput" formControlName="name" class="w-100" />
-    <label for="nameInput">Nombre</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('name'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-5">
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <div class="mb-5">
+        <h3 class="font-semibold text-gray-950">Datos de acceso</h3>
+        <p class="mt-1 text-sm text-gray-500">Información que identifica al usuario en la aplicación</p>
+      </div>
+
+      <div class="space-y-4">
+        @if (create()) {
+          <div>
+            <label for="usernameInput" class="block text-sm font-medium text-gray-900">Usuario <span class="text-red-600" aria-hidden="true">*</span></label>
+            <input pInputText type="text" id="usernameInput" formControlName="username" class="mt-2 w-full" placeholder="nombre.apellido" autocomplete="username" [invalid]="isFieldInvalid('username')" />
+            <p class="mt-1.5 text-xs text-gray-500">Se utilizará para iniciar sesión</p>
+
+            @for (failure of failures().getFailures('username'); track failure) {
+              <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+            }
+          </div>
+        } @else {
+          <div>
+            <span class="block text-sm font-medium text-gray-900">Usuario</span>
+
+            <div class="mt-2 flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
+                <i class="pi pi-user" aria-hidden="true"></i>
+              </span>
+
+              <strong class="truncate text-sm text-gray-950">{{ username }}</strong>
+            </div>
+          </div>
+        }
+
+        <div>
+          <label for="nameInput" class="block text-sm font-medium text-gray-900">Nombre completo <span class="text-red-600" aria-hidden="true">*</span></label>
+          <input pInputText type="text" id="nameInput" formControlName="name" class="mt-2 w-full" placeholder="Nombre y apellidos" autocomplete="name" [invalid]="isFieldInvalid('name')" />
+
+          @for (failure of failures().getFailures('name'); track failure) {
+            <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+          }
+        </div>
+
+        <div>
+          <label for="emailInput" class="block text-sm font-medium text-gray-900">Correo electrónico <span class="text-red-600" aria-hidden="true">*</span></label>
+          <input pInputText type="email" id="emailInput" formControlName="email" class="mt-2 w-full" placeholder="nombre@ejemplo.com" autocomplete="email" [invalid]="isFieldInvalid('email')" />
+
+          @if (create()) {
+            <p class="mt-1.5 text-xs text-gray-500">Recibirá aquí la invitación para activar su cuenta</p>
+          }
+
+          @for (failure of failures().getFailures('email'); track failure) {
+            <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+          }
+        </div>
+      </div>
+    </section>
+
+    @if (create()) {
+      <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <h3 class="font-semibold text-gray-950">Roles</h3>
+            <p class="mt-1 text-sm text-gray-500">Define qué podrá consultar y gestionar el usuario</p>
+          </div>
+
+          <span class="shrink-0 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">{{ roles.length }} {{ roles.length === 1 ? 'seleccionado' : 'seleccionados' }}</span>
+        </div>
+
+        <div class="relative mt-4">
+          <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+          <input type="search" class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Buscar roles..." aria-label="Buscar roles" [value]="roleFilter" (input)="roleFilter = $any($event.target).value" />
+        </div>
+
+        <div class="mt-3 space-y-2">
+          @for (role of filteredRoles; track role.name) {
+            <label class="flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors hover:bg-gray-50" [class.border-blue-400]="isRoleSelected(role)" [class.bg-blue-50]="isRoleSelected(role)" [class.border-gray-200]="!isRoleSelected(role)">
+              <input type="checkbox" class="size-4 shrink-0 rounded border-gray-300 text-blue-600" [checked]="isRoleSelected(role)" (change)="toggleRole(role, $any($event.target).checked)" />
+
+              <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600" [class.bg-blue-100]="isRoleSelected(role)" [class.text-blue-700]="isRoleSelected(role)">
+                <i class="pi pi-shield" aria-hidden="true"></i>
+              </span>
+
+              <span class="min-w-0 flex-1 truncate text-sm font-medium text-gray-950">{{ role.name }}</span>
+            </label>
+          } @empty {
+            <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center">
+              <i class="pi pi-search text-xl text-gray-400" aria-hidden="true"></i>
+              <p class="mt-2 text-sm font-medium text-gray-700">No se encontraron roles</p>
+              <p class="mt-1 text-xs text-gray-500">Prueba con otro nombre.</p>
+            </div>
+          }
+        </div>
+      </section>
     }
   </div>
-  <!-- Email -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="text" id="emailInput" formControlName="email" class="w-100" />
-    <label for="emailInput">E-mail</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('email'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
+
+  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancel.emit()" />
+    <p-button type="submit" [label]="create() ? 'Enviar invitación' : 'Guardar cambios'" [icon]="create() ? 'pi pi-send' : 'pi pi-check'" [disabled]="!formStatus.saveEnabled" [loading]="loading()" [attr.aria-disabled]="!formStatus.saveEnabled" />
   </div>
-  <div class="mb-2">
-    <p-picklist [source]="selection()" [target]="roles" [dragdrop]="true" [responsive]="true" breakpoint="1400px">
-      <ng-template let-item #item>
-        {{ item.name }}
-      </ng-template>
-    </p-picklist>
-  </div>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

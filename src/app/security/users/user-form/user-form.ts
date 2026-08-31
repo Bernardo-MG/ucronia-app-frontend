@@ -1,18 +1,15 @@
-
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { PickListModule } from 'primeng/picklist';
 
 @Component({
   selector: 'access-user-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule, PickListModule],
+  imports: [ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
@@ -28,13 +25,13 @@ export class UserForm implements OnChanges {
   }
 
   public readonly save = output<UserFormData>();
+  public readonly cancel = output<void>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
-
   public username = '';
-
   public roles: Role[] = [];
+  public roleFilter = '';
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -58,19 +55,37 @@ export class UserForm implements OnChanges {
     }
   }
 
+  public get filteredRoles(): Role[] {
+    const filter = this.roleFilter.trim().toLocaleLowerCase();
+    return this.selection().filter(role => !filter || role.name.toLocaleLowerCase().includes(filter));
+  }
+
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    this.form.get('roles')?.setValue(this.roles.map(r => r.name));
+  public onSave(): void {
+    this.form.get('roles')?.setValue(this.roles.map(role => role.name));
     if (this.form.valid) {
-      // Valid form, can emit data
       this.save.emit(this.form.value);
     }
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
+  }
+
+  public isRoleSelected(role: Role): boolean {
+    return this.roles.some(selected => selected.name === role.name);
+  }
+
+  public toggleRole(role: Role, checked: boolean): void {
+    if (checked && !this.isRoleSelected(role)) {
+      this.roles = [...this.roles, role];
+    } else if (!checked) {
+      this.roles = this.roles.filter(selected => selected.name !== role.name);
+    }
+
+    this.form.markAsDirty();
   }
 
 }
