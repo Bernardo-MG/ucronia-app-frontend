@@ -19,7 +19,8 @@ export class FeeCalendarService {
     const sorting = new Sorting(
       [
         new SortingProperty('member.name.firstName'),
-        new SortingProperty('member.name.lastName')
+        new SortingProperty('member.name.lastName'),
+        new SortingProperty('month')
       ]
     );
 
