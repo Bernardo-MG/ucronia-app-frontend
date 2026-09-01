@@ -1,63 +1,66 @@
-
 import { DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
-import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
+import { LibraryConfig } from '../library-config';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
 
 @Component({
   selector: 'assoc-library-book-info',
-  imports: [SkeletonModule, LibraryBookLendings, DetailField, DatePipe],
+  imports: [SkeletonModule, LibraryBookLendings, DatePipe],
   templateUrl: './library-book-info.html'
 })
 export class LibraryBookInfo {
+
+  private readonly config = inject(LibraryConfig);
 
   public readonly loading = input(false);
   public readonly book = input<FictionBook | GameBook>(new GameBook());
   public readonly borrowerNames = input<Record<number, string>>({});
 
-  public languages: Language[] = [];
+  public languages: Language[] = this.config.getLanguages();
+
+  public get isGame(): boolean {
+    return Object.prototype.hasOwnProperty.call(this.book(), 'gameSystem');
+  }
 
   public get authors(): string {
-    return this.book().authors.map(e => e.name).join(", ");
+    return this.book().authors.map(author => author.name).join(', ');
   }
 
   public get publishers(): string {
-    return this.book().publishers.map(e => e.name).join(", ");
+    return this.book().publishers.map(publisher => publisher.name).join(', ');
   }
 
   public get language(): string {
-    const language = this.languages.find(lang => lang.code === this.book().language);
+    const language = this.languages.find(item => item.code === this.book().language);
     return language ? language.name : this.book().language;
   }
 
   public get bookType(): BookType | undefined {
-    if (Object.prototype.hasOwnProperty.call(this.book(), 'bookType')) {
+    if (this.isGame) {
       return (this.book() as GameBook).bookType;
-    } else {
-      return undefined;
     }
+
+    return undefined;
   }
 
   public get gameSystem(): GameSystem | undefined {
-    if (Object.prototype.hasOwnProperty.call(this.book(), 'gameSystem')) {
+    if (this.isGame) {
       return (this.book() as GameBook).gameSystem;
-    } else {
-      return undefined;
     }
+
+    return undefined;
   }
 
   public get donors(): string {
-    let donors;
-    const data = this.book();
-    if (data.donation) {
-      donors = data.donation.donors.map(e => e.name.fullName).join(", ");
-    } else {
-      donors = '';
+    const donation = this.book().donation;
+
+    if (!donation) {
+      return '';
     }
 
-    return donors;
+    return donation.donors.map(donor => donor.name.fullName).join(', ');
   }
 
 }

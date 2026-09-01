@@ -1,25 +1,97 @@
-<div class="ms-3 space-y-5">
-  <p-card class="w-60">
-    <ui-status-detail icon="pi pi-check" falseIcon="pi pi-times" [loading]="loading()"
-      [value]="data().paid" trueText="{{ data().transaction?.date | date:'yyyy-MM-dd' }}"
-      falseText="Sin pagar" name="Pagada" />
-  </p-card>
+<div class="space-y-5">
+  @if (loading()) {
+    <p-skeleton height="8rem" borderRadius="0.75rem" />
+  } @else {
+    <section class="flex items-center justify-between gap-4 rounded-xl border p-5" [class.border-green-200]="data().paid"
+      [class.bg-green-50]="data().paid" [class.border-amber-200]="!data().paid" [class.bg-amber-50]="!data().paid">
+      <div class="flex min-w-0 items-center gap-4">
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-full" [class.bg-green-600]="data().paid"
+          [class.text-white]="data().paid" [class.bg-amber-100]="!data().paid" [class.text-amber-700]="!data().paid">
+          <i [class]="data().paid ? 'pi pi-check text-xl' : 'pi pi-clock text-xl'" aria-hidden="true"></i>
+        </span>
+        <div>
+          <span class="text-xs font-semibold uppercase tracking-wide" [class.text-green-700]="data().paid"
+            [class.text-amber-700]="!data().paid">Estado</span>
+          <strong class="mt-0.5 block text-2xl" [class.text-green-800]="data().paid"
+            [class.text-amber-800]="!data().paid">
+            {{ data().paid ? 'Pagada' : 'Pendiente' }}
+          </strong>
+          @if (data().paid) {
+            <span class="text-sm text-green-700">
+              Pago registrado el {{ data().transaction?.date | date:'d MMMM y' }}
+            </span>
+          } @else {
+            <span class="text-sm text-amber-700">Esta cuota todavía no se ha pagado</span>
+          }
+        </div>
+      </div>
+      <div class="shrink-0 text-right">
+        <strong class="block text-2xl text-gray-950">
+          {{ data().feeType.amount | currency:'EUR':'symbol':'1.2-2' }}
+        </strong>
+        <span class="text-xs text-gray-500">Importe</span>
+      </div>
+    </section>
+  }
 
-  <!-- Month -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Mes"
-      [value]="data().month | date:'yyyy-MM'" />
-  </div>
+  <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <h3 class="font-semibold text-gray-950">Socio</h3>
+    @if (loading()) {
+      <div class="mt-4 flex items-center gap-3">
+        <p-skeleton shape="circle" size="3rem" />
+        <div class="space-y-2">
+          <p-skeleton width="12rem" height="1rem" />
+          <p-skeleton width="6rem" height="0.75rem" />
+        </div>
+      </div>
+    } @else {
+      <div class="mt-4 flex items-center gap-3">
+        <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+          <i class="pi pi-user" aria-hidden="true"></i>
+        </span>
+        <div class="min-w-0">
+          <strong class="block truncate text-gray-950">{{ data().member.name.fullName }}</strong>
+          <span class="text-sm text-gray-500">Socio nº {{ data().member.number }}</span>
+        </div>
+      </div>
+    }
+  </section>
 
-  <!-- Member -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Socio" [value]="data().member.name.fullName" />
-  </div>
-
-  <!-- Fee type -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-credit-card" name="Tipo de cuota"
-      [value]="data().feeType.name + ' (' + data().feeType.amount + '€)'" />
-  </div>
-
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <h3 class="border-b border-gray-200 px-5 py-4 font-semibold text-gray-950">Datos de la cuota</h3>
+    @if (loading()) {
+      <div class="space-y-4 p-5">
+        @for (row of [1, 2, 3, 4]; track row) {
+          <p-skeleton height="1.5rem" />
+        }
+      </div>
+    } @else {
+      <dl class="divide-y divide-gray-100">
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-calendar w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">Periodo</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ data().month | date:'MMMM y' }}</dd>
+        </div>
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-credit-card w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">Tipo de cuota</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ data().feeType.name }}</dd>
+        </div>
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-euro w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">Importe</dt>
+          <dd class="text-sm font-medium text-gray-950">
+            {{ data().feeType.amount | currency:'EUR':'symbol':'1.2-2' }}
+          </dd>
+        </div>
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-calendar-clock w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">Fecha de pago</dt>
+          <dd class="text-sm font-medium text-gray-950">
+            {{ data().paid ? (data().transaction?.date | date:'d MMMM y') : 'Sin pagar' }}
+          </dd>
+        </div>
+      </dl>
+    }
+  </section>
 </div>

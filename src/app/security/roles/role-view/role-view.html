@@ -27,83 +27,76 @@
     </header>
 
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <access-role-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
-        [roles]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-        (show)="onShowInfo($event)" (delete)="onDelete($event)" (changePermissions)="onChangePermissions($event)"
-        (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+      <access-role-list [loading]="loading" [roles]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     </div>
   </section>
 
-  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
-    position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true" position="right" [style]="{ width: 'min(44rem, 100vw)' }">
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              Rol de seguridad
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-shield" aria-hidden="true"></i>
             </span>
 
-            <h2 class="mt-1 text-xl font-semibold">
-              {{ selectedData.name }}
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Detalle del rol</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Rol de seguridad</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
-          <access-role-info [data]="selectedData" />
-        </div>
+        <div class="w-full px-2 py-4 sm:px-4">
+          <access-role-info [data]="selectedData" [loading]="loading" />
 
-        <ng-template #footer>
-          <div class="flex w-full justify-between gap-2">
+          <div class="mt-6 flex w-full justify-between gap-2 border-t border-gray-200 pt-4">
             @if (permissions.delete) {
-            <p-button label="Eliminar" icon="pi pi-trash" severity="danger" text
-              (click)="onDelete({ event: $event, role: selectedData })" />
+              <p-button label="Eliminar rol" icon="pi pi-trash" severity="danger" outlined (click)="onDelete({ event: $event, role: selectedData })" />
             }
 
             @if (permissions.edit) {
-            <p-button label="Editar permisos" icon="pi pi-key" severity="secondary"
-              (click)="onChangePermissions(selectedData)" />
+              <p-button label="Editar permisos" icon="pi pi-key" (click)="onChangePermissions(selectedData)" />
             }
           </div>
-        </ng-template>
+        </div>
       }
 
       @case (Dialog.CREATE) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              Nuevo acceso
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-shield" aria-hidden="true"></i>
             </span>
 
-            <h2 class="mt-1 text-xl font-semibold">
-              Crear rol
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Crear rol</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Define el nombre y los permisos del nuevo rol</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
-          <access-role-form [selection]="resourcePermissions" [loading]="loading" [failures]="failures"
-            (save)="onCreate($event)" />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <access-role-form [selection]="resourcePermissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" (cancel)="dialog = Dialog.NONE" />
         </div>
       }
 
       @case (Dialog.PERMISSIONS) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              {{ selectedData.name }}
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-shield" aria-hidden="true"></i>
             </span>
 
-            <h2 class="mt-1 text-xl font-semibold">
-              Editar permisos
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Editar rol</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Actualiza los permisos asignados</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
-          <access-role-change-permission [selection]="resourcePermissions" [permissions]="selectedData.permissions"
-            (save)="onSetRolePermissions($event)" />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <access-role-change-permission [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" (cancel)="dialog = Dialog.NONE" />
         </div>
       }
     }
