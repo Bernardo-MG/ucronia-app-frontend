@@ -26,7 +26,7 @@ export class FeePaymentsForm {
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public selectedMember?: Profile;

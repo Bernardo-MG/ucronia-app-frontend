@@ -79,7 +79,7 @@
         </ng-template>
 
         <div class="w-full px-2 py-4 sm:px-4">
-          <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" (cancel)="dialog = Dialog.NONE" />
+          <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" (cancelEdition)="dialog = Dialog.NONE" />
         </div>
       }
 
@@ -98,7 +98,7 @@
         </ng-template>
 
         <div class="w-full px-2 py-4 sm:px-4">
-          <access-user-form [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" (cancel)="dialog = Dialog.NONE" />
+          <access-user-form [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" (cancelEdition)="dialog = Dialog.NONE" />
         </div>
       }
     }

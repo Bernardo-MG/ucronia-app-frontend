@@ -127,7 +127,7 @@
         </ng-template>
         <div class="w-full px-2 py-4 sm:px-4">
           <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
-            (cancel)="dialog = Dialog.NONE" />
+            (cancelEdition)="dialog = Dialog.NONE" />
         </div>
       }
       @case(Dialog.EDIT) {

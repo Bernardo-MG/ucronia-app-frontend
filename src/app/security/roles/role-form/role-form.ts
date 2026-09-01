@@ -24,7 +24,7 @@ export class RoleForm implements OnChanges {
   }
 
   public readonly save = output<Role>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
 
   public permissions: ResourcePermission[] = [];
 

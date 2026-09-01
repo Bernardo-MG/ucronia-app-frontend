@@ -26,7 +26,7 @@ export class FeeEditionForm implements OnChanges {
   }
 
   public readonly save = output<FeeEditionEvent>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
 
   public formStatus: FormStatus;
 

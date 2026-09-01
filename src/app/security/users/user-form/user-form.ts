@@ -34,7 +34,7 @@ export class UserForm implements OnChanges {
 
   public readonly save = output<UserFormData>();
   public readonly update = output<UserEditionFormData>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public formStatus: FormStatus;

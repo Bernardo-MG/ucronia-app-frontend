@@ -21,7 +21,7 @@ export class LibraryBookCreationForm implements OnChanges {
   public readonly failures = input(new FailureStore());
 
   public readonly save = output<LibraryBookCreationFormData>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
 
   public formStatus: FormStatus;
 

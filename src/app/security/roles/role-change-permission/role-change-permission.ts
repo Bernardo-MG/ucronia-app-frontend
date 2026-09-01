@@ -15,7 +15,7 @@ export class RoleChangePermission implements OnChanges {
   public readonly loading = input(false);
 
   public readonly save = output<ResourcePermission[]>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
 
   public selected: ResourcePermission[] = [];
   public filterValue = '';

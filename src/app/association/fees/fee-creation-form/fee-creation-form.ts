@@ -22,7 +22,7 @@ export class FeeCreationForm implements OnChanges {
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
-  public readonly cancel = output<void>();
+  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public selectedMember?: Profile;

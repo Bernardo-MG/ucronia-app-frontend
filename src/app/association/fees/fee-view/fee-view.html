@@ -117,7 +117,7 @@
             [failures]="failures"
             [members]="members"
             (save)="onCreateUnpaid($event)"
-            (cancel)="dialog = Dialog.NONE"
+            (cancelEdition)="dialog = Dialog.NONE"
             (searchMember)="onSearchMembers($event)"
           />
         </div>
@@ -137,7 +137,7 @@
         </ng-template>
         <div class="w-full px-2 py-4 sm:px-4">
           <assoc-fee-payments-form [loading]="status.loading" [failures]="failures" [members]="members"
-            (save)="onPay($event)" (cancel)="dialog = Dialog.NONE" (searchMember)="onSearchMembers($event)" />
+            (save)="onPay($event)" (cancelEdition)="dialog = Dialog.NONE" (searchMember)="onSearchMembers($event)" />
         </div>
       }
 
@@ -157,7 +157,7 @@
         </ng-template>
         <div class="w-full px-2 py-4 sm:px-4">
           <assoc-fee-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
-            (save)="onUpdate($event)" (cancel)="dialog = Dialog.NONE" />
+            (save)="onUpdate($event)" (cancelEdition)="dialog = Dialog.NONE" />
         </div>
       }
 
