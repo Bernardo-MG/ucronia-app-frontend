@@ -33,17 +33,13 @@ export class UserList {
 
   public readonly loading = input(false);
   public readonly editable = input(false);
-  public readonly deletable = input(false);
   public readonly users = input<User[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
   public readonly show = output<User>();
-  public readonly delete = output<UserDeleteEvent>();
   public readonly edit = output<User>();
-  public readonly editRoles = output<User>();
-  public readonly editMember = output<User>();
   public readonly active = output<UserStatusChange>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
@@ -76,18 +72,6 @@ export class UserList {
         command: () => this.edit.emit(user)
       },
       {
-        label: 'Editar roles',
-        icon: 'pi pi-id-card',
-        disabled: !this.editable(),
-        command: () => this.editRoles.emit(user)
-      },
-      {
-        label: 'Vincular socio',
-        icon: 'pi pi-link',
-        disabled: !this.editable(),
-        command: () => this.editMember.emit(user)
-      },
-      {
         separator: true
       },
       {
@@ -100,17 +84,6 @@ export class UserList {
           this.active.emit({
             user,
             enabled: !user.enabled
-          });
-        }
-      },
-      {
-        label: 'Eliminar',
-        icon: 'pi pi-trash',
-        disabled: !this.deletable(),
-        command: menuEvent => {
-          this.delete.emit({
-            event: menuEvent.originalEvent as Event,
-            user
           });
         }
       }

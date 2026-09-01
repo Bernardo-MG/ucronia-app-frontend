@@ -19,16 +19,12 @@ export interface RoleDeleteEvent {
 export class RoleList {
 
   public readonly loading = input(false);
-  public readonly editable = input(false);
-  public readonly deletable = input(false);
   public readonly roles = input<Role[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
   public readonly show = output<Role>();
-  public readonly delete = output<RoleDeleteEvent>();
-  public readonly changePermissions = output<Role>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
@@ -52,26 +48,6 @@ export class RoleList {
         label: 'Ver detalles',
         icon: 'pi pi-eye',
         command: () => this.show.emit(role)
-      },
-      {
-        label: 'Editar permisos',
-        icon: 'pi pi-key',
-        disabled: !this.editable(),
-        command: () => this.changePermissions.emit(role)
-      },
-      {
-        separator: true
-      },
-      {
-        label: 'Eliminar',
-        icon: 'pi pi-trash',
-        disabled: !this.deletable(),
-        command: menuEvent => {
-          this.delete.emit({
-            event: menuEvent.originalEvent as Event,
-            role
-          });
-        }
       }
     ];
 
