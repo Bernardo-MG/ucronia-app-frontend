@@ -1,7 +1,5 @@
 <div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
-  <header
-    class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between"
-  >
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <div>
       <h1 class="text-3xl font-bold tracking-tight text-gray-950">
         Usuarios
@@ -13,11 +11,7 @@
     </div>
 
     @if (permissions.create) {
-      <p-button
-        label="Invitar usuario"
-        icon="pi pi-envelope"
-        (click)="onStartInvitation()"
-      />
+      <p-button label="Invitar usuario" icon="pi pi-envelope" (click)="onStartInvitation()" />
     }
   </header>
 
@@ -32,86 +26,39 @@
       </p>
     </header>
 
-    <div
-      class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
-    >
-      <access-user-list
-        [loading]="loading"
-        [editable]="permissions.edit"
-        [deletable]="permissions.delete"
-        [users]="data.content"
-        [rows]="data.size"
-        [page]="data.page"
-        [totalRecords]="data.totalElements"
-        (show)="onShowUser($event)"
-        (delete)="onDelete($event)"
-        (changeDirection)="onChangeDirection($event)"
-        (changePage)="load($event)"
-        (active)="onSetEnabled($event)"
-        (edit)="onStartEditing($event)"
-        (editRoles)="onStartEditingRoles($event)"
-        (editMember)="onStartEditingMember($event)"
-      />
+    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+      <access-user-list [loading]="loading" [editable]="permissions.edit" [users]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" (active)="onSetEnabled($event)" (edit)="onStartEditing($event)" />
     </div>
   </section>
 
-  <p-drawer
-    [visible]="dialog !== Dialog.NONE"
-    (visibleChange)="onDrawerVisibleChange($event)"
-    [closable]="true"
-    position="right"
-    [style]="{ width: 'min(44rem, 100vw)' }"
-  >
+  <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true" position="right" [style]="{ width: 'min(44rem, 100vw)' }">
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div>
-            <span
-              class="text-xs font-medium uppercase tracking-wide text-gray-500"
-            >
-              Usuario
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-user" aria-hidden="true"></i>
             </span>
 
-            <h2 class="mt-1 text-xl font-semibold">
-              {{ selectedData.name || selectedData.username }}
-            </h2>
-
-            <span class="text-sm text-gray-500">
-              {{ selectedData.email }}
-            </span>
+            <div class="min-w-0">
+              <h2 class="truncate text-xl font-semibold text-gray-950">{{ selectedData.name || selectedData.username }}</h2>
+              <p class="mt-0.5 truncate text-sm font-normal text-gray-500">{{ selectedData.email }}</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
-          <access-user-info
-            [user]="selectedData"
-            [member]="member"
-            [loading]="loading"
-          />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
         </div>
 
         <ng-template #footer>
           <div class="flex w-full justify-between gap-2">
             @if (permissions.delete) {
-              <p-button
-                label="Eliminar"
-                icon="pi pi-trash"
-                severity="danger"
-                text
-                (click)="onDelete({
-                  event: $event,
-                  user: selectedData
-                })"
-              />
+              <p-button label="Eliminar usuario" icon="pi pi-trash" severity="danger" [outlined]="true" (click)="onDelete({ event: $event, user: selectedData })" />
             }
 
             @if (permissions.edit) {
-              <p-button
-                label="Editar"
-                icon="pi pi-pencil"
-                severity="secondary"
-                (click)="onStartEditing(selectedData)"
-              />
+              <p-button label="Editar usuario" icon="pi pi-pencil" (click)="onStartEditing(selectedData)" />
             }
           </div>
         </ng-template>
@@ -138,77 +85,20 @@
 
       @case (Dialog.EDIT) {
         <ng-template #header>
-          <div>
-            <span
-              class="text-xs font-medium uppercase tracking-wide text-gray-500"
-            >
-              {{ selectedData.username }}
+          <div class="flex items-center gap-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+              <i class="pi pi-user-edit" aria-hidden="true"></i>
             </span>
 
-            <h2 class="mt-1 text-xl font-semibold">
-              Editar usuario
-            </h2>
+            <div>
+              <h2 class="text-xl font-semibold text-gray-950">Editar usuario</h2>
+              <p class="mt-0.5 text-sm font-normal text-gray-500">Actualiza sus datos, roles y vinculación con un socio</p>
+            </div>
           </div>
         </ng-template>
 
-        <div class="w-full p-4">
-          <access-user-form
-            [create]="false"
-            [loading]="loading"
-            [data]="selectedData"
-            [failures]="failures"
-            (save)="onUpdate($event)"
-          />
-        </div>
-      }
-
-      @case (Dialog.ROLES) {
-        <ng-template #header>
-          <div>
-            <span
-              class="text-xs font-medium uppercase tracking-wide text-gray-500"
-            >
-              {{ selectedData.username }}
-            </span>
-
-            <h2 class="mt-1 text-xl font-semibold">
-              Editar roles
-            </h2>
-          </div>
-        </ng-template>
-
-        <div class="w-full p-4">
-          <access-user-roles-editor
-            [roles]="selectedData.roles"
-            [selection]="roleSelection"
-            (save)="onSetRoles($event)"
-          />
-        </div>
-      }
-
-      @case (Dialog.MEMBER) {
-        <ng-template #header>
-          <div>
-            <span
-              class="text-xs font-medium uppercase tracking-wide text-gray-500"
-            >
-              {{ selectedData.username }}
-            </span>
-
-            <h2 class="mt-1 text-xl font-semibold">
-              Vincular socio
-            </h2>
-          </div>
-        </ng-template>
-
-        <div class="w-full p-4">
-          <access-user-member-editor-form
-            [member]="member"
-            [members]="members"
-            [loading]="loading"
-            (assignMember)="onAssignMember($event.number)"
-            (searchMember)="onSearchMembers($event)"
-          />
+        <div class="w-full px-2 py-4 sm:px-4">
+          <access-user-form [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" (cancel)="dialog = Dialog.NONE" />
         </div>
       }
     }

@@ -3,13 +3,15 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { Profile } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { MemberSearch, MemberSearchEvent } from '../../../shared/member/member-search/member-search';
 
 @Component({
   selector: 'access-user-form',
-  imports: [ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
@@ -18,20 +20,29 @@ export class UserForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   public readonly create = input(true);
   public readonly selection = input<Role[]>([]);
+  public readonly members = input<Profile[]>([]);
 
   @Input() public set data(value: User) {
     this.form.patchValue(value as any);
     this.username = value.username;
+    this.roles = [...value.roles];
+  }
+
+  @Input() public set member(value: Profile) {
+    this.selectedMember = value ?? new Profile();
   }
 
   public readonly save = output<UserFormData>();
+  public readonly update = output<UserEditionFormData>();
   public readonly cancel = output<void>();
+  public readonly searchMember = output<MemberSearchEvent>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
   public username = '';
   public roles: Role[] = [];
   public roleFilter = '';
+  public selectedMember = new Profile();
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -50,14 +61,20 @@ export class UserForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
-    if (selection) {
+    if (selection && this.create()) {
       this.roles = [];
     }
   }
 
   public get filteredRoles(): Role[] {
     const filter = this.roleFilter.trim().toLocaleLowerCase();
-    return this.selection().filter(role => !filter || role.name.toLocaleLowerCase().includes(filter));
+    const roles = new Map<string, Role>();
+
+    [...this.roles, ...this.selection()].forEach(role => roles.set(role.name, role));
+
+    return Array.from(roles.values())
+      .filter(role => !filter || role.name.toLocaleLowerCase().includes(filter))
+      .sort((first, second) => first.name.localeCompare(second.name));
   }
 
   /**
@@ -65,8 +82,18 @@ export class UserForm implements OnChanges {
    */
   public onSave(): void {
     this.form.get('roles')?.setValue(this.roles.map(role => role.name));
+
     if (this.form.valid) {
-      this.save.emit(this.form.value);
+      if (this.create()) {
+        this.save.emit(this.form.value);
+      } else {
+        this.update.emit({
+          name: this.form.get('name')?.value,
+          email: this.form.get('email')?.value,
+          roles: this.roles,
+          member: this.selectedMember
+        });
+      }
     }
   }
 
@@ -88,6 +115,16 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
+  public onSelectMember(member: Profile): void {
+    this.selectedMember = member;
+    this.form.markAsDirty();
+  }
+
+  public onRemoveMember(): void {
+    this.selectedMember = new Profile();
+    this.form.markAsDirty();
+  }
+
 }
 
 export class UserFormData {
@@ -95,4 +132,11 @@ export class UserFormData {
   public name = '';
   public email = '';
   public roles: string[] = [];
+}
+
+export interface UserEditionFormData {
+  name: string;
+  email: string;
+  roles: Role[];
+  member: Profile;
 }

@@ -7,17 +7,15 @@ import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
-import { UserForm, UserFormData } from '../user-form/user-form';
+import { finalize, forkJoin, Observable, of, switchMap } from 'rxjs';
+import { UserEditionFormData, UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
 import { UserDeleteEvent, UserList, UserStatusChange } from '../user-list/user-list';
-import { UserMemberEditorForm } from '../user-member-editor-form/user-member-editor-form';
-import { UserRolesEditor } from '../user-roles-editor/user-roles-editor';
 import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [ButtonModule, DrawerModule, UserForm, UserInfo, UserRolesEditor, UserMemberEditorForm, UserList],
+  imports: [ButtonModule, DrawerModule, UserForm, UserInfo, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
@@ -29,30 +27,19 @@ export class UserView implements OnInit {
   public readonly Dialog = Dialog;
 
   public data = new Page<User>();
-
   public selectedData = new User();
   public member = new Profile();
-
-  /**
-   * Loading flag.
-   */
   public loading = false;
+  public failures = new FailureStore();
+  public roleSelection: Role[] = [];
+  public members: Profile[] = [];
+  public dialog = Dialog.NONE;
 
   private sort = new Sorting();
-
-  public failures = new FailureStore();
-
-  public roleSelection: Role[] = [];
-
-  public availableMembers: Profile[] = [];
-  public members: Profile[] = [];
-
-  public dialog = Dialog.NONE;
 
   constructor() {
     const authService = inject(AuthService);
 
-    // Check permissions
     this.permissions = {
       create: authService.hasPermission(SecurityPermissions.user.create),
       edit: authService.hasPermission(SecurityPermissions.user.update),
@@ -64,14 +51,12 @@ export class UserView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
+  public onChangeDirection(sorting: SortingEvent): void {
+    const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
 
-  public onChangeDirection(sorting: SortingEvent) {
-    // TODO: should receive the actual direction, not a number
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
 
     this.load(this.data.page);
   }
@@ -83,41 +68,37 @@ export class UserView implements OnInit {
     );
   }
 
-  public onSetRoles(roles: Role[]): void {
+  public onUpdate(toUpdate: UserEditionFormData): void {
     const user: UserUpdate = {
-      ...this.selectedData,
-      roles: [...roles.map(r => r.name)]
-    }
-    this.call(
-      () => this.service.update(this.selectedData.username, user),
-      () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: UserFormData): void {
-    const user: UserUpdate = {
-      ...toUpdate,
+      name: toUpdate.name,
+      email: toUpdate.email,
       enabled: this.selectedData.enabled,
       passwordNotExpired: this.selectedData.passwordNotExpired,
-      roles: this.selectedData.roles.map(r => r.name)
-    }
+      roles: toUpdate.roles.map(role => role.name)
+    };
+    const memberNumber = toUpdate.member?.number ?? -1;
+    const currentMemberNumber = this.member?.number ?? -1;
+
     this.call(
-      () => this.service.update(this.selectedData.username, user),
+      () => this.service.update(this.selectedData.username, user).pipe(
+        switchMap(updated => memberNumber !== currentMemberNumber ? this.service.assignProfile(this.selectedData.username, memberNumber) : of(updated))
+      ),
       () => this.load()
     );
   }
 
-  public onAssignMember(member: number): void {
-    this.call(
-      () => this.service.assignProfile(this.selectedData.username, member),
-      () => this.load()
-    );
-  }
-
-  public onShowUser(user: User) {
+  public onShowUser(user: User): void {
     this.selectedData = user;
-    this.service.getProfile(user.username).subscribe(member => this.member = member);
-    this.dialog = Dialog.INFO;
+    this.loading = true;
+
+    this.service.getProfile(user.username)
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(member => {
+        this.member = member ?? new Profile();
+        this.dialog = Dialog.INFO;
+      });
   }
 
   public onSetEnabled(change: UserStatusChange): void {
@@ -162,68 +143,66 @@ export class UserView implements OnInit {
 
   public onStartInvitation(): void {
     this.loading = true;
+
     this.service.getAllRoles()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(r => this.roleSelection = r);
-    this.dialog = Dialog.INVITE;
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(roles => {
+        this.roleSelection = roles;
+        this.dialog = Dialog.INVITE;
+      });
   }
 
   public onStartEditing(user: User): void {
     this.selectedData = user;
-    this.dialog = Dialog.EDIT;
-  }
-
-  public onStartEditingRoles(user: User): void {
-    this.selectedData = user;
     this.loading = true;
-    this.service.getAvailableRoles(user.username)
-      .pipe(
-        finalize(() => this.loading = false)
-      )
-      .subscribe(r => this.roleSelection = r);
-    this.dialog = Dialog.ROLES;
+    this.members = [];
+
+    forkJoin({
+      roles: this.service.getAllRoles(),
+      member: this.service.getProfile(user.username)
+    }).pipe(
+      finalize(() => this.loading = false)
+    ).subscribe(({ roles, member }) => {
+      this.roleSelection = roles;
+      this.member = member ?? new Profile();
+      this.dialog = Dialog.EDIT;
+    });
   }
 
-  public onStartEditingMember(user: User): void {
-    this.selectedData = user;
-    this.service.getProfile(user.username).subscribe(member => this.member = member);
-    this.service.getAvailableMembers(user.username).subscribe(members => this.availableMembers = members);
-    this.dialog = Dialog.MEMBER;
-  }
-
-  public onSearchMembers(event: { query: string }) {
+  public onSearchMembers(event: { query: string }): void {
     this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
       });
   }
 
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined) {
+  public load(page: number | undefined = undefined): void {
     this.loading = true;
+
     this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
+      .pipe(
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
   }
 
-  // DIALOGS
-
-  public onDrawerVisibleChange(visible: boolean) {
+  public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
       this.dialog = Dialog.NONE;
     }
   }
 
-  // PRIVATE METHODS
-
-  private call(
-    action: () => Observable<any>,
-    onSuccess: () => void
-  ) {
+  private call(action: () => Observable<unknown>, onSuccess: () => void): void {
     this.loading = true;
+
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -254,7 +233,5 @@ enum Dialog {
   NONE = 'none',
   INFO = 'info',
   EDIT = 'edit',
-  INVITE = 'invite',
-  ROLES = 'roles',
-  MEMBER = 'member'
+  INVITE = 'invite'
 }

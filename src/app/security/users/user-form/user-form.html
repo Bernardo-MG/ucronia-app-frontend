@@ -1,9 +1,22 @@
 <form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-5">
+    @if (!create()) {
+      <section class="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
+        <div class="flex items-center justify-between gap-4">
+          <div class="min-w-0">
+            <span class="block text-xs font-medium uppercase tracking-wide text-gray-500">Usuario</span>
+            <strong class="mt-1 block truncate text-sm text-gray-950">{{ username }}</strong>
+          </div>
+
+          <span class="text-right text-xs text-gray-500">El nombre de usuario no se puede modificar</span>
+        </div>
+      </section>
+    }
+
     <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <div class="mb-5">
-        <h3 class="font-semibold text-gray-950">Datos de acceso</h3>
-        <p class="mt-1 text-sm text-gray-500">Información que identifica al usuario en la aplicación</p>
+        <h3 class="font-semibold text-gray-950">{{ create() ? 'Datos de acceso' : 'Datos personales' }}</h3>
+        <p class="mt-1 text-sm text-gray-500">{{ create() ? 'Información que identifica al usuario en la aplicación' : 'Actualiza la información básica de la cuenta' }}</p>
       </div>
 
       <div class="space-y-4">
@@ -16,18 +29,6 @@
             @for (failure of failures().getFailures('username'); track failure) {
               <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
             }
-          </div>
-        } @else {
-          <div>
-            <span class="block text-sm font-medium text-gray-900">Usuario</span>
-
-            <div class="mt-2 flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
-              <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-700">
-                <i class="pi pi-user" aria-hidden="true"></i>
-              </span>
-
-              <strong class="truncate text-sm text-gray-950">{{ username }}</strong>
-            </div>
           </div>
         }
 
@@ -55,40 +56,65 @@
       </div>
     </section>
 
-    @if (create()) {
-      <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-        <div class="flex items-start justify-between gap-4">
-          <div>
-            <h3 class="font-semibold text-gray-950">Roles</h3>
-            <p class="mt-1 text-sm text-gray-500">Define qué podrá consultar y gestionar el usuario</p>
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <h3 class="font-semibold text-gray-950">Roles</h3>
+          <p class="mt-1 text-sm text-gray-500">Define el nivel de acceso a la aplicación</p>
+        </div>
+
+        <span class="shrink-0 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">{{ roles.length }} {{ roles.length === 1 ? 'seleccionado' : 'seleccionados' }}</span>
+      </div>
+
+      <div class="relative mt-4">
+        <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
+        <input type="search" class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Buscar roles..." aria-label="Buscar roles" [value]="roleFilter" (input)="roleFilter = $any($event.target).value" />
+      </div>
+
+      <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        @for (role of filteredRoles; track role.name) {
+          <label class="flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors hover:bg-gray-50" [class.border-blue-400]="isRoleSelected(role)" [class.bg-blue-50]="isRoleSelected(role)" [class.border-gray-200]="!isRoleSelected(role)">
+            <input type="checkbox" class="size-4 shrink-0 rounded border-gray-300 text-blue-600" [checked]="isRoleSelected(role)" (change)="toggleRole(role, $any($event.target).checked)" />
+            <span class="min-w-0 flex-1 truncate text-sm font-medium text-gray-950">{{ role.name }}</span>
+          </label>
+        } @empty {
+          <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center sm:col-span-2">
+            <i class="pi pi-search text-xl text-gray-400" aria-hidden="true"></i>
+            <p class="mt-2 text-sm font-medium text-gray-700">No se encontraron roles</p>
+            <p class="mt-1 text-xs text-gray-500">Prueba con otro nombre.</p>
           </div>
+        }
+      </div>
+    </section>
 
-          <span class="shrink-0 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">{{ roles.length }} {{ roles.length === 1 ? 'seleccionado' : 'seleccionados' }}</span>
+    @if (!create()) {
+      <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div>
+          <h3 class="font-semibold text-gray-950">Socio vinculado</h3>
+          <p class="mt-1 text-sm text-gray-500">Relaciona la cuenta con un perfil del directorio</p>
         </div>
 
-        <div class="relative mt-4">
-          <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
-          <input type="search" class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Buscar roles..." aria-label="Buscar roles" [value]="roleFilter" (input)="roleFilter = $any($event.target).value" />
-        </div>
+        @if (selectedMember.number > 0) {
+          <div class="mt-4 flex items-center gap-3 rounded-lg border border-gray-200 bg-gray-50 px-4 py-3">
+            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 font-medium text-blue-700">
+              <i class="pi pi-user" aria-hidden="true"></i>
+            </span>
 
-        <div class="mt-3 space-y-2">
-          @for (role of filteredRoles; track role.name) {
-            <label class="flex cursor-pointer items-center gap-3 rounded-lg border px-4 py-3 transition-colors hover:bg-gray-50" [class.border-blue-400]="isRoleSelected(role)" [class.bg-blue-50]="isRoleSelected(role)" [class.border-gray-200]="!isRoleSelected(role)">
-              <input type="checkbox" class="size-4 shrink-0 rounded border-gray-300 text-blue-600" [checked]="isRoleSelected(role)" (change)="toggleRole(role, $any($event.target).checked)" />
-
-              <span class="flex size-9 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600" [class.bg-blue-100]="isRoleSelected(role)" [class.text-blue-700]="isRoleSelected(role)">
-                <i class="pi pi-shield" aria-hidden="true"></i>
-              </span>
-
-              <span class="min-w-0 flex-1 truncate text-sm font-medium text-gray-950">{{ role.name }}</span>
-            </label>
-          } @empty {
-            <div class="rounded-xl border border-dashed border-gray-300 bg-gray-50 px-4 py-8 text-center">
-              <i class="pi pi-search text-xl text-gray-400" aria-hidden="true"></i>
-              <p class="mt-2 text-sm font-medium text-gray-700">No se encontraron roles</p>
-              <p class="mt-1 text-xs text-gray-500">Prueba con otro nombre.</p>
+            <div class="min-w-0 flex-1">
+              <strong class="block truncate text-sm text-gray-950">{{ selectedMember.name.fullName }}</strong>
+              <span class="text-xs text-gray-500">Socio n.º {{ selectedMember.number }}</span>
             </div>
-          }
+
+            <button type="button" class="text-sm font-medium text-blue-700 hover:text-blue-900" (click)="onRemoveMember()">Desvincular</button>
+          </div>
+        } @else {
+          <div class="mt-4 rounded-lg border border-dashed border-gray-300 bg-gray-50 px-4 py-3 text-sm text-gray-500">Este usuario no está vinculado a ningún socio.</div>
+        }
+
+        <div class="mt-4">
+          <label class="mb-2 block text-sm font-medium text-gray-900">{{ selectedMember.number > 0 ? 'Cambiar socio' : 'Vincular socio' }}</label>
+          <assoc-member-search [member]="selectedMember" [members]="members()" (selectMember)="onSelectMember($event)" (searchMember)="searchMember.emit($event)" />
+          <p class="mt-1.5 text-xs text-gray-500">{{ selectedMember.number > 0 ? 'Selecciona otro socio para sustituir la vinculación actual.' : 'Busca por nombre o número de socio.' }}</p>
         </div>
       </section>
     }
