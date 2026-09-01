@@ -27,10 +27,9 @@
     </header>
 
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <access-role-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
-        [roles]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements"
-        (show)="onShowInfo($event)" (delete)="onDelete($event)" (changePermissions)="onChangePermissions($event)"
-        (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+      <access-role-list [loading]="loading" [roles]="data.content" [rows]="data.size" [page]="data.page"
+        [totalRecords]="data.totalElements" (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)"
+        (changePage)="load($event)" />
     </div>
   </section>
 

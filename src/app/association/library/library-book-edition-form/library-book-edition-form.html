@@ -217,7 +217,7 @@
   </div>
 
   <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancel.emit()" />
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
     <p-button type="submit" label="Guardar cambios" icon="pi pi-check" [loading]="loading()"
       [disabled]="!formStatus.saveEnabled" [attr.aria-disabled]="!formStatus.saveEnabled" />
   </div>
