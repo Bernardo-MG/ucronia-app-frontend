@@ -23,6 +23,9 @@ describe('ScheduledGameService', () => {
     },
     profile: {
       get: jasmine.createSpy().and.returnValue(of({}))
+    },
+    gameTable: {
+      get: jasmine.createSpy().and.returnValue(of({}))
     }
   };
 
@@ -38,5 +41,11 @@ describe('ScheduledGameService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should get a game table', () => {
+    service.getTable(10).subscribe();
+
+    expect(mockUcroniaClient.gameTable.get).toHaveBeenCalledWith(10);
   });
 });

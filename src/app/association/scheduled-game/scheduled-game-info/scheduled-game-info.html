@@ -17,6 +17,10 @@
   </div>
 
   <div>
+    <ui-detail-field [loading]="loading()" icon="pi pi-table" name="Mesa" [value]="table()?.name || '-'" />
+  </div>
+
+  <div>
     <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Plazas" [value]="data().maxPlayers" />
   </div>
 

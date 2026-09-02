@@ -3,6 +3,7 @@
  */
 
 export * from './lib/calendar/activity';
+export * from './lib/calendar/game-table';
 export * from './lib/calendar/recurrence';
 export * from './lib/calendar/scheduled-game';
 export * from './lib/fees/fee';
@@ -37,4 +38,3 @@ export * from './lib/transactions/transaction';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
 export * from './lib/transactions/transaction-summary';
-

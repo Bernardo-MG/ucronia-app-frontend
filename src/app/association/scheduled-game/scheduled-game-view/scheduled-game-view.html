@@ -86,7 +86,8 @@
       </ng-template>
 
       <div class="w-full px-2 py-4 sm:px-4">
-        <assoc-scheduled-game-info [data]="selectedData" [master]="selectedMaster" [loading]="status.loading" />
+        <assoc-scheduled-game-info [data]="selectedData" [master]="selectedMaster" [table]="selectedTable"
+          [loading]="status.loading" />
       </div>
 
       <ng-template #footer>

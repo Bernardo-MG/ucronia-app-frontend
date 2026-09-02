@@ -4,7 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Profile, ScheduledGame } from '@ucronia/domain';
+import { GameTable, Profile, ScheduledGame } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -13,8 +13,8 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { finalize, map, Observable, switchMap } from 'rxjs';
 import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
+import { finalize, forkJoin, Observable, of, switchMap } from 'rxjs';
 import { ScheduledGameForm } from '../scheduled-game-form/scheduled-game-form';
 import { ScheduledGameInfo } from '../scheduled-game-info/scheduled-game-info';
 import { ScheduledGameList } from '../scheduled-game-list/scheduled-game-list';
@@ -48,6 +48,7 @@ export class ScheduledGameView implements OnInit {
   public members: Profile[] = [];
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();
+  public selectedTable: GameTable | undefined;
   public dialog = Dialog.NONE;
   public failures = new FailureStore();
 
@@ -138,23 +139,24 @@ export class ScheduledGameView implements OnInit {
 
   public onShowInfo(scheduledGame: ScheduledGame) {
     this.dialog = Dialog.INFO;
+    this.selectedTable = undefined;
 
     this.withLoading(
       this.service.getOne(scheduledGame.number)
         .pipe(
-          switchMap(loadedGame => this.service.getMaster(loadedGame.master)
-            .pipe(
-              map(master => ({
-                loadedGame,
-                master
-              }))
-            )
-          )
+          switchMap(loadedGame => forkJoin({
+            loadedGame: of(loadedGame),
+            master: this.service.getMaster(loadedGame.master),
+            table: !loadedGame.table
+              ? of(undefined)
+              : this.service.getTable(loadedGame.table)
+          }))
         )
     )
-      .subscribe(({ loadedGame, master }) => {
+      .subscribe(({ loadedGame, master, table }) => {
         this.selectedData = loadedGame;
         this.selectedMaster = master;
+        this.selectedTable = table;
       });
   }
 
