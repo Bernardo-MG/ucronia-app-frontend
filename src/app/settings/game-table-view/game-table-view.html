@@ -1,0 +1,22 @@
+<div class="p-4 space-y-6">
+  <header class="flex items-center justify-between">
+    <h1 class="text-4xl font-bold">Mesas de juego</h1>
+    @if (permissions.create) {
+      <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" aria-label="Nueva mesa" rounded />
+    }
+  </header>
+  <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading" [editable]="permissions.edit"
+      [deletable]="permissions.delete" [data]="data.content" [rows]="data.size" [page]="data.page"
+      [totalRecords]="data.totalElements" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
+      (changePage)="load($event)" /></div>
+</div>
+@switch (dialog) {
+  @case (Dialog.CREATE) {
+    <ng-template #header>Crear mesa de juego</ng-template>
+    <assoc-game-table-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+  }
+  @case (Dialog.EDIT) {
+    <ng-template #header>Editar mesa de juego</ng-template>
+    <assoc-game-table-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+  }
+}

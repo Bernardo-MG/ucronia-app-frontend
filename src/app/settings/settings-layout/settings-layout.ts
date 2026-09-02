@@ -68,6 +68,14 @@ export class SettingsLayout {
       });
     }
 
+    if (authService.hasPermission(UcroniaPermissions.gameTable.read)) {
+      catalogItems.push({
+        label: 'Mesas de juego',
+        icon: 'pi pi-table',
+        routerLink: 'game-tables'
+      });
+    }
+
     if (authService.hasPermission(UcroniaPermissions.directory.memberProfile.read)
     ) {
       catalogItems.push({

@@ -23,6 +23,11 @@ export const settingsRoutes: Routes = [
         loadComponent: () => import('./fee-type-view/fee-type-view').then(m => m.FeeTypeView)
       },
       {
+        path: 'game-tables',
+        canActivate: [ResourceGuard(UcroniaPermissions.gameTable.read)],
+        loadComponent: () => import('./game-table-view/game-table-view').then(m => m.GameTableView)
+      },
+      {
         path: 'keys',
         canActivate: [ResourceGuard(UcroniaPermissions.directory.memberProfile.read)],
         loadComponent: () => import('./key-view/key-view').then(m => m.KeyView)
