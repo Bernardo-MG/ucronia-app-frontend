@@ -31,7 +31,7 @@
 
   <div>
     <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Recurrencia"
-      [value]="(data().recurrence.interval || 0) + ' ' + (data().recurrence.unit || '-')" />
+      [value]="(data().recurrence?.interval || 0) + ' ' + (data().recurrence?.unit || '-')" />
   </div>
 
   <div>

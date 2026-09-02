@@ -30,7 +30,7 @@ export class ScheduledGameForm implements OnChanges {
 
   @Input() public set data(value: ScheduledGame) {
     this.form.patchValue(value as any);
-    this.recurring = value.recurrence.interval > 0;
+    this.recurring = value.recurrence ? value.recurrence?.interval > 0 : false;
     this.showImageField = !!value.image;
   }
 
