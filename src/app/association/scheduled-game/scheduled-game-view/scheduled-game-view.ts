@@ -1,21 +1,28 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Profile, ScheduledGame } from '@ucronia/domain';
+import { GameTable, Profile, ScheduledGame } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
-import { finalize, map, Observable, switchMap } from 'rxjs';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
+import { finalize, forkJoin, Observable, of, switchMap } from 'rxjs';
 import { ScheduledGameForm } from '../scheduled-game-form/scheduled-game-form';
 import { ScheduledGameInfo } from '../scheduled-game-info/scheduled-game-info';
 import { ScheduledGameList } from '../scheduled-game-list/scheduled-game-list';
 import { ScheduledGameService } from '../scheduled-game-service';
 
 @Component({
-  imports: [PanelModule, ButtonModule, DrawerModule, ScheduledGameList, ScheduledGameInfo, ScheduledGameForm],
+  imports: [FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule,
+    SelectButtonModule, ScheduledGameList, ScheduledGameInfo, ScheduledGameForm],
   templateUrl: './scheduled-game-view.html'
 })
 export class ScheduledGameView implements OnInit {
@@ -30,14 +37,44 @@ export class ScheduledGameView implements OnInit {
   };
 
   public scheduledGames = new Page<ScheduledGame>();
+  public filterValue = '';
+  public selectedStatus: CalendarStatus | 'all' = 'all';
+  public readonly statusOptions: StatusOption[] = [
+    { label: 'Todas', value: 'all' },
+    { label: 'Borrador', value: CalendarStatus.DRAFT },
+    { label: 'Publicada', value: CalendarStatus.PUBLISHED }
+  ];
+
   public members: Profile[] = [];
-  private sort = new Sorting();
+  public tables: GameTable[] = [];
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();
-
+  public selectedTable: GameTable | undefined;
   public dialog = Dialog.NONE;
-
   public failures = new FailureStore();
+
+  private sort = new Sorting();
+
+  public get filteredScheduledGames(): ScheduledGame[] {
+    const query = this.filterValue.trim().toLocaleLowerCase('es');
+
+    return this.scheduledGames.content.filter(game => {
+      const matchesStatus = this.selectedStatus === 'all' || game.status === this.selectedStatus;
+      const matchesQuery = !query
+        || game.title.toLocaleLowerCase('es').includes(query)
+        || game.location.toLocaleLowerCase('es').includes(query);
+
+      return matchesStatus && matchesQuery;
+    });
+  }
+
+  public get draftCount(): number {
+    return this.scheduledGames.content.filter(game => game.status === CalendarStatus.DRAFT).length;
+  }
+
+  public get publishedCount(): number {
+    return this.scheduledGames.content.filter(game => game.status === CalendarStatus.PUBLISHED).length;
+  }
 
   constructor() {
     const authService = inject(AuthService);
@@ -51,14 +88,15 @@ export class ScheduledGameView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
+    this.loadTables();
   }
 
   public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
 
+    this.sort.addField(new SortingProperty(sorting.field, direction));
     this.load(this.scheduledGames.page);
   }
 
@@ -79,7 +117,7 @@ export class ScheduledGameView implements OnInit {
   public onDelete(event: Event) {
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
-      message: 'Estas seguro de querer borrar? Esta accion no es revertible',
+      message: '¿Estás seguro de querer borrar? Esta acción no es reversible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: {
         label: 'Cancelar',
@@ -103,23 +141,24 @@ export class ScheduledGameView implements OnInit {
 
   public onShowInfo(scheduledGame: ScheduledGame) {
     this.dialog = Dialog.INFO;
+    this.selectedTable = undefined;
 
     this.withLoading(
       this.service.getOne(scheduledGame.number)
         .pipe(
-          switchMap((loadedGame) => this.service.getMaster(loadedGame.master)
-            .pipe(
-              map((master) => ({
-                loadedGame,
-                master
-              }))
-            )
-          )
+          switchMap(loadedGame => forkJoin({
+            loadedGame: of(loadedGame),
+            master: this.service.getMaster(loadedGame.master),
+            table: !loadedGame.table
+              ? of(undefined)
+              : this.service.getTable(loadedGame.table)
+          }))
         )
     )
-      .subscribe(({ loadedGame, master }) => {
+      .subscribe(({ loadedGame, master, table }) => {
         this.selectedData = loadedGame;
         this.selectedMaster = master;
+        this.selectedTable = table;
       });
   }
 
@@ -128,6 +167,11 @@ export class ScheduledGameView implements OnInit {
       this.service.getAll(page, this.sort)
     )
       .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
+  }
+
+  private loadTables(): void {
+    this.service.getTables()
+      .subscribe(tables => this.tables = tables);
   }
 
   public onDrawerVisibleChange(visible: boolean) {
@@ -169,6 +213,7 @@ export class ScheduledGameView implements OnInit {
     onSuccess: () => void
   ) {
     this.status.loading = true;
+
     action()
       .pipe(finalize(() => this.status.loading = false))
       .subscribe({
@@ -181,7 +226,7 @@ export class ScheduledGameView implements OnInit {
       });
   }
 
-  private handleError(error: unknown): void {
+  private handleError(error: unknown) {
     if (error instanceof FailureResponse) {
       this.failures = error.failures;
     } else {
@@ -209,6 +254,11 @@ interface Permissions {
 
 interface Status {
   loading: boolean;
+}
+
+interface StatusOption {
+  label: string;
+  value: CalendarStatus | 'all';
 }
 
 enum Dialog {

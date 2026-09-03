@@ -1,41 +1,83 @@
-<div class="ms-3 space-y-5">
+<div class="space-y-5">
+  @if (data().image) {
+    <img class="h-40 w-full rounded-xl object-cover" [src]="data().image" [alt]="data().title" />
+  }
 
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-tag" name="Titulo" [value]="data().title" />
+  <div class="flex items-center justify-between gap-3">
+    <p class="text-sm text-gray-500">Estado de la partida</p>
+    @if (loading()) {
+      <p-skeleton width="7rem" height="1.75rem" borderRadius="1rem" />
+    } @else {
+      <p-tag [value]="getStatusName(data().status)" [severity]="getStatusSeverity(data().status)" />
+    }
   </div>
 
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-send" name="Estado" [value]="getName(data().status)" />
+  <section class="grid grid-cols-1 overflow-hidden rounded-xl border border-gray-200 sm:grid-cols-3">
+    <div class="flex items-center gap-3 p-4 sm:border-r sm:border-gray-200">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700"><i class="pi pi-calendar" aria-hidden="true"></i></span>
+      <div class="min-w-0">
+        <p class="text-sm text-gray-500">Inicio</p>
+        @if (loading()) { <p-skeleton class="mt-2" width="8rem" height="1.25rem" /> }
+        @else { <p class="font-semibold text-gray-950">{{ data().start | date:'dd MMM yyyy · HH:mm' }}</p> }
+      </div>
+    </div>
+    <div class="flex items-center gap-3 border-t border-gray-200 p-4 sm:border-r sm:border-t-0">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700"><i class="pi pi-table" aria-hidden="true"></i></span>
+      <div class="min-w-0">
+        <p class="text-sm text-gray-500">Mesa</p>
+        @if (loading()) { <p-skeleton class="mt-2" width="7rem" height="1.25rem" /> }
+        @else { <p class="truncate font-semibold text-gray-950">{{ table()?.name || 'Sin asignar' }}</p> }
+      </div>
+    </div>
+    <div class="flex items-center gap-3 border-t border-gray-200 p-4 sm:border-t-0">
+      <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-700"><i class="pi pi-users" aria-hidden="true"></i></span>
+      <div class="min-w-0">
+        <p class="text-sm text-gray-500">Plazas</p>
+        @if (loading()) { <p-skeleton class="mt-2" width="6rem" height="1.25rem" /> }
+        @else { <p class="font-semibold text-gray-950">{{ data().maxPlayers }} jugadores</p> }
+      </div>
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+    <section class="rounded-xl border border-gray-200 p-5">
+      <h3 class="flex items-center gap-2 font-semibold text-gray-950"><i class="pi pi-file-edit text-blue-700" aria-hidden="true"></i>Detalles</h3>
+      <div class="mt-4 border-t border-gray-200 pt-4">
+        <p class="text-sm text-gray-500">Descripción</p>
+        @if (loading()) {
+          <div class="mt-3 space-y-2"><p-skeleton height="1rem" /><p-skeleton width="70%" height="1rem" /></div>
+        } @else {
+          <p class="mt-2 whitespace-pre-line text-gray-950">{{ data().description || 'Sin descripción' }}</p>
+        }
+      </div>
+    </section>
+
+    <section class="rounded-xl border border-gray-200 p-5">
+      <h3 class="flex items-center gap-2 font-semibold text-gray-950"><i class="pi pi-building-columns text-blue-700" aria-hidden="true"></i>Organización</h3>
+      <div class="mt-4 space-y-4 border-t border-gray-200 pt-4">
+        <div>
+          <p class="text-sm text-gray-500">Director</p>
+          <div class="mt-2 flex items-center gap-3">
+            <span class="flex size-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-600"><i class="pi pi-user" aria-hidden="true"></i></span>
+            @if (loading()) { <p-skeleton width="9rem" height="1.25rem" /> }
+            @else { <p class="font-medium text-gray-950">{{ master().name.fullName || 'Sin asignar' }}</p> }
+          </div>
+        </div>
+        <div class="border-t border-gray-200 pt-4">
+          <p class="text-sm text-gray-500">Lugar</p>
+          @if (loading()) { <p-skeleton class="mt-2" width="10rem" height="1.25rem" /> }
+          @else { <p class="mt-2 flex items-center gap-2 font-medium text-gray-950"><i class="pi pi-map-marker text-gray-500" aria-hidden="true"></i>{{ data().location || 'Sin especificar' }}</p> }
+        </div>
+      </div>
+    </section>
   </div>
 
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-file-edit" name="Descripcion" [value]="data().description" />
-  </div>
-
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-map-marker" name="Lugar" [value]="data().location" />
-  </div>
-
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-users" name="Plazas" [value]="data().maxPlayers" />
-  </div>
-
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-image" name="Imagen" [value]="data().image" />
-  </div>
-
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-clock" name="Inicio"
-      [value]="data().start | date:'yyyy-MM-dd HH:mm'" />
-  </div>
-
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Recurrencia"
-      [value]="(data().recurrence.interval || 0) + ' ' + (data().recurrence.unit || '-')" />
-  </div>
-
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Director" [value]="master().name.fullName" />
-  </div>
-
+  <section class="flex items-center gap-3 rounded-xl border border-gray-200 p-4">
+    <span class="flex size-10 shrink-0 items-center justify-center text-blue-700"><i class="pi pi-sync" aria-hidden="true"></i></span>
+    <div>
+      <p class="text-sm text-gray-500">Recurrencia</p>
+      @if (loading()) { <p-skeleton class="mt-2" width="8rem" height="1.25rem" /> }
+      @else { <p class="font-medium text-gray-950">{{ getRecurrenceName() }}</p> }
+    </div>
+  </section>
 </div>

@@ -3,9 +3,9 @@
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)">
   <ng-template #header>
-    <tr class="border-b bg-gray-100">
+    <tr class="border-b border-gray-200 bg-gray-50">
       <th pSortableColumn="title">
-        Titulo
+        Título
         <p-sortIcon field="title" />
       </th>
       <th pSortableColumn="status">
@@ -24,18 +24,20 @@
         Plazas
         <p-sortIcon field="maxPlayers" />
       </th>
-      <th>
-      </th>
+      <th></th>
     </tr>
   </ng-template>
+
   <ng-template #body let-scheduledGame>
-    <tr>
-      <td>{{ scheduledGame.title }}</td>
-      <td>{{ getName(scheduledGame.status) }}</td>
-      <td>{{ scheduledGame.start | date:'yyyy-MM-dd HH:mm' }}</td>
+    <tr class="hover:bg-gray-50">
+      <td class="font-medium text-gray-950">{{ scheduledGame.title }}</td>
+      <td>
+        <p-tag [value]="getName(scheduledGame.status)" [severity]="getSeverity(scheduledGame.status)" />
+      </td>
+      <td>{{ scheduledGame.start | date:'d MMM y · HH:mm' }}</td>
       <td>{{ scheduledGame.location }}</td>
       <td>{{ scheduledGame.maxPlayers }}</td>
-      <td class="w-40">
+      <td class="w-20 text-right">
         <p-button icon="pi pi-eye" severity="secondary" aria-label="Ver" (click)="show.emit(scheduledGame)" rounded
           text />
       </td>

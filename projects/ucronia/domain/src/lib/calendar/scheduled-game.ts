@@ -7,11 +7,12 @@ export class ScheduledGame {
   public gameType = ScheduledGameType.ONESHOT;
   public description = "";
   public location = "";
+  public table: number | undefined = 0;
   public master = 0;
   public maxPlayers = 0;
   public image = "";
   public start = new Date();
-  public recurrence = new Recurrence();
+  public recurrence: Recurrence | undefined = new Recurrence();
   public status = CalendarStatus.DRAFT;
 }
 

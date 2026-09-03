@@ -1,7 +1,8 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { MemberStatus, Profile, ScheduledGame } from '@ucronia/domain';
+import { GameTable, MemberStatus, Profile, ScheduledGame } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -101,6 +102,16 @@ export class ScheduledGameService {
 
   public getMaster(number: number): Observable<Profile> {
     return this.ucroniaClient.profile.get(number);
+  }
+
+  public getTable(number: number): Observable<GameTable> {
+    return this.ucroniaClient.gameTable.get(number);
+  }
+
+  public getTables(): Observable<GameTable[]> {
+    const sorting = new Sorting([new SortingProperty('name')]);
+
+    return getAllPages((page, size) => this.ucroniaClient.gameTable.page(page, size, sorting));
   }
 
   public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<Profile[]> {
