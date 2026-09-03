@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { GameTable, MemberStatus, Profile, ScheduledGame } from '@ucronia/domain';
@@ -105,6 +106,12 @@ export class ScheduledGameService {
 
   public getTable(number: number): Observable<GameTable> {
     return this.ucroniaClient.gameTable.get(number);
+  }
+
+  public getTables(): Observable<GameTable[]> {
+    const sorting = new Sorting([new SortingProperty('name')]);
+
+    return getAllPages((page, size) => this.ucroniaClient.gameTable.page(page, size, sorting));
   }
 
   public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<Profile[]> {

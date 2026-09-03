@@ -13,7 +13,7 @@ describe('ScheduledGameView', () => {
 
   const scheduledGameServiceMock = jasmine.createSpyObj<ScheduledGameService>(
     'ScheduledGameService',
-    ['create', 'update', 'delete', 'getAll', 'getOne', 'getMaster', 'getTable']
+    ['create', 'update', 'delete', 'getAll', 'getOne', 'getMaster', 'getTable', 'getTables']
   );
 
   beforeEach(async () => {
@@ -21,6 +21,7 @@ describe('ScheduledGameView', () => {
     scheduledGameServiceMock.getAll.and.returnValue(
       of(new Page<ScheduledGame>())
     );
+    scheduledGameServiceMock.getTables.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
       imports: [ScheduledGameView],

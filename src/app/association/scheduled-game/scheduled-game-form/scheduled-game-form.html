@@ -64,6 +64,18 @@
             }
           </div>
         </div>
+
+        <div>
+          <label for="tableInput" class="mb-2 block font-semibold text-gray-950">Mesa</label>
+          <p-select inputId="tableInput" [options]="tables()" optionLabel="name" optionValue="number"
+            formControlName="table" placeholder="Sin mesa asignada" appendTo="body" class="w-full"
+            [showClear]="true" [invalid]="isFieldInvalid('table')" />
+          @for (failure of failures().getFailures('table'); track failure) {
+            <p-message class="mt-2 block" severity="error" size="small" variant="simple">
+              {{ failure.message }}
+            </p-message>
+          }
+        </div>
       </div>
     </section>
 

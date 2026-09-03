@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Profile, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
+import { GameTable, Profile, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputNumberModule } from 'primeng/inputnumber';
@@ -26,6 +26,7 @@ export class ScheduledGameForm implements OnChanges {
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
+  public readonly tables = input<GameTable[]>([]);
   public readonly selectedMaster = input(new Profile());
 
   @Input() public set data(value: ScheduledGame) {
@@ -62,6 +63,7 @@ export class ScheduledGameForm implements OnChanges {
       gameType: [ScheduledGameType.ONESHOT, Validators.required],
       description: [''],
       location: [''],
+      table: [null],
       maxPlayers: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
       image: [''],
       start: [null, Validators.required],

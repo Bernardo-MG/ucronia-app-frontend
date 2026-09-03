@@ -120,6 +120,7 @@
 
       <div class="w-full px-2 py-4 sm:px-4">
         <assoc-scheduled-game-form [loading]="status.loading" [failures]="failures" [members]="members"
+          [tables]="tables"
           (save)="onCreate($event)" (cancelEdition)="dialog = Dialog.NONE"
           (searchMember)="onSearchMembers($event)" />
       </div>
@@ -140,6 +141,7 @@
 
       <div class="w-full px-2 py-4 sm:px-4">
         <assoc-scheduled-game-form [loading]="status.loading" [data]="selectedData" [members]="members"
+          [tables]="tables"
           [selectedMaster]="selectedMaster" [failures]="failures" (save)="onUpdate($event)"
           (cancelEdition)="dialog = Dialog.INFO" (searchMember)="onSearchMembers($event)" />
       </div>

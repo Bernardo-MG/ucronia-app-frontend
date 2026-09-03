@@ -46,6 +46,7 @@ export class ScheduledGameView implements OnInit {
   ];
 
   public members: Profile[] = [];
+  public tables: GameTable[] = [];
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();
   public selectedTable: GameTable | undefined;
@@ -87,6 +88,7 @@ export class ScheduledGameView implements OnInit {
 
   public ngOnInit(): void {
     this.load();
+    this.loadTables();
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -165,6 +167,11 @@ export class ScheduledGameView implements OnInit {
       this.service.getAll(page, this.sort)
     )
       .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
+  }
+
+  private loadTables(): void {
+    this.service.getTables()
+      .subscribe(tables => this.tables = tables);
   }
 
   public onDrawerVisibleChange(visible: boolean) {
