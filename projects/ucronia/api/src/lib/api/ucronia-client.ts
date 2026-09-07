@@ -4,6 +4,7 @@ import { ActivityEndpoint } from './endpoint/activity-endpoint';
 import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
+import { GameTableEndpoint } from './endpoint/game-table-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint';
 import { KeyEndpoint } from './endpoint/key-endpoint';
 import { LibraryEndpoint } from './endpoint/library-endpoint';
@@ -79,6 +80,10 @@ export class UcroniaClient {
 
   public get scheduledGame() {
     return new ScheduledGameEndpoint(this.http, this.base_url);
+  }
+
+  public get gameTable() {
+    return new GameTableEndpoint(this.http, this.base_url);
   }
 
   public get setting() {
