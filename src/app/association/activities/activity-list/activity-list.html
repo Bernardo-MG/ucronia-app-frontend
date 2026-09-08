@@ -3,7 +3,7 @@
   currentPageReportTemplate="Total: {totalRecords}" (onSort)="changeDirection.emit($event)" (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr class="border-b border-gray-200 bg-gray-50">
-      <th pSortableColumn="date">Próxima fecha <p-sortIcon field="date" /></th>
+      <th pSortableColumn="date">Fecha <p-sortIcon field="date" /></th>
       <th pSortableColumn="title">Actividad <p-sortIcon field="title" /></th>
       <th pSortableColumn="location">Lugar <p-sortIcon field="location" /></th>
       <th>Sesiones</th>
@@ -13,17 +13,16 @@
   <ng-template #body let-activity>
     <tr class="hover:bg-gray-50">
       <td>
-        @if (getNextDate(activity); as nextDate) {
-          <div class="flex min-w-52 items-center gap-3">
-            <span class="flex size-14 shrink-0 flex-col items-center justify-center rounded-lg bg-blue-50 text-blue-700">
-              <strong class="text-lg leading-none">{{ nextDate.start | date:'dd' }}</strong>
-              <span class="mt-1 text-xs font-semibold uppercase">{{ nextDate.start | date:'MMM' }}</span>
-            </span>
-            <div><span class="block text-sm text-gray-700">{{ nextDate.start | date:'EEE · HH:mm' }}–{{ nextDate.end | date:'HH:mm' }}</span><p-tag class="mt-1 block" value="Próxima" severity="success" /></div>
-          </div>
-        } @else {
-          <span class="text-sm text-gray-500">Sin próximas fechas</span>
-        }
+        <div class="min-w-64 space-y-1">
+          @for (date of activity.dates; track date) {
+            <div class="flex items-center gap-2 text-sm text-gray-700">
+              <i class="pi pi-calendar text-xs text-primary" aria-hidden="true"></i>
+              <span>{{ date.start | date:'d MMM y, HH:mm' }}–{{ date.end | date:'HH:mm' }}</span>
+            </div>
+          } @empty {
+            <span class="text-sm text-gray-500">Sin fechas</span>
+          }
+        </div>
       </td>
       <td><strong class="block text-gray-950">{{ activity.title }}</strong><span class="mt-1 block max-w-xl truncate text-sm text-gray-500">{{ activity.description }}</span></td>
       <td>{{ activity.location || 'Sin lugar' }}</td>
