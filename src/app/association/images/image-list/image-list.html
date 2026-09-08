@@ -1,0 +1,28 @@
+<p-table [lazy]="true" dataKey="number" [loading]="loading()" [value]="images()" [paginator]="true"
+  [rows]="rows()" [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)" responsiveLayout="scroll">
+  <ng-template #header>
+    <tr>
+      <th class="w-32">Vista previa</th>
+      <th pSortableColumn="name" class="min-w-48">Nombre <p-sortIcon field="name" /></th>
+      <th class="min-w-72">Descripción</th>
+      <th pSortableColumn="mediaType" class="min-w-36">Archivo <p-sortIcon field="mediaType" /></th>
+      <th class="min-w-44">Actualizado</th>
+      <th class="w-16"><span class="sr-only">Acciones</span></th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-image>
+    <tr class="cursor-pointer transition-colors hover:bg-primary-50/40" tabindex="0"
+      (click)="show.emit(image)" (keydown.enter)="show.emit(image)">
+      <td><img [src]="contentUrl()(image.number)" [alt]="image.name"
+        class="h-12 w-20 rounded-md border border-gray-200 object-cover" loading="lazy" /></td>
+      <td><span class="font-medium text-gray-950">{{ image.name }}</span></td>
+      <td class="max-w-96 text-gray-600"><span class="line-clamp-2">{{ image.description || 'Sin descripción' }}</span></td>
+      <td class="text-gray-600">{{ image.mediaType }} · {{ formatSize(image.size) }}</td>
+      <td class="text-gray-600">{{ image.audit.updatedAt || image.audit.createdAt | date:'d MMM y · HH:mm' }}</td>
+      <td class="text-right"><p-button icon="pi pi-ellipsis-v" severity="secondary" aria-label="Ver imagen"
+        (click)="$event.stopPropagation(); show.emit(image)" rounded text /></td>
+    </tr>
+  </ng-template>
+</p-table>
