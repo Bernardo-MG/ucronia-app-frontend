@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, InjectionToken } from '@angular/core';
+import { AccountEndpoint } from './endpoint/account-endpoint';
 import { ActivityEndpoint } from './endpoint/activity-endpoint';
 import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
 import { GameTableEndpoint } from './endpoint/game-table-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint';
+import { ImageEndpoint } from './endpoint/image-endpoint';
 import { KeyEndpoint } from './endpoint/key-endpoint';
 import { LibraryEndpoint } from './endpoint/library-endpoint';
 import { MemberEndpoint } from './endpoint/member-endpoint';
@@ -16,7 +18,6 @@ import { ScheduledGameEndpoint } from './endpoint/scheduled-game-endpoint';
 import { SettingEndpoint } from './endpoint/setting-endpoint';
 import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
-import { AccountEndpoint } from './endpoint/account-endpoint';
 import { UserEndpoint } from './endpoint/user-profile-endpoint';
 
 export const UCRONIA_API_BASE_URL = new InjectionToken<string>('UCRONIA_API_BASE_URL');
@@ -36,6 +37,10 @@ export class UcroniaClient {
 
   public get guest() {
     return new GuestEndpoint(this.http, this.base_url);
+  }
+
+  public get image() {
+    return new ImageEndpoint(this.http, this.base_url);
   }
 
   public get sponsor() {

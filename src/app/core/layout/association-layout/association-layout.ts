@@ -127,6 +127,14 @@ export class AssociationLayout {
           icon: 'pi pi-clock'
         });
     }
+    if (authService.hasPermission(UcroniaPermissions.image.read)) {
+      items.push(
+        {
+          label: 'Imágenes',
+          routerLink: '/association/images',
+          icon: 'pi pi-images'
+        });
+    }
 
     return items;
   }
