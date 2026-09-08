@@ -50,20 +50,7 @@ export class ActivityView implements OnInit {
   public failures = new FailureStore();
 
   public get filteredActivities(): Activity[] {
-    const query = this.filterValue.trim().toLocaleLowerCase('es');
-    const now = new Date();
-
-    return this.activities.content.filter(activity => {
-      const matchesQuery = !query
-        || activity.title.toLocaleLowerCase('es').includes(query)
-        || activity.location.toLocaleLowerCase('es').includes(query);
-      const hasUpcomingDate = activity.dates.some(date => new Date(date.end) >= now);
-      const matchesDisplay = this.selectedDisplay === ActivityDisplay.ALL
-        || (this.selectedDisplay === ActivityDisplay.UPCOMING && hasUpcomingDate)
-        || (this.selectedDisplay === ActivityDisplay.PAST && !hasUpcomingDate);
-
-      return matchesQuery && matchesDisplay;
-    });
+    return this.activities.content;
   }
 
   public get upcomingSessions(): number {
@@ -73,7 +60,7 @@ export class ActivityView implements OnInit {
   }
 
   public get locationCount(): number {
-    return new Set(this.activities.content.map(activity => activity.location.trim()).filter(Boolean)).size;
+    return new Set(this.activities.content.map(activity => activity.location).filter(Boolean)).size;
   }
 
   constructor() {

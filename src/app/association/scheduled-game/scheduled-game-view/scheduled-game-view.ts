@@ -56,16 +56,7 @@ export class ScheduledGameView implements OnInit {
   private sort = new Sorting();
 
   public get filteredScheduledGames(): ScheduledGame[] {
-    const query = this.filterValue.trim().toLocaleLowerCase('es');
-
-    return this.scheduledGames.content.filter(game => {
-      const matchesStatus = this.selectedStatus === 'all' || game.status === this.selectedStatus;
-      const matchesQuery = !query
-        || game.title.toLocaleLowerCase('es').includes(query)
-        || game.location.toLocaleLowerCase('es').includes(query);
-
-      return matchesStatus && matchesQuery;
-    });
+    return this.scheduledGames.content;
   }
 
   public get draftCount(): number {
