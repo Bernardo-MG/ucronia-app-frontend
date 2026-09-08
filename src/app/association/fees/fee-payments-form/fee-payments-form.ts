@@ -1,4 +1,3 @@
-
 import { Component, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
@@ -27,7 +26,10 @@ export class FeePaymentsForm {
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
+  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
+
+  public selectedMember?: Profile;
 
   public formStatus: FormStatus;
 
@@ -54,7 +56,9 @@ export class FeePaymentsForm {
       return;
     }
 
+    this.selectedMember = member;
     this.form.get('member')?.setValue(member.number);
+    this.form.get('member')?.markAsTouched();
 
     if (this.months.length === 0) {
       this.addDate();
@@ -62,7 +66,7 @@ export class FeePaymentsForm {
   }
 
   public addDate() {
-    this.months.push(this.fb.control(undefined));
+    this.months.push(this.fb.control(undefined, Validators.required));
   }
 
   public removeDate(index: number): void {
@@ -72,7 +76,6 @@ export class FeePaymentsForm {
   public onMonthSelect(date: Date, index: number) {
     const controlValue = this.months.at(index).value;
 
-    // If your form stores a Date:
     const currentDate = controlValue instanceof Date
       ? controlValue
       : new Date(controlValue);
@@ -87,13 +90,12 @@ export class FeePaymentsForm {
    */
   public onSave() {
     if (this.form.valid) {
-      // Valid form, can emit data
       this.save.emit(this.form.value);
     }
   }
 
   public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
 }

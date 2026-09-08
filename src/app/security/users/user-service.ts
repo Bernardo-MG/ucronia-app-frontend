@@ -122,15 +122,15 @@ export class UserService {
   // Members
 
   public getProfile(username: string): Observable<Profile> {
-    return this.securityClient.user.profile.get(username);
+    return this.ucroniaClient.user.profile.get(username);
   }
 
   public assignProfile(username: string, profile: number): Observable<Profile> {
     let obs: Observable<Profile>;
     if (profile && profile > 0) {
-      obs = this.securityClient.user.profile.set(username, profile);
+      obs = this.ucroniaClient.user.profile.set(username, profile);
     } else {
-      obs = this.securityClient.user.profile.delete(username);
+      obs = this.ucroniaClient.user.profile.delete(username);
     }
 
     return obs

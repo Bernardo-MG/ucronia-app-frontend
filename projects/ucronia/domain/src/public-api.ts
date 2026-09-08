@@ -3,14 +3,16 @@
  */
 
 export * from './lib/calendar/activity';
+export * from './lib/calendar/game-table';
 export * from './lib/calendar/recurrence';
-export * from './lib/calendar/scheduled_game';
+export * from './lib/calendar/scheduled-game';
 export * from './lib/fees/fee';
 export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
 export * from './lib/fees/fee-type';
 export * from './lib/fees/years-range';
 export * from './lib/guests/guest';
+export * from './lib/image/image';
 export * from './lib/library/author';
 export * from './lib/library/book-lending';
 export * from './lib/library/book-type';
@@ -37,4 +39,3 @@ export * from './lib/transactions/transaction';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
 export * from './lib/transactions/transaction-summary';
-

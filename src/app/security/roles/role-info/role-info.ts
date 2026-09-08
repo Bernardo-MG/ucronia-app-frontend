@@ -1,45 +1,64 @@
-import { CommonModule } from '@angular/common';
-import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
-import { arrayPage } from '@bernardo-mg/request';
 import { SkeletonModule } from 'primeng/skeleton';
-import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-role-info',
-  imports: [CommonModule, SkeletonModule, TableModule],
+  imports: [SkeletonModule],
   templateUrl: './role-info.html'
 })
-export class RoleInfo implements OnChanges {
+export class RoleInfo {
 
   public readonly data = input(new Role());
   public readonly loading = input(false);
 
-  public loadingPermissions = false;
+  public filterValue = '';
 
-  public view: string = 'details';
-
-  public rolePermissions = arrayPage<ResourcePermission>([], 1, 0);
-
-  public get firstRolePermission() {
-    return (this.rolePermissions.page - 1) * this.rolePermissions.size;
+  public get resourceCount(): number {
+    return new Set(
+      this.data().permissions.map(permission => permission.resource)
+    ).size;
   }
 
-  private pageSize = 10;
+  public get permissionGroups(): PermissionGroup[] {
+    const filter = this.filterValue.trim().toLocaleLowerCase();
+    const groups = new Map<string, ResourcePermission[]>();
 
-  public ngOnChanges({ data }: SimpleChanges): void {
-    if (data) {
-      this.rolePermissions = arrayPage<ResourcePermission>(this.data().permissions, 1, this.pageSize);
-    }
+    this.data().permissions
+      .filter(permission => !filter || [
+        permission.resource,
+        permission.action,
+        permission.name
+      ].some(value => value.toLocaleLowerCase().includes(filter)))
+      .forEach(permission => {
+        const permissions = groups.get(permission.resource) ?? [];
+
+        permissions.push(permission);
+        groups.set(permission.resource, permissions);
+      });
+
+    return Array.from(groups.entries())
+      .map(([resource, permissions]) => ({
+        resource,
+        permissions: permissions.sort((first, second) => first.action.localeCompare(second.action))
+      }))
+      .sort((first, second) => first.resource.localeCompare(second.resource));
   }
 
-  public onChangeView(newView: string) {
-    this.view = newView;
+  public formatLabel(value: string): string {
+    const label = value
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[._-]+/g, ' ')
+      .trim();
+
+    return label
+      ? label.charAt(0).toLocaleUpperCase() + label.slice(1)
+      : value;
   }
 
-  public onPermissionsPageChange(event: TablePageEvent) {
-    const page = (event.first / this.pageSize) + 1;
-    this.rolePermissions = arrayPage<ResourcePermission>(this.data().permissions, page, this.pageSize);
-  }
+}
 
+interface PermissionGroup {
+  resource: string;
+  permissions: ResourcePermission[];
 }

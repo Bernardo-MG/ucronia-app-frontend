@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Account, PasswordChange, SecurityClient } from '@bernardo-mg/security';
+import { UcroniaClient } from '@ucronia/api';
 import { Profile } from '@ucronia/domain';
 import { Observable } from 'rxjs';
 
@@ -9,13 +10,14 @@ import { Observable } from 'rxjs';
 export class AccountService {
 
   private readonly securityClient = inject(SecurityClient);
+  private readonly ucroniaClient = inject(UcroniaClient);
 
   public getAccount(): Observable<Account> {
     return this.securityClient.account.get();
   }
 
-  public getProfile(username: string): Observable<Profile | undefined> {
-    return this.securityClient.user.profile.get(username);
+  public getProfile(): Observable<Profile | undefined> {
+    return this.ucroniaClient.account.profile.get();
   }
 
   public changePassword(data: PasswordChange): Observable<void> {

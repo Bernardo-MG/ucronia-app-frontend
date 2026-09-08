@@ -1,0 +1,149 @@
+:host
+  display: block
+  min-height: 100vh
+
+.login-page
+  display: grid
+  grid-template-columns: minmax(22rem, 45%) minmax(0, 1fr)
+  min-height: 100vh
+  background: var(--p-surface-50, #f6f8fa)
+
+.login-brand
+  position: relative
+  display: flex
+  align-items: center
+  justify-content: center
+  overflow: hidden
+  padding: 3rem
+  background: var(--p-content-background, #fff)
+  border-right: 1px solid var(--p-content-border-color, #d0d7de)
+
+.login-brand__content
+  position: relative
+  z-index: 1
+  width: 100%
+  max-width: 34rem
+  text-align: center
+
+.login-brand__logo
+  display: block
+  width: min(100%, 28rem)
+  max-height: 22rem
+  margin-inline: auto
+  object-fit: contain
+
+.login-brand__title
+  margin: 1.5rem 0 0
+  color: var(--p-text-color, #1f2328)
+  font-size: clamp(1.5rem, 2vw, 2rem)
+  font-weight: 700
+  line-height: 1.25
+
+.login-brand__description
+  margin: 0.75rem 0 0
+  color: var(--p-text-muted-color, #656d76)
+  font-size: 1rem
+  line-height: 1.6
+
+.login-brand__shape
+  position: absolute
+  width: 12rem
+  height: 12rem
+  opacity: 0.12
+  transform: rotate(45deg)
+
+.login-brand__shape--orange
+  top: -7rem
+  left: -5rem
+  background: #ebaa3f
+
+.login-brand__shape--coral
+  bottom: -7rem
+  left: -4rem
+  background: #df4922
+
+.login-brand__shape--green
+  right: -6rem
+  bottom: -6rem
+  background: #70bfaa
+
+.login-access
+  display: flex
+  align-items: center
+  justify-content: center
+  min-width: 0
+  padding: 2rem
+
+.login-card
+  width: 100%
+  max-width: 28rem
+  padding: 2.5rem
+  background: var(--p-content-background, #fff)
+  border: 1px solid var(--p-content-border-color, #d0d7de)
+  border-radius: var(--p-border-radius-xl, 0.75rem)
+  box-shadow: 0 8px 30px rgb(31 35 40 / 8%)
+
+.login-card__header
+  margin-bottom: 2rem
+
+.login-card__eyebrow
+  display: block
+  margin-bottom: 0.5rem
+  color: var(--p-primary-color, #6d28d9)
+  font-size: 0.75rem
+  font-weight: 700
+  line-height: 1.5
+  letter-spacing: 0.05em
+  text-transform: uppercase
+
+.login-card__title
+  margin: 0
+  color: var(--p-text-color, #1f2328)
+  font-size: clamp(1.75rem, 3vw, 2.25rem)
+  font-weight: 700
+  line-height: 1.2
+  letter-spacing: -0.02em
+
+.login-card__description
+  margin: 0.75rem 0 0
+  color: var(--p-text-muted-color, #656d76)
+  font-size: 0.95rem
+  line-height: 1.5
+
+.login-card__footer
+  display: flex
+  align-items: center
+  justify-content: center
+  gap: 0.5rem
+  margin-top: 2rem
+  padding-top: 1.5rem
+  color: var(--p-text-muted-color, #656d76)
+  font-size: 0.8rem
+  border-top: 1px solid var(--p-content-border-color, #d0d7de)
+
+@media (prefers-reduced-motion: reduce)
+  .login-brand__shape
+    transform: none
+
+@media (max-width: 899px)
+  .login-page
+    grid-template-columns: minmax(0, 1fr)
+
+  .login-brand
+    display: none
+
+  .login-access
+    padding: 1.5rem
+
+@media (max-width: 479px)
+  .login-access
+    align-items: stretch
+    padding: 0
+
+  .login-card
+    max-width: none
+    min-height: 100vh
+    padding: 2rem 1.25rem
+    border: 0
+    border-radius: 0
+    box-shadow: none

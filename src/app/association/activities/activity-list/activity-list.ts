@@ -1,13 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { Activity } from '@ucronia/domain';
+import { Activity, ActivityDate } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-activity-list',
-  imports: [ButtonModule, TableModule, DatePipe],
+  imports: [ButtonModule, TableModule, TagModule, DatePipe],
   templateUrl: './activity-list.html'
 })
 export class ActivityList {
@@ -29,6 +30,17 @@ export class ActivityList {
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
+  }
+
+  public getNextDate(activity: Activity): ActivityDate | undefined {
+    const now = new Date();
+    return [...activity.dates]
+      .filter(date => new Date(date.end) >= now)
+      .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime())[0];
+  }
+
+  public getDatesLabel(activity: Activity): string {
+    return `${activity.dates.length} ${activity.dates.length === 1 ? 'fecha' : 'fechas'}`;
   }
 
 }

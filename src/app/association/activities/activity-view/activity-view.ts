@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -6,8 +7,12 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { Activity } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { PanelModule } from 'primeng/panel';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
+import { InputTextModule } from 'primeng/inputtext';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { finalize, Observable } from 'rxjs';
 import { ActivityForm } from '../activity-form/activity-form';
 import { ActivityInfo } from '../activity-info/activity-info';
@@ -15,7 +20,7 @@ import { ActivityList } from '../activity-list/activity-list';
 import { ActivityService } from '../activity-service';
 
 @Component({
-  imports: [PanelModule, ButtonModule, DrawerModule, ActivityList, ActivityInfo, ActivityForm],
+  imports: [FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, ActivityList, ActivityInfo, ActivityForm],
   templateUrl: './activity-view.html'
 })
 export class ActivityView implements OnInit {
@@ -30,12 +35,33 @@ export class ActivityView implements OnInit {
   };
 
   public activities = new Page<Activity>();
+  public filterValue = '';
+  public selectedDisplay = ActivityDisplay.UPCOMING;
+  public readonly displayOptions = [
+    { label: 'Próximas', value: ActivityDisplay.UPCOMING },
+    { label: 'Todas', value: ActivityDisplay.ALL },
+    { label: 'Pasadas', value: ActivityDisplay.PAST }
+  ];
   private sort = new Sorting();
   public selectedData = new Activity();
 
   public dialog = Dialog.NONE;
 
   public failures = new FailureStore();
+
+  public get filteredActivities(): Activity[] {
+    return this.activities.content;
+  }
+
+  public get upcomingSessions(): number {
+    const now = new Date();
+    return this.activities.content.flatMap(activity => activity.dates)
+      .filter(date => new Date(date.end) >= now).length;
+  }
+
+  public get locationCount(): number {
+    return new Set(this.activities.content.map(activity => activity.location).filter(Boolean)).size;
+  }
 
   constructor() {
     const authService = inject(AuthService);
@@ -55,10 +81,10 @@ export class ActivityView implements OnInit {
   // EVENT HANDLERS
 
   public onChangeDirection(sorting: SortingEvent) {
-      const direction = sorting.order === 1
-        ? SortingDirection.Ascending
-        : SortingDirection.Descending;
-      this.sort.addField(new SortingProperty(sorting.field, direction));
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+    this.sort.addField(new SortingProperty(sorting.field, direction));
 
     this.load(this.activities.page);
   }
@@ -168,4 +194,10 @@ enum Dialog {
   INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
+}
+
+enum ActivityDisplay {
+  UPCOMING = 'upcoming',
+  ALL = 'all',
+  PAST = 'past'
 }

@@ -1,81 +1,162 @@
-<div class="ms-3 space-y-5">
+<div class="space-y-5">
+  <!-- Book identity -->
+  <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    @if (loading()) {
+      <div class="flex gap-4">
+        <p-skeleton width="7rem" height="9rem" borderRadius="0.75rem" />
+        <div class="flex-1 space-y-3">
+          <p-skeleton width="50%" height="0.75rem" />
+          <p-skeleton width="75%" height="2rem" />
+          <p-skeleton width="40%" height="1rem" />
+        </div>
+      </div>
+    } @else {
+      <div class="flex gap-4">
+        <span class="flex h-36 w-28 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-500">
+          <i class="pi pi-book text-5xl" aria-hidden="true"></i>
+        </span>
+        <div class="min-w-0 flex-1 py-1">
+          @if (book().title.supertitle) {
+            <span class="block truncate text-sm text-gray-500">{{ book().title.supertitle }}</span>
+          }
+          <h3 class="mt-1 text-2xl font-bold leading-tight text-gray-950">{{ book().title.title }}</h3>
+          @if (book().title.subtitle) {
+            <p class="mt-1 text-sm text-gray-600">{{ book().title.subtitle }}</p>
+          }
+          <div class="mt-4 flex flex-wrap gap-2">
+            <span class="rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">
+              {{ isGame ? 'Juego' : 'Ficción' }}
+            </span>
+            <span class="inline-flex items-center gap-1.5 rounded-md px-2.5 py-1 text-xs font-medium"
+              [class.bg-green-50]="!book().lent" [class.text-green-700]="!book().lent"
+              [class.bg-amber-50]="book().lent" [class.text-amber-700]="book().lent">
+              <span class="size-1.5 rounded-full" [class.bg-green-600]="!book().lent"
+                [class.bg-amber-600]="book().lent"></span>
+              {{ book().lent ? 'Prestado' : 'Disponible' }}
+            </span>
+          </div>
+        </div>
+      </div>
+    }
+  </section>
 
-  <!-- Number -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-hashtag" name="Número" [value]="book().number" />
-  </div>
+  <!-- Bibliographic data -->
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <h3 class="border-b border-gray-200 px-5 py-4 font-semibold text-gray-950">Datos bibliográficos</h3>
+    @if (loading()) {
+      <div class="space-y-4 p-5">
+        @for (row of [1, 2, 3]; track row) {
+          <p-skeleton height="1.5rem" />
+        }
+      </div>
+    } @else {
+      <dl class="divide-y divide-gray-100">
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-barcode w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">ISBN</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ book().isbn || 'Sin información' }}</dd>
+        </div>
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-globe w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">Idioma</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ language || 'Sin información' }}</dd>
+        </div>
+        <div class="flex items-center gap-3 px-5 py-4">
+          <i class="pi pi-calendar w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="flex-1 text-sm text-gray-600">Publicación</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ (book().publishDate | date:'y') || 'Sin información' }}</dd>
+        </div>
+        @if (bookType) {
+          <div class="flex items-center gap-3 px-5 py-4">
+            <i class="pi pi-tag w-5 text-center text-gray-500" aria-hidden="true"></i>
+            <dt class="flex-1 text-sm text-gray-600">Tipo</dt>
+            <dd class="text-sm font-medium text-gray-950">{{ bookType.name }}</dd>
+          </div>
+        }
+        @if (gameSystem) {
+          <div class="flex items-center gap-3 px-5 py-4">
+            <i class="pi pi-cog w-5 text-center text-gray-500" aria-hidden="true"></i>
+            <dt class="flex-1 text-sm text-gray-600">Sistema</dt>
+            <dd class="text-sm font-medium text-gray-950">{{ gameSystem.name }}</dd>
+          </div>
+        }
+      </dl>
+    }
+  </section>
 
-  <!-- ISBN -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-hashtag" name="ISBN" [value]="book().isbn" />
-  </div>
+  <!-- Authors and publishers -->
+  <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <h3 class="font-semibold text-gray-950">Autoría y edición</h3>
+    @if (loading()) {
+      <div class="mt-4 space-y-4">
+        <p-skeleton height="1.5rem" />
+        <p-skeleton height="1.5rem" />
+      </div>
+    } @else {
+      <dl class="mt-4 space-y-4">
+        <div class="flex items-start gap-3">
+          <i class="pi pi-user mt-1 w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="w-24 shrink-0 text-sm text-gray-600">Autores</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ authors || 'Sin información' }}</dd>
+        </div>
+        <div class="flex items-start gap-3">
+          <i class="pi pi-building mt-1 w-5 text-center text-gray-500" aria-hidden="true"></i>
+          <dt class="w-24 shrink-0 text-sm text-gray-600">Editoriales</dt>
+          <dd class="text-sm font-medium text-gray-950">{{ publishers || 'Sin información' }}</dd>
+        </div>
+      </dl>
+    }
+  </section>
 
-  <!-- Title -->
-  <div class="flex gap-3 items-center">
-    <i class="pi pi-book"></i>
-    <div>
-      <p class="text-gray-500 text-sm">Título</p>
-
-      @if (loading()) {
-        <p-skeleton />
-      } @else {
-        <sup class="text-sm">{{book().title.supertitle}}</sup>
-        <span class="font-medium">{{book().title.title}}</span>
-        <sub class="text-sm">{{book().title.subtitle}}</sub>
-      }
-    </div>
-  </div>
-
-  <!-- Language -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-flag" name="Idioma" [value]="language" />
-  </div>
-
-  <!-- Publish Date -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de publicación"
-      [value]="book().publishDate | date:'yyyy-MM-dd'" />
-  </div>
-
-  <!-- Authors -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Autores" [value]="authors" />
-  </div>
-
-  <!-- Publishers -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Editores" [value]="publishers" />
-  </div>
-
-  <!-- Book Type -->
-  @if(bookType) {
-    <div>
-      <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Tipo" [value]="bookType.name" />
-    </div>
+  @if (book().donation) {
+    <!-- Donation -->
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <div class="flex items-start gap-3">
+        <span class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-600">
+          <i class="pi pi-gift" aria-hidden="true"></i>
+        </span>
+        <div>
+          <h3 class="font-semibold text-gray-950">Donación</h3>
+          @if (loading()) {
+            <p-skeleton class="mt-3" width="12rem" height="1.5rem" />
+          } @else {
+            <p class="mt-2 text-sm text-gray-600">
+              Donado por <strong class="font-medium text-gray-950">{{ donors || 'Sin información' }}</strong>
+            </p>
+            <p class="mt-1 text-xs text-gray-500">{{ book().donation?.date | date:'d MMMM y' }}</p>
+          }
+        </div>
+      </div>
+    </section>
   }
 
-  <!-- Game System -->
-  @if(gameSystem) {
-    <div>
-      <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Sistema" [value]="gameSystem.name" />
+  <!-- Lendings -->
+  <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <h3 class="font-semibold text-gray-950">Préstamos</h3>
+    <div class="mt-4 flex items-center gap-3">
+      <span class="flex size-10 shrink-0 items-center justify-center rounded-full"
+        [class.bg-green-50]="!book().lent" [class.text-green-700]="!book().lent"
+        [class.bg-amber-50]="book().lent" [class.text-amber-700]="book().lent">
+        <i [class]="book().lent ? 'pi pi-clock' : 'pi pi-check'" aria-hidden="true"></i>
+      </span>
+      <div>
+        <strong class="block text-sm text-gray-950">
+          {{ book().lent ? 'Actualmente prestado' : 'Actualmente disponible' }}
+        </strong>
+        <span class="text-xs text-gray-500">
+          {{ book().lent ? 'El libro tiene un préstamo activo' : 'Este libro no tiene ningún préstamo activo' }}
+        </span>
+      </div>
     </div>
-  }
-
-  <!-- Donation Date -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Fecha de donación"
-      [value]="book().donation?.date | date:'yyyy-MM-dd'" />
-  </div>
-
-  <!-- Donors -->
-  <div>
-    <ui-detail-field [loading]="loading()" icon="pi pi-user" name="Donante" [value]="donors" />
-  </div>
-
+    @if (book().lendings.length) {
+      <details class="mt-4 border-t border-gray-100 pt-4">
+        <summary class="cursor-pointer text-sm font-medium text-blue-700">
+          Ver historial ({{ book().lendings.length }})
+        </summary>
+        <div class="mt-4">
+          <assoc-library-book-lendings [lendings]="book().lendings" [borrowerNames]="borrowerNames()" />
+        </div>
+      </details>
+    }
+  </section>
 </div>
-
-<!-- Lendings -->
-<ng-template #header>
-  <span class="text-lg font-semibold">Préstamos</span>
-</ng-template>
-<assoc-library-book-lendings [lendings]="book().lendings" [borrowerNames]="borrowerNames()" />

@@ -1,0 +1,35 @@
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-6">
+    <div><label for="imageName" class="mb-2 block font-semibold text-gray-950">Nombre <span class="text-red-600">*</span></label>
+      <input pInputText id="imageName" formControlName="name" maxlength="100" class="w-full"
+        [invalid]="isFieldInvalid('name')" />
+      @for (failure of failures().getFailures('name'); track failure) {
+        <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
+    </div>
+    <div><label for="imageDescription" class="mb-2 block font-semibold text-gray-950">Descripción</label>
+      <textarea pTextarea id="imageDescription" formControlName="description" maxlength="500" rows="5"
+        class="w-full resize-y" [invalid]="isFieldInvalid('description')"></textarea>
+      <div class="mt-1 text-right text-xs text-gray-400">{{ form.get('description')?.value?.length || 0 }} / 500</div>
+      @for (failure of failures().getFailures('description'); track failure) {
+        <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
+    </div>
+    <div><label for="imageFile" class="mb-2 block font-semibold text-gray-950">
+      {{ data() ? 'Sustituir archivo' : 'Archivo' }} @if (!data()) { <span class="text-red-600">*</span> }
+    </label>
+      <label for="imageFile" class="flex cursor-pointer flex-col items-center rounded-xl border border-dashed border-gray-300 p-8 text-center hover:bg-gray-50">
+        <i class="pi pi-upload text-2xl text-primary" aria-hidden="true"></i>
+        <span class="mt-2 font-medium text-gray-950">{{ file?.name || 'Selecciona una imagen' }}</span>
+        <span class="mt-1 text-sm text-gray-500">PNG, JPG, WebP o GIF</span>
+      </label>
+      <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only"
+        (change)="onFileSelected($event)" />
+    </div>
+  </div>
+  <div class="sticky bottom-0 mt-8 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
+    <p-button type="submit" [label]="data() ? 'Guardar cambios' : 'Crear imagen'" icon="pi pi-check"
+      [disabled]="!formStatus.saveEnabled || (!data() && !file)" [loading]="loading()" />
+  </div>
+</form>

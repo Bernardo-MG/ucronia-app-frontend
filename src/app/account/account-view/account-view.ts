@@ -77,7 +77,7 @@ export class AccountView {
     this.service.getAccount()
       .pipe(
         tap(account => this.account = account),
-        switchMap(account => this.service.getProfile(account.username)),
+        switchMap(account => this.service.getProfile()),
         finalize(() => this.accountLoading = false)
       )
       .subscribe(profile => this.profile = profile);

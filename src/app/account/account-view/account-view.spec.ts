@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { SecurityClient } from '@bernardo-mg/security';
+import { AccountService } from '@app/account/account-service';
+import { Account } from '@bernardo-mg/security';
+import { Profile } from '@ucronia/domain';
 import { of } from 'rxjs';
 
 import { AccountSection, AccountView } from './account-view';
@@ -7,36 +9,36 @@ import { AccountSection, AccountView } from './account-view';
 describe('AccountView', () => {
   let component: AccountView;
   let fixture: ComponentFixture<AccountView>;
-
-  const securityClientMock = {
-    account: {
-      get: jasmine.createSpy('getAccount')
-    },
-    password: {
-      change: {
-        change: jasmine.createSpy('changePassword')
-      }
-    }
-  };
+  let accountServiceMock: jasmine.SpyObj<AccountService>;
 
   beforeEach(async () => {
-    securityClientMock.account.get.and.returnValue(of({
+    const account = Object.assign(new Account(), {
       username: 'bernardo',
       name: 'Bernardo',
-      email: 'bernardo@example.com',
-      profile: undefined
-    }));
+      email: 'bernardo@example.com'
+    });
 
-    securityClientMock.password.change.change.and.returnValue(
-      of(undefined)
+    const profile = new Profile();
+
+    accountServiceMock = jasmine.createSpyObj<AccountService>(
+      'AccountService',
+      [
+        'getAccount',
+        'getProfile',
+        'changePassword'
+      ]
     );
+
+    accountServiceMock.getAccount.and.returnValue(of(account));
+    accountServiceMock.getProfile.and.returnValue(of(profile));
+    accountServiceMock.changePassword.and.returnValue(of(undefined));
 
     await TestBed.configureTestingModule({
       imports: [AccountView],
       providers: [
         {
-          provide: SecurityClient,
-          useValue: securityClientMock
+          provide: AccountService,
+          useValue: accountServiceMock
         }
       ]
     }).compileComponents();
@@ -50,12 +52,14 @@ describe('AccountView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should load and display the account information', () => {
-    expect(securityClientMock.account.get).toHaveBeenCalled();
+  it('should load the account and profile', () => {
+    expect(accountServiceMock.getAccount).toHaveBeenCalledTimes(1);
+    expect(accountServiceMock.getProfile).toHaveBeenCalledTimes(1);
 
     expect(component.account.username).toBe('bernardo');
     expect(component.account.name).toBe('Bernardo');
     expect(component.account.email).toBe('bernardo@example.com');
+    expect(component.profile).toBeDefined();
 
     const content = fixture.nativeElement.textContent;
 
@@ -75,9 +79,7 @@ describe('AccountView', () => {
     expect(component.activeSection).toBe(AccountSection.Profile);
 
     const activeItem: HTMLElement | null =
-      fixture.nativeElement.querySelector(
-        '.account-nav__item--active'
-      );
+      fixture.nativeElement.querySelector('.account-nav__item--active');
 
     expect(activeItem).not.toBeNull();
     expect(activeItem?.textContent).toContain('Cuenta');
@@ -94,7 +96,6 @@ describe('AccountView', () => {
 
   it('should not scroll when the target is not found', () => {
     spyOn(document, 'getElementById').and.returnValue(null);
-
     const scrollSpy = spyOn(window, 'scrollTo');
 
     component.scrollTo(AccountSection.Member);

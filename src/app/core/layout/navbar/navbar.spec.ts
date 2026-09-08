@@ -74,13 +74,35 @@ describe('Navbar', () => {
       mockLayoutService.showSettingsLink.and.returnValue(true);
       mockLayoutService.showSecurityLink.and.returnValue(true);
 
-      mockAuthService.hasPermission.and.callFake((permission: {resource: string, action: string}) => {
-        return ['profile', 'funds', 'library'].includes(permission.resource) && permission.action === 'READ';
-      });
+      mockAuthService.hasPermission.and.callFake(
+        (permission: { resource: string, action: string }) => {
+          return ['profile', 'funds', 'library'].includes(permission.resource)
+            && permission.action === 'READ';
+        }
+      );
 
       createComponent();
 
       expect(component.loggedOut).toBeFalse();
+      expect(component.showSettings).toBeTrue();
+      expect(component.showSecurity).toBeTrue();
+    });
+
+    it('should refresh permission flags after login without recreating the navbar', () => {
+      let showSettings = false;
+      let showSecurity = false;
+      mockLayoutService.showSettingsLink.and.callFake(() => showSettings);
+      mockLayoutService.showSecurityLink.and.callFake(() => showSecurity);
+
+      createComponent();
+
+      expect(component.showSettings).toBeFalse();
+      expect(component.showSecurity).toBeFalse();
+
+      showSettings = true;
+      showSecurity = true;
+      fixture.detectChanges();
+
       expect(component.showSettings).toBeTrue();
       expect(component.showSecurity).toBeTrue();
     });

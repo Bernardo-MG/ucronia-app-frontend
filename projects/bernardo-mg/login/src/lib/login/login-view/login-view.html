@@ -1,9 +1,45 @@
-<div class="flex items-center justify-center p-4">
-  <p-card class="w-full md:w-1/2 lg:w-1/3">
-    <ng-template #title>
-      <h2>Acceder a Ucronía</h2>
-    </ng-template>
-    <login-form [waiting]="waiting" [failedLogin]="failedLogin" (login)="onLogin($event)"
-      (rememberMe)="onRememberMe($event)" (lostPassword)="onLostPassword()"></login-form>
-  </p-card>
-</div>
+<main class="login-page">
+  <section class="login-brand" aria-labelledby="brand-title">
+    <span class="login-brand__shape login-brand__shape--orange"></span>
+    <span class="login-brand__shape login-brand__shape--coral"></span>
+    <span class="login-brand__shape login-brand__shape--green"></span>
+
+    <div class="login-brand__content">
+      <img class="login-brand__logo" src="/img/Ucronia_logo-01.png" alt="Ucronía" />
+
+      <h1 id="brand-title" class="login-brand__title">
+        Asociación de juegos de rol
+      </h1>
+
+      <p class="login-brand__description">
+        Toda la información en un solo lugar
+      </p>
+    </div>
+  </section>
+
+  <section class="login-access" aria-labelledby="login-title">
+    <div class="login-card">
+      <header class="login-card__header">
+        <span class="login-card__eyebrow">
+          Área de socios
+        </span>
+
+        <h1 id="login-title" class="login-card__title">
+          Acceder a Ucronía
+        </h1>
+
+        <p class="login-card__description">
+          Introduce tus datos para continuar
+        </p>
+      </header>
+
+      <login-form [waiting]="waiting" [failedLogin]="failedLogin" (login)="onLogin($event)"
+        (rememberMe)="onRememberMe($event)" (lostPassword)="onLostPassword()" />
+
+      <footer class="login-card__footer">
+        <i class="pi pi-shield" aria-hidden="true"></i>
+        <span>Acceso exclusivo para miembros autorizados</span>
+      </footer>
+    </div>
+  </section>
+</main>

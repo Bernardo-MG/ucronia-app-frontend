@@ -1,196 +1,224 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <!-- Title -->
-  <div class="row mb-2">
-    <div formGroupName="title" class="col-sm-4">
-      <p-floatlabel variant="in">
-        <input pInputText [invalid]="isFieldInvalid('supertitle')" maxlength="100" id="supertitleInput" formControlName="supertitle"
-          class="w-100" />
-        <label for="supertitleInput">Supertítulo</label>
-      </p-floatlabel>
-      <div class="mb-2">
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-5">
+    <div class="flex items-center gap-3 rounded-xl border border-blue-200 bg-blue-50 p-4 text-blue-800">
+      <i class="pi pi-book" aria-hidden="true"></i>
+      <span class="rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium">{{ isGameBook ? 'Juego' : 'Ficción' }}</span>
+      <p class="text-sm">Edita los datos del catálogo y sus relaciones.</p>
+    </div>
+
+    <!-- Main information -->
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm" formGroupName="title">
+      <h3 class="font-semibold text-gray-950">Información principal</h3>
+
+      <div class="mt-5">
+        <label for="supertitleInput" class="block font-medium text-gray-950">Supertítulo</label>
+        <input pInputText id="supertitleInput" formControlName="supertitle" maxlength="100" placeholder="Opcional"
+          class="mt-2 w-full" [invalid]="isFieldInvalid('title.supertitle')" />
         @for (failure of failures().getFailures('title.supertitle'); track failure) {
-          <p-message severity="error" size="small" variant="simple">
-            {{failure.message}}
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
           </p-message>
         }
       </div>
-    </div>
-    <div formGroupName="title" class="col-sm-4">
-      <p-floatlabel variant="in">
-        <input pInputText [invalid]="isFieldInvalid('title')" maxlength="100" id="titleInput" formControlName="title" class="w-100" />
-        <label for="titleInput">Título</label>
-      </p-floatlabel>
-      <div class="mb-2">
+
+      <div class="mt-4">
+        <label for="titleInput" class="block font-medium text-gray-950">
+          Título <span class="text-red-600" aria-hidden="true">*</span>
+        </label>
+        <input pInputText id="titleInput" formControlName="title" maxlength="100" class="mt-2 w-full"
+          [invalid]="isFieldInvalid('title.title')" />
         @for (failure of failures().getFailures('title.title'); track failure) {
-          <p-message severity="error" size="small" variant="simple">
-            {{failure.message}}
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
           </p-message>
         }
       </div>
-    </div>
-    <div formGroupName="title" class="col-sm-4">
-      <p-floatlabel variant="in">
-        <input pInputText [invalid]="isFieldInvalid('subtitle')" maxlength="100" id="subtitleInput" formControlName="subtitle"
-          class="w-100" />
-        <label for="subtitleInput">Subtítulo</label>
-      </p-floatlabel>
-      <div class="mb-2">
+
+      <div class="mt-4">
+        <label for="subtitleInput" class="block font-medium text-gray-950">Subtítulo</label>
+        <input pInputText id="subtitleInput" formControlName="subtitle" maxlength="100" placeholder="Opcional"
+          class="mt-2 w-full" [invalid]="isFieldInvalid('title.subtitle')" />
         @for (failure of failures().getFailures('title.subtitle'); track failure) {
-          <p-message severity="error" size="small" variant="simple">
-            {{failure.message}}
+          <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+            {{ failure.message }}
           </p-message>
         }
       </div>
-    </div>
+    </section>
+
+    <!-- Bibliographic data -->
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 class="font-semibold text-gray-950">Datos bibliográficos</h3>
+
+      <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label for="isbnInput" class="block font-medium text-gray-950">ISBN</label>
+          <input pInputText id="isbnInput" formControlName="isbn" maxlength="17" placeholder="Opcional"
+            class="mt-2 w-full" [invalid]="isFieldInvalid('isbn')" />
+          @for (failure of failures().getFailures('isbn'); track failure) {
+            <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+              {{ failure.message }}
+            </p-message>
+          }
+        </div>
+
+        <div>
+          <label for="languageInput" class="block font-medium text-gray-950">
+            Idioma <span class="text-red-600" aria-hidden="true">*</span>
+          </label>
+          <p-select inputId="languageInput" [options]="languages" formControlName="language" optionLabel="name"
+            optionValue="code" placeholder="Selecciona un idioma" appendTo="body" class="mt-2 w-full"
+            [invalid]="isFieldInvalid('language')" />
+          @for (failure of failures().getFailures('language'); track failure) {
+            <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+              {{ failure.message }}
+            </p-message>
+          }
+        </div>
+
+        <div>
+          <label for="publishDateInput" class="block font-medium text-gray-950">Fecha de publicación</label>
+          <p-datepicker id="publishDateInput" formControlName="publishDate" [invalid]="isFieldInvalid('publishDate')"
+            dateFormat="dd MM yy" placeholder="Selecciona una fecha" appendTo="body" class="mt-2 w-full" />
+          @for (failure of failures().getFailures('publishDate'); track failure) {
+            <p-message class="mt-1 block" severity="error" size="small" variant="simple">
+              {{ failure.message }}
+            </p-message>
+          }
+        </div>
+
+        @if (isGameBook) {
+          <div>
+            <label for="gameSystemInput" class="block font-medium text-gray-950">Sistema</label>
+            <p-select inputId="gameSystemInput" [options]="gameSystemOptions" optionLabel="name" optionValue="number"
+              [ngModel]="selectedGameSystemNumber" [ngModelOptions]="{ standalone: true }"
+              placeholder="Selecciona un sistema" appendTo="body" class="mt-2 w-full"
+              (onChange)="onSelectGameSystem($event.value)" />
+          </div>
+
+          <div class="sm:col-span-2">
+            <label for="bookTypeInput" class="block font-medium text-gray-950">Tipo</label>
+            <p-select inputId="bookTypeInput" [options]="bookTypeOptions" optionLabel="name" optionValue="number"
+              [ngModel]="selectedBookTypeNumber" [ngModelOptions]="{ standalone: true }"
+              placeholder="Selecciona un tipo" appendTo="body" class="mt-2 w-full"
+              (onChange)="onSelectBookType($event.value)" />
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Authors and publishers -->
+    <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 class="font-semibold text-gray-950">Autoría y edición</h3>
+
+      <div>
+        <label class="block font-medium text-gray-950">Autores</label>
+        <p-inputgroup class="mt-2">
+          <p-inputgroup-addon>
+            <i class="pi pi-search" aria-hidden="true"></i>
+          </p-inputgroup-addon>
+          <p-autocomplete name="authorSearch" [ngModel]="authorSearchValue" [ngModelOptions]="{ standalone: true }"
+            [suggestions]="authorSearchResults" optionLabel="name" dataKey="number" [forceSelection]="true"
+            placeholder="Buscar autor..." (completeMethod)="onSearchAuthors($event)"
+            (onSelect)="onSelectAuthor($event.value)" appendTo="body" />
+        </p-inputgroup>
+
+        @if (selectedAuthors.length) {
+          <div class="mt-3 flex flex-wrap gap-2">
+            @for (author of selectedAuthors; track author.number) {
+              <span class="inline-flex items-center gap-2 rounded-md bg-blue-50 px-2.5 py-1.5 text-sm font-medium text-blue-700">
+                {{ author.name }}
+                <button type="button" class="text-blue-500 hover:text-blue-800"
+                  [attr.aria-label]="'Eliminar ' + author.name" (click)="onRemoveAuthor(author)">
+                  <i class="pi pi-times text-xs" aria-hidden="true"></i>
+                </button>
+              </span>
+            }
+          </div>
+        }
+      </div>
+
+      <div>
+        <label class="block font-medium text-gray-950">Editoriales</label>
+        <p-inputgroup class="mt-2">
+          <p-inputgroup-addon>
+            <i class="pi pi-search" aria-hidden="true"></i>
+          </p-inputgroup-addon>
+          <p-autocomplete name="publisherSearch" [ngModel]="publisherSearchValue"
+            [ngModelOptions]="{ standalone: true }" [suggestions]="publisherSearchResults" optionLabel="name"
+            dataKey="number" [forceSelection]="true" placeholder="Buscar editorial..."
+            (completeMethod)="onSearchPublishers($event)" (onSelect)="onSelectPublisher($event.value)"
+            appendTo="body" />
+        </p-inputgroup>
+
+        @if (selectedPublishers.length) {
+          <div class="mt-3 flex flex-wrap gap-2">
+            @for (publisher of selectedPublishers; track publisher.number) {
+              <span class="inline-flex items-center gap-2 rounded-md bg-blue-50 px-2.5 py-1.5 text-sm font-medium text-blue-700">
+                {{ publisher.name }}
+                <button type="button" class="text-blue-500 hover:text-blue-800"
+                  [attr.aria-label]="'Eliminar ' + publisher.name" (click)="onRemovePublisher(publisher)">
+                  <i class="pi pi-times text-xs" aria-hidden="true"></i>
+                </button>
+              </span>
+            }
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Donation -->
+    <details class="rounded-xl border border-gray-200 bg-white shadow-sm"
+      [open]="!!form.get('donation.date')?.value || selectedDonors.length > 0">
+      <summary class="flex cursor-pointer list-none items-center gap-3 p-5">
+        <i class="pi pi-gift text-gray-500" aria-hidden="true"></i>
+        <span class="flex-1 font-semibold text-gray-950">Donación</span>
+        @if (selectedDonors.length || form.get('donation.date')?.value) {
+          <span class="text-sm text-gray-500">{{ selectedDonors.length }} donante(s)</span>
+        }
+        <i class="pi pi-chevron-down text-xs text-gray-500" aria-hidden="true"></i>
+      </summary>
+
+      <div class="space-y-4 border-t border-gray-100 p-5" formGroupName="donation">
+        <div>
+          <label for="donationDateInput" class="block font-medium text-gray-950">Fecha de donación</label>
+          <p-datepicker id="donationDateInput" formControlName="date" dateFormat="dd MM yy"
+            placeholder="Selecciona una fecha" appendTo="body" class="mt-2 w-full" />
+        </div>
+
+        <div>
+          <label class="block font-medium text-gray-950">Donantes</label>
+          <p-inputgroup class="mt-2">
+            <p-inputgroup-addon>
+              <i class="pi pi-search" aria-hidden="true"></i>
+            </p-inputgroup-addon>
+            <p-autocomplete name="donorSearch" [ngModel]="donorSearchValue" [ngModelOptions]="{ standalone: true }"
+              [suggestions]="donorSearchResults" optionLabel="name.fullName" dataKey="number"
+              [forceSelection]="true" placeholder="Buscar donante..." (completeMethod)="onSearchDonors($event)"
+              (onSelect)="onSelectDonor($event.value)" appendTo="body" />
+          </p-inputgroup>
+
+          @if (selectedDonors.length) {
+            <div class="mt-3 flex flex-wrap gap-2">
+              @for (donor of selectedDonors; track donor.number) {
+                <span class="inline-flex items-center gap-2 rounded-md bg-blue-50 px-2.5 py-1.5 text-sm font-medium text-blue-700">
+                  {{ donor.name.fullName }}
+                  <button type="button" class="text-blue-500 hover:text-blue-800"
+                    [attr.aria-label]="'Eliminar ' + donor.name.fullName" (click)="onRemoveDonor(donor)">
+                    <i class="pi pi-times text-xs" aria-hidden="true"></i>
+                  </button>
+                </span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    </details>
   </div>
-  <!-- ISBN -->
-  <p-floatlabel variant="in">
-    <input pInputText [invalid]="isFieldInvalid('isbn')" maxlength="17" id="isbnInput" formControlName="isbn" class="w-100" />
-    <label for="isbnInput">ISBN</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('isbn'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
+
+  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
+    <p-button type="submit" label="Guardar cambios" icon="pi pi-check" [loading]="loading()"
+      [disabled]="!formStatus.saveEnabled" [attr.aria-disabled]="!formStatus.saveEnabled" />
   </div>
-  <!-- Language -->
-  <p-select [options]="languages" [invalid]="isFieldInvalid('language')" formControlName="language" optionLabel="name"
-    optionValue="code" placeholder="Idioma" appendTo="body" />
-  <div class="mb-2">
-    @for (failure of failures().getFailures('language'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
-  </div>
-  <!-- Publish date -->
-  <p-floatlabel variant="in">
-    <p-datepicker [invalid]="isFieldInvalid('publishDate')" id="publishDate" formControlName="publishDate"
-      appendTo="body" />
-    <label for="publishDate">Fecha de publicación</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('publishDate'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
-  </div>
-
-  <div formGroupName="donation" class="border-t pt-4 mb-3">
-    <label class="font-semibold mb-2 block">Donación</label>
-
-    <p-floatlabel variant="in" class="mb-3 block">
-      <p-datepicker id="donationDate" formControlName="date" appendTo="body" />
-      <label for="donationDate">Fecha de donación</label>
-    </p-floatlabel>
-
-    <p-inputgroup>
-      <p-inputgroup-addon>
-        <i class="pi pi-search"></i>
-      </p-inputgroup-addon>
-      <p-autocomplete name="donorSearch" [ngModel]="donorSearchValue" [ngModelOptions]="{ standalone: true }"
-        [suggestions]="donorSearchResults" optionLabel="name.fullName" dataKey="number" [forceSelection]="true"
-        placeholder="Buscar donante..." (completeMethod)="onSearchDonors($event)" (onSelect)="onSelectDonor($event.value)"
-        appendTo="body" />
-    </p-inputgroup>
-
-    <p-table dataKey="number" [value]="selectedDonors" class="mt-3">
-      <ng-template #header>
-        <tr>
-          <th>Nombre</th>
-          <th scope="col"></th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-row>
-        <tr>
-          <td>{{row.name.fullName}}</td>
-          <td>
-            <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemoveDonor(row)" rounded text />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-
-  <div class="border-t pt-4 mb-3">
-    <label class="font-semibold mb-2 block">Autores</label>
-    <p-inputgroup>
-      <p-inputgroup-addon>
-        <i class="pi pi-search"></i>
-      </p-inputgroup-addon>
-      <p-autocomplete name="authorSearch" [ngModel]="authorSearchValue" [ngModelOptions]="{ standalone: true }"
-        [suggestions]="authorSearchResults" optionLabel="name" dataKey="number" [forceSelection]="true"
-        placeholder="Buscar autor..." (completeMethod)="onSearchAuthors($event)" (onSelect)="onSelectAuthor($event.value)"
-        appendTo="body" />
-    </p-inputgroup>
-
-    <p-table dataKey="number" [value]="selectedAuthors" class="mt-3">
-      <ng-template #header>
-        <tr>
-          <th>Nombre</th>
-          <th scope="col"></th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-row>
-        <tr>
-          <td>{{row.name}}</td>
-          <td>
-            <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemoveAuthor(row)" rounded text />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-
-  <div class="border-t pt-4 mb-3">
-    <label class="font-semibold mb-2 block">Editores</label>
-    <p-inputgroup>
-      <p-inputgroup-addon>
-        <i class="pi pi-search"></i>
-      </p-inputgroup-addon>
-      <p-autocomplete name="publisherSearch" [ngModel]="publisherSearchValue" [ngModelOptions]="{ standalone: true }"
-        [suggestions]="publisherSearchResults" optionLabel="name" dataKey="number" [forceSelection]="true"
-        placeholder="Buscar editor..." (completeMethod)="onSearchPublishers($event)" (onSelect)="onSelectPublisher($event.value)"
-        appendTo="body" />
-    </p-inputgroup>
-
-    <p-table dataKey="number" [value]="selectedPublishers" class="mt-3">
-      <ng-template #header>
-        <tr>
-          <th>Nombre</th>
-          <th scope="col"></th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-row>
-        <tr>
-          <td>{{row.name}}</td>
-          <td>
-            <p-button icon="pi pi-trash" severity="danger" aria-label="Borrar" (click)="onRemovePublisher(row)" rounded text />
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
-
-  @if (isGameBook) {
-    <div class="border-t pt-4 mb-3">
-      <label class="font-semibold mb-2 block">Sistema</label>
-      <p-select [options]="gameSystemOptions" optionLabel="name" optionValue="number" [ngModel]="selectedGameSystemNumber"
-        [ngModelOptions]="{ standalone: true }" placeholder="Seleccione un sistema" (onChange)="onSelectGameSystem($event.value)"
-        appendTo="body" />
-    </div>
-
-    <div class="border-t pt-4 mb-3">
-      <label class="font-semibold mb-2 block">Tipo</label>
-      <p-select [options]="bookTypeOptions" optionLabel="name" optionValue="number" [ngModel]="selectedBookTypeNumber"
-        [ngModelOptions]="{ standalone: true }" placeholder="Seleccione un tipo" (onChange)="onSelectBookType($event.value)"
-        appendTo="body" />
-    </div>
-  }
-
-  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

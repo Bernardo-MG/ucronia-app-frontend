@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -23,7 +24,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm],
+  imports: [DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, DatePipe],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {

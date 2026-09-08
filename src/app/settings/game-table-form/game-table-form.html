@@ -1,0 +1,19 @@
+<form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div>
+    <label for="nameInput" class="mb-2 block font-semibold">Nombre</label>
+    <input pInputText id="nameInput" formControlName="name" maxlength="50" class="w-full"
+      placeholder="Nombre de la mesa" [invalid]="isFieldInvalid('name')" />
+    @for (failure of failures().getFailures('name'); track failure) {
+      <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+    }
+  </div>
+  <div>
+    <label for="descriptionInput" class="mb-2 block font-semibold">Descripción</label>
+    <textarea pTextarea id="descriptionInput" formControlName="description" maxlength="200" rows="4" class="w-full"
+      placeholder="Descripción de la mesa" [invalid]="isFieldInvalid('description')"></textarea>
+    @for (failure of failures().getFailures('description'); track failure) {
+      <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+    }
+  </div>
+  <p-button type="submit" label="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()" />
+</form>

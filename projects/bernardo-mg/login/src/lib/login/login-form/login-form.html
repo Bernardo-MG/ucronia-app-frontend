@@ -1,53 +1,73 @@
-﻿<form [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+﻿<form class="space-y-5" [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+  <div>
+    <label for="usernameInput" class="mb-2 block text-sm font-semibold text-gray-950">
+      Usuario o correo electrónico
+    </label>
 
-  <!-- Username -->
-  <p-floatlabel variant="in" class="flex mb-2">
-    <p-icon-field>
+    <p-iconfield class="block w-full">
       <p-inputicon class="pi pi-envelope" />
-      <input pInputText type="text" id="usernameInput" formControlName="username" class="w-full" />
-    </p-icon-field>
-    <label for="usernameInput">Usuario/email</label>
-  </p-floatlabel>
 
-  <!-- Password -->
-  <p-floatlabel variant="in" class="flex mb-2">
-    <p-icon-field>
-      <p-inputicon class="pi pi-lock" />
-      <input pInputText type="password" id="passwordInput" formControlName="password" class="w-full" />
-    </p-icon-field>
-    <label for="passwordInput">Contraseña</label>
-  </p-floatlabel>
+      <input pInputText id="usernameInput" type="text" formControlName="username" autocomplete="username"
+        placeholder="usuario@ejemplo.com" class="w-full" [attr.aria-invalid]="form.controls['username'].invalid && form.controls['username'].touched" />
+    </p-iconfield>
 
-  <div class="flex flex-wrap mb-3 items-center w-full">
-
-    <!-- Remember me -->
-    <div class="flex items-center space-x-2">
-      <p-toggleswitch inputId="rememberMe" [disabled]="waiting"
-        (onChange)="onRememberMe($event.checked)"></p-toggleswitch>
-      <label for="rememberMe" class="select-none">Mantener sesión</label>
-    </div>
-
-    <!-- Lost password -->
-    <div class="ml-auto">
-      <p-button label="¿Perdiste la clave?" link id="lostPassword" [disabled]="waiting" (click)="onLostPasword()">
-      </p-button>
-    </div>
-
+    @if (form.controls['username'].invalid && form.controls['username'].touched) {
+      <small class="mt-1 block text-red-600">
+        Introduce tu usuario o correo electrónico
+      </small>
+    }
   </div>
 
-  <!-- Submit button -->
-  <div class="flex justify-center w-full mt-2">
-    <p-button id="login" severity="secondary" type="submit" label="Login" [loading]="waiting" [disabled]="!loginEnabled"
-      [attr.aria-disabled]="!loginEnabled"></p-button>
+  <div>
+    <label for="passwordInput" class="mb-2 block text-sm font-semibold text-gray-950">
+      Contraseña
+    </label>
+
+    <div class="relative">
+      <p-iconfield class="block w-full">
+        <p-inputicon class="pi pi-lock" />
+
+        <input pInputText id="passwordInput" [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
+          autocomplete="current-password" placeholder="Introduce tu contraseña" class="w-full !pr-12"
+          [attr.aria-invalid]="form.controls['password'].invalid && form.controls['password'].touched" />
+      </p-iconfield>
+
+      <button type="button"
+        class="absolute right-0 top-0 flex h-full w-12 items-center justify-center border-0 bg-transparent text-gray-500 hover:text-gray-950"
+        [attr.aria-label]="passwordVisible ? 'Ocultar contraseña' : 'Mostrar contraseña'" [attr.aria-pressed]="passwordVisible" (click)="togglePasswordVisibility()">
+        <i class="pi" [class.pi-eye]="!passwordVisible" [class.pi-eye-slash]="passwordVisible" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    @if (form.controls['password'].invalid && form.controls['password'].touched) {
+      <small class="mt-1 block text-red-600">
+        Introduce tu contraseña
+      </small>
+    }
   </div>
 
-  <!-- Login failed warning -->
   @if (failedLogin) {
-    <ng-container>
-      <div class="mt-1">
-        <p-message id="loginFailedWarning" severity="warn">Usuario inválido</p-message>
-      </div>
-    </ng-container>
+    <p-message id="loginFailedWarning" severity="error" icon="pi pi-exclamation-circle" class="w-full">
+      Usuario o contraseña incorrectos
+    </p-message>
   }
 
+  <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+    <div class="flex items-center gap-2">
+      <p-checkbox inputId="rememberMe" [binary]="true" [disabled]="waiting" (onChange)="onRememberMe($event.checked)" />
+
+      <label for="rememberMe" class="select-none text-sm text-gray-700">
+        Mantener la sesión iniciada
+      </label>
+    </div>
+
+    <button id="lostPassword" type="button"
+      class="border-0 bg-transparent p-0 text-left text-sm font-medium text-primary hover:underline sm:ml-auto"
+      [disabled]="waiting" (click)="onLostPassword()">
+      ¿Has olvidado tu contraseña?
+    </button>
+  </div>
+
+  <p-button id="login" type="submit" label="Iniciar sesión" icon="pi pi-sign-in" styleClass="w-full" [loading]="waiting"
+    [disabled]="!loginEnabled" [attr.aria-disabled]="!loginEnabled" />
 </form>
