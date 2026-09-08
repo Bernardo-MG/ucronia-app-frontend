@@ -5,18 +5,17 @@ import { FailureStore } from '@bernardo-mg/request';
 import { Activity } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
 export class ActivityForm implements OnChanges {
+
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   private readonly fb = inject(FormBuilder);
@@ -29,6 +28,7 @@ export class ActivityForm implements OnChanges {
       location: value.location,
       image: value.image
     });
+    this.showImageField = !!value.image;
 
     this.dates.clear();
 
@@ -42,9 +42,11 @@ export class ActivityForm implements OnChanges {
   }
 
   public readonly save = output<Activity>();
+  public readonly cancelEdition = output<void>();
 
   public formStatus: FormStatus;
   public form: FormGroup;
+  public showImageField = false;
 
   constructor() {
     this.form = this.fb.group({

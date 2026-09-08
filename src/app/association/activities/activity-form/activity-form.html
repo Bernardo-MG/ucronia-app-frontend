@@ -1,89 +1,55 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-
-  <!-- Title -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="titleInput" formControlName="title" [invalid]="isFieldInvalid('title')" maxlength="100" class="w-full min-w-0" />
-    <label for="titleInput">Título</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('title'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
-
-  <!-- Description -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="descriptionInput" formControlName="description" [invalid]="isFieldInvalid('description')" maxlength="200" class="w-full min-w-0" />
-    <label for="descriptionInput">Descripción</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('description'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
-
-  <!-- Location -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="locationInput" formControlName="location" [invalid]="isFieldInvalid('location')" maxlength="200" class="w-full min-w-0" />
-    <label for="locationInput">Lugar</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('location'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
-
-  <!-- Image -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="imageInput" formControlName="image" [invalid]="isFieldInvalid('image')" maxlength="200" class="w-full min-w-0" />
-    <label for="imageInput">Imagen</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('image'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-  </div>
-
-  <!-- Dates -->
-  <div formArrayName="dates">
-    @for (dateGroup of dates.controls; track dateGroup; let i = $index) {
-      <div [formGroupName]="i" class="mb-4">
-
-        <p-floatlabel variant="in" class="mb-2">
-          <p-datepicker [id]="'dayInput' + i" formControlName="day" dateFormat="yy-mm-dd" appendTo="body"
-            class="w-full" />
-          <label [for]="'dayInput' + i">Día</label>
-        </p-floatlabel>
-
-        <p-floatlabel variant="in" class="mb-2">
-          <p-datepicker [id]="'startHourInput' + i" formControlName="startHour" [timeOnly]="true" appendTo="body"
-            class="w-full" />
-          <label [for]="'startHourInput' + i">Hora de inicio</label>
-        </p-floatlabel>
-
-        <p-floatlabel variant="in" class="mb-2">
-          <p-datepicker [id]="'endHourInput' + i" formControlName="endHour" [timeOnly]="true" appendTo="body"
-            class="w-full" />
-          <label [for]="'endHourInput' + i">Hora de fin</label>
-        </p-floatlabel>
-
-        @if (dates.length > 1) {
-          <p-button type="button" severity="danger" label="Eliminar día" (onClick)="removeDate(i)" />
+<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-8">
+    <section>
+      <div class="mb-5"><h3 class="text-lg font-semibold text-gray-950">Información de la actividad</h3><p class="mt-1 text-sm text-gray-500">Define los datos principales</p></div>
+      <div class="space-y-5">
+        <div>
+          <label for="titleInput" class="mb-2 block font-semibold text-gray-950">Título <span class="text-red-600" aria-hidden="true">*</span></label>
+          <input pInputText type="text" id="titleInput" formControlName="title" placeholder="Título de la actividad" [invalid]="isFieldInvalid('title')" maxlength="100" class="w-full" />
+          @for (failure of failures().getFailures('title'); track failure) { <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message> }
+        </div>
+        <div>
+          <label for="descriptionInput" class="mb-2 block font-semibold text-gray-950">Descripción</label>
+          <textarea pTextarea id="descriptionInput" formControlName="description" placeholder="Describe brevemente la actividad" [invalid]="isFieldInvalid('description')" maxlength="200" rows="4" class="w-full resize-y"></textarea>
+          <div class="mt-1 flex justify-between gap-3"><div>@for (failure of failures().getFailures('description'); track failure) { <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message> }</div><span class="shrink-0 text-xs text-gray-400">{{ form.get('description')?.value?.length || 0 }} / 200</span></div>
+        </div>
+        <div>
+          <label for="locationInput" class="mb-2 block font-semibold text-gray-950">Lugar</label>
+          <input pInputText type="text" id="locationInput" formControlName="location" placeholder="Lugar de la actividad" [invalid]="isFieldInvalid('location')" maxlength="200" class="w-full" />
+          @for (failure of failures().getFailures('location'); track failure) { <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message> }
+        </div>
+        <div>
+          <button type="button" class="flex items-center gap-2 text-sm font-medium text-primary hover:underline" (click)="showImageField = !showImageField"><i class="pi pi-image" aria-hidden="true"></i>{{ showImageField ? 'Ocultar imagen' : 'Añadir imagen' }}</button>
+          @if (showImageField) {
+            <div class="mt-3">
+              <label for="imageInput" class="mb-2 block font-semibold text-gray-950">URL de la imagen</label>
+              <input pInputText type="url" id="imageInput" formControlName="image" placeholder="https://ejemplo.com/imagen.jpg" [invalid]="isFieldInvalid('image')" maxlength="200" class="w-full" />
+              @for (failure of failures().getFailures('image'); track failure) { <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message> }
+            </div>
+          }
+        </div>
+      </div>
+    </section>
+    <section class="border-t border-gray-200 pt-7">
+      <div class="mb-5"><h3 class="text-lg font-semibold text-gray-950">Fechas programadas</h3><p class="mt-1 text-sm text-gray-500">Añade uno o varios horarios</p></div>
+      <div formArrayName="dates" class="space-y-4">
+        @for (dateGroup of dates.controls; track dateGroup; let i = $index) {
+          <div [formGroupName]="i" class="rounded-xl border border-gray-200 p-4">
+            <div class="mb-4 flex items-center justify-between gap-3"><h4 class="font-semibold text-gray-950">Fecha {{ i + 1 }}</h4>@if (dates.length > 1) { <p-button type="button" icon="pi pi-trash" severity="danger" [attr.aria-label]="'Eliminar fecha ' + (i + 1)" (onClick)="removeDate(i)" rounded text /> }</div>
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+              <div><label [for]="'dayInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Día</label><p-datepicker [id]="'dayInput' + i" formControlName="day" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body" class="w-full" /></div>
+              <div><label [for]="'startHourInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Inicio</label><p-datepicker [id]="'startHourInput' + i" formControlName="startHour" [timeOnly]="true" hourFormat="24" appendTo="body" class="w-full" /></div>
+              <div><label [for]="'endHourInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Fin</label><p-datepicker [id]="'endHourInput' + i" formControlName="endHour" [timeOnly]="true" hourFormat="24" appendTo="body" class="w-full" /></div>
+            </div>
+          </div>
         }
       </div>
-    }
+      <p-button class="mt-4 block" type="button" label="Añadir fecha" icon="pi pi-plus" severity="secondary" (onClick)="addDate()" outlined />
+    </section>
   </div>
-
-  <p-button type="button" label="Añadir día" severity="secondary" (onClick)="addDate()" />
-
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  <div class="sticky bottom-0 mt-8 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
+    <p-button type="button" label="Cancelar" severity="secondary" (click)="cancelEdition.emit()" outlined />
+    <p-button type="submit" [label]="form.get('number')?.value ? 'Guardar cambios' : 'Crear actividad'" icon="pi pi-check"
+      [disabled]="!formStatus.saveEnabled" [loading]="loading()" [attr.aria-disabled]="!formStatus.saveEnabled" />
+  </div>
 </form>
