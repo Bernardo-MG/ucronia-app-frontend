@@ -18,4 +18,17 @@
       <div><dt class="text-sm text-gray-500">Actualizada</dt><dd class="mt-1 text-gray-950">{{ data().audit.updatedAt | date:'d MMM y · HH:mm' }}</dd></div>
     </dl>
   </section>
+
+  <section class="rounded-xl border border-gray-200 p-5">
+    <h3 class="flex items-center gap-2 font-semibold text-gray-950">
+      <i class="pi pi-link text-blue-700" aria-hidden="true"></i>Enlace
+    </h3>
+    <div class="mt-4 flex flex-col gap-2 sm:flex-row">
+      <input pInputText type="text" aria-label="URL de la imagen" class="min-w-0 flex-1"
+        [value]="source()" readonly />
+      <p-button icon="pi pi-copy" label="Copiar" severity="secondary" (click)="copyUrl()" />
+      <a pButton icon="pi pi-external-link" aria-label="Abrir imagen" [href]="source()"
+        target="_blank" rel="noopener noreferrer"></a>
+    </div>
+  </section>
 </div>
