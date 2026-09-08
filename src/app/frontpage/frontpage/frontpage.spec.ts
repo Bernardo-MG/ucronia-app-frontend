@@ -9,7 +9,7 @@ describe('Frontpage', () => {
 
   const frontpageServiceMock = {
     getSettings: jasmine.createSpy().and.returnValue(of({})),
-    getActivities: jasmine.createSpy().and.returnValue(of({}))
+    getActivities: jasmine.createSpy().and.returnValue(of({ content: [] }))
   };
 
   beforeEach(async () => {
