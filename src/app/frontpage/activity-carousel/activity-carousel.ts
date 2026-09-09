@@ -18,9 +18,21 @@ export class ActivityCarousel {
     { breakpoint: '1024px', numVisible: 1, numScroll: 1 }
   ];
 
-  public firstDate(activity: Activity): ActivityDate | undefined {
-    return [...(activity.dates ?? [])]
-      .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime())[0];
+  public dateRange(activity: Activity): ActivityDate | undefined {
+    const dates = [...(activity.dates ?? [])]
+      .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime());
+
+    if (!dates.length) {
+      return undefined;
+    }
+
+    return {
+      start: dates[0].start,
+      end: dates.reduce(
+        (latest, date) => new Date(date.end).getTime() > new Date(latest).getTime() ? date.end : latest,
+        dates[0].end
+      )
+    };
   }
 
 }

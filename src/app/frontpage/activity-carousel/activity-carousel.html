@@ -5,15 +5,17 @@
   </header>
 
   @if (loading()) {
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
-      @for (item of [1, 2, 3]; track item) {
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+      @for (item of [1, 2]; track item) {
         <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-          <p-skeleton width="100%" height="12rem" borderRadius="0" />
-          <div class="space-y-3 p-5">
-            <p-skeleton width="75%" height="1.5rem" />
-            <p-skeleton width="45%" />
-            <p-skeleton width="100%" />
-            <p-skeleton width="80%" />
+          <div class="flex flex-col sm:flex-row">
+            <p-skeleton width="12rem" height="12rem" borderRadius="0" />
+            <div class="flex-1 space-y-3 p-5">
+              <p-skeleton width="75%" height="1.5rem" />
+              <p-skeleton width="45%" />
+              <p-skeleton width="100%" />
+              <p-skeleton width="80%" />
+            </div>
           </div>
         </div>
       }
@@ -51,10 +53,28 @@
         </div>
       }
 
-      @if (firstDate(activity); as first) {
-        <div class="absolute bottom-3 left-3 flex size-14 flex-col items-center justify-center rounded-lg bg-white text-primary-700 shadow-md">
-          <strong class="text-xl leading-none">{{ first.start | date:'dd' }}</strong>
-          <span class="mt-1 text-[0.65rem] font-semibold uppercase">{{ first.start | date:'MMM' }}</span>
+      @if (dateRange(activity); as range) {
+        <div class="absolute bottom-3 left-3 flex min-h-14 min-w-14 items-center justify-center rounded-lg bg-white px-2 text-primary-700 shadow-md">
+          @if ((range.start | date:'yyyy-MM-dd') === (range.end | date:'yyyy-MM-dd')) {
+            <div class="flex flex-col items-center">
+              <strong class="text-xl leading-none">{{ range.start | date:'dd' }}</strong>
+              <span class="mt-1 text-[0.65rem] font-semibold uppercase">{{ range.start | date:'MMM' }}</span>
+            </div>
+          } @else {
+            <div class="flex items-center gap-1.5">
+              <div class="flex flex-col items-center">
+                <strong class="text-lg leading-none">{{ range.start | date:'dd' }}</strong>
+                <span class="mt-1 text-[0.6rem] font-semibold uppercase">{{ range.start | date:'MMM' }}</span>
+              </div>
+
+              <span class="text-sm text-gray-400">-</span>
+
+              <div class="flex flex-col items-center">
+                <strong class="text-lg leading-none">{{ range.end | date:'dd' }}</strong>
+                <span class="mt-1 text-[0.6rem] font-semibold uppercase">{{ range.end | date:'MMM' }}</span>
+              </div>
+            </div>
+          }
         </div>
       }
     </div>
@@ -79,10 +99,17 @@
       }
 
       <div class="mt-auto border-t border-gray-200 pt-4">
-        @if (firstDate(activity); as first) {
+        @if (dateRange(activity); as range) {
           <span class="flex items-center gap-2 text-sm text-gray-700">
-            <i class="pi pi-clock text-primary" aria-hidden="true"></i>
-            {{ first.start | date:'HH:mm' }}–{{ first.end | date:'HH:mm' }}
+            <i class="pi pi-calendar text-primary" aria-hidden="true"></i>
+
+            @if ((range.start | date:'yyyy-MM-dd') === (range.end | date:'yyyy-MM-dd')) {
+              {{ range.start | date:'dd MMM yyyy' }}
+              ·
+              {{ range.start | date:'HH:mm' }}-{{ range.end | date:'HH:mm' }}
+            } @else {
+              {{ range.start | date:'dd MMM yyyy, HH:mm' }}-{{ range.end | date:'dd MMM yyyy, HH:mm' }}
+            }
           </span>
         } @else {
           <span class="text-sm text-gray-500">Sin fechas</span>
