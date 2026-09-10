@@ -15,7 +15,8 @@ export class ActivityCarousel {
   public readonly data = input<Activity[]>([]);
 
   public readonly responsiveOptions = [
-    { breakpoint: '1024px', numVisible: 1, numScroll: 1 }
+    { breakpoint: '1280px', numVisible: 2, numScroll: 1 },
+    { breakpoint: '768px', numVisible: 1, numScroll: 1 }
   ];
 
   public dateRange(activity: Activity): ActivityDate | undefined {
