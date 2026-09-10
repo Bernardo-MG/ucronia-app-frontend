@@ -21,24 +21,34 @@ export class ActivityCarousel {
   ];
 
   public dateRange(activity: Activity): ActivityDate | undefined {
+    let range: ActivityDate | undefined;
     const dates = this.sortedDates(activity);
 
-    if (!dates.length) {
-      return undefined;
+    if (dates.length) {
+      range = {
+        start: dates[0].start,
+        end: dates.reduce(
+          (latest, date) => new Date(date.end).getTime() > new Date(latest).getTime() ? date.end : latest,
+          dates[0].end
+        )
+      };
+    } else {
+      range = undefined;
     }
 
-    return {
-      start: dates[0].start,
-      end: dates.reduce(
-        (latest, date) => new Date(date.end).getTime() > new Date(latest).getTime() ? date.end : latest,
-        dates[0].end
-      )
-    };
+    return range;
   }
 
   public sortedDates(activity: Activity): ActivityDate[] {
-    return [...(activity.dates ?? [])]
-      .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime());
+    let dates: ActivityDate[];
+
+    if (activity.dates) {
+      dates = activity.dates;
+    } else {
+      dates = [];
+    }
+
+    return dates.sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime());
   }
 
 }
