@@ -102,18 +102,49 @@
       }
 
       <div class="mt-auto border-t border-gray-200 pt-3">
-        @if (dateRange(activity); as range) {
-          <span class="flex items-center gap-2 text-sm text-gray-700">
-            <i class="pi pi-calendar shrink-0 text-primary" aria-hidden="true"></i>
+        @if (activity.dates.length) {
+          <button type="button" class="flex w-full items-center gap-2 text-sm font-medium text-primary transition-colors hover:text-primary-700"
+            aria-haspopup="dialog" [attr.aria-label]="'Ver horarios de ' + activity.title" (click)="schedulePopover.toggle($event)">
+            <i class="pi pi-calendar shrink-0" aria-hidden="true"></i>
+            <span>Ver horarios</span>
+            <i class="pi pi-chevron-right ml-auto text-xs" aria-hidden="true"></i>
+          </button>
 
-            @if ((range.start | date:'yyyy-MM-dd') === (range.end | date:'yyyy-MM-dd')) {
-              {{ range.start | date:'dd MMM yyyy' }}·{{ range.start | date:'HH:mm' }}-{{ range.end | date:'HH:mm' }}
-            } @else {
-              {{ range.start | date:'dd MMM yyyy, HH:mm' }}-{{ range.end | date:'dd MMM yyyy, HH:mm' }}
-            }
-          </span>
+          <p-popover #schedulePopover appendTo="body">
+            <div class="w-[min(22rem,calc(100vw-2rem))]">
+              <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+                <h4 class="font-semibold text-gray-950">Horarios</h4>
+                <button type="button" class="flex size-8 items-center justify-center rounded-full text-gray-500 transition-colors hover:bg-gray-100 hover:text-gray-700"
+                  aria-label="Cerrar horarios" (click)="schedulePopover.hide()">
+                  <i class="pi pi-times text-sm" aria-hidden="true"></i>
+                </button>
+              </div>
+
+              <div class="divide-y divide-gray-200">
+                @for (date of sortedDates(activity); track date) {
+                  <div class="flex items-center gap-3 py-3">
+                    <div class="flex size-11 shrink-0 flex-col items-center justify-center rounded-lg bg-primary-50 text-primary-700">
+                      <strong class="text-sm leading-none">{{ date.start | date:'dd' }}</strong>
+                      <span class="mt-1 text-[0.6rem] font-semibold uppercase">{{ date.start | date:'MMM' }}</span>
+                    </div>
+
+                    <div class="min-w-0 flex-1">
+                      <p class="truncate text-sm font-medium capitalize text-gray-800">{{ date.start | date:'EEEE, d MMMM' }}</p>
+                      <p class="mt-1 flex items-center gap-1.5 text-sm text-gray-500">
+                        <i class="pi pi-clock text-xs" aria-hidden="true"></i>
+                        {{ date.start | date:'HH:mm' }}-{{ date.end | date:'HH:mm' }}
+                      </p>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </p-popover>
         } @else {
-          <span class="text-sm text-gray-500">Sin fechas</span>
+          <span class="flex items-center gap-2 text-sm text-gray-500">
+            <i class="pi pi-calendar-times" aria-hidden="true"></i>
+            Sin horarios
+          </span>
         }
       </div>
     </div>

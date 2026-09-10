@@ -39,4 +39,22 @@ describe('ActivityCarousel', () => {
   it('should return undefined when the activity has no dates', () => {
     expect(component.dateRange(new Activity())).toBeUndefined();
   });
+
+  it('should sort activity dates without changing the source array', () => {
+    const activity = new Activity();
+    activity.dates = [
+      { start: new Date('2026-09-15T18:00:00Z'), end: new Date('2026-09-15T21:00:00Z') },
+      { start: new Date('2026-09-08T18:00:00Z'), end: new Date('2026-09-08T21:00:00Z') },
+      { start: new Date('2026-09-10T18:00:00Z'), end: new Date('2026-09-10T21:00:00Z') }
+    ];
+
+    const sorted = component.sortedDates(activity);
+
+    expect(sorted.map(date => date.start)).toEqual([
+      new Date('2026-09-08T18:00:00Z'),
+      new Date('2026-09-10T18:00:00Z'),
+      new Date('2026-09-15T18:00:00Z')
+    ]);
+    expect(activity.dates[0].start).toEqual(new Date('2026-09-15T18:00:00Z'));
+  });
 });

@@ -2,11 +2,12 @@ import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { Activity, ActivityDate } from '@ucronia/domain';
 import { CarouselModule } from 'primeng/carousel';
+import { PopoverModule } from 'primeng/popover';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-activity-carousel',
-  imports: [CarouselModule, SkeletonModule, DatePipe, NgTemplateOutlet],
+  imports: [CarouselModule, PopoverModule, SkeletonModule, DatePipe, NgTemplateOutlet],
   templateUrl: './activity-carousel.html'
 })
 export class ActivityCarousel {
@@ -20,8 +21,7 @@ export class ActivityCarousel {
   ];
 
   public dateRange(activity: Activity): ActivityDate | undefined {
-    const dates = [...(activity.dates ?? [])]
-      .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime());
+    const dates = this.sortedDates(activity);
 
     if (!dates.length) {
       return undefined;
@@ -34,6 +34,11 @@ export class ActivityCarousel {
         dates[0].end
       )
     };
+  }
+
+  public sortedDates(activity: Activity): ActivityDate[] {
+    return [...(activity.dates ?? [])]
+      .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime());
   }
 
 }
