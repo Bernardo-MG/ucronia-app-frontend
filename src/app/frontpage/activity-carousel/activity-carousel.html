@@ -40,7 +40,7 @@
     </div>
   } @else if (data().length > 1) {
     <p-carousel [value]="data()" [numVisible]="3" [numScroll]="1" [responsiveOptions]="responsiveOptions"
-      [circular]="data().length > 3" [showIndicators]="data().length > 3" [showNavigators]="data().length > 3">
+      [circular]="data().length > 3" [showIndicators]="data().length > 1" [showNavigators]="data().length > 1">
       <ng-template #item let-activity>
         <div class="mx-2 h-full">
           <ng-container [ngTemplateOutlet]="activityCard" [ngTemplateOutletContext]="{ $implicit: activity }" />

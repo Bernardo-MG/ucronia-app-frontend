@@ -8,7 +8,7 @@ describe('FrontpageService', () => {
 
   const ucroniaClientMock = {
     activity: {
-      page: jasmine.createSpy().and.returnValue(of({ content: [] }))
+      page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 }))
     },
     setting: {
       public: {
@@ -28,5 +28,13 @@ describe('FrontpageService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+
+  it('should load every activities page with the selected date range', () => {
+    const from = new Date('2026-09-12T10:00:00Z');
+
+    service.getActivities(from, undefined).subscribe();
+
+    expect(ucroniaClientMock.activity.page).toHaveBeenCalledWith(1, 100, undefined, from, undefined);
   });
 });

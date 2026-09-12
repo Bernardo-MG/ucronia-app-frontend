@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Page } from '@bernardo-mg/request';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { UcroniaClient } from '@ucronia/api';
 import { Activity, PublicSettings } from '@ucronia/domain';
 import { Observable } from 'rxjs';
@@ -15,8 +15,8 @@ export class FrontpageService {
     return this.ucroniaClient.setting.public.get();
   }
 
-  public getActivities(from: Date | undefined = undefined, to: Date | undefined = undefined): Observable<Page<Activity>> {
-    return this.ucroniaClient.activity.page(undefined, undefined, undefined, from, to);
+  public getActivities(from: Date | undefined = undefined, to: Date | undefined = undefined): Observable<Activity[]> {
+    return getAllPages((page, size) => this.ucroniaClient.activity.page(page, size, undefined, from, to));
   }
 
 }

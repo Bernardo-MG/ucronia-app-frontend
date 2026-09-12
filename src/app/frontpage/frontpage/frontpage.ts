@@ -39,7 +39,7 @@ export class Frontpage implements OnInit {
     this.loadingActivities = true;
     this.service.getActivities(from, to)
       .pipe(finalize(() => this.loadingActivities = false))
-      .subscribe(activities => this.activities = activities.content);
+      .subscribe(activities => this.activities = activities);
   }
 
 }
