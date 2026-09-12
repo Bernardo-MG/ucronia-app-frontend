@@ -1,19 +1,28 @@
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { Activity, ActivityDate } from '@ucronia/domain';
 import { CarouselModule } from 'primeng/carousel';
 import { PopoverModule } from 'primeng/popover';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-activity-carousel',
-  imports: [CarouselModule, PopoverModule, SkeletonModule, DatePipe, NgTemplateOutlet],
+  imports: [FormsModule, CarouselModule, PopoverModule, SelectButtonModule, SkeletonModule, DatePipe, NgTemplateOutlet],
   templateUrl: './activity-carousel.html'
 })
 export class ActivityCarousel {
 
   public readonly loading = input(false);
   public readonly data = input<Activity[]>([]);
+  public readonly display = input<ActivityDisplay>('upcoming');
+  public readonly displayChange = output<ActivityDisplay>();
+
+  public readonly displayOptions = [
+    { label: 'Próximas', icon: 'pi pi-calendar', value: 'upcoming' },
+    { label: 'Pasadas', icon: 'pi pi-history', value: 'past' }
+  ];
 
   public readonly responsiveOptions = [
     { breakpoint: '1280px', numVisible: 2, numScroll: 1 },
@@ -52,3 +61,5 @@ export class ActivityCarousel {
   }
 
 }
+
+export type ActivityDisplay = 'past' | 'upcoming';

@@ -15,8 +15,8 @@ export class FrontpageService {
     return this.ucroniaClient.setting.public.get();
   }
 
-  public getActivities(): Observable<Page<Activity>> {
-    return this.ucroniaClient.activity.page();
+  public getActivities(from: Date | undefined = undefined, to: Date | undefined = undefined): Observable<Page<Activity>> {
+    return this.ucroniaClient.activity.page(undefined, undefined, undefined, from, to);
   }
 
 }

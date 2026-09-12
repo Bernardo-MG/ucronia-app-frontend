@@ -7,6 +7,9 @@ describe('FrontpageService', () => {
   let service: FrontpageService;
 
   const ucroniaClientMock = {
+    activity: {
+      page: jasmine.createSpy().and.returnValue(of({ content: [] }))
+    },
     setting: {
       public: {
         get: jasmine.createSpy().and.returnValue(of({}))

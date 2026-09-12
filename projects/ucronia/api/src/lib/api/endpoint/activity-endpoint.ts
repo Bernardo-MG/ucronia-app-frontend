@@ -32,7 +32,9 @@ export class ActivityEndpoint {
   public page(
     page: number | undefined = undefined,
     size: number | undefined = undefined,
-    sort: Sorting | undefined = undefined
+    sort: Sorting | undefined = undefined,
+    from: Date | undefined = undefined,
+    to: Date | undefined = undefined
   ): Observable<Page<Activity>> {
     let params = new HttpParams();
     if (page) {
@@ -44,6 +46,12 @@ export class ActivityEndpoint {
 
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    if (from) {
+      params = params.append('from', from.toISOString());
+    }
+    if (to) {
+      params = params.append('to', to.toISOString());
+    }
 
     return this.http.get<PaginatedResponse<Activity>>(`${this.apiUrl}/activity`, { params })
       .pipe(
