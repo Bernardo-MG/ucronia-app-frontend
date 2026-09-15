@@ -1,24 +1,28 @@
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Activity } from '@ucronia/domain';
+import { Activity, Image } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, TextareaModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, SelectModule,
+    TextareaModule],
   templateUrl: './activity-form.html'
 })
-export class ActivityForm implements OnChanges {
+export class ActivityForm implements OnChanges, OnInit {
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   private readonly fb = inject(FormBuilder);
+  private readonly imageService = inject(ImageService);
 
   @Input() public set data(value: Activity) {
     this.form.patchValue({
@@ -46,6 +50,7 @@ export class ActivityForm implements OnChanges {
 
   public formStatus: FormStatus;
   public form: FormGroup;
+  public imageOptions: ActivityImageOption[] = [];
   public showImageField = false;
 
   constructor() {
@@ -66,6 +71,11 @@ export class ActivityForm implements OnChanges {
     if (loading) {
       this.formStatus.loading = this.loading();
     }
+  }
+
+  public ngOnInit(): void {
+    this.imageService.getAllForSelection()
+      .subscribe(images => this.imageOptions = images.map(image => this.toImageOption(image)));
   }
 
   public get dates(): FormArray {
@@ -118,4 +128,18 @@ export class ActivityForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
+  private toImageOption(image: Image): ActivityImageOption {
+    return {
+      name: image.name,
+      description: image.description,
+      url: this.imageService.contentUrl(image.number)
+    };
+  }
+
+}
+
+interface ActivityImageOption {
+  name: string;
+  description: string;
+  url: string;
 }

@@ -22,8 +22,27 @@
           <button type="button" class="flex items-center gap-2 text-sm font-medium text-primary hover:underline" (click)="showImageField = !showImageField"><i class="pi pi-image" aria-hidden="true"></i>{{ showImageField ? 'Ocultar imagen' : 'Añadir imagen' }}</button>
           @if (showImageField) {
             <div class="mt-3">
-              <label for="imageInput" class="mb-2 block font-semibold text-gray-950">URL de la imagen</label>
-              <input pInputText type="url" id="imageInput" formControlName="image" placeholder="https://ejemplo.com/imagen.jpg" [invalid]="isFieldInvalid('image')" maxlength="200" class="w-full" />
+              <label for="imageInput" class="mb-2 block font-semibold text-gray-950">Imagen</label>
+              <p-select inputId="imageInput" formControlName="image" [options]="imageOptions" optionLabel="name"
+                optionValue="url" [filter]="true" filterBy="name,description" filterPlaceholder="Buscar imágenes…"
+                placeholder="Selecciona una imagen" emptyFilterMessage="No se han encontrado imágenes"
+                emptyMessage="No hay imágenes disponibles" [showClear]="true" appendTo="body" class="w-full">
+                <ng-template #selectedItem let-image>
+                  <div class="flex min-w-0 items-center gap-3">
+                    <img [src]="image.url" alt="" class="size-9 shrink-0 rounded-md border border-gray-200 bg-white object-contain p-1" />
+                    <span class="truncate">{{ image.name }}</span>
+                  </div>
+                </ng-template>
+                <ng-template #item let-image>
+                  <div class="flex min-w-0 items-center gap-3 py-1">
+                    <img [src]="image.url" alt="" class="size-12 shrink-0 rounded-md border border-gray-200 bg-white object-contain p-1" loading="lazy" />
+                    <div class="min-w-0">
+                      <div class="truncate font-medium text-gray-950">{{ image.name }}</div>
+                      @if (image.description) { <div class="truncate text-sm text-gray-500">{{ image.description }}</div> }
+                    </div>
+                  </div>
+                </ng-template>
+              </p-select>
               @for (failure of failures().getFailures('image'); track failure) { <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message> }
             </div>
           }

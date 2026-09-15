@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { Page, Sorting } from '@bernardo-mg/request';
+import { getAllPages } from '@app/shared/request/get-all-pages';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { Image } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
@@ -11,8 +12,13 @@ export class ImageService {
   private readonly client = inject(UcroniaClient);
   private readonly messages = inject(MessageService);
 
-  public getAll(page: number | undefined, sort: Sorting): Observable<Page<Image>> {
-    return this.client.image.page(page, undefined, sort);
+  public getAll(page: number | undefined, sort: Sorting, size: number | undefined = undefined): Observable<Page<Image>> {
+    return this.client.image.page(page, size, sort);
+  }
+
+  public getAllForSelection(): Observable<Image[]> {
+    const sorting = new Sorting([new SortingProperty('name')]);
+    return getAllPages((page, size) => this.getAll(page, sorting, size));
   }
 
   public get(number: number): Observable<Image> {

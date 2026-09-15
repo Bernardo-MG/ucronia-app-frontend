@@ -10,7 +10,7 @@ describe('ImageService', () => {
   const image = Object.assign(new Image(), { number: 1, name: 'Image', description: 'Description', mediaType: 'image/png' });
   const client = {
     image: {
-      page: jasmine.createSpy().and.returnValue(of({ content: [] })),
+      page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 })),
       get: jasmine.createSpy().and.returnValue(of(image)),
       content: jasmine.createSpy().and.returnValue(of(new Blob(['data'], { type: 'image/png' }))),
       contentUrl: jasmine.createSpy().and.returnValue('/images/1/content'),
@@ -31,6 +31,12 @@ describe('ImageService', () => {
     const file = new File(['data'], 'image.png', { type: 'image/png' });
     service.create(image, file).subscribe();
     expect(client.image.create).toHaveBeenCalledWith(image.name, image.description, file);
+  });
+
+  it('should load all images ordered by name for selectors', () => {
+    service.getAllForSelection().subscribe();
+
+    expect(client.image.page).toHaveBeenCalledWith(1, 100, jasmine.anything());
   });
 
   it('should reuse the current content when only metadata changes', () => {
