@@ -2,10 +2,11 @@ import { Component, inject, input, OnChanges, output, SimpleChanges } from '@ang
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Image } from '@ucronia/domain';
+import { Image, ImageFolder } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 
 export interface ImageFormData {
@@ -15,13 +16,14 @@ export interface ImageFormData {
 
 @Component({
   selector: 'assoc-image-form',
-  imports: [ButtonModule, InputTextModule, MessageModule, ReactiveFormsModule, TextareaModule],
+  imports: [ButtonModule, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule],
   templateUrl: './image-form.html'
 })
 export class ImageForm implements OnChanges {
   private readonly fb = inject(FormBuilder);
 
   public readonly data = input<Image | undefined>();
+  public readonly folders = input<ImageFolder[]>([]);
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly save = output<ImageFormData>();
@@ -35,7 +37,8 @@ export class ImageForm implements OnChanges {
     this.form = this.fb.group({
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
-      description: ['', Validators.maxLength(500)]
+      description: ['', Validators.maxLength(500)],
+      folderNumber: [null]
     });
     this.formStatus = new FormStatus(this.form);
   }
@@ -61,4 +64,26 @@ export class ImageForm implements OnChanges {
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
+
+  public get folderOptions(): FolderOption[] {
+    return [
+      { name: 'Sin carpeta', number: null },
+      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
+    ];
+  }
+
+  private folderPath(folder: ImageFolder): string {
+    const names = [folder.name];
+    let parent = this.folders().find(item => item.number === folder.parentNumber);
+    while (parent) {
+      names.unshift(parent.name);
+      parent = this.folders().find(item => item.number === parent?.parentNumber);
+    }
+    return names.join(' / ');
+  }
+}
+
+interface FolderOption {
+  name: string;
+  number: number | null;
 }

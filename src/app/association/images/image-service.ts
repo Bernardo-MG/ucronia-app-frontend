@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { Image } from '@ucronia/domain';
+import { Image, ImageFolder } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, switchMap, tap } from 'rxjs';
 
@@ -19,6 +19,41 @@ export class ImageService {
   public getAllForSelection(): Observable<Image[]> {
     const sorting = new Sorting([new SortingProperty('name')]);
     return getAllPages((page, size) => this.getAll(page, sorting, size));
+  }
+
+  public getFolders(): Observable<ImageFolder[]> {
+    return this.client.image.folders();
+  }
+
+  public getFolderImages(folderNumber: number, page: number | undefined, sort: Sorting,
+    size: number | undefined = undefined): Observable<Page<Image>> {
+    return this.client.image.folderPage(folderNumber, page, size, sort);
+  }
+
+  public getRootImages(page: number | undefined, sort: Sorting,
+    size: number | undefined = undefined): Observable<Page<Image>> {
+    return this.client.image.rootPage(page, size, sort);
+  }
+
+  public createFolder(name: string, parentNumber: number | null): Observable<ImageFolder> {
+    return this.client.image.createFolder(name, parentNumber)
+      .pipe(tap(() => this.notify('Creada', 'Carpeta creada')));
+  }
+
+  public updateFolder(folder: ImageFolder): Observable<ImageFolder> {
+    return this.client.image.updateFolder(folder.number, folder.name, folder.parentNumber)
+      .pipe(tap(() => this.notify('Actualizada', 'Carpeta actualizada')));
+  }
+
+  public deleteFolder(number: number): Observable<ImageFolder> {
+    return this.client.image.deleteFolder(number)
+      .pipe(tap(() => this.notify('Borrada', 'Carpeta borrada')));
+  }
+
+  public move(imageNumber: number, folderNumber: number | null): Observable<Image> {
+    const request = folderNumber === null ? this.client.image.moveToRoot(imageNumber)
+      : this.client.image.moveToFolder(imageNumber, folderNumber);
+    return request.pipe(tap(() => this.notify('Movida', 'Imagen movida')));
   }
 
   public get(number: number): Observable<Image> {
