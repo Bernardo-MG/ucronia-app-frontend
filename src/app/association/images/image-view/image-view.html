@@ -33,6 +33,7 @@
           <p-button label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text
             (click)="showEditFolder()" />
           <p-button label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
+            [disabled]="status.loading || data.totalElements > 0 || childFolders.length > 0"
             (click)="onDeleteFolder($event)" />
         </div>
       }
