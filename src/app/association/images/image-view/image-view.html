@@ -11,10 +11,10 @@
     </div>
   </header>
 
-  <section>
-    <div class="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-      <div>
-        <nav class="mb-2 flex flex-wrap items-center gap-1 text-sm" aria-label="Ruta de carpetas">
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="flex flex-col gap-4 border-b border-gray-200 p-4 sm:p-5 lg:flex-row lg:items-end lg:justify-between">
+      <div class="min-w-0">
+        <nav class="mb-3 flex flex-wrap items-center gap-1 text-sm" aria-label="Ruta de carpetas">
           <button type="button" class="rounded px-1.5 py-1 text-gray-500 hover:bg-gray-100 hover:text-primary"
             (click)="openFolder()"><i class="pi pi-home mr-1" aria-hidden="true"></i>Imágenes</button>
           @for (folder of breadcrumbs; track folder.number) {
@@ -29,7 +29,7 @@
         <p class="mt-1 text-sm text-gray-500">{{ childFolders.length }} carpetas · {{ data.totalElements }} imágenes</p>
       </div>
       @if (currentFolderNumber !== null && permissions.edit) {
-        <div class="flex gap-2">
+        <div class="flex shrink-0 gap-1">
           <p-button label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text
             (click)="showEditFolder()" />
           <p-button label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
@@ -40,23 +40,32 @@
     </div>
 
     @if (childFolders.length) {
-      <div class="mb-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        @for (folder of childFolders; track folder.number) {
-          <button type="button"
-            class="group flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left shadow-sm transition hover:-translate-y-0.5 hover:border-primary-200 hover:shadow-md"
-            (click)="openFolder(folder.number)">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
-              <i class="pi pi-folder text-xl" aria-hidden="true"></i>
-            </span>
-            <span class="min-w-0 flex-1 truncate font-semibold text-gray-950">{{ folder.name }}</span>
-            <i class="pi pi-angle-right text-gray-400 transition group-hover:translate-x-0.5 group-hover:text-primary"
-              aria-hidden="true"></i>
-          </button>
-        }
+      <div class="border-b border-gray-200 p-4 sm:p-5">
+        <h3 class="mb-3 text-sm font-semibold text-gray-950">Carpetas</h3>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          @for (folder of childFolders; track folder.number) {
+            <button type="button"
+              class="group flex min-w-0 items-center gap-3 rounded-xl border border-gray-200 bg-white p-3 text-left transition-colors hover:border-primary-200 hover:bg-primary-50/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              (click)="openFolder(folder.number)">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                <i class="pi pi-folder text-xl" aria-hidden="true"></i>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block truncate font-semibold text-gray-950">{{ folder.name }}</span>
+                <span class="mt-0.5 block text-xs text-gray-500">Abrir carpeta</span>
+              </span>
+              <i class="pi pi-angle-right text-sm text-gray-400 transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                aria-hidden="true"></i>
+            </button>
+          }
+        </div>
       </div>
     }
 
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div>
+      <div class="border-b border-gray-200 px-4 py-3 sm:px-5">
+        <h3 class="text-sm font-semibold text-gray-950">Imágenes</h3>
+      </div>
       <assoc-image-list [loading]="status.loading" [images]="data.content" [rows]="data.size"
         [page]="data.page" [totalRecords]="data.totalElements" [contentUrl]="contentUrl"
         (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />

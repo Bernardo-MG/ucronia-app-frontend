@@ -4,7 +4,7 @@
   (onPage)="onPageChange($event)" responsiveLayout="scroll">
   <ng-template #header>
     <tr>
-      <th class="w-32">Vista previa</th>
+      <th class="w-24">Imagen</th>
       <th pSortableColumn="name" class="min-w-48">Nombre <p-sortIcon field="name" /></th>
       <th class="min-w-72">Descripción</th>
       <th pSortableColumn="mediaType" class="min-w-36">Archivo <p-sortIcon field="mediaType" /></th>
@@ -15,8 +15,9 @@
   <ng-template #body let-image>
     <tr class="cursor-pointer transition-colors hover:bg-primary-50/40" tabindex="0"
       (click)="show.emit(image)" (keydown.enter)="show.emit(image)">
-      <td><img [src]="contentUrl()(image.number)" [alt]="image.name"
-        class="h-12 w-20 rounded-md border border-gray-200 object-cover" loading="lazy" /></td>
+      <td><span class="flex size-14 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white">
+        <img [src]="contentUrl()(image.number)" [alt]="image.name" class="size-full object-contain" loading="lazy" />
+      </span></td>
       <td><span class="font-medium text-gray-950">{{ image.name }}</span></td>
       <td class="max-w-96 text-gray-600"><span class="line-clamp-2">{{ image.description || 'Sin descripción' }}</span></td>
       <td class="text-gray-600">{{ image.mediaType }} · {{ formatSize(image.size) }}</td>
