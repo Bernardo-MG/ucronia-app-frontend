@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Image } from '@ucronia/domain';
+import { Image, ImageFolder } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 
 export class ImageEndpoint {
@@ -28,6 +28,53 @@ export class ImageEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => this.mapPage(response))
+      );
+  }
+
+  public folderPage(folderNumber: number, page: number | undefined = undefined, size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined): Observable<Page<Image>> {
+    return this.imagePage(`${this.apiUrl}/image-folders/${folderNumber}/images`, page, size, sort);
+  }
+
+  public rootPage(page: number | undefined = undefined, size: number | undefined = undefined,
+    sort: Sorting | undefined = undefined): Observable<Page<Image>> {
+    return this.imagePage(`${this.apiUrl}/image-folders/root/images`, page, size, sort);
+  }
+
+  public folders(): Observable<ImageFolder[]> {
+    return this.http.get<ImageFolder[]>(`${this.apiUrl}/image-folders`)
+      .pipe(catchError(this.errorInterceptor.handle));
+  }
+
+  public createFolder(name: string, parentNumber: number | null): Observable<ImageFolder> {
+    return this.http.post<ImageFolder>(`${this.apiUrl}/image-folders`, { name, parentNumber })
+      .pipe(catchError(this.errorInterceptor.handle));
+  }
+
+  public updateFolder(number: number, name: string, parentNumber: number | null): Observable<ImageFolder> {
+    return this.http.put<ImageFolder>(`${this.apiUrl}/image-folders/${number}`, { name, parentNumber })
+      .pipe(catchError(this.errorInterceptor.handle));
+  }
+
+  public deleteFolder(number: number): Observable<ImageFolder> {
+    return this.http.delete<ImageFolder>(`${this.apiUrl}/image-folders/${number}`)
+      .pipe(catchError(this.errorInterceptor.handle));
+  }
+
+  public moveToFolder(imageNumber: number, folderNumber: number): Observable<Image> {
+    return this.http.put<SimpleResponse<Image>>(
+      `${this.apiUrl}/image-folders/${folderNumber}/images/${imageNumber}`, null)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => this.mapImage(response.content))
+      );
+  }
+
+  public moveToRoot(imageNumber: number): Observable<Image> {
+    return this.http.delete<SimpleResponse<Image>>(`${this.apiUrl}/image-folders/images/${imageNumber}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => this.mapImage(response.content))
       );
   }
 
@@ -79,6 +126,20 @@ export class ImageEndpoint {
     data.append('description', description);
     data.append('file', file);
     return data;
+  }
+
+  private imagePage(url: string, page: number | undefined, size: number | undefined,
+    sort: Sorting | undefined): Observable<Page<Image>> {
+    let params = new HttpParams();
+    if (page) params = params.append('page', page);
+    if (size) params = params.append('size', size);
+    sort?.properties.forEach(property => params = params.append('sort',
+      `${String(property.property)}|${property.direction}`));
+    return this.http.get<PaginatedResponse<Image>>(url, { params })
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => this.mapPage(response))
+      );
   }
 
   private mapImage(image: Image): Image {
