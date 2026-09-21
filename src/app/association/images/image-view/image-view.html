@@ -28,14 +28,16 @@
         </h2>
         <p class="mt-1 text-sm text-gray-500">{{ childFolders.length }} carpetas · {{ data.totalElements }} imágenes</p>
       </div>
-      @if (currentFolderNumber !== null && permissions.edit) {
-        <div class="flex shrink-0 gap-1">
-          <p-button label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text
-            (click)="showEditFolder()" />
+      @if (currentFolderNumber !== null && (permissions.edit || permissions.delete)) {
+      <div class="flex shrink-0 gap-1">
+        @if (permissions.edit) {
+          <p-button label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text (click)="showEditFolder()" />
+        }
+        @if (permissions.delete) {
           <p-button label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
-            [disabled]="status.loading || data.totalElements > 0 || childFolders.length > 0"
-            (click)="onDeleteFolder($event)" />
-        </div>
+            [disabled]="status.loading || data.totalElements > 0 || childFolders.length > 0" (click)="onDeleteFolder($event)" />
+        }
+      </div>
       }
     </div>
 
