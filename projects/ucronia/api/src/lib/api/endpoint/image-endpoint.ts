@@ -112,6 +112,14 @@ export class ImageEndpoint {
       );
   }
 
+  public patch(number: number, name: string, description: string): Observable<Image> {
+    return this.http.patch<SimpleResponse<Image>>(`${this.apiUrl}/images/${number}`, { name, description })
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => this.mapImage(response.content))
+      );
+  }
+
   public delete(number: number): Observable<Image> {
     return this.http.delete<SimpleResponse<Image>>(`${this.apiUrl}/images/${number}`)
       .pipe(

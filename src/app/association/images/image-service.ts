@@ -4,7 +4,7 @@ import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { Image, ImageFolder } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { Observable, switchMap, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class ImageService {
@@ -70,24 +70,21 @@ export class ImageService {
   }
 
   public update(image: Image, file?: File): Observable<Image> {
+    let response: Observable<Image>;
+
     if (file) {
-      return this.updateWithFile(image, file);
+      response = this.client.image.update(image.number, image.name, image.description, file);
+    } else {
+      response = this.client.image.patch(image.number, image.name, image.description);
     }
-    return this.client.image.content(image.number)
-      .pipe(
-        switchMap(content => this.updateWithFile(image,
-          new File([content], image.name, { type: image.mediaType })))
-      );
+    response = response.pipe(tap(() => this.notify('Actualizada', 'Imagen actualizada')));
+
+    return response;
   }
 
   public delete(number: number): Observable<Image> {
     return this.client.image.delete(number)
       .pipe(tap(() => this.notify('Borrada', 'Imagen borrada')));
-  }
-
-  private updateWithFile(image: Image, file: File): Observable<Image> {
-    return this.client.image.update(image.number, image.name, image.description, file)
-      .pipe(tap(() => this.notify('Actualizada', 'Imagen actualizada')));
   }
 
   private notify(summary: string, detail: string): void {

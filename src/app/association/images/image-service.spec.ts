@@ -16,6 +16,7 @@ describe('ImageService', () => {
       contentUrl: jasmine.createSpy().and.returnValue('/images/1/content'),
       create: jasmine.createSpy().and.returnValue(of(image)),
       update: jasmine.createSpy().and.returnValue(of(image)),
+      patch: jasmine.createSpy().and.returnValue(of(image)),
       delete: jasmine.createSpy().and.returnValue(of(image))
     }
   };
@@ -39,11 +40,11 @@ describe('ImageService', () => {
     expect(client.image.page).toHaveBeenCalledWith(1, 100, jasmine.anything());
   });
 
-  it('should reuse the current content when only metadata changes', () => {
+  it('should update only metadata when no replacement file is supplied', () => {
     service.update(image).subscribe();
-    expect(client.image.content).toHaveBeenCalledWith(image.number);
-    expect(client.image.update).toHaveBeenCalledWith(image.number, image.name, image.description,
-      jasmine.any(File));
+    expect(client.image.patch).toHaveBeenCalledWith(image.number, image.name, image.description);
+    expect(client.image.content).not.toHaveBeenCalled();
+    expect(client.image.update).not.toHaveBeenCalled();
   });
 
   it('should delete an image', () => {
