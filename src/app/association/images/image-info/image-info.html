@@ -2,9 +2,10 @@
   @if (loading()) {
     <p-skeleton height="20rem" borderRadius="0.75rem" />
   } @else {
-    <img [src]="source()" [alt]="data().name"
+    <img [assocImageContent]="data().number" [alt]="data().name"
       class="max-h-96 w-full rounded-xl border border-gray-200 bg-gray-50 object-contain" />
   }
+  @if (data().publicAccess) {
   <section class="rounded-xl border border-gray-200 p-5">
     <h3 class="flex items-center gap-2 font-semibold text-gray-950">
       <i class="pi pi-image text-blue-700" aria-hidden="true"></i>Detalles
@@ -34,10 +35,10 @@
       <a pButton icon="pi pi-external-link" aria-label="Abrir imagen" [href]="source()"
         target="_blank" rel="noopener noreferrer"></a>
     </div>
-    @if (!data().publicAccess) {
-      <p class="mt-3 text-sm text-gray-500">
-        Este enlace solo funciona para usuarios autenticados con permiso para leer imágenes.
-      </p>
-    }
   </section>
+  } @else {
+    <section class="rounded-xl border border-gray-200 p-5 text-sm text-gray-500">
+      <i class="pi pi-lock mr-2" aria-hidden="true"></i>Las imágenes privadas no tienen un enlace compartible.
+    </section>
+  }
 </div>

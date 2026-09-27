@@ -64,6 +64,10 @@ export class ImageService {
     return this.client.image.contentUrl(number);
   }
 
+  public content(number: number): Observable<Blob> {
+    return this.client.image.content(number);
+  }
+
   public create(image: Image, file: File): Observable<Image> {
     return this.client.image.create(image.name, image.description, image.publicAccess, file)
       .pipe(tap(() => this.notify('Creada', 'Imagen creada')));

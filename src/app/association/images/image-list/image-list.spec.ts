@@ -8,7 +8,6 @@ describe('ImageList', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({ imports: [ImageList] }).compileComponents();
     fixture = TestBed.createComponent(ImageList);
-    fixture.componentRef.setInput('contentUrl', (number: number) => `/images/${number}/content`);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

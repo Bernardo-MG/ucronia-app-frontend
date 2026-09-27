@@ -5,10 +5,11 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { SkeletonModule } from 'primeng/skeleton';
+import { ImageContent } from '../image-content/image-content';
 
 @Component({
   selector: 'assoc-image-info',
-  imports: [ButtonModule, DatePipe, InputTextModule, SkeletonModule],
+  imports: [ButtonModule, DatePipe, ImageContent, InputTextModule, SkeletonModule],
   templateUrl: './image-info.html'
 })
 export class ImageInfo {

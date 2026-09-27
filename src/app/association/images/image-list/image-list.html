@@ -16,7 +16,7 @@
     <tr class="cursor-pointer transition-colors hover:bg-primary-50/40" tabindex="0"
       (click)="show.emit(image)" (keydown.enter)="show.emit(image)">
       <td><span class="flex size-14 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white">
-        <img [src]="contentUrl()(image.number)" [alt]="image.name" class="size-full object-contain" loading="lazy" />
+        <img [assocImageContent]="image.number" [alt]="image.name" class="size-full object-contain" loading="lazy" />
       </span></td>
       <td><span class="font-medium text-gray-950">{{ image.name }}</span>
         @if (!image.publicAccess) {

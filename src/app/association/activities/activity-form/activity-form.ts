@@ -9,12 +9,13 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { ImageContent } from '../../images/image-content/image-content';
 import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, SelectModule,
-    TextareaModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
+    MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
 export class ActivityForm implements OnChanges, OnInit {
@@ -132,7 +133,7 @@ export class ActivityForm implements OnChanges, OnInit {
     return {
       name: image.name,
       description: image.description,
-      url: this.imageService.contentUrl(image.number)
+      number: image.number
     };
   }
 
@@ -141,5 +142,5 @@ export class ActivityForm implements OnChanges, OnInit {
 interface ActivityImageOption {
   name: string;
   description: string;
-  url: string;
+  number: number;
 }

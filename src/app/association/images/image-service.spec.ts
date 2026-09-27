@@ -24,6 +24,7 @@ describe('ImageService', () => {
   };
 
   beforeEach(() => {
+    for (const spy of Object.values(client.image)) spy.calls.reset();
     TestBed.configureTestingModule({ providers: [MessageService, { provide: UcroniaClient, useValue: client }] });
     service = TestBed.inject(ImageService);
   });
@@ -40,6 +41,12 @@ describe('ImageService', () => {
     service.getAllForSelection().subscribe();
 
     expect(client.image.page).toHaveBeenCalledWith(1, 100, jasmine.anything());
+  });
+
+  it('should load image content through the API client', () => {
+    service.content(image.number).subscribe();
+
+    expect(client.image.content).toHaveBeenCalledWith(image.number);
   });
 
   it('should update only metadata when no replacement file is supplied', () => {
