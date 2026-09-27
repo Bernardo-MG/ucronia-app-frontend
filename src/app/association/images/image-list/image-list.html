@@ -18,7 +18,13 @@
       <td><span class="flex size-14 items-center justify-center overflow-hidden rounded-lg border border-gray-200 bg-white">
         <img [src]="contentUrl()(image.number)" [alt]="image.name" class="size-full object-contain" loading="lazy" />
       </span></td>
-      <td><span class="font-medium text-gray-950">{{ image.name }}</span></td>
+      <td><span class="font-medium text-gray-950">{{ image.name }}</span>
+        @if (!image.publicAccess) {
+          <span class="ml-2 inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+            <i class="pi pi-lock text-[0.65rem]" aria-hidden="true"></i>Privada
+          </span>
+        }
+      </td>
       <td class="max-w-96 text-gray-600"><span class="line-clamp-2">{{ image.description || 'Sin descripción' }}</span></td>
       <td class="text-gray-600">{{ image.mediaType }} · {{ formatSize(image.size) }}</td>
       <td class="text-gray-600">{{ image.audit.updatedAt || image.audit.createdAt | date:'d MMM y · HH:mm' }}</td>

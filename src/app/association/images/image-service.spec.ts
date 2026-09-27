@@ -7,7 +7,9 @@ import { ImageService } from './image-service';
 
 describe('ImageService', () => {
   let service: ImageService;
-  const image = Object.assign(new Image(), { number: 1, name: 'Image', description: 'Description', mediaType: 'image/png' });
+  const image = Object.assign(new Image(), {
+    number: 1, name: 'Image', description: 'Description', mediaType: 'image/png', publicAccess: false
+  });
   const client = {
     image: {
       page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 })),
@@ -31,7 +33,7 @@ describe('ImageService', () => {
   it('should upload an image', () => {
     const file = new File(['data'], 'image.png', { type: 'image/png' });
     service.create(image, file).subscribe();
-    expect(client.image.create).toHaveBeenCalledWith(image.name, image.description, file);
+    expect(client.image.create).toHaveBeenCalledWith(image.name, image.description, image.publicAccess, file);
   });
 
   it('should load all images ordered by name for selectors', () => {
@@ -42,9 +44,16 @@ describe('ImageService', () => {
 
   it('should update only metadata when no replacement file is supplied', () => {
     service.update(image).subscribe();
-    expect(client.image.patch).toHaveBeenCalledWith(image.number, image.name, image.description);
+    expect(client.image.patch).toHaveBeenCalledWith(image.number, image.name, image.description, image.publicAccess);
     expect(client.image.content).not.toHaveBeenCalled();
     expect(client.image.update).not.toHaveBeenCalled();
+  });
+
+  it('should preserve visibility when replacing image content', () => {
+    const file = new File(['replacement'], 'replacement.png', { type: 'image/png' });
+    service.update(image, file).subscribe();
+    expect(client.image.update)
+      .toHaveBeenCalledWith(image.number, image.name, image.description, image.publicAccess, file);
   });
 
   it('should delete an image', () => {

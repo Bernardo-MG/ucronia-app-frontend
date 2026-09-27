@@ -95,25 +95,26 @@ export class ImageEndpoint {
     return `${this.apiUrl}/images/${number}/content`;
   }
 
-  public create(name: string, description: string, file: File): Observable<Image> {
-    return this.http.post<SimpleResponse<Image>>(`${this.apiUrl}/images`, this.formData(name, description, file))
+  public create(name: string, description: string, publicAccess: boolean, file: File): Observable<Image> {
+    return this.http.post<SimpleResponse<Image>>(`${this.apiUrl}/images`,
+      this.formData(name, description, publicAccess, file))
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => this.mapImage(response.content))
       );
   }
 
-  public update(number: number, name: string, description: string, file: File): Observable<Image> {
+  public update(number: number, name: string, description: string, publicAccess: boolean, file: File): Observable<Image> {
     return this.http.put<SimpleResponse<Image>>(`${this.apiUrl}/images/${number}`,
-      this.formData(name, description, file))
+      this.formData(name, description, publicAccess, file))
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => this.mapImage(response.content))
       );
   }
 
-  public patch(number: number, name: string, description: string): Observable<Image> {
-    return this.http.patch<SimpleResponse<Image>>(`${this.apiUrl}/images/${number}`, { name, description })
+  public patch(number: number, name: string, description: string, publicAccess: boolean): Observable<Image> {
+    return this.http.patch<SimpleResponse<Image>>(`${this.apiUrl}/images/${number}`, { name, description, publicAccess })
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => this.mapImage(response.content))
@@ -128,10 +129,11 @@ export class ImageEndpoint {
       );
   }
 
-  private formData(name: string, description: string, file: File): FormData {
+  private formData(name: string, description: string, publicAccess: boolean, file: File): FormData {
     const data = new FormData();
     data.append('name', name);
     data.append('description', description);
+    data.append('publicAccess', String(publicAccess));
     data.append('file', file);
     return data;
   }
@@ -151,6 +153,7 @@ export class ImageEndpoint {
   }
 
   private mapImage(image: Image): Image {
+    image.publicAccess ??= true;
     if (image.audit?.createdAt) image.audit.createdAt = new Date(image.audit.createdAt);
     if (image.audit?.updatedAt) image.audit.updatedAt = new Date(image.audit.updatedAt);
     return image;

@@ -65,7 +65,7 @@ export class ImageService {
   }
 
   public create(image: Image, file: File): Observable<Image> {
-    return this.client.image.create(image.name, image.description, file)
+    return this.client.image.create(image.name, image.description, image.publicAccess, file)
       .pipe(tap(() => this.notify('Creada', 'Imagen creada')));
   }
 
@@ -73,9 +73,9 @@ export class ImageService {
     let response: Observable<Image>;
 
     if (file) {
-      response = this.client.image.update(image.number, image.name, image.description, file);
+      response = this.client.image.update(image.number, image.name, image.description, image.publicAccess, file);
     } else {
-      response = this.client.image.patch(image.number, image.name, image.description);
+      response = this.client.image.patch(image.number, image.name, image.description, image.publicAccess);
     }
     response = response.pipe(tap(() => this.notify('Actualizada', 'Imagen actualizada')));
 

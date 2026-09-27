@@ -5,6 +5,7 @@ export class Image {
   public folderNumber: number | null = null;
   public mediaType = '';
   public size = 0;
+  public publicAccess = true;
   public audit = new ImageAudit();
 }
 
