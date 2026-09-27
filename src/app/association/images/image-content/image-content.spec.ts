@@ -35,7 +35,7 @@ describe('ImageContent', () => {
     const image = fixture.debugElement.query(By.css('img')).nativeElement as HTMLImageElement;
     expect(service.content).toHaveBeenCalledWith(4);
     expect(URL.createObjectURL).toHaveBeenCalledWith(content);
-    expect(image.src).toEndWith('blob:image');
+    expect(image.src).toBe('blob:image');
   });
 
   it('should revoke the object URL when destroyed', () => {
