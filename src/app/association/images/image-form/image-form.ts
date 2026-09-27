@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
+import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 export interface ImageFormData {
   image: Image;
@@ -16,7 +17,7 @@ export interface ImageFormData {
 
 @Component({
   selector: 'assoc-image-form',
-  imports: [ButtonModule, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule],
+  imports: [ButtonModule, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
   templateUrl: './image-form.html'
 })
 export class ImageForm implements OnChanges {
@@ -38,6 +39,7 @@ export class ImageForm implements OnChanges {
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', Validators.maxLength(500)],
+      publicAccess: [true],
       folderNumber: [null]
     });
     this.formStatus = new FormStatus(this.form);

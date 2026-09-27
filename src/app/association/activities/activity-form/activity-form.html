@@ -29,13 +29,15 @@
                 emptyMessage="No hay imágenes disponibles" [showClear]="true" appendTo="body" class="w-full">
                 <ng-template #selectedItem let-image>
                   <div class="flex min-w-0 items-center gap-3">
-                    <img [src]="image.url" alt="" class="size-9 shrink-0 rounded-md border border-gray-200 bg-white object-contain p-1" />
+                    <img [assocImageContent]="image.number" alt=""
+                      class="size-9 shrink-0 rounded-md border border-gray-200 bg-white object-contain p-1" />
                     <span class="truncate">{{ image.name }}</span>
                   </div>
                 </ng-template>
                 <ng-template #item let-image>
                   <div class="flex min-w-0 items-center gap-3 py-1">
-                    <img [src]="image.url" alt="" class="size-12 shrink-0 rounded-md border border-gray-200 bg-white object-contain p-1" loading="lazy" />
+                    <img [assocImageContent]="image.number" alt=""
+                      class="size-12 shrink-0 rounded-md border border-gray-200 bg-white object-contain p-1" loading="lazy" />
                     <div class="min-w-0">
                       <div class="truncate font-medium text-gray-950">{{ image.name }}</div>
                       @if (image.description) { <div class="truncate text-sm text-gray-500">{{ image.description }}</div> }

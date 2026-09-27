@@ -69,7 +69,7 @@
         <h3 class="text-sm font-semibold text-gray-950">Imágenes</h3>
       </div>
       <assoc-image-list [loading]="status.loading" [images]="data.content" [rows]="data.size"
-        [page]="data.page" [totalRecords]="data.totalElements" [contentUrl]="contentUrl"
+        [page]="data.page" [totalRecords]="data.totalElements"
         (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     </div>
   </section>

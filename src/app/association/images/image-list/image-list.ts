@@ -4,10 +4,11 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Image } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
+import { ImageContent } from '../image-content/image-content';
 
 @Component({
   selector: 'assoc-image-list',
-  imports: [ButtonModule, DatePipe, TableModule],
+  imports: [ButtonModule, DatePipe, ImageContent, TableModule],
   templateUrl: './image-list.html'
 })
 export class ImageList {
@@ -16,8 +17,6 @@ export class ImageList {
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
-  public readonly contentUrl = input.required<(number: number) => string>();
-
   public readonly show = output<Image>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();

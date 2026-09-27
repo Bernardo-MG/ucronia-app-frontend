@@ -15,6 +15,15 @@
         <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
       }
     </div>
+    <div class="flex items-start justify-between gap-4 rounded-xl border border-gray-200 p-4">
+      <div>
+        <label for="imagePublicAccess" class="block font-semibold text-gray-950">Acceso público</label>
+        <p class="mt-1 text-sm text-gray-500">
+          Si se desactiva, solo los usuarios con permiso para leer imágenes podrán verla.
+        </p>
+      </div>
+      <p-toggleswitch inputId="imagePublicAccess" formControlName="publicAccess" />
+    </div>
     @if (data()) {
       <div>
         <label for="imageFolder" class="mb-2 block font-semibold text-gray-950">Carpeta</label>
