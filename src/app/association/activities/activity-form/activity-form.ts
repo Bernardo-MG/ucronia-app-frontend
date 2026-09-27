@@ -133,7 +133,8 @@ export class ActivityForm implements OnChanges, OnInit {
     return {
       name: image.name,
       description: image.description,
-      number: image.number
+      number: image.number,
+      url: this.imageService.contentUrl(image.number)
     };
   }
 
@@ -143,4 +144,5 @@ interface ActivityImageOption {
   name: string;
   description: string;
   number: number;
+  url: string;
 }
