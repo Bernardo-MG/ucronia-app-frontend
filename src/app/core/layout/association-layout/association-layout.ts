@@ -135,6 +135,14 @@ export class AssociationLayout {
           icon: 'pi pi-images'
         });
     }
+    if (authService.hasPermission(UcroniaPermissions.file.read)) {
+      items.push(
+        {
+          label: 'Archivos',
+          routerLink: '/association/files',
+          icon: 'pi pi-file'
+        });
+    }
 
     return items;
   }
