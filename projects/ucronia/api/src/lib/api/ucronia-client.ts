@@ -5,6 +5,7 @@ import { ActivityEndpoint } from './endpoint/activity-endpoint';
 import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
+import { FileEndpoint } from './endpoint/file-endpoint';
 import { GameTableEndpoint } from './endpoint/game-table-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint';
 import { ImageEndpoint } from './endpoint/image-endpoint';
@@ -41,6 +42,10 @@ export class UcroniaClient {
 
   public get image() {
     return new ImageEndpoint(this.http, this.base_url);
+  }
+
+  public get file() {
+    return new FileEndpoint(this.http, this.base_url);
   }
 
   public get sponsor() {

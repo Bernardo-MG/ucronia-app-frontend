@@ -1,0 +1,131 @@
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div><h1 class="text-3xl font-bold tracking-tight text-gray-950">Archivos</h1>
+      <p class="mt-1 text-sm text-gray-500">Gestiona los documentos de la asociación</p></div>
+    <div class="flex flex-wrap gap-2">
+      @if (permissions.create) {
+        <p-button label="Nueva carpeta" icon="pi pi-folder-plus" severity="secondary" [outlined]="true"
+          (click)="showCreateFolder()" />
+        <p-button label="Nuevo archivo" icon="pi pi-plus" (click)="dialog = Dialog.CREATE" />
+      }
+    </div>
+  </header>
+
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="flex flex-col gap-4 border-b border-gray-200 p-4 sm:p-5 lg:flex-row lg:items-end lg:justify-between">
+      <div class="min-w-0">
+        <nav class="mb-3 flex flex-wrap items-center gap-1 text-sm" aria-label="Ruta de carpetas">
+          <button type="button" class="rounded px-1.5 py-1 text-gray-500 hover:bg-gray-100 hover:text-primary"
+            (click)="openFolder()"><i class="pi pi-home mr-1" aria-hidden="true"></i>Archivos</button>
+          @for (folder of breadcrumbs; track folder.number) {
+            <i class="pi pi-angle-right text-xs text-gray-400" aria-hidden="true"></i>
+            <button type="button" class="rounded px-1.5 py-1 font-medium text-gray-700 hover:bg-gray-100 hover:text-primary"
+              (click)="openFolder(folder.number)">{{ folder.name }}</button>
+          }
+        </nav>
+        <h2 class="text-xl font-semibold text-gray-950">
+          {{ breadcrumbs.length ? breadcrumbs[breadcrumbs.length - 1].name : 'Archivos' }}
+        </h2>
+        <p class="mt-1 text-sm text-gray-500">{{ childFolders.length }} carpetas · {{ data.totalElements }} archivos</p>
+      </div>
+      @if (currentFolderNumber !== null && (permissions.edit || permissions.delete)) {
+      <div class="flex shrink-0 gap-1">
+        @if (permissions.edit) {
+          <p-button label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text (click)="showEditFolder()" />
+        }
+        @if (permissions.delete) {
+          <p-button label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
+            [disabled]="status.loading || data.totalElements > 0 || childFolders.length > 0" (click)="onDeleteFolder($event)" />
+        }
+      </div>
+      }
+    </div>
+
+    @if (childFolders.length) {
+      <div class="border-b border-gray-200 p-4 sm:p-5">
+        <h3 class="mb-3 text-sm font-semibold text-gray-950">Carpetas</h3>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          @for (folder of childFolders; track folder.number) {
+            <button type="button"
+              class="group flex min-w-0 items-center gap-3 rounded-xl border border-gray-200 bg-white p-3 text-left transition-colors hover:border-primary-200 hover:bg-primary-50/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              (click)="openFolder(folder.number)">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                <i class="pi pi-folder text-xl" aria-hidden="true"></i>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block truncate font-semibold text-gray-950">{{ folder.name }}</span>
+                <span class="mt-0.5 block text-xs text-gray-500">Abrir carpeta</span>
+              </span>
+              <i class="pi pi-angle-right text-sm text-gray-400 transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                aria-hidden="true"></i>
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <div>
+      <div class="border-b border-gray-200 px-4 py-3 sm:px-5">
+        <h3 class="text-sm font-semibold text-gray-950">Archivos</h3>
+      </div>
+      <assoc-file-list [loading]="status.loading" [files]="data.content" [rows]="data.size"
+        [page]="data.page" [totalRecords]="data.totalElements"
+        (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+    </div>
+  </section>
+</div>
+
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <ng-template #header><div><span class="text-xs font-medium uppercase tracking-wide text-gray-500">
+        Archivo #{{ selectedData.number }}</span><h2 class="mt-1 text-xl font-semibold">{{ selectedData.name }}</h2></div></ng-template>
+      <div class="w-full p-4"><assoc-file-info [data]="selectedData" [loading]="status.loading"
+        [source]="contentUrl(selectedData.number)" (download)="download($event)" /></div>
+      <ng-template #footer><div class="flex w-full justify-between gap-2">
+        <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="onDelete($event)" text />
+        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
+          (click)="dialog = Dialog.EDIT" />
+      </div></ng-template>
+    }
+    @case (Dialog.CREATE) {
+      <ng-template #header><h2 class="text-xl font-semibold">Nuevo archivo</h2></ng-template>
+      <div class="w-full p-4"><assoc-file-form [loading]="status.loading" [failures]="failures"
+        (save)="onCreate($event)" (cancelEdition)="dialog = Dialog.NONE" /></div>
+    }
+    @case (Dialog.EDIT) {
+      <ng-template #header><div><h2 class="text-xl font-semibold">Editar archivo</h2>
+        <p class="mt-1 text-sm text-gray-500">Archivo #{{ selectedData.number }} · {{ selectedData.name }}</p></div></ng-template>
+      <div class="w-full p-4"><assoc-file-form [data]="selectedData" [folders]="folders" [loading]="status.loading"
+        [failures]="failures" (save)="onUpdate($event)" (cancelEdition)="dialog = Dialog.INFO" /></div>
+    }
+    @case (Dialog.CREATE_FOLDER) {
+      <ng-template #header><h2 class="text-xl font-semibold">Nueva carpeta</h2></ng-template>
+      <div class="w-full p-4">
+        <label for="folderName" class="mb-2 block font-semibold text-gray-950">Nombre</label>
+        <input pInputText id="folderName" [(ngModel)]="folderName" maxlength="100" class="w-full"
+          (keydown.enter)="createFolder()" />
+      </div>
+      <ng-template #footer><div class="flex w-full justify-end gap-2">
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (click)="dialog = Dialog.NONE" />
+        <p-button label="Crear carpeta" icon="pi pi-check" [disabled]="!folderName.trim()" [loading]="status.loading"
+          (click)="createFolder()" />
+      </div></ng-template>
+    }
+    @case (Dialog.EDIT_FOLDER) {
+      <ng-template #header><h2 class="text-xl font-semibold">Renombrar carpeta</h2></ng-template>
+      <div class="w-full p-4">
+        <label for="folderEditName" class="mb-2 block font-semibold text-gray-950">Nombre</label>
+        <input pInputText id="folderEditName" [(ngModel)]="folderName" maxlength="100" class="w-full"
+          (keydown.enter)="updateFolder()" />
+      </div>
+      <ng-template #footer><div class="flex w-full justify-end gap-2">
+        <p-button label="Cancelar" severity="secondary" [outlined]="true" (click)="dialog = Dialog.NONE" />
+        <p-button label="Guardar cambios" icon="pi pi-check" [disabled]="!folderName.trim()"
+          [loading]="status.loading" (click)="updateFolder()" />
+      </div></ng-template>
+    }
+  }
+</p-drawer>

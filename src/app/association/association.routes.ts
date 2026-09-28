@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import { activityRoutes } from './activities/activity.routes';
 import { directoryRoutes } from './directory/directory.routes';
 import { feesRoutes } from './fees/fees.routes';
+import { fileRoutes } from './files/file.routes';
 import { fundsRoutes } from './funds/funds.routes';
 import { imageRoutes } from './images/image.routes';
 import { libraryRoutes } from './library/library.routes';
@@ -16,6 +17,7 @@ export const associationRoutes: Routes = [
   ...PublicMembersRoutes,
   ...myFeesRoutes,
   ...libraryRoutes,
+  ...fileRoutes,
   ...imageRoutes,
   ...feesRoutes,
   ...directoryRoutes,

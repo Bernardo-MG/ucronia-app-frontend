@@ -11,6 +11,7 @@ export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
 export * from './lib/fees/fee-type';
 export * from './lib/fees/years-range';
+export * from './lib/file/file';
 export * from './lib/guests/guest';
 export * from './lib/image/image';
 export * from './lib/library/author';

@@ -23,6 +23,12 @@ export const UcroniaPermissions = {
     update: { resource: 'FEE_TYPE', action: 'UPDATE' },
     delete: { resource: 'FEE_TYPE', action: 'DELETE' }
   },
+  file: {
+    read: { resource: 'FILE', action: 'READ' },
+    create: { resource: 'FILE', action: 'CREATE' },
+    update: { resource: 'FILE', action: 'UPDATE' },
+    delete: { resource: 'FILE', action: 'DELETE' }
+  },
   gameTable: {
     read: { resource: 'GAME_TABLE', action: 'READ' },
     create: { resource: 'GAME_TABLE', action: 'CREATE' },
