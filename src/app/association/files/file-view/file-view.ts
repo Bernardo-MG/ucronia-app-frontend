@@ -28,6 +28,7 @@ export class FileView implements OnInit {
   public readonly Dialog = Dialog;
   public readonly permissions: Permissions;
   public readonly status = { loading: false };
+  public readonly contentUrl = (number: number) => this.service.contentUrl(number);
 
   public data = new Page<StoredFile>();
   public folders: FileFolder[] = [];

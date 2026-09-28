@@ -91,6 +91,10 @@ export class FileEndpoint {
       .pipe(catchError(this.errorInterceptor.handle));
   }
 
+  public contentUrl(number: number): string {
+    return `${this.apiUrl}/files/${number}/content`;
+  }
+
   public create(name: string, description: string, publicAccess: boolean, file: File): Observable<StoredFile> {
     return this.http.post<SimpleResponse<StoredFile>>(`${this.apiUrl}/files`,
       this.formData(name, description, publicAccess, file))

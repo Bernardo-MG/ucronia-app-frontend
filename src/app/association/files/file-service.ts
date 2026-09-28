@@ -64,6 +64,10 @@ export class FileService {
     return this.client.file.content(number);
   }
 
+  public contentUrl(number: number): string {
+    return this.client.file.contentUrl(number);
+  }
+
   public create(metadata: StoredFile, content: File): Observable<StoredFile> {
     return this.client.file.create(metadata.name, metadata.description, metadata.publicAccess, content)
       .pipe(tap(() => this.notify('Creado', 'Archivo creado')));

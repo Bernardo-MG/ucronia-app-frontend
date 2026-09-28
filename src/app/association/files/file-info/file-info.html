@@ -22,6 +22,22 @@
 
   <section class="rounded-xl border border-gray-200 p-5">
     <h3 class="flex items-center gap-2 font-semibold text-gray-950">
+      <i class="pi pi-link text-blue-700" aria-hidden="true"></i>URL del archivo
+    </h3>
+    <div class="mt-4 flex flex-col gap-2 sm:flex-row">
+      <input pInputText type="text" aria-label="URL del archivo" class="min-w-0 flex-1"
+        [value]="source()" readonly />
+      <p-button icon="pi pi-copy" label="Copiar" severity="secondary" (click)="copyUrl()" />
+    </div>
+    @if (!data().publicAccess) {
+      <p class="mt-2 text-xs text-gray-500">
+        Este archivo es privado. La URL requiere una solicitud autenticada con permiso FILE:READ.
+      </p>
+    }
+  </section>
+
+  <section class="rounded-xl border border-gray-200 p-5">
+    <h3 class="flex items-center gap-2 font-semibold text-gray-950">
       <i class="pi pi-download text-blue-700" aria-hidden="true"></i>Descarga
     </h3>
     <p class="mt-2 text-sm text-gray-500">La descarga usa tu sesión, también para archivos privados.</p>

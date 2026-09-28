@@ -82,7 +82,7 @@
       <ng-template #header><div><span class="text-xs font-medium uppercase tracking-wide text-gray-500">
         Archivo #{{ selectedData.number }}</span><h2 class="mt-1 text-xl font-semibold">{{ selectedData.name }}</h2></div></ng-template>
       <div class="w-full p-4"><assoc-file-info [data]="selectedData" [loading]="status.loading"
-        (download)="download($event)" /></div>
+        [source]="contentUrl(selectedData.number)" (download)="download($event)" /></div>
       <ng-template #footer><div class="flex w-full justify-between gap-2">
         <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
           (click)="onDelete($event)" text />

@@ -15,6 +15,7 @@ describe('FileService', () => {
       page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 })),
       get: jasmine.createSpy().and.returnValue(of(file)),
       content: jasmine.createSpy().and.returnValue(of(new Blob(['data'], { type: 'application/pdf' }))),
+      contentUrl: jasmine.createSpy().and.returnValue('/files/1/content'),
       create: jasmine.createSpy().and.returnValue(of(file)),
       update: jasmine.createSpy().and.returnValue(of(file)),
       patch: jasmine.createSpy().and.returnValue(of(file)),
@@ -46,6 +47,11 @@ describe('FileService', () => {
     service.content(file.number).subscribe();
 
     expect(client.file.content).toHaveBeenCalledWith(file.number);
+  });
+
+  it('should expose the file content URL', () => {
+    expect(service.contentUrl(file.number)).toBe('/files/1/content');
+    expect(client.file.contentUrl).toHaveBeenCalledWith(file.number);
   });
 
   it('should update only metadata when no replacement file is supplied', () => {
