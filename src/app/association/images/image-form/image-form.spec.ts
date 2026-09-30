@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Image } from '@ucronia/domain';
+import { Asset } from '@ucronia/domain';
 import { ImageForm } from './image-form';
 
 describe('ImageForm', () => {
@@ -16,7 +16,7 @@ describe('ImageForm', () => {
   it('should create', () => expect(component).toBeTruthy());
 
   it('should load image metadata for editing', () => {
-    const image = Object.assign(new Image(), {
+    const image = Object.assign(new Asset(), {
       number: 2, name: 'Poster', description: 'Event poster', publicAccess: false
     });
     fixture.componentRef.setInput('data', image);

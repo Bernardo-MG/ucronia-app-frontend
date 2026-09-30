@@ -4,7 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Image, ImageFolder } from '@ucronia/domain';
+import { Asset, AssetFolder } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -29,9 +29,9 @@ export class ImageView implements OnInit {
   public readonly status = { loading: false };
   public readonly contentUrl = (number: number) => this.service.contentUrl(number);
 
-  public data = new Page<Image>();
-  public folders: ImageFolder[] = [];
-  public selectedData = new Image();
+  public data = new Page<Asset>();
+  public folders: AssetFolder[] = [];
+  public selectedData = new Asset();
   public currentFolderNumber: number | null = null;
   public folderName = '';
   public dialog = Dialog.NONE;
@@ -61,12 +61,12 @@ export class ImageView implements OnInit {
       .subscribe(data => this.data = data);
   }
 
-  public get childFolders(): ImageFolder[] {
+  public get childFolders(): AssetFolder[] {
     return this.folders.filter(folder => folder.parentNumber === this.currentFolderNumber);
   }
 
-  public get breadcrumbs(): ImageFolder[] {
-    const folders: ImageFolder[] = [];
+  public get breadcrumbs(): AssetFolder[] {
+    const folders: AssetFolder[] = [];
     let current = this.folders.find(folder => folder.number === this.currentFolderNumber);
     while (current) {
       folders.unshift(current);
@@ -136,7 +136,7 @@ export class ImageView implements OnInit {
     this.load(this.data.page);
   }
 
-  public onShowInfo(image: Image): void {
+  public onShowInfo(image: Asset): void {
     this.selectedData = image;
     this.dialog = Dialog.INFO;
     this.status.loading = true;
@@ -175,7 +175,7 @@ export class ImageView implements OnInit {
     if (!visible) this.dialog = Dialog.NONE;
   }
 
-  private call(action: () => Observable<Image>): void {
+  private call(action: () => Observable<Asset>): void {
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
@@ -191,7 +191,7 @@ export class ImageView implements OnInit {
       });
   }
 
-  private callFolder(action: () => Observable<ImageFolder>): void {
+  private callFolder(action: () => Observable<AssetFolder>): void {
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))

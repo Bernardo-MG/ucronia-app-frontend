@@ -2,6 +2,9 @@
  * Public API Surface of domain
  */
 
+export * from './lib/asset/asset-folder';
+export * from './lib/asset/asset-type';
+export * from './lib/asset/asset';
 export * from './lib/calendar/activity';
 export * from './lib/calendar/game-table';
 export * from './lib/calendar/recurrence';
@@ -11,9 +14,7 @@ export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
 export * from './lib/fees/fee-type';
 export * from './lib/fees/years-range';
-export * from './lib/file/file';
 export * from './lib/guests/guest';
-export * from './lib/image/image';
 export * from './lib/library/author';
 export * from './lib/library/book-lending';
 export * from './lib/library/book-type';
@@ -26,8 +27,8 @@ export * from './lib/library/language';
 export * from './lib/library/lent-book';
 export * from './lib/library/publisher';
 export * from './lib/library/title';
-export * from './lib/members/member';
 export * from './lib/members/key';
+export * from './lib/members/member';
 export * from './lib/members/member-status';
 export * from './lib/members/membership-evolution-month';
 export * from './lib/members/public-member';
@@ -40,3 +41,4 @@ export * from './lib/transactions/transaction';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
 export * from './lib/transactions/transaction-summary';
+

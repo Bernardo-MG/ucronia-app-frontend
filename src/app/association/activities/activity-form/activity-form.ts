@@ -2,7 +2,7 @@ import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChang
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Activity, Image } from '@ucronia/domain';
+import { Activity, Asset } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -129,7 +129,7 @@ export class ActivityForm implements OnChanges, OnInit {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  private toImageOption(image: Image): ActivityImageOption {
+  private toImageOption(image: Asset): ActivityImageOption {
     return {
       name: image.name,
       description: image.description,

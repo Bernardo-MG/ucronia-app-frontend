@@ -4,7 +4,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { StoredFile, FileFolder } from '@ucronia/domain';
+import { Asset, AssetFolder } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
@@ -30,9 +30,9 @@ export class FileView implements OnInit {
   public readonly status = { loading: false };
   public readonly contentUrl = (number: number) => this.service.contentUrl(number);
 
-  public data = new Page<StoredFile>();
-  public folders: FileFolder[] = [];
-  public selectedData = new StoredFile();
+  public data = new Page<Asset>();
+  public folders: AssetFolder[] = [];
+  public selectedData = new Asset();
   public currentFolderNumber: number | null = null;
   public folderName = '';
   public dialog = Dialog.NONE;
@@ -62,12 +62,12 @@ export class FileView implements OnInit {
       .subscribe(data => this.data = data);
   }
 
-  public get childFolders(): FileFolder[] {
+  public get childFolders(): AssetFolder[] {
     return this.folders.filter(folder => folder.parentNumber === this.currentFolderNumber);
   }
 
-  public get breadcrumbs(): FileFolder[] {
-    const folders: FileFolder[] = [];
+  public get breadcrumbs(): AssetFolder[] {
+    const folders: AssetFolder[] = [];
     let current = this.folders.find(folder => folder.number === this.currentFolderNumber);
     while (current) {
       folders.unshift(current);
@@ -137,7 +137,7 @@ export class FileView implements OnInit {
     this.load(this.data.page);
   }
 
-  public onShowInfo(file: StoredFile): void {
+  public onShowInfo(file: Asset): void {
     this.selectedData = file;
     this.dialog = Dialog.INFO;
     this.status.loading = true;
@@ -160,7 +160,7 @@ export class FileView implements OnInit {
         : this.service.move(file.number, data.metadata.folderNumber))));
   }
 
-  public download(file: StoredFile): void {
+  public download(file: Asset): void {
     this.status.loading = true;
     this.service.content(file.number)
       .pipe(finalize(() => this.status.loading = false))
@@ -182,7 +182,7 @@ export class FileView implements OnInit {
     if (!visible) this.dialog = Dialog.NONE;
   }
 
-  private call(action: () => Observable<StoredFile>): void {
+  private call(action: () => Observable<Asset>): void {
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
@@ -198,7 +198,7 @@ export class FileView implements OnInit {
       });
   }
 
-  private callFolder(action: () => Observable<FileFolder>): void {
+  private callFolder(action: () => Observable<AssetFolder>): void {
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))

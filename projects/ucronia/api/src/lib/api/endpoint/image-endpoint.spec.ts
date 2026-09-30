@@ -17,6 +17,10 @@ describe('ImageEndpoint', () => {
 
   afterEach(() => http.verify());
 
+  it('should expose the shared asset content URL', () => {
+    expect(endpoint.contentUrl(1)).toBe('http://localhost/api/assets/1/content');
+  });
+
   it('should send image visibility when creating an image', () => {
     const file = new File(['data'], 'image.png', { type: 'image/png' });
 

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { StoredFile } from '@ucronia/domain';
+import { Asset } from '@ucronia/domain';
 import { FileForm } from './file-form';
 
 describe('FileForm', () => {
@@ -16,7 +16,7 @@ describe('FileForm', () => {
   it('should create', () => expect(component).toBeTruthy());
 
   it('should load file metadata for editing', () => {
-    const file = Object.assign(new StoredFile(), {
+    const file = Object.assign(new Asset(), {
       number: 2, name: 'Rules', description: 'Association rules', publicAccess: false
     });
     fixture.componentRef.setInput('data', file);

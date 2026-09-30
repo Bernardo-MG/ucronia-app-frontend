@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
-import { Image } from '@ucronia/domain';
+import { Asset } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,7 +16,7 @@ export class ImageInfo {
 
   private readonly messages = inject(MessageService);
 
-  public readonly data = input(new Image());
+  public readonly data = input(new Asset());
   public readonly loading = input(false);
   public readonly source = input('');
 

@@ -2,7 +2,7 @@ import { Component, inject, input, OnChanges, output, SimpleChanges } from '@ang
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Image, ImageFolder } from '@ucronia/domain';
+import { Asset, AssetFolder } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -11,7 +11,7 @@ import { TextareaModule } from 'primeng/textarea';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 export interface ImageFormData {
-  image: Image;
+  image: Asset;
   file?: File;
 }
 
@@ -23,8 +23,8 @@ export interface ImageFormData {
 export class ImageForm implements OnChanges {
   private readonly fb = inject(FormBuilder);
 
-  public readonly data = input<Image | undefined>();
-  public readonly folders = input<ImageFolder[]>([]);
+  public readonly data = input<Asset | undefined>();
+  public readonly folders = input<AssetFolder[]>([]);
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
   public readonly save = output<ImageFormData>();
@@ -47,7 +47,7 @@ export class ImageForm implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
-      this.form.reset(this.data() || new Image());
+      this.form.reset(this.data() || new Asset());
       this.file = undefined;
     }
     if (changes['loading']) this.formStatus.loading = this.loading();
@@ -60,7 +60,7 @@ export class ImageForm implements OnChanges {
 
   public onSave(): void {
     if (!this.formStatus.saveEnabled || (!this.data() && !this.file)) return;
-    this.save.emit({ image: Object.assign(new Image(), this.form.value), file: this.file });
+    this.save.emit({ image: Object.assign(new Asset(), this.form.value), file: this.file });
   }
 
   public isFieldInvalid(property: string): boolean {
@@ -74,7 +74,7 @@ export class ImageForm implements OnChanges {
     ];
   }
 
-  private folderPath(folder: ImageFolder): string {
+  private folderPath(folder: AssetFolder): string {
     const names = [folder.name];
     let parent = this.folders().find(item => item.number === folder.parentNumber);
     while (parent) {

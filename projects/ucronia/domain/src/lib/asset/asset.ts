@@ -1,4 +1,6 @@
-export class StoredFile {
+import { AssetType } from "./asset-type";
+
+export class Asset {
   public number = 0;
   public name = '';
   public description = '';
@@ -6,16 +8,11 @@ export class StoredFile {
   public mediaType = '';
   public size = 0;
   public publicAccess = true;
-  public audit = new FileAudit();
+  public type: AssetType = 'FILE';
+  public audit = new AssetAudit();
 }
 
-export class FileFolder {
-  public number = 0;
-  public name = '';
-  public parentNumber: number | null = null;
-}
-
-export class FileAudit {
+export class AssetAudit {
   public createdAt?: Date;
   public updatedAt?: Date;
 }
