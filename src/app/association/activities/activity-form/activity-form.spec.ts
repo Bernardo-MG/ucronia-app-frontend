@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Image } from '@ucronia/domain';
+import { Asset } from '@ucronia/domain';
 import { of } from 'rxjs';
 import { ImageService } from '../../images/image-service';
 import { ActivityForm } from './activity-form';
@@ -7,7 +7,7 @@ import { ActivityForm } from './activity-form';
 describe('ActivityForm', () => {
   let component: ActivityForm;
   let fixture: ComponentFixture<ActivityForm>;
-  const image = Object.assign(new Image(), { number: 4, name: 'Image' });
+  const image = Object.assign(new Asset(), { number: 4, name: 'Image' });
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

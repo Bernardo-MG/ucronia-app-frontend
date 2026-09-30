@@ -18,7 +18,7 @@ describe('FileEndpoint', () => {
   afterEach(() => http.verify());
 
   it('should expose the file content URL', () => {
-    expect(endpoint.contentUrl(1)).toBe('http://localhost/api/files/1/content');
+    expect(endpoint.contentUrl(1)).toBe('http://localhost/api/assets/1/content?download=true');
   });
 
   it('should send file visibility when creating a file', () => {

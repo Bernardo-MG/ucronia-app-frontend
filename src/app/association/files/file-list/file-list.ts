@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { StoredFile } from '@ucronia/domain';
+import { Asset } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
@@ -12,11 +12,11 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 })
 export class FileList {
   public readonly loading = input(false);
-  public readonly files = input<StoredFile[]>([]);
+  public readonly files = input<Asset[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
-  public readonly show = output<StoredFile>();
+  public readonly show = output<Asset>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 

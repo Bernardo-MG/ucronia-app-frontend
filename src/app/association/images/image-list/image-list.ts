@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { Image } from '@ucronia/domain';
+import { Asset } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { ImageContent } from '../image-content/image-content';
@@ -13,11 +13,11 @@ import { ImageContent } from '../image-content/image-content';
 })
 export class ImageList {
   public readonly loading = input(false);
-  public readonly images = input<Image[]>([]);
+  public readonly images = input<Asset[]>([]);
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
-  public readonly show = output<Image>();
+  public readonly show = output<Asset>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 

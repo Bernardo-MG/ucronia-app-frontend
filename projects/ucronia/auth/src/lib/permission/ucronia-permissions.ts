@@ -24,10 +24,10 @@ export const UcroniaPermissions = {
     delete: { resource: 'FEE_TYPE', action: 'DELETE' }
   },
   file: {
-    read: { resource: 'FILE', action: 'READ' },
-    create: { resource: 'FILE', action: 'CREATE' },
-    update: { resource: 'FILE', action: 'UPDATE' },
-    delete: { resource: 'FILE', action: 'DELETE' }
+    read: { resource: 'ASSETS', action: 'READ' },
+    create: { resource: 'ASSETS', action: 'CREATE' },
+    update: { resource: 'ASSETS', action: 'UPDATE' },
+    delete: { resource: 'ASSETS', action: 'DELETE' }
   },
   gameTable: {
     read: { resource: 'GAME_TABLE', action: 'READ' },
@@ -36,10 +36,10 @@ export const UcroniaPermissions = {
     delete: { resource: 'GAME_TABLE', action: 'DELETE' }
   },
   image: {
-    read: { resource: 'IMAGE', action: 'READ' },
-    create: { resource: 'IMAGE', action: 'CREATE' },
-    update: { resource: 'IMAGE', action: 'UPDATE' },
-    delete: { resource: 'IMAGE', action: 'DELETE' }
+    read: { resource: 'ASSETS', action: 'READ' },
+    create: { resource: 'ASSETS', action: 'CREATE' },
+    update: { resource: 'ASSETS', action: 'UPDATE' },
+    delete: { resource: 'ASSETS', action: 'DELETE' }
   },
   library: {
     book: {
