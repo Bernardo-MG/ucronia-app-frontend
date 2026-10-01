@@ -26,7 +26,7 @@ describe('ImageEndpoint', () => {
 
     endpoint.create('Image', 'Description', false, file).subscribe();
 
-    const request = http.expectOne('http://localhost/api/images');
+    const request = http.expectOne('http://localhost/api/assets/images');
     const body = request.request.body as FormData;
     expect(request.request.method).toBe('POST');
     expect(body.get('publicAccess')).toBe('false');
@@ -37,7 +37,7 @@ describe('ImageEndpoint', () => {
   it('should send image visibility when updating metadata', () => {
     endpoint.patch(1, 'Image', 'Description', false).subscribe();
 
-    const request = http.expectOne('http://localhost/api/images/1');
+    const request = http.expectOne('http://localhost/api/assets/images/1');
     expect(request.request.method).toBe('PATCH');
     expect(request.request.body).toEqual({ name: 'Image', description: 'Description', publicAccess: false });
     request.flush({ content: { number: 1, name: 'Image', description: 'Description', publicAccess: false } });

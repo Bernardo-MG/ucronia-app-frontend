@@ -14,22 +14,22 @@ export class FolderEndpoint {
   ) { }
 
   public folders(): Observable<AssetFolder[]> {
-    return this.http.get<AssetFolder[]>(`${this.apiUrl}/asset/folders`)
+    return this.http.get<AssetFolder[]>(`${this.apiUrl}/assets/folders`)
       .pipe(catchError(this.errorInterceptor.handle));
   }
 
   public createFolder(name: string, parentNumber: number | null): Observable<AssetFolder> {
-    return this.http.post<AssetFolder>(`${this.apiUrl}/asset/folders`, { name, parentNumber })
+    return this.http.post<AssetFolder>(`${this.apiUrl}/assets/folders`, { name, parentNumber })
       .pipe(catchError(this.errorInterceptor.handle));
   }
 
   public updateFolder(number: number, name: string, parentNumber: number | null): Observable<AssetFolder> {
-    return this.http.put<AssetFolder>(`${this.apiUrl}/asset/folders/${number}`, { name, parentNumber })
+    return this.http.put<AssetFolder>(`${this.apiUrl}/assets/folders/${number}`, { name, parentNumber })
       .pipe(catchError(this.errorInterceptor.handle));
   }
 
   public deleteFolder(number: number): Observable<AssetFolder> {
-    return this.http.delete<AssetFolder>(`${this.apiUrl}/asset/folders/${number}`)
+    return this.http.delete<AssetFolder>(`${this.apiUrl}/assets/folders/${number}`)
       .pipe(catchError(this.errorInterceptor.handle));
   }
 
@@ -37,7 +37,7 @@ export class FolderEndpoint {
     size: number | undefined = undefined, sort: Sorting | undefined = undefined): Observable<Page<Asset>> {
     const params = assetPageParams(page, size, sort);
     const folderPath = folderNumber === null ? 'root' : String(folderNumber);
-    return this.http.get<PaginatedResponse<Asset>>(`${this.apiUrl}/asset/folders/${folderPath}/assets`, { params })
+    return this.http.get<PaginatedResponse<Asset>>(`${this.apiUrl}/assets/folders/${folderPath}/assets`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAssetPage(response, type))
@@ -46,7 +46,7 @@ export class FolderEndpoint {
 
   public moveToFolder(assetNumber: number, folderNumber: number, type: AssetType): Observable<Asset> {
     return this.http.put<SimpleResponse<Asset>>(
-      `${this.apiUrl}/asset/folders/${folderNumber}/assets/${assetNumber}`, null)
+      `${this.apiUrl}/assets/folders/${folderNumber}/assets/${assetNumber}`, null)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAsset(response.content, type))
@@ -54,7 +54,7 @@ export class FolderEndpoint {
   }
 
   public moveToRoot(assetNumber: number, type: AssetType): Observable<Asset> {
-    return this.http.delete<SimpleResponse<Asset>>(`${this.apiUrl}/asset/folders/assets/${assetNumber}`)
+    return this.http.delete<SimpleResponse<Asset>>(`${this.apiUrl}/assets/folders/assets/${assetNumber}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAsset(response.content, type))

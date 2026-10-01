@@ -26,7 +26,7 @@ describe('FileEndpoint', () => {
 
     endpoint.create('Document', 'Description', false, file).subscribe();
 
-    const request = http.expectOne('http://localhost/api/files');
+    const request = http.expectOne('http://localhost/api/assets/files');
     const body = request.request.body as FormData;
     expect(request.request.method).toBe('POST');
     expect(body.get('publicAccess')).toBe('false');
@@ -37,7 +37,7 @@ describe('FileEndpoint', () => {
   it('should send file visibility when updating metadata', () => {
     endpoint.patch(1, 'Document', 'Description', false).subscribe();
 
-    const request = http.expectOne('http://localhost/api/files/1');
+    const request = http.expectOne('http://localhost/api/assets/files/1');
     expect(request.request.method).toBe('PATCH');
     expect(request.request.body).toEqual({ name: 'Document', description: 'Description', publicAccess: false });
     request.flush({ content: { number: 1, name: 'Document', description: 'Description', publicAccess: false } });
