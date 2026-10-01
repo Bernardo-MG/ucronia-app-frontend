@@ -19,7 +19,7 @@ export class AssetResourceEndpoint {
   public page(page: number | undefined = undefined, size: number | undefined = undefined,
     sort: Sorting | undefined = undefined): Observable<Page<Asset>> {
     const params = assetPageParams(page, size, sort);
-    return this.http.get<PaginatedResponse<Asset>>(`${this.apiUrl}/${this.resource}`, { params })
+    return this.http.get<PaginatedResponse<Asset>>(`${this.apiUrl}/assets/${this.resource}`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAssetPage(response, this.assetType))
@@ -27,7 +27,7 @@ export class AssetResourceEndpoint {
   }
 
   public get(number: number): Observable<Asset> {
-    return this.http.get<SimpleResponse<Asset>>(`${this.apiUrl}/${this.resource}/${number}`)
+    return this.http.get<SimpleResponse<Asset>>(`${this.apiUrl}/assets/${this.resource}/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAsset(response.content, this.assetType))
@@ -48,7 +48,7 @@ export class AssetResourceEndpoint {
   }
 
   public create(name: string, description: string, publicAccess: boolean, file: File): Observable<Asset> {
-    return this.http.post<SimpleResponse<Asset>>(`${this.apiUrl}/${this.resource}`,
+    return this.http.post<SimpleResponse<Asset>>(`${this.apiUrl}/assets/${this.resource}`,
       this.formData(name, description, publicAccess, file))
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -57,7 +57,7 @@ export class AssetResourceEndpoint {
   }
 
   public update(number: number, name: string, description: string, publicAccess: boolean, file: File): Observable<Asset> {
-    return this.http.put<SimpleResponse<Asset>>(`${this.apiUrl}/${this.resource}/${number}`,
+    return this.http.put<SimpleResponse<Asset>>(`${this.apiUrl}/assets/${this.resource}/${number}`,
       this.formData(name, description, publicAccess, file))
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -66,7 +66,7 @@ export class AssetResourceEndpoint {
   }
 
   public patch(number: number, name: string, description: string, publicAccess: boolean): Observable<Asset> {
-    return this.http.patch<SimpleResponse<Asset>>(`${this.apiUrl}/${this.resource}/${number}`,
+    return this.http.patch<SimpleResponse<Asset>>(`${this.apiUrl}/assets/${this.resource}/${number}`,
       { name, description, publicAccess })
       .pipe(
         catchError(this.errorInterceptor.handle),
@@ -75,7 +75,7 @@ export class AssetResourceEndpoint {
   }
 
   public delete(number: number): Observable<Asset> {
-    return this.http.delete<SimpleResponse<Asset>>(`${this.apiUrl}/${this.resource}/${number}`)
+    return this.http.delete<SimpleResponse<Asset>>(`${this.apiUrl}/assets/${this.resource}/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAsset(response.content, this.assetType))
