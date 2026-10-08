@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Activity, ActivityDate } from '@ucronia/domain';
@@ -20,7 +21,7 @@ export class ActivityEndpoint {
 
   private mapActivity(activity: Activity): Activity {
     activity.dates = activity.dates.map(d => this.mapActivityDate(d));
-    return activity;
+    return mapAudit(activity);
   }
 
   private mapActivities(page: PaginatedResponse<Activity>): PaginatedResponse<Activity> {

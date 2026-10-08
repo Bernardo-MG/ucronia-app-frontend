@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpParams } from '@angular/common/http';
 import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { Asset, AssetType } from '@ucronia/domain';
@@ -15,9 +16,7 @@ export function assetPageParams(page: number | undefined, size: number | undefin
 export function mapAsset(asset: Asset, type: AssetType): Asset {
   asset.type ??= type;
   asset.publicAccess ??= true;
-  if (asset.audit?.createdAt) asset.audit.createdAt = new Date(asset.audit.createdAt);
-  if (asset.audit?.updatedAt) asset.audit.updatedAt = new Date(asset.audit.updatedAt);
-  return asset;
+  return mapAudit(asset);
 }
 
 export function mapAssetPage(page: PaginatedResponse<Asset>, type: AssetType): PaginatedResponse<Asset> {
