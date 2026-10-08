@@ -5,6 +5,7 @@
 export * from './lib/asset/asset-folder';
 export * from './lib/asset/asset-type';
 export * from './lib/asset/asset';
+export * from './lib/audit/audit-details';
 export * from './lib/calendar/activity';
 export * from './lib/calendar/game-table';
 export * from './lib/calendar/recurrence';
@@ -41,4 +42,3 @@ export * from './lib/transactions/transaction';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
 export * from './lib/transactions/transaction-summary';
-

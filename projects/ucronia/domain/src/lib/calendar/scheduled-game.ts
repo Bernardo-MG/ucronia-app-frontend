@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { CalendarStatus } from "./calendar-status";
 import { Recurrence } from "./recurrence";
 
@@ -14,6 +15,7 @@ export class ScheduledGame {
   public start = new Date();
   public recurrence: Recurrence | undefined = new Recurrence();
   public status = CalendarStatus.DRAFT;
+  public audit?: AuditDetails;
 }
 
 export enum ScheduledGameType {

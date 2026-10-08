@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { AssetType } from "./asset-type";
 
 export class Asset {
@@ -9,10 +10,5 @@ export class Asset {
   public size = 0;
   public publicAccess = true;
   public type: AssetType = 'FILE';
-  public audit = new AssetAudit();
-}
-
-export class AssetAudit {
-  public createdAt?: Date;
-  public updatedAt?: Date;
+  public audit = new AuditDetails();
 }
