@@ -1,4 +1,3 @@
-/** Audit metadata returned by the backend. API endpoints normalize timestamps to Date objects. */
 export class AuditDetails {
   public createdAt?: Date | null;
   public updatedAt?: Date | null;

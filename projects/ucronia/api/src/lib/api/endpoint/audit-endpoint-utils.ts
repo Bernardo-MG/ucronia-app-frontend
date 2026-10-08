@@ -1,6 +1,5 @@
 import { AuditDetails } from '@ucronia/domain';
 
-/** Normalize audit dates without replacing the record or its audit users. */
 export function mapAudit<T extends { audit?: AuditDetails | null }>(record: T): T {
   if (record.audit?.createdAt != null) {
     record.audit.createdAt = new Date(record.audit.createdAt);
