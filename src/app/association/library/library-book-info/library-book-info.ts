@@ -1,3 +1,4 @@
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DatePipe } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
@@ -7,7 +8,7 @@ import { LibraryBookLendings } from '../library-book-lendings/library-book-lendi
 
 @Component({
   selector: 'assoc-library-book-info',
-  imports: [SkeletonModule, LibraryBookLendings, DatePipe],
+  imports: [AuditInfo, SkeletonModule, LibraryBookLendings, DatePipe],
   templateUrl: './library-book-info.html'
 })
 export class LibraryBookInfo {

@@ -1,3 +1,4 @@
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
@@ -7,7 +8,7 @@ import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-profile-info',
-  imports: [CommonModule, SkeletonModule, CardModule, DetailField, StatusDetail, DatePipe],
+  imports: [AuditInfo, CommonModule, SkeletonModule, CardModule, DetailField, StatusDetail, DatePipe],
   templateUrl: './profile-info.html'
 })
 export class ProfileInfo {

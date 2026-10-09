@@ -1,3 +1,4 @@
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { GameTable, Profile, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
@@ -7,7 +8,7 @@ import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calenda
 
 @Component({
   selector: 'assoc-scheduled-game-info',
-  imports: [DatePipe, SkeletonModule, TagModule],
+  imports: [AuditInfo, DatePipe, SkeletonModule, TagModule],
   templateUrl: './scheduled-game-info.html'
 })
 export class ScheduledGameInfo {

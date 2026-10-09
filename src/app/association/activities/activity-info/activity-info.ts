@@ -1,3 +1,4 @@
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { Activity, ActivityDate } from '@ucronia/domain';
@@ -5,7 +6,7 @@ import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-activity-info',
-  imports: [DatePipe, TagModule],
+  imports: [AuditInfo, DatePipe, TagModule],
   templateUrl: './activity-info.html'
 })
 export class ActivityInfo {

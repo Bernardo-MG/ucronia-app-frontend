@@ -1,0 +1,14 @@
+@if (!loading()) {
+  @if (audit(); as details) {
+    @if (details.createdAt || details.updatedAt) {
+      <div class="mt-4 space-y-1 text-xs text-gray-500 break-words">
+        @if (details.createdAt) {
+          <p>Creado el {{ details.createdAt | date:'d MMM y · HH:mm' }}@if (userLabel(details.createdBy); as user) { por {{ user }}}</p>
+        }
+        @if (details.updatedAt) {
+          <p>Actualizado el {{ details.updatedAt | date:'d MMM y · HH:mm' }}@if (userLabel(details.updatedBy); as user) { por {{ user }}}</p>
+        }
+      </div>
+    }
+  }
+}
