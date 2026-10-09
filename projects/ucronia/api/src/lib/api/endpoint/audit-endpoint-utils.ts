@@ -1,6 +1,8 @@
 import { AuditDetails } from '@ucronia/domain';
 
-export function mapAudit<T extends { audit?: AuditDetails | null }>(record: T): T {
+export function mapAudit<T extends { audit?: AuditDetails | null } | null | undefined>(record: T): T {
+  if (record == null) return record;
+
   if (record.audit?.createdAt != null) {
     record.audit.createdAt = new Date(record.audit.createdAt);
   }
