@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 
 export class Activity {
   public number = 0;
@@ -6,6 +7,7 @@ export class Activity {
   public location = "";
   public image = "";
   public dates: ActivityDate[] = [];
+  public audit?: AuditDetails;
 }
 
 export class ActivityDate {

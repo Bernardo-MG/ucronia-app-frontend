@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { Author } from "./author";
 import { BookLending } from "./book-lending";
 import { Donation } from "./donation";
@@ -15,4 +16,5 @@ export class FictionBook {
   public lendings: BookLending[] = [];
   public publishers: Publisher[] = [];
   public donation: Donation | undefined;
+  public audit?: AuditDetails;
 }

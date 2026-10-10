@@ -1,6 +1,6 @@
-
 import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Role, User } from '@bernardo-mg/authentication';
 import { arrayPage } from '@bernardo-mg/request';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
@@ -11,7 +11,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'access-user-info',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, CardModule, DetailField, StatusDetail, TableModule],
+  imports: [AuditInfo, FormsModule, ReactiveFormsModule, ButtonModule, CardModule, DetailField, StatusDetail, TableModule],
   templateUrl: './user-info.html'
 })
 export class UserInfo implements OnChanges {

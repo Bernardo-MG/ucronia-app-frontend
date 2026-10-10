@@ -155,7 +155,7 @@ export class DirectoryService {
 
           return forkJoin(requests).pipe(
             map(results => {
-              return Object.assign({}, profile, ...results);
+              return Object.assign({}, profile, ...results, { audit: profile.audit });
             })
           );
         })

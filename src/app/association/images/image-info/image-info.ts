@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Component, inject, input } from '@angular/core';
 import { Asset } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
@@ -9,7 +9,7 @@ import { ImageContent } from '../image-content/image-content';
 
 @Component({
   selector: 'assoc-image-info',
-  imports: [ButtonModule, DatePipe, ImageContent, InputTextModule, SkeletonModule],
+  imports: [AuditInfo, ButtonModule, ImageContent, InputTextModule, SkeletonModule],
   templateUrl: './image-info.html'
 })
 export class ImageInfo {

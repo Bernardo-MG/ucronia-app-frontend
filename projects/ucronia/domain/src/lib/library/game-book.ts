@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { Author } from "./author";
 import { Donation } from "./donation";
 import { BookLending } from "./book-lending";
@@ -19,4 +20,5 @@ export class GameBook {
   public donation: Donation | undefined;
   public bookType: BookType | undefined;
   public gameSystem: GameSystem | undefined;
+  public audit?: AuditDetails;
 }

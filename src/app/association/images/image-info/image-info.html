@@ -19,9 +19,8 @@
       </dd></div>
       <div class="sm:col-span-2"><dt class="text-sm text-gray-500">Descripción</dt>
         <dd class="mt-1 whitespace-pre-line text-gray-950">{{ data().description || 'Sin descripción' }}</dd></div>
-      <div><dt class="text-sm text-gray-500">Creada</dt><dd class="mt-1 text-gray-950">{{ data().audit.createdAt | date:'d MMM y · HH:mm' }}</dd></div>
-      <div><dt class="text-sm text-gray-500">Actualizada</dt><dd class="mt-1 text-gray-950">{{ data().audit.updatedAt | date:'d MMM y · HH:mm' }}</dd></div>
     </dl>
+    <assoc-audit-info [audit]="data().audit" [loading]="loading()" />
   </section>
 
   <section class="rounded-xl border border-gray-200 p-5">

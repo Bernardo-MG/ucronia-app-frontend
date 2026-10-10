@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient } from '@angular/common/http';
 import { ErrorRequestInterceptor, SimpleResponse } from '@bernardo-mg/request';
 import { PublicSettings, Setting } from '@ucronia/domain';
@@ -25,7 +26,7 @@ export class SettingEndpoint {
     return this.http.get<SimpleResponse<Setting[]>>(`${this.apiUrl}/settings`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => response.content.map(setting => mapAudit(setting)))
       );
   }
 
@@ -35,7 +36,7 @@ export class SettingEndpoint {
     return this.http.get<SimpleResponse<Setting>>(`${this.apiUrl}/settings/${code}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -46,7 +47,7 @@ export class SettingEndpoint {
     return this.http.put<SimpleResponse<Setting>>(`${this.apiUrl}/settings/${code}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

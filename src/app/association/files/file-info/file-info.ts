@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Component, inject, input, output } from '@angular/core';
 import { Asset } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
@@ -8,7 +8,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'assoc-file-info',
-  imports: [ButtonModule, DatePipe, InputTextModule, SkeletonModule],
+  imports: [AuditInfo, ButtonModule, InputTextModule, SkeletonModule],
   templateUrl: './file-info.html'
 })
 export class FileInfo {

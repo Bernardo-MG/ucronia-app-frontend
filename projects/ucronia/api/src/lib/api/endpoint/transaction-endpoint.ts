@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
@@ -16,13 +17,13 @@ export class TransactionEndpoint {
 
   private mapTransaction(transaction: Transaction): Transaction {
     transaction.date = new Date(transaction.date);
-    return transaction;
+    return mapAudit(transaction);
   }
 
   private mapTransactions(page: PaginatedResponse<Transaction>): PaginatedResponse<Transaction> {
     page.content = page.content.map(t => {
       t.date = new Date(t.date);
-      return t;
+      return mapAudit(t);
     });
 
     return page;
@@ -73,7 +74,7 @@ export class TransactionEndpoint {
         map(response => response.content),
         map(t => {
           t.date = new Date(t.date);
-          return t;
+          return mapAudit(t);
         }),
         map(r => this.mapTransaction(r))
       );
