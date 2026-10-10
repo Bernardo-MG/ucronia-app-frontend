@@ -1,3 +1,4 @@
+import { mapUserAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { User, UserTokenStatus } from '@bernardo-mg/authentication';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
@@ -43,7 +44,11 @@ export class UserEndpoint {
 
     return this.http.get<PaginatedResponse<User>>(`${this.apiUrl}/security/user`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.forEach(record => mapUserAudit(record));
+          return response;
+        })
       );
   }
 
@@ -53,7 +58,7 @@ export class UserEndpoint {
     return this.http.get<SimpleResponse<User>>(`${this.apiUrl}/security/user/${username}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapUserAudit(response.content))
       );
   }
 
@@ -63,7 +68,7 @@ export class UserEndpoint {
     return this.http.post<SimpleResponse<User>>(`${this.apiUrl}/security/user`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapUserAudit(response.content))
       );
   }
 
@@ -74,7 +79,7 @@ export class UserEndpoint {
     return this.http.put<SimpleResponse<User>>(`${this.apiUrl}/security/user/${username}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapUserAudit(response.content))
       );
   }
 
@@ -84,7 +89,7 @@ export class UserEndpoint {
     return this.http.delete<SimpleResponse<User>>(`${this.apiUrl}/security/user/${username}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapUserAudit(response.content))
       );
   }
 
@@ -103,7 +108,11 @@ export class UserOnboardingEndpoint {
     return this.http
       .post<SimpleResponse<User>>(`${this.apiUrl}/security/user/onboarding/activate/${token}`, activation)
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          mapUserAudit(response.content);
+          return response;
+        })
       );
   }
 
@@ -121,7 +130,7 @@ export class UserOnboardingEndpoint {
     return this.http.post<SimpleResponse<User>>(`${this.apiUrl}/security/user/onboarding/invite`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapUserAudit(response.content))
       );
   }
 
