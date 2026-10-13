@@ -8,12 +8,13 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { Author } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { AuthorService } from '../author-service';
 
 @Component({
-  imports: [NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerModule, NameList, ButtonModule, NameForm, DetailField],
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {

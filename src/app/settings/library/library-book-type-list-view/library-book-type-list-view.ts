@@ -9,11 +9,12 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { BookType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { BookTypeService } from '../book-type-service';
 
 @Component({
-  imports: [NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerModule, NameList, ButtonModule, NameForm, DetailField],
   templateUrl: './library-book-type-list-view.html'
 })
 export class LibraryBookTypeListView implements OnInit {

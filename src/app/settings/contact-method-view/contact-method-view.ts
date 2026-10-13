@@ -4,6 +4,7 @@ import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
@@ -11,7 +12,7 @@ import { ContactMethodService } from '../contact-method-service';
 
 @Component({
   selector: 'assoc-contact-method-view',
-  imports: [ButtonModule, ContactMethodList, ContactMethodForm],
+  imports: [DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-method-view.html'
 })
 export class ContactMethodView implements OnInit {

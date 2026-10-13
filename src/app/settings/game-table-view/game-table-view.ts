@@ -4,13 +4,14 @@ import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { GameTable } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { GameTableForm } from '../game-table-form/game-table-form';
 import { GameTableList } from '../game-table-list/game-table-list';
 import { GameTableService } from '../game-table-service';
 
 @Component({
-  selector: 'assoc-game-table-view', imports: [ButtonModule, GameTableForm, GameTableList],
+  selector: 'assoc-game-table-view', imports: [DrawerModule, ButtonModule, GameTableForm, GameTableList],
   templateUrl: './game-table-view.html'
 })
 export class GameTableView implements OnInit {
@@ -58,6 +59,12 @@ export class GameTableView implements OnInit {
   public load(page: number | undefined = undefined): void {
     this.loading = true;
     this.service.getAll(page).pipe(finalize(() => this.loading = false)).subscribe(data => this.data = data);
+  }
+
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.dialog = Dialog.NONE;
+    }
   }
 
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {

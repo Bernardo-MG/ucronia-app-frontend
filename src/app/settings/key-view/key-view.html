@@ -14,27 +14,30 @@
   </div>
 </div>
 
-@switch (dialog) {
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
 
-  @case(Dialog.CREATE) {
-    <ng-template #header>
-      Crear llave
-    </ng-template>
-    <div class="w-full">
-      <assoc-key-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
-    </div>
+    @case(Dialog.CREATE) {
+      <ng-template #header>
+        Crear llave
+      </ng-template>
+      <div class="w-full">
+        <assoc-key-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
+    }
+
+    @case(Dialog.EDIT) {
+      <ng-template #header>
+        Editar llave
+      </ng-template>
+      <div class="w-full">
+        <assoc-key-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
+      </ng-template>
+    }
+
   }
-
-  @case(Dialog.EDIT) {
-    <ng-template #header>
-      Editar llave
-    </ng-template>
-    <div class="w-full">
-      <assoc-key-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
-    </div>
-    <ng-template #footer>
-      <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-    </ng-template>
-  }
-
-}
+</p-drawer>

@@ -9,11 +9,12 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { GameSystem } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { GameSystemService } from '../game-system-service';
 
 @Component({
-  imports: [NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerModule, NameList, ButtonModule, NameForm, DetailField],
   templateUrl: './library-game-system-list-view.html'
 })
 export class LibraryGameSystemListView implements OnInit {

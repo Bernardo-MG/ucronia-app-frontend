@@ -10,39 +10,42 @@
     (sortChange)="onSort($event)" (pageChange)="load($event)"></shared-name-list>
 </div>
 
-@switch (drawer) {
-  @case (Drawer.INFO) {
-    <ng-template #header>
-      Editorial
-    </ng-template>
-    <div>
-      <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
-    </div>
-    <ng-template #footer>
-      <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
-      <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-        (click)="onDelete($event)" rounded text />
-    </ng-template>
+<p-drawer [visible]="drawer !== Drawer.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (drawer) {
+    @case (Drawer.INFO) {
+      <ng-template #header>
+        Editorial
+      </ng-template>
+      <div>
+        <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
+        <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
+          (click)="onDelete($event)" rounded text />
+      </ng-template>
+    }
+    @case (Drawer.CREATION) {
+      <ng-template #header>
+        Crear editorial
+      </ng-template>
+      <div class="w-full">
+        <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
+          (reject)="onReject()"></shared-name-form>
+      </div>
+    }
+    @case (Drawer.EDITION) {
+      <ng-template #header>
+        Modificar editorial
+      </ng-template>
+      <div class="w-full">
+        <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
+          (reject)="onReject()"></shared-name-form>
+      </div>
+      <ng-template #footer>
+        <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
+      </ng-template>
+    }
   }
-  @case (Drawer.CREATION) {
-    <ng-template #header>
-      Crear editorial
-    </ng-template>
-    <div class="w-full">
-      <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
-        (reject)="onReject()"></shared-name-form>
-    </div>
-  }
-  @case (Drawer.EDITION) {
-    <ng-template #header>
-      Modificar editorial
-    </ng-template>
-    <div class="w-full">
-      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
-        (reject)="onReject()"></shared-name-form>
-    </div>
-    <ng-template #footer>
-      <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
-    </ng-template>
-  }
-}
+</p-drawer>
