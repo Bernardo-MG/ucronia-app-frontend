@@ -8,10 +8,9 @@
   </header>
 
   <div class="max-w-3xl mx-auto space-y-6">
-    <assoc-fee-type-list [loading]="loading" [deletable]="permissions.delete"
+    <assoc-fee-type-list [loading]="loading"
       [data]="feeTypeData.content" [rows]="feeTypeData.size" [page]="feeTypeData.page"
-      [totalRecords]="feeTypeData.totalElements" (show)="onShowInfo($event)" (delete)="onDelete($event)"
-      (changePage)="load($event)" />
+      [totalRecords]="feeTypeData.totalElements" (show)="onShowInfo($event)" (changePage)="load($event)" />
   </div>
 </div>
 
@@ -26,8 +25,12 @@
         <ui-detail-field [loading]="loading" icon="pi pi-euro" name="Importe" [value]="selectedData.amount + ' €'" />
       </div>
       <ng-template #footer>
-        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
-          (click)="onShowEdit(selectedData)" />
+        <div class="flex w-full justify-between gap-2">
+          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" [disabled]="!permissions.delete || loading"
+            (click)="onDelete($event)" text />
+          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
+            (click)="onShowEdit(selectedData)" />
+        </div>
       </ng-template>
     }
 

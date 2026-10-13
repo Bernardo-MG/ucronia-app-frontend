@@ -3,6 +3,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { FeeType } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
@@ -19,6 +20,8 @@ import { FeeTypeService } from '../fee-type-service';
 export class FeeTypeView implements OnInit {
 
   private readonly feeTypeService = inject(FeeTypeService);
+
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
@@ -83,11 +86,16 @@ export class FeeTypeView implements OnInit {
     );
   }
 
-  public onDelete(number: number): void {
-    this.call(
-      () => this.feeTypeService.delete(number),
-      () => this.load()
-    );
+  public onDelete(event: Event): void {
+    const number = this.selectedData.number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es reversible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
+      accept: () => this.call(() => this.feeTypeService.delete(number), () => this.load())
+    });
   }
 
   // DATA LOADING

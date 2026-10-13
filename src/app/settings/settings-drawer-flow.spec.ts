@@ -29,12 +29,16 @@ for (const { view, service, form } of cases) {
   describe(`${view.name} drawer flow`, () => {
     let fixture: ComponentFixture<SettingsView>;
     let allowed: boolean;
+    let confirmation: jasmine.SpyObj<ConfirmationService>;
     const item = { number: 7, name: 'Prueba', description: 'Detalle completo', available: false, amount: 12 };
     const page = Object.assign(new Page<typeof item>(), { content: [item], page: 1, size: 10, totalElements: 1 });
     const crud = jasmine.createSpyObj('SettingsService', ['getAll', 'create', 'update', 'delete']);
 
     beforeEach(async () => {
       allowed = true;
+      confirmation = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', ['confirm']);
+      crud.delete.calls.reset();
+      crud.delete.and.returnValue(of(item));
       crud.getAll.and.returnValue(of(page));
       crud.update.and.returnValue(of(item));
       await TestBed.configureTestingModule({
@@ -42,7 +46,7 @@ for (const { view, service, form } of cases) {
         providers: [
           provideNoopAnimations(),
           provideZonelessChangeDetection(),
-          ConfirmationService,
+          { provide: ConfirmationService, useValue: confirmation },
           { provide: AuthService, useValue: { hasPermission: () => allowed } },
           { provide: service, useValue: crud }
         ]
@@ -88,7 +92,24 @@ for (const { view, service, form } of cases) {
       click('button[aria-label="Ver detalles"]');
       const edit = fixture.debugElement.query(By.css('p-button[label="Editar"] button'));
       expect(edit.nativeElement.disabled).toBeTrue();
+      expect(fixture.debugElement.query(By.css('button[aria-label="Eliminar"]')).nativeElement.disabled).toBeTrue();
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
+    });
+
+    it('deletes only from the info drawer after confirmation', () => {
+      render();
+      expect(fixture.nativeElement.querySelector('.pi-trash')).toBeNull();
+      expect(fixture.nativeElement.querySelector('.pi-ellipsis-v')).toBeNull();
+      click('button[aria-label="Ver detalles"]');
+      click('button[aria-label="Eliminar"]');
+      expect(confirmation.confirm).toHaveBeenCalledTimes(1);
+      expect(crud.delete).not.toHaveBeenCalled();
+      expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
+      confirmation.confirm.calls.mostRecent().args[0].accept?.();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(crud.delete).toHaveBeenCalledOnceWith(item.number);
+      expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.NONE);
     });
 
     it('keeps the edit form open on a failed save and closes after a successful retry', () => {

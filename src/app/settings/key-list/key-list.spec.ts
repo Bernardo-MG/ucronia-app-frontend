@@ -1,28 +1,17 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Key } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
 import { TablePageEvent } from 'primeng/table';
 import { KeyList } from './key-list';
 
 describe('KeyList', () => {
   let component: KeyList;
   let fixture: ComponentFixture<KeyList>;
-  let confirmationService: jasmine.SpyObj<ConfirmationService>;
 
   beforeEach(async () => {
-    confirmationService = jasmine.createSpyObj<ConfirmationService>(
-      'ConfirmationService',
-      ['confirm']
-    );
-
     await TestBed.configureTestingModule({
       imports: [KeyList],
-      providers: [
-        {
-          provide: ConfirmationService,
-          useValue: confirmationService
-        }
-      ]
+      providers: [provideZonelessChangeDetection()]
     }).compileComponents();
 
     fixture = TestBed.createComponent(KeyList);
@@ -81,50 +70,16 @@ describe('KeyList', () => {
     expect(emitSpy).toHaveBeenCalledOnceWith(3);
   });
 
-  it('should request confirmation before deleting a key', () => {
-    const target = document.createElement('button');
-    const event = { currentTarget: target } as unknown as Event;
-    const key = { number: 4 } as Key;
-
-    component.confirmDelete(event, key);
-
-    expect(confirmationService.confirm).toHaveBeenCalled();
-
-    const confirmation =
-      confirmationService.confirm.calls.mostRecent().args[0];
-
-    expect(confirmation).toEqual(
-      jasmine.objectContaining({
-        target,
-        message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
-        icon: 'pi pi-info-circle',
-        rejectButtonProps: jasmine.objectContaining({
-          label: 'Cancelar',
-          severity: 'secondary',
-          outlined: true
-        }),
-        acceptButtonProps: jasmine.objectContaining({
-          label: 'Borrar',
-          severity: 'danger'
-        })
-      })
-    );
-  });
-
-  it('should emit the key number when deletion is accepted', () => {
-    const emitSpy = spyOn(component.delete, 'emit');
-    const event = {
-      currentTarget: document.createElement('button')
-    } as unknown as Event;
-    const key = { number: 8 } as Key;
-
-    component.confirmDelete(event, key);
-
-    const confirmation =
-      confirmationService.confirm.calls.mostRecent().args[0];
-
-    confirmation.accept?.();
-
-    expect(emitSpy).toHaveBeenCalledOnceWith(8);
+  it('should show key details without table deletion controls', () => {
+    fixture.componentRef.setInput('data', [{ number: 4, available: true, description: 'Puerta' }]);
+    fixture.componentRef.setInput('rows', 10);
+    fixture.componentRef.setInput('page', 1);
+    fixture.componentRef.setInput('totalRecords', 1);
+    fixture.detectChanges();
+    const emitSpy = spyOn(component.show, 'emit');
+    fixture.nativeElement.querySelector('button[aria-label="Ver detalles"]').click();
+    expect(emitSpy).toHaveBeenCalledOnceWith(component.data()[0]);
+    expect(fixture.nativeElement.querySelector('.pi-trash')).toBeNull();
+    expect(fixture.nativeElement.querySelector('.pi-ellipsis-v')).toBeNull();
   });
 });

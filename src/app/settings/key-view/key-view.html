@@ -8,9 +8,9 @@
   </header>
 
   <div class="max-w-3xl mx-auto space-y-6">
-    <assoc-key-list [loading]="loading" [deletable]="permissions.delete" [data]="keys.content"
+    <assoc-key-list [loading]="loading" [data]="keys.content"
       [rows]="keys.size" [page]="keys.page" [totalRecords]="keys.totalElements" (show)="onShowInfo($event)"
-      (delete)="onDelete($event)" (changePage)="load($event)" />
+      (changePage)="load($event)" />
   </div>
 </div>
 
@@ -25,8 +25,12 @@
         <ui-detail-field [loading]="loading" icon="pi pi-comment" name="Descripción" [value]="selectedData.description" />
       </div>
       <ng-template #footer>
-        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
-          (click)="onShowEdit(selectedData)" />
+        <div class="flex w-full justify-between gap-2">
+          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" [disabled]="!permissions.delete || loading"
+            (click)="onDelete($event)" text />
+          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
+            (click)="onShowEdit(selectedData)" />
+        </div>
       </ng-template>
     }
 

@@ -8,10 +8,10 @@
   </header>
 
   <div class="max-w-3xl mx-auto space-y-6">
-    <assoc-contact-method-list [loading]="loading" [deletable]="permissions.delete"
+    <assoc-contact-method-list [loading]="loading"
       [data]="contactMethodData.content" [rows]="contactMethodData.size" [page]="contactMethodData.page"
       [totalRecords]="contactMethodData.totalElements" (show)="onShowInfo($event)"
-      (delete)="onDelete($event)" (changePage)="load($event)" />
+      (changePage)="load($event)" />
   </div>
 </div>
 
@@ -25,8 +25,12 @@
         <ui-detail-field [loading]="loading" icon="pi pi-phone" name="Nombre" [value]="selectedData.name" />
       </div>
       <ng-template #footer>
-        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
-          (click)="onShowEdit(selectedData)" />
+        <div class="flex w-full justify-between gap-2">
+          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" [disabled]="!permissions.delete || loading"
+            (click)="onDelete($event)" text />
+          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
+            (click)="onShowEdit(selectedData)" />
+        </div>
       </ng-template>
     }
 

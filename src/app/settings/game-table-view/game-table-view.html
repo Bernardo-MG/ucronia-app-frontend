@@ -6,9 +6,8 @@
     }
   </header>
   <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading"
-      [deletable]="permissions.delete" [data]="data.content" [rows]="data.size" [page]="data.page"
-      [totalRecords]="data.totalElements" (show)="onShowInfo($event)" (delete)="onDelete($event)"
-      (changePage)="load($event)" /></div>
+      [data]="data.content" [rows]="data.size" [page]="data.page"
+      [totalRecords]="data.totalElements" (show)="onShowInfo($event)" (changePage)="load($event)" /></div>
 </div>
 <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
   position="right" [style]="{ width: 'min(44rem, 100vw)' }">
@@ -21,8 +20,12 @@
         <ui-detail-field [loading]="loading" icon="pi pi-comment" name="Descripción" [value]="selectedData.description" />
       </div>
       <ng-template #footer>
-        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
-          (click)="onShowEdit(selectedData)" />
+        <div class="flex w-full justify-between gap-2">
+          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" [disabled]="!permissions.delete || loading"
+            (click)="onDelete($event)" text />
+          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
+            (click)="onShowEdit(selectedData)" />
+        </div>
       </ng-template>
     }
 
