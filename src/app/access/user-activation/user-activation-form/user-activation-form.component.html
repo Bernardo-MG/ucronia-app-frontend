@@ -2,7 +2,7 @@
   <!-- Password -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <input pInputText type="password" [invalid]="isFieldInvalid('password')" id="passwordInput" formControlName="password" class="w-100" />
-    <label for="passwordInput">Contraseña</label>
+    <label for="passwordInput">Contraseña <span class="text-red-600" aria-hidden="true">*</span></label>
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('password'); track failure) {
@@ -14,7 +14,7 @@
   <!-- Repeat password -->
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <input pInputText type="password" id="confirmPasswordInput" formControlName="confirmPassword" class="w-100" />
-    <label for="confirmPasswordInput">Repite contraseña</label>
+    <label for="confirmPasswordInput">Repite contraseña <span class="text-red-600" aria-hidden="true">*</span></label>
   </p-floatlabel>
   <!-- Password mismatch warning -->
   @if (showPasswordMismatchWarning()) {

@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="expirationDateInput" [minDate]="today" formControlName="expirationDate" dateFormat="yy-mm-dd" appendTo="body" />
-    <label for="expirationDateInput">Fecha de expiración</label>
+    <label for="expirationDateInput">Fecha de expiración <span class="text-red-600" aria-hidden="true">*</span></label>
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('expirationDate'); track failure) {

@@ -1,5 +1,6 @@
 <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
   <!-- Name -->
+  <label for="nameInput" class="mb-2 block font-medium">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
   <p-inputgroup class="mb-2 d-flex">
     <p-inputgroup-addon>
       <i class="pi pi-history"></i>
@@ -15,6 +16,7 @@
     }
   </div>
   <!-- Amount -->
+  <label for="amountInput" class="mb-2 block font-medium">Importe <span class="text-red-600" aria-hidden="true">*</span></label>
   <p-inputgroup class="mb-2 d-flex">
     <p-inputgroup-addon>
       <i class="pi pi-euro"></i>

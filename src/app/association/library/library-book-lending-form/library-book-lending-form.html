@@ -1,7 +1,7 @@
 <form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="mb-4">
     <!-- Member -->
-    <label class="font-semibold mb-2 block">Socio</label>
+    <label class="font-semibold mb-2 block">Socio <span class="text-red-600" aria-hidden="true">*</span></label>
     <assoc-member-search [members]="members()" (selectMember)="onSelectMember($event)"
       (searchMember)="searchMember.emit($event)" />
     <div class="mb-2">
@@ -16,7 +16,7 @@
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="lendingDateInput" formControlName="lendingDate" [invalid]="isFieldInvalid('lendingDate')"
       dateFormat="yy-mm-dd" [maxDate]="today" appendTo="body" />
-    <label for="lendingDateInput">Fecha</label>
+    <label for="lendingDateInput">Fecha <span class="text-red-600" aria-hidden="true">*</span></label>
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('lendingDate'); track failure) {

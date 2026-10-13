@@ -58,9 +58,9 @@
           <div [formGroupName]="i" class="rounded-xl border border-gray-200 p-4">
             <div class="mb-4 flex items-center justify-between gap-3"><h4 class="font-semibold text-gray-950">Fecha {{ i + 1 }}</h4>@if (dates.length > 1) { <p-button type="button" icon="pi pi-trash" severity="danger" [attr.aria-label]="'Eliminar fecha ' + (i + 1)" (onClick)="removeDate(i)" rounded text /> }</div>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-              <div><label [for]="'dayInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Día</label><p-datepicker [id]="'dayInput' + i" formControlName="day" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body" class="w-full" /></div>
-              <div><label [for]="'startHourInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Inicio</label><p-datepicker [id]="'startHourInput' + i" formControlName="startHour" [timeOnly]="true" hourFormat="24" appendTo="body" class="w-full" /></div>
-              <div><label [for]="'endHourInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Fin</label><p-datepicker [id]="'endHourInput' + i" formControlName="endHour" [timeOnly]="true" hourFormat="24" appendTo="body" class="w-full" /></div>
+              <div><label [for]="'dayInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Día <span class="text-red-600" aria-hidden="true">*</span></label><p-datepicker [inputId]="'dayInput' + i" formControlName="day" dateFormat="dd/mm/yy" [showIcon]="true" appendTo="body" class="w-full" /></div>
+              <div><label [for]="'startHourInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Inicio <span class="text-red-600" aria-hidden="true">*</span></label><p-datepicker [inputId]="'startHourInput' + i" formControlName="startHour" [timeOnly]="true" hourFormat="24" appendTo="body" class="w-full" /></div>
+              <div><label [for]="'endHourInput' + i" class="mb-2 block text-sm font-medium text-gray-700">Fin <span class="text-red-600" aria-hidden="true">*</span></label><p-datepicker [inputId]="'endHourInput' + i" formControlName="endHour" [timeOnly]="true" hourFormat="24" appendTo="body" class="w-full" /></div>
             </div>
           </div>
         }

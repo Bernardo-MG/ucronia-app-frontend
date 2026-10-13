@@ -2,7 +2,7 @@
   <!-- Name -->
   <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
     <input pInputText type="text" id="nameInput" formControlName="name" class="w-full min-w-0" />
-    <label for="nameInput">Nombre</label>
+    <label for="nameInput">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
   </p-floatlabel>
   <div class="mb-2 w-full min-w-0">
     @for (failure of failures().getFailures('name'); track failure) {

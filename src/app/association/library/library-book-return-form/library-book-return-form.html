@@ -5,7 +5,7 @@
   <p-floatlabel variant="in" class="mb-2 d-flex">
     <p-datepicker id="returnDateInput" formControlName="returnDate" [invalid]="isFieldInvalid('returnDate')"
       dateFormat="yy-mm-dd" [minDate]="lentDate()" [maxDate]="today" appendTo="body" />
-    <label for="returnDateInput">Fecha</label>
+    <label for="returnDateInput">Fecha <span class="text-red-600" aria-hidden="true">*</span></label>
   </p-floatlabel>
   <div class="mb-2">
     @for (failure of failures().getFailures('returnDate'); track failure) {
