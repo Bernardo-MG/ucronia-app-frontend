@@ -1,3 +1,5 @@
+<p-menu #actionsMenu [model]="actions" [popup]="true" />
+
 <p-table lazy="true" dataKey="number" [loading]="loading()" [value]="data()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="Total: {totalRecords}" (onPage)="onPageChange($event)">
@@ -13,10 +15,12 @@
       <td>{{ table.name }}</td>
       <td>{{ table.description }}</td>
       <td class="w-40">
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          (click)="edit.emit(table)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-          (click)="confirmDelete($event, table)" rounded text />
+        <p-button icon="pi pi-eye" severity="secondary" ariaLabel="Ver detalles"
+          (click)="show.emit(table)" rounded text />
+        @if (deletable()) {
+          <p-button icon="pi pi-ellipsis-v" severity="secondary" ariaLabel="Más acciones"
+            (click)="openActionsMenu($event, table)" rounded text />
+        }
       </td>
     </tr>
   </ng-template>

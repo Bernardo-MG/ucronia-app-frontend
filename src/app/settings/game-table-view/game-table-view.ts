@@ -5,13 +5,14 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { GameTable } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { GameTableForm } from '../game-table-form/game-table-form';
 import { GameTableList } from '../game-table-list/game-table-list';
 import { GameTableService } from '../game-table-service';
 
 @Component({
-  selector: 'assoc-game-table-view', imports: [DrawerModule, ButtonModule, GameTableForm, GameTableList],
+  selector: 'assoc-game-table-view', imports: [DetailField, DrawerModule, ButtonModule, GameTableForm, GameTableList],
   templateUrl: './game-table-view.html'
 })
 export class GameTableView implements OnInit {
@@ -40,7 +41,19 @@ export class GameTableView implements OnInit {
     this.load();
   }
 
+  public onShowInfo(data: GameTable): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onShowEdit(table: GameTable): void {
+    this.failures.clear();
     this.selectedData = table; this.dialog = Dialog.EDIT;
   }
 
@@ -84,6 +97,7 @@ interface Permissions {
 
 enum Dialog {
   NONE = 'none',
+  INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
 }

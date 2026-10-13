@@ -21,7 +21,7 @@
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       <access-user-token-list [loading]="loading" [editable]="editable" [tokens]="data.content" [rows]="data.size"
         [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowInfo($event)"
-        (extend)="onStartExtend($event)" (revoke)="onRevoke($event)" (changeDirection)="onChangeDirection($event)"
+        (revoke)="onRevoke($event)" (changeDirection)="onChangeDirection($event)"
         (changePage)="load($event)" />
     </div>
   </section>
@@ -78,6 +78,9 @@
           <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures"
             (save)="onExtendExpiration($event)" />
         </div>
+        <ng-template #footer>
+          <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" text />
+        </ng-template>
       }
     }
   </p-drawer>

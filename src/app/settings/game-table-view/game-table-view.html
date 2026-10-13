@@ -5,14 +5,27 @@
       <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" aria-label="Nueva mesa" rounded />
     }
   </header>
-  <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading" [editable]="permissions.edit"
+  <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading"
       [deletable]="permissions.delete" [data]="data.content" [rows]="data.size" [page]="data.page"
-      [totalRecords]="data.totalElements" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
+      [totalRecords]="data.totalElements" (show)="onShowInfo($event)" (delete)="onDelete($event)"
       (changePage)="load($event)" /></div>
 </div>
 <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
   position="right" [style]="{ width: 'min(44rem, 100vw)' }">
   @switch (dialog) {
+    @case (Dialog.INFO) {
+      <ng-template #header>Mesa de juego</ng-template>
+      <div class="w-full space-y-4 px-2 py-4 sm:px-4">
+        <ui-detail-field [loading]="loading" icon="pi pi-hashtag" name="Número" [value]="selectedData.number" />
+        <ui-detail-field [loading]="loading" icon="pi pi-table" name="Nombre" [value]="selectedData.name" />
+        <ui-detail-field [loading]="loading" icon="pi pi-comment" name="Descripción" [value]="selectedData.description" />
+      </div>
+      <ng-template #footer>
+        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
+          (click)="onShowEdit(selectedData)" />
+      </ng-template>
+    }
+
     @case (Dialog.CREATE) {
       <ng-template #header>Crear mesa de juego</ng-template>
       <assoc-game-table-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
@@ -20,6 +33,9 @@
     @case (Dialog.EDIT) {
       <ng-template #header>Editar mesa de juego</ng-template>
       <assoc-game-table-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      <ng-template #footer>
+        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" text />
+      </ng-template>
     }
   }
 </p-drawer>

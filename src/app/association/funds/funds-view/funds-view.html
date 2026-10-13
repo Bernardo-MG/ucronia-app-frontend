@@ -134,7 +134,7 @@
         <ng-template #header><h2 class="text-xl font-semibold">Editar transacción</h2></ng-template>
         <div class="w-full p-4">
           <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
-            (save)="onUpdate($event)" />
+            (save)="onUpdate($event)" (cancelEdition)="dialog = Dialog.INFO" />
         </div>
       }
     }

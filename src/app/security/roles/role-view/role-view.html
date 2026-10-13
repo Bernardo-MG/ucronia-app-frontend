@@ -96,7 +96,7 @@
         </ng-template>
 
         <div class="w-full px-2 py-4 sm:px-4">
-          <access-role-change-permission [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" (cancel)="dialog = Dialog.NONE" />
+          <access-role-change-permission [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" (cancel)="dialog = Dialog.INFO" />
         </div>
       }
     }

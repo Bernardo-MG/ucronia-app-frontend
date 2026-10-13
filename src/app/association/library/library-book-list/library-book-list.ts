@@ -38,13 +38,7 @@ export class LibraryBookList {
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     event.stopPropagation();
-    this.editionMenuItems = [
-      {
-        label: 'Ver detalles',
-        icon: 'pi pi-eye',
-        command: () => this.showBook.emit(book)
-      }
-    ];
+    this.editionMenuItems = [];
 
     if (this.editable()) {
       this.editionMenuItems.push({

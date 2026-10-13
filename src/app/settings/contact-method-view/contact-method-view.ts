@@ -5,6 +5,7 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
@@ -12,7 +13,7 @@ import { ContactMethodService } from '../contact-method-service';
 
 @Component({
   selector: 'assoc-contact-method-view',
-  imports: [DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
+  imports: [DetailField, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-method-view.html'
 })
 export class ContactMethodView implements OnInit {
@@ -51,7 +52,19 @@ export class ContactMethodView implements OnInit {
 
   // EVENT HANDLERS
 
+  public onShowInfo(data: ContactMethod): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onShowEdit(contactMethod: ContactMethod) {
+    this.failures.clear();
     this.selectedData = contactMethod;
     this.dialog = Dialog.EDIT;
   }
@@ -132,6 +145,7 @@ interface Permissions {
 
 enum Dialog {
   NONE = 'none',
+  INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
 }

@@ -5,6 +5,7 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
 import { FeeTypeList } from '../fee-type-list/fee-type-list';
@@ -12,7 +13,7 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-view',
-  imports: [DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
+  imports: [DetailField, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {
@@ -51,7 +52,19 @@ export class FeeTypeView implements OnInit {
 
   // EVENT HANDLERS
 
+  public onShowInfo(data: FeeType): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onShowEdit(feeType: FeeType) {
+    this.failures.clear();
     this.selectedData = feeType;
     this.dialog = Dialog.EDIT;
   }

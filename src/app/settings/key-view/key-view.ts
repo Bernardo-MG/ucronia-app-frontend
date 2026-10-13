@@ -5,6 +5,7 @@ import { UcroniaPermissions } from '@ucronia/auth';
 import { Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
+import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { KeyForm } from '../key-form/key-form';
 import { KeyList } from '../key-list/key-list';
@@ -12,7 +13,7 @@ import { KeyService } from '../key-service';
 
 @Component({
   selector: 'assoc-key-view',
-  imports: [DrawerModule, ButtonModule, KeyList, KeyForm],
+  imports: [DetailField, DrawerModule, ButtonModule, KeyList, KeyForm],
   templateUrl: './key-view.html'
 })
 export class KeyView implements OnInit {
@@ -45,7 +46,19 @@ export class KeyView implements OnInit {
     this.load();
   }
 
+  public onShowInfo(data: Key): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onShowEdit(key: Key) {
+    this.failures.clear();
     this.selectedData = key;
     this.dialog = Dialog.EDIT;
   }
@@ -120,6 +133,7 @@ interface Permissions {
 
 enum Dialog {
   NONE = 'none',
+  INFO = 'info',
   EDIT = 'edit',
   CREATE = 'create'
 }

@@ -130,6 +130,9 @@
         <assoc-profile-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
           [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" [keys]="keys" (save)="onUpdate($event)" />
       </div>
+      <ng-template #footer>
+        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" text />
+      </ng-template>
     }
   }
 </p-drawer>
