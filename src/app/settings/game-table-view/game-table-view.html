@@ -27,14 +27,30 @@
 
     @case (Dialog.CREATE) {
       <ng-template #header>Crear mesa de juego</ng-template>
-      <assoc-game-table-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="game-table-view-create"
+          submitLabel="Crear mesa"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocGameTableForm.saveEnabled"
+          [loading]="fieldsAssocGameTableForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
     @case (Dialog.EDIT) {
       <ng-template #header>Editar mesa de juego</ng-template>
-      <assoc-game-table-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
       <ng-template #footer>
-        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" text />
+        <shared-drawer-form-actions
+          formId="game-table-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocGameTableForm.saveEnabled"
+          [loading]="fieldsAssocGameTableForm.loading()"
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
+
     }
   }
 </p-drawer>

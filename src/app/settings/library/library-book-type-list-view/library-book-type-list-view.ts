@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { DetailField } from '@bernardo-mg/ui';
@@ -14,7 +15,7 @@ import { finalize, Observable } from 'rxjs';
 import { BookTypeService } from '../book-type-service';
 
 @Component({
-  imports: [DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, DetailField],
   templateUrl: './library-book-type-list-view.html'
 })
 export class LibraryBookTypeListView implements OnInit {

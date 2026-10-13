@@ -1,6 +1,7 @@
 import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
@@ -12,10 +13,13 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm implements OnChanges {
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
@@ -68,6 +72,10 @@ export class FeeCreationForm implements OnChanges {
     const memberControl = this.form.get('member');
     memberControl?.setValue(member.number);
     memberControl?.markAsTouched();
+  }
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
   }
 }
 

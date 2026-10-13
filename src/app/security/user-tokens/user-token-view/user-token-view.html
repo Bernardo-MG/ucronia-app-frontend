@@ -75,12 +75,19 @@
             Selecciona la nueva fecha de expiración del token.
           </p>
 
-          <access-user-token-extend-form [expirationDate]="selectedData.expirationDate" [failures]="failures"
+          <access-user-token-extend-form #fieldsAccessUserTokenExtendForm formId="user-token-view-extend" [showActions]="false" [expirationDate]="selectedData.expirationDate" [failures]="failures"
             (save)="onExtendExpiration($event)" />
         </div>
         <ng-template #footer>
-          <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" text />
+          <shared-drawer-form-actions
+            formId="user-token-view-extend"
+            submitLabel="Extender expiración"
+            submitIcon="pi pi-calendar-plus"
+            [disabled]="!fieldsAccessUserTokenExtendForm.saveEnabled"
+            [loading]="fieldsAccessUserTokenExtendForm.loading()"
+            (cancelForm)="dialog = Dialog.INFO" />
         </ng-template>
+
       }
     }
   </p-drawer>

@@ -1,5 +1,6 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -11,10 +12,13 @@ import { MemberSearch, MemberSearchEvent } from '../../../shared/member/member-s
 
 @Component({
   selector: 'access-user-form',
-  imports: [ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule, MemberSearch],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
@@ -125,6 +129,9 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 }
 
 export class UserFormData {

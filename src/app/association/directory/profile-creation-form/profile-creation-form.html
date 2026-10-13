@@ -1,4 +1,4 @@
-<form class="space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <section formGroupName="name" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
   <div>
     <label for="firstNameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
@@ -22,6 +22,8 @@
     }
   </div>
   </section>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Crear perfil" submitIcon="pi pi-plus"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

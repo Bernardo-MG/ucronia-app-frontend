@@ -35,8 +35,17 @@
         Crear tipo de cuota
       </ng-template>
       <div class="w-full">
-        <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="fee-type-view-create"
+          submitLabel="Crear tipo de cuota"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocFeeTypeForm.saveEnabled"
+          [loading]="fieldsAssocFeeTypeForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
 
     @case(Dialog.EDIT) {
@@ -44,11 +53,18 @@
         Editar tipo de cuota
       </ng-template>
       <div class="w-full">
-        <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
-        <p-button icon="pi pi-times" severity="secondary" label="Cancelar" (click)="onCancelEdit()" rounded text class="!p-2" />
+        <shared-drawer-form-actions
+          formId="fee-type-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocFeeTypeForm.saveEnabled"
+          [loading]="fieldsAssocFeeTypeForm.loading()"
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
+
     }
 
   }

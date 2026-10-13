@@ -31,22 +31,36 @@
         Crear tipo
       </ng-template>
       <div class="w-full">
-        <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
+        <shared-name-form #fieldsSharedNameForm formId="library-book-type-list-view-creation" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
       </div>
       <ng-template #footer>
-        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="onReject()" text />
+        <shared-drawer-form-actions
+          formId="library-book-type-list-view-creation"
+          submitLabel="Crear"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsSharedNameForm.saveEnabled"
+          [loading]="fieldsSharedNameForm.loading()"
+          (cancelForm)="onReject()" />
       </ng-template>
+
     }
     @case (Drawer.EDITION) {
       <ng-template #header>
         Modificar tipo
       </ng-template>
       <div class="w-full">
-        <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
+        <shared-name-form #fieldsSharedNameForm formId="library-book-type-list-view-edition" [showActions]="false" [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
       </div>
       <ng-template #footer>
-        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
+        <shared-drawer-form-actions
+          formId="library-book-type-list-view-edition"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsSharedNameForm.saveEnabled"
+          [loading]="fieldsSharedNameForm.loading()"
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
+
     }
   }
 </p-drawer>

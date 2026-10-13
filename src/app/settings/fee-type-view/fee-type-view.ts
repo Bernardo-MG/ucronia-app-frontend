@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -15,7 +16,7 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-view',
-  imports: [DrawerActions, DetailField, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
+  imports: [DrawerFormActions, DrawerActions, DetailField, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {

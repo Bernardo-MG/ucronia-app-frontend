@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -14,7 +15,7 @@ import { GameTableList } from '../game-table-list/game-table-list';
 import { GameTableService } from '../game-table-service';
 
 @Component({
-  selector: 'assoc-game-table-view', imports: [DrawerActions, DetailField, DrawerModule, ButtonModule, GameTableForm, GameTableList],
+  selector: 'assoc-game-table-view', imports: [DrawerFormActions, DrawerActions, DetailField, DrawerModule, ButtonModule, GameTableForm, GameTableList],
   templateUrl: './game-table-view.html'
 })
 export class GameTableView implements OnInit {

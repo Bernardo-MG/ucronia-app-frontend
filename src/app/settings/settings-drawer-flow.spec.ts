@@ -37,6 +37,8 @@ for (const { view, service, form } of cases) {
     beforeEach(async () => {
       allowed = true;
       confirmation = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', ['confirm']);
+      crud.create.calls.reset();
+      crud.create.and.returnValue(of(item));
       crud.delete.calls.reset();
       crud.delete.and.returnValue(of(item));
       crud.getAll.and.returnValue(of(page));
@@ -93,6 +95,39 @@ for (const { view, service, form } of cases) {
       const edit = fixture.debugElement.query(By.css('p-button[data-action="edit"] button'));
       expect(edit.nativeElement.disabled).toBeTrue();
       expect(fixture.debugElement.query(By.css('button[aria-label="Eliminar"]')).nativeElement.disabled).toBeTrue();
+      expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
+    });
+
+    it('uses one fixed creation footer and submits the validated form once', () => {
+      render();
+      click('header p-button button');
+      const editor = fixture.debugElement.query(By.css(form));
+      expect(editor.nativeElement.querySelector('button[type="submit"]')).toBeNull();
+      editor.componentInstance.form.patchValue(item);
+      editor.componentInstance.form.markAsDirty();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      const submit: HTMLButtonElement = fixture.nativeElement.querySelector('button[data-action="submit"]');
+      expect(submit.closest('.p-drawer-footer')).not.toBeNull();
+      expect(submit.form).toBe(editor.nativeElement.querySelector('form'));
+      expect(submit.disabled).toBeFalse();
+      submit.click();
+      fixture.changeDetectorRef.markForCheck();
+      fixture.detectChanges();
+      expect(crud.create).toHaveBeenCalledTimes(1);
+      expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.NONE);
+    });
+
+    it('uses the same fixed footer for creation and edit cancellation', () => {
+      render();
+      click('header p-button button');
+      click('button[data-action="cancel"]');
+      expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.NONE);
+      click('button[aria-label="Ver detalles"]');
+      click('p-button[data-action="edit"] button');
+      const cancel: HTMLButtonElement = fixture.nativeElement.querySelector('button[data-action="cancel"]');
+      expect(cancel.closest('.p-drawer-footer')).not.toBeNull();
+      click('button[data-action="cancel"]');
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
     });
 

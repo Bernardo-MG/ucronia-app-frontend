@@ -118,16 +118,34 @@
           </div>
         </ng-template>
         <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
-            (cancelEdition)="dialog = Dialog.NONE" />
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+            />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="funds-view-create"
+            submitLabel="Crear movimiento"
+            submitIcon="pi pi-plus"
+            [disabled]="!fieldsAssocTransactionForm.saveEnabled"
+            [loading]="fieldsAssocTransactionForm.loading()"
+            (cancelForm)="dialog = Dialog.NONE" />
+        </ng-template>
       }
       @case(Dialog.EDIT) {
         <ng-template #header><h2 class="text-xl font-semibold">Editar transacción</h2></ng-template>
         <div class="w-full p-4">
-          <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
-            (save)="onUpdate($event)" (cancelEdition)="dialog = Dialog.INFO" />
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false" [data]="selectedData" [loading]="status.loading" [failures]="failures"
+            (save)="onUpdate($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="funds-view-edit"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAssocTransactionForm.saveEnabled"
+            [loading]="fieldsAssocTransactionForm.loading()"
+            (cancelForm)="dialog = Dialog.INFO" />
+        </ng-template>
       }
     }
   </p-drawer>

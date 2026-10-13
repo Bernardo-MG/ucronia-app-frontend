@@ -117,18 +117,34 @@
     @case(Dialog.CREATE) {
       <ng-template #header><h2 class="text-xl font-semibold">Nuevo perfil</h2></ng-template>
       <div class="w-full p-4">
-        <assoc-profile-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-profile-creation-form #fieldsAssocProfileCreationForm formId="directory-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="directory-view-create"
+          submitLabel="Crear perfil"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocProfileCreationForm.saveEnabled"
+          [loading]="fieldsAssocProfileCreationForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
     @case(Dialog.EDIT) {
       <ng-template #header><h2 class="text-xl font-semibold">Editar perfil</h2></ng-template>
       <div class="w-full p-4">
-        <assoc-profile-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
+        <assoc-profile-edition-form #fieldsAssocProfileEditionForm formId="directory-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [failures]="failures"
           [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" [keys]="keys" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
-        <p-button label="Cancelar" icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.INFO" text />
+        <shared-drawer-form-actions
+          formId="directory-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocProfileEditionForm.saveEnabled"
+          [loading]="fieldsAssocProfileEditionForm.loading()"
+          (cancelForm)="dialog = Dialog.INFO" />
       </ng-template>
+
     }
   }
 </p-drawer>

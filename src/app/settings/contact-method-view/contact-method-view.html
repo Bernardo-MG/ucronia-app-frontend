@@ -35,8 +35,17 @@
         Crear método de contacto
       </ng-template>
       <div class="w-full">
-        <assoc-contact-method-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="contact-method-view-create"
+          submitLabel="Crear método"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocContactMethodForm.saveEnabled"
+          [loading]="fieldsAssocContactMethodForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
 
     @case (Dialog.EDIT) {
@@ -44,12 +53,19 @@
         Editar método de contacto
       </ng-template>
       <div class="w-full">
-        <assoc-contact-method-form [loading]="loading" [data]="selectedData" [failures]="failures"
+        <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
           (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
-        <p-button icon="pi pi-times" severity="secondary" label="Cancelar" (click)="onCancelEdit()" rounded text class="!p-2" />
+        <shared-drawer-form-actions
+          formId="contact-method-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocContactMethodForm.saveEnabled"
+          [loading]="fieldsAssocContactMethodForm.loading()"
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
+
     }
 
   }

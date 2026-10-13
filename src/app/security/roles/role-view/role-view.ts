@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
@@ -16,7 +17,7 @@ import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [DrawerActions,
+  imports: [DrawerFormActions, DrawerActions,
     ButtonModule,
     DrawerModule,
     RoleForm,

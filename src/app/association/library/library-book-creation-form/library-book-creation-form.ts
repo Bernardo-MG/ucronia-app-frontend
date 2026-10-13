@@ -1,5 +1,6 @@
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Language, Title } from '@ucronia/domain';
@@ -11,10 +12,13 @@ import { LibraryConfig } from '../library-config';
 
 @Component({
   selector: 'assoc-library-book-creation-form',
-  imports: [ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, SelectModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, SelectModule],
   templateUrl: './library-book-creation-form.html'
 })
 export class LibraryBookCreationForm implements OnChanges {
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
 
@@ -69,6 +73,9 @@ export class LibraryBookCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 }
 
 export class LibraryBookCreationFormData {

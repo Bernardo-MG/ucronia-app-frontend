@@ -1,4 +1,4 @@
-<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="flex flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-6">
     <div><label for="imageName" class="block font-medium text-gray-950">Nombre <span class="text-red-600">*</span></label>
       <input pInputText id="imageName" formControlName="name" maxlength="100" class="w-full"
@@ -44,9 +44,8 @@
         (change)="onFileSelected($event)" />
     </div>
   </div>
-  <div class="sticky bottom-0 mt-8 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
-    <p-button type="submit" [label]="data() ? 'Guardar cambios' : 'Crear imagen'" icon="pi pi-check"
-      [disabled]="!formStatus.saveEnabled || (!data() && !file)" [loading]="loading()" />
-  </div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

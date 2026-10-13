@@ -108,15 +108,24 @@
         </ng-template>
 
         <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-fee-creation-form
+          <assoc-fee-creation-form #fieldsAssocFeeCreationForm formId="fee-view-create" [showActions]="false"
             [loading]="status.loading"
             [failures]="failures"
             [members]="members"
             (save)="onCreateUnpaid($event)"
-            (cancelEdition)="dialog = Dialog.NONE"
+
             (searchMember)="onSearchMembers($event)"
           />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="fee-view-create"
+            submitLabel="Crear cuota"
+            submitIcon="pi pi-plus"
+            [disabled]="!fieldsAssocFeeCreationForm.saveEnabled"
+            [loading]="fieldsAssocFeeCreationForm.loading()"
+            (cancelForm)="dialog = Dialog.NONE" />
+        </ng-template>
       }
 
       @case(Dialog.PAY) {
@@ -132,9 +141,18 @@
           </div>
         </ng-template>
         <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-fee-payments-form [loading]="status.loading" [failures]="failures" [members]="members"
-            (save)="onPay($event)" (cancelEdition)="dialog = Dialog.NONE" (searchMember)="onSearchMembers($event)" />
+          <assoc-fee-payments-form #fieldsAssocFeePaymentsForm formId="fee-view-pay" [showActions]="false" [loading]="status.loading" [failures]="failures" [members]="members"
+            (save)="onPay($event)" (searchMember)="onSearchMembers($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="fee-view-pay"
+            submitLabel="Registrar pago"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAssocFeePaymentsForm.saveEnabled"
+            [loading]="fieldsAssocFeePaymentsForm.loading()"
+            (cancelForm)="dialog = Dialog.NONE" />
+        </ng-template>
       }
 
       @case(Dialog.EDITION) {
@@ -152,9 +170,18 @@
           </div>
         </ng-template>
         <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-fee-edition-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
-            (save)="onUpdate($event)" (cancelEdition)="dialog = Dialog.NONE" />
+          <assoc-fee-edition-form #fieldsAssocFeeEditionForm formId="fee-view-edition" [showActions]="false" [loading]="status.loading" [data]="selectedData" [failures]="failures"
+            (save)="onUpdate($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="fee-view-edition"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAssocFeeEditionForm.saveEnabled"
+            [loading]="fieldsAssocFeeEditionForm.loading()"
+            (cancelForm)="dialog = Dialog.INFO" />
+        </ng-template>
       }
 
     }

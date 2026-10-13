@@ -79,8 +79,17 @@
         </div>
       </ng-template>
       <div class="w-full px-2 py-4 sm:px-4">
-        <assoc-activity-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" (cancelEdition)="dialog = Dialog.NONE" />
+        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="activity-view-create"
+          submitLabel="Crear actividad"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocActivityForm.saveEnabled"
+          [loading]="fieldsAssocActivityForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
     @case(Dialog.EDIT) {
       <ng-template #header>
@@ -90,9 +99,18 @@
         </div>
       </ng-template>
       <div class="w-full px-2 py-4 sm:px-4">
-        <assoc-activity-form [loading]="status.loading" [data]="selectedData" [failures]="failures"
-          (save)="onUpdate($event)" (cancelEdition)="dialog = Dialog.INFO" />
+        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [failures]="failures"
+          (save)="onUpdate($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="activity-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocActivityForm.saveEnabled"
+          [loading]="fieldsAssocActivityForm.loading()"
+          (cancelForm)="dialog = Dialog.INFO" />
+      </ng-template>
     }
   }
 </p-drawer>

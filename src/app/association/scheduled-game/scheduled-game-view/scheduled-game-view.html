@@ -113,11 +113,20 @@
       </ng-template>
 
       <div class="w-full px-2 py-4 sm:px-4">
-        <assoc-scheduled-game-form [loading]="status.loading" [failures]="failures" [members]="members"
+        <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" [members]="members"
           [tables]="tables"
-          (save)="onCreate($event)" (cancelEdition)="dialog = Dialog.NONE"
+          (save)="onCreate($event)"
           (searchMember)="onSearchMembers($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="scheduled-game-view-create"
+          submitLabel="Crear partida"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocScheduledGameForm.saveEnabled"
+          [loading]="fieldsAssocScheduledGameForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
 
     @case (Dialog.EDIT) {
@@ -134,11 +143,20 @@
       </ng-template>
 
       <div class="w-full px-2 py-4 sm:px-4">
-        <assoc-scheduled-game-form [loading]="status.loading" [data]="selectedData" [members]="members"
+        <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [members]="members"
           [tables]="tables"
           [selectedMaster]="selectedMaster" [failures]="failures" (save)="onUpdate($event)"
-          (cancelEdition)="dialog = Dialog.INFO" (searchMember)="onSearchMembers($event)" />
+          (searchMember)="onSearchMembers($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="scheduled-game-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocScheduledGameForm.saveEnabled"
+          [loading]="fieldsAssocScheduledGameForm.loading()"
+          (cancelForm)="dialog = Dialog.INFO" />
+      </ng-template>
     }
   }
 </p-drawer>

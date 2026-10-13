@@ -1,10 +1,12 @@
 import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'access-role-change-permission',
-  imports: [ButtonModule],
+  imports: [DrawerFormActions, FormsModule, ButtonModule],
   templateUrl: './role-change-permission.html'
 })
 export class RoleChangePermission implements OnChanges {
@@ -12,6 +14,9 @@ export class RoleChangePermission implements OnChanges {
   public readonly data = input(new Role());
   public readonly selection = input<ResourcePermission[]>([]);
   public readonly permissions = input<ResourcePermission[]>([]);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
   public readonly loading = input(false);
 
   public readonly save = output<ResourcePermission[]>();
@@ -120,6 +125,9 @@ export class RoleChangePermission implements OnChanges {
     return Array.from(permissions.values());
   }
 
+  public get saveEnabled(): boolean {
+    return !this.loading();
+  }
 }
 
 interface PermissionGroup {

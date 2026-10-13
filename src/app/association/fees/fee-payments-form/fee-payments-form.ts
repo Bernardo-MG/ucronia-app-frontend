@@ -1,6 +1,7 @@
 import { Component, inject, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
@@ -13,12 +14,15 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
 
   private fb = inject(FormBuilder);
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
@@ -97,6 +101,9 @@ export class FeePaymentsForm {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 }
 
 export class FeesPaymentEvent {

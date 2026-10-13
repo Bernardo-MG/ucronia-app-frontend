@@ -1,6 +1,6 @@
-
 import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
@@ -11,10 +11,15 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-book-return-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule],
   templateUrl: './library-book-return-form.html'
 })
 export class LibraryBookReturnForm implements OnChanges {
+
+  public readonly cancelEdition = output<void>();
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
   public readonly lentDate = input(new Date());
@@ -73,6 +78,9 @@ export class LibraryBookReturnForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 }
 
 export class BookReturnedEvent {

@@ -35,8 +35,17 @@
         Crear llave
       </ng-template>
       <div class="w-full">
-        <assoc-key-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-key-form #fieldsAssocKeyForm formId="key-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="key-view-create"
+          submitLabel="Crear llave"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocKeyForm.saveEnabled"
+          [loading]="fieldsAssocKeyForm.loading()"
+          (cancelForm)="dialog = Dialog.NONE" />
+      </ng-template>
     }
 
     @case(Dialog.EDIT) {
@@ -44,11 +53,18 @@
         Editar llave
       </ng-template>
       <div class="w-full">
-        <assoc-key-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+        <assoc-key-form #fieldsAssocKeyForm formId="key-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
-        <p-button icon="pi pi-times" severity="secondary" label="Cancelar" (click)="onCancelEdit()" rounded text class="!p-2" />
+        <shared-drawer-form-actions
+          formId="key-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocKeyForm.saveEnabled"
+          [loading]="fieldsAssocKeyForm.loading()"
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
+
     }
 
   }

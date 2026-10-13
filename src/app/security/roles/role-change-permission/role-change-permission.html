@@ -1,4 +1,4 @@
-<div class="flex min-h-[calc(100vh-8rem)] flex-col">
+<form [attr.id]="formId()" class="flex flex-col" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-5">
     <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Rol actual</span>
@@ -78,8 +78,8 @@
     </section>
   </div>
 
-  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
-    <p-button type="button" label="Guardar cambios" icon="pi pi-check" [loading]="loading()" (click)="onSave()" />
-  </div>
-</div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
+</form>

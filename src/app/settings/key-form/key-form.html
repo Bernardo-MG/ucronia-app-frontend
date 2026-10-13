@@ -1,4 +1,4 @@
-<form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+<form [attr.id]="formId()" class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
   <div>
     <label for="availableInput" class="block font-medium text-gray-950">Disponible</label>
     <p-toggleswitch inputId="availableInput" formControlName="available" class="mt-2 block" />
@@ -10,6 +10,8 @@
       <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

@@ -1,0 +1,11 @@
+<shared-drawer-actions [showDelete]="false" [showEdit]="false" [loading]="loading()">
+  <div drawerActionsStart>
+    @if (showCancel()) {
+      <button pButton type="button" data-action="cancel" label="Cancelar" severity="secondary" outlined
+        class="h-11 rounded-lg px-4" [disabled]="loading()" (click)="cancelForm.emit()"></button>
+    }
+  </div>
+  <button drawerActionsEnd pButton type="submit" data-action="submit" class="h-11 rounded-lg px-4"
+    [attr.form]="formId()" [label]="submitLabel()" [icon]="submitIcon()" [attr.aria-label]="submitLabel()"
+    [disabled]="disabled() || loading()" [loading]="loading()"></button>
+</shared-drawer-actions>

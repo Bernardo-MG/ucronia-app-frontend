@@ -1,4 +1,4 @@
-<form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+<form [attr.id]="formId()" class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
   <div>
     <label for="nameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
     <input pInputText id="nameInput" type="text" formControlName="name" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name')" />
@@ -6,6 +6,8 @@
       <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

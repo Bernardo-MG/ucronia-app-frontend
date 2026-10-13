@@ -1,13 +1,14 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore, Page } from '@bernardo-mg/request';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -16,12 +17,15 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, ButtonModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, ButtonModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './library-book-edition-form.html'
 })
 export class LibraryBookEditionForm implements OnChanges {
 
   private readonly service = inject(LibraryService);
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
 
@@ -310,6 +314,9 @@ export class LibraryBookEditionForm implements OnChanges {
       });
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 }
 
 export class LibraryBookEditionFormData {

@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="space-y-5">
+<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="onSave()" novalidate class="space-y-5">
   <!-- Member -->
   <h2>{{memberName}}</h2>
   <!-- Return date -->
@@ -17,6 +17,8 @@
   </div>
 
   <!-- Save button -->
-  <p-button type="submit" name="Guardar" [loading]="loading()" [disabled]="!formStatus.saveEnabled"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

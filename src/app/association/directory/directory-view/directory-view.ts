@@ -5,6 +5,7 @@ import { KeyService } from '@app/settings/key-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -33,7 +34,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [DrawerActions, ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
+  imports: [DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {

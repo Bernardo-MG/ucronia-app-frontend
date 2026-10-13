@@ -1,5 +1,6 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -9,10 +10,13 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-role-form',
-  imports: [ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
   templateUrl: './role-form.html'
 })
 export class RoleForm implements OnChanges {
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
 
   public readonly loading = input(false);
   public readonly failures = input(new FailureStore());
@@ -191,6 +195,9 @@ export class RoleForm implements OnChanges {
       || `${permission.resource}:${permission.action}`;
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 }
 
 interface PermissionGroup {

@@ -1,4 +1,4 @@
-<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="flex flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-5">
 
     <!-- Pending-payment notice -->
@@ -89,10 +89,8 @@
   </div>
 
   <!-- Actions -->
-  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
-
-    <p-button type="submit" label="Crear cuota" icon="pi pi-plus" [disabled]="!formStatus.saveEnabled"
-      [loading]="loading()" [attr.aria-disabled]="!formStatus.saveEnabled" />
-  </div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Crear cuota" submitIcon="pi pi-plus"
+      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

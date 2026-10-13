@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -19,7 +20,7 @@ import { FileService } from '../file-service';
 
 @Component({
   selector: 'assoc-file-view',
-  imports: [DrawerActions, ButtonModule, DrawerModule, FormsModule, FileForm, FileInfo, FileList, InputTextModule],
+  imports: [DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, FormsModule, FileForm, FileInfo, FileList, InputTextModule],
   templateUrl: './file-view.html'
 })
 export class FileView implements OnInit {
