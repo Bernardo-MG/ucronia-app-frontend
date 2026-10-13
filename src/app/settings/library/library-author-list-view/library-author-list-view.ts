@@ -1,7 +1,7 @@
-
 import { Component, inject, OnInit } from '@angular/core';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -14,7 +14,7 @@ import { finalize, Observable } from 'rxjs';
 import { AuthorService } from '../author-service';
 
 @Component({
-  imports: [DrawerModule, NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, DetailField],
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {

@@ -20,12 +20,8 @@
         <ui-detail-field [loading]="loading" icon="pi pi-comment" name="Descripción" [value]="selectedData.description" />
       </div>
       <ng-template #footer>
-        <div class="flex w-full justify-between gap-2">
-          <p-button icon="pi pi-trash" severity="danger" ariaLabel="Eliminar" [disabled]="!permissions.delete || loading"
-            (click)="onDelete($event)" text />
-          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit || loading"
-            (click)="onShowEdit(selectedData)" />
-        </div>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="loading"
+          editLabel="Editar mesa" (delete)="onDelete($event)" (edit)="onShowEdit(selectedData)" />
       </ng-template>
     }
 

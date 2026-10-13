@@ -1,6 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { ContactMethodService } from '@app/settings/contact-method-service';
+import { FeeTypeService } from '@app/settings/fee-type-service';
+import { KeyService } from '@app/settings/key-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -12,12 +16,9 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
 import { finalize, forkJoin, Observable } from 'rxjs';
-import { ContactMethodService } from '@app/settings/contact-method-service';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';
-import { FeeTypeService } from '@app/settings/fee-type-service';
 import { GuestList } from '../guest-list/guest-list';
-import { KeyService } from '@app/settings/key-service';
 import { MemberProfileList } from '../member-profile-list/member-profile-list';
 import { MembershipEvolutionChartView } from '../membership-evolution-chart-view/membership-evolution-chart-view.component';
 import { DirectorySummary } from '../model/directory-summary';
@@ -32,7 +33,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
+  imports: [DrawerActions, ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {

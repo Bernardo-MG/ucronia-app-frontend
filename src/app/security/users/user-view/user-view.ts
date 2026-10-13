@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
@@ -15,7 +16,7 @@ import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [ButtonModule, DrawerModule, UserForm, UserInfo, UserList],
+  imports: [DrawerActions, ButtonModule, DrawerModule, UserForm, UserInfo, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {

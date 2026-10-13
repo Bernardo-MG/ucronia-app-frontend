@@ -49,17 +49,12 @@
 
         <div class="w-full px-2 py-4 sm:px-4">
           <access-role-info [data]="selectedData" [loading]="loading" />
-
-          <div class="mt-6 flex w-full justify-between gap-2 border-t border-gray-200 pt-4">
-            @if (permissions.delete) {
-              <p-button label="Eliminar rol" icon="pi pi-trash" severity="danger" outlined (click)="onDelete({ event: $event, role: selectedData })" />
-            }
-
-            @if (permissions.edit) {
-              <p-button label="Editar permisos" icon="pi pi-key" (click)="onChangePermissions(selectedData)" />
-            }
-          </div>
         </div>
+        <ng-template #footer>
+          <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="loading"
+            editLabel="Editar permisos" editIcon="pi pi-key"
+            (delete)="onDelete({ event: $event, role: selectedData })" (edit)="onChangePermissions(selectedData)" />
+        </ng-template>
       }
 
       @case (Dialog.CREATE) {

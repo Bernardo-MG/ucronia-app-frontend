@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { ConfirmationService } from 'primeng/api';
@@ -75,7 +75,7 @@ for (const { view, service, form } of cases) {
       expect(fixture.debugElement.query(By.directive(Drawer)).componentInstance.visible).toBeTrue();
       expect(fixture.nativeElement.textContent).toContain('7');
       expect(fixture.debugElement.query(By.css(form))).toBeNull();
-      click('p-button[label="Editar"] button');
+      click('p-button[data-action="edit"] button');
       const editor = fixture.debugElement.query(By.css(form));
       expect(editor.componentInstance.form.value.number).toBe(item.number);
       fixture.componentInstance.onCancelEdit();
@@ -90,7 +90,7 @@ for (const { view, service, form } of cases) {
       render();
       expect(fixture.debugElement.query(By.css('button[aria-label="Más acciones"]'))).toBeNull();
       click('button[aria-label="Ver detalles"]');
-      const edit = fixture.debugElement.query(By.css('p-button[label="Editar"] button'));
+      const edit = fixture.debugElement.query(By.css('p-button[data-action="edit"] button'));
       expect(edit.nativeElement.disabled).toBeTrue();
       expect(fixture.debugElement.query(By.css('button[aria-label="Eliminar"]')).nativeElement.disabled).toBeTrue();
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
@@ -115,7 +115,7 @@ for (const { view, service, form } of cases) {
     it('keeps the edit form open on a failed save and closes after a successful retry', () => {
       render();
       click('button[aria-label="Ver detalles"]');
-      click('p-button[label="Editar"] button');
+      click('p-button[data-action="edit"] button');
       crud.update.and.returnValue(throwError(() => new Error('Save failed')));
       fixture.componentInstance.onUpdate(item);
       fixture.changeDetectorRef.markForCheck();

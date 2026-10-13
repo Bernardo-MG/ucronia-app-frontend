@@ -91,17 +91,11 @@
       </div>
 
       <ng-template #footer>
-        <div class="flex w-full justify-between gap-2">
-          <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-            (click)="onDelete($event)" text />
-
-          <div class="flex gap-2">
-            <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
-              (click)="onShowEdit()" outlined />
-            <p-button label="Publicar" icon="pi pi-send" severity="success" [disabled]="status.loading"
-              (click)="onPublish($event)" />
-          </div>
-        </div>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
+          editLabel="Editar partida" (delete)="onDelete($event)" (edit)="onShowEdit()">
+          <p-button drawerActionsEnd label="Publicar" icon="pi pi-send" severity="success" styleClass="h-11 rounded-lg px-4"
+            [disabled]="status.loading" (click)="onPublish($event)" />
+        </shared-drawer-actions>
       </ng-template>
     }
 

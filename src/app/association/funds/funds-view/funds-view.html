@@ -101,17 +101,9 @@
           <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
         </div>
         <ng-template #footer>
-          <div class="flex w-full justify-between gap-2">
-            @if (permissions.delete) {
-              <p-button label="Eliminar transacción" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-                (click)="onDelete($event)" outlined />
-            }
-            @if (permissions.edit) {
-              <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
-                (click)="dialog = Dialog.EDIT" outlined />
-            }
-          </div>
-        </ng-template>
+        <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="status.loading"
+          editLabel="Editar transacción" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDIT" />
+      </ng-template>
       }
       @case(Dialog.CREATE) {
         <ng-template #header>

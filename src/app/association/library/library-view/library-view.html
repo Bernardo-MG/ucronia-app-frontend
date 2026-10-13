@@ -83,12 +83,8 @@
           <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
         </div>
       <ng-template #footer>
-        <div class="flex w-full justify-between gap-2">
-          <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-            (click)="onDelete($event)" text />
-          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
-            [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" />
-        </div>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
+          editLabel="Editar libro" (delete)="onDelete($event)" (edit)="onShowEdit()" />
       </ng-template>
       }
 

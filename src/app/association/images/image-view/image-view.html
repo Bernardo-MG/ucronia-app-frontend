@@ -83,12 +83,10 @@
         Imagen #{{ selectedData.number }}</span><h2 class="mt-1 text-xl font-semibold">{{ selectedData.name }}</h2></div></ng-template>
       <div class="w-full p-4"><assoc-image-info [data]="selectedData" [loading]="status.loading"
         [source]="contentUrl(selectedData.number)" /></div>
-      <ng-template #footer><div class="flex w-full justify-between gap-2">
-        <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-          (click)="onDelete($event)" text />
-        <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
-          (click)="dialog = Dialog.EDIT" />
-      </div></ng-template>
+      <ng-template #footer>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
+          editLabel="Editar imagen" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDIT" />
+      </ng-template>
     }
     @case (Dialog.CREATE) {
       <ng-template #header><h2 class="text-xl font-semibold">Nueva imagen</h2></ng-template>

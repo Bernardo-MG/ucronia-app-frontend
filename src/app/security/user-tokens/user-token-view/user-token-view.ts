@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
@@ -13,7 +14,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 
 @Component({
   selector: 'access-user-token-view',
-  imports: [DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
+  imports: [DrawerActions, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
   templateUrl: './user-token-view.html'
 })
 export class UserTokenView implements OnInit {

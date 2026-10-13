@@ -52,16 +52,9 @@
         </div>
 
         <ng-template #footer>
-          <div class="flex w-full justify-between gap-2">
-            @if (permissions.delete) {
-              <p-button label="Eliminar usuario" icon="pi pi-trash" severity="danger" [outlined]="true" (click)="onDelete({ event: $event, user: selectedData })" />
-            }
-
-            @if (permissions.edit) {
-              <p-button label="Editar usuario" icon="pi pi-pencil" (click)="onStartEditing(selectedData)" />
-            }
-          </div>
-        </ng-template>
+        <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="loading"
+          editLabel="Editar usuario" (delete)="onDelete({ event: $event, user: selectedData })" (edit)="onStartEditing(selectedData)" />
+      </ng-template>
       }
 
       @case (Dialog.INVITE) {

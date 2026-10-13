@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -21,7 +22,7 @@ import { ScheduledGameList } from '../scheduled-game-list/scheduled-game-list';
 import { ScheduledGameService } from '../scheduled-game-service';
 
 @Component({
-  imports: [FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule,
+  imports: [DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule,
     SelectButtonModule, ScheduledGameList, ScheduledGameInfo, ScheduledGameForm],
   templateUrl: './scheduled-game-view.html'
 })

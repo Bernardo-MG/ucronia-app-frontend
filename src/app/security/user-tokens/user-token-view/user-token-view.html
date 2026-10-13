@@ -50,10 +50,10 @@
 
         @if (editable && !selectedData.revoked && !selectedData.consumed) {
           <ng-template #footer>
-            <div class="flex w-full justify-end">
-              <p-button label="Extender expiración" icon="pi pi-calendar-plus" severity="secondary"
-                (click)="onStartExtend(selectedData)" />
-            </div>
+            <shared-drawer-actions [showDelete]="false" [showEdit]="false" [loading]="loading">
+              <p-button drawerActionsEnd label="Extender expiración" icon="pi pi-calendar-plus"
+                styleClass="h-11 rounded-lg px-4" [disabled]="loading" (click)="onStartExtend(selectedData)" />
+            </shared-drawer-actions>
           </ng-template>
         }
       }

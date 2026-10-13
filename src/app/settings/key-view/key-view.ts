@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -14,7 +15,7 @@ import { KeyService } from '../key-service';
 
 @Component({
   selector: 'assoc-key-view',
-  imports: [DetailField, DrawerModule, ButtonModule, KeyList, KeyForm],
+  imports: [DrawerActions, DetailField, DrawerModule, ButtonModule, KeyList, KeyForm],
   templateUrl: './key-view.html'
 })
 export class KeyView implements OnInit {

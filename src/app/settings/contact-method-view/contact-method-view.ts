@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -14,7 +15,7 @@ import { ContactMethodService } from '../contact-method-service';
 
 @Component({
   selector: 'assoc-contact-method-view',
-  imports: [DetailField, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
+  imports: [DrawerActions, DetailField, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-method-view.html'
 })
 export class ContactMethodView implements OnInit {
