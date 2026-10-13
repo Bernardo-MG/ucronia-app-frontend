@@ -56,9 +56,9 @@
           <p-inputgroup-addon>
             <i class="pi pi-calendar-clock" aria-hidden="true"></i>
           </p-inputgroup-addon>
-          <p-datepicker id="transactionDateInput" formControlName="date" [maxDate]="today"
+          <p-datepicker inputId="transactionDateInput" formControlName="date" [maxDate]="today"
             [invalid]="isFieldInvalid('transaction.date')" dateFormat="dd MM yy"
-            placeholder="Selecciona una fecha" appendTo="body" />
+            placeholder="Selecciona una fecha" appendTo="body" class="w-full" />
         </p-inputgroup>
         @for (failure of failures().getFailures('transaction.date'); track failure) {
           <p-message class="mt-2 block" severity="error" size="small" variant="simple">

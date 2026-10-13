@@ -1,28 +1,15 @@
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-
-  <div class="mb-4">
-    <label for="availableInput" class="select-none font-medium">Disponible</label>
-    <div class="mt-2">
-      <p-toggleswitch inputId="availableInput" formControlName="available" />
-    </div>
+<form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div>
+    <label for="availableInput" class="block font-medium text-gray-950">Disponible</label>
+    <p-toggleswitch inputId="availableInput" formControlName="available" class="mt-2 block" />
   </div>
-
-  <p-inputgroup class="mb-2 d-flex">
-    <p-inputgroup-addon>
-      <i class="pi pi-comment"></i>
-    </p-inputgroup-addon>
-    <input pInputText type="text" id="descriptionInput" formControlName="description"
-      [invalid]="isFieldInvalid('description')" maxlength="250" class="w-100" placeholder="Descripcion" />
-  </p-inputgroup>
-
-  <div class="mb-2">
+  <div>
+    <label for="descriptionInput" class="block font-medium text-gray-950">Descripción</label>
+    <input pInputText id="descriptionInput" type="text" formControlName="description" maxlength="250" class="mt-2 w-full" [invalid]="isFieldInvalid('description')" />
     @for (failure of failures().getFailures('description'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
-
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

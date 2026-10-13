@@ -7,9 +7,6 @@ import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod, FeeType, Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -20,7 +17,7 @@ import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm implements OnChanges {

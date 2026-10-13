@@ -4,8 +4,6 @@ import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -18,8 +16,6 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    InputGroupModule,
-    InputGroupAddonModule,
     InputNumberModule,
     ToggleSwitchModule,
     MessageModule

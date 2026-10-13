@@ -4,14 +4,12 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-profile-creation-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule, InputGroupModule, InputGroupAddonModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule],
   templateUrl: './profile-creation-form.html'
 })
 export class ProfileCreationForm implements OnChanges {

@@ -4,12 +4,11 @@ import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-token-extend-form',
-  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, ButtonModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, DatePickerModule, ButtonModule, MessageModule],
   templateUrl: './user-token-extend-form.html'
 })
 export class UserTokenExtendForm {

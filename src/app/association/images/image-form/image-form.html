@@ -1,13 +1,13 @@
 <form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-6">
-    <div><label for="imageName" class="mb-2 block font-semibold text-gray-950">Nombre <span class="text-red-600">*</span></label>
+    <div><label for="imageName" class="block font-medium text-gray-950">Nombre <span class="text-red-600">*</span></label>
       <input pInputText id="imageName" formControlName="name" maxlength="100" class="w-full"
         [invalid]="isFieldInvalid('name')" />
       @for (failure of failures().getFailures('name'); track failure) {
         <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
       }
     </div>
-    <div><label for="imageDescription" class="mb-2 block font-semibold text-gray-950">Descripción</label>
+    <div><label for="imageDescription" class="block font-medium text-gray-950">Descripción</label>
       <textarea pTextarea id="imageDescription" formControlName="description" maxlength="500" rows="5"
         class="w-full resize-y" [invalid]="isFieldInvalid('description')"></textarea>
       <div class="mt-1 text-right text-xs text-gray-400">{{ form.get('description')?.value?.length || 0 }} / 500</div>
@@ -26,13 +26,13 @@
     </div>
     @if (data()) {
       <div>
-        <label for="imageFolder" class="mb-2 block font-semibold text-gray-950">Carpeta</label>
+        <label for="imageFolder" class="block font-medium text-gray-950">Carpeta</label>
         <p-select inputId="imageFolder" formControlName="folderNumber" [options]="folderOptions"
           optionLabel="name" optionValue="number" appendTo="body" class="w-full" />
         <p class="mt-1 text-xs text-gray-500">Selecciona dónde guardar la imagen.</p>
       </div>
     }
-    <div><label for="imageFile" class="mb-2 block font-semibold text-gray-950">
+    <div><label for="imageFile" class="block font-medium text-gray-950">
       {{ data() ? 'Sustituir archivo' : 'Archivo' }} @if (!data()) { <span class="text-red-600">*</span> }
     </label>
       <label for="imageFile" class="flex cursor-pointer flex-col items-center rounded-xl border border-dashed border-gray-300 p-8 text-center hover:bg-gray-50">

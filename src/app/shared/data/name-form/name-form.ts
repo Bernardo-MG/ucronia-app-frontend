@@ -5,13 +5,12 @@ import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { FeeCreation } from '@ucronia/api';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'shared-name-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
   templateUrl: './name-form.html'
 })
 export class NameForm implements OnChanges {

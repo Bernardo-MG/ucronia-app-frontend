@@ -1,46 +1,27 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  
-  <!-- Name -->
-  <div formGroupName="name" class="flex flex-col gap-2">
-  
-    <label for="firstNameInput" class="font-medium">
-      Nombre <span class="text-red-600" aria-hidden="true">*</span>
-    </label>
-  
-    <div class="flex flex-col md:items-end md:flex-row gap-4">
-      <p-inputgroup class="mb-2 d-flex">
-        <p-inputgroup-addon>
-          <i class="pi pi-user"></i>
-        </p-inputgroup-addon>
-        <input pInputText type="text" id="firstNameInput" formControlName="firstName"
-          [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
-        <input pInputText type="text" id="nicknameInput" formControlName="nickname"
-          [invalid]="isFieldInvalid('name.nickname')" maxlength="50" placeholder="Apodo" />
-        <input pInputText type="text" id="lastNameInput" formControlName="lastName"
-          [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
-      </p-inputgroup>
-    </div>
-  
+<form class="space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <section formGroupName="name" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+  <div>
+    <label for="firstNameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+    <input pInputText id="firstNameInput" formControlName="firstName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.firstName')" />
+    @for (failure of failures().getFailures('name.firstName'); track failure) {
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+    }
   </div>
-
-  @for (failure of failures().getFailures('name.firstName'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{ failure.message }}
-    </p-message>
-  }
-
-  @for (failure of failures().getFailures('name.lastName'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{ failure.message }}
-    </p-message>
-  }
-
-  @for (failure of failures().getFailures('name.nickname'); track failure) {
-    <p-message severity="error" size="small" variant="simple">
-      {{ failure.message }}
-    </p-message>
-  }
-
+  <div>
+    <label for="lastNameInput" class="block font-medium text-gray-950">Apellidos</label>
+    <input pInputText id="lastNameInput" formControlName="lastName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.lastName')" />
+    @for (failure of failures().getFailures('name.lastName'); track failure) {
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+    }
+  </div>
+  <div>
+    <label for="nicknameInput" class="block font-medium text-gray-950">Apodo</label>
+    <input pInputText id="nicknameInput" formControlName="nickname" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.nickname')" />
+    @for (failure of failures().getFailures('name.nickname'); track failure) {
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+    }
+  </div>
+  </section>
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
     [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
 </form>

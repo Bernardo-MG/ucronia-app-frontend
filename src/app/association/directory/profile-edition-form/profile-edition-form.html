@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+<form [formGroup]="form" (ngSubmit)="submit()" novalidate class="space-y-5">
 
   <div class="flex flex-col gap-2">
     <p class="font-medium">Tipo</p>
@@ -20,17 +20,17 @@
   @if (isMember) {
     <!-- Fee type -->
     <div formGroupName="feeType" class="mb-2 flex flex-col gap-2">
-      <label for="feeTypeInput" class="font-medium">Tipo de cuota <span class="text-red-600" aria-hidden="true">*</span></label>
+      <label for="feeTypeInput" class="block font-medium text-gray-950">Tipo de cuota <span class="text-red-600" aria-hidden="true">*</span></label>
     
-      <p-select id="feeTypeInput" [options]="feeTypes()" optionLabel="name" optionValue="number" formControlName="number"
-        placeholder="Tipo de cuota" class="w-64">
+      <p-select inputId="feeTypeInput" [options]="feeTypes()" optionLabel="name" optionValue="number" formControlName="number"
+        placeholder="Selecciona un tipo" class="mt-2 w-full">
       </p-select>
     </div>
 
     <div class="mb-2 flex flex-col gap-2">
-      <label for="keyInput" class="font-medium">Llave</label>
-      <p-select id="keyInput" [options]="keys()" optionLabel="number" optionValue="number" formControlName="key"
-        placeholder="Sin llave" class="w-64" [showClear]="true" appendTo="body">
+      <label for="keyInput" class="block font-medium text-gray-950">Llave</label>
+      <p-select inputId="keyInput" [options]="keys()" optionLabel="number" optionValue="number" formControlName="key"
+        placeholder="Sin llave" class="mt-2 w-full" [showClear]="true" appendTo="body">
         <ng-template let-key pTemplate="item">
           <div class="flex items-center gap-2">
             <span>#{{ key.number }} - {{ key.description }}</span>
@@ -74,107 +74,59 @@
     </div>
   }
 
-  <!-- Name -->
-  <div formGroupName="name" class="flex flex-col gap-2">
-    <label for="firstNameInput" class="font-medium">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
-
-    <div class="flex flex-col md:items-end md:flex-row gap-4">
-      <p-inputgroup class="mb-2 d-flex">
-        <p-inputgroup-addon><i class="pi pi-user"></i></p-inputgroup-addon>
-
-        <input pInputText type="text" id="firstNameInput" formControlName="firstName"
-          [invalid]="isFieldInvalid('name.firstName')" maxlength="50" placeholder="Nombre" />
-
-        <input pInputText type="text" id="nicknameInput" formControlName="nickname"
-          [invalid]="isFieldInvalid('name.nickname')" maxlength="50" placeholder="Apodo" />
-
-        <input pInputText type="text" id="lastNameInput" formControlName="lastName"
-          [invalid]="isFieldInvalid('name.lastName')" maxlength="50" placeholder="Apellidos" />
-      </p-inputgroup>
-    </div>
-  </div>
-
-  <div class="mb-2">
+  <section formGroupName="name" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+  <div>
+    <label for="firstNameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+    <input pInputText id="firstNameInput" formControlName="firstName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.firstName')" />
     @for (failure of failures().getFailures('name.firstName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
-
-    @for (failure of failures().getFailures('name.nickname'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
-    }
-
+  </div>
+  <div>
+    <label for="lastNameInput" class="block font-medium text-gray-950">Apellidos</label>
+    <input pInputText id="lastNameInput" formControlName="lastName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.lastName')" />
     @for (failure of failures().getFailures('name.lastName'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
+  <div>
+    <label for="nicknameInput" class="block font-medium text-gray-950">Apodo</label>
+    <input pInputText id="nicknameInput" formControlName="nickname" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.nickname')" />
+    @for (failure of failures().getFailures('name.nickname'); track failure) {
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+    }
+  </div>
+  </section>
 
-  <!-- Birth date -->
-  <p-inputgroup class="mb-2">
-    <p-inputgroup-addon><i class="pi pi-calendar"></i></p-inputgroup-addon>
-
-    <p-datepicker id="birthDateInput" formControlName="birthDate" [invalid]="isFieldInvalid('birthDate')"
-      dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" placeholder="Fecha de nacimiento"></p-datepicker>
-  </p-inputgroup>
-
-  <div class="mb-2">
+  <div>
+    <label for="birthDateInput" class="block font-medium text-gray-950">Fecha de nacimiento</label>
+    <p-datepicker inputId="birthDateInput" formControlName="birthDate" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" class="mt-2 w-full" [invalid]="isFieldInvalid('birthDate')" />
     @for (failure of failures().getFailures('birthDate'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
 
-  <!-- Identifier -->
-  <p-inputgroup class="mb-2">
-    <p-inputgroup-addon><i class="pi pi-id-card"></i></p-inputgroup-addon>
-
-    <input pInputText type="text" id="identifierInput" formControlName="identifier"
-      [invalid]="isFieldInvalid('identifier')" maxlength="15" placeholder="DNI" class="w-100" />
-  </p-inputgroup>
-
-  <div class="mb-2">
+  <div>
+    <label for="identifierInput" class="block font-medium text-gray-950">DNI</label>
+    <input pInputText id="identifierInput" formControlName="identifier" maxlength="15" class="mt-2 w-full" [invalid]="isFieldInvalid('identifier')" />
     @for (failure of failures().getFailures('identifier'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
 
-  <!-- Address -->
-  <p-inputgroup class="mb-2">
-    <p-inputgroup-addon><i class="pi pi-home"></i></p-inputgroup-addon>
-
-    <input pInputText type="text" id="addressInput" formControlName="address"
-      [invalid]="isFieldInvalid('address')" maxlength="250" placeholder="Dirección" class="w-100" />
-  </p-inputgroup>
-
-  <div class="mb-2">
+  <div>
+    <label for="addressInput" class="block font-medium text-gray-950">Dirección</label>
+    <input pInputText id="addressInput" formControlName="address" maxlength="250" class="mt-2 w-full" [invalid]="isFieldInvalid('address')" />
     @for (failure of failures().getFailures('address'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
 
-  <!-- Comments -->
-  <p-inputgroup class="mb-2">
-    <p-inputgroup-addon><i class="pi pi-comment"></i></p-inputgroup-addon>
-
-    <textarea pTextarea formControlName="comments" rows="4" autoResize="true" placeholder="Comentarios" class="w-100"
-      [invalid]="isFieldInvalid('comments')" maxlength="250"></textarea>
-  </p-inputgroup>
-
-  <div class="mb-2">
+  <div>
+    <label for="commentsInput" class="block font-medium text-gray-950">Comentarios</label>
+    <textarea pTextarea id="commentsInput" formControlName="comments" rows="4" autoResize="true" maxlength="250" class="mt-2 w-full" [invalid]="isFieldInvalid('comments')"></textarea>
     @for (failure of failures().getFailures('comments'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{ failure.message }}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
 
@@ -188,16 +140,19 @@
 
     @for (channel of contactChannels.controls; track channel; let i = $index) {
 
-      <div [formGroupName]="i" class="flex gap-2 items-start">
+      <div [formGroupName]="i" class="flex items-end gap-3">
 
-        <p-inputgroup class="flex-1">
-          <p-inputgroup-addon><i class="pi pi-phone"></i></p-inputgroup-addon>
-
-          <p-select formControlName="method" [options]="contactMethods()" optionLabel="name" placeholder="Método"
-            class="w-full" appendTo="body"></p-select>
-
-          <input pInputText placeholder="Detalle" formControlName="detail" maxlength="50" />
-        </p-inputgroup>
+        <div class="grid min-w-0 flex-1 grid-cols-1 gap-5 sm:grid-cols-2">
+          <div>
+            <label [for]="'contactMethodInput' + i" class="block font-medium text-gray-950">Método</label>
+            <p-select [inputId]="'contactMethodInput' + i" formControlName="method" [options]="contactMethods()"
+              optionLabel="name" class="mt-2 w-full" appendTo="body" />
+          </div>
+          <div>
+            <label [for]="'contactDetailInput' + i" class="block font-medium text-gray-950">Detalle</label>
+            <input pInputText [id]="'contactDetailInput' + i" formControlName="detail" maxlength="50" class="mt-2 w-full" />
+          </div>
+        </div>
 
         <!-- Remove -->
         <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeContactChannel(i)"></p-button>
@@ -215,9 +170,12 @@
       </div>
 
       @for (game of games.controls; track game; let i = $index) {
-        <div class="flex gap-2 items-start">
-          <p-datepicker [formControlName]="i" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today"
-            placeholder="Fecha"></p-datepicker>
+        <div class="flex items-end gap-3">
+          <div class="min-w-0 flex-1">
+            <label [for]="'guestGameInput' + i" class="block font-medium text-gray-950">Fecha</label>
+            <p-datepicker [inputId]="'guestGameInput' + i" [formControlName]="i" dateFormat="yy-mm-dd"
+              appendTo="body" [maxDate]="today" class="mt-2 w-full" />
+          </div>
 
           <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)"></p-button>
         </div>
@@ -235,9 +193,11 @@
       </div>
 
       @for (year of years.controls; track year; let i = $index) {
-        <div class="flex gap-2 items-start">
-          <label [for]="'sponsorYearInput' + i" class="font-medium">Año <span class="text-red-600" aria-hidden="true">*</span></label>
-          <input pInputText type="number" [id]="'sponsorYearInput' + i" [formControlName]="i" placeholder="Año" class="w-24" />
+        <div class="flex items-end gap-3">
+          <div class="min-w-0 flex-1">
+            <label [for]="'sponsorYearInput' + i" class="block font-medium text-gray-950">Año <span class="text-red-600" aria-hidden="true">*</span></label>
+            <input pInputText type="number" [id]="'sponsorYearInput' + i" [formControlName]="i" class="mt-2 w-full" />
+          </div>
 
           <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeYear(i)"></p-button>
         </div>

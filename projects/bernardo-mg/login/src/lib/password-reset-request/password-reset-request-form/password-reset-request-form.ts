@@ -2,7 +2,6 @@
 import { Component, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 
 /**
@@ -10,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
  */
 @Component({
   selector: 'login-password-reset-request-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule],
   templateUrl: './password-reset-request-form.html'
 })
 export class PasswordResetRequestForm {

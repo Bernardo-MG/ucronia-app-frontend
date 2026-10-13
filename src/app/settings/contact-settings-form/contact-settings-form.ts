@@ -2,14 +2,13 @@ import { Component, inject, input, OnChanges, output, SimpleChanges } from '@ang
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'assoc-contact-settings-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule, ButtonModule],
   templateUrl: './contact-settings-form.html'
 })
 export class ContactSettingsForm implements OnChanges {

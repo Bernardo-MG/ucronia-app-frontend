@@ -6,13 +6,12 @@ import { FailureStore } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-book-return-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule],
   templateUrl: './library-book-return-form.html'
 })
 export class LibraryBookReturnForm implements OnChanges {

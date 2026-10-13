@@ -1,6 +1,6 @@
 <form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
   <div>
-    <label for="nameInput" class="mb-2 block font-semibold">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+    <label for="nameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
     <input pInputText id="nameInput" formControlName="name" maxlength="50" class="w-full"
       placeholder="Nombre de la mesa" [invalid]="isFieldInvalid('name')" />
     @for (failure of failures().getFailures('name'); track failure) {
@@ -8,7 +8,7 @@
     }
   </div>
   <div>
-    <label for="descriptionInput" class="mb-2 block font-semibold">Descripción <span class="text-red-600" aria-hidden="true">*</span></label>
+    <label for="descriptionInput" class="block font-medium text-gray-950">Descripción <span class="text-red-600" aria-hidden="true">*</span></label>
     <textarea pTextarea id="descriptionInput" formControlName="description" maxlength="200" rows="4" class="w-full"
       placeholder="Descripción de la mesa" [invalid]="isFieldInvalid('description')"></textarea>
     @for (failure of failures().getFailures('description'); track failure) {

@@ -22,7 +22,7 @@
       <div class="space-y-4">
         @if (create()) {
           <div>
-            <label for="usernameInput" class="block text-sm font-medium text-gray-900">Usuario <span class="text-red-600" aria-hidden="true">*</span></label>
+            <label for="usernameInput" class="block font-medium text-gray-950">Usuario <span class="text-red-600" aria-hidden="true">*</span></label>
             <input pInputText type="text" id="usernameInput" formControlName="username" class="mt-2 w-full" placeholder="nombre.apellido" autocomplete="username" [invalid]="isFieldInvalid('username')" />
             <p class="mt-1.5 text-xs text-gray-500">Se utilizará para iniciar sesión</p>
 
@@ -33,7 +33,7 @@
         }
 
         <div>
-          <label for="nameInput" class="block text-sm font-medium text-gray-900">Nombre completo <span class="text-red-600" aria-hidden="true">*</span></label>
+          <label for="nameInput" class="block font-medium text-gray-950">Nombre completo <span class="text-red-600" aria-hidden="true">*</span></label>
           <input pInputText type="text" id="nameInput" formControlName="name" class="mt-2 w-full" placeholder="Nombre y apellidos" autocomplete="name" [invalid]="isFieldInvalid('name')" />
 
           @for (failure of failures().getFailures('name'); track failure) {
@@ -42,7 +42,7 @@
         </div>
 
         <div>
-          <label for="emailInput" class="block text-sm font-medium text-gray-900">Correo electrónico <span class="text-red-600" aria-hidden="true">*</span></label>
+          <label for="emailInput" class="block font-medium text-gray-950">Correo electrónico <span class="text-red-600" aria-hidden="true">*</span></label>
           <input pInputText type="email" id="emailInput" formControlName="email" class="mt-2 w-full" placeholder="nombre@ejemplo.com" autocomplete="email" [invalid]="isFieldInvalid('email')" />
 
           @if (create()) {
@@ -66,9 +66,10 @@
         <span class="shrink-0 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-medium text-blue-700">{{ roles.length }} {{ roles.length === 1 ? 'seleccionado' : 'seleccionados' }}</span>
       </div>
 
-      <div class="relative mt-4">
+      <label for="roleFilterInput" class="mt-4 block font-medium text-gray-950">Buscar roles</label>
+      <div class="relative mt-2">
         <i class="pi pi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
-        <input type="search" class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Buscar roles..." aria-label="Buscar roles" [value]="roleFilter" (input)="roleFilter = $any($event.target).value" />
+        <input type="search" id="roleFilterInput" class="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-3 text-sm outline-none transition-colors focus:border-blue-500 focus:ring-2 focus:ring-blue-100" placeholder="Buscar roles..." aria-label="Buscar roles" [value]="roleFilter" (input)="roleFilter = $any($event.target).value" />
       </div>
 
       <div class="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -112,7 +113,7 @@
         }
 
         <div class="mt-4">
-          <label class="mb-2 block text-sm font-medium text-gray-900">{{ selectedMember.number > 0 ? 'Cambiar socio' : 'Vincular socio' }}</label>
+          <label class="block font-medium text-gray-950">{{ selectedMember.number > 0 ? 'Cambiar socio' : 'Vincular socio' }}</label>
           <assoc-member-search [member]="selectedMember" [members]="members()" (selectMember)="onSelectMember($event)" (searchMember)="searchMember.emit($event)" />
           <p class="mt-1.5 text-xs text-gray-500">{{ selectedMember.number > 0 ? 'Selecciona otro socio para sustituir la vinculación actual.' : 'Busca por nombre o número de socio.' }}</p>
         </div>

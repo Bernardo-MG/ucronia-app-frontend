@@ -7,12 +7,11 @@ import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-book-lending-form',
-  imports: [FormsModule, ReactiveFormsModule, FloatLabelModule, DatePickerModule, MessageModule, ButtonModule, MemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, DatePickerModule, MessageModule, ButtonModule, MemberSearch],
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {

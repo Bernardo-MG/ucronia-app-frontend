@@ -1,15 +1,16 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0">
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
   <!-- Name -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
+  <div class="space-y-2">
+    <label for="nameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+
     <input pInputText type="text" id="nameInput" formControlName="name" class="w-full min-w-0" />
-    <label for="nameInput">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('name'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
+    <div>
+      @for (failure of failures().getFailures('name'); track failure) {
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
+      }
+    </div>
   </div>
   <!-- Save button -->
   <div class="mt-4 w-full min-w-0">

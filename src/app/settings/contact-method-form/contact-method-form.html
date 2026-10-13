@@ -1,18 +1,9 @@
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <!-- Name -->
-  <label for="nameInput" class="mb-2 block font-medium">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
-  <p-inputgroup class="mb-2 d-flex">
-    <p-inputgroup-addon>
-      <i class="pi pi-phone"></i>
-    </p-inputgroup-addon>
-    <input pInputText type="text" id="nameInput" formControlName="name" [invalid]="isFieldInvalid('name')" maxlength="50"
-      class="w-100" placeholder="Nombre" />
-  </p-inputgroup>
-  <div class="mb-2">
+<form class="space-y-5" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+  <div>
+    <label for="nameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+    <input pInputText id="nameInput" type="text" formControlName="name" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name')" />
     @for (failure of failures().getFailures('name'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
+      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
   </div>
   <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
