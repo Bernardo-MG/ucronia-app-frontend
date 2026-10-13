@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
+import { settingsPermissions } from '@app/settings/settings-permissions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { SecurityPermissions } from '@bernardo-mg/security';
-import { UcroniaPermissions } from '@ucronia/auth';
 
 /**
  * Service responsible for managing layout-related functionality, such as retrieving menu options.
@@ -44,7 +44,7 @@ export class LayoutService {
   }
 
   private loadPermissions() {
-    this.showSettingsLinkFlag = this.authService.hasPermission(UcroniaPermissions.associationSettings.read);
+    this.showSettingsLinkFlag = this.authService.hasAnyPermission(settingsPermissions);
     this.showSecurityLinkFlag = this.authService.hasAnyPermission([SecurityPermissions.role.read, SecurityPermissions.user.read, SecurityPermissions.userToken.read, SecurityPermissions.loginRegister.read]);
   }
 

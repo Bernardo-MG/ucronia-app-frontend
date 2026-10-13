@@ -13,11 +13,7 @@ interface MenuSection {
 
 @Component({
   selector: 'assoc-settings-layout',
-  imports: [
-    RouterModule,
-    CardModule,
-    RippleModule
-  ],
+  imports: [RouterModule, CardModule, RippleModule],
   templateUrl: './settings-layout.html',
   styleUrl: './settings-layout.scss'
 })
@@ -32,16 +28,18 @@ export class SettingsLayout {
     const libraryItems = this.libraryItems(authService);
 
     this.menuSections = [
-      {
-        label: 'Configuración',
-        items: [
-          {
-            label: 'Propiedades',
-            icon: 'pi pi-sliders-h',
-            routerLink: 'properties'
-          }
-        ]
-      },
+      ...(authService.hasPermission(UcroniaPermissions.associationSettings.read)
+        ? [{
+          label: 'Configuración',
+          items: [
+            {
+              label: 'Propiedades',
+              icon: 'pi pi-sliders-h',
+              routerLink: 'properties'
+            }
+          ]
+        }]
+        : []),
       ...(catalogItems.length > 0
         ? [{
           label: 'Catálogos',
