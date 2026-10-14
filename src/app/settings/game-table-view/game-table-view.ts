@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -15,7 +16,7 @@ import { GameTableList } from '../game-table-list/game-table-list';
 import { GameTableService } from '../game-table-service';
 
 @Component({
-  selector: 'assoc-game-table-view', imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, GameTableForm, GameTableList],
+  selector: 'assoc-game-table-view', imports: [DrawerHeader, DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, GameTableForm, GameTableList],
   templateUrl: './game-table-view.html'
 })
 export class GameTableView implements OnInit {
@@ -89,6 +90,7 @@ export class GameTableView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

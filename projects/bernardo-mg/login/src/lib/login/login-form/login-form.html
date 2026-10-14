@@ -1,10 +1,10 @@
-﻿<form class="space-y-5" [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+﻿<form class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
   <div>
     <label for="usernameInput" class="block font-medium text-gray-950">
       Usuario o correo electrónico <span class="text-red-600" aria-hidden="true">*</span>
     </label>
 
-    <p-iconfield class="block w-full">
+    <p-iconfield class="mt-2 block w-full">
       <p-inputicon class="pi pi-envelope" />
 
       <input pInputText id="usernameInput" type="text" formControlName="username" autocomplete="username"
@@ -23,7 +23,7 @@
       Contraseña <span class="text-red-600" aria-hidden="true">*</span>
     </label>
 
-    <div class="relative">
+    <div class="relative mt-2">
       <p-iconfield class="block w-full">
         <p-inputicon class="pi pi-lock" />
 

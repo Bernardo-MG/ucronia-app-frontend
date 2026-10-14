@@ -5,7 +5,7 @@
       <p class="mt-1 text-sm text-gray-500">Organiza y publica las próximas partidas de la asociación</p>
     </div>
     @if (permissions.create) {
-      <p-button label="Nueva partida" icon="pi pi-plus" (click)="dialog = Dialog.CREATE"
+      <p-button type="button" label="Nueva partida" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE"
         [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
@@ -74,18 +74,10 @@
   @switch (dialog) {
     @case (Dialog.INFO) {
       <ng-template #header>
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <i class="pi pi-calendar" aria-hidden="true"></i>
-          </span>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-950">{{ selectedData.title }}</h2>
-            <p class="mt-0.5 text-sm font-normal text-gray-500">Partida programada #{{ selectedData.number }}</p>
-          </div>
-        </div>
+        <shared-drawer-header title="{{ selectedData.title }}" icon="pi pi-calendar" subtitle="Partida programada #{{ selectedData.number }}" />
       </ng-template>
 
-      <div class="w-full px-2 py-4 sm:px-4">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <assoc-scheduled-game-info [data]="selectedData" [master]="selectedMaster" [table]="selectedTable"
           [loading]="status.loading" />
       </div>
@@ -93,26 +85,18 @@
       <ng-template #footer>
         <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
           editLabel="Editar partida" (delete)="onDelete($event)" (edit)="onShowEdit()">
-          <p-button drawerActionsEnd label="Publicar" icon="pi pi-send" severity="success" styleClass="h-11 rounded-lg px-4"
-            [disabled]="status.loading" (click)="onPublish($event)" />
+          <p-button type="button" drawerActionsEnd label="Publicar" icon="pi pi-send" severity="success" styleClass="h-11 rounded-lg px-4"
+            [disabled]="status.loading" (onClick)="onPublish($event)" />
         </shared-drawer-actions>
       </ng-template>
     }
 
     @case (Dialog.CREATE) {
       <ng-template #header>
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <i class="pi pi-calendar" aria-hidden="true"></i>
-          </span>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-950">Nueva partida</h2>
-            <p class="mt-0.5 text-sm font-normal text-gray-500">Programa una nueva sesión para la asociación</p>
-          </div>
-        </div>
+        <shared-drawer-header title="Nueva partida" icon="pi pi-calendar" subtitle="Programa una nueva sesión para la asociación" />
       </ng-template>
 
-      <div class="w-full px-2 py-4 sm:px-4">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" [members]="members"
           [tables]="tables"
           (save)="onCreate($event)"
@@ -125,24 +109,16 @@
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocScheduledGameForm.saveEnabled"
           [loading]="fieldsAssocScheduledGameForm.loading()"
-          (cancelForm)="dialog = Dialog.NONE" />
+          (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
 
     @case (Dialog.EDIT) {
       <ng-template #header>
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <i class="pi pi-pencil" aria-hidden="true"></i>
-          </span>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-950">Editar partida</h2>
-            <p class="mt-0.5 text-sm font-normal text-gray-500">{{ selectedData.title }}</p>
-          </div>
-        </div>
+        <shared-drawer-header title="Editar partida" icon="pi pi-pencil" subtitle="{{ selectedData.title }}" />
       </ng-template>
 
-      <div class="w-full px-2 py-4 sm:px-4">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [members]="members"
           [tables]="tables"
           [selectedMaster]="selectedMaster" [failures]="failures" (save)="onUpdate($event)"
@@ -155,7 +131,7 @@
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocScheduledGameForm.saveEnabled"
           [loading]="fieldsAssocScheduledGameForm.loading()"
-          (cancelForm)="dialog = Dialog.INFO" />
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
     }
   }

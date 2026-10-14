@@ -4,14 +4,13 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { GameTable } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-game-table-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule, TextareaModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, TextareaModule],
   templateUrl: './game-table-form.html'
 })
 export class GameTableForm implements OnChanges {
@@ -25,6 +24,8 @@ export class GameTableForm implements OnChanges {
   @Input() public set data(value: GameTable) {
     this.form.patchValue(value);
   }
+
+  public isEdit = false;
 
   public readonly save = output<GameTable>();
 
@@ -45,8 +46,10 @@ export class GameTableForm implements OnChanges {
     if (loading) this.formStatus.loading = this.loading();
   }
 
-  public submit(): void {
-    if (this.formStatus.saveEnabled) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
   }

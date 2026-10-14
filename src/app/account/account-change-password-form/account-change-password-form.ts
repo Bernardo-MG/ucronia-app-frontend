@@ -1,15 +1,15 @@
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PasswordChange } from '@bernardo-mg/security';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'account-change-password-form',
-  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './account-change-password-form.html'
 })
 export class AccountChangePasswordForm implements OnChanges {
@@ -34,6 +34,10 @@ export class AccountChangePasswordForm implements OnChanges {
       ? null
       : { passwordsMismatch: true };
   };
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     const formBuilder = inject(FormBuilder);
@@ -61,17 +65,15 @@ export class AccountChangePasswordForm implements OnChanges {
   public onSave(): void {
     this.form.markAllAsTouched();
 
-    if (this.form.invalid || !this.formStatus.saveEnabled) {
-      return;
+    if (this.saveEnabled) {
+      const value = this.form.getRawValue();
+      const change = new PasswordChange();
+
+      change.oldPassword = value.oldPassword;
+      change.newPassword = value.newPassword;
+
+      this.save.emit(change);
     }
-
-    const value = this.form.getRawValue();
-    const change = new PasswordChange();
-
-    change.oldPassword = value.oldPassword;
-    change.newPassword = value.newPassword;
-
-    this.save.emit(change);
   }
 
   public isFieldInvalid(property: string): boolean {

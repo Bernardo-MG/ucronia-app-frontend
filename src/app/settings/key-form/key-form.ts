@@ -1,10 +1,9 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Key } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
@@ -13,9 +12,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 @Component({
   selector: 'assoc-key-form',
   imports: [DrawerFormActions,
-    FormsModule,
     ReactiveFormsModule,
-    ButtonModule,
     InputTextModule,
     InputNumberModule,
     ToggleSwitchModule,
@@ -55,7 +52,7 @@ export class KeyForm implements OnChanges {
 
     this.form = fb.group({
       number: [null],
-      available: [false],
+      available: [true],
       description: ['']
     });
 
@@ -68,8 +65,10 @@ export class KeyForm implements OnChanges {
     }
   }
 
-  public submit() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
   }
@@ -79,6 +78,6 @@ export class KeyForm implements OnChanges {
   }
 
   public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
+    return this.form.valid && !this.loading() && (!this.isEdit || this.form.dirty);
   }
 }

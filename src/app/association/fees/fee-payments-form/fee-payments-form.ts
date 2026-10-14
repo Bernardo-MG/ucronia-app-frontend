@@ -1,5 +1,5 @@
-import { Component, inject, input, output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -14,10 +14,10 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
-export class FeePaymentsForm {
+export class FeePaymentsForm implements OnChanges {
 
   private fb = inject(FormBuilder);
 
@@ -52,6 +52,12 @@ export class FeePaymentsForm {
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
+
+  public ngOnChanges({ loading }: SimpleChanges): void {
+    if (loading) {
+      this.formStatus.loading = this.loading();
+    }
   }
 
   public onSelectMember(member: Profile) {
@@ -91,8 +97,10 @@ export class FeePaymentsForm {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
   }

@@ -4,7 +4,6 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Asset, AssetFolder } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -18,7 +17,7 @@ export interface ImageFormData {
 
 @Component({
   selector: 'assoc-image-form',
-  imports: [DrawerFormActions, ButtonModule, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  imports: [DrawerFormActions, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
   templateUrl: './image-form.html'
 })
 export class ImageForm implements OnChanges {
@@ -63,8 +62,11 @@ export class ImageForm implements OnChanges {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled || (!this.data() && !this.file)) return;
-    this.save.emit({ image: Object.assign(new Asset(), this.form.value), file: this.file });
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      this.save.emit({ image: Object.assign(new Asset(), this.form.value), file: this.file });
+    }
   }
 
   public isFieldInvalid(property: string): boolean {

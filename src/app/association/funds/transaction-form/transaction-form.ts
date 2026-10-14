@@ -1,10 +1,9 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Transaction } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageModule } from 'primeng/message';
@@ -12,7 +11,7 @@ import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-transaction-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule],
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm implements OnChanges {
@@ -70,14 +69,13 @@ export class TransactionForm implements OnChanges {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+    if (this.saveEnabled) {
       const { type, ...transaction } = this.form.value;
-
       transaction.amount = type === TransactionType.EXPENSE
         ? -Math.abs(transaction.amount)
         : Math.abs(transaction.amount);
-
       this.save.emit(transaction);
     }
   }

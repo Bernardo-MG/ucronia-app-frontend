@@ -1,4 +1,4 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="space-y-5">
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
   <!-- Password -->
   <div class="space-y-2">
     <label for="passwordInput" class="block font-medium text-gray-950">Contraseña <span class="text-red-600" aria-hidden="true">*</span></label>
@@ -25,7 +25,7 @@
   }
   <!-- Submit button -->
   <div class="flex gap-3">
-    <p-button type="submit" severity="secondary" name="Activar" [loading]="loading()" [disabled]="!saveEnabled"
-    [attr.aria-disabled]="!saveEnabled">Activar</p-button>
+    <shared-drawer-form-actions submitLabel="Activar cuenta" submitIcon="pi pi-check" [showCancel]="false"
+      [disabled]="!saveEnabled" [loading]="loading()" />
   </div>
 </form>

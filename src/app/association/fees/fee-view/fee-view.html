@@ -8,7 +8,7 @@
     </div>
 
     @if (permissions.create) {
-      <p-button label="Nueva cuota" icon="pi pi-plus" (click)="feeCreationMenu.toggle($event)"
+      <p-button type="button" label="Nueva cuota" icon="pi pi-plus" (onClick)="feeCreationMenu.toggle($event)"
         [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
@@ -66,49 +66,24 @@
 
       @case(Dialog.INFO) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-credit-card" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Detalle de cuota</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">{{ selectedData.month | date:'MMMM y' }}</p>
-            </div>
-          </div>
-        </ng-template>
+        <shared-drawer-header title="Detalle de cuota" icon="pi pi-credit-card" subtitle="{{ selectedData.month | date:'MMMM y' }}" />
+      </ng-template>
         <div class="w-full space-y-4 px-2 py-4 sm:px-4">
           <assoc-fee-info [data]="selectedData" [loading]="status.loading" />
         </div>
         <ng-template #footer>
         <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
           [editLabel]="selectedData.paid ? 'Editar cuota' : 'Pagar'"
-          [editIcon]="selectedData.paid ? 'pi pi-pencil' : 'pi pi-euro'" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDITION" />
+          [editIcon]="selectedData.paid ? 'pi pi-pencil' : 'pi pi-euro'" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDIT" />
       </ng-template>
       }
 
       @case (Dialog.CREATE) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span
-              class="flex size-10 shrink-0 items-center justify-center
-                    rounded-full bg-blue-100 text-blue-700"
-            >
-              <i class="pi pi-credit-card" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Crear cuota" icon="pi pi-credit-card" subtitle="Registra una cuota pendiente para un socio" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">
-                Crear cuota
-              </h2>
-
-              <p class="mt-0.5 text-sm font-normal text-gray-500">
-                Registra una cuota pendiente para un socio
-              </p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <assoc-fee-creation-form #fieldsAssocFeeCreationForm formId="fee-view-create" [showActions]="false"
             [loading]="status.loading"
             [failures]="failures"
@@ -125,23 +100,15 @@
             submitIcon="pi pi-plus"
             [disabled]="!fieldsAssocFeeCreationForm.saveEnabled"
             [loading]="fieldsAssocFeeCreationForm.loading()"
-            (cancelForm)="dialog = Dialog.NONE" />
+            (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
 
       @case(Dialog.PAY) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-green-100 text-green-700">
-              <i class="pi pi-euro" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Registrar pago</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Marca una o varias cuotas como pagadas</p>
-            </div>
-          </div>
-        </ng-template>
-        <div class="w-full px-2 py-4 sm:px-4">
+        <shared-drawer-header title="Registrar pago" icon="pi pi-euro" tone="green" subtitle="Marca una o varias cuotas como pagadas" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <assoc-fee-payments-form #fieldsAssocFeePaymentsForm formId="fee-view-pay" [showActions]="false" [loading]="status.loading" [failures]="failures" [members]="members"
             (save)="onPay($event)" (searchMember)="onSearchMembers($event)" />
         </div>
@@ -152,25 +119,15 @@
             submitIcon="pi pi-check"
             [disabled]="!fieldsAssocFeePaymentsForm.saveEnabled"
             [loading]="fieldsAssocFeePaymentsForm.loading()"
-            (cancelForm)="dialog = Dialog.NONE" />
+            (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
 
-      @case(Dialog.EDITION) {
+      @case(Dialog.EDIT) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-pencil" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Editar cuota</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">
-                {{ selectedData.month | date:'MMMM y' }} · {{ selectedData.member.name.fullName }}
-              </p>
-            </div>
-          </div>
-        </ng-template>
-        <div class="w-full px-2 py-4 sm:px-4">
+        <shared-drawer-header title="Editar cuota" icon="pi pi-pencil" subtitle="{{ selectedData.month | date:'MMMM y' }} · {{ selectedData.member.name.fullName }}" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <assoc-fee-edition-form #fieldsAssocFeeEditionForm formId="fee-view-edition" [showActions]="false" [loading]="status.loading" [data]="selectedData" [failures]="failures"
             (save)="onUpdate($event)" />
         </div>
@@ -181,7 +138,7 @@
             submitIcon="pi pi-check"
             [disabled]="!fieldsAssocFeeEditionForm.saveEnabled"
             [loading]="fieldsAssocFeeEditionForm.loading()"
-            (cancelForm)="dialog = Dialog.INFO" />
+            (cancelForm)="onCancelEdit()" />
         </ng-template>
       }
 

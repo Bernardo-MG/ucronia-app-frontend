@@ -1,4 +1,4 @@
-<form [attr.id]="formId()" class="flex flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-5">
     @if (!create()) {
       <section class="rounded-xl border border-gray-200 bg-gray-50 px-4 py-3">
@@ -113,8 +113,8 @@
         }
 
         <div class="mt-4">
-          <label class="block font-medium text-gray-950">{{ selectedMember.number > 0 ? 'Cambiar socio' : 'Vincular socio' }}</label>
-          <assoc-member-search [member]="selectedMember" [members]="members()" (selectMember)="onSelectMember($event)" (searchMember)="searchMember.emit($event)" />
+          <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">{{ selectedMember.number > 0 ? 'Cambiar socio' : 'Vincular socio' }}</label>
+          <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [member]="selectedMember" [members]="members()" (selectMember)="onSelectMember($event)" (searchMember)="searchMember.emit($event)" />
           <p class="mt-1.5 text-xs text-gray-500">{{ selectedMember.number > 0 ? 'Selecciona otro socio para sustituir la vinculación actual.' : 'Busca por nombre o número de socio.' }}</p>
         </div>
       </section>

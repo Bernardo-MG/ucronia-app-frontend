@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -20,7 +21,7 @@ import { FileService } from '../file-service';
 
 @Component({
   selector: 'assoc-file-view',
-  imports: [DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, FormsModule, FileForm, FileInfo, FileList, InputTextModule],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, FormsModule, FileForm, FileInfo, FileList, InputTextModule],
   templateUrl: './file-view.html'
 })
 export class FileView implements OnInit {
@@ -180,8 +181,16 @@ export class FileView implements OnInit {
     });
   }
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) this.dialog = Dialog.NONE;
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
   }
 
   private call(action: () => Observable<Asset>): void {

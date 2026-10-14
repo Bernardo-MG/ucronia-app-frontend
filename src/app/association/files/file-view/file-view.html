@@ -4,9 +4,9 @@
       <p class="mt-1 text-sm text-gray-500">Gestiona los documentos de la asociación</p></div>
     <div class="flex flex-wrap gap-2">
       @if (permissions.create) {
-        <p-button label="Nueva carpeta" icon="pi pi-folder-plus" severity="secondary" [outlined]="true"
-          (click)="showCreateFolder()" />
-        <p-button label="Nuevo archivo" icon="pi pi-plus" (click)="dialog = Dialog.CREATE" />
+        <p-button type="button" label="Nueva carpeta" icon="pi pi-folder-plus" severity="secondary" [outlined]="true"
+          (onClick)="showCreateFolder()" />
+        <p-button type="button" label="Nuevo archivo" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE" />
       }
     </div>
   </header>
@@ -31,10 +31,10 @@
       @if (currentFolderNumber !== null && (permissions.edit || permissions.delete)) {
       <div class="flex shrink-0 gap-1">
         @if (permissions.edit) {
-          <p-button label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text (click)="showEditFolder()" />
+          <p-button type="button" label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text (onClick)="showEditFolder()" />
         }
         @if (permissions.delete) {
-          <p-button label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
+          <p-button type="button" label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
             [disabled]="status.loading || data.totalElements > 0 || childFolders.length > 0" (click)="onDeleteFolder($event)" />
         }
       </div>
@@ -79,9 +79,10 @@
   position="right" [style]="{ width: 'min(44rem, 100vw)' }">
   @switch (dialog) {
     @case (Dialog.INFO) {
-      <ng-template #header><div><span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-        Archivo #{{ selectedData.number }}</span><h2 class="mt-1 text-xl font-semibold">{{ selectedData.name }}</h2></div></ng-template>
-      <div class="w-full p-4"><assoc-file-info [data]="selectedData" [loading]="status.loading"
+      <ng-template #header>
+        <shared-drawer-header title="{{ selectedData.name }}" icon="pi pi-file" subtitle="Archivo #{{ selectedData.number }}" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-info [data]="selectedData" [loading]="status.loading"
         [source]="contentUrl(selectedData.number)" (download)="download($event)" /></div>
       <ng-template #footer>
         <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
@@ -89,8 +90,10 @@
       </ng-template>
     }
     @case (Dialog.CREATE) {
-      <ng-template #header><h2 class="text-xl font-semibold">Nuevo archivo</h2></ng-template>
-      <div class="w-full p-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures"
+      <ng-template #header>
+        <shared-drawer-header title="Nuevo archivo" icon="pi pi-file" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures"
         (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
@@ -100,13 +103,14 @@
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocFileForm.saveEnabled"
           [loading]="fieldsAssocFileForm.loading()"
-          (cancelForm)="dialog = Dialog.NONE" />
+          (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
     @case (Dialog.EDIT) {
-      <ng-template #header><div><h2 class="text-xl font-semibold">Editar archivo</h2>
-        <p class="mt-1 text-sm text-gray-500">Archivo #{{ selectedData.number }} · {{ selectedData.name }}</p></div></ng-template>
-      <div class="w-full p-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-edit" [showActions]="false" [data]="selectedData" [folders]="folders" [loading]="status.loading"
+      <ng-template #header>
+        <shared-drawer-header title="Editar archivo" icon="pi pi-pencil" subtitle="Archivo #{{ selectedData.number }} · {{ selectedData.name }}" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-edit" [showActions]="false" [data]="selectedData" [folders]="folders" [loading]="status.loading"
         [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
@@ -116,12 +120,14 @@
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocFileForm.saveEnabled"
           [loading]="fieldsAssocFileForm.loading()"
-          (cancelForm)="dialog = Dialog.INFO" />
+          (cancelForm)="onCancelEdit()" />
       </ng-template>
     }
     @case (Dialog.CREATE_FOLDER) {
-      <ng-template #header><h2 class="text-xl font-semibold">Nueva carpeta</h2></ng-template>
-      <form id="file-create_folder" class="w-full p-4" (ngSubmit)="createFolder()">
+      <ng-template #header>
+        <shared-drawer-header title="Nueva carpeta" icon="pi pi-folder" />
+      </ng-template>
+      <form id="file-create_folder" class="w-full min-w-0 px-2 py-4 sm:px-4" (ngSubmit)="createFolder()">
         <label for="folderName" class="mb-2 block font-semibold text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
         <input pInputText id="folderName" name="folderName" [(ngModel)]="folderName" maxlength="100" class="w-full" />
       </form>
@@ -132,12 +138,14 @@
           submitIcon="pi pi-plus"
           [disabled]="!folderName.trim()"
           [loading]="status.loading"
-          (cancelForm)="dialog = Dialog.NONE" />
+          (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
     @case (Dialog.EDIT_FOLDER) {
-      <ng-template #header><h2 class="text-xl font-semibold">Renombrar carpeta</h2></ng-template>
-      <form id="file-edit_folder" class="w-full p-4" (ngSubmit)="updateFolder()">
+      <ng-template #header>
+        <shared-drawer-header title="Renombrar carpeta" icon="pi pi-pencil" />
+      </ng-template>
+      <form id="file-edit_folder" class="w-full min-w-0 px-2 py-4 sm:px-4" (ngSubmit)="updateFolder()">
         <label for="folderEditName" class="mb-2 block font-semibold text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
         <input pInputText id="folderEditName" name="folderName" [(ngModel)]="folderName" maxlength="100" class="w-full" />
       </form>
@@ -148,7 +156,7 @@
           submitIcon="pi pi-check"
           [disabled]="!folderName.trim()"
           [loading]="status.loading"
-          (cancelForm)="dialog = Dialog.NONE" />
+          (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
   }

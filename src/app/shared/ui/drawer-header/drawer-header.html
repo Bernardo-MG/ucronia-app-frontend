@@ -1,0 +1,13 @@
+<div class="flex items-center gap-3">
+  <span class="flex size-10 shrink-0 items-center justify-center rounded-full"
+    [class.bg-blue-100]="tone() === 'blue'" [class.text-blue-700]="tone() === 'blue'"
+    [class.bg-green-100]="tone() === 'green'" [class.text-green-700]="tone() === 'green'">
+    <i [class]="icon()" aria-hidden="true"></i>
+  </span>
+  <div class="min-w-0">
+    <h2 class="break-words text-xl font-semibold text-gray-950">{{ title() }}</h2>
+    @if (subtitle()) {
+      <p class="mt-0.5 break-words text-sm font-normal text-gray-500">{{ subtitle() }}</p>
+    }
+  </div>
+</div>

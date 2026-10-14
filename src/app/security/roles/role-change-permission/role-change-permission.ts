@@ -108,7 +108,9 @@ export class RoleChangePermission implements OnChanges {
   }
 
   public onSave(): void {
-    this.save.emit(this.selected);
+    if (this.saveEnabled) {
+      this.save.emit(this.selected);
+    }
   }
 
   private permissionKey(permission: ResourcePermission): string {

@@ -1,5 +1,5 @@
-<form [attr.id]="formId()" class="space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <section formGroupName="name" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <section formGroupName="name" class="grid grid-cols-1 gap-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:grid-cols-2">
   <div>
     <label for="firstNameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
     <input pInputText id="firstNameInput" formControlName="firstName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.firstName')" />

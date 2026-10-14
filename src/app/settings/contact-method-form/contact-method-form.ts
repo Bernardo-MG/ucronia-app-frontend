@@ -1,16 +1,15 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-contact-method-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './contact-method-form.html'
 })
 export class ContactMethodForm implements OnChanges {
@@ -25,7 +24,10 @@ export class ContactMethodForm implements OnChanges {
 
   @Input() public set data(value: ContactMethod) {
     this.form.patchValue(value as any);
+    this.isEdit = true;
   }
+
+  public isEdit = false;
 
   public readonly save = output<ContactMethod>();
 
@@ -49,8 +51,10 @@ export class ContactMethodForm implements OnChanges {
     }
   }
 
-  public submit() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }

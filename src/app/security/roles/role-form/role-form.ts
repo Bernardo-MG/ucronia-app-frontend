@@ -4,13 +4,12 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-role-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './role-form.html'
 })
 export class RoleForm implements OnChanges {
@@ -24,8 +23,11 @@ export class RoleForm implements OnChanges {
 
   @Input() public set data(value: Role) {
     this.form.patchValue(value as any);
+    this.isEdit = true;
     this.permissions = [...value.permissions];
   }
+
+  public isEdit = false;
 
   public readonly save = output<Role>();
   public readonly cancelEdition = output<void>();
@@ -106,9 +108,10 @@ export class RoleForm implements OnChanges {
   }
 
   public onSave(): void {
-    this.form.get('permissions')?.setValue(this.permissions);
+    this.form.markAllAsTouched();
 
-    if (this.form.valid) {
+    if (this.saveEnabled) {
+      this.form.get('permissions')?.setValue(this.permissions);
       this.save.emit(this.form.value);
     }
   }

@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
@@ -15,7 +16,7 @@ import { finalize, Observable } from 'rxjs';
 import { BookTypeService } from '../book-type-service';
 
 @Component({
-  imports: [DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, SettingsInfo],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, SettingsInfo],
   templateUrl: './library-book-type-list-view.html'
 })
 export class LibraryBookTypeListView implements OnInit {
@@ -28,8 +29,8 @@ export class LibraryBookTypeListView implements OnInit {
   public data = new Page<BookType>();
   public loading = false;
   public failures = new FailureStore();
-  public drawer = Drawer.NONE;
-  public readonly Drawer = Drawer;
+  public dialog = Dialog.NONE;
+  public readonly Dialog = Dialog;
   public selected = new BookType();
   private sort = new Sorting();
 
@@ -52,29 +53,29 @@ export class LibraryBookTypeListView implements OnInit {
 
   public onShowCreate(): void {
     this.selected = new BookType();
-    this.drawer = Drawer.CREATION;
+    this.dialog = Dialog.CREATE;
     this.failures.clear();
   }
 
   public onShowInfo(item: any): void {
     this.selected = item;
-    this.drawer = Drawer.INFO;
+    this.dialog = Dialog.INFO;
     this.failures.clear();
   }
 
   public onShowEdit(item: any): void {
     this.selected = item;
-    this.drawer = Drawer.EDITION;
+    this.dialog = Dialog.EDIT;
     this.failures.clear();
   }
 
   public onReject(): void {
-    this.drawer = Drawer.NONE;
+    this.dialog = Dialog.NONE;
     this.failures.clear();
   }
 
   public onCancelEdit(): void {
-    this.drawer = Drawer.INFO;
+    this.dialog = Dialog.INFO;
     this.failures.clear();
   }
 
@@ -102,7 +103,7 @@ export class LibraryBookTypeListView implements OnInit {
   }
 
   public onSave(data: any): void {
-    if (this.drawer === Drawer.CREATION) {
+    if (this.dialog === Dialog.CREATE) {
       this.onCreate(data);
     } else {
       this.onUpdate(data);
@@ -114,12 +115,12 @@ export class LibraryBookTypeListView implements OnInit {
     this.service.create(data)
       .pipe(finalize(() => {
         this.loading = false;
-        this.drawer = Drawer.NONE;
+        this.dialog = Dialog.NONE;
       }))
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.drawer = Drawer.NONE;
+          this.dialog = Dialog.NONE;
           this.load(this.data.page);
         },
         error: error => {
@@ -139,7 +140,7 @@ export class LibraryBookTypeListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.drawer = Drawer.NONE;
+          this.dialog = Dialog.NONE;
           this.load(this.data.page);
         },
         error: error => {
@@ -162,7 +163,8 @@ export class LibraryBookTypeListView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
-      this.drawer = Drawer.NONE;
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
     }
   }
 
@@ -187,7 +189,7 @@ export class LibraryBookTypeListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.drawer = Drawer.NONE;
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
         error: error => this.handleError(error)
@@ -210,9 +212,9 @@ interface Permissions {
   delete: boolean;
 }
 
-enum Drawer {
+enum Dialog {
   NONE = 'none',
   INFO = 'info',
-  CREATION = 'creation',
-  EDITION = 'edition'
+  CREATE = 'create',
+  EDIT = 'edit'
 }

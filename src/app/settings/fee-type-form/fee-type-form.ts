@@ -1,16 +1,16 @@
+import { InputNumberModule } from 'primeng/inputnumber';
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-type-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, MessageModule],
+  imports: [InputNumberModule, DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './fee-type-form.html'
 })
 export class FeeTypeForm implements OnChanges {
@@ -25,7 +25,10 @@ export class FeeTypeForm implements OnChanges {
 
   @Input() public set data(value: FeeType) {
     this.form.patchValue(value as any);
+    this.isEdit = true;
   }
+
+  public isEdit = false;
 
   public readonly save = output<FeeType>();
 
@@ -50,8 +53,9 @@ export class FeeTypeForm implements OnChanges {
     }
   }
 
-  public submit() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }

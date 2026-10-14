@@ -1,5 +1,5 @@
 import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -15,7 +15,7 @@ import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
+  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
     MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
@@ -48,6 +48,10 @@ export class ActivityForm implements OnChanges, OnInit {
     if (this.dates.length === 0) {
       this.addDate();
     }
+  }
+  
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
   }
 
   public readonly save = output<Activity>();
@@ -104,23 +108,22 @@ export class ActivityForm implements OnChanges, OnInit {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled) {
-      return;
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      const value = this.form.value;
+      this.save.emit({
+        number: value.number ?? 0,
+        title: value.title,
+        description: value.description ?? '',
+        location: value.location ?? '',
+        image: value.image ?? '',
+        dates: value.dates.map((date: any) => ({
+          start: this.mergeDayAndTime(date.day, date.startHour),
+          end: this.mergeDayAndTime(date.day, date.endHour)
+        }))
+      });
     }
-
-    const value = this.form.value;
-
-    this.save.emit({
-      number: value.number ?? 0,
-      title: value.title,
-      description: value.description ?? '',
-      location: value.location ?? '',
-      image: value.image ?? '',
-      dates: value.dates.map((date: any) => ({
-        start: this.mergeDayAndTime(date.day, date.startHour),
-        end: this.mergeDayAndTime(date.day, date.endHour)
-      }))
-    });
   }
 
   private mergeDayAndTime(day: Date, time: Date): Date {
@@ -142,9 +145,6 @@ export class ActivityForm implements OnChanges, OnInit {
     };
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 interface ActivityImageOption {

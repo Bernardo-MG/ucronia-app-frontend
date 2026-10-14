@@ -2,7 +2,7 @@
   <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Mesas de juego</h1>
     @if (permissions.create) {
-      <p-button label="Nueva mesa" icon="pi pi-plus" (click)="dialog = Dialog.CREATE" />
+      <p-button type="button" label="Nueva mesa" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE" />
     }
   </header>
   <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading"
@@ -14,17 +14,9 @@
   @switch (dialog) {
     @case (Dialog.INFO) {
       <ng-template #header>
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <i class="pi pi-table" aria-hidden="true"></i>
-          </span>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-950">Mesa de juego</h2>
-            <p class="mt-0.5 text-sm font-normal text-gray-500">Ajustes / Mesas de juego</p>
-          </div>
-        </div>
+        <shared-drawer-header title="Mesa de juego" icon="pi pi-table" subtitle="Ajustes / Mesas de juego" />
       </ng-template>
-      <div class="w-full px-2 py-4 sm:px-4">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <shared-settings-info [loading]="loading" category="Mesa de juego" icon="pi pi-table"
           [number]="selectedData.number" [title]="selectedData.name" [showDescription]="true" [description]="selectedData.description" />
       </div>
@@ -35,8 +27,12 @@
     }
 
     @case (Dialog.CREATE) {
-      <ng-template #header>Crear mesa de juego</ng-template>
-      <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      <ng-template #header>
+        <shared-drawer-header title="Crear mesa de juego" icon="pi pi-table" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
       <ng-template #footer>
         <shared-drawer-form-actions
           formId="game-table-view-create"
@@ -44,12 +40,16 @@
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocGameTableForm.saveEnabled"
           [loading]="fieldsAssocGameTableForm.loading()"
-          (cancelForm)="dialog = Dialog.NONE" />
+          (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
     @case (Dialog.EDIT) {
-      <ng-template #header>Editar mesa de juego</ng-template>
-      <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      <ng-template #header>
+        <shared-drawer-header title="Editar mesa de juego" icon="pi pi-pencil" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      </div>
       <ng-template #footer>
         <shared-drawer-form-actions
           formId="game-table-view-edit"

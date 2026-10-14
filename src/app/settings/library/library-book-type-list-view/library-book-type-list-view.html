@@ -2,29 +2,21 @@
   <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Tipo de libro</h1>
     @if (permissions.create) {
-      <p-button label="Nuevo tipo de libro" icon="pi pi-plus" (click)="onShowCreate()" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
+      <p-button type="button" label="Nuevo tipo de libro" icon="pi pi-plus" (onClick)="onShowCreate()" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
   <shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (sortChange)="onSort($event)"
     (pageChange)="load($event)"></shared-name-list>
 </div>
 
-<p-drawer [visible]="drawer !== Drawer.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
   position="right" [style]="{ width: 'min(44rem, 100vw)' }">
-  @switch (drawer) {
-    @case (Drawer.INFO) {
+  @switch (dialog) {
+    @case (Dialog.INFO) {
       <ng-template #header>
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <i class="pi pi-book" aria-hidden="true"></i>
-          </span>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-950">Tipo de libro</h2>
-            <p class="mt-0.5 text-sm font-normal text-gray-500">Ajustes / Biblioteca</p>
-          </div>
-        </div>
+        <shared-drawer-header title="Tipo de libro" icon="pi pi-book" subtitle="Ajustes / Biblioteca" />
       </ng-template>
-      <div class="w-full px-2 py-4 sm:px-4">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <shared-settings-info [loading]="loading" category="Tipo de libro" icon="pi pi-book"
           [number]="selected.number" [title]="selected.name" />
       </div>
@@ -33,17 +25,17 @@
           editLabel="Editar tipo" (delete)="onDelete($event)" (edit)="onShowEdit(selected)" />
       </ng-template>
     }
-    @case (Drawer.CREATION) {
+    @case (Dialog.CREATE) {
       <ng-template #header>
-        Crear tipo
+        <shared-drawer-header title="Crear tipo de libro" icon="pi pi-book" />
       </ng-template>
-      <div class="w-full">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <shared-name-form #fieldsSharedNameForm formId="library-book-type-list-view-creation" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
           formId="library-book-type-list-view-creation"
-          submitLabel="Crear"
+          submitLabel="Crear tipo de libro"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsSharedNameForm.saveEnabled"
           [loading]="fieldsSharedNameForm.loading()"
@@ -51,11 +43,11 @@
       </ng-template>
 
     }
-    @case (Drawer.EDITION) {
+    @case (Dialog.EDIT) {
       <ng-template #header>
-        Modificar tipo
+        <shared-drawer-header title="Editar tipo de libro" icon="pi pi-pencil" />
       </ng-template>
-      <div class="w-full">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <shared-name-form #fieldsSharedNameForm formId="library-book-type-list-view-edition" [showActions]="false" [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
       </div>
       <ng-template #footer>

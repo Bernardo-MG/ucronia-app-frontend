@@ -1,14 +1,14 @@
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
-import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'assoc-contact-settings-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule],
   templateUrl: './contact-settings-form.html'
 })
 export class ContactSettingsForm implements OnChanges {
@@ -62,8 +62,9 @@ export class ContactSettingsForm implements OnChanges {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+    if (this.saveEnabled) {
       const changedValues: any = {};
 
       Object.entries(this.form.controls).forEach(([key, control]) => {
@@ -76,6 +77,10 @@ export class ContactSettingsForm implements OnChanges {
         this.save.emit(changedValues);
       }
     }
+  }
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
   }
 
 }

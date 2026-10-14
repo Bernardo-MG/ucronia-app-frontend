@@ -175,13 +175,14 @@ export class ProfileEditionForm implements OnChanges {
     this.years.removeAt(index);
   }
 
-  public submit() {
-    if (this.formStatus.saveEnabled) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       const value: FullProfile = {
         ...this.form.value,
         types: [...this.selected]
       };
-
       this.save.emit(value);
     }
   }

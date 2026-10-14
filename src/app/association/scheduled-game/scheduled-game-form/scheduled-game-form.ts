@@ -93,15 +93,14 @@ export class ScheduledGameForm implements OnChanges {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled) {
-      return;
-    }
+    this.form.markAllAsTouched();
 
-    if (!this.recurring) {
-      this.form.get('recurrence.interval')?.setValue(0);
+    if (this.saveEnabled) {
+      if (!this.recurring) {
+        this.form.get('recurrence.interval')?.setValue(0);
+      }
+      this.save.emit(this.form.value);
     }
-
-    this.save.emit(this.form.value);
   }
 
   public onSelectMaster(member: Profile): void {

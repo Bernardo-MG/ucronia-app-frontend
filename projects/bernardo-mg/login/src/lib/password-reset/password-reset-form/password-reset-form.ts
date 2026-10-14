@@ -29,6 +29,10 @@ export class PasswordResetForm implements OnChanges {
 
   public form: FormGroup;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -54,8 +58,10 @@ export class PasswordResetForm implements OnChanges {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value.password);
     }

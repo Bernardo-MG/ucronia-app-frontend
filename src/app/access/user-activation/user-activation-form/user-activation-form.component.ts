@@ -1,3 +1,4 @@
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 
 import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -12,7 +13,7 @@ import { MessageModule } from 'primeng/message';
  */
 @Component({
   selector: 'access-user-activation-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationForm implements OnChanges {
@@ -88,7 +89,9 @@ export class UserActivationForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave() {
-    if (this.form.valid) {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value.password);
     }

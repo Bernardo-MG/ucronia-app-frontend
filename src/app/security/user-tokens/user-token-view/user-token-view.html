@@ -31,28 +31,18 @@
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              Token de usuario
-            </span>
-            <h2 class="mt-1 text-xl font-semibold">
-              {{ selectedData.name || selectedData.scope }}
-            </h2>
-            <span class="text-sm text-gray-500">
-              {{ selectedData.username }}
-            </span>
-          </div>
-        </ng-template>
+        <shared-drawer-header title="{{ selectedData.name || selectedData.scope }}" icon="pi pi-ticket" subtitle="Token de usuario" />
+      </ng-template>
 
-        <div class="w-full p-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <access-user-token-info [data]="selectedData" [loading]="loading" />
         </div>
 
         @if (editable && !selectedData.revoked && !selectedData.consumed) {
           <ng-template #footer>
             <shared-drawer-actions [showDelete]="false" [showEdit]="false" [loading]="loading">
-              <p-button drawerActionsEnd label="Extender expiración" icon="pi pi-calendar-plus"
-                styleClass="h-11 rounded-lg px-4" [disabled]="loading" (click)="onStartExtend(selectedData)" />
+              <p-button type="button" drawerActionsEnd label="Extender expiración" icon="pi pi-calendar-plus"
+                styleClass="h-11 rounded-lg px-4" [disabled]="loading" (onClick)="onStartExtend(selectedData)" />
             </shared-drawer-actions>
           </ng-template>
         }
@@ -60,15 +50,8 @@
 
       @case (Dialog.EXTEND) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">
-              {{ selectedData.username }}
-            </span>
-            <h2 class="mt-1 text-xl font-semibold">
-              Extender token
-            </h2>
-          </div>
-        </ng-template>
+        <shared-drawer-header title="Extender token" icon="pi pi-pencil" subtitle="{{ selectedData.username }}" />
+      </ng-template>
 
         <div class="w-full space-y-4 p-4">
           <p class="text-sm text-gray-500">
@@ -85,7 +68,7 @@
             submitIcon="pi pi-calendar-plus"
             [disabled]="!fieldsAccessUserTokenExtendForm.saveEnabled"
             [loading]="fieldsAccessUserTokenExtendForm.loading()"
-            (cancelForm)="dialog = Dialog.INFO" />
+            (cancelForm)="onCancelEdit()" />
         </ng-template>
 
       }

@@ -1,18 +1,17 @@
-import { Component, inject, input, Input, output } from '@angular/core';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-token-extend-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, DatePickerModule, ButtonModule, MessageModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, DatePickerModule, MessageModule],
   templateUrl: './user-token-extend-form.html'
 })
-export class UserTokenExtendForm {
+export class UserTokenExtendForm implements OnChanges {
 
   public readonly cancelEdition = output<void>();
 
@@ -44,8 +43,20 @@ export class UserTokenExtendForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onSave() {
-    if (this.form.valid) {
+  public ngOnChanges({ loading }: SimpleChanges): void {
+    if (loading) {
+      this.formStatus.loading = this.loading();
+    }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
+  }
+
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value.expirationDate as Date);
     }

@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -16,7 +17,7 @@ import { ContactMethodService } from '../contact-method-service';
 
 @Component({
   selector: 'assoc-contact-method-view',
-  imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-method-view.html'
 })
 export class ContactMethodView implements OnInit {
@@ -114,6 +115,7 @@ export class ContactMethodView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

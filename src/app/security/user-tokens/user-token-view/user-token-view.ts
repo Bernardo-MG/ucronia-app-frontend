@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -15,7 +16,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 
 @Component({
   selector: 'access-user-token-view',
-  imports: [DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
   templateUrl: './user-token-view.html'
 })
 export class UserTokenView implements OnInit {
@@ -93,8 +94,14 @@ export class UserTokenView implements OnInit {
       });
   }
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

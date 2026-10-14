@@ -1,4 +1,6 @@
-<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="submit()" novalidate class="space-y-5">
+<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
+  <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <h3 class="font-semibold text-gray-950">Tipo y estado</h3>
 
   <div class="flex flex-col gap-2">
     <p class="font-medium">Tipo</p>
@@ -23,14 +25,14 @@
       <label for="feeTypeInput" class="block font-medium text-gray-950">Tipo de cuota <span class="text-red-600" aria-hidden="true">*</span></label>
 
       <p-select inputId="feeTypeInput" [options]="feeTypes()" optionLabel="name" optionValue="number" formControlName="number"
-        placeholder="Selecciona un tipo" class="mt-2 w-full">
+        placeholder="Selecciona un tipo" class="w-full">
       </p-select>
     </div>
 
     <div class="mb-2 flex flex-col gap-2">
       <label for="keyInput" class="block font-medium text-gray-950">Llave</label>
       <p-select inputId="keyInput" [options]="keys()" optionLabel="number" optionValue="number" formControlName="key"
-        placeholder="Sin llave" class="mt-2 w-full" [showClear]="true" appendTo="body">
+        placeholder="Sin llave" class="w-full" [showClear]="true" appendTo="body">
         <ng-template let-key pTemplate="item">
           <div class="flex items-center gap-2">
             <span>#{{ key.number }} - {{ key.description }}</span>
@@ -74,7 +76,9 @@
     </div>
   }
 
-  <section formGroupName="name" class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+  </section>
+
+  <section formGroupName="name" class="grid grid-cols-1 gap-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:grid-cols-2">
   <div>
     <label for="firstNameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
     <input pInputText id="firstNameInput" formControlName="firstName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.firstName')" />
@@ -98,9 +102,11 @@
   </div>
   </section>
 
+  <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <h3 class="font-semibold text-gray-950">Datos personales</h3>
   <div>
     <label for="birthDateInput" class="block font-medium text-gray-950">Fecha de nacimiento</label>
-    <p-datepicker inputId="birthDateInput" formControlName="birthDate" dateFormat="yy-mm-dd" appendTo="body" [maxDate]="today" class="mt-2 w-full" [invalid]="isFieldInvalid('birthDate')" />
+    <p-datepicker inputId="birthDateInput" formControlName="birthDate" dateFormat="dd/mm/yy" appendTo="body" [maxDate]="today" class="mt-2 w-full" [invalid]="isFieldInvalid('birthDate')" />
     @for (failure of failures().getFailures('birthDate'); track failure) {
       <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
     }
@@ -130,12 +136,14 @@
     }
   </div>
 
+  </section>
+
   <!-- Contact channels -->
-  <div class="mb-2 space-y-3" formArrayName="contactChannels">
+  <div class="space-y-3 rounded-xl border border-gray-200 bg-white p-5 shadow-sm" formArrayName="contactChannels">
 
     <div class="flex items-center">
-      <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
-      <p-button icon="pi pi-plus-circle" (click)="addContactChannel()" aria-label="Añadir medio de contacto" rounded text />
+      <h3 class="font-semibold text-gray-950">Medios de contacto</h3>
+      <p-button type="button" icon="pi pi-plus" (onClick)="addContactChannel()" ariaLabel="Añadir medio de contacto" rounded text />
     </div>
 
     @for (channel of contactChannels.controls; track channel; let i = $index) {
@@ -155,29 +163,29 @@
         </div>
 
         <!-- Remove -->
-        <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeContactChannel(i)"></p-button>
+        <p-button icon="pi pi-trash" severity="danger" type="button" ariaLabel="Eliminar medio de contacto" (onClick)="removeContactChannel(i)" rounded text></p-button>
       </div>
     }
   </div>
 
   <!-- Games -->
   @if (isGuest) {
-    <div class="mb-2 space-y-3" formArrayName="games">
+    <div class="space-y-3 rounded-xl border border-gray-200 bg-white p-5 shadow-sm" formArrayName="games">
 
       <div class="flex items-center">
-        <h3 class="text-sm font-semibold text-gray-600">Partidas</h3>
-        <p-button icon="pi pi-plus-circle" (click)="addGame()" aria-label="Añadir partida" rounded text />
+        <h3 class="font-semibold text-gray-950">Partidas</h3>
+        <p-button type="button" icon="pi pi-plus" (onClick)="addGame()" ariaLabel="Añadir partida" rounded text />
       </div>
 
       @for (game of games.controls; track game; let i = $index) {
         <div class="flex items-end gap-3">
           <div class="min-w-0 flex-1">
             <label [for]="'guestGameInput' + i" class="block font-medium text-gray-950">Fecha</label>
-            <p-datepicker [inputId]="'guestGameInput' + i" [formControlName]="i" dateFormat="yy-mm-dd"
+            <p-datepicker [inputId]="'guestGameInput' + i" [formControlName]="i" dateFormat="dd/mm/yy"
               appendTo="body" [maxDate]="today" class="mt-2 w-full" />
           </div>
 
-          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeGame(i)"></p-button>
+          <p-button icon="pi pi-trash" severity="danger" type="button" ariaLabel="Eliminar partida" (onClick)="removeGame(i)" rounded text></p-button>
         </div>
       }
     </div>
@@ -185,11 +193,11 @@
 
   <!-- Years -->
   @if (isSponsor) {
-    <div class="mb-2 space-y-3" formArrayName="years">
+    <div class="space-y-3 rounded-xl border border-gray-200 bg-white p-5 shadow-sm" formArrayName="years">
 
       <div class="flex items-center">
-        <h3 class="text-sm font-semibold text-gray-600">Años de patrocinio</h3>
-        <p-button icon="pi pi-plus-circle" (click)="addYear()" aria-label="Añadir año de patrocinio" rounded text />
+        <h3 class="font-semibold text-gray-950">Años de patrocinio</h3>
+        <p-button type="button" icon="pi pi-plus" (onClick)="addYear()" ariaLabel="Añadir año de patrocinio" rounded text />
       </div>
 
       @for (year of years.controls; track year; let i = $index) {
@@ -199,7 +207,7 @@
             <input pInputText type="number" [id]="'sponsorYearInput' + i" [formControlName]="i" class="mt-2 w-full" />
           </div>
 
-          <p-button icon="pi pi-trash" severity="danger" type="button" (onClick)="removeYear(i)"></p-button>
+          <p-button icon="pi pi-trash" severity="danger" type="button" ariaLabel="Eliminar año de patrocinio" (onClick)="removeYear(i)" rounded text></p-button>
         </div>
       }
     </div>

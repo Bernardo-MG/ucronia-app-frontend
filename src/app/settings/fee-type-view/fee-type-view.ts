@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -16,7 +17,7 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-view',
-  imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {
@@ -114,6 +115,7 @@ export class FeeTypeView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

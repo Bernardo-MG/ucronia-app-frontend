@@ -11,7 +11,7 @@
     </div>
 
     @if (permissions.create) {
-      <p-button label="Invitar usuario" icon="pi pi-envelope" (click)="onStartInvitation()" />
+      <p-button type="button" label="Invitar usuario" icon="pi pi-envelope" (onClick)="onStartInvitation()" />
     }
   </header>
 
@@ -35,19 +35,10 @@
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-user" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="{{ selectedData.name || selectedData.username }}" icon="pi pi-user" subtitle="{{ selectedData.email }}" />
+      </ng-template>
 
-            <div class="min-w-0">
-              <h2 class="truncate text-xl font-semibold text-gray-950">{{ selectedData.name || selectedData.username }}</h2>
-              <p class="mt-0.5 truncate text-sm font-normal text-gray-500">{{ selectedData.email }}</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
         </div>
 
@@ -59,19 +50,10 @@
 
       @case (Dialog.INVITE) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-user-plus" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Invitar usuario" icon="pi pi-user-plus" subtitle="Crea el acceso y asigna sus roles iniciales" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Invitar usuario</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Crea el acceso y asigna sus roles iniciales</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <access-user-form #fieldsAccessUserForm formId="user-view-invite" [showActions]="false" [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
         </div>
         <ng-template #footer>
@@ -81,25 +63,16 @@
             submitIcon="pi pi-send"
             [disabled]="!fieldsAccessUserForm.saveEnabled"
             [loading]="fieldsAccessUserForm.loading()"
-            (cancelForm)="dialog = Dialog.NONE" />
+            (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
 
       @case (Dialog.EDIT) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-user-edit" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Editar usuario" icon="pi pi-pencil" subtitle="Actualiza sus datos, roles y vinculación con un socio" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Editar usuario</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Actualiza sus datos, roles y vinculación con un socio</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <access-user-form #fieldsAccessUserForm formId="user-view-edit" [showActions]="false" [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" />
         </div>
         <ng-template #footer>
@@ -109,7 +82,7 @@
             submitIcon="pi pi-check"
             [disabled]="!fieldsAccessUserForm.saveEnabled"
             [loading]="fieldsAccessUserForm.loading()"
-            (cancelForm)="dialog = Dialog.INFO" />
+            (cancelForm)="onCancelEdit()" />
         </ng-template>
       }
     }

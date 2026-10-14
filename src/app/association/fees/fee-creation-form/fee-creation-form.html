@@ -1,4 +1,4 @@
-<form [attr.id]="formId()" class="flex flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-5">
 
     <!-- Pending-payment notice -->
@@ -12,7 +12,7 @@
     <section class="space-y-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <!-- Member -->
       <div>
-        <label class="block font-medium text-gray-950">
+        <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">
           Socio
           <span class="text-red-600" aria-hidden="true">*</span>
         </label>
@@ -21,7 +21,7 @@
           Busca por nombre o número de socio
         </p>
 
-        <assoc-member-search [members]="members()" (selectMember)="onSelectMember($event)"
+        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
           (searchMember)="searchMember.emit($event)" />
 
         @if (isFieldInvalid('member')) {

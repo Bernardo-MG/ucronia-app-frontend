@@ -1,7 +1,7 @@
-<form [attr.id]="formId()" class="flex flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-6">
-    <div><label for="imageName" class="block font-medium text-gray-950">Nombre <span class="text-red-600">*</span></label>
-      <input pInputText id="imageName" formControlName="name" maxlength="100" class="w-full"
+    <div><label for="imageName" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+      <input pInputText id="imageName" formControlName="name" maxlength="100" class="mt-2 w-full"
         [invalid]="isFieldInvalid('name')" />
       @for (failure of failures().getFailures('name'); track failure) {
         <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
@@ -28,14 +28,14 @@
       <div>
         <label for="imageFolder" class="block font-medium text-gray-950">Carpeta</label>
         <p-select inputId="imageFolder" formControlName="folderNumber" [options]="folderOptions"
-          optionLabel="name" optionValue="number" appendTo="body" class="w-full" />
+          optionLabel="name" optionValue="number" appendTo="body" class="mt-2 w-full" />
         <p class="mt-1 text-xs text-gray-500">Selecciona dónde guardar la imagen.</p>
       </div>
     }
     <div><label for="imageFile" class="block font-medium text-gray-950">
-      {{ data() ? 'Sustituir archivo' : 'Archivo' }} @if (!data()) { <span class="text-red-600">*</span> }
+      {{ data() ? 'Sustituir archivo' : 'Archivo' }} @if (!data()) { <span class="text-red-600" aria-hidden="true">*</span> }
     </label>
-      <label for="imageFile" class="flex cursor-pointer flex-col items-center rounded-xl border border-dashed border-gray-300 p-8 text-center hover:bg-gray-50">
+      <label for="imageFile" class="mt-2 flex cursor-pointer flex-col items-center rounded-xl border border-dashed border-gray-300 p-8 text-center hover:bg-gray-50">
         <i class="pi pi-upload text-2xl text-primary" aria-hidden="true"></i>
         <span class="mt-2 font-medium text-gray-950">{{ file?.name || 'Selecciona una imagen' }}</span>
         <span class="mt-1 text-sm text-gray-500">PNG, JPG, WebP o GIF</span>

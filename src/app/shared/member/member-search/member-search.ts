@@ -12,6 +12,9 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 })
 export class MemberSearch {
 
+  public readonly inputId = input('memberSearchInput');
+  public readonly disabled = input(false);
+
   public readonly members = input<Profile[]>([]);
   public readonly member = input(new Profile());
 

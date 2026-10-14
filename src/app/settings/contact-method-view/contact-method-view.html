@@ -2,7 +2,7 @@
   <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Métodos de contacto</h1>
     @if (permissions.create) {
-      <p-button label="Nuevo método de contacto" icon="pi pi-plus" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
+      <p-button type="button" label="Nuevo método de contacto" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
 
@@ -19,17 +19,9 @@
   @switch (dialog) {
     @case (Dialog.INFO) {
       <ng-template #header>
-        <div class="flex items-center gap-3">
-          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-            <i class="pi pi-phone" aria-hidden="true"></i>
-          </span>
-          <div>
-            <h2 class="text-xl font-semibold text-gray-950">Método de contacto</h2>
-            <p class="mt-0.5 text-sm font-normal text-gray-500">Ajustes / Métodos de contacto</p>
-          </div>
-        </div>
+        <shared-drawer-header title="Método de contacto" icon="pi pi-phone" subtitle="Ajustes / Métodos de contacto" />
       </ng-template>
-      <div class="w-full px-2 py-4 sm:px-4">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <shared-settings-info [loading]="loading" category="Método de contacto" icon="pi pi-phone"
           [number]="selectedData.number" [title]="selectedData.name" />
       </div>
@@ -41,9 +33,9 @@
 
     @case (Dialog.CREATE) {
       <ng-template #header>
-        Crear método de contacto
+        <shared-drawer-header title="Crear método de contacto" icon="pi pi-phone" />
       </ng-template>
-      <div class="w-full">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
@@ -53,15 +45,15 @@
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocContactMethodForm.saveEnabled"
           [loading]="fieldsAssocContactMethodForm.loading()"
-          (cancelForm)="dialog = Dialog.NONE" />
+          (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
 
     @case (Dialog.EDIT) {
       <ng-template #header>
-        Editar método de contacto
+        <shared-drawer-header title="Editar método de contacto" icon="pi pi-pencil" />
       </ng-template>
-      <div class="w-full">
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
           (save)="onUpdate($event)" />
       </div>

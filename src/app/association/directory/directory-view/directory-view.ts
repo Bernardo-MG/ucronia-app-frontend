@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
@@ -34,7 +35,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 
 @Component({
   selector: 'assoc-directory-view',
-  imports: [DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
@@ -216,8 +217,14 @@ export class DirectoryView implements OnInit {
 
   // DIALOGS
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

@@ -1,16 +1,18 @@
-<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="onSave()" novalidate class="space-y-5">
-  <div class="space-y-2">
-    <label for="expirationDateInput" class="block font-medium text-gray-950">Fecha de expiración <span class="text-red-600" aria-hidden="true">*</span></label>
+<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
+  <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div class="space-y-2">
+      <label for="expirationDateInput" class="block font-medium text-gray-950">Fecha de expiración <span class="text-red-600" aria-hidden="true">*</span></label>
 
-    <p-datepicker inputId="expirationDateInput" [minDate]="today" formControlName="expirationDate" dateFormat="yy-mm-dd" appendTo="body" class="w-full" />
-    <div>
-      @for (failure of failures().getFailures('expirationDate'); track failure) {
-        <p-message severity="error" size="small" variant="simple">
-          {{failure.message}}
-        </p-message>
-      }
+      <p-datepicker inputId="expirationDateInput" [minDate]="today" formControlName="expirationDate" [invalid]="isFieldInvalid('expirationDate')" dateFormat="dd/mm/yy" appendTo="body" class="w-full" />
+      <div>
+        @for (failure of failures().getFailures('expirationDate'); track failure) {
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
+        }
+      </div>
     </div>
-  </div>
+  </section>
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
       [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />

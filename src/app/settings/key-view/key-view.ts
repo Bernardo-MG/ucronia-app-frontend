@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -16,7 +17,7 @@ import { KeyService } from '../key-service';
 
 @Component({
   selector: 'assoc-key-view',
-  imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, KeyList, KeyForm],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, KeyList, KeyForm],
   templateUrl: './key-view.html'
 })
 export class KeyView implements OnInit {
@@ -104,6 +105,7 @@ export class KeyView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

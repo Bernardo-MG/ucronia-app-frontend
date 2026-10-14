@@ -30,6 +30,8 @@ export class PasswordResetRequestForm {
    * Handler for the save event.
    */
   public onSave() {
+    this.form.markAllAsTouched();
+
     if (this.form.valid) {
       // Valid form, can emit data
       this.save.emit(this.form.value.email);

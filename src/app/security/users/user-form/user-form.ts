@@ -6,13 +6,12 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule, MemberSearch],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
@@ -85,9 +84,10 @@ export class UserForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave(): void {
-    this.form.get('roles')?.setValue(this.roles.map(role => role.name));
+    this.form.markAllAsTouched();
 
-    if (this.form.valid) {
+    if (this.saveEnabled) {
+      this.form.get('roles')?.setValue(this.roles.map(role => role.name));
       if (this.create()) {
         this.save.emit(this.form.value);
       } else {

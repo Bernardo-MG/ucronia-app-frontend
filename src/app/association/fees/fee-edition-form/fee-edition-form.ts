@@ -5,7 +5,6 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Fee } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -13,7 +12,7 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-edition-form',
-  imports: [DrawerFormActions, CurrencyPipe, DatePipe, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule],
+  imports: [DrawerFormActions, CurrencyPipe, DatePipe, ReactiveFormsModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './fee-edition-form.html'
 })
 export class FeeEditionForm implements OnChanges {
@@ -58,8 +57,10 @@ export class FeeEditionForm implements OnChanges {
     }
   }
 
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
   }

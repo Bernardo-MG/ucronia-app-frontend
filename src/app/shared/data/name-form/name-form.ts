@@ -1,16 +1,14 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { FeeCreation } from '@ucronia/api';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'shared-name-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './name-form.html'
 })
 export class NameForm implements OnChanges {
@@ -24,15 +22,13 @@ export class NameForm implements OnChanges {
 
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: any) {
+  @Input() public set data(value: NameFormData) {
     this.form.patchValue(value);
   }
 
-  public readonly save = output<FeeCreation>();
+  public readonly save = output<NameFormData>();
 
   public formStatus: FormStatus;
-
-  public memberName = "";
 
   public form: FormGroup;
 
@@ -56,8 +52,10 @@ export class NameForm implements OnChanges {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }
@@ -70,4 +68,9 @@ export class NameForm implements OnChanges {
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+}
+
+export interface NameFormData {
+  number?: number | null;
+  name: string;
 }

@@ -4,7 +4,6 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Language, Title } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -12,7 +11,7 @@ import { LibraryConfig } from '../library-config';
 
 @Component({
   selector: 'assoc-library-book-creation-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, SelectModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, SelectModule],
   templateUrl: './library-book-creation-form.html'
 })
 export class LibraryBookCreationForm implements OnChanges {
@@ -63,8 +62,10 @@ export class LibraryBookCreationForm implements OnChanges {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       this.save.emit({ book: this.form.value, kind: this.kind });
     }
   }

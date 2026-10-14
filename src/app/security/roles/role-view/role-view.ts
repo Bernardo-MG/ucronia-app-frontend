@@ -1,3 +1,4 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -17,7 +18,7 @@ import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [DrawerFormActions, DrawerActions,
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions,
     ButtonModule,
     DrawerModule,
     RoleForm,
@@ -166,8 +167,14 @@ export class RoleView implements OnInit {
       });
   }
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

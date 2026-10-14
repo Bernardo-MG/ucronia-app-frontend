@@ -5,7 +5,6 @@ import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore, Page } from '@bernardo-mg/request';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -17,7 +16,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-edition-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, ButtonModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './library-book-edition-form.html'
 })
 export class LibraryBookEditionForm implements OnChanges {
@@ -154,20 +153,18 @@ export class LibraryBookEditionForm implements OnChanges {
   }
 
   public onSave(): void {
-    if (!this.form.valid) {
-      return;
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      const donation = this.form.get('donation')?.value as Donation;
+      const hasDonationDate = !!donation?.date;
+      const hasDonors = !!donation?.donors?.length;
+      const value = {
+        ...this.form.value,
+        donation: hasDonationDate || hasDonors ? donation : undefined
+      };
+      this.save.emit(value as FictionBook | GameBook);
     }
-
-    const donation = this.form.get('donation')?.value as Donation;
-    const hasDonationDate = !!donation?.date;
-    const hasDonors = !!donation?.donors?.length;
-
-    const value = {
-      ...this.form.value,
-      donation: hasDonationDate || hasDonors ? donation : undefined
-    };
-
-    this.save.emit(value as FictionBook | GameBook);
   }
 
   public onSearchAuthors(event: { query: string }): void {
