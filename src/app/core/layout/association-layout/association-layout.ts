@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
+import { librarySettingsPermissions } from '@app/association/library/settings/library-settings-permissions';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -74,11 +75,12 @@ export class AssociationLayout {
           icon: 'pi pi-money-bill'
         });
     }
-    if (authService.hasPermission(UcroniaPermissions.library.book.read)) {
+    const canReadBooks = authService.hasPermission(UcroniaPermissions.library.book.read);
+    if (canReadBooks || authService.hasAnyPermission(librarySettingsPermissions)) {
       items.push(
         {
           label: 'Biblioteca',
-          routerLink: '/association/library',
+          routerLink: canReadBooks ? '/association/library' : '/association/library/settings',
           icon: 'pi pi-book'
         });
     }

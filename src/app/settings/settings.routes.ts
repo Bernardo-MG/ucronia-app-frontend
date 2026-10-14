@@ -44,31 +44,6 @@ export const settingsRoutes: Routes = [
         path: 'contact-methods',
         canActivate: [ResourceGuard(UcroniaPermissions.directory.contactMethod.read)],
         loadComponent: () => import('./contact-method-view/contact-method-view').then(m => m.ContactMethodView)
-      },
-      {
-        path: 'library',
-        children: [
-          {
-            path: 'author',
-            canActivate: [ResourceGuard(UcroniaPermissions.library.author.read)],
-            loadComponent: () => import('./library/library-author-list-view/library-author-list-view').then(m => m.LibraryAuthorListView)
-          },
-          {
-            path: 'publisher',
-            canActivate: [ResourceGuard(UcroniaPermissions.library.publisher.read)],
-            loadComponent: () => import('./library/library-publisher-list-view/library-publisher-list-view').then(m => m.LibraryPublisherListView)
-          },
-          {
-            path: 'system',
-            canActivate: [ResourceGuard(UcroniaPermissions.library.system.read)],
-            loadComponent: () => import('./library/library-game-system-list-view/library-game-system-list-view').then(m => m.LibraryGameSystemListView)
-          },
-          {
-            path: 'type',
-            canActivate: [ResourceGuard(UcroniaPermissions.library.type.read)],
-            loadComponent: () => import('./library/library-book-type-list-view/library-book-type-list-view').then(m => m.LibraryBookTypeListView)
-          }
-        ]
       }
     ]
   }

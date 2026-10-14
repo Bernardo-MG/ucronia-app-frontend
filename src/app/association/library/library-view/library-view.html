@@ -5,9 +5,15 @@
       <p class="mt-1 text-sm text-gray-500">Gestiona el catálogo y los préstamos de la asociación</p>
     </div>
 
-    @if (permissions.create && display === Display.BOOKS) {
-      <p-button type="button" label="Nuevo libro" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATION" />
-    }
+    <div class="flex flex-wrap gap-2">
+      @if (permissions.settings) {
+        <p-button type="button" label="Configuración" icon="pi pi-cog" severity="secondary" outlined
+          routerLink="/association/library/settings" />
+      }
+      @if (permissions.create && display === Display.BOOKS) {
+        <p-button type="button" label="Nuevo libro" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATION" />
+      }
+    </div>
   </header>
 
   <p-card styleClass="overflow-hidden">
