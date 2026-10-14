@@ -1,15 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideRouter } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { BookLending, GameBook, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
-import { LibrarySummary } from '../model/library-summary';
 import { BookReportService } from '../book-report-service';
+import { Dialog } from '../library-dialog';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
+import { LibrarySummary } from '../model/library-summary';
 import { LibraryView } from './library-view';
 
 describe('LibraryView', () => {
@@ -108,6 +109,22 @@ describe('LibraryView', () => {
     const permittedFixture = TestBed.createComponent(LibraryView);
     permittedFixture.detectChanges();
     expect(permittedFixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).not.toBeNull();
+  });
+
+  it('opens the selected lending in the info drawer and closes it', () => {
+    const lending = new BookLending();
+    lending.book.title.fullTitle = 'Selected book';
+    lending.borrower = 7;
+    component.lendingBorrowerNames = { 7: 'Borrower name' };
+    component.onShowLending(lending);
+    fixture.detectChanges();
+    expect(component.selectedLending).toBe(lending);
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+    const info = fixture.nativeElement.querySelector('assoc-library-lending-info');
+    expect(info.textContent).toContain('Selected book');
+    expect(info.textContent).toContain('Borrower name');
+    component.onDrawerVisibleChange(false);
+    expect(component.dialog).toBe(Dialog.NONE);
   });
 
   it('should create', () => {

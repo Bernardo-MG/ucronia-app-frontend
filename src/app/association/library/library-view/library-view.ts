@@ -1,10 +1,10 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -26,15 +26,16 @@ import { BookLendingEvent, LibraryBookLendingForm } from '../library-book-lendin
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { BookReturnedEvent, LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
+import { LibraryLendingInfo } from '../library-lending-info/library-lending-info';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
-import { librarySettingsPermissions } from '../settings/library-settings-permissions';
 import { LibrarySummary } from '../model/library-summary';
+import { librarySettingsPermissions } from '../settings/library-settings-permissions';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  imports: [LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -52,6 +53,7 @@ export class LibraryView implements OnInit {
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedBorrower = new Profile();
+  public selectedLending = new BookLending();
   public members: Profile[] = [];
 
   public data = new Page<FictionBook | GameBook>();
@@ -223,6 +225,11 @@ export class LibraryView implements OnInit {
     } else {
       this.loadLendings();
     }
+  }
+
+  public onShowLending(lending: BookLending): void {
+    this.selectedLending = lending;
+    this.dialog = Dialog.LENDING_INFO;
   }
 
   public onShowBook(book: FictionBook | GameBook) {

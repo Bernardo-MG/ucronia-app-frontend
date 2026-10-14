@@ -1,7 +1,7 @@
 import { ComponentFixture } from '@angular/core/testing';
 import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
-import { LibraryBookLendingForm } from './library-book-lending-form';
 import { Profile } from '@ucronia/domain';
+import { LibraryBookLendingForm } from './library-book-lending-form';
 
 describe('LibraryBookLendingForm', () => {
   let fixture: ComponentFixture<LibraryBookLendingForm>;
