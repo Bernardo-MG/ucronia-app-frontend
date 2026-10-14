@@ -1,5 +1,5 @@
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
-import { Component, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -12,9 +12,11 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './account-change-password-form.html'
 })
-export class AccountChangePasswordForm implements OnChanges {
+export class AccountChangePasswordForm {
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
@@ -54,12 +56,6 @@ export class AccountChangePasswordForm implements OnChanges {
     );
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['loading']) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public onSave(): void {

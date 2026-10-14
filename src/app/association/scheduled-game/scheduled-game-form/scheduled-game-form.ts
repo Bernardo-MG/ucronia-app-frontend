@@ -27,7 +27,10 @@ export class ScheduledGameForm implements OnChanges {
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
   public readonly tables = input<GameTable[]>([]);
@@ -85,10 +88,7 @@ export class ScheduledGameForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, selectedMaster }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnChanges({ selectedMaster }: SimpleChanges): void {
 
     if (selectedMaster && this.selectedMaster().number) {
       this.master = this.selectedMaster();

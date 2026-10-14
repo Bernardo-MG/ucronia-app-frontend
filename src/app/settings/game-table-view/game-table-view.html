@@ -39,7 +39,7 @@
           submitLabel="Crear mesa"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocGameTableForm.saveEnabled"
-          [loading]="fieldsAssocGameTableForm.loading()"
+          [loading]="fieldsAssocGameTableForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -56,7 +56,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocGameTableForm.saveEnabled"
-          [loading]="fieldsAssocGameTableForm.loading()"
+          [loading]="fieldsAssocGameTableForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
 

@@ -26,6 +26,6 @@
   <!-- Submit button -->
   <div class="flex gap-3">
     <shared-drawer-form-actions submitLabel="Activar cuenta" submitIcon="pi pi-check" [showCancel]="false"
-      [disabled]="!saveEnabled" [loading]="loading()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" />
   </div>
 </form>

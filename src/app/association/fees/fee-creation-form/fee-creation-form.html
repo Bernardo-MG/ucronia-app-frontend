@@ -21,7 +21,7 @@
           Busca por nombre o número de socio
         </p>
 
-        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
+        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
           (searchMember)="searchMember.emit($event)" />
 
         @if (isFieldInvalid('member')) {
@@ -91,6 +91,6 @@
   <!-- Actions -->
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Crear cuota" submitIcon="pi pi-plus"
-      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
   }
 </form>

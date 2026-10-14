@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -13,14 +13,17 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule],
   templateUrl: './library-book-return-form.html'
 })
-export class LibraryBookReturnForm implements OnChanges {
+export class LibraryBookReturnForm {
 
   public readonly cancelEdition = output<void>();
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly lentDate = input(new Date());
   public readonly failures = input(new FailureStore());
   public readonly borrowerName = input('');
@@ -59,12 +62,6 @@ export class LibraryBookReturnForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   /**

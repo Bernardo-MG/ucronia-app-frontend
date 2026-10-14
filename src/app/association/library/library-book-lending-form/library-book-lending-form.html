@@ -3,7 +3,7 @@
     <div class="mb-4">
       <!-- Member -->
       <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">Socio <span class="text-red-600" aria-hidden="true">*</span></label>
-      <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
+      <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
         (searchMember)="searchMember.emit($event)" />
       <div class="mb-2">
         @if (isFieldInvalid('borrower')) {
@@ -32,6 +32,6 @@
   </section>
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Prestar libro" submitIcon="pi pi-arrow-right"
-      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
   }
 </form>

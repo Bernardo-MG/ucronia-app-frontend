@@ -43,7 +43,7 @@
           submitLabel="Crear llave"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocKeyForm.saveEnabled"
-          [loading]="fieldsAssocKeyForm.loading()"
+          [loading]="fieldsAssocKeyForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -61,7 +61,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocKeyForm.saveEnabled"
-          [loading]="fieldsAssocKeyForm.loading()"
+          [loading]="fieldsAssocKeyForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
 

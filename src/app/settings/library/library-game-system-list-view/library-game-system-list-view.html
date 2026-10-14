@@ -38,7 +38,7 @@
           submitLabel="Crear sistema de juego"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsSharedNameForm.saveEnabled"
-          [loading]="fieldsSharedNameForm.loading()"
+          [loading]="fieldsSharedNameForm.formStatus.loading"
           (cancelForm)="onReject()" />
       </ng-template>
 
@@ -56,7 +56,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsSharedNameForm.saveEnabled"
-          [loading]="fieldsSharedNameForm.loading()"
+          [loading]="fieldsSharedNameForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
 

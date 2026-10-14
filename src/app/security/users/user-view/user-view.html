@@ -62,7 +62,7 @@
             submitLabel="Enviar invitación"
             submitIcon="pi pi-send"
             [disabled]="!fieldsAccessUserForm.saveEnabled"
-            [loading]="fieldsAccessUserForm.loading()"
+            [loading]="fieldsAccessUserForm.formStatus.loading"
             (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
@@ -81,7 +81,7 @@
             submitLabel="Guardar cambios"
             submitIcon="pi pi-check"
             [disabled]="!fieldsAccessUserForm.saveEnabled"
-            [loading]="fieldsAccessUserForm.loading()"
+            [loading]="fieldsAccessUserForm.formStatus.loading"
             (cancelForm)="onCancelEdit()" />
         </ng-template>
       }

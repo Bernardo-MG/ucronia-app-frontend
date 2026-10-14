@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -13,13 +13,16 @@ import { TextareaModule } from 'primeng/textarea';
   imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, TextareaModule],
   templateUrl: './game-table-form.html'
 })
-export class GameTableForm implements OnChanges {
+export class GameTableForm {
   public readonly cancelEdition = output<void>();
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   @Input() public set data(value: GameTable) {
     this.form.patchValue(value);
@@ -45,10 +48,6 @@ export class GameTableForm implements OnChanges {
       description: [null, Validators.required]
     });
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) this.formStatus.loading = this.loading();
   }
 
   public onSave(): void {

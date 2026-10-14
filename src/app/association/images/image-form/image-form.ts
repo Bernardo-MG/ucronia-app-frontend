@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -28,7 +28,10 @@ export class ImageForm implements OnChanges {
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly save = output<ImageFormData>();
   public readonly cancelEdition = output<void>();
@@ -57,7 +60,6 @@ export class ImageForm implements OnChanges {
       this.form.reset(this.data() || new Asset());
       this.file = undefined;
     }
-    if (changes['loading']) this.formStatus.loading = this.loading();
   }
 
   public onFileSelected(event: Event): void {

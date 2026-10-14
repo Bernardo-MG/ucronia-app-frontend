@@ -173,7 +173,7 @@
         <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">
           Director <span class="text-red-600" aria-hidden="true">*</span>
         </label>
-        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [members]="members()" [member]="master" (selectMember)="onSelectMaster($event)"
+        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [members]="members()" [member]="master" (selectMember)="onSelectMaster($event)"
           (searchMember)="searchMember.emit($event)" />
 
         @if (master.number) {
@@ -228,6 +228,6 @@
 
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
-      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
   }
 </form>

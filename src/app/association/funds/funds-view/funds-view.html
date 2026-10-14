@@ -111,7 +111,7 @@
             submitLabel="Crear movimiento"
             submitIcon="pi pi-plus"
             [disabled]="!fieldsAssocTransactionForm.saveEnabled"
-            [loading]="fieldsAssocTransactionForm.loading()"
+            [loading]="fieldsAssocTransactionForm.formStatus.loading"
             (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
@@ -129,7 +129,7 @@
             submitLabel="Guardar cambios"
             submitIcon="pi pi-check"
             [disabled]="!fieldsAssocTransactionForm.saveEnabled"
-            [loading]="fieldsAssocTransactionForm.loading()"
+            [loading]="fieldsAssocTransactionForm.formStatus.loading"
             (cancelForm)="onCancelEdit()" />
         </ng-template>
       }

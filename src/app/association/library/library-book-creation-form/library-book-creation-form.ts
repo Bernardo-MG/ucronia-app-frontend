@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
@@ -14,12 +14,14 @@ import { LibraryConfig } from '../library-config';
   imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, SelectModule],
   templateUrl: './library-book-creation-form.html'
 })
-export class LibraryBookCreationForm implements OnChanges {
+export class LibraryBookCreationForm {
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
@@ -55,12 +57,6 @@ export class LibraryBookCreationForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   /**

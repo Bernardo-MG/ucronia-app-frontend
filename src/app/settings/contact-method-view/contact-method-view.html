@@ -44,7 +44,7 @@
           submitLabel="Crear método"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocContactMethodForm.saveEnabled"
-          [loading]="fieldsAssocContactMethodForm.loading()"
+          [loading]="fieldsAssocContactMethodForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -63,7 +63,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocContactMethodForm.saveEnabled"
-          [loading]="fieldsAssocContactMethodForm.loading()"
+          [loading]="fieldsAssocContactMethodForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
 

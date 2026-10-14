@@ -62,7 +62,7 @@
             submitLabel="Crear rol"
             submitIcon="pi pi-plus"
             [disabled]="!fieldsAccessRoleForm.saveEnabled"
-            [loading]="fieldsAccessRoleForm.loading()"
+            [loading]="fieldsAccessRoleForm.formStatus.loading"
             (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
@@ -81,7 +81,7 @@
             submitLabel="Guardar cambios"
             submitIcon="pi pi-check"
             [disabled]="!fieldsAccessRoleChangePermission.saveEnabled"
-            [loading]="fieldsAccessRoleChangePermission.loading()"
+            [loading]="fieldsAccessRoleChangePermission.formStatus.loading"
             (cancelForm)="onCancelEdit()" />
         </ng-template>
       }

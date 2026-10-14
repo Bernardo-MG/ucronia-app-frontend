@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -15,12 +15,15 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, CurrencyPipe, DatePipe, ReactiveFormsModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './fee-edition-form.html'
 })
-export class FeeEditionForm implements OnChanges {
+export class FeeEditionForm {
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: Fee) {
@@ -53,12 +56,6 @@ export class FeeEditionForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public onSave(): void {

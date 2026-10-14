@@ -67,7 +67,7 @@
             submitLabel="Extender expiración"
             submitIcon="pi pi-calendar-plus"
             [disabled]="!fieldsAccessUserTokenExtendForm.saveEnabled"
-            [loading]="fieldsAccessUserTokenExtendForm.loading()"
+            [loading]="fieldsAccessUserTokenExtendForm.formStatus.loading"
             (cancelForm)="onCancelEdit()" />
         </ng-template>
 

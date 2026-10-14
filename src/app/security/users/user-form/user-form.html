@@ -114,7 +114,7 @@
 
         <div class="mt-4">
           <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">{{ selectedMember.number > 0 ? 'Cambiar socio' : 'Vincular socio' }}</label>
-          <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [member]="selectedMember" [members]="members()" (selectMember)="onSelectMember($event)" (searchMember)="searchMember.emit($event)" />
+          <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [member]="selectedMember" [members]="members()" (selectMember)="onSelectMember($event)" (searchMember)="searchMember.emit($event)" />
           <p class="mt-1.5 text-xs text-gray-500">{{ selectedMember.number > 0 ? 'Selecciona otro socio para sustituir la vinculación actual.' : 'Busca por nombre o número de socio.' }}</p>
         </div>
       </section>
@@ -123,6 +123,6 @@
 
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
-      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
   }
 </form>

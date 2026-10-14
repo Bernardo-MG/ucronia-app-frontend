@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, output, Input } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -17,14 +17,17 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
-export class FeePaymentsForm implements OnChanges {
+export class FeePaymentsForm {
 
   private readonly fb = inject(FormBuilder);
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
@@ -56,12 +59,6 @@ export class FeePaymentsForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public onSelectMember(member: Profile) {

@@ -99,7 +99,7 @@
             submitLabel="Crear cuota"
             submitIcon="pi pi-plus"
             [disabled]="!fieldsAssocFeeCreationForm.saveEnabled"
-            [loading]="fieldsAssocFeeCreationForm.loading()"
+            [loading]="fieldsAssocFeeCreationForm.formStatus.loading"
             (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
@@ -118,7 +118,7 @@
             submitLabel="Registrar pago"
             submitIcon="pi pi-check"
             [disabled]="!fieldsAssocFeePaymentsForm.saveEnabled"
-            [loading]="fieldsAssocFeePaymentsForm.loading()"
+            [loading]="fieldsAssocFeePaymentsForm.formStatus.loading"
             (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
@@ -137,7 +137,7 @@
             submitLabel="Guardar cambios"
             submitIcon="pi pi-check"
             [disabled]="!fieldsAssocFeeEditionForm.saveEnabled"
-            [loading]="fieldsAssocFeeEditionForm.loading()"
+            [loading]="fieldsAssocFeeEditionForm.formStatus.loading"
             (cancelForm)="onCancelEdit()" />
         </ng-template>
       }

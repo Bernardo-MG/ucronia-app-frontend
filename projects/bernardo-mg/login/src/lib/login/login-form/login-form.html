@@ -54,7 +54,7 @@
 
   <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
     <div class="flex items-center gap-2">
-      <p-checkbox inputId="rememberMe" [binary]="true" [disabled]="waiting" (onChange)="onRememberMe($event.checked)" />
+      <p-checkbox inputId="rememberMe" [binary]="true" [disabled]="formStatus.loading" (onChange)="onRememberMe($event.checked)" />
 
       <label for="rememberMe" class="select-none text-sm text-gray-700">
         Mantener la sesión iniciada
@@ -63,11 +63,11 @@
 
     <button id="lostPassword" type="button"
       class="border-0 bg-transparent p-0 text-left text-sm font-medium text-primary hover:underline sm:ml-auto"
-      [disabled]="waiting" (click)="onLostPassword()">
+      [disabled]="formStatus.loading" (click)="onLostPassword()">
       ¿Has olvidado tu contraseña?
     </button>
   </div>
 
-  <p-button id="login" type="submit" label="Iniciar sesión" icon="pi pi-sign-in" styleClass="w-full" [loading]="waiting"
+  <p-button id="login" type="submit" label="Iniciar sesión" icon="pi pi-sign-in" styleClass="w-full" [loading]="formStatus.loading"
     [disabled]="!loginEnabled" [attr.aria-disabled]="!loginEnabled" />
 </form>

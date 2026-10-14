@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
@@ -11,14 +11,16 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './name-form.html'
 })
-export class NameForm implements OnChanges {
+export class NameForm {
 
   public readonly cancelEdition = output<void>();
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
@@ -45,12 +47,6 @@ export class NameForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   /**

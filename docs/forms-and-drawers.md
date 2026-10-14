@@ -23,7 +23,7 @@ Use the same structure for new creation and editing screens. Existing examples:
 - Use `isFieldInvalid` for control feedback and small simple error messages for server failures.
 - Expose `loading`, `failures`, `formId`, `showActions`, `saveEnabled`, `save` and `cancelEdition` on drawer forms. A combined user form may also expose an update event.
 - `onSave(): void` marks fields touched and returns when `saveEnabled` is false, before serializing or emitting. This also guards Enter submissions.
-- Loading updates `FormStatus`, disables controls and blocks submission. Standalone member searches also receive `[disabled]="loading()"`.
+- Loading updates `FormStatus`, disables controls and blocks submission. Standalone member searches also receive `[disabled]="formStatus.loading"`.
 - Editing normally requires a valid, dirty form. Upload creation additionally requires a selected file.
 
 ## Footer actions
@@ -42,3 +42,5 @@ Keep `formStatus` readonly and initialize it once against the component's form.
 Forward loading changes to `formStatus.loading`; do not enable/disable the form separately.
 Both the submit handler and its button use the component's `saveEnabled` getter, which delegates to `FormStatus` and may add domain requirements such as a selected upload or matching passwords.
 All forms require valid, dirty controls and must not be loading before submission. Form instances and other fields assigned only during construction are readonly.
+
+Use `loading` as the single state name. Each form exposes only an `@Input() loading` setter that assigns `formStatus.loading`. Form templates and drawer footers read `formStatus.loading` directly. No separate form loading flag or signal is needed; lifecycle hooks remain only for other input changes.

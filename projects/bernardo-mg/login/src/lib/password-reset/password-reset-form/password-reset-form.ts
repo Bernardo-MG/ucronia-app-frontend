@@ -1,5 +1,5 @@
 
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -17,9 +17,11 @@ import { MessageModule } from 'primeng/message';
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, IconFieldModule, InputIconModule],
   templateUrl: './password-reset-form.html'
 })
-export class PasswordResetForm implements OnChanges {
+export class PasswordResetForm {
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
@@ -47,12 +49,6 @@ export class PasswordResetForm implements OnChanges {
     );
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   /**

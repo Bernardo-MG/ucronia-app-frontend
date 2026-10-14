@@ -102,7 +102,7 @@
           submitLabel="Crear imagen"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocImageForm.saveEnabled"
-          [loading]="fieldsAssocImageForm.loading()"
+          [loading]="fieldsAssocImageForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -119,7 +119,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocImageForm.saveEnabled"
-          [loading]="fieldsAssocImageForm.loading()"
+          [loading]="fieldsAssocImageForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
     }

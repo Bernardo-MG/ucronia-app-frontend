@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -11,14 +11,17 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, DatePickerModule, MessageModule],
   templateUrl: './user-token-extend-form.html'
 })
-export class UserTokenExtendForm implements OnChanges {
+export class UserTokenExtendForm {
 
   public readonly cancelEdition = output<void>();
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
 
   @Input() public set expirationDate(value: Date) {
@@ -45,12 +48,6 @@ export class UserTokenExtendForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public isFieldInvalid(property: string): boolean {

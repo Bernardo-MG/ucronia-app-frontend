@@ -37,5 +37,5 @@
   </div>
 
   <shared-drawer-form-actions submitLabel="Guardar cambios" submitIcon="pi pi-check" [showCancel]="false"
-      [disabled]="!saveEnabled" [loading]="loading()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" />
 </form>

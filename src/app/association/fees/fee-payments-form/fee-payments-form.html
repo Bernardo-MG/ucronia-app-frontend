@@ -7,7 +7,7 @@
           Socio <span class="text-red-600" aria-hidden="true">*</span>
         </label>
         <p class="mb-2 mt-1 text-sm text-gray-500">Busca por nombre o número de socio</p>
-        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="loading()" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
+        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
           (searchMember)="searchMember.emit($event)" />
 
         @if (isFieldInvalid('member')) {
@@ -105,6 +105,6 @@
   <!-- Actions -->
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
-      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
   }
 </form>

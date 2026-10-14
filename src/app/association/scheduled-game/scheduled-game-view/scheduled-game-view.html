@@ -108,7 +108,7 @@
           submitLabel="Crear partida"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocScheduledGameForm.saveEnabled"
-          [loading]="fieldsAssocScheduledGameForm.loading()"
+          [loading]="fieldsAssocScheduledGameForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -130,7 +130,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocScheduledGameForm.saveEnabled"
-          [loading]="fieldsAssocScheduledGameForm.loading()"
+          [loading]="fieldsAssocScheduledGameForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
     }

@@ -43,7 +43,7 @@
           submitLabel="Crear tipo de cuota"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocFeeTypeForm.saveEnabled"
-          [loading]="fieldsAssocFeeTypeForm.loading()"
+          [loading]="fieldsAssocFeeTypeForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -61,7 +61,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocFeeTypeForm.saveEnabled"
-          [loading]="fieldsAssocFeeTypeForm.loading()"
+          [loading]="fieldsAssocFeeTypeForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
 

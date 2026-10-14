@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, OnInit, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -19,12 +19,15 @@ import { ImageService } from '../../images/image-service';
     MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
-export class ActivityForm implements OnChanges, OnInit {
+export class ActivityForm implements OnInit {
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   private readonly fb = inject(FormBuilder);
   private readonly imageService = inject(ImageService);
@@ -74,12 +77,6 @@ export class ActivityForm implements OnChanges, OnInit {
 
     this.formStatus = new FormStatus(this.form);
     this.addDate();
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public ngOnInit(): void {

@@ -19,12 +19,8 @@ import { MessageModule } from 'primeng/message';
 export class LoginForm {
 
   @Input()
-  public set waiting(waiting: boolean) {
-    this.formStatus.loading = waiting;
-  }
-
-  public get waiting(): boolean {
-    return this.formStatus.loading;
+  public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
   }
 
   @Input()
@@ -73,13 +69,13 @@ export class LoginForm {
   }
 
   public onRememberMe(checked: boolean): void {
-    if (!this.waiting) {
+    if (!this.formStatus.loading) {
       this.rememberMe.emit(checked);
     }
   }
 
   public onLostPassword(): void {
-    if (!this.waiting) {
+    if (!this.formStatus.loading) {
       this.lostPassword.emit();
     }
   }

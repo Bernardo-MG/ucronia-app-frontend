@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -18,7 +18,9 @@ export class RoleChangePermission implements OnChanges {
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly save = output<ResourcePermission[]>();
   public readonly cancelEdition = output<void>();
@@ -46,10 +48,7 @@ export class RoleChangePermission implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ permissions, loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnChanges({ permissions }: SimpleChanges): void {
     if (permissions) {
       this.form.reset({ permissions: [...permissions.currentValue] });
     }

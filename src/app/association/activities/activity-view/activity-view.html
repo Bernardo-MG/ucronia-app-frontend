@@ -81,7 +81,7 @@
           submitLabel="Crear actividad"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocActivityForm.saveEnabled"
-          [loading]="fieldsAssocActivityForm.loading()"
+          [loading]="fieldsAssocActivityForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -99,7 +99,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocActivityForm.saveEnabled"
-          [loading]="fieldsAssocActivityForm.loading()"
+          [loading]="fieldsAssocActivityForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
     }

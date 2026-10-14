@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
@@ -19,14 +19,16 @@ import { LibraryService } from '../library-service';
   imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './library-book-edition-form.html'
 })
-export class LibraryBookEditionForm implements OnChanges {
+export class LibraryBookEditionForm {
 
   private readonly service = inject(LibraryService);
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
@@ -148,12 +150,6 @@ export class LibraryBookEditionForm implements OnChanges {
       this.service.getBookTypes.bind(this.service),
       bookTypes => this.bookTypes = bookTypes
     );
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public onSave(): void {

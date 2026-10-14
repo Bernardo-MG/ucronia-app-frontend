@@ -1,5 +1,5 @@
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -17,7 +17,9 @@ export class ContactSettingsForm implements OnChanges {
   public readonly instagram = input('');
   public readonly googleMaps = input('');
   public readonly teamUp = input('');
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly save = output<SocialSettingsFormEvent>();
 
@@ -45,10 +47,7 @@ export class ContactSettingsForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, email, instagram, googleMaps, teamUp }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnChanges({ email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (instagram) {
       this.form.get('instagram')?.setValue(instagram.currentValue);
     }

@@ -54,7 +54,7 @@ describe('LoginForm', () => {
     });
 
     it('should have a not enabled form when waiting', () => {
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       expect(component.form.enabled).toBeFalse();
@@ -107,7 +107,7 @@ describe('LoginForm', () => {
       component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
       component.form.markAsDirty();
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -115,7 +115,7 @@ describe('LoginForm', () => {
     });
 
     it('should disable the login button when the form is waiting', () => {
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -133,7 +133,7 @@ describe('LoginForm', () => {
     });
 
     it('should disable the remember me check button when waiting', () => {
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       const rememberMe = fixture.debugElement.nativeElement.querySelector('#rememberMe');
@@ -154,7 +154,7 @@ describe('LoginForm', () => {
     });
 
     it('should disable the inputs when waiting', () => {
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       const username = fixture.debugElement.nativeElement.querySelector('#usernameInput');
@@ -246,7 +246,7 @@ describe('LoginForm', () => {
     it('should not emit lost password when clicking the lost password button and it is disabled', () => {
       spyOn(component.lostPassword, 'emit');
 
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('#lostPassword');
@@ -297,7 +297,7 @@ describe('LoginForm', () => {
     it('should not emit remember me when when changing the remember me checkbox and it is disabled', () => {
       spyOn(component.rememberMe, 'emit');
 
-      component.waiting = true;
+      component.loading = true;
       fixture.detectChanges();
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
@@ -341,11 +341,11 @@ describe('LoginForm', () => {
     component.form.setValue({ username: 'username', password: 'password' });
     component.form.markAsDirty();
     const emitted = spyOn(component.login, 'emit');
-    component.waiting = true;
+    component.loading = true;
     component.onLogin();
     expect(emitted).not.toHaveBeenCalled();
     expect(component.loginEnabled).toBeFalse();
-    component.waiting = false;
+    component.loading = false;
     component.onLogin();
     expect(emitted).toHaveBeenCalledTimes(1);
   });
@@ -354,7 +354,7 @@ describe('LoginForm', () => {
     component.form.setValue({ username: 'username', password: 'password' });
     const emitted = spyOn(component.login, 'emit');
     expect(component.form.pristine).toBeTrue();
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.loginEnabled).toBeFalse();
     component.onLogin();
     expect(emitted).not.toHaveBeenCalled();
   });

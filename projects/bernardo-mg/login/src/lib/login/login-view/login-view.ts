@@ -15,7 +15,7 @@ export class LoginView {
   private readonly router = inject(Router);
 
   public failedLogin = false;
-  public waiting = false;
+  public loading = false;
 
   private rememberMe = false;
   private readonly returnRoute: string;
@@ -28,12 +28,12 @@ export class LoginView {
   }
 
   public onLogin(login: LoginEvent): void {
-    this.waiting = true;
+    this.loading = true;
     this.failedLogin = false;
 
     this.service.login(login, this.rememberMe)
       .pipe(
-        finalize(() => this.waiting = false)
+        finalize(() => this.loading = false)
       )
       .subscribe({
         next: user => {

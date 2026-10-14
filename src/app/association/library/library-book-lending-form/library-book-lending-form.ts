@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -13,14 +13,17 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, DatePickerModule, MessageModule, MemberSearch],
   templateUrl: './library-book-lending-form.html'
 })
-export class LibraryBookLendingForm implements OnChanges {
+export class LibraryBookLendingForm {
 
   public readonly cancelEdition = output<void>();
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
@@ -58,12 +61,6 @@ export class LibraryBookLendingForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   /**

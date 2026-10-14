@@ -99,7 +99,7 @@
             submitLabel="Guardar cambios"
             submitIcon="pi pi-check"
             [disabled]="!fieldsAssocLibraryBookEditionForm.saveEnabled"
-            [loading]="fieldsAssocLibraryBookEditionForm.loading()"
+            [loading]="fieldsAssocLibraryBookEditionForm.formStatus.loading"
             (cancelForm)="onCancelEdit()" />
         </ng-template>
       }
@@ -118,7 +118,7 @@
             submitLabel="Crear libro"
             submitIcon="pi pi-plus"
             [disabled]="!fieldsAssocLibraryBookCreationForm.saveEnabled"
-            [loading]="fieldsAssocLibraryBookCreationForm.loading()"
+            [loading]="fieldsAssocLibraryBookCreationForm.formStatus.loading"
             (cancelForm)="onDrawerVisibleChange(false)" />
         </ng-template>
       }
@@ -139,7 +139,7 @@
               submitLabel="Devolver libro"
               submitIcon="pi pi-undo"
               [disabled]="!fieldsAssocLibraryBookReturnForm.saveEnabled"
-              [loading]="fieldsAssocLibraryBookReturnForm.loading()"
+              [loading]="fieldsAssocLibraryBookReturnForm.formStatus.loading"
               (cancelForm)="onCancelEdit()" />
           </ng-template>
         } @else {
@@ -156,7 +156,7 @@
               submitLabel="Prestar libro"
               submitIcon="pi pi-arrow-right"
               [disabled]="!fieldsAssocLibraryBookLendingForm.saveEnabled"
-              [loading]="fieldsAssocLibraryBookLendingForm.loading()"
+              [loading]="fieldsAssocLibraryBookLendingForm.formStatus.loading"
               (cancelForm)="onCancelEdit()" />
           </ng-template>
         }

@@ -19,7 +19,10 @@ export class UserForm implements OnChanges {
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly create = input(true);
   public readonly selection = input<Role[]>([]);
@@ -64,10 +67,7 @@ export class UserForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, selection }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnChanges({ selection }: SimpleChanges): void {
     if (selection && this.create()) {
       this.roles = [];
     }

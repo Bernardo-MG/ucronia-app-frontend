@@ -124,7 +124,7 @@
           submitLabel="Crear perfil"
           submitIcon="pi pi-plus"
           [disabled]="!fieldsAssocProfileCreationForm.saveEnabled"
-          [loading]="fieldsAssocProfileCreationForm.loading()"
+          [loading]="fieldsAssocProfileCreationForm.formStatus.loading"
           (cancelForm)="onDrawerVisibleChange(false)" />
       </ng-template>
     }
@@ -142,7 +142,7 @@
           submitLabel="Guardar cambios"
           submitIcon="pi pi-check"
           [disabled]="!fieldsAssocProfileEditionForm.saveEnabled"
-          [loading]="fieldsAssocProfileEditionForm.loading()"
+          [loading]="fieldsAssocProfileEditionForm.formStatus.loading"
           (cancelForm)="onCancelEdit()" />
       </ng-template>
 

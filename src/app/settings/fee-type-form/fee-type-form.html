@@ -19,6 +19,6 @@
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" [submitLabel]="isEdit ? 'Guardar cambios' : 'Crear tipo de cuota'"
       [submitIcon]="isEdit ? 'pi pi-check' : 'pi pi-plus'"
-      [disabled]="!saveEnabled" [loading]="loading()" (cancelForm)="cancelEdition.emit()" />
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
   }
 </form>

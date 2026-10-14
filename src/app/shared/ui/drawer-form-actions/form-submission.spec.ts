@@ -1,4 +1,4 @@
-import { provideZonelessChangeDetection, SimpleChange, Type } from '@angular/core';
+import { provideZonelessChangeDetection, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -84,12 +84,10 @@ for (const formType of forms) {
     it('blocks native submission while loading and restores eligibility afterwards', () => {
       expect(component.saveEnabled).toBeTrue();
       fixture.componentRef.setInput('loading', true);
-      component.ngOnChanges({ loading: new SimpleChange(false, true, false) });
       component.onSave();
       expect(emitted).not.toHaveBeenCalled();
       expect(component.form.disabled).toBeTrue();
       fixture.componentRef.setInput('loading', false);
-      component.ngOnChanges({ loading: new SimpleChange(true, false, false) });
       expect(component.saveEnabled).toBeTrue();
     });
 
