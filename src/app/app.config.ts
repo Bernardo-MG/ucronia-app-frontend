@@ -26,6 +26,9 @@ export const appConfig: ApplicationConfig = {
       ])
     ),
     providePrimeNG({
+      translation: {
+        firstDayOfWeek: 1
+      },
       theme: {
         preset: Aura,
         options: { darkModeSelector: '.app-dark' }
