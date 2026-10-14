@@ -1,0 +1,18 @@
+<div class="flex w-full flex-wrap items-center justify-between gap-3 border-t border-gray-200 pt-4">
+  <div class="flex flex-wrap items-center gap-3">
+    @if (showDelete()) {
+      <p-button data-action="delete" type="button" [label]="deleteLabel()" [ariaLabel]="deleteLabel()"
+        icon="pi pi-trash" severity="danger" outlined styleClass="h-11 rounded-lg px-4"
+        [disabled]="deleteDisabled() || loading()" (onClick)="delete.emit($event)" />
+    }
+    <ng-content select="[drawerActionsStart]" />
+  </div>
+  <div class="ml-auto flex flex-wrap items-center justify-end gap-3">
+    @if (showEdit()) {
+      <p-button data-action="edit" type="button" [label]="editLabel()" [ariaLabel]="editLabel()"
+        [icon]="editIcon()" styleClass="h-11 rounded-lg px-4"
+        [disabled]="editDisabled() || loading()" (onClick)="edit.emit()" />
+    }
+    <ng-content select="[drawerActionsEnd]" />
+  </div>
+</div>

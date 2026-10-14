@@ -1,15 +1,14 @@
-
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod, FeeType, Key } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -20,14 +19,22 @@ import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
+  imports: [InputGroupModule, InputGroupAddonModule, DrawerFormActions, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
   templateUrl: './profile-edition-form.html'
 })
-export class ProfileEditionForm implements OnChanges {
+export class ProfileEditionForm {
 
   private readonly fb = inject(FormBuilder);
 
-  public readonly loading = input(false);
+  public readonly cancelEdition = output<void>();
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly feeTypes = input<FeeType[]>([]);
@@ -62,7 +69,7 @@ export class ProfileEditionForm implements OnChanges {
 
   public readonly save = output<FullProfile>();
 
-  public today = new Date();
+  public readonly today = new Date();
 
   public lockedTypes: string[] = [];
 
@@ -92,14 +99,18 @@ export class ProfileEditionForm implements OnChanges {
 
   public selected: string[] = [];
 
-  public options = [
+  public readonly options = [
     { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
     { label: 'Member', value: 'member', icon: 'pi-users', disabled: false },
     { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     this.form = this.fb.group({
@@ -125,12 +136,6 @@ export class ProfileEditionForm implements OnChanges {
     });
 
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public onTypeChange(event: SelectButtonChangeEvent) {
@@ -173,13 +178,14 @@ export class ProfileEditionForm implements OnChanges {
     this.years.removeAt(index);
   }
 
-  public submit() {
-    if (this.formStatus.saveEnabled) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       const value: FullProfile = {
         ...this.form.value,
         types: [...this.selected]
       };
-
       this.save.emit(value);
     }
   }

@@ -1,36 +1,42 @@
-
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, input, Input, output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { FeeCreation } from '@ucronia/api';
-import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'shared-name-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, MessageModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './name-form.html'
 })
-export class NameForm implements OnChanges {
+export class NameForm {
 
-  public readonly loading = input(false);
+  public readonly cancelEdition = output<void>();
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
-  @Input() public set data(value: any) {
+  @Input() public set data(value: NameFormData) {
     this.form.patchValue(value);
   }
 
-  public readonly save = output<FeeCreation>();
+  public readonly save = output<NameFormData>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public memberName = "";
+  public readonly form: FormGroup;
 
-  public form: FormGroup;
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -43,17 +49,13 @@ export class NameForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
-  }
-
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }
@@ -63,4 +65,9 @@ export class NameForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
+}
+
+export interface NameFormData {
+  number?: number | null;
+  name: string;
 }

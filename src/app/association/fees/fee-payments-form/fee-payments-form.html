@@ -1,13 +1,13 @@
-<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-5">
     <section class="space-y-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <!-- Member -->
       <div>
-        <label class="block font-semibold text-gray-950">
+        <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">
           Socio <span class="text-red-600" aria-hidden="true">*</span>
         </label>
         <p class="mb-2 mt-1 text-sm text-gray-500">Busca por nombre o número de socio</p>
-        <assoc-member-search [members]="members()" (selectMember)="onSelectMember($event)"
+        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [members]="members()" (selectMember)="onSelectMember($event)"
           (searchMember)="searchMember.emit($event)" />
 
         @if (isFieldInvalid('member')) {
@@ -35,7 +35,7 @@
 
       <!-- Payment date -->
       <div>
-        <label for="paymentDateInput" class="block font-semibold text-gray-950">
+        <label for="paymentDateInput" class="block font-medium text-gray-950">
           Fecha de pago <span class="text-red-600" aria-hidden="true">*</span>
         </label>
         <p class="mb-2 mt-1 text-sm text-gray-500">Fecha en la que se recibió el pago</p>
@@ -43,9 +43,9 @@
           <p-inputgroup-addon>
             <i class="pi pi-calendar-clock" aria-hidden="true"></i>
           </p-inputgroup-addon>
-          <p-datepicker id="paymentDateInput" formControlName="paymentDate" [maxDate]="today"
-            [invalid]="isFieldInvalid('paymentDate')" dateFormat="dd MM yy" placeholder="Selecciona una fecha"
-            appendTo="body" />
+          <p-datepicker inputId="paymentDateInput" formControlName="paymentDate" [maxDate]="today"
+            [invalid]="isFieldInvalid('paymentDate')" dateFormat="dd/mm/yy" placeholder="Selecciona una fecha"
+            appendTo="body" class="w-full" />
         </p-inputgroup>
         @for (failure of failures().getFailures('paymentDate'); track failure) {
           <p-message class="mt-2 block" severity="error" size="small" variant="simple">
@@ -57,22 +57,25 @@
 
     <!-- Fees -->
     <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-      <h3 class="font-semibold text-gray-950">Cuotas a pagar</h3>
+      <h3 class="font-semibold text-gray-950">Cuotas a pagar <span class="text-red-600" aria-hidden="true">*</span></h3>
       <p class="mb-3 mt-1 text-sm text-gray-500">Añade los meses incluidos en este pago</p>
 
       <div class="space-y-2">
         @for (date of months.controls; track date; let i = $index) {
-          <div class="flex items-center gap-2">
-            <p-inputgroup class="flex-1">
-              <p-inputgroup-addon>
-                <i class="pi pi-calendar" aria-hidden="true"></i>
-              </p-inputgroup-addon>
-              <p-datepicker [id]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')" view="month"
-                dateFormat="MM yy" placeholder="Selecciona un mes" (onSelect)="onMonthSelect($event, i)"
-                appendTo="body" />
-            </p-inputgroup>
+          <div class="flex items-end gap-2">
+            <div class="flex-1">
+              <label [for]="'monthYearInput_' + i" class="block font-medium text-gray-950">Mes <span class="text-red-600" aria-hidden="true">*</span></label>
+              <p-inputgroup>
+                <p-inputgroup-addon>
+                  <i class="pi pi-calendar" aria-hidden="true"></i>
+                </p-inputgroup-addon>
+                <p-datepicker [inputId]="'monthYearInput_' + i" [invalid]="isFieldInvalid('months[]')" view="month"
+                  dateFormat="MM yy" placeholder="Selecciona un mes" (onSelect)="onMonthSelect($event, i)"
+                  appendTo="body" class="w-full" />
+              </p-inputgroup>
+            </div>
             <p-button type="button" icon="pi pi-trash" severity="secondary" [outlined]="true"
-              (click)="removeDate(i)" [disabled]="!formStatus.formEnabled" aria-label="Eliminar mes"
+              (onClick)="removeDate(i)" [disabled]="!formStatus.formEnabled" ariaLabel="Eliminar mes"
               [attr.aria-disabled]="!formStatus.formEnabled" />
           </div>
         }
@@ -100,10 +103,8 @@
   </div>
 
   <!-- Actions -->
-  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
-    <p-button type="submit" label="Registrar pago" icon="pi pi-check" severity="success"
-      [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-      [attr.aria-disabled]="!formStatus.saveEnabled" />
-  </div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

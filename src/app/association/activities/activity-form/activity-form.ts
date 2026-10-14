@@ -1,5 +1,6 @@
-import { Component, inject, Input, input, OnChanges, OnInit, output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, Input, input, OnInit, output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Activity, Asset } from '@ucronia/domain';
@@ -14,13 +15,19 @@ import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
+  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
     MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
-export class ActivityForm implements OnChanges, OnInit {
+export class ActivityForm implements OnInit {
 
-  public readonly loading = input(false);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   private readonly fb = inject(FormBuilder);
   private readonly imageService = inject(ImageService);
@@ -45,12 +52,16 @@ export class ActivityForm implements OnChanges, OnInit {
       this.addDate();
     }
   }
+  
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   public readonly save = output<Activity>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
   public imageOptions: ActivityImageOption[] = [];
   public showImageField = false;
 
@@ -66,12 +77,6 @@ export class ActivityForm implements OnChanges, OnInit {
 
     this.formStatus = new FormStatus(this.form);
     this.addDate();
-  }
-
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
   }
 
   public ngOnInit(): void {
@@ -100,23 +105,22 @@ export class ActivityForm implements OnChanges, OnInit {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled) {
-      return;
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      const value = this.form.value;
+      this.save.emit({
+        number: value.number ?? 0,
+        title: value.title,
+        description: value.description ?? '',
+        location: value.location ?? '',
+        image: value.image ?? '',
+        dates: value.dates.map((date: any) => ({
+          start: this.mergeDayAndTime(date.day, date.startHour),
+          end: this.mergeDayAndTime(date.day, date.endHour)
+        }))
+      });
     }
-
-    const value = this.form.value;
-
-    this.save.emit({
-      number: value.number ?? 0,
-      title: value.title,
-      description: value.description ?? '',
-      location: value.location ?? '',
-      image: value.image ?? '',
-      dates: value.dates.map((date: any) => ({
-        start: this.mergeDayAndTime(date.day, date.startHour),
-        end: this.mergeDayAndTime(date.day, date.endHour)
-      }))
-    });
   }
 
   private mergeDayAndTime(day: Date, time: Date): Date {

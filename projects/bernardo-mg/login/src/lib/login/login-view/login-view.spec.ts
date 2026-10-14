@@ -53,19 +53,19 @@ describe('Login', () => {
     expect(spy).toHaveBeenCalledWith(login, false);
   });
 
-  describe('waiting', () => {
+  describe('loading', () => {
 
-    it('should set waiting to true while login is in progress', () => {
+    it('should set loading to true while login is in progress', () => {
       const service = TestBed.inject(LoginService);
 
       spyOn(service, 'login').and.returnValue(NEVER);
 
       component.onLogin(new LoginEvent('username', 'password'));
 
-      expect(component.waiting).toBeTrue();
+      expect(component.loading).toBeTrue();
     });
 
-    it('should set waiting to false after login', () => {
+    it('should set loading to false after login', () => {
       const service = TestBed.inject(LoginService);
 
       spyOn(service, 'login').and.returnValue(
@@ -74,16 +74,16 @@ describe('Login', () => {
 
       component.onLogin(new LoginEvent('username', 'password'));
 
-      expect(component.waiting).toBeFalse();
+      expect(component.loading).toBeFalse();
     });
 
-    it('should set waiting to false when there is an error', () => {
+    it('should set loading to false when there is an error', () => {
       const service = TestBed.inject(LoginService);
       spyOn(service, 'login').and.returnValue(
         throwError(() => new Error('login failed'))
       );
 
-      expect(component.waiting).toBeFalse();
+      expect(component.loading).toBeFalse();
     });
 
   });

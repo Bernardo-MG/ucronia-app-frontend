@@ -1,19 +1,16 @@
-<form [formGroup]="form" (ngSubmit)="submit()" novalidate>
-  <!-- Name -->
-  <p-inputgroup class="mb-2 d-flex">
-    <p-inputgroup-addon>
-      <i class="pi pi-phone"></i>
-    </p-inputgroup-addon>
-    <input pInputText type="text" id="nameInput" formControlName="name" [invalid]="isFieldInvalid('name')" maxlength="50"
-      class="w-100" placeholder="Nombre" />
-  </p-inputgroup>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('name'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
-  </div>
-  <p-button type="submit" name="Guardar" [disabled]="!formStatus.saveEnabled" [loading]="loading()"
-    [attr.aria-disabled]="!formStatus.saveEnabled">Guardar</p-button>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div>
+      <label for="nameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+      <input pInputText id="nameInput" type="text" formControlName="name" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name')" />
+      @for (failure of failures().getFailures('name'); track failure) {
+        <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
+    </div>
+  </section>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" [submitLabel]="isEdit ? 'Guardar cambios' : 'Crear método de contacto'"
+      [submitIcon]="isEdit ? 'pi pi-check' : 'pi pi-plus'"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

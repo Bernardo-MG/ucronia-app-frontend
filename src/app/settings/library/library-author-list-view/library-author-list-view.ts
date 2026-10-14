@@ -1,19 +1,22 @@
-
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
+import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Author } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { AuthorService } from '../author-service';
 
 @Component({
-  imports: [NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, SettingsInfo],
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {
@@ -26,8 +29,8 @@ export class LibraryAuthorListView implements OnInit {
   public data = new Page<Author>();
   public loading = false;
   public failures = new FailureStore();
-  public drawer = Drawer.NONE;
-  public readonly Drawer = Drawer;
+  public dialog = Dialog.NONE;
+  public readonly Dialog = Dialog;
   public selected = new Author();
   private sort = new Sorting();
 
@@ -50,29 +53,29 @@ export class LibraryAuthorListView implements OnInit {
 
   public onShowCreate(): void {
     this.selected = new Author();
-    this.drawer = Drawer.CREATION;
+    this.dialog = Dialog.CREATE;
     this.failures.clear();
   }
 
   public onShowInfo(item: any): void {
     this.selected = item;
-    this.drawer = Drawer.INFO;
+    this.dialog = Dialog.INFO;
     this.failures.clear();
   }
 
   public onShowEdit(item: any): void {
     this.selected = item;
-    this.drawer = Drawer.EDITION;
+    this.dialog = Dialog.EDIT;
     this.failures.clear();
   }
 
   public onReject(): void {
-    this.drawer = Drawer.NONE;
+    this.dialog = Dialog.NONE;
     this.failures.clear();
   }
 
   public onCancelEdit(): void {
-    this.drawer = Drawer.INFO;
+    this.dialog = Dialog.INFO;
     this.failures.clear();
   }
 
@@ -100,7 +103,7 @@ export class LibraryAuthorListView implements OnInit {
   }
 
   public onSave(data: any): void {
-    if (this.drawer === Drawer.CREATION) {
+    if (this.dialog === Dialog.CREATE) {
       this.onCreate(data);
     } else {
       this.onUpdate(data);
@@ -114,7 +117,7 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.drawer = Drawer.NONE;
+          this.dialog = Dialog.NONE;
           this.load(this.data.page);
         },
         error: error => {
@@ -134,7 +137,7 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.drawer = Drawer.NONE;
+          this.dialog = Dialog.NONE;
           this.load(this.data.page);
         },
         error: error => {
@@ -157,7 +160,8 @@ export class LibraryAuthorListView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
-      this.drawer = Drawer.NONE;
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
     }
   }
 
@@ -182,7 +186,7 @@ export class LibraryAuthorListView implements OnInit {
       .subscribe({
         complete: () => {
           this.failures.clear();
-          this.drawer = Drawer.NONE;
+          this.dialog = Dialog.NONE;
           onSuccess();
         },
         error: error => this.handleError(error)
@@ -205,9 +209,9 @@ interface Permissions {
   delete: boolean;
 }
 
-enum Drawer {
+enum Dialog {
   NONE = 'none',
   INFO = 'info',
-  CREATION = 'creation',
-  EDITION = 'edition'
+  CREATE = 'create',
+  EDIT = 'edit'
 }

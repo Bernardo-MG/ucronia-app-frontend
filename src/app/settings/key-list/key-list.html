@@ -13,16 +13,13 @@
     <tr>
       <td>
         {{ key.number }}
-        @if (!key.available) {
-          <p-tag value="Perdida" severity="danger" />
-        }
       </td>
+      <td><p-tag [value]="key.available ? 'Disponible' : 'Perdida'"
+        [severity]="key.available ? 'success' : 'danger'" /></td>
       <td>{{ key.description }}</td>
       <td class="w-40">
-        <p-button icon="pi pi-pencil" severity="secondary" [disabled]="!editable()" aria-label="Editar"
-          [attr.aria-disabled]="!editable()" (click)="edit.emit(key)" rounded text />
-        <p-button icon="pi pi-trash" severity="danger" [disabled]="!deletable()" aria-label="Borrar"
-          [attr.aria-disabled]="!deletable()" (click)="confirmDelete($event, key)" rounded text />
+        <p-button icon="pi pi-eye" severity="secondary" ariaLabel="Ver detalles"
+          (click)="show.emit(key)" rounded text />
       </td>
     </tr>
   </ng-template>

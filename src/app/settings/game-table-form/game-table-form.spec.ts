@@ -1,14 +1,20 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture } from '@angular/core/testing';
+import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { GameTableForm } from './game-table-form';
 
 describe('GameTableForm', () => {
   let fixture: ComponentFixture<GameTableForm>;
+  let component: GameTableForm;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [GameTableForm] }).compileComponents();
-    fixture = TestBed.createComponent(GameTableForm);
-    fixture.detectChanges();
+  beforeEach(() => {
+    fixture = createFormFixture(GameTableForm);
+    component = fixture.componentInstance;
   });
 
-  it('should create', () => expect(fixture.componentInstance).toBeTruthy());
+  it('requires the table name and description', () => {
+    editForm(component.form, { name: 'Table A' });
+    expect(component.form.invalid).toBeTrue();
+    editForm(component.form, { description: 'Main room' });
+    expect(component.form.valid).toBeTrue();
+  });
 });

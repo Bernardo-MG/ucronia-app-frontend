@@ -1,12 +1,15 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
 import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
+import { Drawer, DrawerModule } from 'primeng/drawer';
 import { finalize, forkJoin, Observable, of, switchMap } from 'rxjs';
 import { UserEditionFormData, UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
@@ -15,10 +18,12 @@ import { UserService } from '../user-service';
 
 @Component({
   selector: 'access-user-view',
-  imports: [ButtonModule, DrawerModule, UserForm, UserInfo, UserList],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, UserForm, UserInfo, UserList],
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
+
+  private readonly drawer = viewChild(Drawer);
 
   private readonly service = inject(UserService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -93,7 +98,7 @@ export class UserView implements OnInit {
 
     this.service.getProfile(user.username)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe(member => {
         this.member = member ?? new Profile();
@@ -146,7 +151,7 @@ export class UserView implements OnInit {
 
     this.service.getAllRoles()
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe(roles => {
         this.roleSelection = roles;
@@ -163,7 +168,7 @@ export class UserView implements OnInit {
       roles: this.service.getAllRoles(),
       member: this.service.getProfile(user.username)
     }).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => this.finishLoading())
     ).subscribe(({ roles, member }) => {
       this.roleSelection = roles;
       this.member = member ?? new Profile();
@@ -183,17 +188,29 @@ export class UserView implements OnInit {
 
     this.service.getAll(page, this.sort)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe(response => {
         this.data = response;
       });
   }
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
+  }
+
+  private finishLoading(): void {
+    this.loading = false;
+    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    this.drawer()?.cd.markForCheck();
   }
 
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {
@@ -201,7 +218,7 @@ export class UserView implements OnInit {
 
     action()
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe({
         complete: () => {

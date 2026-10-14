@@ -38,6 +38,7 @@ describe('NameForm', () => {
       component.save.subscribe(spy);
 
       component.form.patchValue({ name: 'Alice', number: 1 });
+      component.form.markAsDirty();
 
       // Trigger ngSubmit manually
       const formEl = fixture.debugElement.query(By.css('form'));

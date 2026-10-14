@@ -1,9 +1,9 @@
-<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1">
     <section class="space-y-6 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <!-- Transaction type -->
       <div>
-        <label class="block font-semibold text-gray-950">
+        <label class="block font-medium text-gray-950">
           Tipo de movimiento <span class="text-red-600" aria-hidden="true">*</span>
         </label>
         <p class="mb-3 mt-1 text-sm text-gray-500">Indica cómo afecta al saldo</p>
@@ -37,7 +37,7 @@
 
       <!-- Description -->
       <div>
-        <label for="descriptionInput" class="block font-semibold text-gray-950">
+        <label for="descriptionInput" class="block font-medium text-gray-950">
           Descripción <span class="text-red-600" aria-hidden="true">*</span>
         </label>
         <p class="mb-2 mt-1 text-sm text-gray-500">Explica brevemente el concepto del movimiento</p>
@@ -60,12 +60,12 @@
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <!-- Date -->
         <div>
-          <label for="dateInput" class="block font-semibold text-gray-950">
+          <label for="dateInput" class="block font-medium text-gray-950">
             Fecha <span class="text-red-600" aria-hidden="true">*</span>
           </label>
           <p class="mb-2 mt-1 text-sm text-gray-500">Fecha del movimiento</p>
-          <p-datepicker id="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
-            dateFormat="dd MM yy" placeholder="Selecciona una fecha" appendTo="body" class="w-full" />
+          <p-datepicker inputId="dateInput" formControlName="date" [maxDate]="today" [invalid]="isFieldInvalid('date')"
+            dateFormat="dd/mm/yy" placeholder="Selecciona una fecha" appendTo="body" class="w-full" />
           @for (failure of failures().getFailures('date'); track failure) {
             <p-message class="mt-2 block" severity="error" size="small" variant="simple">
               {{ failure.message }}
@@ -75,7 +75,7 @@
 
         <!-- Amount -->
         <div>
-          <label for="amountInput" class="block font-semibold text-gray-950">
+          <label for="amountInput" class="block font-medium text-gray-950">
             Importe <span class="text-red-600" aria-hidden="true">*</span>
           </label>
           <p class="mb-2 mt-1 text-sm text-gray-500">Importe del movimiento</p>
@@ -104,10 +104,8 @@
     </section>
   </div>
 
-  <div class="sticky bottom-0 mt-6 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true" (click)="cancelEdition.emit()" />
-    <p-button type="submit" [label]="form.get('type')?.value === TransactionType.INCOME ? 'Crear ingreso' : 'Crear gasto'"
-      icon="pi pi-plus" [severity]="form.get('type')?.value === TransactionType.INCOME ? 'success' : 'danger'"
-      [disabled]="!formStatus.saveEnabled" [loading]="loading()" />
-  </div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

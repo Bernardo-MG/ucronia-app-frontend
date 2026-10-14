@@ -11,7 +11,7 @@
     </div>
 
     @if (permissions.create) {
-      <p-button label="Nuevo rol" icon="pi pi-plus" (click)="onStartCreation()" />
+      <p-button type="button" label="Nuevo rol" icon="pi pi-plus" (onClick)="onStartCreation()" />
     }
   </header>
 
@@ -35,69 +35,55 @@
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-shield" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Detalle del rol" icon="pi pi-shield" subtitle="Rol de seguridad" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Detalle del rol</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Rol de seguridad</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <access-role-info [data]="selectedData" [loading]="loading" />
-
-          <div class="mt-6 flex w-full justify-between gap-2 border-t border-gray-200 pt-4">
-            @if (permissions.delete) {
-              <p-button label="Eliminar rol" icon="pi pi-trash" severity="danger" outlined (click)="onDelete({ event: $event, role: selectedData })" />
-            }
-
-            @if (permissions.edit) {
-              <p-button label="Editar permisos" icon="pi pi-key" (click)="onChangePermissions(selectedData)" />
-            }
-          </div>
         </div>
+        <ng-template #footer>
+          <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="loading"
+            editLabel="Editar permisos" editIcon="pi pi-key"
+            (delete)="onDelete({ event: $event, role: selectedData })" (edit)="onChangePermissions(selectedData)" />
+        </ng-template>
       }
 
       @case (Dialog.CREATE) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-shield" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Crear rol" icon="pi pi-shield" subtitle="Define el nombre y los permisos del nuevo rol" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Crear rol</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Define el nombre y los permisos del nuevo rol</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
-          <access-role-form [selection]="resourcePermissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" (cancel)="dialog = Dialog.NONE" />
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <access-role-form #fieldsAccessRoleForm formId="role-view-create" [showActions]="false" [selection]="resourcePermissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="role-view-create"
+            submitLabel="Crear rol"
+            submitIcon="pi pi-plus"
+            [disabled]="!fieldsAccessRoleForm.saveEnabled"
+            [loading]="fieldsAccessRoleForm.formStatus.loading"
+            (cancelForm)="onDrawerVisibleChange(false)" />
+        </ng-template>
       }
 
       @case (Dialog.PERMISSIONS) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-shield" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Editar rol" icon="pi pi-pencil" subtitle="Actualiza los permisos asignados" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Editar rol</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Actualiza los permisos asignados</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
-          <access-role-change-permission [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" (cancel)="dialog = Dialog.NONE" />
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <access-role-change-permission #fieldsAccessRoleChangePermission formId="role-view-permissions" [showActions]="false" [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="role-view-permissions"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAccessRoleChangePermission.saveEnabled"
+            [loading]="fieldsAccessRoleChangePermission.formStatus.loading"
+            (cancelForm)="onCancelEdit()" />
+        </ng-template>
       }
     }
   </p-drawer>
