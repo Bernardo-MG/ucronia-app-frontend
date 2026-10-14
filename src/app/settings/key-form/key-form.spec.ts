@@ -46,6 +46,7 @@ describe('KeyForm', () => {
       available: true,
       description: 'Patio'
     });
+    component.form.markAsDirty();
 
     component.onSave();
 
@@ -55,14 +56,16 @@ describe('KeyForm', () => {
       description: 'Patio'
     });
   });
-  it('allows creating a key with valid defaults and no optional edits', () => {
+  it('requires a dirty form when creating a key', () => {
     const emitted = spyOn(component.save, 'emit');
     expect(component.form.pristine).toBeTrue();
-    expect(component.saveEnabled).toBeTrue();
+    expect(component.saveEnabled).toBeFalse();
+    component.onSave();
+    expect(emitted).not.toHaveBeenCalled();
+    component.form.get('description')?.setValue('Main entrance');
+    component.form.markAsDirty();
     component.onSave();
     expect(emitted).toHaveBeenCalledTimes(1);
-    expect(emitted.calls.mostRecent().args[0].available).toBeTrue();
-    expect(emitted.calls.mostRecent().args[0].description).toBe('');
   });
 
   it('does not submit an unchanged existing key', () => {

@@ -30,8 +30,8 @@ export class FeeCreationForm implements OnChanges {
 
   public selectedMember?: Profile;
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

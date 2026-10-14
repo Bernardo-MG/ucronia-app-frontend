@@ -21,12 +21,12 @@ export class ContactSettingsForm implements OnChanges {
 
   public readonly save = output<SocialSettingsFormEvent>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
   /**
    * Form structure.
    */
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
@@ -47,7 +47,7 @@ export class ContactSettingsForm implements OnChanges {
 
   public ngOnChanges({ loading, email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (loading) {
-      this.formStatus.loading = loading.currentValue;
+      this.formStatus.loading = this.loading();
     }
     if (instagram) {
       this.form.get('instagram')?.setValue(instagram.currentValue);

@@ -26,9 +26,9 @@ export class LibraryBookCreationForm implements OnChanges {
   public readonly save = output<LibraryBookCreationFormData>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public readonly languages: Language[] = [];
 

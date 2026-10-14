@@ -28,9 +28,9 @@ export class NameForm implements OnChanges {
 
   public readonly save = output<NameFormData>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

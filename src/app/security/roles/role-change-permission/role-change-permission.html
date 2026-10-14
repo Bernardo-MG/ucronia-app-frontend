@@ -1,5 +1,5 @@
-<form [attr.id]="formId()" class="flex flex-col" (ngSubmit)="onSave()" novalidate>
-  <div class="flex-1 space-y-5">
+<form [formGroup]="form" [attr.id]="formId()" class="w-full min-w-0 space-y-5" (ngSubmit)="onSave()" novalidate>
+  <fieldset [disabled]="!formStatus.formEnabled" class="min-w-0 space-y-5 border-0 p-0">
     <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Rol actual</span>
 
@@ -76,7 +76,7 @@
         }
       </div>
     </section>
-  </div>
+  </fieldset>
 
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"

@@ -31,8 +31,8 @@ export class ContactMethodForm implements OnChanges {
 
   public readonly save = output<ContactMethod>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

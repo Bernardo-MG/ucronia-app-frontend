@@ -42,13 +42,13 @@ export class KeyForm implements OnChanges {
 
   public readonly save = output<Key>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
 
   public isEdit = false;
 
   public get saveEnabled(): boolean {
-    return this.form.valid && !this.loading() && (!this.isEdit || this.form.dirty);
+    return this.formStatus.saveEnabled;
   }
 
   constructor() {

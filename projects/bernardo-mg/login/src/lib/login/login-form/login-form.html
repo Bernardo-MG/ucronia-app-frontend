@@ -8,10 +8,10 @@
       <p-inputicon class="pi pi-envelope" />
 
       <input pInputText id="usernameInput" type="text" formControlName="username" autocomplete="username"
-        placeholder="usuario@ejemplo.com" class="w-full" [attr.aria-invalid]="form.controls['username'].invalid && form.controls['username'].touched" />
+        placeholder="usuario@ejemplo.com" class="w-full" [invalid]="isFieldInvalid('username')" />
     </p-iconfield>
 
-    @if (form.controls['username'].invalid && form.controls['username'].touched) {
+    @if (isFieldInvalid('username')) {
       <small class="mt-1 block text-red-600">
         Introduce tu usuario o correo electrónico
       </small>
@@ -29,7 +29,7 @@
 
         <input pInputText id="passwordInput" [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
           autocomplete="current-password" placeholder="Introduce tu contraseña" class="w-full !pr-12"
-          [attr.aria-invalid]="form.controls['password'].invalid && form.controls['password'].touched" />
+          [invalid]="isFieldInvalid('password')" />
       </p-iconfield>
 
       <button type="button"
@@ -39,7 +39,7 @@
       </button>
     </div>
 
-    @if (form.controls['password'].invalid && form.controls['password'].touched) {
+    @if (isFieldInvalid('password')) {
       <small class="mt-1 block text-red-600">
         Introduce tu contraseña
       </small>

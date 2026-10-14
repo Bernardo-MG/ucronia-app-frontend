@@ -38,9 +38,9 @@ export class LibraryBookLendingForm implements OnChanges {
     this.form.get('book')?.setValue(value);
   }
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public memberName = '';
 

@@ -64,7 +64,7 @@ export class ProfileEditionForm implements OnChanges {
 
   public readonly save = output<FullProfile>();
 
-  public today = new Date();
+  public readonly today = new Date();
 
   public lockedTypes: string[] = [];
 
@@ -94,14 +94,14 @@ export class ProfileEditionForm implements OnChanges {
 
   public selected: string[] = [];
 
-  public options = [
+  public readonly options = [
     { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
     { label: 'Member', value: 'member', icon: 'pi-users', disabled: false },
     { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

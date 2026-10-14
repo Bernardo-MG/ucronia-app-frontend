@@ -31,13 +31,13 @@ export class FeeEditionForm implements OnChanges {
   public readonly save = output<FeeEditionEvent>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public fee = new Fee();
 
-  public today = new Date();
+  public readonly today = new Date();
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

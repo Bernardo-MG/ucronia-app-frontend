@@ -32,8 +32,8 @@ export class FeeTypeForm implements OnChanges {
 
   public readonly save = output<FeeType>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

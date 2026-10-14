@@ -57,8 +57,8 @@ export class ActivityForm implements OnChanges, OnInit {
   public readonly save = output<Activity>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
   public imageOptions: ActivityImageOption[] = [];
   public showImageField = false;
 

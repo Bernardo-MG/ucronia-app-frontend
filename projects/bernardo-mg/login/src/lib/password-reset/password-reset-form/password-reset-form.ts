@@ -25,9 +25,9 @@ export class PasswordResetForm implements OnChanges {
 
   public readonly save = output<string>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

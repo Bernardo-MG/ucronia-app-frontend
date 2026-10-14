@@ -37,7 +37,9 @@ describe('LoginForm', () => {
 
     it('should have a valid form when the username and password are not empty', () => {
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       expect(component.form.valid).toBeTrue();
@@ -69,7 +71,9 @@ describe('LoginForm', () => {
 
     it('should enable the login button when both username and password are set', () => {
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -78,6 +82,7 @@ describe('LoginForm', () => {
 
     it('should disable the login button when missing the username', () => {
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -86,6 +91,7 @@ describe('LoginForm', () => {
 
     it('should disable the login button when missing the password', () => {
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
@@ -98,7 +104,9 @@ describe('LoginForm', () => {
 
     it('should disable the login button when the form is valid but it is waiting', () => {
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       component.waiting = true;
       fixture.detectChanges();
 
@@ -164,7 +172,9 @@ describe('LoginForm', () => {
       spyOn(component.login, 'emit');
 
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const formEl = fixture.debugElement.query(By.css('form'));
@@ -177,7 +187,9 @@ describe('LoginForm', () => {
       spyOn(component.login, 'emit');
 
       component.form.get('username')?.setValue('');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const formEl = fixture.debugElement.query(By.css('form'));
@@ -190,7 +202,9 @@ describe('LoginForm', () => {
       spyOn(component.login, 'emit');
 
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('#login button');
@@ -203,7 +217,9 @@ describe('LoginForm', () => {
       spyOn(component.login, 'emit');
 
       component.form.get('username')?.setValue('');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const formEl = fixture.debugElement.query(By.css('form'));
@@ -216,7 +232,9 @@ describe('LoginForm', () => {
       spyOn(component.lostPassword, 'emit');
 
       component.form.get('username')?.setValue('username');
+      component.form.markAsDirty();
       component.form.get('password')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('#lostPassword');
@@ -309,6 +327,7 @@ describe('LoginForm', () => {
 
     it('should show the login failure warning when receiving the failure flag', () => {
       component.failedLogin = true;
+      fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
 
       const warning = fixture.debugElement.nativeElement.querySelector('#loginFailedWarning');
@@ -316,6 +335,28 @@ describe('LoginForm', () => {
       expect(warning).not.toBeUndefined();
     });
 
+  });
+
+  it('does not emit another login while waiting', () => {
+    component.form.setValue({ username: 'username', password: 'password' });
+    component.form.markAsDirty();
+    const emitted = spyOn(component.login, 'emit');
+    component.waiting = true;
+    component.onLogin();
+    expect(emitted).not.toHaveBeenCalled();
+    expect(component.loginEnabled).toBeFalse();
+    component.waiting = false;
+    component.onLogin();
+    expect(emitted).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not submit a valid pristine form', () => {
+    component.form.setValue({ username: 'username', password: 'password' });
+    const emitted = spyOn(component.login, 'emit');
+    expect(component.form.pristine).toBeTrue();
+    expect(component.saveEnabled).toBeFalse();
+    component.onLogin();
+    expect(emitted).not.toHaveBeenCalled();
   });
 
 });

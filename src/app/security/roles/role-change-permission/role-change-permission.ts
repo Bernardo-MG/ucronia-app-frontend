@@ -1,12 +1,13 @@
-import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { FormStatus } from '@bernardo-mg/form';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'access-role-change-permission',
-  imports: [DrawerFormActions, FormsModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule],
   templateUrl: './role-change-permission.html'
 })
 export class RoleChangePermission implements OnChanges {
@@ -22,12 +23,35 @@ export class RoleChangePermission implements OnChanges {
   public readonly save = output<ResourcePermission[]>();
   public readonly cancelEdition = output<void>();
 
-  public selected: ResourcePermission[] = [];
+  public readonly form;
+  public readonly formStatus: FormStatus;
+
+  public get selected(): ResourcePermission[] {
+    return this.form.controls.permissions.value;
+  }
+
+  public set selected(value: ResourcePermission[]) {
+    this.form.controls.permissions.setValue(value);
+    this.form.markAsDirty();
+  }
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
   public filterValue = '';
 
-  public ngOnChanges({ permissions }: SimpleChanges): void {
+  constructor() {
+    const fb = inject(FormBuilder);
+    this.form = fb.nonNullable.group({ permissions: [[] as ResourcePermission[]] });
+    this.formStatus = new FormStatus(this.form);
+  }
+
+  public ngOnChanges({ permissions, loading }: SimpleChanges): void {
+    if (loading) {
+      this.formStatus.loading = this.loading();
+    }
     if (permissions) {
-      this.selected = [...permissions.currentValue];
+      this.form.reset({ permissions: [...permissions.currentValue] });
     }
   }
 
@@ -127,9 +151,6 @@ export class RoleChangePermission implements OnChanges {
     return Array.from(permissions.values());
   }
 
-  public get saveEnabled(): boolean {
-    return !this.loading();
-  }
 }
 
 interface PermissionGroup {

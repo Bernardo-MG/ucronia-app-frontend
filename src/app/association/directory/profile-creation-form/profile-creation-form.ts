@@ -23,8 +23,8 @@ export class ProfileCreationForm implements OnChanges {
 
   public readonly save = output<ProfileCreationFormData>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
   
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

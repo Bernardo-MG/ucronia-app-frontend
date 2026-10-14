@@ -1,3 +1,4 @@
+import { FormStatus } from '@bernardo-mg/form';
 import { Component, inject, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
@@ -17,21 +18,13 @@ import { MessageModule } from 'primeng/message';
 })
 export class LoginForm {
 
-  private _waiting = false;
-
   @Input()
   public set waiting(waiting: boolean) {
-    this._waiting = waiting;
-
-    if (waiting) {
-      this.form.disable();
-    } else {
-      this.form.enable();
-    }
+    this.formStatus.loading = waiting;
   }
 
   public get waiting(): boolean {
-    return this._waiting;
+    return this.formStatus.loading;
   }
 
   @Input()
@@ -42,7 +35,13 @@ export class LoginForm {
   public readonly lostPassword = output<void>();
 
   public readonly form: FormGroup;
+  public readonly formStatus: FormStatus;
+
   public passwordVisible = false;
+
+  public get loginEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   public constructor() {
     const formBuilder = inject(FormBuilder);
@@ -51,15 +50,18 @@ export class LoginForm {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.formStatus = new FormStatus(this.form);
   }
 
-  public get loginEnabled(): boolean {
-    return this.form.valid && !this.waiting;
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property);
   }
 
   public onLogin(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (!this.loginEnabled) {
+      if (this.form.invalid) {
+        this.form.markAllAsTouched();
+      }
       return;
     }
 

@@ -24,7 +24,7 @@ Use the same structure for new creation and editing screens. Existing examples:
 - Expose `loading`, `failures`, `formId`, `showActions`, `saveEnabled`, `save` and `cancelEdition` on drawer forms. A combined user form may also expose an update event.
 - `onSave(): void` marks fields touched and returns when `saveEnabled` is false, before serializing or emitting. This also guards Enter submissions.
 - Loading updates `FormStatus`, disables controls and blocks submission. Standalone member searches also receive `[disabled]="loading()"`.
-- Editing normally requires a valid, dirty form. Creation with entirely optional fields, such as a key, may submit valid defaults. Upload creation additionally requires a selected file.
+- Editing normally requires a valid, dirty form. Upload creation additionally requires a selected file.
 
 ## Footer actions
 
@@ -35,3 +35,10 @@ Creation uses `Crear …` and `pi pi-plus`; editing uses `Guardar cambios` and `
 Payments, lending, returns, invitations and password changes keep their specific labels and icons.
 Page forms without cancellation can use the same footer with `[showCancel]="false"`.
 Authentication library forms use their own PrimeNG buttons to avoid a dependency on the application, while retaining the same field layout and primary-button styling.
+
+## FormStatus
+
+Keep `formStatus` readonly and initialize it once against the component's form.
+Forward loading changes to `formStatus.loading`; do not enable/disable the form separately.
+Both the submit handler and its button use the component's `saveEnabled` getter, which delegates to `FormStatus` and may add domain requirements such as a selected upload or matching passwords.
+All forms require valid, dirty controls and must not be loading before submission. Form instances and other fields assigned only during construction are readonly.

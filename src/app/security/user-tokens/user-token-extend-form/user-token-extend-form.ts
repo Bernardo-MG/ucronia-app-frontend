@@ -25,7 +25,7 @@ export class UserTokenExtendForm implements OnChanges {
     this.form.get('expirationDate')?.setValue(value);
   }
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
   public readonly form;
 

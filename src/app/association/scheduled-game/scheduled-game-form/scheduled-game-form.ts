@@ -43,7 +43,7 @@ export class ScheduledGameForm implements OnChanges {
   public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
   public form: FormGroup;
   public master = new Profile();
   public recurring = false;

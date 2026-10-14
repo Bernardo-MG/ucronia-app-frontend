@@ -34,11 +34,11 @@ export class TransactionForm implements OnChanges {
   public readonly save = output<Transaction>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
-  public today = new Date();
+  public readonly today = new Date();
 
   public readonly TransactionType = TransactionType;
 

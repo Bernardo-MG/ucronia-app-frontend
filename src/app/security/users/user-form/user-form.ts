@@ -40,8 +40,8 @@ export class UserForm implements OnChanges {
   public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
   public username = '';
   public roles: Role[] = [];
   public roleFilter = '';

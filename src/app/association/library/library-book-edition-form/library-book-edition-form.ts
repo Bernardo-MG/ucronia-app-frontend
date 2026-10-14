@@ -44,9 +44,9 @@ export class LibraryBookEditionForm implements OnChanges {
   public readonly save = output<FictionBook | GameBook>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public readonly languages: Language[] = [];
 

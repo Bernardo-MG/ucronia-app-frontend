@@ -35,13 +35,13 @@ export class LibraryBookReturnForm implements OnChanges {
 
   public readonly save = output<BookReturnedEvent>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
-  public fee = new Fee();
+  public readonly fee = new Fee();
 
-  public memberName = '';
+  public readonly memberName = '';
 
   public readonly today = new Date();
 

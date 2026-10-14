@@ -23,6 +23,7 @@ export class GameTableForm implements OnChanges {
   public readonly failures = input(new FailureStore());
   @Input() public set data(value: GameTable) {
     this.form.patchValue(value);
+    this.isEdit = true;
   }
 
   public isEdit = false;

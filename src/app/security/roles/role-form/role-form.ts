@@ -36,9 +36,9 @@ export class RoleForm implements OnChanges {
 
   public filterValue = '';
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

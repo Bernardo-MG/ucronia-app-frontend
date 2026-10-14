@@ -19,7 +19,7 @@ import { MessageModule } from 'primeng/message';
 })
 export class FeePaymentsForm implements OnChanges {
 
-  private fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
@@ -34,11 +34,11 @@ export class FeePaymentsForm implements OnChanges {
 
   public selectedMember?: Profile;
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
-  public today = new Date();
+  public readonly today = new Date();
 
   public get months(): FormArray {
     return this.form.get('months') as FormArray;

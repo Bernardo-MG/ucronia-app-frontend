@@ -56,6 +56,7 @@ describe('ContactSettingsForm', () => {
     });
 
     it('should update loading state', () => {
+      fixture.componentRef.setInput('loading', true);
       component.ngOnChanges({
         loading: { currentValue: true, previousValue: false, firstChange: false, isFirstChange: () => false }
       });
