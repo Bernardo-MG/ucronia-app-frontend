@@ -1,3 +1,5 @@
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -17,7 +19,7 @@ import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [DrawerFormActions, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
+  imports: [InputGroupModule, InputGroupAddonModule, DrawerFormActions, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm {

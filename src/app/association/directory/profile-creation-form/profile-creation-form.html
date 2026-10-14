@@ -1,26 +1,26 @@
 <form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
-  <section formGroupName="name" class="grid grid-cols-1 gap-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm sm:grid-cols-2">
-  <div>
-    <label for="firstNameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
-    <input pInputText id="firstNameInput" formControlName="firstName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.firstName')" />
-    @for (failure of failures().getFailures('name.firstName'); track failure) {
-      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+  <section formGroupName="name" class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div class="mb-2 grid grid-cols-3 gap-2 pl-11">
+      <label for="firstNameInput" class="block text-sm font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+      <label for="nicknameInput" class="block text-sm font-medium text-gray-950">Apodo</label>
+      <label for="lastNameInput" class="block text-sm font-medium text-gray-950">Apellidos</label>
+    </div>
+    <p-inputgroup>
+      <p-inputgroup-addon styleClass="w-11 min-w-11">
+        <i class="pi pi-user" aria-hidden="true"></i>
+      </p-inputgroup-addon>
+      <input pInputText id="firstNameInput" formControlName="firstName" maxlength="50" class="min-w-0"
+        autocomplete="given-name" [invalid]="isFieldInvalid('name.firstName')" />
+      <input pInputText id="nicknameInput" formControlName="nickname" maxlength="50" class="min-w-0"
+        autocomplete="nickname" [invalid]="isFieldInvalid('name.nickname')" />
+      <input pInputText id="lastNameInput" formControlName="lastName" maxlength="50" class="min-w-0"
+        autocomplete="family-name" [invalid]="isFieldInvalid('name.lastName')" />
+    </p-inputgroup>
+    @for (property of ['firstName', 'nickname', 'lastName']; track property) {
+      @for (failure of failures().getFailures('name.' + property); track failure) {
+        <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
     }
-  </div>
-  <div>
-    <label for="lastNameInput" class="block font-medium text-gray-950">Apellidos</label>
-    <input pInputText id="lastNameInput" formControlName="lastName" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.lastName')" />
-    @for (failure of failures().getFailures('name.lastName'); track failure) {
-      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
-    }
-  </div>
-  <div>
-    <label for="nicknameInput" class="block font-medium text-gray-950">Apodo</label>
-    <input pInputText id="nicknameInput" formControlName="nickname" maxlength="50" class="mt-2 w-full" [invalid]="isFieldInvalid('name.nickname')" />
-    @for (failure of failures().getFailures('name.nickname'); track failure) {
-      <p-message class="mt-1 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
-    }
-  </div>
   </section>
   @if (showActions()) {
     <shared-drawer-form-actions class="mt-6" submitLabel="Crear perfil" submitIcon="pi pi-plus"
