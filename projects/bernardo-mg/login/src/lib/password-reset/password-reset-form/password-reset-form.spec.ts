@@ -235,6 +235,7 @@ describe('PasswordResetForm', () => {
 
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('password');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const formEl = fixture.debugElement.query(By.css('form'));
