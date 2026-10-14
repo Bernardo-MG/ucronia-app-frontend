@@ -81,7 +81,8 @@
         </div>
         <ng-template #footer>
         <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
-          editLabel="Editar cuota" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDITION" />
+          [editLabel]="selectedData.paid ? 'Editar cuota' : 'Pagar'"
+          [editIcon]="selectedData.paid ? 'pi pi-pencil' : 'pi pi-euro'" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDITION" />
       </ng-template>
       }
 
