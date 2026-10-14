@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -8,7 +9,6 @@ import { FeeType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
 import { FeeTypeList } from '../fee-type-list/fee-type-list';
@@ -16,7 +16,7 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-view',
-  imports: [DrawerFormActions, DrawerActions, DetailField, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
+  imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {

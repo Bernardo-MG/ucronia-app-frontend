@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -8,14 +9,13 @@ import { GameTable } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { GameTableForm } from '../game-table-form/game-table-form';
 import { GameTableList } from '../game-table-list/game-table-list';
 import { GameTableService } from '../game-table-service';
 
 @Component({
-  selector: 'assoc-game-table-view', imports: [DrawerFormActions, DrawerActions, DetailField, DrawerModule, ButtonModule, GameTableForm, GameTableList],
+  selector: 'assoc-game-table-view', imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, GameTableForm, GameTableList],
   templateUrl: './game-table-view.html'
 })
 export class GameTableView implements OnInit {

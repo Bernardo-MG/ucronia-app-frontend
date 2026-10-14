@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -8,7 +9,6 @@ import { ContactMethod } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
@@ -16,7 +16,7 @@ import { ContactMethodService } from '../contact-method-service';
 
 @Component({
   selector: 'assoc-contact-method-view',
-  imports: [DrawerFormActions, DrawerActions, DetailField, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
+  imports: [DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
   templateUrl: './contact-method-view.html'
 })
 export class ContactMethodView implements OnInit {

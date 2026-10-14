@@ -14,11 +14,19 @@
   @switch (drawer) {
     @case (Drawer.INFO) {
       <ng-template #header>
-        Autor
+        <div class="flex items-center gap-3">
+          <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
+            <i class="pi pi-user" aria-hidden="true"></i>
+          </span>
+          <div>
+            <h2 class="text-xl font-semibold text-gray-950">Detalle de autor</h2>
+            <p class="mt-0.5 text-sm font-normal text-gray-500">Ajustes / Biblioteca</p>
+          </div>
+        </div>
       </ng-template>
-      <div>
-        <ui-detail-field [loading]="loading" icon="pi pi-hashtag" name="Número" [value]="selected.number" />
-        <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
+      <div class="w-full px-2 py-4 sm:px-4">
+        <shared-settings-info [loading]="loading" category="Autor" icon="pi pi-user"
+          [number]="selected.number" [title]="selected.name" />
       </div>
       <ng-template #footer>
         <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="loading"

@@ -1,4 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
+import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -10,12 +11,11 @@ import { Author } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { DetailField } from 'projects/bernardo-mg/ui/src/lib/details/detail-field/detail-field';
 import { finalize, Observable } from 'rxjs';
 import { AuthorService } from '../author-service';
 
 @Component({
-  imports: [DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, DetailField],
+  imports: [DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, SettingsInfo],
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {
