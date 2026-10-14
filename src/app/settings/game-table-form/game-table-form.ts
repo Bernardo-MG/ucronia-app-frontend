@@ -32,6 +32,10 @@ export class GameTableForm implements OnChanges {
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
     this.form = fb.group({
@@ -58,7 +62,4 @@ export class GameTableForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }

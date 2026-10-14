@@ -40,6 +40,10 @@ export class RoleForm implements OnChanges {
 
   public form: FormGroup;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -198,9 +202,6 @@ export class RoleForm implements OnChanges {
       || `${permission.resource}:${permission.action}`;
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 interface PermissionGroup {

@@ -28,6 +28,10 @@ export class ContactSettingsForm implements OnChanges {
    */
   public form: FormGroup;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const formBuilder = inject(FormBuilder);
 
@@ -77,10 +81,6 @@ export class ContactSettingsForm implements OnChanges {
         this.save.emit(changedValues);
       }
     }
-  }
-
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
   }
 
 }

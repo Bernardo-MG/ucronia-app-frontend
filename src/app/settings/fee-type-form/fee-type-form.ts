@@ -35,6 +35,10 @@ export class FeeTypeForm implements OnChanges {
   public formStatus: FormStatus;
   public form: FormGroup;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -65,7 +69,4 @@ export class FeeTypeForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }

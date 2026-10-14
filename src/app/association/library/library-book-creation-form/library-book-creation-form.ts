@@ -34,6 +34,10 @@ export class LibraryBookCreationForm implements OnChanges {
 
   public kind: 'fiction' | 'game' = 'game';
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
     const config = inject(LibraryConfig);
@@ -74,9 +78,6 @@ export class LibraryBookCreationForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class LibraryBookCreationFormData {

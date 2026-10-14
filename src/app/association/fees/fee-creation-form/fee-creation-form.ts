@@ -33,6 +33,10 @@ export class FeeCreationForm implements OnChanges {
   public formStatus: FormStatus;
   public form: FormGroup;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -75,9 +79,6 @@ export class FeeCreationForm implements OnChanges {
     memberControl?.markAsTouched();
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class FeeCreationEvent {

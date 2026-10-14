@@ -42,6 +42,10 @@ export class TransactionForm implements OnChanges {
 
   public readonly TransactionType = TransactionType;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -84,9 +88,6 @@ export class TransactionForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 enum TransactionType {

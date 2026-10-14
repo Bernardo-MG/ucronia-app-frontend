@@ -45,6 +45,10 @@ export class LibraryBookReturnForm implements OnChanges {
 
   public readonly today = new Date();
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -79,9 +83,6 @@ export class LibraryBookReturnForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class BookReturnedEvent {

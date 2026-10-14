@@ -33,6 +33,10 @@ export class UserTokenExtendForm implements OnChanges {
 
   public readonly today = new Date();
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -62,7 +66,4 @@ export class UserTokenExtendForm implements OnChanges {
     }
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }

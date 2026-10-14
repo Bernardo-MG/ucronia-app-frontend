@@ -47,6 +47,10 @@ export class KeyForm implements OnChanges {
 
   public isEdit = false;
 
+  public get saveEnabled(): boolean {
+    return this.form.valid && !this.loading() && (!this.isEdit || this.form.dirty);
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -77,7 +81,4 @@ export class KeyForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get saveEnabled(): boolean {
-    return this.form.valid && !this.loading() && (!this.isEdit || this.form.dirty);
-  }
 }

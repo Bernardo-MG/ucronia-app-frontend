@@ -103,6 +103,10 @@ export class ProfileEditionForm implements OnChanges {
   public formStatus: FormStatus;
   public form: FormGroup;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     this.form = this.fb.group({
       number: [-1],
@@ -204,8 +208,5 @@ export class ProfileEditionForm implements OnChanges {
     feeTypeControl.updateValueAndValidity();
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 

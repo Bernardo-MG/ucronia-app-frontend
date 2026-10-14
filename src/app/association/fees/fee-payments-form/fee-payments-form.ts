@@ -44,6 +44,10 @@ export class FeePaymentsForm implements OnChanges {
     return this.form.get('months') as FormArray;
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     this.form = this.fb.group({
       paymentDate: [null, Validators.required],
@@ -109,9 +113,6 @@ export class FeePaymentsForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class FeesPaymentEvent {

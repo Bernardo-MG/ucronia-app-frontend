@@ -37,6 +37,10 @@ export class ImageForm implements OnChanges {
   public readonly formStatus: FormStatus;
   public file?: File;
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
+  }
+
   constructor() {
     this.form = this.fb.group({
       number: [0],
@@ -90,9 +94,6 @@ export class ImageForm implements OnChanges {
     return names.join(' / ');
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
-  }
 }
 
 interface FolderOption {

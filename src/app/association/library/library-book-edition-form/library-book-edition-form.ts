@@ -106,6 +106,10 @@ export class LibraryBookEditionForm implements OnChanges {
     return [this.noBookTypeOption, ...this.bookTypes];
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
     const config = inject(LibraryConfig);
@@ -311,9 +315,6 @@ export class LibraryBookEditionForm implements OnChanges {
       });
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class LibraryBookEditionFormData {

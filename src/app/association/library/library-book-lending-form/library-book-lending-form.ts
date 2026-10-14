@@ -44,6 +44,10 @@ export class LibraryBookLendingForm implements OnChanges {
 
   public memberName = '';
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -86,9 +90,6 @@ export class LibraryBookLendingForm implements OnChanges {
     this.form.get('borrower')?.setValue(member.number);
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class BookLendingEvent {

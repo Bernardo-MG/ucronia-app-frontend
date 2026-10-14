@@ -60,6 +60,10 @@ export class ScheduledGameForm implements OnChanges {
     { name: 'Partida única', value: ScheduledGameType.ONESHOT }
   ];
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     this.form = this.fb.group({
       number: [null],
@@ -140,7 +144,4 @@ export class ScheduledGameForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }

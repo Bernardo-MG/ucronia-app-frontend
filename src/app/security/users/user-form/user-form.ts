@@ -47,6 +47,10 @@ export class UserForm implements OnChanges {
   public roleFilter = '';
   public selectedMember = new Profile();
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
 
@@ -129,9 +133,6 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 }
 
 export class UserFormData {
