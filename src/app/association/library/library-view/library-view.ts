@@ -158,7 +158,11 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
       () => {
-        this.load(this.data.page);
+        if (this.display === Display.LENDINGS) {
+          this.loadLendings(this.lendings.page);
+        } else {
+          this.load(this.data.page);
+        }
         this.loadSummary();
       }
     );
@@ -225,6 +229,20 @@ export class LibraryView implements OnInit {
     } else {
       this.loadLendings();
     }
+  }
+
+  public onShowLendingReturn(): void {
+    if (!this.permissions.edit || this.selectedLending.returnDate || this.status.loading) {
+      return;
+    }
+
+    this.failures.clear();
+    this.dialog = Dialog.LENDING_RETURN;
+  }
+
+  public onCancelLendingReturn(): void {
+    this.failures.clear();
+    this.dialog = Dialog.LENDING_INFO;
   }
 
   public onShowLending(lending: BookLending): void {

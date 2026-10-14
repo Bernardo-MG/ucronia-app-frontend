@@ -87,6 +87,32 @@
           <assoc-library-lending-info [lending]="selectedLending"
             [borrowerName]="lendingBorrowerNames[selectedLending.borrower] || ''" />
         </div>
+        <ng-template #footer>
+          @if (permissions.edit && !selectedLending.returnDate) {
+            <div class="flex justify-end">
+              <p-button type="button" label="Devolver libro" icon="pi pi-undo" [disabled]="status.loading"
+                (onClick)="onShowLendingReturn()" />
+            </div>
+          }
+        </ng-template>
+      }
+      @case (Dialog.LENDING_RETURN) {
+        <ng-template #header>
+          <shared-drawer-header title="Devolver libro" icon="pi pi-undo"
+            [subtitle]="selectedLending.book.title.fullTitle" />
+        </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-library-book-return-form #lendingReturnForm formId="library-lending-return" [showActions]="false"
+            [loading]="status.loading" [failures]="failures" [borrower]="selectedLending.borrower"
+            [borrowerName]="lendingBorrowerNames[selectedLending.borrower] || ''"
+            [book]="selectedLending.book.number" [lentDate]="selectedLending.lendingDate"
+            (save)="onReturn($event)" />
+        </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions formId="library-lending-return" submitLabel="Devolver libro"
+            submitIcon="pi pi-undo" [disabled]="!permissions.edit || !lendingReturnForm.saveEnabled"
+            [loading]="lendingReturnForm.formStatus.loading" (cancelForm)="onCancelLendingReturn()" />
+        </ng-template>
       }
       @case (Dialog.INFO) {
         <ng-template #header>
