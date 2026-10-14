@@ -1,48 +1,65 @@
 <div class="p-4 space-y-6">
-  <header class="flex items-center justify-between">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Tipo de libro</h1>
     @if (permissions.create) {
-      <p-button icon="pi pi-plus-circle" (click)="drawer = Drawer.CREATION" [disabled]="!permissions.create"
-        aria-label="Nuevo tipo de libro" [attr.aria-disabled]="!permissions.create" rounded />
+      <p-button type="button" label="Nuevo tipo de libro" icon="pi pi-plus" (onClick)="onShowCreate()" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
   <shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)" (sortChange)="onSort($event)"
     (pageChange)="load($event)"></shared-name-list>
 </div>
 
-@switch (drawer) {
-  @case (Drawer.INFO) {
-    <ng-template #header>
-      Tipo
-    </ng-template>
-    <div>
-      <ui-detail-field [loading]="loading" icon="pi pi-user" name="Nombre" [value]="selected.name" />
-    </div>
-    <ng-template #footer>
-      <p-button icon="pi pi-pencil" [disabled]="!permissions.edit" (click)="onShowEdit(selected)" rounded text />
-      <p-button icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete" (click)="onDelete($event)" rounded
-        text />
-    </ng-template>
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <ng-template #header>
+        <shared-drawer-header title="Tipo de libro" icon="pi pi-book" subtitle="Ajustes / Biblioteca" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <shared-settings-info [loading]="loading" category="Tipo de libro" icon="pi pi-book"
+          [number]="selected.number" [title]="selected.name" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="loading"
+          editLabel="Editar tipo" (delete)="onDelete($event)" (edit)="onShowEdit(selected)" />
+      </ng-template>
+    }
+    @case (Dialog.CREATE) {
+      <ng-template #header>
+        <shared-drawer-header title="Crear tipo de libro" icon="pi pi-book" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <shared-name-form #fieldsSharedNameForm formId="library-book-type-list-view-creation" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="library-book-type-list-view-creation"
+          submitLabel="Crear tipo de libro"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsSharedNameForm.saveEnabled"
+          [loading]="fieldsSharedNameForm.formStatus.loading"
+          (cancelForm)="onReject()" />
+      </ng-template>
+
+    }
+    @case (Dialog.EDIT) {
+      <ng-template #header>
+        <shared-drawer-header title="Editar tipo de libro" icon="pi pi-pencil" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <shared-name-form #fieldsSharedNameForm formId="library-book-type-list-view-edition" [showActions]="false" [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="library-book-type-list-view-edition"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsSharedNameForm.saveEnabled"
+          [loading]="fieldsSharedNameForm.formStatus.loading"
+          (cancelForm)="onCancelEdit()" />
+      </ng-template>
+
+    }
   }
-  @case (Drawer.CREATION) {
-    <ng-template #header>
-      Crear tipo
-    </ng-template>
-    <div class="w-full">
-      <shared-name-form [loading]="loading" [failures]="failures" (save)="onSave($event)"
-        (reject)="onReject()"></shared-name-form>
-    </div>
-  }
-  @case (Drawer.EDITION) {
-    <ng-template #header>
-      Modificar tipo
-    </ng-template>
-    <div class="w-full">
-      <shared-name-form [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"
-        (reject)="onReject()"></shared-name-form>
-    </div>
-    <ng-template #footer>
-      <p-button icon="pi pi-times" severity="secondary" (click)="onCancelEdit()" rounded text />
-    </ng-template>
-  }
-}
+</p-drawer>

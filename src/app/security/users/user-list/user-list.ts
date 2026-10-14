@@ -39,7 +39,6 @@ export class UserList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<User>();
-  public readonly edit = output<User>();
   public readonly active = output<UserStatusChange>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
@@ -60,20 +59,6 @@ export class UserList {
 
   public openEditionMenu(event: Event, user: User): void {
     this.editionMenuItems = [
-      {
-        label: 'Ver detalles',
-        icon: 'pi pi-eye',
-        command: () => this.show.emit(user)
-      },
-      {
-        label: 'Editar datos',
-        icon: 'pi pi-pencil',
-        disabled: !this.editable(),
-        command: () => this.edit.emit(user)
-      },
-      {
-        separator: true
-      },
       {
         label: user.enabled ? 'Desactivar' : 'Activar',
         icon: user.enabled

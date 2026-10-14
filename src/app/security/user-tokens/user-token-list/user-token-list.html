@@ -29,7 +29,7 @@
         Estado
       </th>
 
-      <th class="w-14">
+      <th class="w-28">
         <span class="sr-only">Acciones</span>
       </th>
     </tr>
@@ -73,8 +73,12 @@
       </td>
 
       <td class="text-right">
-        <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text aria-label="Acciones del token"
-          (click)="openActionsMenu($event, token)" />
+        <p-button icon="pi pi-eye" severity="secondary" rounded text ariaLabel="Ver detalles del token"
+          (click)="show.emit(token)" />
+        @if (editable() && !token.revoked && !token.consumed) {
+          <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text ariaLabel="Acciones del token"
+            (click)="openActionsMenu($event, token)" />
+        }
       </td>
     </tr>
   </ng-template>

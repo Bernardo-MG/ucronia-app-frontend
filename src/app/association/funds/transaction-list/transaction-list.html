@@ -23,7 +23,7 @@
       </td>
       <td class="text-gray-600">{{ transaction.date | date:'d MMM y' }}</td>
       <td class="text-right">
-        <p-button icon="pi pi-ellipsis-v" severity="secondary" aria-label="Ver detalles de la transacción"
+        <p-button icon="pi pi-eye" severity="secondary" ariaLabel="Ver detalles de la transacción"
           (click)="show.emit(transaction.index)" rounded text />
       </td>
     </tr>

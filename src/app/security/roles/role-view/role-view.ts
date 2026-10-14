@@ -1,11 +1,14 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, viewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
+import { Drawer, DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { RoleChangePermission } from '../role-change-permission/role-change-permission';
 import { RoleForm } from '../role-form/role-form';
@@ -15,17 +18,12 @@ import { RoleService } from '../role-service';
 
 @Component({
   selector: 'access-role-view',
-  imports: [
-    ButtonModule,
-    DrawerModule,
-    RoleForm,
-    RoleInfo,
-    RoleChangePermission,
-    RoleList
-  ],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
+
+  private readonly drawer = viewChild(Drawer);
 
   private readonly service = inject(RoleService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -131,7 +129,7 @@ export class RoleView implements OnInit {
 
     this.service.getAvailablePermissions(role.name)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe(permissions => {
         this.resourcePermissions = permissions;
@@ -144,7 +142,7 @@ export class RoleView implements OnInit {
 
     this.service.getAllPermissions()
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe(permissions => {
         this.resourcePermissions = permissions;
@@ -157,17 +155,29 @@ export class RoleView implements OnInit {
 
     this.service.getAll(page, this.sort)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe(response => {
         this.data = response;
       });
   }
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
+  }
+
+  private finishLoading(): void {
+    this.loading = false;
+    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    this.drawer()?.cd.markForCheck();
   }
 
   private call(
@@ -178,7 +188,7 @@ export class RoleView implements OnInit {
 
     action()
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.finishLoading())
       )
       .subscribe({
         complete: () => {

@@ -1,6 +1,7 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { GameTable, Profile, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
@@ -15,7 +16,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-scheduled-game-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule,
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule,
     MessageModule, SelectModule, TextareaModule, ToggleSwitchModule, MemberSearch],
   templateUrl: './scheduled-game-form.html'
 })
@@ -23,7 +24,13 @@ export class ScheduledGameForm implements OnChanges {
 
   private readonly fb = inject(FormBuilder);
 
-  public readonly loading = input(false);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
   public readonly tables = input<GameTable[]>([]);
@@ -39,7 +46,7 @@ export class ScheduledGameForm implements OnChanges {
   public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
   public form: FormGroup;
   public master = new Profile();
   public recurring = false;
@@ -55,6 +62,10 @@ export class ScheduledGameForm implements OnChanges {
     { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
     { name: 'Partida única', value: ScheduledGameType.ONESHOT }
   ];
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     this.form = this.fb.group({
@@ -77,10 +88,7 @@ export class ScheduledGameForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, selectedMaster }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnChanges({ selectedMaster }: SimpleChanges): void {
 
     if (selectedMaster && this.selectedMaster().number) {
       this.master = this.selectedMaster();
@@ -89,15 +97,14 @@ export class ScheduledGameForm implements OnChanges {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled) {
-      return;
-    }
+    this.form.markAllAsTouched();
 
-    if (!this.recurring) {
-      this.form.get('recurrence.interval')?.setValue(0);
+    if (this.saveEnabled) {
+      if (!this.recurring) {
+        this.form.get('recurrence.interval')?.setValue(0);
+      }
+      this.save.emit(this.form.value);
     }
-
-    this.save.emit(this.form.value);
   }
 
   public onSelectMaster(member: Profile): void {

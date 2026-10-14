@@ -1,9 +1,15 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
+import { SettingsInfo } from '@app/settings/settings-info/settings-info';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { FeeType } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
+import { DrawerModule } from 'primeng/drawer';
 import { finalize, Observable } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
 import { FeeTypeList } from '../fee-type-list/fee-type-list';
@@ -11,12 +17,14 @@ import { FeeTypeService } from '../fee-type-service';
 
 @Component({
   selector: 'assoc-fee-type-view',
-  imports: [ButtonModule, FeeTypeList, FeeTypeForm],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, FeeTypeList, FeeTypeForm],
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {
 
   private readonly feeTypeService = inject(FeeTypeService);
+
+  private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
@@ -50,7 +58,19 @@ export class FeeTypeView implements OnInit {
 
   // EVENT HANDLERS
 
+  public onShowInfo(data: FeeType): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onShowEdit(feeType: FeeType) {
+    this.failures.clear();
     this.selectedData = feeType;
     this.dialog = Dialog.EDIT;
   }
@@ -69,11 +89,16 @@ export class FeeTypeView implements OnInit {
     );
   }
 
-  public onDelete(number: number): void {
-    this.call(
-      () => this.feeTypeService.delete(number),
-      () => this.load()
-    );
+  public onDelete(event: Event): void {
+    const number = this.selectedData.number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es reversible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
+      accept: () => this.call(() => this.feeTypeService.delete(number), () => this.load())
+    });
   }
 
   // DATA LOADING
@@ -90,6 +115,7 @@ export class FeeTypeView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }

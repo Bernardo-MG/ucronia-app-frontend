@@ -1,17 +1,17 @@
-﻿<form class="space-y-5" [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
+﻿<form class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onLogin()" novalidate>
   <div>
-    <label for="usernameInput" class="mb-2 block text-sm font-semibold text-gray-950">
-      Usuario o correo electrónico
+    <label for="usernameInput" class="block font-medium text-gray-950">
+      Usuario o correo electrónico <span class="text-red-600" aria-hidden="true">*</span>
     </label>
 
-    <p-iconfield class="block w-full">
+    <p-iconfield class="mt-2 block w-full">
       <p-inputicon class="pi pi-envelope" />
 
       <input pInputText id="usernameInput" type="text" formControlName="username" autocomplete="username"
-        placeholder="usuario@ejemplo.com" class="w-full" [attr.aria-invalid]="form.controls['username'].invalid && form.controls['username'].touched" />
+        placeholder="usuario@ejemplo.com" class="w-full" [invalid]="isFieldInvalid('username')" />
     </p-iconfield>
 
-    @if (form.controls['username'].invalid && form.controls['username'].touched) {
+    @if (isFieldInvalid('username')) {
       <small class="mt-1 block text-red-600">
         Introduce tu usuario o correo electrónico
       </small>
@@ -19,17 +19,17 @@
   </div>
 
   <div>
-    <label for="passwordInput" class="mb-2 block text-sm font-semibold text-gray-950">
-      Contraseña
+    <label for="passwordInput" class="block font-medium text-gray-950">
+      Contraseña <span class="text-red-600" aria-hidden="true">*</span>
     </label>
 
-    <div class="relative">
+    <div class="relative mt-2">
       <p-iconfield class="block w-full">
         <p-inputicon class="pi pi-lock" />
 
         <input pInputText id="passwordInput" [type]="passwordVisible ? 'text' : 'password'" formControlName="password"
           autocomplete="current-password" placeholder="Introduce tu contraseña" class="w-full !pr-12"
-          [attr.aria-invalid]="form.controls['password'].invalid && form.controls['password'].touched" />
+          [invalid]="isFieldInvalid('password')" />
       </p-iconfield>
 
       <button type="button"
@@ -39,7 +39,7 @@
       </button>
     </div>
 
-    @if (form.controls['password'].invalid && form.controls['password'].touched) {
+    @if (isFieldInvalid('password')) {
       <small class="mt-1 block text-red-600">
         Introduce tu contraseña
       </small>
@@ -54,7 +54,7 @@
 
   <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
     <div class="flex items-center gap-2">
-      <p-checkbox inputId="rememberMe" [binary]="true" [disabled]="waiting" (onChange)="onRememberMe($event.checked)" />
+      <p-checkbox inputId="rememberMe" [binary]="true" [disabled]="formStatus.loading" (onChange)="onRememberMe($event.checked)" />
 
       <label for="rememberMe" class="select-none text-sm text-gray-700">
         Mantener la sesión iniciada
@@ -63,11 +63,11 @@
 
     <button id="lostPassword" type="button"
       class="border-0 bg-transparent p-0 text-left text-sm font-medium text-primary hover:underline sm:ml-auto"
-      [disabled]="waiting" (click)="onLostPassword()">
+      [disabled]="formStatus.loading" (click)="onLostPassword()">
       ¿Has olvidado tu contraseña?
     </button>
   </div>
 
-  <p-button id="login" type="submit" label="Iniciar sesión" icon="pi pi-sign-in" styleClass="w-full" [loading]="waiting"
+  <p-button id="login" type="submit" label="Iniciar sesión" icon="pi pi-sign-in" styleClass="w-full" [loading]="formStatus.loading"
     [disabled]="!loginEnabled" [attr.aria-disabled]="!loginEnabled" />
 </form>

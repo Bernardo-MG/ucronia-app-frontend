@@ -1,9 +1,9 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Asset, AssetFolder } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -17,7 +17,7 @@ export interface ImageFormData {
 
 @Component({
   selector: 'assoc-image-form',
-  imports: [ButtonModule, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  imports: [DrawerFormActions, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
   templateUrl: './image-form.html'
 })
 export class ImageForm implements OnChanges {
@@ -25,7 +25,13 @@ export class ImageForm implements OnChanges {
 
   public readonly data = input<Asset | undefined>();
   public readonly folders = input<AssetFolder[]>([]);
-  public readonly loading = input(false);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly save = output<ImageFormData>();
   public readonly cancelEdition = output<void>();
@@ -33,6 +39,10 @@ export class ImageForm implements OnChanges {
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
   public file?: File;
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
+  }
 
   constructor() {
     this.form = this.fb.group({
@@ -50,7 +60,6 @@ export class ImageForm implements OnChanges {
       this.form.reset(this.data() || new Asset());
       this.file = undefined;
     }
-    if (changes['loading']) this.formStatus.loading = this.loading();
   }
 
   public onFileSelected(event: Event): void {
@@ -59,8 +68,11 @@ export class ImageForm implements OnChanges {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled || (!this.data() && !this.file)) return;
-    this.save.emit({ image: Object.assign(new Asset(), this.form.value), file: this.file });
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      this.save.emit({ image: Object.assign(new Asset(), this.form.value), file: this.file });
+    }
   }
 
   public isFieldInvalid(property: string): boolean {
@@ -83,6 +95,7 @@ export class ImageForm implements OnChanges {
     }
     return names.join(' / ');
   }
+
 }
 
 interface FolderOption {

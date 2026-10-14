@@ -1,6 +1,6 @@
-<form class="flex min-h-[calc(100vh-8rem)] flex-col" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
   <div class="flex-1 space-y-8">
-    <section>
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <div class="mb-5">
         <h3 class="text-lg font-semibold text-gray-950">Información de la partida</h3>
         <p class="mt-1 text-sm text-gray-500">Define los datos principales de la sesión</p>
@@ -8,11 +8,11 @@
 
       <div class="space-y-5">
         <div>
-          <label for="titleInput" class="mb-2 block font-semibold text-gray-950">
+          <label for="titleInput" class="block font-medium text-gray-950">
             Título <span class="text-red-600" aria-hidden="true">*</span>
           </label>
           <input pInputText type="text" id="titleInput" formControlName="title" placeholder="Título de la partida"
-            [invalid]="isFieldInvalid('title')" maxlength="100" class="w-full" />
+            [invalid]="isFieldInvalid('title')" maxlength="100" class="mt-2 w-full" />
           @for (failure of failures().getFailures('title'); track failure) {
             <p-message class="mt-2 block" severity="error" size="small" variant="simple">
               {{ failure.message }}
@@ -21,7 +21,7 @@
         </div>
 
         <div>
-          <label for="descriptionInput" class="mb-2 block font-semibold text-gray-950">Descripción</label>
+          <label for="descriptionInput" class="block font-medium text-gray-950">Descripción</label>
           <textarea pTextarea id="descriptionInput" formControlName="description" placeholder="Describe brevemente la partida"
             [invalid]="isFieldInvalid('description')" maxlength="200" rows="4" class="w-full resize-y"></textarea>
           <div class="mt-1 flex justify-between gap-3">
@@ -40,11 +40,11 @@
 
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label for="gameTypeInput" class="mb-2 block font-semibold text-gray-950">
+            <label for="gameTypeInput" class="block font-medium text-gray-950">
               Tipo de partida <span class="text-red-600" aria-hidden="true">*</span>
             </label>
-            <p-select id="gameTypeInput" [options]="gameTypes" optionLabel="name" optionValue="value"
-              formControlName="gameType" placeholder="Selecciona un tipo" appendTo="body" class="w-full"
+            <p-select inputId="gameTypeInput" [options]="gameTypes" optionLabel="name" optionValue="value"
+              formControlName="gameType" placeholder="Selecciona un tipo" appendTo="body" class="mt-2 w-full"
               [invalid]="isFieldInvalid('gameType')" />
             @for (failure of failures().getFailures('gameType'); track failure) {
               <p-message class="mt-2 block" severity="error" size="small" variant="simple">
@@ -54,9 +54,9 @@
           </div>
 
           <div>
-            <label for="locationInput" class="mb-2 block font-semibold text-gray-950">Lugar</label>
+            <label for="locationInput" class="block font-medium text-gray-950">Lugar</label>
             <input pInputText type="text" id="locationInput" formControlName="location"
-              placeholder="Lugar de la partida" [invalid]="isFieldInvalid('location')" maxlength="200" class="w-full" />
+              placeholder="Lugar de la partida" [invalid]="isFieldInvalid('location')" maxlength="200" class="mt-2 w-full" />
             @for (failure of failures().getFailures('location'); track failure) {
               <p-message class="mt-2 block" severity="error" size="small" variant="simple">
                 {{ failure.message }}
@@ -66,9 +66,9 @@
         </div>
 
         <div>
-          <label for="tableInput" class="mb-2 block font-semibold text-gray-950">Mesa</label>
+          <label for="tableInput" class="block font-medium text-gray-950">Mesa</label>
           <p-select inputId="tableInput" [options]="tables()" optionLabel="name" optionValue="number"
-            formControlName="table" placeholder="Sin mesa asignada" appendTo="body" class="w-full"
+            formControlName="table" placeholder="Sin mesa asignada" appendTo="body" class="mt-2 w-full"
             [showClear]="true" [invalid]="isFieldInvalid('table')" />
           @for (failure of failures().getFailures('table'); track failure) {
             <p-message class="mt-2 block" severity="error" size="small" variant="simple">
@@ -79,7 +79,7 @@
       </div>
     </section>
 
-    <section class="border-t border-gray-200 pt-7">
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <div class="mb-5">
         <h3 class="text-lg font-semibold text-gray-950">Fecha y aforo</h3>
         <p class="mt-1 text-sm text-gray-500">Indica cuándo tendrá lugar y cuántas plazas estarán disponibles</p>
@@ -87,12 +87,12 @@
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div>
-          <label for="startInput" class="mb-2 block font-semibold text-gray-950">
+          <label for="startInput" class="block font-medium text-gray-950">
             Fecha de inicio <span class="text-red-600" aria-hidden="true">*</span>
           </label>
-          <p-datepicker id="startInput" formControlName="start" [showTime]="true" [showIcon]="true"
+          <p-datepicker inputId="startInput" formControlName="start" [showTime]="true" [showIcon]="true"
             [invalid]="isFieldInvalid('start')" dateFormat="dd/mm/yy" hourFormat="24"
-            placeholder="Selecciona fecha y hora" appendTo="body" class="w-full" />
+            placeholder="Selecciona fecha y hora" appendTo="body" class="mt-2 w-full" />
           @for (failure of failures().getFailures('start'); track failure) {
             <p-message class="mt-2 block" severity="error" size="small" variant="simple">
               {{ failure.message }}
@@ -101,13 +101,13 @@
         </div>
 
         <div>
-          <label for="maxPlayersInput" class="mb-2 block font-semibold text-gray-950">
+          <label for="maxPlayersInput" class="block font-medium text-gray-950">
             Plazas máximas <span class="text-red-600" aria-hidden="true">*</span>
           </label>
           <p-inputnumber inputId="maxPlayersInput" formControlName="maxPlayers" [showButtons]="true"
             buttonLayout="horizontal" spinnerMode="horizontal" decrementButtonIcon="pi pi-minus"
             incrementButtonIcon="pi pi-plus" [min]="1" [max]="100" [invalid]="isFieldInvalid('maxPlayers')"
-            placeholder="Número de plazas" class="w-full" />
+            placeholder="Número de plazas" class="mt-2 w-full" />
           @for (failure of failures().getFailures('maxPlayers'); track failure) {
             <p-message class="mt-2 block" severity="error" size="small" variant="simple">
               {{ failure.message }}
@@ -117,7 +117,7 @@
       </div>
     </section>
 
-    <section class="border-t border-gray-200 pt-7">
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <div class="mb-5">
         <h3 class="text-lg font-semibold text-gray-950">Recurrencia</h3>
       </div>
@@ -134,11 +134,11 @@
       @if (recurring) {
         <div formGroupName="recurrence" class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
-            <label for="recurrenceIntervalInput" class="mb-2 block font-semibold text-gray-950">
+            <label for="recurrenceIntervalInput" class="block font-medium text-gray-950">
               Repetir cada <span class="text-red-600" aria-hidden="true">*</span>
             </label>
             <p-inputnumber inputId="recurrenceIntervalInput" formControlName="interval" [min]="1" [max]="365"
-              [showButtons]="true" [invalid]="isFieldInvalid('recurrence.interval')" class="w-full" />
+              [showButtons]="true" [invalid]="isFieldInvalid('recurrence.interval')" class="mt-2 w-full" />
             @for (failure of failures().getFailures('recurrence.interval'); track failure) {
               <p-message class="mt-2 block" severity="error" size="small" variant="simple">
                 {{ failure.message }}
@@ -147,11 +147,11 @@
           </div>
 
           <div>
-            <label for="recurrenceUnitInput" class="mb-2 block font-semibold text-gray-950">
+            <label for="recurrenceUnitInput" class="block font-medium text-gray-950">
               Periodicidad <span class="text-red-600" aria-hidden="true">*</span>
             </label>
-            <p-select id="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value"
-              formControlName="unit" placeholder="Selecciona una periodicidad" appendTo="body" class="w-full"
+            <p-select inputId="recurrenceUnitInput" [options]="recurrenceUnits" optionLabel="name" optionValue="value"
+              formControlName="unit" placeholder="Selecciona una periodicidad" appendTo="body" class="mt-2 w-full"
               [invalid]="isFieldInvalid('recurrence.unit')" />
             @for (failure of failures().getFailures('recurrence.unit'); track failure) {
               <p-message class="mt-2 block" severity="error" size="small" variant="simple">
@@ -163,17 +163,17 @@
       }
     </section>
 
-    <section class="border-t border-gray-200 pt-7">
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
       <div class="mb-5">
         <h3 class="text-lg font-semibold text-gray-950">Dirección</h3>
         <p class="mt-1 text-sm text-gray-500">Selecciona quién dirigirá la partida</p>
       </div>
 
       <div>
-        <label class="mb-2 block font-semibold text-gray-950">
+        <label [for]="(formId() || 'profile') + '-member-search'" class="block font-medium text-gray-950">
           Director <span class="text-red-600" aria-hidden="true">*</span>
         </label>
-        <assoc-member-search [members]="members()" [member]="master" (selectMember)="onSelectMaster($event)"
+        <assoc-member-search [inputId]="(formId() || 'profile') + '-member-search'" [disabled]="formStatus.loading" class="mt-2 block w-full" [members]="members()" [member]="master" (selectMember)="onSelectMaster($event)"
           (searchMember)="searchMember.emit($event)" />
 
         @if (master.number) {
@@ -185,8 +185,8 @@
               <strong class="block truncate text-sm text-gray-950">{{ master.name.fullName }}</strong>
               <span class="text-sm text-gray-500">Director seleccionado</span>
             </div>
-            <p-button type="button" icon="pi pi-times" severity="secondary" aria-label="Quitar director"
-              (click)="clearMaster()" rounded text />
+            <p-button type="button" icon="pi pi-times" severity="secondary" ariaLabel="Quitar director"
+              (onClick)="clearMaster()" rounded text />
           </div>
         }
 
@@ -211,10 +211,10 @@
 
         @if (showImageField) {
           <div class="mt-3">
-            <label for="imageInput" class="mb-2 block font-semibold text-gray-950">URL de la imagen</label>
+            <label for="imageInput" class="block font-medium text-gray-950">URL de la imagen</label>
             <input pInputText type="url" id="imageInput" formControlName="image"
               placeholder="https://ejemplo.com/imagen.jpg" [invalid]="isFieldInvalid('image')"
-              maxlength="200" class="w-full" />
+              maxlength="200" class="mt-2 w-full" />
             @for (failure of failures().getFailures('image'); track failure) {
               <p-message class="mt-2 block" severity="error" size="small" variant="simple">
                 {{ failure.message }}
@@ -226,10 +226,8 @@
     </section>
   </div>
 
-  <div class="sticky bottom-0 mt-8 flex items-center justify-between gap-3 border-t border-gray-200 bg-white py-4">
-    <p-button type="button" label="Cancelar" severity="secondary" [outlined]="true"
-      (click)="cancelEdition.emit()" />
-    <p-button type="submit" [label]="form.get('number')?.value ? 'Guardar cambios' : 'Crear partida'"
-      icon="pi pi-check" [disabled]="!formStatus.saveEnabled" [loading]="loading()" />
-  </div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

@@ -12,7 +12,7 @@
       <th class="hidden lg:table-cell">Tipo</th>
       <th class="hidden sm:table-cell w-28" pSortableColumn="number">N.º <p-sortIcon field="number" /></th>
       <th class="w-32">Estado</th>
-      <th class="w-16"><span class="sr-only">Acciones</span></th>
+      <th class="w-28"><span class="sr-only">Acciones</span></th>
     </tr>
   </ng-template>
 
@@ -40,8 +40,12 @@
         }
       </td>
       <td class="text-right">
-        <p-button icon="pi pi-ellipsis-v" severity="secondary" aria-label="Acciones del libro"
-          (click)="openEditionMenu($event, book)" rounded text />
+        <p-button icon="pi pi-eye" severity="secondary" ariaLabel="Ver detalles del libro"
+          (click)="$event.stopPropagation(); showBook.emit(book)" (keydown.enter)="$event.stopPropagation()" rounded text />
+        @if (editable()) {
+          <p-button icon="pi pi-ellipsis-v" severity="secondary" ariaLabel="Acciones del libro"
+            (click)="openEditionMenu($event, book)" (keydown.enter)="$event.stopPropagation()" rounded text />
+        }
       </td>
     </tr>
   </ng-template>
