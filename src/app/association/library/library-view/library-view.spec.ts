@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { BookLending, GameBook, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
@@ -55,7 +57,11 @@ describe('LibraryView', () => {
     ['downloadExcelReport']
   );
 
+  const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission', 'hasAnyPermission']);
+
   beforeEach(async () => {
+    authServiceMock.hasPermission.and.returnValue(false);
+    authServiceMock.hasAnyPermission.and.returnValue(false);
     libraryServiceMock.getAllBooks.and.returnValue(
       of(new Page<GameBook>())
     );
@@ -77,7 +83,9 @@ describe('LibraryView', () => {
         LibraryView
       ],
       providers: [
+        { provide: AuthService, useValue: authServiceMock },
         ConfirmationService,
+        provideRouter([]),
         provideAnimationsAsync(),
         { provide: LibraryService, useValue: libraryServiceMock },
         { provide: LibraryLendingService, useValue: lendingServiceMock },
@@ -89,6 +97,17 @@ describe('LibraryView', () => {
     fixture = TestBed.createComponent(LibraryView);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('hides the settings button without catalog permissions', () => {
+    expect(fixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).toBeNull();
+  });
+
+  it('shows the settings button when a catalog is readable', () => {
+    authServiceMock.hasAnyPermission.and.returnValue(true);
+    const permittedFixture = TestBed.createComponent(LibraryView);
+    permittedFixture.detectChanges();
+    expect(permittedFixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).not.toBeNull();
   });
 
   it('should create', () => {

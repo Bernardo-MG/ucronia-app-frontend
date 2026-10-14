@@ -1,0 +1,33 @@
+<div class="settings-page">
+  <div class="settings-layout">
+    <aside class="settings-sidebar">
+      <header class="settings-sidebar__header">
+        <span class="settings-sidebar__eyebrow">Configuración</span>
+        <h1 class="settings-sidebar__title">Biblioteca</h1>
+        @if (showLibraryLink) {
+          <a pRipple routerLink="/association/library/books" class="settings-nav__item">
+            <i class="pi pi-arrow-left" aria-hidden="true"></i>
+            <span>Volver a la biblioteca</span>
+          </a>
+        }
+      </header>
+      <nav class="settings-nav" aria-label="Configuración de la biblioteca">
+        <div class="settings-nav__items">
+          @for (option of options; track option.path) {
+            <a pRipple class="settings-nav__item" [routerLink]="option.path"
+              routerLinkActive="settings-nav__item--active" #activeLink="routerLinkActive"
+              [attr.aria-current]="activeLink.isActive ? 'page' : null">
+              <i class="settings-nav__icon" [class]="option.icon" aria-hidden="true"></i>
+              <span>{{ option.label }}</span>
+            </a>
+          }
+        </div>
+      </nav>
+    </aside>
+    <main class="settings-content">
+      <p-card class="h-full">
+        <router-outlet />
+      </p-card>
+    </main>
+  </div>
+</div>

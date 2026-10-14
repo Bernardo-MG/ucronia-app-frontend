@@ -1,6 +1,7 @@
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -28,11 +29,12 @@ import { Dialog } from '../library-dialog';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
+import { librarySettingsPermissions } from '../settings/library-settings-permissions';
 import { LibrarySummary } from '../model/library-summary';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  imports: [RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -101,6 +103,7 @@ export class LibraryView implements OnInit {
 
     // Check permissions
     this.permissions = {
+      settings: authService.hasAnyPermission(librarySettingsPermissions),
       create: authService.hasPermission(UcroniaPermissions.library.book.create),
       edit: authService.hasPermission(UcroniaPermissions.library.book.update),
       delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
@@ -460,6 +463,7 @@ export class LibraryView implements OnInit {
 }
 
 interface Permissions {
+  settings: boolean;
   create: boolean;
   edit: boolean;
   delete: boolean;
