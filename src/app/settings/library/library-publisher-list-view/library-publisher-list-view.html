@@ -1,9 +1,8 @@
 <div class="p-4 space-y-6">
-  <header class="flex items-center justify-between">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Editoriales</h1>
     @if (permissions.create) {
-      <p-button icon="pi pi-plus-circle" (click)="onShowCreate()" [disabled]="!permissions.create"
-        aria-label="Nueva editorial" [attr.aria-disabled]="!permissions.create" rounded />
+      <p-button label="Nueva editorial" icon="pi pi-plus" (click)="onShowCreate()" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
   <shared-name-list [data]="data" [loading]="loading" (show)="onShowInfo($event)"

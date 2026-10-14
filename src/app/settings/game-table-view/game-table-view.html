@@ -1,8 +1,8 @@
 <div class="p-4 space-y-6">
-  <header class="flex items-center justify-between">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Mesas de juego</h1>
     @if (permissions.create) {
-      <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" aria-label="Nueva mesa" rounded />
+      <p-button label="Nueva mesa" icon="pi pi-plus" (click)="dialog = Dialog.CREATE" />
     }
   </header>
   <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading"
