@@ -1,20 +1,28 @@
+import { inject } from '@angular/core';
 import { Routes } from '@angular/router';
-import { ResourceGuard } from '@bernardo-mg/authentication';
+import { AuthService, ResourceGuard } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
+import { settingsOptions } from './settings-permissions';
+import { SettingsGuard } from './settings.guard';
 
 export const settingsRoutes: Routes = [
   {
     path: 'settings',
-    canActivate: [ResourceGuard(UcroniaPermissions.associationSettings.read)],
+    canActivate: [SettingsGuard],
     loadComponent: () => import('./settings-layout/settings-layout').then(m => m.SettingsLayout),
     children: [
       {
         path: '',
-        redirectTo: 'properties',
+        redirectTo: () => {
+          const authService = inject(AuthService);
+          const option = settingsOptions.find(option => authService.hasPermission(option.permission));
+          return option ? `/settings/${option.path}` : '/';
+        },
         pathMatch: 'full'
       },
       {
         path: 'properties',
+        canActivate: [ResourceGuard(UcroniaPermissions.associationSettings.read)],
         loadComponent: () => import('./settings-view/settings-view').then(m => m.SettingsView)
       },
       {
@@ -39,22 +47,25 @@ export const settingsRoutes: Routes = [
       },
       {
         path: 'library',
-        canActivate: [ResourceGuard(UcroniaPermissions.library.book.read)],
         children: [
           {
             path: 'author',
+            canActivate: [ResourceGuard(UcroniaPermissions.library.author.read)],
             loadComponent: () => import('./library/library-author-list-view/library-author-list-view').then(m => m.LibraryAuthorListView)
           },
           {
             path: 'publisher',
+            canActivate: [ResourceGuard(UcroniaPermissions.library.publisher.read)],
             loadComponent: () => import('./library/library-publisher-list-view/library-publisher-list-view').then(m => m.LibraryPublisherListView)
           },
           {
             path: 'system',
+            canActivate: [ResourceGuard(UcroniaPermissions.library.system.read)],
             loadComponent: () => import('./library/library-game-system-list-view/library-game-system-list-view').then(m => m.LibraryGameSystemListView)
           },
           {
             path: 'type',
+            canActivate: [ResourceGuard(UcroniaPermissions.library.type.read)],
             loadComponent: () => import('./library/library-book-type-list-view/library-book-type-list-view').then(m => m.LibraryBookTypeListView)
           }
         ]
