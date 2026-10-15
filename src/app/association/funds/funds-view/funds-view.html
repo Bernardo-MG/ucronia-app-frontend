@@ -76,7 +76,7 @@
         @case (FundsDisplay.LIST) {
           <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
             [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
-            (changePage)="loadList($event)" />
+            (changeDirection)="onChangeDirection($event)" (changePage)="loadList($event)" />
         }
       }
     </div>
