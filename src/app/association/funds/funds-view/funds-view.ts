@@ -1,10 +1,11 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { CurrencyPipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Transaction, TransactionSummary } from '@ucronia/domain';
@@ -63,6 +64,8 @@ export class FundsView implements OnInit {
   public display = FundsDisplay.CALENDAR;
 
   public failures = new FailureStore();
+
+  private sort = new Sorting();
 
   public dialog = Dialog.NONE;
 
@@ -145,6 +148,14 @@ export class FundsView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
+  public onChangeDirection(sorting: SortingEvent) {
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+    this.sort = new Sorting([new SortingProperty(sorting.field, direction)]);
+    this.loadList();
+  }
+
   public onFilter(filter: string) {
     this.descriptionFilter = filter;
     this.loadList();
@@ -184,7 +195,7 @@ export class FundsView implements OnInit {
 
   public loadList(page: number | undefined = undefined) {
     this.status.loadingList = true;
-    this.service.getAll(page, this.descriptionFilter)
+    this.service.getAll(page, this.descriptionFilter, this.sort)
       .pipe(finalize(() => this.status.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
   }

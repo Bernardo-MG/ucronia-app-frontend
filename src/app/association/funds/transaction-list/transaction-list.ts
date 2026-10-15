@@ -1,5 +1,6 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
+import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Transaction } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
@@ -17,7 +18,8 @@ export class TransactionList {
   public readonly rows = input(0);
   public readonly page = input(0);
   public readonly totalRecords = input(0);
-  
+
+  public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
   public readonly show = output<number>();
 

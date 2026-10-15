@@ -1,12 +1,12 @@
 <p-table [lazy]="true" dataKey="index" [loading]="loading()" [value]="data()" [paginator]="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
-  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onPage)="onPageChange($event)" responsiveLayout="scroll">
+  currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)" (onPage)="onPageChange($event)" responsiveLayout="scroll">
   <ng-template #header>
     <tr>
-      <th class="min-w-72">Descripción</th>
+      <th pSortableColumn="description" class="min-w-72">Descripción <p-sortIcon field="description" /></th>
       <th class="min-w-28">Tipo</th>
-      <th class="min-w-36 text-right">Importe</th>
-      <th class="min-w-36">Fecha</th>
+      <th pSortableColumn="amount" class="min-w-36 text-right">Importe <p-sortIcon field="amount" /></th>
+      <th pSortableColumn="date" class="min-w-36">Fecha <p-sortIcon field="date" /></th>
       <th class="w-16"><span class="sr-only">Acciones</span></th>
     </tr>
   </ng-template>

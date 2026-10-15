@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { UcroniaClient } from '@ucronia/api';
+import { Sorting, SortingProperty } from '@bernardo-mg/request';
+import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Transaction } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Page } from 'projects/bernardo-mg/request/src/lib/models/page';
@@ -64,9 +65,13 @@ export class TransactionService {
       );
   }
 
-  public getAll(page: number | undefined = undefined, description: string | undefined = undefined): Observable<Page<Transaction>> {
+  public getAll(page: number | undefined = undefined, description: string | undefined = undefined, sort: Sorting = new Sorting()): Observable<Page<Transaction>> {
+    const sorting = new Sorting(mergeProperties(sort.properties, [
+      new SortingProperty('date'),
+      new SortingProperty('description')
+    ]));
     return this.ucroniaClient.transaction
-      .page(page, undefined, undefined, description, undefined, undefined);
+      .page(page, undefined, sorting, description, undefined, undefined);
   }
 
   public getOne(index: number): Observable<Transaction> {
