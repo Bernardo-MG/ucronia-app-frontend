@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { Sorting, SortingProperty } from '@bernardo-mg/request';
+import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Transaction } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { Page } from 'projects/bernardo-mg/request/src/lib/models/page';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({

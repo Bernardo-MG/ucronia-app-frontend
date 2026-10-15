@@ -1,10 +1,9 @@
-import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { GameTable, Profile, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
+import { CalendarStatus, GameTable, Profile, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TagModule } from 'primeng/tag';
-import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
 
 @Component({
   selector: 'assoc-scheduled-game-info',

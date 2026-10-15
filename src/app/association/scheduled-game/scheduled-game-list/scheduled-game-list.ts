@@ -1,11 +1,10 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { ScheduledGame } from '@ucronia/domain';
+import { CalendarStatus, ScheduledGame } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
 
 @Component({
   selector: 'app-scheduled-game-list',

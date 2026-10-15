@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
-import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
+import { CalendarStatus, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
 import { ScheduledGameInfo } from './scheduled-game-info';
 
 describe('ScheduledGameInfo', () => {
