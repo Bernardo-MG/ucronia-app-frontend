@@ -137,7 +137,7 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(this.selectedData.index),
-      () => this.load()
+        () => this.load()
       )
     });
   }

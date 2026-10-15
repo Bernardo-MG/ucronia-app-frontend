@@ -14,8 +14,8 @@ export class TransactionDisplaySelector implements OnChanges {
   public readonly view = output<FundsDisplay>();
 
   public readonly statusOptions = [
-    { label: 'Lista', value: FundsDisplay.LIST, icon: 'pi pi-list' },
-    { label: 'Calendario', value: FundsDisplay.CALENDAR, icon: 'pi pi-calendar' }
+    { label: 'Calendario', value: FundsDisplay.CALENDAR, icon: 'pi pi-calendar' },
+    { label: 'Lista', value: FundsDisplay.LIST, icon: 'pi pi-list' }
   ];
   public selectedStatus = FundsDisplay.LIST;
 
