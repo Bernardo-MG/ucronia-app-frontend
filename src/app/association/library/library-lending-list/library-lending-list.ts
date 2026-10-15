@@ -3,11 +3,12 @@ import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { BookLending } from '@ucronia/domain';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 
 @Component({
   selector: 'assoc-library-lending-list',
-  imports: [TableModule, DatePipe],
+  imports: [TableModule, DatePipe, ButtonModule],
   templateUrl: './library-lending-list.html'
 })
 export class LibraryLendingList {
@@ -21,6 +22,7 @@ export class LibraryLendingList {
   
   public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
+  public readonly showLending = output<BookLending>();
 
   public get first() {
     return (this.page() - 1) * this.rows();

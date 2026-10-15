@@ -1,73 +1,61 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { BookLending, LentBook } from '@ucronia/domain';
+import { BookLending } from '@ucronia/domain';
 import { LibraryBookLendings } from './library-book-lendings';
 
 describe('LibraryBookLendings', () => {
-  let component: LibraryBookLendings;
   let fixture: ComponentFixture<LibraryBookLendings>;
+  const loan = (borrower: number, date: string, returned?: string) => Object.assign(new BookLending(), {
+    borrower, lendingDate: new Date(date), returnDate: returned ? new Date(returned) : undefined, days: 14
+  });
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        LibraryBookLendings
-      ]
-    })
-      .compileComponents();
-
+    await TestBed.configureTestingModule({ imports: [LibraryBookLendings] }).compileComponents();
     fixture = TestBed.createComponent(LibraryBookLendings);
-    component = fixture.componentInstance;
+  });
+
+  it('groups each loan into one entry, sorts active loans first, and keeps source order intact', () => {
+    const old = loan(1, '2026-08-01', '2026-08-15');
+    const recent = loan(2, '2026-09-01', '2026-09-15');
+    const active = loan(3, '2026-10-01');
+    const source = [old, active, recent];
+    fixture.componentRef.setInput('lendings', source);
+    fixture.componentRef.setInput('borrowerNames', { 1: 'Laura García', 2: 'Carlos Ruiz', 3: 'Ana Martín' });
     fixture.detectChanges();
+    const rows = fixture.nativeElement.querySelectorAll('article');
+    expect(rows.length).toBe(3);
+    expect(rows[0].textContent).toContain('Ana Martín');
+    expect(rows[0].textContent).toContain('Activo');
+    expect(rows[0].textContent).toContain('Devolución pendiente');
+    expect(rows[1].textContent).toContain('Carlos Ruiz');
+    expect(rows[1].textContent).toContain('Devuelto');
+    expect(fixture.componentInstance.history()[1].lending).toBe(recent);
+    expect(source).toEqual([old, active, recent]);
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should display the correct number of rows', () => {
-    const lendings: BookLending[] = [
-      { book: new LentBook(), borrower: 1, lendingDate: new Date('2024-01-01'), returnDate: new Date('2024-01-05'), days: 4 },
-      { book: new LentBook(), borrower: 2, lendingDate: new Date('2024-02-01'), returnDate: new Date('2024-02-10'), days: 9 },
-    ];
-
-    fixture.componentRef.setInput('lendings', lendings);
-    fixture.componentRef.setInput('borrowerNames', { 1: 'John Doe', 2: 'Jane Smith' });
+  it('emits the original lending when its eye button is clicked', () => {
+    const lending = loan(1, '2026-10-01');
+    fixture.componentRef.setInput('lendings', [lending]);
     fixture.detectChanges();
-
-    const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
-    expect(rows.length).toBe(lendings.length * 2);
+    const show = jasmine.createSpy('showLending');
+    fixture.componentInstance.showLending.subscribe(show);
+    fixture.nativeElement.querySelector('button').click();
+    expect(show).toHaveBeenCalledOnceWith(lending);
   });
 
-  it('should display the correct data in each row', () => {
-    const lendings: BookLending[] = [
-      { book: new LentBook(), borrower: 1, lendingDate: new Date('2024-01-01'), returnDate: new Date('2024-01-05'), days: 4 },
-    ];
-
-    fixture.componentRef.setInput('lendings', lendings);
-    fixture.componentRef.setInput('borrowerNames', { 1: 'John Doe' });
+  it('updates borrower labels and initials when names arrive', () => {
+    fixture.componentRef.setInput('lendings', [loan(7, '2026-10-01')]);
     fixture.detectChanges();
-
-    const dates = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
-
-    expect(dates.length).toBe(2);
-
-    expect(dates[0].nativeElement.textContent.trim()).toBe('2024-01-01');
-    expect(dates[1].nativeElement.textContent.trim()).toBe('2024-01-05');
-
-    const names = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-opposite'));
-
-    expect(names.length).toBe(2);
-
-    expect(names[0].nativeElement.textContent.trim()).toBe('John Doe');
-    expect(names[1].nativeElement.textContent.trim()).toBe('John Doe');
-  });
-
-  it('should not show anything when there is no data', () => {
-    fixture.componentRef.setInput('lendings', []);
+    expect(fixture.componentInstance.history()[0].borrower).toBe('7');
+    fixture.componentRef.setInput('borrowerNames', { 7: 'Ana Martín' });
     fixture.detectChanges();
-
-    const rows = fixture.debugElement.queryAll(By.css('.p-timeline-event > .p-timeline-event-content'));
-    expect(rows.length).toBe(0);
+    expect(fixture.componentInstance.history()[0].borrower).toBe('Ana Martín');
+    expect(fixture.componentInstance.history()[0].initials).toBe('AM');
   });
 
+  it('shows an empty state without any history rows', () => {
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('article').length).toBe(0);
+    expect(fixture.nativeElement.textContent).toContain('Este libro todavía no tiene préstamos.');
+    expect(fixture.nativeElement.textContent).toContain('0 préstamos');
+  });
 });

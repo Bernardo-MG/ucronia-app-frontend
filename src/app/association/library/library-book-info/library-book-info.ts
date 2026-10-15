@@ -1,21 +1,23 @@
-import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DatePipe } from '@angular/common';
-import { Component, inject, input } from '@angular/core';
-import { BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
+import { Component, inject, input, output } from '@angular/core';
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
+import { BookLending, BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
 import { SkeletonModule } from 'primeng/skeleton';
-import { LibraryConfig } from '../library-config';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
+import { LibraryConfig } from '../library-config';
 
 @Component({
   selector: 'assoc-library-book-info',
   imports: [AuditInfo, SkeletonModule, LibraryBookLendings, DatePipe],
-  templateUrl: './library-book-info.html'
+  templateUrl: './library-book-info.html',
+  styleUrl: './library-book-info.scss'
 })
 export class LibraryBookInfo {
 
   private readonly config = inject(LibraryConfig);
 
   public readonly loading = input(false);
+  public readonly showLending = output<BookLending>();
   public readonly book = input<FictionBook | GameBook>(new GameBook());
   public readonly borrowerNames = input<Record<number, string>>({});
 
