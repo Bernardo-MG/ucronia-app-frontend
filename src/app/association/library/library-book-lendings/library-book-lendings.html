@@ -1,15 +1,54 @@
-<p-timeline [value]="history">
-  <ng-template #opposite let-event>
-    <small>{{ event.borrower }}</small>
-  </ng-template>
-  <ng-template #marker let-event>
-    @if(event.lent) {
-      <i class="pi pi-upload text-danger"></i>
-    } @else {
-      <i class="pi pi-download text-green-500"></i>
+<section class="lending-history" aria-label="Historial de préstamos">
+  <header class="history-header">
+    <i class="pi pi-arrow-right-arrow-left history-icon" aria-hidden="true"></i>
+    <div class="history-heading">
+      <h3>Préstamos</h3>
+      <p>Historial de este libro</p>
+    </div>
+    <span class="history-count">{{ lendings().length }} {{ lendings().length === 1 ? 'préstamo' : 'préstamos' }}</span>
+  </header>
+
+  <div class="history-entries">
+    @for (entry of history(); track entry.lending; let index = $index) {
+      @if (!entry.active && (index === 0 || history()[index - 1].active)) {
+        <h4 class="previous-heading">Préstamos anteriores</h4>
+      }
+      <article class="history-entry" [class.history-entry--active]="entry.active">
+        <span class="history-marker" aria-hidden="true"></span>
+        <span class="borrower-avatar" aria-hidden="true">{{ entry.initials }}</span>
+        <div class="entry-details">
+          <div class="borrower-heading">
+            <h4>{{ entry.borrower }}</h4>
+            <span class="status-badge" [class.status-badge--active]="entry.active">{{ entry.active ? 'Activo' : 'Devuelto' }}</span>
+          </div>
+          <p class="entry-dates">
+            @if (entry.active) {
+              Prestado el {{ entry.lending.lendingDate | date:'d MMM y':undefined:'es' }}
+            } @else {
+              <span class="sr-only">Préstamo: </span>{{ entry.lending.lendingDate | date:'d MMM y':undefined:'es' }}
+              <i class="pi pi-arrow-right date-arrow" aria-hidden="true"></i>
+              <span class="sr-only">Devolución: </span>{{ entry.lending.returnDate | date:'d MMM y':undefined:'es' }}
+            }
+          </p>
+          @if (!entry.active) {
+            <p class="entry-duration">{{ entry.lending.days }} {{ entry.lending.days === 1 ? 'día' : 'días' }}</p>
+          }
+        </div>
+        @if (entry.active) {
+          <div class="active-duration">
+            <strong>{{ entry.lending.days }} {{ entry.lending.days === 1 ? 'día' : 'días' }}</strong>
+            <span>Devolución pendiente</span>
+          </div>
+        }
+        <p-button type="button" icon="pi pi-eye" severity="secondary" [outlined]="true"
+          [ariaLabel]="'Ver préstamo de ' + entry.borrower" pTooltip="Ver préstamo" tooltipPosition="left"
+          (onClick)="showLending.emit(entry.lending)" />
+      </article>
+    } @empty {
+      <div class="history-empty">
+        <i class="pi pi-bookmark" aria-hidden="true"></i>
+        <p>Este libro todavía no tiene préstamos.</p>
+      </div>
     }
-  </ng-template>
-  <ng-template #content let-event>
-    {{ event.date | date:'yyyy-MM-dd' }}
-  </ng-template>
-</p-timeline>
+  </div>
+</section>

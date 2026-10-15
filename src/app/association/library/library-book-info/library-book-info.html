@@ -131,34 +131,15 @@
   }
 
   <!-- Lendings -->
-  <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
-    <h3 class="font-semibold text-gray-950">Préstamos</h3>
-    <div class="mt-4 flex items-center gap-3">
-      <span class="flex size-10 shrink-0 items-center justify-center rounded-full"
-        [class.bg-green-50]="!book().lent" [class.text-green-700]="!book().lent"
-        [class.bg-amber-50]="book().lent" [class.text-amber-700]="book().lent">
-        <i [class]="book().lent ? 'pi pi-clock' : 'pi pi-check'" aria-hidden="true"></i>
-      </span>
-      <div>
-        <strong class="block text-sm text-gray-950">
-          {{ book().lent ? 'Actualmente prestado' : 'Actualmente disponible' }}
-        </strong>
-        <span class="text-xs text-gray-500">
-          {{ book().lent ? 'El libro tiene un préstamo activo' : 'Este libro no tiene ningún préstamo activo' }}
-        </span>
-      </div>
-    </div>
-    @if (book().lendings.length) {
-      <details class="mt-4 border-t border-gray-100 pt-4">
-        <summary class="cursor-pointer text-sm font-medium text-blue-700">
-          Ver historial ({{ book().lendings.length }})
-        </summary>
-        <div class="mt-4">
-          <assoc-library-book-lendings [lendings]="book().lendings" [borrowerNames]="borrowerNames()" />
-        </div>
-      </details>
-    }
-  </section>
+  @if (loading()) {
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm" aria-label="Cargando préstamos">
+      <p-skeleton height="2rem" width="50%" />
+      <p-skeleton class="mt-4" height="7rem" />
+    </section>
+  } @else {
+    <assoc-library-book-lendings [lendings]="book().lendings" [borrowerNames]="borrowerNames()"
+      (showLending)="showLending.emit($event)" />
+  }
 </div>
 
 <assoc-audit-info [audit]="book().audit" [loading]="loading()" />

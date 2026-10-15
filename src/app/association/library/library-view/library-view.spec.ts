@@ -173,6 +173,20 @@ describe('LibraryView', () => {
     expect(component.dialog).toBe(Dialog.NONE);
   });
 
+  it('opens book history lending details with the current book identity and borrower name', () => {
+    component.selectedData.number = 42;
+    component.selectedData.title.fullTitle = 'Current book';
+    component.selectedBookBorrowerNames = { 7: 'Ana Martín' };
+    const lending = new BookLending();
+    lending.borrower = 7;
+    component.onShowBookLending(lending);
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+    expect(component.selectedLending.book.number).toBe(42);
+    expect(component.selectedLending.book.title.fullTitle).toBe('Current book');
+    expect(component.lendingBorrowerNames[7]).toBe('Ana Martín');
+    expect(lending.book.number).toBe(-1);
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

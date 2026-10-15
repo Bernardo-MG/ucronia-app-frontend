@@ -119,7 +119,7 @@
         <shared-drawer-header title="{{ selectedData.title.fullTitle }}" icon="pi pi-book" subtitle="Libro #{{ selectedData.number }}" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
+          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" (showLending)="onShowBookLending($event)" />
         </div>
       <ng-template #footer>
         <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"

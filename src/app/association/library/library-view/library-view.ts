@@ -245,6 +245,14 @@ export class LibraryView implements OnInit {
     this.dialog = Dialog.LENDING_INFO;
   }
 
+  public onShowBookLending(lending: BookLending): void {
+    this.lendingBorrowerNames = { ...this.lendingBorrowerNames, ...this.selectedBookBorrowerNames };
+    this.onShowLending({
+      ...lending,
+      book: { number: this.selectedData.number, title: this.selectedData.title }
+    });
+  }
+
   public onShowLending(lending: BookLending): void {
     this.selectedLending = lending;
     this.dialog = Dialog.LENDING_INFO;
