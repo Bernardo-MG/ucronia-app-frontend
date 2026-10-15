@@ -60,7 +60,7 @@ export class FundsView implements OnInit {
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
 
-  public display = FundsDisplay.LIST;
+  public display = FundsDisplay.CALENDAR;
 
   public failures = new FailureStore();
 
