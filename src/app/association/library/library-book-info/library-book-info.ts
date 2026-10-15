@@ -9,7 +9,8 @@ import { LibraryConfig } from '../library-config';
 @Component({
   selector: 'assoc-library-book-info',
   imports: [AuditInfo, SkeletonModule, LibraryBookLendings, DatePipe],
-  templateUrl: './library-book-info.html'
+  templateUrl: './library-book-info.html',
+  styleUrl: './library-book-info.scss'
 })
 export class LibraryBookInfo {
 
