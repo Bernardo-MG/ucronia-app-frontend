@@ -2,9 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { Fee, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, Member, MemberStatus, YearsRange } from '@ucronia/domain';
 import { endOfYear, startOfYear } from 'date-fns';
-import { Member } from 'projects/ucronia/domain/src/public-api';
 import { forkJoin, map, Observable } from 'rxjs';
 import { MemberFees } from './domain/member-fees';
 

@@ -7,6 +7,7 @@ export * from './lib/guards/logged-out.guard';
 export * from './lib/guards/resource.guard';
 export * from './lib/interceptors/jwt-authentication.interceptor';
 export * from './lib/interceptors/unauthorized.interceptor';
+export * from './lib/models/audit-details';
 export * from './lib/models/id';
 export * from './lib/models/login-status';
 export * from './lib/models/permission-list';

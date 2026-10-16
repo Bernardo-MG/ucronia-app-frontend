@@ -1,5 +1,3 @@
-<p-menu #actionsMenu [model]="actions" [popup]="true" />
-
 <p-table [lazy]="true" dataKey="name" [loading]="loading()" [value]="roles()" [paginator]="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" [showCurrentPageReport]="true"
   currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
@@ -29,8 +27,8 @@
       </td>
 
       <td class="text-right">
-        <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text aria-label="Acciones del rol"
-          (click)="openActionsMenu($event, role)" />
+        <p-button icon="pi pi-eye" severity="secondary" rounded text ariaLabel="Ver detalles del rol"
+          (click)="show.emit(role)" />
       </td>
     </tr>
   </ng-template>

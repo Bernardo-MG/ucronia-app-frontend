@@ -13,11 +13,7 @@ interface MenuSection {
 
 @Component({
   selector: 'assoc-settings-layout',
-  imports: [
-    RouterModule,
-    CardModule,
-    RippleModule
-  ],
+  imports: [RouterModule, CardModule, RippleModule],
   templateUrl: './settings-layout.html',
   styleUrl: './settings-layout.scss'
 })
@@ -29,29 +25,24 @@ export class SettingsLayout {
     const authService = inject(AuthService);
 
     const catalogItems = this.catalogItems(authService);
-    const libraryItems = this.libraryItems(authService);
 
     this.menuSections = [
-      {
-        label: 'Configuración',
-        items: [
-          {
-            label: 'Propiedades',
-            icon: 'pi pi-sliders-h',
-            routerLink: 'properties'
-          }
-        ]
-      },
+      ...(authService.hasPermission(UcroniaPermissions.associationSettings.read)
+        ? [{
+          label: 'Configuración',
+          items: [
+            {
+              label: 'Propiedades',
+              icon: 'pi pi-sliders-h',
+              routerLink: 'properties'
+            }
+          ]
+        }]
+        : []),
       ...(catalogItems.length > 0
         ? [{
           label: 'Catálogos',
           items: catalogItems
-        }]
-        : []),
-      ...(libraryItems.length > 0
-        ? [{
-          label: 'Biblioteca',
-          items: libraryItems
         }]
         : [])
     ];
@@ -65,6 +56,14 @@ export class SettingsLayout {
         label: 'Tipos de cuota',
         icon: 'pi pi-money-bill',
         routerLink: 'fee-types'
+      });
+    }
+
+    if (authService.hasPermission(UcroniaPermissions.gameTable.read)) {
+      catalogItems.push({
+        label: 'Mesas de juego',
+        icon: 'pi pi-table',
+        routerLink: 'game-tables'
       });
     }
 
@@ -87,44 +86,6 @@ export class SettingsLayout {
     }
 
     return catalogItems;
-  }
-
-  private libraryItems(authService: AuthService): MenuItem[] {
-    const libraryItems: MenuItem[] = [];
-
-    if (authService.hasPermission(UcroniaPermissions.library.author.read)) {
-      libraryItems.push({
-        label: 'Autores',
-        icon: 'pi pi-user',
-        routerLink: 'library/author'
-      });
-    }
-
-    if (authService.hasPermission(UcroniaPermissions.library.publisher.read)) {
-      libraryItems.push({
-        label: 'Editoriales',
-        icon: 'pi pi-building',
-        routerLink: 'library/publisher'
-      });
-    }
-
-    if (authService.hasPermission(UcroniaPermissions.library.system.read)) {
-      libraryItems.push({
-        label: 'Sistemas',
-        icon: 'pi pi-cog',
-        routerLink: 'library/system'
-      });
-    }
-
-    if (authService.hasPermission(UcroniaPermissions.library.type.read)) {
-      libraryItems.push({
-        label: 'Tipos',
-        icon: 'pi pi-cog',
-        routerLink: 'library/type'
-      });
-    }
-
-    return libraryItems;
   }
 
 }

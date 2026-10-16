@@ -1,6 +1,9 @@
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -24,7 +27,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, DatePipe],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, DatePipe],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -179,8 +182,14 @@ export class FeeView implements OnInit {
 
   // DIALOGS
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }
@@ -277,7 +286,7 @@ interface Filter {
 enum Dialog {
   NONE = 'none',
   INFO = 'info',
-  EDITION = 'edition',
+  EDIT = 'edit',
   CREATE = 'create',
   PAY = 'pay'
 }

@@ -1,32 +1,46 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { Component, inject, input, Input, output } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-type-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, InputGroupModule, InputGroupAddonModule, MessageModule],
+  imports: [InputNumberModule, DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './fee-type-form.html'
 })
-export class FeeTypeForm implements OnChanges {
+export class FeeTypeForm {
 
-  public readonly loading = input(false);
+  public readonly cancelEdition = output<void>();
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: FeeType) {
     this.form.patchValue(value as any);
+    this.isEdit = true;
   }
+
+  public isEdit = false;
 
   public readonly save = output<FeeType>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -40,14 +54,9 @@ export class FeeTypeForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
-  }
-
-  public submit() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+    if (this.saveEnabled) {
       // Valid form, can emit data
       this.save.emit(this.form.value);
     }

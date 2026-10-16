@@ -1,27 +1,33 @@
-import { Component, inject, input, output } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, input, output, Input } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
 
-  private fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
 
-  public readonly loading = input(false);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
@@ -31,14 +37,18 @@ export class FeePaymentsForm {
 
   public selectedMember?: Profile;
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
-  public today = new Date();
+  public readonly today = new Date();
 
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
+  }
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
   }
 
   constructor() {
@@ -88,8 +98,10 @@ export class FeePaymentsForm {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
   }

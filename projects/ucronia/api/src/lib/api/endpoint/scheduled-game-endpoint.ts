@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { ScheduledGame } from '@ucronia/domain';
@@ -14,7 +15,7 @@ export class ScheduledGameEndpoint {
 
   private mapScheduledGame(scheduledGame: ScheduledGame): ScheduledGame {
     scheduledGame.start = new Date(scheduledGame.start);
-    return scheduledGame;
+    return mapAudit(scheduledGame);
   }
 
   private mapScheduledGames(page: PaginatedResponse<ScheduledGame>): PaginatedResponse<ScheduledGame> {

@@ -11,7 +11,7 @@
     </div>
 
     @if (permissions.create) {
-      <p-button label="Invitar usuario" icon="pi pi-envelope" (click)="onStartInvitation()" />
+      <p-button type="button" label="Invitar usuario" icon="pi pi-envelope" (onClick)="onStartInvitation()" />
     }
   </header>
 
@@ -27,7 +27,7 @@
     </header>
 
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <access-user-list [loading]="loading" [editable]="permissions.edit" [users]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" (active)="onSetEnabled($event)" (edit)="onStartEditing($event)" />
+      <access-user-list [loading]="loading" [editable]="permissions.edit" [users]="data.content" [rows]="data.size" [page]="data.page" [totalRecords]="data.totalElements" (show)="onShowUser($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" (active)="onSetEnabled($event)" />
     </div>
   </section>
 
@@ -35,71 +35,55 @@
     @switch (dialog) {
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-user" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="{{ selectedData.name || selectedData.username }}" icon="pi pi-user" subtitle="{{ selectedData.email }}" />
+      </ng-template>
 
-            <div class="min-w-0">
-              <h2 class="truncate text-xl font-semibold text-gray-950">{{ selectedData.name || selectedData.username }}</h2>
-              <p class="mt-0.5 truncate text-sm font-normal text-gray-500">{{ selectedData.email }}</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <access-user-info [user]="selectedData" [member]="member" [loading]="loading" />
         </div>
 
         <ng-template #footer>
-          <div class="flex w-full justify-between gap-2">
-            @if (permissions.delete) {
-              <p-button label="Eliminar usuario" icon="pi pi-trash" severity="danger" [outlined]="true" (click)="onDelete({ event: $event, user: selectedData })" />
-            }
-
-            @if (permissions.edit) {
-              <p-button label="Editar usuario" icon="pi pi-pencil" (click)="onStartEditing(selectedData)" />
-            }
-          </div>
-        </ng-template>
+        <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="loading"
+          editLabel="Editar usuario" (delete)="onDelete({ event: $event, user: selectedData })" (edit)="onStartEditing(selectedData)" />
+      </ng-template>
       }
 
       @case (Dialog.INVITE) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-user-plus" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Invitar usuario" icon="pi pi-user-plus" subtitle="Crea el acceso y asigna sus roles iniciales" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Invitar usuario</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Crea el acceso y asigna sus roles iniciales</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
-          <access-user-form [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" (cancelEdition)="dialog = Dialog.NONE" />
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <access-user-form #fieldsAccessUserForm formId="user-view-invite" [showActions]="false" [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="user-view-invite"
+            submitLabel="Enviar invitación"
+            submitIcon="pi pi-send"
+            [disabled]="!fieldsAccessUserForm.saveEnabled"
+            [loading]="fieldsAccessUserForm.formStatus.loading"
+            (cancelForm)="onDrawerVisibleChange(false)" />
+        </ng-template>
       }
 
       @case (Dialog.EDIT) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-user-edit" aria-hidden="true"></i>
-            </span>
+        <shared-drawer-header title="Editar usuario" icon="pi pi-pencil" subtitle="Actualiza sus datos, roles y vinculación con un socio" />
+      </ng-template>
 
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Editar usuario</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Actualiza sus datos, roles y vinculación con un socio</p>
-            </div>
-          </div>
-        </ng-template>
-
-        <div class="w-full px-2 py-4 sm:px-4">
-          <access-user-form [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" (cancelEdition)="dialog = Dialog.NONE" />
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <access-user-form #fieldsAccessUserForm formId="user-view-edit" [showActions]="false" [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="user-view-edit"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAccessUserForm.saveEnabled"
+            [loading]="fieldsAccessUserForm.formStatus.loading"
+            (cancelForm)="onCancelEdit()" />
+        </ng-template>
       }
     }
   </p-drawer>

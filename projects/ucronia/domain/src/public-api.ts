@@ -2,9 +2,15 @@
  * Public API Surface of domain
  */
 
+export * from './lib/asset/asset';
+export * from './lib/asset/asset-folder';
+export * from './lib/asset/asset-type';
+export * from './lib/audit/audit-details';
 export * from './lib/calendar/activity';
+export * from './lib/calendar/calendar-status';
+export * from './lib/calendar/game-table';
 export * from './lib/calendar/recurrence';
-export * from './lib/calendar/scheduled_game';
+export * from './lib/calendar/scheduled-game';
 export * from './lib/fees/fee';
 export * from './lib/fees/fee-payment';
 export * from './lib/fees/fee-payment-report';
@@ -23,8 +29,8 @@ export * from './lib/library/language';
 export * from './lib/library/lent-book';
 export * from './lib/library/publisher';
 export * from './lib/library/title';
-export * from './lib/members/member';
 export * from './lib/members/key';
+export * from './lib/members/member';
 export * from './lib/members/member-status';
 export * from './lib/members/membership-evolution-month';
 export * from './lib/members/public-member';

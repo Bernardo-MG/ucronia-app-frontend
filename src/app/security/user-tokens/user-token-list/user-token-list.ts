@@ -37,7 +37,6 @@ export class UserTokenList {
   public readonly totalRecords = input(0);
 
   public readonly show = output<UserToken>();
-  public readonly extend = output<UserToken>();
   public readonly revoke = output<UserToken>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
@@ -96,20 +95,6 @@ export class UserTokenList {
       !token.consumed;
 
     this.actions = [
-      {
-        label: 'Ver detalles',
-        icon: 'pi pi-eye',
-        command: () => this.show.emit(token)
-      },
-      {
-        label: 'Extender expiración',
-        icon: 'pi pi-calendar-plus',
-        disabled: !modifiable,
-        command: () => this.extend.emit(token)
-      },
-      {
-        separator: true
-      },
       {
         label: 'Revocar',
         icon: 'pi pi-ban',

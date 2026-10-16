@@ -1,5 +1,8 @@
+import { AuditDetails } from "../audit/audit-details";
+
 export class Setting {
-  code = '';
-  value = '';
-  type = '';
+  public code = '';
+  public value = '';
+  public type = '';
+  public audit?: AuditDetails;
 }

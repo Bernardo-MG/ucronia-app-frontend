@@ -1,29 +1,31 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
   <!-- Password -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="password" [invalid]="isFieldInvalid('password')" id="passwordInput" formControlName="password" class="w-100" />
-    <label for="passwordInput">Contraseña</label>
-  </p-floatlabel>
-  <div class="mb-2">
-    @for (failure of failures().getFailures('password'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
+  <div class="space-y-2">
+    <label for="passwordInput" class="block font-medium text-gray-950">Contraseña <span class="text-red-600" aria-hidden="true">*</span></label>
+
+    <input pInputText type="password" [invalid]="isFieldInvalid('password')" id="passwordInput" formControlName="password" class="w-full" />
+    <div>
+      @for (failure of failures().getFailures('password'); track failure) {
+        <p-message severity="error" size="small" variant="simple">
+          {{failure.message}}
+        </p-message>
+      }
+    </div>
   </div>
   <!-- Repeat password -->
-  <p-floatlabel variant="in" class="mb-2 d-flex">
-    <input pInputText type="password" id="confirmPasswordInput" formControlName="confirmPassword" class="w-100" />
-    <label for="confirmPasswordInput">Repite contraseña</label>
-  </p-floatlabel>
+  <div class="space-y-2">
+    <label for="confirmPasswordInput" class="block font-medium text-gray-950">Repite contraseña <span class="text-red-600" aria-hidden="true">*</span></label>
+
+    <input pInputText type="password" id="confirmPasswordInput" formControlName="confirmPassword" class="w-full" />
+  </div>
   <!-- Password mismatch warning -->
   @if (showPasswordMismatchWarning()) {
     <div id="passwordMismatchWarning" class="text-danger text-center pb-2">Las
     contraseñas no coinciden</div>
   }
   <!-- Submit button -->
-  <div class="d-grid gap-2">
-    <p-button type="submit" severity="secondary" name="Activar" [loading]="loading()" [disabled]="!saveEnabled"
-    [attr.aria-disabled]="!saveEnabled">Activar</p-button>
+  <div class="flex gap-3">
+    <shared-drawer-form-actions submitLabel="Activar cuenta" submitIcon="pi pi-check" [showCancel]="false"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" />
   </div>
 </form>

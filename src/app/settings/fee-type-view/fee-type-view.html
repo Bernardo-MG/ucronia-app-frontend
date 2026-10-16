@@ -1,41 +1,71 @@
 <div class="p-4 space-y-6">
-  <header class="flex items-center justify-between">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <h1 class="text-4xl font-bold">Tipos de cuota</h1>
     @if (permissions.create) {
-      <p-button icon="pi pi-plus-circle" (click)="dialog = Dialog.CREATE" [disabled]="!permissions.create"
-        aria-label="Nuevo tipo de cuota" [attr.aria-disabled]="!permissions.create" rounded />
+      <p-button type="button" label="Nuevo tipo de cuota" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE" [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
 
   <div class="max-w-3xl mx-auto space-y-6">
-    <assoc-fee-type-list [loading]="loading" [editable]="permissions.edit" [deletable]="permissions.delete"
+    <assoc-fee-type-list [loading]="loading"
       [data]="feeTypeData.content" [rows]="feeTypeData.size" [page]="feeTypeData.page"
-      [totalRecords]="feeTypeData.totalElements" (edit)="onShowEdit($event)" (delete)="onDelete($event)"
-      (changePage)="load($event)" />
+      [totalRecords]="feeTypeData.totalElements" (show)="onShowInfo($event)" (changePage)="load($event)" />
   </div>
 </div>
 
-@switch (dialog) {
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <ng-template #header>
+        <shared-drawer-header title="Tipo de cuota" icon="pi pi-tag" subtitle="Ajustes / Cuotas" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <shared-settings-info [loading]="loading" category="Tipo de cuota" icon="pi pi-tag"
+          [number]="selectedData.number" [title]="selectedData.name" [amount]="selectedData.amount" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="loading"
+          editLabel="Editar tipo de cuota" (delete)="onDelete($event)" (edit)="onShowEdit(selectedData)" />
+      </ng-template>
+    }
 
-  @case(Dialog.CREATE) {
-    <ng-template #header>
-      Crear tipo de cuota
-    </ng-template>
-    <div class="w-full">
-      <assoc-fee-type-form [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
-    </div>
+    @case(Dialog.CREATE) {
+      <ng-template #header>
+        <shared-drawer-header title="Crear tipo de cuota" icon="pi pi-tag" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="fee-type-view-create"
+          submitLabel="Crear tipo de cuota"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocFeeTypeForm.saveEnabled"
+          [loading]="fieldsAssocFeeTypeForm.formStatus.loading"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+
+    @case(Dialog.EDIT) {
+      <ng-template #header>
+        <shared-drawer-header title="Editar tipo de cuota" icon="pi pi-pencil" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="fee-type-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocFeeTypeForm.saveEnabled"
+          [loading]="fieldsAssocFeeTypeForm.formStatus.loading"
+          (cancelForm)="onCancelEdit()" />
+      </ng-template>
+
+    }
+
   }
-
-  @case(Dialog.EDIT) {
-    <ng-template #header>
-      Editar tipo de cuota
-    </ng-template>
-    <div class="w-full">
-      <assoc-fee-type-form [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
-    </div>
-    <ng-template #footer>
-      <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-    </ng-template>
-  }
-
-}
+</p-drawer>

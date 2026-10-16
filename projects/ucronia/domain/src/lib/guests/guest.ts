@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { ContactChannel } from "../profile/profile";
 
 export class Guest {
@@ -10,6 +11,7 @@ export class Guest {
   public address = '';
   public comments = '';
   public types: string[] = [];
+  public audit?: AuditDetails;
 }
 
 export class GuestName {

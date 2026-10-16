@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { ContactMethod } from "./contact-method";
 
 export class Profile {
@@ -9,6 +10,7 @@ export class Profile {
   public address = '';
   public comments = '';
   public types: string[] = [];
+  public audit?: AuditDetails;
 }
 
 export class ContactChannel {

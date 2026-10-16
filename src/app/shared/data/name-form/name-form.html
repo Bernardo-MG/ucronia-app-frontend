@@ -1,19 +1,22 @@
-<form [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0">
-  <!-- Name -->
-  <p-floatlabel variant="in" class="mb-2 w-full min-w-0">
-    <input pInputText type="text" id="nameInput" formControlName="name" class="w-full min-w-0" />
-    <label for="nameInput">Nombre</label>
-  </p-floatlabel>
-  <div class="mb-2 w-full min-w-0">
-    @for (failure of failures().getFailures('name'); track failure) {
-      <p-message severity="error" size="small" variant="simple">
-        {{failure.message}}
-      </p-message>
-    }
-  </div>
-  <!-- Save button -->
-  <div class="mt-4 w-full min-w-0">
-    <p-button type="submit" label="Guardar" [disabled]="!formStatus.saveEnabled"
-      [attr.aria-disabled]="!formStatus.saveEnabled" class="w-full" />
-  </div>
+<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
+  <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <!-- Name -->
+    <div class="space-y-2">
+      <label for="nameInput" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+
+      <input pInputText type="text" id="nameInput" formControlName="name" class="w-full min-w-0" />
+      <div>
+        @for (failure of failures().getFailures('name'); track failure) {
+          <p-message severity="error" size="small" variant="simple">
+            {{failure.message}}
+          </p-message>
+        }
+      </div>
+    </div>
+    <!-- Save button -->
+  </section>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
+  }
 </form>

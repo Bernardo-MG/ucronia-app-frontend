@@ -1,0 +1,65 @@
+<div class="p-4 space-y-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <h1 class="text-4xl font-bold">Mesas de juego</h1>
+    @if (permissions.create) {
+      <p-button type="button" label="Nueva mesa" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE" />
+    }
+  </header>
+  <div class="max-w-5xl mx-auto"><assoc-game-table-list [loading]="loading"
+      [data]="data.content" [rows]="data.size" [page]="data.page"
+      [totalRecords]="data.totalElements" (show)="onShowInfo($event)" (changePage)="load($event)" /></div>
+</div>
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <ng-template #header>
+        <shared-drawer-header title="Mesa de juego" icon="pi pi-table" subtitle="Ajustes / Mesas de juego" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <shared-settings-info [loading]="loading" category="Mesa de juego" icon="pi pi-table"
+          [number]="selectedData.number" [title]="selectedData.name" [showDescription]="true" [description]="selectedData.description" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="loading"
+          editLabel="Editar mesa" (delete)="onDelete($event)" (edit)="onShowEdit(selectedData)" />
+      </ng-template>
+    }
+
+    @case (Dialog.CREATE) {
+      <ng-template #header>
+        <shared-drawer-header title="Crear mesa de juego" icon="pi pi-table" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="game-table-view-create"
+          submitLabel="Crear mesa"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocGameTableForm.saveEnabled"
+          [loading]="fieldsAssocGameTableForm.formStatus.loading"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+    @case (Dialog.EDIT) {
+      <ng-template #header>
+        <shared-drawer-header title="Editar mesa de juego" icon="pi pi-pencil" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="game-table-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocGameTableForm.saveEnabled"
+          [loading]="fieldsAssocGameTableForm.formStatus.loading"
+          (cancelForm)="onCancelEdit()" />
+      </ng-template>
+
+    }
+  }
+</p-drawer>

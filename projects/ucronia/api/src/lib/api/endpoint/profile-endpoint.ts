@@ -1,3 +1,4 @@
+import { mapAudit, mapAuditPage } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Guest, Member, Profile, Sponsor } from '@ucronia/domain';
@@ -48,7 +49,8 @@ export class ProfileEndpoint {
 
     return this.http.get<PaginatedResponse<Profile>>(`${this.apiUrl}/profile`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => mapAuditPage(response))
       );
   }
 
@@ -58,7 +60,7 @@ export class ProfileEndpoint {
     return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -68,7 +70,7 @@ export class ProfileEndpoint {
     return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/profile`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -79,7 +81,7 @@ export class ProfileEndpoint {
     return this.http.patch<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -89,7 +91,7 @@ export class ProfileEndpoint {
     return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/profile/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -115,7 +117,7 @@ export class TransformProfileEndpoint {
     return this.http.put<SimpleResponse<Member>>(`${this.apiUrl}/profile/${number}/member`, conversion)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -125,7 +127,7 @@ export class TransformProfileEndpoint {
     return this.http.put<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/${number}/sponsor`, undefined)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -135,7 +137,7 @@ export class TransformProfileEndpoint {
     return this.http.put<SimpleResponse<Guest>>(`${this.apiUrl}/profile/${number}/guest`, undefined)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient } from '@angular/common/http';
 import { ErrorRequestInterceptor, SimpleResponse } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
@@ -35,7 +36,7 @@ export class UserProfileEndpoint {
     return this.http.get<SimpleResponse<Profile>>(`${this.apiUrl}/security/user/${username}/profile`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -46,7 +47,7 @@ export class UserProfileEndpoint {
     return this.http.post<SimpleResponse<Profile>>(`${this.apiUrl}/security/user/${username}/profile/${profile}`, null)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -56,7 +57,7 @@ export class UserProfileEndpoint {
     return this.http.delete<SimpleResponse<Profile>>(`${this.apiUrl}/security/user/${username}/profile`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

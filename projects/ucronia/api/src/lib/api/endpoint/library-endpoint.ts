@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, Publisher } from '@ucronia/domain';
@@ -109,7 +110,7 @@ export class ReportEndpoint {
 
 export class LendingEndpoint {
 
-  public mapLendingDates = (lending: BookLending): BookLending => ({
+  public mapLendingDates = (lending: BookLending): BookLending => mapAudit({
     ...lending,
     lendingDate: new Date(lending.lendingDate),
     returnDate: lending.returnDate ? new Date(lending.returnDate) : undefined
@@ -143,7 +144,7 @@ export class LendingEndpoint {
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => {
-          response.content.map((lending) => this.mapLendingDates(lending));
+          response.content = response.content.map((lending) => this.mapLendingDates(lending));
           return response;
         })
       );
@@ -187,9 +188,9 @@ function mapBookDates<T extends GameBook | FictionBook>(book: T): T {
     if (lending.returnDate) {
       lending.returnDate = new Date(lending.returnDate);
     }
-    return lending;
+    return mapAudit(lending);
   });
-  return book;
+  return mapAudit(book);
 }
 
 export class GameBookEndpoint {

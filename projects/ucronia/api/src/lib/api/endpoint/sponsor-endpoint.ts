@@ -1,3 +1,4 @@
+import { mapAudit, mapAuditPage } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Sponsor } from '@ucronia/domain';
@@ -37,7 +38,8 @@ export class SponsorEndpoint {
 
     return this.http.get<PaginatedResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => mapAuditPage(response))
       );
   }
 
@@ -47,7 +49,7 @@ export class SponsorEndpoint {
     return this.http.get<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -57,7 +59,7 @@ export class SponsorEndpoint {
     return this.http.post<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -68,7 +70,7 @@ export class SponsorEndpoint {
     return this.http.patch<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -78,7 +80,7 @@ export class SponsorEndpoint {
     return this.http.delete<SimpleResponse<Sponsor>>(`${this.apiUrl}/profile/sponsor/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

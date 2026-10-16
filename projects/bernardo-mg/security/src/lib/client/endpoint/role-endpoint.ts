@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Role } from '@bernardo-mg/authentication';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
@@ -34,7 +35,11 @@ export class RoleEndpoint {
 
     return this.http.get<PaginatedResponse<Role>>(`${this.apiUrl}/security/role`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => {
+          response.content.forEach(record => mapAudit(record));
+          return response;
+        })
       );
   }
 
@@ -44,7 +49,7 @@ export class RoleEndpoint {
     return this.http.get<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -54,7 +59,7 @@ export class RoleEndpoint {
     return this.http.post<SimpleResponse<Role>>(`${this.apiUrl}/security/role`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -65,7 +70,7 @@ export class RoleEndpoint {
     return this.http.put<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -75,7 +80,7 @@ export class RoleEndpoint {
     return this.http.delete<SimpleResponse<Role>>(`${this.apiUrl}/security/role/${name}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

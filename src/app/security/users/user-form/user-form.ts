@@ -1,22 +1,28 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
-import { MemberSearch, MemberSearchEvent } from '../../../shared/member/member-search/member-search';
 
 @Component({
   selector: 'access-user-form',
-  imports: [ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule, MemberSearch],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
 
-  public readonly loading = input(false);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   public readonly create = input(true);
   public readonly selection = input<Role[]>([]);
@@ -37,12 +43,16 @@ export class UserForm implements OnChanges {
   public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
   public username = '';
   public roles: Role[] = [];
   public roleFilter = '';
   public selectedMember = new Profile();
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -57,10 +67,7 @@ export class UserForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, selection }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnChanges({ selection }: SimpleChanges): void {
     if (selection && this.create()) {
       this.roles = [];
     }
@@ -81,9 +88,10 @@ export class UserForm implements OnChanges {
    * Handler for the save event.
    */
   public onSave(): void {
-    this.form.get('roles')?.setValue(this.roles.map(role => role.name));
+    this.form.markAllAsTouched();
 
-    if (this.form.valid) {
+    if (this.saveEnabled) {
+      this.form.get('roles')?.setValue(this.roles.map(role => role.name));
       if (this.create()) {
         this.save.emit(this.form.value);
       } else {

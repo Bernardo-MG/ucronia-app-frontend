@@ -1,15 +1,14 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
-import { ButtonModule } from 'primeng/button';
-import { FloatLabelModule } from 'primeng/floatlabel';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'assoc-contact-settings-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, FloatLabelModule, IconFieldModule, InputIconModule, ButtonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule],
   templateUrl: './contact-settings-form.html'
 })
 export class ContactSettingsForm implements OnChanges {
@@ -18,16 +17,22 @@ export class ContactSettingsForm implements OnChanges {
   public readonly instagram = input('');
   public readonly googleMaps = input('');
   public readonly teamUp = input('');
-  public readonly loading = input(false);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly save = output<SocialSettingsFormEvent>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
   /**
    * Form structure.
    */
-  public form: FormGroup;
+  public readonly form: FormGroup;
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   constructor() {
     const formBuilder = inject(FormBuilder);
@@ -42,10 +47,7 @@ export class ContactSettingsForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public ngOnChanges({ loading, email, instagram, googleMaps, teamUp }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = loading.currentValue;
-    }
+  public ngOnChanges({ email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (instagram) {
       this.form.get('instagram')?.setValue(instagram.currentValue);
     }
@@ -63,8 +65,9 @@ export class ContactSettingsForm implements OnChanges {
   /**
    * Handler for the save event.
    */
-  public onSave() {
-    if (this.form.valid) {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+    if (this.saveEnabled) {
       const changedValues: any = {};
 
       Object.entries(this.form.controls).forEach(([key, control]) => {

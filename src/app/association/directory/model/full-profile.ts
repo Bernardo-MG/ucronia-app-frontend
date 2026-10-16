@@ -1,3 +1,5 @@
+import { AuditDetails } from "@ucronia/domain";
+
 export class FullProfile {
   public number = -1;
   public identifier = '';
@@ -13,6 +15,7 @@ export class FullProfile {
   public key?: number;
   public active? = false;
   public renew? = false;
+  public audit?: AuditDetails;
 }
 
 export class FullProfileChannel {

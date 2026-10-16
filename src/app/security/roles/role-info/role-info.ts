@@ -1,10 +1,11 @@
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Component, input } from '@angular/core';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'access-role-info',
-  imports: [SkeletonModule],
+  imports: [AuditInfo, SkeletonModule],
   templateUrl: './role-info.html'
 })
 export class RoleInfo {

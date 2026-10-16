@@ -1,0 +1,51 @@
+<form [attr.id]="formId()" class="w-full min-w-0 space-y-5" [formGroup]="form" (ngSubmit)="onSave()" novalidate>
+  <div class="flex-1 space-y-6">
+    <div><label for="imageName" class="block font-medium text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+      <input pInputText id="imageName" formControlName="name" maxlength="100" class="mt-2 w-full"
+        [invalid]="isFieldInvalid('name')" />
+      @for (failure of failures().getFailures('name'); track failure) {
+        <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
+    </div>
+    <div><label for="imageDescription" class="block font-medium text-gray-950">Descripción</label>
+      <textarea pTextarea id="imageDescription" formControlName="description" maxlength="500" rows="5"
+        class="w-full resize-y" [invalid]="isFieldInvalid('description')"></textarea>
+      <div class="mt-1 text-right text-xs text-gray-400">{{ form.get('description')?.value?.length || 0 }} / 500</div>
+      @for (failure of failures().getFailures('description'); track failure) {
+        <p-message class="mt-2 block" severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
+    </div>
+    <div class="flex items-start justify-between gap-4 rounded-xl border border-gray-200 p-4">
+      <div>
+        <label for="imagePublicAccess" class="block font-semibold text-gray-950">Acceso público</label>
+        <p class="mt-1 text-sm text-gray-500">
+          Si se desactiva, solo los usuarios con permiso para leer imágenes podrán verla.
+        </p>
+      </div>
+      <p-toggleswitch inputId="imagePublicAccess" formControlName="publicAccess" />
+    </div>
+    @if (data()) {
+      <div>
+        <label for="imageFolder" class="block font-medium text-gray-950">Carpeta</label>
+        <p-select inputId="imageFolder" formControlName="folderNumber" [options]="folderOptions"
+          optionLabel="name" optionValue="number" appendTo="body" class="mt-2 w-full" />
+        <p class="mt-1 text-xs text-gray-500">Selecciona dónde guardar la imagen.</p>
+      </div>
+    }
+    <div><label for="imageFile" class="block font-medium text-gray-950">
+      {{ data() ? 'Sustituir archivo' : 'Archivo' }} @if (!data()) { <span class="text-red-600" aria-hidden="true">*</span> }
+    </label>
+      <label for="imageFile" class="mt-2 flex cursor-pointer flex-col items-center rounded-xl border border-dashed border-gray-300 p-8 text-center hover:bg-gray-50">
+        <i class="pi pi-upload text-2xl text-primary" aria-hidden="true"></i>
+        <span class="mt-2 font-medium text-gray-950">{{ file?.name || 'Selecciona una imagen' }}</span>
+        <span class="mt-1 text-sm text-gray-500">PNG, JPG, WebP o GIF</span>
+      </label>
+      <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" class="sr-only"
+        (change)="onFileSelected($event)" />
+    </div>
+  </div>
+  @if (showActions()) {
+    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
+  }
+</form>

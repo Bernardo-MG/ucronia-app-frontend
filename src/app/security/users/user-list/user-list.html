@@ -23,7 +23,7 @@
         Estado
       </th>
 
-      <th class="w-14">
+      <th class="w-28">
         <span class="sr-only">Acciones</span>
       </th>
     </tr>
@@ -69,8 +69,12 @@
       </td>
 
       <td class="text-right">
-        <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text aria-label="Acciones del usuario"
-          (click)="openEditionMenu($event, user)" />
+        <p-button icon="pi pi-eye" severity="secondary" rounded text ariaLabel="Ver detalles del usuario"
+          (click)="show.emit(user)" />
+        @if (editable()) {
+          <p-button icon="pi pi-ellipsis-v" severity="secondary" rounded text ariaLabel="Acciones del usuario"
+            (click)="openEditionMenu($event, user)" />
+        }
       </td>
     </tr>
   </ng-template>

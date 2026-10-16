@@ -1,11 +1,14 @@
-
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
+import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, PublicMember, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -23,14 +26,16 @@ import { BookLendingEvent, LibraryBookLendingForm } from '../library-book-lendin
 import { LibraryBookList } from '../library-book-list/library-book-list';
 import { BookReturnedEvent, LibraryBookReturnForm } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
+import { LibraryLendingInfo } from '../library-lending-info/library-lending-info';
 import { LibraryLendingList } from '../library-lending-list/library-lending-list';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 import { LibrarySummary } from '../model/library-summary';
+import { librarySettingsPermissions } from '../settings/library-settings-permissions';
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  imports: [LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
@@ -48,6 +53,7 @@ export class LibraryView implements OnInit {
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedBorrower = new Profile();
+  public selectedLending = new BookLending();
   public members: Profile[] = [];
 
   public data = new Page<FictionBook | GameBook>();
@@ -99,6 +105,7 @@ export class LibraryView implements OnInit {
 
     // Check permissions
     this.permissions = {
+      settings: authService.hasAnyPermission(librarySettingsPermissions),
       create: authService.hasPermission(UcroniaPermissions.library.book.create),
       edit: authService.hasPermission(UcroniaPermissions.library.book.update),
       delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
@@ -151,7 +158,11 @@ export class LibraryView implements OnInit {
     this.call(
       () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
       () => {
-        this.load(this.data.page);
+        if (this.display === Display.LENDINGS) {
+          this.loadLendings(this.lendings.page);
+        } else {
+          this.load(this.data.page);
+        }
         this.loadSummary();
       }
     );
@@ -218,6 +229,33 @@ export class LibraryView implements OnInit {
     } else {
       this.loadLendings();
     }
+  }
+
+  public onShowLendingReturn(): void {
+    if (!this.permissions.edit || this.selectedLending.returnDate || this.status.loading) {
+      return;
+    }
+
+    this.failures.clear();
+    this.dialog = Dialog.LENDING_RETURN;
+  }
+
+  public onCancelLendingReturn(): void {
+    this.failures.clear();
+    this.dialog = Dialog.LENDING_INFO;
+  }
+
+  public onShowBookLending(lending: BookLending): void {
+    this.lendingBorrowerNames = { ...this.lendingBorrowerNames, ...this.selectedBookBorrowerNames };
+    this.onShowLending({
+      ...lending,
+      book: { number: this.selectedData.number, title: this.selectedData.title }
+    });
+  }
+
+  public onShowLending(lending: BookLending): void {
+    this.selectedLending = lending;
+    this.dialog = Dialog.LENDING_INFO;
   }
 
   public onShowBook(book: FictionBook | GameBook) {
@@ -332,8 +370,14 @@ export class LibraryView implements OnInit {
 
   // DIALOGS
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
+      this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }
@@ -452,6 +496,7 @@ export class LibraryView implements OnInit {
 }
 
 interface Permissions {
+  settings: boolean;
   create: boolean;
   edit: boolean;
   delete: boolean;

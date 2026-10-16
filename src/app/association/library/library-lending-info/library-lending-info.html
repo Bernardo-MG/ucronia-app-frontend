@@ -1,0 +1,35 @@
+<section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+  <h3 class="border-b border-gray-200 px-5 py-4 font-semibold text-gray-950">Datos del préstamo</h3>
+  <dl class="divide-y divide-gray-100">
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Libro</dt>
+      <dd class="min-w-0 break-words text-sm font-medium text-gray-950">{{ lending().book.title.fullTitle }}</dd>
+    </div>
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Número de libro</dt>
+      <dd class="text-sm font-medium text-gray-950">{{ lending().book.number }}</dd>
+    </div>
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Socio</dt>
+      <dd class="min-w-0 break-words text-sm font-medium text-gray-950">{{ borrowerName() || lending().borrower }}</dd>
+    </div>
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Estado</dt>
+      <dd class="text-sm font-medium text-gray-950">{{ lending().returnDate ? 'Devuelto' : 'Prestado' }}</dd>
+    </div>
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Fecha de préstamo</dt>
+      <dd class="text-sm font-medium text-gray-950">{{ lending().lendingDate | date:'yyyy-MM-dd' }}</dd>
+    </div>
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Fecha de devolución</dt>
+      <dd class="text-sm font-medium text-gray-950">{{ (lending().returnDate | date:'yyyy-MM-dd') || 'Pendiente' }}</dd>
+    </div>
+    <div class="flex flex-wrap items-start gap-3 px-5 py-4">
+      <dt class="flex-1 text-sm text-gray-600">Días prestado</dt>
+      <dd class="text-sm font-medium text-gray-950">{{ lending().days }}</dd>
+    </div>
+  </dl>
+</section>
+
+<assoc-audit-info [audit]="lending().audit" />

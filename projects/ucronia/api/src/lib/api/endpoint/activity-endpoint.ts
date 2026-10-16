@@ -1,3 +1,4 @@
+import { mapAudit } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Activity, ActivityDate } from '@ucronia/domain';
@@ -20,7 +21,7 @@ export class ActivityEndpoint {
 
   private mapActivity(activity: Activity): Activity {
     activity.dates = activity.dates.map(d => this.mapActivityDate(d));
-    return activity;
+    return mapAudit(activity);
   }
 
   private mapActivities(page: PaginatedResponse<Activity>): PaginatedResponse<Activity> {
@@ -32,7 +33,9 @@ export class ActivityEndpoint {
   public page(
     page: number | undefined = undefined,
     size: number | undefined = undefined,
-    sort: Sorting | undefined = undefined
+    sort: Sorting | undefined = undefined,
+    from: Date | undefined = undefined,
+    to: Date | undefined = undefined
   ): Observable<Page<Activity>> {
     let params = new HttpParams();
     if (page) {
@@ -44,6 +47,12 @@ export class ActivityEndpoint {
 
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
+    if (from) {
+      params = params.append('from', from.toISOString());
+    }
+    if (to) {
+      params = params.append('to', to.toISOString());
+    }
 
     return this.http.get<PaginatedResponse<Activity>>(`${this.apiUrl}/activity`, { params })
       .pipe(

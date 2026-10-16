@@ -1,14 +1,14 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { ScheduledGame } from '@ucronia/domain';
+import { CalendarStatus, ScheduledGame } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { CalendarStatus } from 'projects/ucronia/domain/src/lib/calendar/calendar-status';
+import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'app-scheduled-game-list',
-  imports: [ButtonModule, TableModule, DatePipe],
+  imports: [ButtonModule, TableModule, TagModule, DatePipe],
   templateUrl: './scheduled-game-list.html'
 })
 export class ScheduledGameList {
@@ -37,9 +37,31 @@ export class ScheduledGameList {
       case CalendarStatus.DRAFT:
         return 'Borrador';
       case CalendarStatus.PUBLISHED:
-        return 'Publicado';
+        return 'Publicada';
+      case CalendarStatus.PENDING_REVIEW:
+        return 'Pendiente de revisión';
+      case CalendarStatus.CANCELLED:
+        return 'Cancelada';
+      case CalendarStatus.REJECTED:
+        return 'Rechazada';
       default:
         return status;
+    }
+  }
+
+  public getSeverity(status: CalendarStatus): 'success' | 'warn' | 'info' | 'danger' | 'secondary' {
+    switch (status) {
+      case CalendarStatus.PUBLISHED:
+        return 'success';
+      case CalendarStatus.DRAFT:
+        return 'warn';
+      case CalendarStatus.PENDING_REVIEW:
+        return 'info';
+      case CalendarStatus.CANCELLED:
+      case CalendarStatus.REJECTED:
+        return 'danger';
+      default:
+        return 'secondary';
     }
   }
 

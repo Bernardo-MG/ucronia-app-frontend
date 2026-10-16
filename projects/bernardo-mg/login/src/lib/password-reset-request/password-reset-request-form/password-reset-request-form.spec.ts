@@ -36,6 +36,7 @@ describe('PasswordResetRequestForm', () => {
     it('should have an invalid email when the email is empty', () => {
       const emailControl = component.form.get('email');
       component.form.get('email')?.setValue('');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       expect(emailControl?.valid).toBeFalse();
@@ -44,6 +45,7 @@ describe('PasswordResetRequestForm', () => {
     it('should have an invalid email when the email format is invalid', () => {
       const emailControl = component.form.get('email');
       component.form.get('email')?.setValue('abc');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       expect(emailControl?.valid).toBeFalse();
@@ -52,6 +54,7 @@ describe('PasswordResetRequestForm', () => {
     it('should have an valid email when the email format is valid', () => {
       const emailControl = component.form.get('email');
       component.form.get('email')?.setValue('test@example.com');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       expect(emailControl?.valid).toBeTrue();
@@ -63,6 +66,7 @@ describe('PasswordResetRequestForm', () => {
 
     it('should enable the form button when the form is valid', () => {
       component.form.get('email')?.setValue('test@example.com');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -71,6 +75,7 @@ describe('PasswordResetRequestForm', () => {
 
     it('should disable the form button when the form is invalid', () => {
       component.form.get('email')?.setValue('abc');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
@@ -85,6 +90,7 @@ describe('PasswordResetRequestForm', () => {
       spyOn(component.save, 'emit');
 
       component.form.get('email')?.setValue('test@example.com');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const formEl = fixture.debugElement.query(By.css('form'));
@@ -97,6 +103,7 @@ describe('PasswordResetRequestForm', () => {
       spyOn(component.save, 'emit');
 
       component.form.get('email')?.setValue('');
+      component.form.markAsDirty();
       fixture.detectChanges();
 
       const formEl = fixture.debugElement.query(By.css('form'));
@@ -105,6 +112,30 @@ describe('PasswordResetRequestForm', () => {
       expect(component.save.emit).not.toHaveBeenCalled();
     });
 
+  });
+
+  it('blocks requests while loading and accepts changes afterwards', () => {
+    component.form.setValue({ email: 'test@example.com' });
+    component.form.markAsDirty();
+    const emitted = spyOn(component.save, 'emit');
+    fixture.componentRef.setInput('loading', true);
+    fixture.detectChanges();
+    component.onSave();
+    expect(component.form.disabled).toBeTrue();
+    expect(emitted).not.toHaveBeenCalled();
+    fixture.componentRef.setInput('loading', false);
+    fixture.detectChanges();
+    component.onSave();
+    expect(emitted).toHaveBeenCalledWith('test@example.com');
+  });
+
+  it('does not submit a valid pristine form', () => {
+    component.form.setValue({ email: 'test@example.com' });
+    const emitted = spyOn(component.save, 'emit');
+    expect(component.form.pristine).toBeTrue();
+    expect(component.saveEnabled).toBeFalse();
+    component.onSave();
+    expect(emitted).not.toHaveBeenCalled();
   });
 
 });

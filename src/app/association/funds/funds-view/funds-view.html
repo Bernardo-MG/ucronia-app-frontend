@@ -5,10 +5,10 @@
       <p class="mt-1 text-sm text-gray-500">Controla los ingresos, gastos y saldo de la asociación</p>
     </div>
     <div class="flex flex-wrap gap-2">
-      <p-button label="Exportar Excel" icon="pi pi-download" severity="secondary" outlined
-        [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (click)="downloadExcel()" />
+      <p-button type="button" label="Exportar Excel" icon="pi pi-download" severity="secondary" outlined
+        [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (onClick)="downloadExcel()" />
       @if (permissions.create) {
-        <p-button label="Nueva transacción" icon="pi pi-plus" (click)="dialog = Dialog.CREATE"
+        <p-button type="button" label="Nueva transacción" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE"
           [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
       }
     </div>
@@ -76,7 +76,7 @@
         @case (FundsDisplay.LIST) {
           <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
             [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
-            (changePage)="loadList($event)" />
+            (changeDirection)="onChangeDirection($event)" (changePage)="loadList($event)" />
         }
       }
     </div>
@@ -87,55 +87,51 @@
     @switch (dialog) {
       @case(Dialog.INFO) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-wallet" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Detalle de la transacción</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Movimiento #{{ selectedData.index }}</p>
-            </div>
-          </div>
-        </ng-template>
+        <shared-drawer-header title="Detalle de la transacción" icon="pi pi-wallet" subtitle="Movimiento #{{ selectedData.index }}" />
+      </ng-template>
         <div class="w-full space-y-4 px-2 py-4 sm:px-4">
           <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
         </div>
         <ng-template #footer>
-          <div class="flex w-full justify-between gap-2">
-            @if (permissions.delete) {
-              <p-button label="Eliminar transacción" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-                (click)="onDelete($event)" outlined />
-            }
-            @if (permissions.edit) {
-              <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
-                (click)="dialog = Dialog.EDIT" outlined />
-            }
-          </div>
-        </ng-template>
+        <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="status.loading"
+          editLabel="Editar transacción" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDIT" />
+      </ng-template>
       }
       @case(Dialog.CREATE) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-wallet" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Nueva transacción</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Registra un ingreso o un gasto</p>
-            </div>
-          </div>
-        </ng-template>
-        <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-transaction-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
-            (cancelEdition)="dialog = Dialog.NONE" />
+        <shared-drawer-header title="Nueva transacción" icon="pi pi-wallet" subtitle="Registra un ingreso o un gasto" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+            />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="funds-view-create"
+            submitLabel="Crear movimiento"
+            submitIcon="pi pi-plus"
+            [disabled]="!fieldsAssocTransactionForm.saveEnabled"
+            [loading]="fieldsAssocTransactionForm.formStatus.loading"
+            (cancelForm)="onDrawerVisibleChange(false)" />
+        </ng-template>
       }
       @case(Dialog.EDIT) {
-        <ng-template #header><h2 class="text-xl font-semibold">Editar transacción</h2></ng-template>
-        <div class="w-full p-4">
-          <assoc-transaction-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
+        <ng-template #header>
+        <shared-drawer-header title="Editar transacción" icon="pi pi-pencil" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false" [data]="selectedData" [loading]="status.loading" [failures]="failures"
             (save)="onUpdate($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="funds-view-edit"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAssocTransactionForm.saveEnabled"
+            [loading]="fieldsAssocTransactionForm.formStatus.loading"
+            (cancelForm)="onCancelEdit()" />
+        </ng-template>
       }
     }
   </p-drawer>

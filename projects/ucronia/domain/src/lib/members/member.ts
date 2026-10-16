@@ -1,3 +1,4 @@
+import { AuditDetails } from "../audit/audit-details";
 import { ContactChannel } from "../profile/profile";
 
 export class Member {
@@ -13,6 +14,7 @@ export class Member {
   public key?: number;
   public active = false;
   public renew = false;
+  public audit?: AuditDetails;
 }
 
 export class MemberFeeType {

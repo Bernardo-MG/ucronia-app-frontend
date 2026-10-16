@@ -1,25 +1,36 @@
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, inject, Input, input, OnInit, output } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Activity } from '@ucronia/domain';
+import { Activity, Asset } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { FloatLabelModule } from 'primeng/floatlabel';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
+import { TextareaModule } from 'primeng/textarea';
+import { ImageContent } from '../../images/image-content/image-content';
+import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, FloatLabelModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
+    MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
-export class ActivityForm implements OnChanges {
-  public readonly loading = input(false);
+export class ActivityForm implements OnInit {
+
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly failures = input(new FailureStore());
   private readonly fb = inject(FormBuilder);
+  private readonly imageService = inject(ImageService);
 
   @Input() public set data(value: Activity) {
     this.form.patchValue({
@@ -29,6 +40,7 @@ export class ActivityForm implements OnChanges {
       location: value.location,
       image: value.image
     });
+    this.showImageField = !!value.image;
 
     this.dates.clear();
 
@@ -40,11 +52,18 @@ export class ActivityForm implements OnChanges {
       this.addDate();
     }
   }
+  
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   public readonly save = output<Activity>();
+  public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly formStatus: FormStatus;
+  public readonly form: FormGroup;
+  public imageOptions: ActivityImageOption[] = [];
+  public showImageField = false;
 
   constructor() {
     this.form = this.fb.group({
@@ -60,10 +79,9 @@ export class ActivityForm implements OnChanges {
     this.addDate();
   }
 
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
+  public ngOnInit(): void {
+    this.imageService.getAllForSelection()
+      .subscribe(images => this.imageOptions = images.map(image => this.toImageOption(image)));
   }
 
   public get dates(): FormArray {
@@ -87,23 +105,22 @@ export class ActivityForm implements OnChanges {
   }
 
   public onSave(): void {
-    if (!this.formStatus.saveEnabled) {
-      return;
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      const value = this.form.value;
+      this.save.emit({
+        number: value.number ?? 0,
+        title: value.title,
+        description: value.description ?? '',
+        location: value.location ?? '',
+        image: value.image ?? '',
+        dates: value.dates.map((date: any) => ({
+          start: this.mergeDayAndTime(date.day, date.startHour),
+          end: this.mergeDayAndTime(date.day, date.endHour)
+        }))
+      });
     }
-
-    const value = this.form.value;
-
-    this.save.emit({
-      number: value.number ?? 0,
-      title: value.title,
-      description: value.description ?? '',
-      location: value.location ?? '',
-      image: value.image ?? '',
-      dates: value.dates.map((date: any) => ({
-        start: this.mergeDayAndTime(date.day, date.startHour),
-        end: this.mergeDayAndTime(date.day, date.endHour)
-      }))
-    });
   }
 
   private mergeDayAndTime(day: Date, time: Date): Date {
@@ -116,4 +133,20 @@ export class ActivityForm implements OnChanges {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
+  private toImageOption(image: Asset): ActivityImageOption {
+    return {
+      name: image.name,
+      description: image.description,
+      number: image.number,
+      url: this.imageService.contentUrl(image.number)
+    };
+  }
+
+}
+
+interface ActivityImageOption {
+  name: string;
+  description: string;
+  number: number;
+  url: string;
 }

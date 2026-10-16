@@ -1,3 +1,4 @@
+import { mapAudit, mapAuditPage } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Member, MemberStatus } from '@ucronia/domain';
@@ -40,7 +41,8 @@ export class MemberEndpoint {
 
     return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/profile/member`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => mapAuditPage(response))
       );
   }
 
@@ -50,7 +52,7 @@ export class MemberEndpoint {
     return this.http.get<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -61,7 +63,7 @@ export class MemberEndpoint {
     return this.http.patch<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -71,7 +73,7 @@ export class MemberEndpoint {
     return this.http.delete<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

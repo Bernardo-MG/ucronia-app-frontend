@@ -1,3 +1,4 @@
+import { mapAudit, mapAuditPage } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Guest } from '@ucronia/domain';
@@ -35,7 +36,8 @@ export class GuestEndpoint {
 
     return this.http.get<PaginatedResponse<Guest>>(`${this.apiUrl}/profile/guest`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => mapAuditPage(response))
       );
   }
 
@@ -45,7 +47,7 @@ export class GuestEndpoint {
     return this.http.get<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -56,7 +58,7 @@ export class GuestEndpoint {
     return this.http.patch<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 
@@ -66,7 +68,7 @@ export class GuestEndpoint {
     return this.http.delete<SimpleResponse<Guest>>(`${this.apiUrl}/profile/guest/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content)
+        map(response => mapAudit(response.content))
       );
   }
 

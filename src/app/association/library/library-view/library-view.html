@@ -5,9 +5,15 @@
       <p class="mt-1 text-sm text-gray-500">Gestiona el catálogo y los préstamos de la asociación</p>
     </div>
 
-    @if (permissions.create && display === Display.BOOKS) {
-      <p-button label="Nuevo libro" icon="pi pi-plus" (click)="dialog = Dialog.CREATION" />
-    }
+    <div class="flex flex-wrap gap-2">
+      @if (permissions.settings) {
+        <p-button type="button" label="Configuración" icon="pi pi-cog" severity="secondary" outlined
+          routerLink="/association/library/settings" />
+      }
+      @if (permissions.create && display === Display.BOOKS) {
+        <p-button type="button" label="Nuevo libro" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATION" />
+      }
+    </div>
   </header>
 
   <p-card styleClass="overflow-hidden">
@@ -48,8 +54,8 @@
         <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"
           aria-label="Tipo de libro" (onChange)="onChangeSource($event)" />
 
-        <p-button class="lg:ml-auto" label="Exportar" icon="pi pi-file-excel" severity="secondary" outlined
-          [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (click)="downloadExcel()" />
+        <p-button type="button" class="lg:ml-auto" label="Exportar" icon="pi pi-file-excel" severity="secondary" outlined
+          [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (onClick)="downloadExcel()" />
       }
     </div>
 
@@ -62,7 +68,7 @@
       @case (Display.LENDINGS) {
         <assoc-library-lending-list [loading]="status.loading" [lendings]="lendings.content" [rows]="lendings.size"
           [borrowerNames]="lendingBorrowerNames" [page]="lendings.page" [totalRecords]="lendings.totalElements" (sort)="onChangeDirection($event)"
-          (pageChange)="load($event)" />
+          (pageChange)="load($event)" (showLending)="onShowLending($event)" />
       }
     }
 
@@ -72,86 +78,131 @@
   <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
     position="right" [style]="{ width: 'min(44rem, 100vw)' }">
     @switch (dialog) {
+      @case (Dialog.LENDING_INFO) {
+        <ng-template #header>
+          <shared-drawer-header title="Información del préstamo" icon="pi pi-bookmark"
+            [subtitle]="selectedLending.book.title.fullTitle" />
+        </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-library-lending-info [lending]="selectedLending"
+            [borrowerName]="lendingBorrowerNames[selectedLending.borrower] || ''" />
+        </div>
+        <ng-template #footer>
+          @if (permissions.edit && !selectedLending.returnDate) {
+            <div class="flex justify-end">
+              <p-button type="button" label="Devolver libro" icon="pi pi-undo" [disabled]="status.loading"
+                (onClick)="onShowLendingReturn()" />
+            </div>
+          }
+        </ng-template>
+      }
+      @case (Dialog.LENDING_RETURN) {
+        <ng-template #header>
+          <shared-drawer-header title="Devolver libro" icon="pi pi-undo"
+            [subtitle]="selectedLending.book.title.fullTitle" />
+        </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-library-book-return-form #lendingReturnForm formId="library-lending-return" [showActions]="false"
+            [loading]="status.loading" [failures]="failures" [borrower]="selectedLending.borrower"
+            [borrowerName]="lendingBorrowerNames[selectedLending.borrower] || ''"
+            [book]="selectedLending.book.number" [lentDate]="selectedLending.lendingDate"
+            (save)="onReturn($event)" />
+        </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions formId="library-lending-return" submitLabel="Devolver libro"
+            submitIcon="pi pi-undo" [disabled]="!permissions.edit || !lendingReturnForm.saveEnabled"
+            [loading]="lendingReturnForm.formStatus.loading" (cancelForm)="onCancelLendingReturn()" />
+        </ng-template>
+      }
       @case (Dialog.INFO) {
         <ng-template #header>
-          <div>
-            <span class="text-xs font-medium uppercase tracking-wide text-gray-500">Libro #{{ selectedData.number }}</span>
-            <h2 class="mt-1 text-xl font-semibold">{{ selectedData.title.fullTitle }}</h2>
-          </div>
-        </ng-template>
-        <div class="w-full p-4">
-          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" />
+        <shared-drawer-header title="{{ selectedData.title.fullTitle }}" icon="pi pi-book" subtitle="Libro #{{ selectedData.number }}" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-library-book-info [loading]="status.loading" [book]="selectedData" [borrowerNames]="selectedBookBorrowerNames" (showLending)="onShowBookLending($event)" />
         </div>
       <ng-template #footer>
-        <div class="flex w-full justify-between gap-2">
-          <p-button label="Eliminar" icon="pi pi-trash" severity="danger" [disabled]="!permissions.delete"
-            (click)="onDelete($event)" text />
-          <p-button label="Editar" icon="pi pi-pencil" severity="secondary" [disabled]="!permissions.edit"
-            [attr.aria-disabled]="!permissions.edit" (click)="onShowEdit()" />
-        </div>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
+          editLabel="Editar libro" (delete)="onDelete($event)" (edit)="onShowEdit()" />
       </ng-template>
       }
 
       @case (Dialog.EDIT) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-pencil" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Editar libro</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">
-                Libro #{{ selectedData.number }} · {{ selectedData.title.fullTitle }}
-              </p>
-            </div>
-          </div>
-        </ng-template>
-        <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-library-book-edition-form [data]="selectedData" [loading]="status.loading" [failures]="failures"
-            (save)="onSaveBook($event)" (cancelEdition)="dialog = Dialog.INFO" />
+        <shared-drawer-header title="Editar libro" icon="pi pi-pencil" subtitle="Libro #{{ selectedData.number }} · {{ selectedData.title.fullTitle }}" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-library-book-edition-form #fieldsAssocLibraryBookEditionForm formId="library-view-edit" [showActions]="false" [data]="selectedData" [loading]="status.loading" [failures]="failures"
+            (save)="onSaveBook($event)" />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="library-view-edit"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsAssocLibraryBookEditionForm.saveEnabled"
+            [loading]="fieldsAssocLibraryBookEditionForm.formStatus.loading"
+            (cancelForm)="onCancelEdit()" />
+        </ng-template>
       }
 
       @case (Dialog.CREATION) {
         <ng-template #header>
-          <div class="flex items-center gap-3">
-            <span class="flex size-10 shrink-0 items-center justify-center rounded-full bg-blue-100 text-blue-700">
-              <i class="pi pi-book" aria-hidden="true"></i>
-            </span>
-            <div>
-              <h2 class="text-xl font-semibold text-gray-950">Nuevo libro</h2>
-              <p class="mt-0.5 text-sm font-normal text-gray-500">Añade una obra al catálogo de la biblioteca</p>
-            </div>
-          </div>
-        </ng-template>
-        <div class="w-full px-2 py-4 sm:px-4">
-          <assoc-library-book-creation-form [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
-            (cancelEdition)="dialog = Dialog.NONE" />
+        <shared-drawer-header title="Nuevo libro" icon="pi pi-book" subtitle="Añade una obra al catálogo de la biblioteca" />
+      </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          <assoc-library-book-creation-form #fieldsAssocLibraryBookCreationForm formId="library-view-creation" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+            />
         </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="library-view-creation"
+            submitLabel="Crear libro"
+            submitIcon="pi pi-plus"
+            [disabled]="!fieldsAssocLibraryBookCreationForm.saveEnabled"
+            [loading]="fieldsAssocLibraryBookCreationForm.formStatus.loading"
+            (cancelForm)="onDrawerVisibleChange(false)" />
+        </ng-template>
       }
 
       @case (Dialog.LENDINGS) {
         @if(selectedData.lent) {
           <ng-template #header>
-            Devolver libro
-          </ng-template>
-          <div class="w-full p-4">
-            <assoc-library-book-return-form [loading]="status.loading" [failures]="failures" [borrower]="borrower"
+        <shared-drawer-header title="Devolver libro" icon="pi pi-undo" />
+      </ng-template>
+          <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+            <assoc-library-book-return-form #fieldsAssocLibraryBookReturnForm formId="library-view-lendings-return" [showActions]="false" [loading]="status.loading" [failures]="failures" [borrower]="borrower"
               [borrowerName]="selectedBorrower.name.fullName"
               [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
           </div>
+          <ng-template #footer>
+            <shared-drawer-form-actions
+              formId="library-view-lendings-return"
+              submitLabel="Devolver libro"
+              submitIcon="pi pi-undo"
+              [disabled]="!fieldsAssocLibraryBookReturnForm.saveEnabled"
+              [loading]="fieldsAssocLibraryBookReturnForm.formStatus.loading"
+              (cancelForm)="onCancelEdit()" />
+          </ng-template>
         } @else {
           <ng-template #header>
-            Prestar libro
-          </ng-template>
-          <div class="w-full p-4">
-            <assoc-library-book-lending-form [loading]="status.loading" [failures]="failures" [book]="selectedData.number"
+        <shared-drawer-header title="Prestar libro" icon="pi pi-arrow-right" />
+      </ng-template>
+          <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+            <assoc-library-book-lending-form #fieldsAssocLibraryBookLendingForm formId="library-view-lendings-lend" [showActions]="false" [loading]="status.loading" [failures]="failures" [book]="selectedData.number"
               [members]="members" (save)="onLend($event)" (searchMember)="onSearchMembers($event)" />
           </div>
+          <ng-template #footer>
+            <shared-drawer-form-actions
+              formId="library-view-lendings-lend"
+              submitLabel="Prestar libro"
+              submitIcon="pi pi-arrow-right"
+              [disabled]="!fieldsAssocLibraryBookLendingForm.saveEnabled"
+              [loading]="fieldsAssocLibraryBookLendingForm.formStatus.loading"
+              (cancelForm)="onCancelEdit()" />
+          </ng-template>
         }
-        <ng-template #footer>
-          <p-button icon="pi pi-times" severity="secondary" (click)="dialog = Dialog.NONE" rounded text class="!p-2" />
-        </ng-template>
+
       }
 
     }

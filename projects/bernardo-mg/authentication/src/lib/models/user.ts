@@ -1,3 +1,4 @@
+import { AuditDetails } from './audit-details';
 import { Role } from "./role";
 
 export class User {
@@ -9,4 +10,5 @@ export class User {
   public passwordNotExpired = true;
   public notLocked = true;
   public roles: Role[] = [];
+  public audit?: AuditDetails | null;
 }

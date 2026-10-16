@@ -1,0 +1,163 @@
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div><h1 class="text-3xl font-bold tracking-tight text-gray-950">Imágenes</h1>
+      <p class="mt-1 text-sm text-gray-500">Gestiona las imágenes de la asociación</p></div>
+    <div class="flex flex-wrap gap-2">
+      @if (permissions.create) {
+        <p-button type="button" label="Nueva carpeta" icon="pi pi-folder-plus" severity="secondary" [outlined]="true"
+          (onClick)="showCreateFolder()" />
+        <p-button type="button" label="Nueva imagen" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE" />
+      }
+    </div>
+  </header>
+
+  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div class="flex flex-col gap-4 border-b border-gray-200 p-4 sm:p-5 lg:flex-row lg:items-end lg:justify-between">
+      <div class="min-w-0">
+        <nav class="mb-3 flex flex-wrap items-center gap-1 text-sm" aria-label="Ruta de carpetas">
+          <button type="button" class="rounded px-1.5 py-1 text-gray-500 hover:bg-gray-100 hover:text-primary"
+            (click)="openFolder()"><i class="pi pi-home mr-1" aria-hidden="true"></i>Imágenes</button>
+          @for (folder of breadcrumbs; track folder.number) {
+            <i class="pi pi-angle-right text-xs text-gray-400" aria-hidden="true"></i>
+            <button type="button" class="rounded px-1.5 py-1 font-medium text-gray-700 hover:bg-gray-100 hover:text-primary"
+              (click)="openFolder(folder.number)">{{ folder.name }}</button>
+          }
+        </nav>
+        <h2 class="text-xl font-semibold text-gray-950">
+          {{ breadcrumbs.length ? breadcrumbs[breadcrumbs.length - 1].name : 'Archivos' }}
+        </h2>
+        <p class="mt-1 text-sm text-gray-500">{{ childFolders.length }} carpetas · {{ data.totalElements }} imágenes</p>
+      </div>
+      @if (currentFolderNumber !== null && (permissions.edit || permissions.delete)) {
+      <div class="flex shrink-0 gap-1">
+        @if (permissions.edit) {
+          <p-button type="button" label="Renombrar" icon="pi pi-pencil" severity="secondary" size="small" text (onClick)="showEditFolder()" />
+        }
+        @if (permissions.delete) {
+          <p-button type="button" label="Eliminar carpeta" icon="pi pi-trash" severity="danger" size="small" text
+            [disabled]="status.loading || data.totalElements > 0 || childFolders.length > 0" (click)="onDeleteFolder($event)" />
+        }
+      </div>
+      }
+    </div>
+
+    @if (childFolders.length) {
+      <div class="border-b border-gray-200 p-4 sm:p-5">
+        <h3 class="mb-3 text-sm font-semibold text-gray-950">Carpetas</h3>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          @for (folder of childFolders; track folder.number) {
+            <button type="button"
+              class="group flex min-w-0 items-center gap-3 rounded-xl border border-gray-200 bg-white p-3 text-left transition-colors hover:border-primary-200 hover:bg-primary-50/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              (click)="openFolder(folder.number)">
+              <span class="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary-50 text-primary">
+                <i class="pi pi-folder text-xl" aria-hidden="true"></i>
+              </span>
+              <span class="min-w-0 flex-1">
+                <span class="block truncate font-semibold text-gray-950">{{ folder.name }}</span>
+                <span class="mt-0.5 block text-xs text-gray-500">Abrir carpeta</span>
+              </span>
+              <i class="pi pi-angle-right text-sm text-gray-400 transition-transform group-hover:translate-x-0.5 group-hover:text-primary"
+                aria-hidden="true"></i>
+            </button>
+          }
+        </div>
+      </div>
+    }
+
+    <div>
+      <div class="border-b border-gray-200 px-4 py-3 sm:px-5">
+        <h3 class="text-sm font-semibold text-gray-950">Imágenes</h3>
+      </div>
+      <assoc-image-list [loading]="status.loading" [images]="data.content" [rows]="data.size"
+        [page]="data.page" [totalRecords]="data.totalElements"
+        (show)="onShowInfo($event)" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+    </div>
+  </section>
+</div>
+
+<p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
+  position="right" [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
+    @case (Dialog.INFO) {
+      <ng-template #header>
+        <shared-drawer-header title="{{ selectedData.name }}" icon="pi pi-image" subtitle="Imagen #{{ selectedData.number }}" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-info [data]="selectedData" [loading]="status.loading"
+        [source]="contentUrl(selectedData.number)" /></div>
+      <ng-template #footer>
+        <shared-drawer-actions [deleteDisabled]="!permissions.delete" [editDisabled]="!permissions.edit" [loading]="status.loading"
+          editLabel="Editar imagen" (delete)="onDelete($event)" (edit)="dialog = Dialog.EDIT" />
+      </ng-template>
+    }
+    @case (Dialog.CREATE) {
+      <ng-template #header>
+        <shared-drawer-header title="Nueva imagen" icon="pi pi-image" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-form #fieldsAssocImageForm formId="image-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures"
+        (save)="onCreate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="image-view-create"
+          submitLabel="Crear imagen"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocImageForm.saveEnabled"
+          [loading]="fieldsAssocImageForm.formStatus.loading"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+    @case (Dialog.EDIT) {
+      <ng-template #header>
+        <shared-drawer-header title="Editar imagen" icon="pi pi-pencil" subtitle="Imagen #{{ selectedData.number }} · {{ selectedData.name }}" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-form #fieldsAssocImageForm formId="image-view-edit" [showActions]="false" [data]="selectedData" [folders]="folders" [loading]="status.loading"
+        [failures]="failures" (save)="onUpdate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="image-view-edit"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!fieldsAssocImageForm.saveEnabled"
+          [loading]="fieldsAssocImageForm.formStatus.loading"
+          (cancelForm)="onCancelEdit()" />
+      </ng-template>
+    }
+    @case (Dialog.CREATE_FOLDER) {
+      <ng-template #header>
+        <shared-drawer-header title="Nueva carpeta" icon="pi pi-folder" />
+      </ng-template>
+      <form id="image-create_folder" class="w-full min-w-0 px-2 py-4 sm:px-4" (ngSubmit)="createFolder()">
+        <label for="folderName" class="mb-2 block font-semibold text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+        <input pInputText id="folderName" name="folderName" [(ngModel)]="folderName" maxlength="100" class="w-full" />
+      </form>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="image-create_folder"
+          submitLabel="Crear carpeta"
+          submitIcon="pi pi-plus"
+          [disabled]="!folderName.trim()"
+          [loading]="status.loading"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+    @case (Dialog.EDIT_FOLDER) {
+      <ng-template #header>
+        <shared-drawer-header title="Renombrar carpeta" icon="pi pi-pencil" />
+      </ng-template>
+      <form id="image-edit_folder" class="w-full min-w-0 px-2 py-4 sm:px-4" (ngSubmit)="updateFolder()">
+        <label for="folderEditName" class="mb-2 block font-semibold text-gray-950">Nombre <span class="text-red-600" aria-hidden="true">*</span></label>
+        <input pInputText id="folderEditName" name="folderName" [(ngModel)]="folderName" maxlength="100" class="w-full" />
+      </form>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="image-edit_folder"
+          submitLabel="Guardar cambios"
+          submitIcon="pi pi-check"
+          [disabled]="!folderName.trim()"
+          [loading]="status.loading"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+  }
+</p-drawer>

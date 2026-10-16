@@ -1,13 +1,13 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore, Page } from '@bernardo-mg/request';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
@@ -16,14 +16,19 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-edition-form',
-  imports: [FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, ButtonModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './library-book-edition-form.html'
 })
-export class LibraryBookEditionForm implements OnChanges {
+export class LibraryBookEditionForm {
 
   private readonly service = inject(LibraryService);
 
-  public readonly loading = input(false);
+  public readonly formId = input<string | null>(null);
+  public readonly showActions = input(true);
+
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly failures = input(new FailureStore());
 
@@ -41,9 +46,9 @@ export class LibraryBookEditionForm implements OnChanges {
   public readonly save = output<FictionBook | GameBook>();
   public readonly cancelEdition = output<void>();
 
-  public formStatus: FormStatus;
+  public readonly formStatus: FormStatus;
 
-  public form: FormGroup;
+  public readonly form: FormGroup;
 
   public readonly languages: Language[] = [];
 
@@ -103,6 +108,10 @@ export class LibraryBookEditionForm implements OnChanges {
     return [this.noBookTypeOption, ...this.bookTypes];
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
   constructor() {
     const fb = inject(FormBuilder);
     const config = inject(LibraryConfig);
@@ -143,27 +152,19 @@ export class LibraryBookEditionForm implements OnChanges {
     );
   }
 
-  public ngOnChanges({ loading }: SimpleChanges): void {
-    if (loading) {
-      this.formStatus.loading = this.loading();
-    }
-  }
-
   public onSave(): void {
-    if (!this.form.valid) {
-      return;
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      const donation = this.form.get('donation')?.value as Donation;
+      const hasDonationDate = !!donation?.date;
+      const hasDonors = !!donation?.donors?.length;
+      const value = {
+        ...this.form.value,
+        donation: hasDonationDate || hasDonors ? donation : undefined
+      };
+      this.save.emit(value as FictionBook | GameBook);
     }
-
-    const donation = this.form.get('donation')?.value as Donation;
-    const hasDonationDate = !!donation?.date;
-    const hasDonors = !!donation?.donors?.length;
-
-    const value = {
-      ...this.form.value,
-      donation: hasDonationDate || hasDonors ? donation : undefined
-    };
-
-    this.save.emit(value as FictionBook | GameBook);
   }
 
   public onSearchAuthors(event: { query: string }): void {
