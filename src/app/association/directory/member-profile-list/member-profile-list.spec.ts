@@ -28,6 +28,9 @@ describe('MemberProfileList', () => {
   it('shows the member number while retaining the profile used by actions', () => {
     const profile = Object.assign(new FullProfile(), { number: 812, memberNumber: 37 });
     fixture.componentRef.setInput('profiles', [profile]);
+    fixture.componentRef.setInput('rows', 10);
+    fixture.componentRef.setInput('page', 1);
+    fixture.componentRef.setInput('totalRecords', 1);
     fixture.detectChanges();
 
     const cells = fixture.nativeElement.querySelectorAll('tbody td');

@@ -25,6 +25,9 @@ describe('PublicMemberList', () => {
   it('shows the member number from the public API response', () => {
     const member = Object.assign(new PublicMember(), { memberNumber: 37 });
     fixture.componentRef.setInput('members', [member]);
+    fixture.componentRef.setInput('rows', 10);
+    fixture.componentRef.setInput('page', 1);
+    fixture.componentRef.setInput('totalRecords', 1);
     fixture.detectChanges();
 
     const cells = fixture.nativeElement.querySelectorAll('tbody td');
