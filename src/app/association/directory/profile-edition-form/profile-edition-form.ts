@@ -65,6 +65,7 @@ export class ProfileEditionForm {
 
     this.lockedTypes = [...value.types];
     this.selected = [...value.types];
+    this.updateFeeTypeValidator();
   }
 
   public readonly save = output<FullProfile>();
