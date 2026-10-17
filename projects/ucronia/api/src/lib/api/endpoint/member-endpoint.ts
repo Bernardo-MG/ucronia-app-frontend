@@ -4,6 +4,7 @@ import { Member, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { MemberCreation } from '../../members/member-creation';
 import { MemberPatch } from '../../members/member-patch';
+import { MemberUpdate } from '../../members/member-update';
 import { mapAudit } from './audit-endpoint-utils';
 
 export class MemberEndpoint {
@@ -64,6 +65,17 @@ export class MemberEndpoint {
     data: MemberCreation
   ): Observable<Member> {
     return this.http.post<SimpleResponse<Member>>(`${this.apiUrl}/profile/member`, data)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => this.mapMember(response.content))
+      );
+  }
+
+  public update(
+    number: number,
+    data: MemberUpdate
+  ): Observable<Member> {
+    return this.http.put<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => this.mapMember(response.content))
