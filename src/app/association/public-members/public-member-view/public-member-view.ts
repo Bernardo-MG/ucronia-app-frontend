@@ -9,7 +9,7 @@ import { CardModule } from 'primeng/card';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { debounceTime, distinctUntilChanged, finalize, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, of, Subject, switchMap } from 'rxjs';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
 
@@ -62,8 +62,7 @@ export class PublicMemberView implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.load();
-    this.loadSummary();
+    this.refresh();
   }
 
   // EVENT HANDLERS
@@ -97,11 +96,26 @@ export class PublicMemberView implements OnInit {
 
   // DATA LOADING
 
+  /** Reload the list and counters after a successful member save. */
+  public refresh(): void {
+    this.load(this.data.page > 0 ? this.data.page : undefined);
+    this.loadSummary();
+  }
+
   public load(page: number | undefined = undefined) {
     this.status.loading = true;
 
     this.service.getAll(page, this.sort, this.nameFilter)
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        switchMap(response => {
+          if (response.content.length === 0 && response.page > 1) {
+            const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
+            return this.service.getAll(previousPage, this.sort, this.nameFilter);
+          }
+          return of(response);
+        }),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe(response => this.data = response);
   }
 
