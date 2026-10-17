@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Member, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
+import { MemberCreation } from '../../members/member-creation';
 import { MemberPatch } from '../../members/member-patch';
 
 export class MemberEndpoint {
@@ -50,6 +51,16 @@ export class MemberEndpoint {
     number: number
   ): Observable<Member> {
     return this.http.get<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
+      .pipe(
+        catchError(this.errorInterceptor.handle),
+        map(response => mapAudit(response.content))
+      );
+  }
+
+  public create(
+    data: MemberCreation
+  ): Observable<Member> {
+    return this.http.post<SimpleResponse<Member>>(`${this.apiUrl}/profile/member`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
         map(response => mapAudit(response.content))

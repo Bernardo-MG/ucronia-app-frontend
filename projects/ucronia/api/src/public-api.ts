@@ -21,6 +21,7 @@ export * from './lib/library/game-book-update';
 export * from './lib/library/game-system-update';
 export * from './lib/library/publisher-creation';
 export * from './lib/library/publisher-update';
+export * from './lib/members/member-creation';
 export * from './lib/members/member-patch';
 export * from './lib/members/member-summary';
 export * from './lib/members/key-creation';
