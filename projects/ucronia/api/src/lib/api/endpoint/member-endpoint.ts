@@ -1,10 +1,10 @@
-import { mapAudit, mapAuditPage } from './audit-endpoint-utils';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
 import { Member, MemberStatus } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { MemberCreation } from '../../members/member-creation';
 import { MemberPatch } from '../../members/member-patch';
+import { mapAudit } from './audit-endpoint-utils';
 
 export class MemberEndpoint {
 
@@ -43,7 +43,10 @@ export class MemberEndpoint {
     return this.http.get<PaginatedResponse<Member>>(`${this.apiUrl}/profile/member`, { params })
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => mapAuditPage(response))
+        map(response => {
+          response.content.forEach(member => this.mapMember(member));
+          return response;
+        })
       );
   }
 
@@ -53,7 +56,7 @@ export class MemberEndpoint {
     return this.http.get<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => mapAudit(response.content))
+        map(response => this.mapMember(response.content))
       );
   }
 
@@ -63,7 +66,7 @@ export class MemberEndpoint {
     return this.http.post<SimpleResponse<Member>>(`${this.apiUrl}/profile/member`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => mapAudit(response.content))
+        map(response => this.mapMember(response.content))
       );
   }
 
@@ -74,7 +77,7 @@ export class MemberEndpoint {
     return this.http.patch<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`, data)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => mapAudit(response.content))
+        map(response => this.mapMember(response.content))
       );
   }
 
@@ -84,8 +87,15 @@ export class MemberEndpoint {
     return this.http.delete<SimpleResponse<Member>>(`${this.apiUrl}/profile/member/${number}`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => mapAudit(response.content))
+        map(response => this.mapMember(response.content))
       );
+  }
+
+  private mapMember(member: Member): Member {
+    if (member.birthDate != null) {
+      member.birthDate = new Date(member.birthDate);
+    }
+    return mapAudit(member);
   }
 
 }
