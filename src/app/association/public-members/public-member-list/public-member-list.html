@@ -1,4 +1,4 @@
-<p-table lazy="true" dataKey="number" [loading]="loading()" [value]="members()" paginator="true" [rows]="rows()"
+<p-table lazy="true" dataKey="memberNumber" [loading]="loading()" [value]="members()" paginator="true" [rows]="rows()"
   [totalRecords]="totalRecords()" [first]="first" showCurrentPageReport="true"
   currentPageReportTemplate="{first}–{last} de {totalRecords}" (onSort)="changeDirection.emit($event)"
   (onPage)="onPageChange($event)" responsiveLayout="scroll" styleClass="p-datatable-striped">
@@ -9,9 +9,9 @@
         Nombre
         <p-sortIcon field="fullName" />
       </th>
-      <th pSortableColumn="number" class="w-40">
+      <th pSortableColumn="memberNumber" class="w-40">
         N.º socio
-        <p-sortIcon field="number" />
+        <p-sortIcon field="memberNumber" />
       </th>
       <th class="w-48">Llave</th>
     </tr>
@@ -26,7 +26,7 @@
           <span class="mt-1 block text-xs text-gray-500">{{ member.name.nickname }}</span>
         }
       </td>
-      <td class="font-mono text-sm text-gray-600">#{{ member.number }}</td>
+      <td class="font-mono text-sm text-gray-600">#{{ member.memberNumber }}</td>
       <td>
         @if (member.key) {
           <span class="inline-flex items-center gap-2 text-gray-700">

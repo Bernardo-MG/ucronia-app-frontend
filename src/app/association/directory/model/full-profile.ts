@@ -2,6 +2,7 @@ import { AuditDetails } from "@ucronia/domain";
 
 export class FullProfile {
   public number = -1;
+  public memberNumber?: number | null;
   public identifier = '';
   public birthDate = new Date();
   public name = new FullProfileName();

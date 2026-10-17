@@ -1,4 +1,8 @@
 @if (isMember) {
+  <div class="ms-3 mt-6">
+    <ui-detail-field [loading]="loading()" icon="pi pi-id-card" name="N.º socio"
+      [value]="'#' + data().memberNumber" />
+  </div>
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 place-items-center pb-4">
     <p-card class="w-60">
       <ui-status-detail icon="pi pi-check" [loading]="loading()" [value]="data().active ? true : false" trueText="Activo"
