@@ -4,12 +4,14 @@
   (onPage)="onPageChange($event)">
   <ng-template #header>
     <tr>
+      <th class="w-40">N.º socio</th>
       <th pSortableColumn="fullName">Nombre <p-sortIcon field="fullName" /></th>
       <th class="w-40"></th>
     </tr>
   </ng-template>
   <ng-template #body let-profile>
     <tr>
+      <td class="font-mono text-sm text-gray-600">{{ '#' + profile.memberNumber }}</td>
       <td>
         {{ profile.name.fullName }}
         @if (profile.key) {

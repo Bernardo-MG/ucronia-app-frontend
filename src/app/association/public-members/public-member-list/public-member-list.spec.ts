@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { PublicMember } from '@ucronia/domain';
 import { PublicMemberList } from './public-member-list';
 
 describe('PublicMemberList', () => {
@@ -19,6 +20,15 @@ describe('PublicMemberList', () => {
     fixture = TestBed.createComponent(PublicMemberList);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('shows the member number from the public API response', () => {
+    const member = Object.assign(new PublicMember(), { memberNumber: 37 });
+    fixture.componentRef.setInput('members', [member]);
+    fixture.detectChanges();
+
+    const cells = fixture.nativeElement.querySelectorAll('tbody td');
+    expect(cells[1].textContent.trim()).toBe('#37');
   });
 
   it('should create', () => {

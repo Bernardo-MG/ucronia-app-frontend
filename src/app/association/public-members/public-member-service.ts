@@ -22,7 +22,7 @@ export class PublicMemberService {
         [
           new SortingProperty('name.firstName'),
           new SortingProperty('name.lastName'),
-          new SortingProperty('number')
+          new SortingProperty('memberNumber')
         ]
       )
     );
