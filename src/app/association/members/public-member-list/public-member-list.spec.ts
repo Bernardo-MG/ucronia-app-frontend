@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { PublicMember } from '@ucronia/domain';
 import { AuthService } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { UcroniaClient } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -59,7 +60,7 @@ describe('PublicMemberList', () => {
     expect(get).toHaveBeenCalledWith(12);
   });
 
-  it('hides the eye button without member profile read permission', () => {
+  it('hides the eye button without member read permission', () => {
     auth.hasPermission.and.returnValue(false);
     const restricted = TestBed.createComponent(PublicMemberList);
     restricted.componentRef.setInput('members', [new PublicMember()]);
@@ -70,6 +71,23 @@ describe('PublicMemberList', () => {
     expect(restricted.nativeElement.querySelector('button[aria-label="Ver información del socio"]')).toBeNull();
     expect(get).not.toHaveBeenCalled();
     restricted.destroy();
+  });
+
+  it('shows the eye button with member read access and does not request private information', () => {
+    auth.hasPermission.and.callFake(permission => permission === UcroniaPermissions.directory.member.read);
+    const publicFixture = TestBed.createComponent(PublicMemberList);
+    publicFixture.componentRef.setInput('members', [Object.assign(new PublicMember(), { number: 12, memberNumber: 37 })]);
+    publicFixture.componentRef.setInput('rows', 10);
+    publicFixture.componentRef.setInput('page', 1);
+    publicFixture.componentRef.setInput('totalRecords', 1);
+    publicFixture.detectChanges();
+    const button = publicFixture.nativeElement.querySelector('button[aria-label="Ver información del socio"]');
+    expect(button).not.toBeNull();
+    button.click();
+    publicFixture.detectChanges();
+    expect(get).not.toHaveBeenCalled();
+    expect(publicFixture.nativeElement.textContent).not.toContain('La siguiente información es privada');
+    publicFixture.destroy();
   });
 
   it('should create', () => {

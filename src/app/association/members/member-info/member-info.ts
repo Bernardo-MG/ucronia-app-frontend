@@ -6,36 +6,44 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { UcroniaClient } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Member } from '@ucronia/domain';
+import { Member, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MessageModule } from 'primeng/message';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [AuditInfo, DrawerHeader, DatePipe, DetailField, StatusDetail, ButtonModule, CardModule, DrawerModule, MessageModule],
+  imports: [AuditInfo, DrawerHeader, DatePipe, DetailField, StatusDetail, ButtonModule, DrawerModule, MessageModule],
   templateUrl: './member-info.html'
 })
 export class MemberInfo implements OnDestroy {
   private readonly client = inject(UcroniaClient);
-  public readonly canRead = inject(AuthService).hasPermission(UcroniaPermissions.directory.memberProfile.read);
+  private readonly auth = inject(AuthService);
+  public readonly canRead = this.auth.hasPermission(UcroniaPermissions.directory.member.read);
+  public readonly canReadPrivate = this.auth.hasPermission(UcroniaPermissions.directory.memberProfile.read);
+  public readonly publicData = signal<PublicMember | null>(null);
   public readonly visible = signal(false);
   public readonly loading = signal(false);
   public readonly data = signal<Member | null>(null);
   public readonly error = signal(false);
   private request?: Subscription;
-  private number: number | null = null;
 
-  public open(number: number): void {
+  public open(member: PublicMember): void {
     if (!this.canRead) return;
     this.request?.unsubscribe();
-    this.number = number;
+    this.publicData.set(member);
     this.data.set(null);
     this.error.set(false);
-    this.loading.set(true);
+    this.loading.set(false);
     this.visible.set(true);
+    if (this.canReadPrivate) this.loadPrivate(member.number);
+  }
+
+  private loadPrivate(number: number): void {
+    this.request?.unsubscribe();
+    this.error.set(false);
+    this.loading.set(true);
     this.request = this.client.memberProfile.get(number).subscribe({
       next: member => {
         this.data.set(member);
@@ -49,12 +57,13 @@ export class MemberInfo implements OnDestroy {
   }
 
   public retry(): void {
-    if (this.number !== null) this.open(this.number);
+    const member = this.publicData();
+    if (this.canRead && this.canReadPrivate && this.visible() && member) this.loadPrivate(member.number);
   }
 
   public close(): void {
     this.request?.unsubscribe();
-    this.number = null;
+    this.publicData.set(null);
     this.visible.set(false);
     this.loading.set(false);
     this.data.set(null);
