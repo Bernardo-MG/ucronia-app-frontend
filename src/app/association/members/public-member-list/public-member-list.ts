@@ -1,12 +1,14 @@
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PublicMember } from '@ucronia/domain';
+import { MemberInfo } from '../member-info/member-info';
+import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { PublicMemberRenewTag } from '../public-member-renew-tag/public-member-renew-tag';
 
 @Component({
   selector: 'assoc-public-member-list',
-  imports: [TableModule, PublicMemberRenewTag],
+  imports: [ButtonModule, MemberInfo, TableModule, PublicMemberRenewTag],
   templateUrl: './public-member-list.html'
 })
 export class PublicMemberList {

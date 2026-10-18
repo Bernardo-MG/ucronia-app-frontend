@@ -1,0 +1,43 @@
+<p-drawer [visible]="visible()" (visibleChange)="!$event && close()" position="right"
+  [style]="{ width: 'min(44rem, 100vw)' }">
+  <ng-template #header>
+    <shared-drawer-header title="Información del socio" icon="pi pi-user" />
+  </ng-template>
+  <div class="w-full min-w-0 space-y-5 px-2 py-4 sm:px-4">
+    @if (loading()) {
+      <p role="status"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Cargando información del socio…</p>
+    } @else if (error()) {
+      <p-message severity="error">No se pudo cargar la información del socio.</p-message>
+      <p-button label="Reintentar" icon="pi pi-refresh" (onClick)="retry()" />
+    } @else if (data(); as member) {
+      <ui-detail-field icon="pi pi-id-card" name="N.º socio" [value]="member.memberNumber == null ? '—' : '#' + member.memberNumber" />
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <p-card><ui-status-detail icon="pi pi-check" name="Estado" [value]="member.active" trueText="Activo" falseText="Inactivo" /></p-card>
+        <p-card><ui-status-detail icon="pi pi-replay" name="Renovación" [value]="member.renew" trueText="Renueva" falseText="No renueva" /></p-card>
+      </div>
+      <ui-detail-field icon="pi pi-calendar" name="Tipo de cuota" [value]="member.feeType.name + ' (' + member.feeType.amount + '€)'" />
+      <ui-detail-field icon="pi pi-key" name="Llave" [value]="member.key == null ? 'Sin llave' : '#' + member.key" />
+      <h3 class="text-sm font-semibold text-gray-600">Datos personales</h3>
+      <ui-detail-field icon="pi pi-user" name="Nombre" [value]="member.name.firstName" />
+      <ui-detail-field icon="pi pi-users" name="Apellidos" [value]="member.name.lastName" />
+      <ui-detail-field icon="pi pi-user" name="Apodo" [value]="member.name.nickname" />
+      <ui-detail-field icon="pi pi-id-card" name="DNI" [value]="member.identifier" />
+      <ui-detail-field icon="pi pi-calendar" name="Fecha de nacimiento" [value]="member.birthDate | date:'dd/MM/yyyy'" />
+      <ui-detail-field icon="pi pi-home" name="Dirección" [value]="member.address" />
+      @if (member.contactChannels.length) {
+        <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
+        @for (channel of member.contactChannels; track $index) {
+          <ui-detail-field icon="pi pi-phone" [name]="channel.method.name" [value]="channel.detail" />
+        }
+      }
+      @if (member.comments) {
+        <h3 class="text-sm font-semibold text-gray-600">Comentarios</h3>
+        <p class="whitespace-pre-line break-words rounded-md border bg-gray-50 p-3 text-sm text-gray-800">{{ member.comments }}</p>
+      }
+      <assoc-audit-info [audit]="member.audit" />
+    }
+  </div>
+  <ng-template #footer>
+    <p-button label="Cerrar" severity="secondary" (onClick)="close()" />
+  </ng-template>
+</p-drawer>
