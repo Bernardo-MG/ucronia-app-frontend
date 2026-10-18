@@ -2,7 +2,7 @@ import { Routes } from '@angular/router';
 import { ResourceGuard } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 
-export const PublicMembersRoutes: Routes = [
+export const membersRoutes: Routes = [
   {
     path: 'members',
     canActivate: [ResourceGuard(UcroniaPermissions.directory.member.read)],
