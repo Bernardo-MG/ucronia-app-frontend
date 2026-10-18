@@ -1,15 +1,13 @@
-import { MemberName } from '@ucronia/domain';
-import { ProfilePatchChannel } from '../profile/profile-patch';
-
+/** Complete PUT update; omitted optional values are cleared. */
 export interface MemberUpdate {
-  name: MemberName;
-  identifier: string | null;
+  name: { firstName: string, nickname?: string, lastName: string };
   feeType: number;
-  key: number | null;
-  birthDate: Date | null;
-  contactChannels: ProfilePatchChannel[];
-  address: string | null;
-  comments: string | null;
+  contactChannels: { method: number, detail: string }[];
   active: boolean;
   renew: boolean;
+  identifier?: string;
+  key?: number;
+  birthDate?: Date;
+  address?: string;
+  comments?: string;
 }

@@ -1,8 +1,22 @@
-<p-drawer [visible]="visible()" (visibleChange)="!$event && close()" position="right"
+<p-drawer [visible]="visible()" (visibleChange)="!$event && close()" [closable]="!saving()" [dismissible]="!saving()" [closeOnEscape]="!saving()" position="right"
   [style]="{ width: 'min(44rem, 100vw)' }">
   <ng-template #header>
-    <shared-drawer-header title="Información del socio" icon="pi pi-user" />
+    <shared-drawer-header [title]="editing() ? 'Editar socio' : 'Información del socio'" [icon]="editing() ? 'pi pi-pencil' : 'pi pi-user'" />
   </ng-template>
+  @if (editing()) {
+    <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+      @if (editError()) { <p-message severity="error">{{ editError() }}</p-message> }
+      @if (loadingOptions()) { <p role="status">Cargando opciones…</p> }
+      <assoc-member-edition-form #fieldsMemberEditionForm formId="member-info-edit" [showActions]="false"
+        [data]="data()!" [feeTypes]="feeTypes" [contactMethods]="contactMethods" [keys]="keys"
+        [failures]="failures" [loading]="saving() || loadingOptions() || !optionsReady()" (save)="onUpdate($event)" />
+    </div>
+    <ng-template #footer>
+      <shared-drawer-form-actions formId="member-info-edit" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+        [disabled]="!fieldsMemberEditionForm.saveEnabled || !optionsReady()" [loading]="saving() || loadingOptions()"
+        (cancelForm)="cancelEdit()" />
+    </ng-template>
+  } @else {
   <div class="w-full min-w-0 space-y-5 px-2 py-4 sm:px-4">
     @if (publicData(); as member) {
       <section aria-labelledby="member-public-info-heading" class="space-y-5">
@@ -57,6 +71,14 @@
     }
   </div>
   <ng-template #footer>
-    <p-button label="Cerrar" severity="secondary" (onClick)="close()" />
+    <div class="flex w-full items-center justify-between gap-3">
+      <p-button label="Cerrar" severity="secondary" (onClick)="close()" />
+      <shared-drawer-actions [showDelete]="false" [showEdit]="canUpdate" editLabel="Editar socio"
+        [editDisabled]="loading() || !canReadPrivate || !data()" (edit)="startEdit()" />
+    </div>
+    @if (canUpdate && !canReadPrivate) {
+      <p class="mt-2 text-sm text-gray-500">Necesitas permiso de lectura de perfiles de socios para cargar el formulario completo.</p>
+    }
   </ng-template>
+  }
 </p-drawer>

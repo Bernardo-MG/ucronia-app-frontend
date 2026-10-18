@@ -43,7 +43,7 @@
     </div>
 
     <assoc-public-member-list [loading]="status.loading" [members]="data.content" [rows]="data.size" [page]="data.page"
-      [totalRecords]="data.totalElements" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
+      [totalRecords]="data.totalElements" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" (updated)="refresh()" />
   </section>
 </div>
 
