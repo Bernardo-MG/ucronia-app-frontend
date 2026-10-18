@@ -1,7 +1,12 @@
 <div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
-  <header>
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
     <h1 class="text-3xl font-bold tracking-tight text-gray-950">Socios</h1>
     <p class="mt-1 text-sm text-gray-500">Consulta los socios activos de la asociación</p>
+    </div>
+    @if (permissions.create) {
+      <p-button type="button" label="Nuevo socio" icon="pi pi-plus" (onClick)="onCreateOpen()" />
+    }
   </header>
 
   <p-card styleClass="overflow-hidden">
@@ -41,3 +46,22 @@
       [totalRecords]="data.totalElements" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
   </section>
 </div>
+
+<p-drawer [visible]="creating" (visibleChange)="onDrawerVisibleChange($event)" [closable]="!saving"
+  position="right" [style]="{width: 'min(44rem, 100vw)'}">
+  @if (creating) {
+    <ng-template #header><shared-drawer-header title="Crear socio" icon="pi pi-users" /></ng-template>
+    <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+      @if (creationError) { <p-message severity="error">{{ creationError }}</p-message> }
+      @if (loadingOptions) { <p role="status">Cargando opciones…</p> }
+      <assoc-member-creation-form #fieldsMemberCreationForm formId="public-member-view-create" [showActions]="false"
+        [loading]="saving || loadingOptions || !optionsReady" [failures]="failures"
+        [feeTypes]="feeTypes" [contactMethods]="contactMethods" [keys]="keys" (save)="onCreate($event)" />
+    </div>
+    <ng-template #footer>
+      <shared-drawer-form-actions formId="public-member-view-create" submitLabel="Crear socio" submitIcon="pi pi-plus"
+        [disabled]="!fieldsMemberCreationForm.saveEnabled || !optionsReady" [loading]="saving || loadingOptions"
+        (cancelForm)="onDrawerVisibleChange(false)" />
+    </ng-template>
+  }
+</p-drawer>

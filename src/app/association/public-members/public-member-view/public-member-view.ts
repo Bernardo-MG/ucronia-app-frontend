@@ -3,24 +3,104 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MemberCount } from '@ucronia/api';
+import { MemberCount, MemberCreation, UcroniaClient } from '@ucronia/api';
+import { AuthService } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
+import { ContactMethod, FeeType, Key } from '@ucronia/domain';
+import { FailureResponse } from '@bernardo-mg/request';
+import { MemberCreationForm } from '../../members/member-creation-form/member-creation-form';
+import { FeeTypeService } from '@app/settings/fee-type-service';
+import { ContactMethodService } from '@app/settings/contact-method-service';
+import { KeyService } from '@app/settings/key-service';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerModule } from 'primeng/drawer';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { MessageService } from 'primeng/api';
 import { Member, PublicMember } from '@ucronia/domain';
 import { CardModule } from 'primeng/card';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
-import { debounceTime, distinctUntilChanged, finalize, of, Subject, switchMap } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, forkJoin, of, Subject, switchMap } from 'rxjs';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
+  imports: [DrawerHeader, DrawerFormActions, DrawerModule, ButtonModule, MessageModule, MemberCreationForm, FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
 
   private readonly service = inject(PublicMemberService);
+
+  private readonly client = inject(UcroniaClient);
+  private readonly feeTypeService = inject(FeeTypeService);
+  private readonly contactMethodService = inject(ContactMethodService);
+  private readonly keyService = inject(KeyService);
+  private readonly messages = inject(MessageService);
+  public readonly permissions = {
+    create: inject(AuthService).hasPermission(UcroniaPermissions.directory.memberProfile.create)
+  };
+  public creating = false;
+  public saving = false;
+  public loadingOptions = false;
+  public optionsReady = false;
+  public creationError = '';
+  public feeTypes: FeeType[] = [];
+  public contactMethods: ContactMethod[] = [];
+  public keys: Key[] = [];
+
+  public onCreateOpen(): void {
+    if (!this.permissions.create || this.creating) return;
+    this.creating = true;
+    this.failures.clear();
+    this.creationError = '';
+    this.optionsReady = false;
+    this.loadingOptions = true;
+    forkJoin({
+      feeTypes: this.feeTypeService.getAllAvailable(),
+      contactMethods: this.contactMethodService.getAllAvailable(),
+      keys: this.keyService.getAllAvailable()
+    }).pipe(finalize(() => this.loadingOptions = false)).subscribe({
+      next: options => {
+        this.feeTypes = options.feeTypes;
+        this.contactMethods = options.contactMethods;
+        this.keys = options.keys;
+        this.optionsReady = true;
+      },
+      error: () => this.creationError = 'No se pudieron cargar las opciones del formulario. Cierra y vuelve a intentarlo.'
+    });
+  }
+
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible && !this.saving) {
+      this.creating = false;
+      this.failures.clear();
+      this.creationError = '';
+    }
+  }
+
+  public onCreate(data: MemberCreation): void {
+    if (!this.permissions.create || !this.creating || !this.optionsReady || this.saving) return;
+    this.saving = true;
+    this.creationError = '';
+    this.client.memberProfile.create(data).pipe(finalize(() => this.saving = false)).subscribe({
+      next: () => {
+        this.failures.clear();
+        this.creating = false;
+        this.messages.add({ severity: 'info', summary: 'Creado', detail: 'Socio creado', life: 3000 });
+        this.refresh();
+      },
+      error: error => {
+        if (error instanceof FailureResponse) this.failures = error.failures;
+        else this.failures.clear();
+        this.creationError = 'No se pudo crear el socio. Revisa los datos e inténtalo de nuevo.';
+      }
+    });
+  }
 
   public data = new Page<PublicMember>();
 
