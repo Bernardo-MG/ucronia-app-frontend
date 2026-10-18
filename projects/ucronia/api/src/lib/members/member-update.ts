@@ -1,7 +1,6 @@
 import { MemberName } from '@ucronia/domain';
 import { ProfilePatchChannel } from '../profile/profile-patch';
 
-/** Full form replacement: use null to clear an optional value. */
 export interface MemberUpdate {
   name: MemberName;
   identifier: string | null;
