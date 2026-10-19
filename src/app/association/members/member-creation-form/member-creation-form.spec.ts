@@ -1,49 +1,73 @@
-import { TestBed } from '@angular/core/testing';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { ComponentFixture } from '@angular/core/testing';
+import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { MemberCreationForm } from './member-creation-form';
 
 describe('MemberCreationForm', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [MemberCreationForm], providers: [provideAnimationsAsync()]
-  }));
+  let fixture: ComponentFixture<MemberCreationForm>;
+  let component: MemberCreationForm;
 
-  it('starts active and renewing with an empty birth date and required fee', () => {
-    const fixture = TestBed.createComponent(MemberCreationForm);
-    fixture.detectChanges();
-    const component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = createFormFixture(MemberCreationForm);
+    component = fixture.componentInstance;
+  });
+
+  it('starts active and renewing with no birth date or fee type', () => {
     expect(component.form.controls.birthDate.value).toBeNull();
     expect(component.form.controls.active.value).toBeTrue();
     expect(component.form.controls.renew.value).toBeTrue();
-    expect(component.form.controls.feeType.valid).toBeFalse();
+    expect(component.form.controls.feeType.hasError('required')).toBeTrue();
     expect(fixture.nativeElement.querySelector('p-selectbutton')).toBeNull();
   });
 
-  it('emits a complete creation request with scalar lookup numbers', () => {
-    const component = TestBed.createComponent(MemberCreationForm).componentInstance;
-    const save = jasmine.createSpy();
-    component.save.subscribe(save);
-    component.form.patchValue({ feeType: 3, name: { firstName: 'Alice' }, key: 5, address: 'Street' });
-    component.addContactChannel();
-    component.contactChannels.at(0).patchValue({ method: 4, detail: 'alice@example.org' });
-    component.form.markAsDirty();
-    component.onSave();
-    expect(save).toHaveBeenCalledWith(jasmine.objectContaining({
-      feeType: 3, key: 5, address: 'Street', birthDate: undefined,
-      active: true, renew: true, contactChannels: [{ method: 4, detail: 'alice@example.org' }]
-    }));
+  it('requires a name and fee type', () => {
+    editForm(component.form, { feeType: 3 });
+
+    expect(component.form.invalid).toBeTrue();
+
+    editForm(component.form, { name: { firstName: 'Ana' } });
+
+    expect(component.form.valid).toBeTrue();
+
+    editForm(component.form, { feeType: null });
+
+    expect(component.form.invalid).toBeTrue();
   });
 
-  it('does not submit while loading or with an incomplete contact channel', () => {
-    const component = TestBed.createComponent(MemberCreationForm).componentInstance;
-    const save = jasmine.createSpy();
-    component.save.subscribe(save);
-    component.form.patchValue({ feeType: 3, name: { firstName: 'Alice' } });
-    component.form.markAsDirty();
-    component.loading = true;
+  it('emits the complete creation request with scalar lookup numbers', () => {
+    const saved = spyOn(component.save, 'emit');
+
+    editForm(component.form, {
+      feeType: 3,
+      name: { firstName: 'Ana', nickname: '', lastName: 'López' },
+      key: 5,
+      address: 'Calle Mayor'
+    });
+    component.addContactChannel();
+    component.contactChannels.at(0).patchValue({ method: 4, detail: 'ana@example.org' });
     component.onSave();
-    component.loading = false;
+
+    expect(saved).toHaveBeenCalledOnceWith(
+      jasmine.objectContaining({
+        feeType: 3,
+        name: { firstName: 'Ana', nickname: '', lastName: 'López' },
+        key: 5,
+        address: 'Calle Mayor',
+        birthDate: undefined,
+        active: true,
+        renew: true,
+        contactChannels: [{ method: 4, detail: 'ana@example.org' }]
+      })
+    );
+  });
+
+  it('does not submit an incomplete contact channel', () => {
+    const saved = spyOn(component.save, 'emit');
+
+    editForm(component.form, { feeType: 3, name: { firstName: 'Ana' } });
     component.addContactChannel();
     component.onSave();
-    expect(save).not.toHaveBeenCalled();
+
+    expect(component.form.invalid).toBeTrue();
+    expect(saved).not.toHaveBeenCalled();
   });
 });

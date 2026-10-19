@@ -1,84 +1,145 @@
-<p-drawer [visible]="visible()" (visibleChange)="!$event && close()" [closable]="!saving()" [dismissible]="!saving()" [closeOnEscape]="!saving()" position="right"
+<p-drawer
+  [visible]="visible()"
+  (visibleChange)="!$event && close()"
+  [closable]="!saving()"
+  [dismissible]="!saving()"
+  [closeOnEscape]="!saving()"
+  position="right"
   [style]="{ width: 'min(44rem, 100vw)' }">
   <ng-template #header>
-    <shared-drawer-header [title]="editing() ? 'Editar socio' : 'Información del socio'" [icon]="editing() ? 'pi pi-pencil' : 'pi pi-user'" />
+    <shared-drawer-header
+      [title]="editing() ? 'Editar socio' : 'Información del socio'"
+      [icon]="editing() ? 'pi pi-pencil' : 'pi pi-user'" />
   </ng-template>
   @if (editing()) {
     <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-      @if (editError()) { <p-message severity="error">{{ editError() }}</p-message> }
-      @if (loadingOptions()) { <p role="status">Cargando opciones…</p> }
-      <assoc-member-edition-form #fieldsMemberEditionForm formId="member-info-edit" [showActions]="false"
-        [data]="data()!" [feeTypes]="feeTypes" [contactMethods]="contactMethods" [keys]="keys"
-        [failures]="failures" [loading]="saving() || loadingOptions() || !optionsReady()" (save)="onUpdate($event)" />
+      @if (editError()) {
+        <p-message severity="error">{{ editError() }}</p-message>
+      }
+      @if (loadingOptions()) {
+        <p role="status">Cargando opciones…</p>
+      }
+      <assoc-member-edition-form
+        #fieldsMemberEditionForm
+        formId="member-info-edit"
+        [showActions]="false"
+        [data]="data()!"
+        [feeTypes]="feeTypes"
+        [contactMethods]="contactMethods"
+        [keys]="keys"
+        [failures]="failures"
+        [loading]="saving() || loadingOptions() || !optionsReady()"
+        (save)="onUpdate($event)" />
     </div>
     <ng-template #footer>
-      <shared-drawer-form-actions formId="member-info-edit" submitLabel="Guardar cambios" submitIcon="pi pi-check"
-        [disabled]="!fieldsMemberEditionForm.saveEnabled || !optionsReady()" [loading]="saving() || loadingOptions()"
+      <shared-drawer-form-actions
+        formId="member-info-edit"
+        submitLabel="Guardar cambios"
+        submitIcon="pi pi-check"
+        [disabled]="!fieldsMemberEditionForm.saveEnabled || !optionsReady()"
+        [loading]="saving() || loadingOptions()"
         (cancelForm)="cancelEdit()" />
     </ng-template>
   } @else {
-  <div class="w-full min-w-0 space-y-5 px-2 py-4 sm:px-4">
-    @if (publicData(); as member) {
-      <section aria-labelledby="member-public-info-heading" class="space-y-5">
-        <h3 id="member-public-info-heading" class="text-sm font-semibold uppercase tracking-wide text-gray-500">Información pública</h3>
-        <div>
-          <h2 class="text-2xl font-bold text-gray-950">{{ member.name.fullName }}</h2>
-          @if (member.name.nickname) { <p class="mt-1 text-gray-600">{{ member.name.nickname }}</p> }
-        </div>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <ui-detail-field icon="pi pi-id-card" name="N.º socio" [value]="member.memberNumber == null ? '—' : '#' + member.memberNumber" />
-          <ui-detail-field icon="pi pi-key" name="Llave" [value]="member.key == null ? 'Sin llave' : '#' + member.key" />
-          <ui-status-detail icon="pi pi-replay" name="Renovación" [value]="member.renew" trueText="Renueva" falseText="No renueva" />
-        </div>
-      </section>
-    }
-    @if (canReadPrivate && publicData()) {
-      <hr class="my-6 border-gray-200" />
-      <section aria-labelledby="member-private-info-heading" class="space-y-5">
-        <div class="rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
-          <h3 id="member-private-info-heading" class="flex items-center gap-2 font-semibold">
-            <i class="pi pi-lock" aria-hidden="true"></i> Información privada
+    <div class="w-full min-w-0 space-y-5 px-2 py-4 sm:px-4">
+      @if (publicData(); as member) {
+        <section aria-labelledby="member-public-info-heading" class="space-y-5">
+          <h3 id="member-public-info-heading" class="text-sm font-semibold uppercase tracking-wide text-gray-500">
+            Información pública
           </h3>
-          <p class="mt-2 text-sm">La siguiente información es privada. Puedes verla porque eres administrador con permiso de lectura de perfiles de socios.</p>
-        </div>
-        @if (loading()) {
-          <p role="status"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Cargando información privada…</p>
-        } @else if (error()) {
-          <p-message severity="error">No se pudo cargar la información privada del socio.</p-message>
-          <p-button label="Reintentar" icon="pi pi-refresh" (onClick)="retry()" />
-        } @else if (data(); as member) {
-          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
-            <ui-status-detail icon="pi pi-check" name="Estado" [value]="member.active" trueText="Activo" falseText="Inactivo" />
-            <ui-detail-field icon="pi pi-calendar" name="Tipo de cuota" [value]="member.feeType.name + ' (' + member.feeType.amount + '€)'" />
-          </div>
-          <h3 class="text-sm font-semibold text-gray-600">Datos personales</h3>
-          <ui-detail-field icon="pi pi-id-card" name="DNI" [value]="member.identifier" />
-          <ui-detail-field icon="pi pi-calendar" name="Fecha de nacimiento" [value]="member.birthDate | date:'dd/MM/yyyy'" />
-          <ui-detail-field icon="pi pi-home" name="Dirección" [value]="member.address" />
-          @if (member.contactChannels.length) {
-            <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
-            @for (channel of member.contactChannels; track $index) {
-              <ui-detail-field icon="pi pi-phone" [name]="channel.method.name" [value]="channel.detail" />
+          <div>
+            <h2 class="text-2xl font-bold text-gray-950">{{ member.name.fullName }}</h2>
+            @if (member.name.nickname) {
+              <p class="mt-1 text-gray-600">{{ member.name.nickname }}</p>
             }
+          </div>
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <ui-detail-field
+              icon="pi pi-id-card"
+              name="N.º socio"
+              [value]="member.memberNumber == null ? '—' : '#' + member.memberNumber" />
+            <ui-detail-field
+              icon="pi pi-key"
+              name="Llave"
+              [value]="member.key == null ? 'Sin llave' : '#' + member.key" />
+            <ui-status-detail
+              icon="pi pi-replay"
+              name="Renovación"
+              [value]="member.renew"
+              trueText="Renueva"
+              falseText="No renueva" />
+          </div>
+        </section>
+      }
+      @if (canReadPrivate && publicData()) {
+        <hr class="my-6 border-gray-200" />
+        <section aria-labelledby="member-private-info-heading" class="space-y-5">
+          <div class="rounded-lg border border-amber-200 bg-amber-50 p-4 text-amber-900">
+            <h3 id="member-private-info-heading" class="flex items-center gap-2 font-semibold">
+              <i class="pi pi-lock" aria-hidden="true"></i> Información privada
+            </h3>
+            <p class="mt-2 text-sm">
+              La siguiente información es privada. Puedes verla porque eres administrador con permiso de lectura de
+              perfiles de socios.
+            </p>
+          </div>
+          @if (loading()) {
+            <p role="status"><i class="pi pi-spin pi-spinner" aria-hidden="true"></i> Cargando información privada…</p>
+          } @else if (error()) {
+            <p-message severity="error">No se pudo cargar la información privada del socio.</p-message>
+            <p-button label="Reintentar" icon="pi pi-refresh" (onClick)="retry()" />
+          } @else if (data(); as member) {
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <ui-status-detail
+                icon="pi pi-check"
+                name="Estado"
+                [value]="member.active"
+                trueText="Activo"
+                falseText="Inactivo" />
+              <ui-detail-field
+                icon="pi pi-calendar"
+                name="Tipo de cuota"
+                [value]="member.feeType.name + ' (' + member.feeType.amount + '€)'" />
+            </div>
+            <h3 class="text-sm font-semibold text-gray-600">Datos personales</h3>
+            <ui-detail-field icon="pi pi-id-card" name="DNI" [value]="member.identifier" />
+            <ui-detail-field
+              icon="pi pi-calendar"
+              name="Fecha de nacimiento"
+              [value]="member.birthDate | date: 'dd/MM/yyyy'" />
+            <ui-detail-field icon="pi pi-home" name="Dirección" [value]="member.address" />
+            @if (member.contactChannels.length) {
+              <h3 class="text-sm font-semibold text-gray-600">Medios de contacto</h3>
+              @for (channel of member.contactChannels; track $index) {
+                <ui-detail-field icon="pi pi-phone" [name]="channel.method.name" [value]="channel.detail" />
+              }
+            }
+            @if (member.comments) {
+              <h3 class="text-sm font-semibold text-gray-600">Comentarios</h3>
+              <p class="whitespace-pre-line break-words rounded-md border bg-gray-50 p-3 text-sm text-gray-800">
+                {{ member.comments }}
+              </p>
+            }
+            <assoc-audit-info [audit]="member.audit" />
           }
-          @if (member.comments) {
-            <h3 class="text-sm font-semibold text-gray-600">Comentarios</h3>
-            <p class="whitespace-pre-line break-words rounded-md border bg-gray-50 p-3 text-sm text-gray-800">{{ member.comments }}</p>
-          }
-          <assoc-audit-info [audit]="member.audit" />
-        }
-      </section>
-    }
-  </div>
-  <ng-template #footer>
-    <div class="flex w-full items-center justify-between gap-3">
-      <p-button label="Cerrar" severity="secondary" (onClick)="close()" />
-      <shared-drawer-actions [showDelete]="false" [showEdit]="canUpdate" editLabel="Editar socio"
-        [editDisabled]="loading() || !canReadPrivate || !data()" (edit)="startEdit()" />
+        </section>
+      }
     </div>
-    @if (canUpdate && !canReadPrivate) {
-      <p class="mt-2 text-sm text-gray-500">Necesitas permiso de lectura de perfiles de socios para cargar el formulario completo.</p>
-    }
-  </ng-template>
+    <ng-template #footer>
+      <div class="flex w-full items-center justify-between gap-3">
+        <p-button label="Cerrar" severity="secondary" (onClick)="close()" />
+        <shared-drawer-actions
+          [showDelete]="false"
+          [showEdit]="canUpdate"
+          editLabel="Editar socio"
+          [editDisabled]="loading() || !canReadPrivate || !data()"
+          (edit)="startEdit()" />
+      </div>
+      @if (canUpdate && !canReadPrivate) {
+        <p class="mt-2 text-sm text-gray-500">
+          Necesitas permiso de lectura de perfiles de socios para cargar el formulario completo.
+        </p>
+      }
+    </ng-template>
   }
 </p-drawer>

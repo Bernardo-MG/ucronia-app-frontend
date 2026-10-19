@@ -1,66 +1,120 @@
 <div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
   <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <div>
-    <h1 class="text-3xl font-bold tracking-tight text-gray-950">Socios</h1>
-    <p class="mt-1 text-sm text-gray-500">Consulta los socios activos de la asociación</p>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-950">Socios</h1>
+      <p class="mt-1 text-sm text-gray-500">Consulta los socios y la asignación de llaves de la asociación</p>
     </div>
     @if (permissions.create) {
       <p-button type="button" label="Nuevo socio" icon="pi pi-plus" (onClick)="onCreateOpen()" />
     }
   </header>
 
-  <p-card styleClass="overflow-hidden">
-    <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
-        <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
-          <i class="pi pi-users text-xl"></i>
-        </span>
-        <div>
-          <strong class="block text-2xl leading-none">{{ active }}</strong>
-          <span class="text-sm text-gray-500">socios activos</span>
-        </div>
-      </div>
-      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
-        <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber-50 text-amber-600">
-          <i class="pi pi-exclamation-triangle text-xl"></i>
-        </span>
-        <div>
-          <strong class="block text-2xl leading-none">{{ notRenewing }}</strong>
-          <span class="text-sm text-gray-500">no renuevan</span>
-        </div>
-      </div>
-    </div>
-  </p-card>
+  <p-tabs [value]="selectedTab" (valueChange)="onTabChange($event)">
+    <p-tablist>
+      <p-tab value="members"><i class="pi pi-users mr-2" aria-hidden="true"></i>Socios</p-tab>
+      @if (permissions.keysRead) {
+        <p-tab value="keys"><i class="pi pi-key mr-2" aria-hidden="true"></i>Llaves</p-tab>
+      }
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="members">
+        <div class="space-y-5">
+          <p-card styleClass="overflow-hidden">
+            <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
+                  <i class="pi pi-users text-xl"></i>
+                </span>
+                <div>
+                  <strong class="block text-2xl leading-none">{{ active }}</strong>
+                  <span class="text-sm text-gray-500">socios activos</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+                  <i class="pi pi-exclamation-triangle text-xl"></i>
+                </span>
+                <div>
+                  <strong class="block text-2xl leading-none">{{ notRenewing }}</strong>
+                  <span class="text-sm text-gray-500">no renuevan</span>
+                </div>
+              </div>
+            </div>
+          </p-card>
 
-  <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-    <div class="border-b border-gray-200 p-4">
-      <p-iconfield class="block w-full">
-        <p-inputicon class="pi pi-search" />
-        <input pInputText type="search" [(ngModel)]="filterValue" (ngModelChange)="onFilterChange($event)"
-          placeholder="Buscar por nombre…" aria-label="Buscar socios por nombre" class="w-full" maxlength="50" />
-      </p-iconfield>
-      <p class="mt-3 text-sm text-gray-500">{{ data.totalElements }} socios</p>
-    </div>
+          <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="border-b border-gray-200 p-4">
+              <p-iconfield class="block w-full">
+                <p-inputicon class="pi pi-search" />
+                <input
+                  pInputText
+                  type="search"
+                  [(ngModel)]="filterValue"
+                  (ngModelChange)="onFilterChange($event)"
+                  placeholder="Buscar por nombre…"
+                  aria-label="Buscar socios por nombre"
+                  class="w-full"
+                  maxlength="50" />
+              </p-iconfield>
+              <p class="mt-3 text-sm text-gray-500">{{ data.totalElements }} socios</p>
+            </div>
 
-    <assoc-public-member-list [loading]="status.loading" [members]="data.content" [rows]="data.size" [page]="data.page"
-      [totalRecords]="data.totalElements" (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" (updated)="refresh()" />
-  </section>
+            <assoc-public-member-list
+              [loading]="status.loading"
+              [members]="data.content"
+              [rows]="data.size"
+              [page]="data.page"
+              [totalRecords]="data.totalElements"
+              (changeDirection)="onChangeDirection($event)"
+              (changePage)="load($event)"
+              (updated)="refresh()" />
+          </section>
+        </div>
+      </p-tabpanel>
+      @if (permissions.keysRead) {
+        <p-tabpanel value="keys">
+          @if (selectedTab === 'keys') {
+            <assoc-member-key-list />
+          }
+        </p-tabpanel>
+      }
+    </p-tabpanels>
+  </p-tabs>
 </div>
 
-<p-drawer [visible]="creating" (visibleChange)="onDrawerVisibleChange($event)" [closable]="!saving"
-  position="right" [style]="{width: 'min(44rem, 100vw)'}">
+<p-drawer
+  [visible]="creating"
+  (visibleChange)="onDrawerVisibleChange($event)"
+  [closable]="!saving"
+  position="right"
+  [style]="{ width: 'min(44rem, 100vw)' }">
   @if (creating) {
     <ng-template #header><shared-drawer-header title="Crear socio" icon="pi pi-users" /></ng-template>
     <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-      @if (creationError) { <p-message severity="error">{{ creationError }}</p-message> }
-      @if (loadingOptions) { <p role="status">Cargando opciones…</p> }
-      <assoc-member-creation-form #fieldsMemberCreationForm formId="public-member-view-create" [showActions]="false"
-        [loading]="saving || loadingOptions || !optionsReady" [failures]="failures"
-        [feeTypes]="feeTypes" [contactMethods]="contactMethods" [keys]="keys" (save)="onCreate($event)" />
+      @if (creationError) {
+        <p-message severity="error">{{ creationError }}</p-message>
+      }
+      @if (loadingOptions) {
+        <p role="status">Cargando opciones…</p>
+      }
+      <assoc-member-creation-form
+        #fieldsMemberCreationForm
+        formId="public-member-view-create"
+        [showActions]="false"
+        [loading]="saving || loadingOptions || !optionsReady"
+        [failures]="failures"
+        [feeTypes]="feeTypes"
+        [contactMethods]="contactMethods"
+        [keys]="keys"
+        (save)="onCreate($event)" />
     </div>
     <ng-template #footer>
-      <shared-drawer-form-actions formId="public-member-view-create" submitLabel="Crear socio" submitIcon="pi pi-plus"
-        [disabled]="!fieldsMemberCreationForm.saveEnabled || !optionsReady" [loading]="saving || loadingOptions"
+      <shared-drawer-form-actions
+        formId="public-member-view-create"
+        submitLabel="Crear socio"
+        submitIcon="pi pi-plus"
+        [disabled]="!fieldsMemberCreationForm.saveEnabled || !optionsReady"
+        [loading]="saving || loadingOptions"
         (cancelForm)="onDrawerVisibleChange(false)" />
     </ng-template>
   }

@@ -20,15 +20,24 @@ describe('MemberEndpoint full update', () => {
   it('sends the supplied model directly through PUT', () => {
     const data: MemberUpdate = {
       name: Object.assign(new MemberName(), { firstName: 'Ana', lastName: 'Test' }),
-      feeType: 3, contactChannels: [], active: false, renew: false,
-      identifier: '', address: '', comments: '', birthDate: undefined, key: undefined
+      feeType: 3,
+      contactChannels: [],
+      active: false,
+      renew: false,
+      identifier: '',
+      address: '',
+      comments: '',
+      birthDate: undefined,
+      key: undefined
     };
-    endpoint.update(10, data).subscribe();
 
+    endpoint.update(10, data).subscribe();
     const request = http.expectOne('/api/profile/member/10');
+
     expect(request.request.method).toBe('PUT');
     expect(request.request.body).toBe(data);
     expect(data.key).toBeUndefined();
+
     request.flush({ content: Object.assign(new Member(), { number: 10, memberNumber: 15 }) });
   });
 });

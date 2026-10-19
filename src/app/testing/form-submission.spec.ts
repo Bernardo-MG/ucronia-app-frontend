@@ -4,6 +4,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ActivityForm } from '@app/association/activities/activity-form/activity-form';
+import { MemberCreationForm } from '@app/association/members/member-creation-form/member-creation-form';
+import { MemberEditionForm } from '@app/association/members/member-edition-form/member-edition-form';
 import { ProfileCreationForm } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { ProfileEditionForm } from '@app/association/directory/profile-edition-form/profile-edition-form';
 import { FeeCreationForm } from '@app/association/fees/fee-creation-form/fee-creation-form';
@@ -34,6 +36,8 @@ import { RoleChangePermission } from '@app/security/roles/role-change-permission
 const date = new Date(2026, 0, 15, 12);
 const permission = { name: 'book:read', resource: 'book', action: 'read' };
 const cases = [
+  { type: MemberCreationForm, values: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' } }, invalid: 'feeType', expected: jasmine.objectContaining({ feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, active: true, renew: true, contactChannels: [] }) },
+  { type: MemberEditionForm, values: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, active: false, renew: false }, invalid: 'feeType', expected: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, identifier: '', birthDate: undefined, address: '', comments: '', key: undefined, active: false, renew: false, contactChannels: [] } },
   { type: ActivityForm, values: { title: 'Club meeting', dates: [{ day: date, startHour: date, endHour: date }] }, invalid: 'title', expected: jasmine.objectContaining({ title: 'Club meeting', dates: [{ start: date, end: date }] }) },
   { type: ProfileCreationForm, values: { name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } }, invalid: 'name.firstName', expected: jasmine.objectContaining({ name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } }) },
   { type: ProfileEditionForm, values: { name: { firstName: 'Ana', nickname: '', lastName: 'López' } }, invalid: 'name.firstName', expected: jasmine.objectContaining({ types: [], name: { firstName: 'Ana', nickname: '', lastName: 'López' } }) },

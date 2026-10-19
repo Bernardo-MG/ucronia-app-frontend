@@ -26,12 +26,19 @@ import { MemberEditionForm } from '../member-edition-form/member-edition-form';
   templateUrl: './member-info.html'
 })
 export class MemberInfo implements OnDestroy {
+
   private readonly drawer = viewChild(Drawer);
+
   private readonly feeTypeService = inject(FeeTypeService);
+
   private readonly contactMethodService = inject(ContactMethodService);
+
   private readonly keyService = inject(KeyService);
+
   private readonly messages = inject(MessageService);
+
   public readonly updated = output<Member>();
+
   public readonly editing = signal(false);
   public readonly saving = signal(false);
   public readonly loadingOptions = signal(false);
@@ -43,8 +50,11 @@ export class MemberInfo implements OnDestroy {
   public keys: Key[] = [];
   private optionsRequest?: Subscription;
   private saveRequest?: Subscription;
+
   private readonly client = inject(UcroniaClient);
+
   private readonly auth = inject(AuthService);
+
   public readonly canRead = this.auth.hasPermission(UcroniaPermissions.directory.member.read);
   public readonly canReadPrivate = this.auth.hasPermission(UcroniaPermissions.directory.memberProfile.read);
   public readonly canUpdate = this.auth.hasPermission(UcroniaPermissions.directory.memberProfile.update);
@@ -56,7 +66,9 @@ export class MemberInfo implements OnDestroy {
   private request?: Subscription;
 
   public open(member: PublicMember): void {
-    if (!this.canRead || this.saving()) return;
+    if (!this.canRead || this.saving()) {
+      return;
+    }
     this.cancelEdit();
     this.request?.unsubscribe();
     this.publicData.set(member);
@@ -64,32 +76,22 @@ export class MemberInfo implements OnDestroy {
     this.error.set(false);
     this.loading.set(false);
     this.visible.set(true);
-    if (this.canReadPrivate) this.loadPrivate(member.number);
-  }
-
-  private loadPrivate(number: number): void {
-    this.request?.unsubscribe();
-    this.error.set(false);
-    this.loading.set(true);
-    this.request = this.client.memberProfile.get(number).subscribe({
-      next: member => {
-        this.data.set(member);
-        this.loading.set(false);
-      },
-      error: () => {
-        this.loading.set(false);
-        this.error.set(true);
-      }
-    });
+    if (this.canReadPrivate) {
+      this.loadPrivate(member.number);
+    }
   }
 
   public retry(): void {
     const member = this.publicData();
-    if (this.canRead && this.canReadPrivate && this.visible() && member) this.loadPrivate(member.number);
+    if (this.canRead && this.canReadPrivate && this.visible() && member) {
+      this.loadPrivate(member.number);
+    }
   }
 
   public startEdit(): void {
-    if (!this.canUpdate || !this.canReadPrivate || !this.data() || this.loading() || this.saving()) return;
+    if (!this.canUpdate || !this.canReadPrivate || !this.data() || this.loading() || this.saving()) {
+      return;
+    }
     this.failures.clear();
     this.editError.set('');
     this.editing.set(true);
@@ -107,9 +109,13 @@ export class MemberInfo implements OnDestroy {
         this.keys = options.keys;
         // Retain assigned lookups even when unavailable for new assignments.
         const member = this.data()!;
-        if (!this.feeTypes.some(fee => fee.number === member.feeType.number)) this.feeTypes = [...this.feeTypes, member.feeType];
+        if (!this.feeTypes.some(fee => fee.number === member.feeType.number)) {
+          this.feeTypes = [...this.feeTypes, member.feeType];
+        }
         for (const channel of member.contactChannels ?? []) {
-          if (!this.contactMethods.some(method => method.number === channel.method.number)) this.contactMethods = [...this.contactMethods, channel.method];
+          if (!this.contactMethods.some(method => method.number === channel.method.number)) {
+            this.contactMethods = [...this.contactMethods, channel.method];
+          }
         }
         if (member.key != null && !this.keys.some(key => key.number === member.key)) {
           this.keys = [...this.keys, Object.assign(new Key(), { number: member.key })];
@@ -128,7 +134,9 @@ export class MemberInfo implements OnDestroy {
   }
 
   public cancelEdit(): void {
-    if (this.saving()) return;
+    if (this.saving()) {
+      return;
+    }
     this.optionsRequest?.unsubscribe();
     this.editing.set(false);
     this.loadingOptions.set(false);
@@ -140,22 +148,38 @@ export class MemberInfo implements OnDestroy {
 
   public onUpdate(change: MemberUpdate): void {
     const member = this.data();
-    if (!this.canUpdate || !this.canReadPrivate || !this.editing() || !this.optionsReady() || !member || this.saving()) return;
+    if (
+      !this.canUpdate ||
+      !this.canReadPrivate ||
+      !this.editing() ||
+      !this.optionsReady() ||
+      !member ||
+      this.saving()
+    ) {
+      return;
+    }
     this.saving.set(true);
     this.editError.set('');
     this.saveRequest = this.client.memberProfile.update(member.number, change).subscribe({
       next: updated => {
         this.saving.set(false);
         this.data.set(updated);
-        this.publicData.set({ number: updated.number, memberNumber: updated.memberNumber, name: updated.name, key: updated.key, renew: updated.renew });
+        this.publicData.set({
+          number: updated.number,
+          memberNumber: updated.memberNumber,
+          name: updated.name,
+          key: updated.key,
+          renew: updated.renew
+        });
         this.cancelEdit();
         this.messages.add({ severity: 'info', summary: 'Actualizado', detail: 'Socio actualizado', life: 3000 });
         this.updated.emit(updated);
       },
       error: error => {
         this.saving.set(false);
-        if (error instanceof FailureResponse) this.failures = error.failures;
-        else this.failures.clear();
+        if (error instanceof FailureResponse) {
+          this.failures = error.failures;
+        } else this.failures.clear();
         this.editError.set('No se pudo actualizar el socio. Revisa los datos e inténtalo de nuevo.');
         this.drawer()?.cd.markForCheck();
       }
@@ -163,7 +187,9 @@ export class MemberInfo implements OnDestroy {
   }
 
   public close(): void {
-    if (this.saving()) return;
+    if (this.saving()) {
+      return;
+    }
     this.cancelEdit();
     this.request?.unsubscribe();
     this.publicData.set(null);
@@ -178,4 +204,21 @@ export class MemberInfo implements OnDestroy {
     this.optionsRequest?.unsubscribe();
     this.saveRequest?.unsubscribe();
   }
+
+  private loadPrivate(number: number): void {
+    this.request?.unsubscribe();
+    this.error.set(false);
+    this.loading.set(true);
+    this.request = this.client.memberProfile.get(number).subscribe({
+      next: member => {
+        this.data.set(member);
+        this.loading.set(false);
+      },
+      error: () => {
+        this.loading.set(false);
+        this.error.set(true);
+      }
+    });
+  }
+
 }

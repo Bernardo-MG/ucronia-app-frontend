@@ -8,8 +8,7 @@ describe('PublicMemberRenewTag', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PublicMemberRenewTag]
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(PublicMemberRenewTag);
     component = fixture.componentInstance;

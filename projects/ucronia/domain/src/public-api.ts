@@ -30,6 +30,7 @@ export * from './lib/library/lent-book';
 export * from './lib/library/publisher';
 export * from './lib/library/title';
 export * from './lib/members/key';
+export * from './lib/members/key-assignment';
 export * from './lib/members/member';
 export * from './lib/members/member-status';
 export * from './lib/members/membership-evolution-month';

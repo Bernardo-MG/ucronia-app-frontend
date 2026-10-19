@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
@@ -17,20 +17,23 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-member-creation-form',
-  imports: [ReactiveFormsModule, DrawerFormActions, ButtonModule, DatePickerModule, InputGroupModule,
-    InputGroupAddonModule, InputTextModule, MessageModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  imports: [ReactiveFormsModule, DrawerFormActions, ButtonModule, DatePickerModule, InputGroupModule, InputGroupAddonModule, InputTextModule, MessageModule, SelectModule, TextareaModule, ToggleSwitchModule],
   templateUrl: './member-creation-form.html'
 })
 export class MemberCreationForm {
+
   private readonly fb = inject(FormBuilder);
+
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
   public readonly failures = input(new FailureStore());
   public readonly feeTypes = input<FeeType[]>([]);
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly keys = input<Key[]>([]);
+
   public readonly save = output<MemberCreation>();
   public readonly cancelEdition = output<void>();
+
   public readonly today = new Date();
 
   public readonly form = this.fb.group({
@@ -49,20 +52,33 @@ export class MemberCreationForm {
     active: [true],
     renew: [true]
   });
+
   public readonly formStatus = new FormStatus(this.form);
 
-  @Input() public set loading(value: boolean) { this.formStatus.loading = value; }
-  public get saveEnabled(): boolean { return this.formStatus.saveEnabled; }
-  public get contactChannels(): FormArray { return this.form.controls.contactChannels; }
-
-  public addContactChannel(): void {
-    this.contactChannels.push(this.fb.group({
-      method: this.fb.control<number | null>(null, Validators.required),
-      detail: ['', [Validators.required, Validators.maxLength(50)]]
-    }));
+  @Input() public set loading(value: boolean) {
+    this.formStatus.loading = value;
   }
 
-  public removeContactChannel(index: number): void { this.contactChannels.removeAt(index); }
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+
+  public get contactChannels(): FormArray {
+    return this.form.controls.contactChannels;
+  }
+
+  public addContactChannel(): void {
+    this.contactChannels.push(
+      this.fb.group({
+        method: this.fb.control<number | null>(null, Validators.required),
+        detail: ['', [Validators.required, Validators.maxLength(50)]]
+      })
+    );
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
+  }
 
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
@@ -70,7 +86,11 @@ export class MemberCreationForm {
 
   public onSave(): void {
     this.form.markAllAsTouched();
-    if (!this.saveEnabled) return;
+
+    if (!this.saveEnabled) {
+      return;
+    }
+
     const value = this.form.getRawValue();
     const data = new MemberCreation(value.feeType!, value.identifier ?? '', value.name);
     data.birthDate = value.birthDate ?? undefined;
@@ -82,4 +102,5 @@ export class MemberCreationForm {
     data.renew = value.renew ?? true;
     this.save.emit(data);
   }
+
 }
