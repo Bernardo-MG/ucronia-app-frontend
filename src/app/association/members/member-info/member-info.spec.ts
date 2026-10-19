@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
-import { KeyService } from '@app/settings/key-service';
+import { MemberKeyService } from '../member-key-service';
 import { AuthService } from '@bernardo-mg/authentication';
 import { MemberUpdate, UcroniaClient } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -24,7 +24,7 @@ describe('MemberInfo', () => {
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', [
     'getAllAvailable'
   ]);
-  const keyServiceMock = jasmine.createSpyObj<KeyService>('KeyService', ['getAllAvailable']);
+  const keyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['getAllAvailable']);
 
   beforeEach(async () => {
     publicMember = Object.assign(new PublicMember(), { number: 12, memberNumber: 37 });
@@ -57,7 +57,7 @@ describe('MemberInfo', () => {
         { provide: UcroniaClient, useValue: { memberProfile: memberEndpointMock } },
         { provide: FeeTypeService, useValue: feeTypeServiceMock },
         { provide: ContactMethodService, useValue: contactMethodServiceMock },
-        { provide: KeyService, useValue: keyServiceMock }
+        { provide: MemberKeyService, useValue: keyServiceMock }
       ]
     }).compileComponents();
 

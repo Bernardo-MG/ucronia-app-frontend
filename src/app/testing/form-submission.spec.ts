@@ -5,6 +5,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ActivityForm } from '@app/association/activities/activity-form/activity-form';
 import { MemberCreationForm } from '@app/association/members/member-creation-form/member-creation-form';
+import { MemberKeyForm } from '@app/association/members/member-key-form/member-key-form';
 import { MemberEditionForm } from '@app/association/members/member-edition-form/member-edition-form';
 import { ProfileCreationForm } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { ProfileEditionForm } from '@app/association/directory/profile-edition-form/profile-edition-form';
@@ -60,6 +61,7 @@ const cases = [
   { type: FeeTypeForm, values: { number: 2, name: 'Monthly', amount: 15 }, invalid: 'amount', expected: { number: 2, name: 'Monthly', amount: 15 } },
   { type: GameTableForm, values: { number: 2, name: 'Table A', description: 'Main room' }, invalid: 'description', expected: { number: 2, name: 'Table A', description: 'Main room' } },
   { type: NameForm, values: { number: 2, name: 'Le Guin' }, invalid: 'name', expected: { number: 2, name: 'Le Guin' } },
+  { type: MemberKeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } },
   { type: KeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } }
 ];
 

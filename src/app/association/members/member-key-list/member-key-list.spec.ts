@@ -3,7 +3,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { KeyAssignment } from '@ucronia/domain';
-import { of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { MemberKeyService } from '../member-key-service';
 import { MemberKeyList } from './member-key-list';
 
@@ -106,6 +106,26 @@ describe('MemberKeyList', () => {
     component.onFilter();
 
     expect(component.first).toBe(0);
+  });
+
+  it('should reload after the current request completes when a key is created during loading', () => {
+    const response = new Subject<KeyAssignment[]>();
+    const updated = [...keys, { number: 4, available: true, description: 'Nueva' }];
+    memberKeyServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.and.returnValues(response, of(updated));
+
+    component.load();
+    component.load();
+
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
+
+    response.next(keys);
+    response.complete();
+
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(2);
+    expect(component.data).toEqual(updated);
+    expect(component.unassigned).toBe(2);
+    expect(component.loading).toBeFalse();
   });
 
   it('should allow retry after a failed request', () => {

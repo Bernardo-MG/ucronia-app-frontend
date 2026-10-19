@@ -27,6 +27,8 @@ export class MemberKeyList implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef);
 
+  private reloadRequested = false;
+
   public readonly canRead = inject(AuthService).hasPermission(UcroniaPermissions.key.read);
 
   public data: KeyAssignment[] = [];
@@ -74,7 +76,11 @@ export class MemberKeyList implements OnInit {
   }
 
   public load(): void {
-    if (!this.canRead || this.loading) {
+    if (!this.canRead) {
+      return;
+    }
+    if (this.loading) {
+      this.reloadRequested = true;
       return;
     }
     this.loading = true;
@@ -83,7 +89,13 @@ export class MemberKeyList implements OnInit {
       .getAll()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.loading = false))
+        finalize(() => {
+          this.loading = false;
+          if (this.reloadRequested && !this.destroyRef.destroyed) {
+            this.reloadRequested = false;
+            this.load();
+          }
+        })
       )
       .subscribe({
         next: data => {

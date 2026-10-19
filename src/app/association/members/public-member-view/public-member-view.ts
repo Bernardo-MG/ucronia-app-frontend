@@ -1,9 +1,8 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
-import { KeyService } from '@app/settings/key-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
@@ -23,13 +22,15 @@ import { MessageModule } from 'primeng/message';
 import { TabsModule } from 'primeng/tabs';
 import { debounceTime, distinctUntilChanged, finalize, forkJoin, of, Subject, switchMap } from 'rxjs';
 import { MemberCreationForm } from '../../members/member-creation-form/member-creation-form';
+import { MemberKeyForm } from '../member-key-form/member-key-form';
+import { MemberKeyService } from '../member-key-service';
 import { MemberKeyList } from '../member-key-list/member-key-list';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [TabsModule, MemberKeyList, DrawerHeader, DrawerFormActions, DrawerModule, ButtonModule, MessageModule, MemberCreationForm, FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
+  imports: [MemberKeyForm, TabsModule, MemberKeyList, DrawerHeader, DrawerFormActions, DrawerModule, ButtonModule, MessageModule, MemberCreationForm, FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
@@ -42,15 +43,22 @@ export class PublicMemberView implements OnInit {
 
   private readonly contactMethodService = inject(ContactMethodService);
 
-  private readonly keyService = inject(KeyService);
+  private readonly keyService = inject(MemberKeyService);
 
   private readonly messages = inject(MessageService);
 
+  private readonly keyList = viewChild(MemberKeyList);
+
   public readonly permissions = {
+    keysCreate: inject(AuthService).hasPermission(UcroniaPermissions.key.create),
     keysRead: inject(AuthService).hasPermission(UcroniaPermissions.key.read),
     create: inject(AuthService).hasPermission(UcroniaPermissions.directory.memberProfile.create)
   };
   public selectedTab = 'members';
+  public creatingKey = false;
+  public savingKey = false;
+  public keyCreationError = '';
+  public keyFailures = new FailureStore();
   public creating = false;
   public saving = false;
   public loadingOptions = false;
@@ -94,6 +102,48 @@ export class PublicMemberView implements OnInit {
       return;
     }
     this.selectedTab = value === 'keys' ? 'keys' : 'members';
+  }
+
+  public onCreateKeyOpen(): void {
+    if (!this.permissions.keysRead || !this.permissions.keysCreate || this.selectedTab !== 'keys' || this.creatingKey) {
+      return;
+    }
+    this.keyFailures.clear();
+    this.keyCreationError = '';
+    this.creatingKey = true;
+  }
+
+  public onKeyDrawerVisibleChange(visible: boolean): void {
+    if (!visible && !this.savingKey) {
+      this.creatingKey = false;
+      this.keyFailures.clear();
+      this.keyCreationError = '';
+    }
+  }
+
+  public onCreateKey(data: Key): void {
+    if (!this.permissions.keysRead || !this.permissions.keysCreate || !this.creatingKey || this.savingKey) {
+      return;
+    }
+    this.savingKey = true;
+    this.keyCreationError = '';
+    this.keyService.create(data)
+      .pipe(finalize(() => (this.savingKey = false)))
+      .subscribe({
+        next: () => {
+          this.keyFailures.clear();
+          this.creatingKey = false;
+          this.keyList()?.load();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.keyFailures = error.failures;
+          } else {
+            this.keyFailures.clear();
+          }
+          this.keyCreationError = 'No se pudo crear la llave. Revisa los datos e inténtalo de nuevo.';
+        }
+      });
   }
 
   public onCreateOpen(): void {

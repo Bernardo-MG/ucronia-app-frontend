@@ -4,8 +4,11 @@
       <h1 class="text-3xl font-bold tracking-tight text-gray-950">Socios</h1>
       <p class="mt-1 text-sm text-gray-500">Consulta los socios y la asignación de llaves de la asociación</p>
     </div>
-    @if (permissions.create) {
+    @if (selectedTab === 'members' && permissions.create) {
       <p-button type="button" label="Nuevo socio" icon="pi pi-plus" (onClick)="onCreateOpen()" />
+    }
+    @if (selectedTab === 'keys' && permissions.keysRead && permissions.keysCreate) {
+      <p-button type="button" label="Nueva llave" icon="pi pi-plus" (onClick)="onCreateKeyOpen()" />
     }
   </header>
 
@@ -116,6 +119,40 @@
         [disabled]="!fieldsMemberCreationForm.saveEnabled || !optionsReady"
         [loading]="saving || loadingOptions"
         (cancelForm)="onDrawerVisibleChange(false)" />
+    </ng-template>
+  }
+</p-drawer>
+
+<p-drawer
+  [visible]="creatingKey"
+  (visibleChange)="onKeyDrawerVisibleChange($event)"
+  [closable]="!savingKey"
+  position="right"
+  [style]="{ width: 'min(44rem, 100vw)' }">
+  @if (creatingKey) {
+    <ng-template #header>
+      <shared-drawer-header title="Crear llave" icon="pi pi-key" />
+    </ng-template>
+    <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+      @if (keyCreationError) {
+        <p-message severity="error">{{ keyCreationError }}</p-message>
+      }
+      <assoc-member-key-form
+        #fieldsAssocKeyForm
+        formId="public-member-view-create-key"
+        [showActions]="false"
+        [loading]="savingKey"
+        [failures]="keyFailures"
+        (save)="onCreateKey($event)" />
+    </div>
+    <ng-template #footer>
+      <shared-drawer-form-actions
+        formId="public-member-view-create-key"
+        submitLabel="Crear llave"
+        submitIcon="pi pi-plus"
+        [disabled]="!fieldsAssocKeyForm.saveEnabled"
+        [loading]="fieldsAssocKeyForm.formStatus.loading"
+        (cancelForm)="onKeyDrawerVisibleChange(false)" />
     </ng-template>
   }
 </p-drawer>
