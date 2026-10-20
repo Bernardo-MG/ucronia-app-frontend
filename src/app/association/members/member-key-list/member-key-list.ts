@@ -14,11 +14,12 @@ import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { finalize } from 'rxjs';
+import { MemberKeyInfo } from '../member-key-info/member-key-info';
 import { MemberKeyService } from '../member-key-service';
 
 @Component({
   selector: 'assoc-member-key-list',
-  imports: [FormsModule, ButtonModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, MessageModule, SelectModule, TableModule, TagModule],
+  imports: [MemberKeyInfo, FormsModule, ButtonModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, MessageModule, SelectModule, TableModule, TagModule],
   templateUrl: './member-key-list.html'
 })
 export class MemberKeyList implements OnInit {
@@ -31,6 +32,7 @@ export class MemberKeyList implements OnInit {
 
   public readonly canRead = inject(AuthService).hasPermission(UcroniaPermissions.key.read);
 
+  public selectedData: KeyAssignment | undefined;
   public data: KeyAssignment[] = [];
   public loading = false;
   public error = false;
@@ -69,6 +71,12 @@ export class MemberKeyList implements OnInit {
 
   public ngOnInit(): void {
     this.load();
+  }
+
+  public onShowInfo(data: KeyAssignment): void {
+    if (this.canRead) {
+      this.selectedData = data;
+    }
   }
 
   public onFilter(): void {

@@ -9,13 +9,14 @@ import { MemberKeyService } from './member-key-service';
 describe('MemberKeyService', () => {
   let service: MemberKeyService;
 
-  const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['assignments', 'page', 'create']);
+  const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['assignments', 'page', 'create', 'update']);
 
   const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
 
   beforeEach(() => {
     messageServiceMock.add.calls.reset();
     keyEndpointMock.create.calls.reset();
+    keyEndpointMock.update.calls.reset();
     keyEndpointMock.page.calls.reset();
     keyEndpointMock.assignments.calls.reset();
     keyEndpointMock.assignments.and.returnValue(
@@ -30,6 +31,31 @@ describe('MemberKeyService', () => {
     });
 
     service = TestBed.inject(MemberKeyService);
+  });
+
+  it('should update the key by its number and show a success message', () => {
+    const key = Object.assign(new Key(), { number: 7, available: false, description: '' });
+    keyEndpointMock.update.and.returnValue(of(key));
+    let result: Key | undefined;
+
+    service.update(key).subscribe(data => (result = data));
+
+    expect(keyEndpointMock.update).toHaveBeenCalledOnceWith(7, { available: false, description: '' });
+    expect(result).toBe(key);
+    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+      severity: 'info', summary: 'Actualizado', detail: 'Llave actualizada', life: 3000
+    });
+  });
+
+  it('should propagate update failures without a success message', () => {
+    const failure = new Error('Update failed');
+    keyEndpointMock.update.and.returnValue(throwError(() => failure));
+    let result: unknown;
+
+    service.update(new Key()).subscribe({ error: error => (result = error) });
+
+    expect(result).toBe(failure);
+    expect(messageServiceMock.add).not.toHaveBeenCalled();
   });
 
   it('should be created', () => {

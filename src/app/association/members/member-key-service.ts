@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
-import { KeyCreation, UcroniaClient } from '@ucronia/api';
+import { KeyCreation, KeyUpdate, UcroniaClient } from '@ucronia/api';
 import { Key, KeyAssignment } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, tap } from 'rxjs';
@@ -35,6 +35,25 @@ export class MemberKeyService {
             severity: 'info',
             summary: 'Creado',
             detail: 'Llave creada',
+            life: 3000
+          });
+        })
+      );
+  }
+
+  public update(data: Key): Observable<Key> {
+    const update: KeyUpdate = {
+      available: data.available,
+      description: data.description
+    };
+
+    return this.ucroniaClient.key.update(data.number, update)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Llave actualizada',
             life: 3000
           });
         })

@@ -4,6 +4,8 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { KeyAssignment } from '@ucronia/domain';
 import { of, Subject, throwError } from 'rxjs';
+import { MemberKeyInfo } from '../member-key-info/member-key-info';
+import { By } from '@angular/platform-browser';
 import { MemberKeyService } from '../member-key-service';
 import { MemberKeyList } from './member-key-list';
 
@@ -47,6 +49,24 @@ describe('MemberKeyList', () => {
     fixture = TestBed.createComponent(MemberKeyList);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('should open details from the row action and refresh after an update', () => {
+    const action = fixture.nativeElement.querySelector('tbody tr p-button button') as HTMLButtonElement;
+
+    action.click();
+    fixture.detectChanges();
+    const info = fixture.debugElement.query(By.directive(MemberKeyInfo)).componentInstance as MemberKeyInfo;
+
+    expect(info.data()).toBe(keys[0]);
+    memberKeyServiceMock.getAll.calls.reset();
+    info.updated.emit();
+    info.close.emit();
+    fixture.detectChanges();
+
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
+    expect(component.selectedData).toBeUndefined();
+    expect(fixture.debugElement.query(By.directive(MemberKeyInfo))).toBeNull();
   });
 
   it('should create', () => {
