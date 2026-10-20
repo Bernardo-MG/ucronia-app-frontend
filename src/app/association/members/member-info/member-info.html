@@ -57,11 +57,11 @@
             <ui-detail-field
               icon="pi pi-id-card"
               name="N.º socio"
-              [value]="member.memberNumber == null ? '—' : '#' + member.memberNumber" />
+              [value]="member.memberNumber === null ? '—' : '#' + member.memberNumber" />
             <ui-detail-field
               icon="pi pi-key"
               name="Llave"
-              [value]="member.key == null ? 'Sin llave' : '#' + member.key" />
+              [value]="member.key === null ? 'Sin llave' : '#' + member.key" />
             <ui-status-detail
               icon="pi pi-replay"
               name="Renovación"
