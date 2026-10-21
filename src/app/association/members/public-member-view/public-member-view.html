@@ -211,6 +211,11 @@
       <ng-template #header>
         <shared-drawer-header title="Información del socio" icon="pi pi-user" />
       </ng-template>
+      @if (error) {
+        <div class="px-2 py-4 sm:px-4">
+          <p-message severity="error">{{ error }}</p-message>
+        </div>
+      }
       <assoc-member-info
         [publicData]="selectedData"
         [data]="privateMember"
@@ -220,10 +225,12 @@
         (retry)="loadPrivateMember()" />
       <ng-template #footer>
         <shared-drawer-actions
-          [showDelete]="false"
+          [showDelete]="permissions.delete"
+          [loading]="status.saving"
           [showEdit]="permissions.edit"
           editLabel="Editar socio"
           [editDisabled]="status.loadingMember || !permissions.readPrivate || !privateMember"
+          (delete)="onDeleteMember($event)"
           (edit)="onShowMemberEdit()" />
         @if (permissions.edit && !permissions.readPrivate) {
           <p class="mt-2 text-sm text-gray-500">

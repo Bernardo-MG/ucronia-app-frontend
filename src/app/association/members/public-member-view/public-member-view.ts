@@ -101,6 +101,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
       readPrivate: authService.hasPermission(UcroniaPermissions.directory.memberProfile.read),
       create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
       edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
+      delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete),
       keysRead: authService.hasPermission(UcroniaPermissions.key.read),
       keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
@@ -266,6 +267,37 @@ export class PublicMemberView implements OnInit, OnDestroy {
             () => this.keyService.delete(number),
             () => this.refreshKeysAndMembers(),
             'No se pudo borrar la llave.'
+          );
+        }
+      }
+    });
+  }
+
+  public onDeleteMember(event: Event): void {
+    if (!this.permissions.read || !this.permissions.delete || this.dialog !== Dialog.INFO || this.status.saving) {
+      return;
+    }
+    const number = this.selectedData.number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es reversible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
+      accept: () => {
+        if (
+          !this.destroyRef.destroyed &&
+          !this.status.saving &&
+          this.dialog === Dialog.INFO &&
+          this.selectedData.number === number
+        ) {
+          this.call(
+            () => this.memberProfileService.delete(number),
+            () => {
+              this.memberRequest?.unsubscribe();
+              this.refreshKeysAndMembers();
+            },
+            'No se pudo borrar el socio. Inténtalo de nuevo.'
           );
         }
       }
@@ -548,6 +580,7 @@ interface Permissions {
   readPrivate: boolean;
   create: boolean;
   edit: boolean;
+  delete: boolean;
   keysRead: boolean;
   keysCreate: boolean;
   keysEdit: boolean;
