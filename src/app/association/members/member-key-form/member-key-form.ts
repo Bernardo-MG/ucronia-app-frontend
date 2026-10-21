@@ -15,8 +15,6 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class MemberKeyForm {
 
-  public readonly cancelEdition = output<void>();
-
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
 
@@ -37,6 +35,7 @@ export class MemberKeyForm {
   }
 
   public readonly save = output<Key>();
+  public readonly cancelEdition = output<void>();
 
   public readonly formStatus: FormStatus;
   public readonly form: FormGroup;

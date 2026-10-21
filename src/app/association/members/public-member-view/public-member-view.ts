@@ -21,69 +21,32 @@ import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { TabsModule } from 'primeng/tabs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  finalize,
-  forkJoin,
-  Observable,
-  of,
-  Subject,
-  Subscription,
-  switchMap,
-  tap
-} from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, forkJoin, Observable, of, Subject, Subscription, switchMap, tap } from 'rxjs';
 import { MemberCreationForm } from '../../members/member-creation-form/member-creation-form';
-import { Dialog } from '../members-dialog';
-import { MemberInfo } from '../member-info/member-info';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
-import { MemberKeyInfo } from '../member-key-info/member-key-info';
+import { MemberInfo } from '../member-info/member-info';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
+import { MemberKeyInfo } from '../member-key-info/member-key-info';
 import { MemberKeyList } from '../member-key-list/member-key-list';
-import { MemberProfileService } from '../member-profile-service';
 import { MemberKeyService } from '../member-key-service';
+import { MemberProfileService } from '../member-profile-service';
+import { Dialog } from '../members-dialog';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [
-    MemberInfo,
-    MemberEditionForm,
-    MemberKeyInfo,
-    DrawerActions,
-    MemberKeyForm,
-    TabsModule,
-    MemberKeyList,
-    DrawerHeader,
-    DrawerFormActions,
-    DrawerModule,
-    ButtonModule,
-    MessageModule,
-    MemberCreationForm,
-    FormsModule,
-    CardModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    PublicMemberList
-  ],
+  imports: [MemberInfo, MemberEditionForm, MemberKeyInfo, DrawerActions, MemberKeyForm, TabsModule, MemberKeyList, DrawerHeader, DrawerFormActions, DrawerModule, ButtonModule, MessageModule, MemberCreationForm, FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit, OnDestroy {
 
   private readonly service = inject(PublicMemberService);
-
   private readonly memberProfileService = inject(MemberProfileService);
-
   private readonly feeTypeService = inject(FeeTypeService);
-
   private readonly contactMethodService = inject(ContactMethodService);
-
   private readonly keyService = inject(MemberKeyService);
-
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly destroyRef = inject(DestroyRef);
 
   private keysReloadRequested = false;

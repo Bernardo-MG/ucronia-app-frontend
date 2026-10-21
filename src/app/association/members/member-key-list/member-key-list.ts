@@ -13,18 +13,7 @@ import { TagModule } from 'primeng/tag';
 
 @Component({
   selector: 'assoc-member-key-list',
-  imports: [
-    FormsModule,
-    ButtonModule,
-    CardModule,
-    IconFieldModule,
-    InputIconModule,
-    InputTextModule,
-    MessageModule,
-    SelectModule,
-    TableModule,
-    TagModule
-  ],
+  imports: [FormsModule, ButtonModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, MessageModule, SelectModule, TableModule, TagModule],
   templateUrl: './member-key-list.html'
 })
 export class MemberKeyList implements OnChanges {
