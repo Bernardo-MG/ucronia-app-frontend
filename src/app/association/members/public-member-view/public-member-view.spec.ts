@@ -5,11 +5,12 @@ import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
-import { MemberCount, MemberCreation, UcroniaClient } from '@ucronia/api';
+import { MemberCount, MemberCreation, MemberUpdate, UcroniaClient } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Key, Member, PublicMember } from '@ucronia/domain';
+import { Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
+import { Dialog } from '../members-dialog';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
 import { MemberKeyService } from '../member-key-service';
 import { PublicMemberService } from '../public-member-service';
@@ -21,9 +22,17 @@ describe('PublicMemberView', () => {
 
   const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('MemberService', ['getAll', 'getSummary']);
   const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
-  const memberEndpointMock = jasmine.createSpyObj<UcroniaClient['memberProfile']>('MemberEndpoint', ['create']);
+  const memberEndpointMock = jasmine.createSpyObj<UcroniaClient['memberProfile']>('MemberEndpoint', [
+    'create',
+    'get',
+    'update'
+  ]);
   const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', [
-    'getAll', 'getAllAvailable', 'create'
+    'getAll',
+    'getAllAvailable',
+    'create',
+    'update',
+    'delete'
   ]);
   const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', [
@@ -32,6 +41,14 @@ describe('PublicMemberView', () => {
 
   beforeEach(async () => {
     authServiceMock.hasPermission.and.returnValue(true);
+    memberEndpointMock.get.calls.reset();
+    memberEndpointMock.update.calls.reset();
+    memberEndpointMock.get.and.returnValue(of(new Member()));
+    memberEndpointMock.update.and.returnValue(of(new Member()));
+    memberKeyServiceMock.update.calls.reset();
+    memberKeyServiceMock.delete.calls.reset();
+    memberKeyServiceMock.update.and.returnValue(of(new Key()));
+    memberKeyServiceMock.delete.and.returnValue(of(new Key()));
     memberEndpointMock.create.calls.reset();
     memberEndpointMock.create.and.returnValue(of(new Member()));
     feeTypeServiceMock.getAllAvailable.calls.reset();
@@ -150,7 +167,7 @@ describe('PublicMemberView', () => {
         contactChannels: [{ method: 4, detail: 'alice@example.org' }]
       })
     );
-    expect(component.creating).toBeFalse();
+    expect(component.dialog).not.toBe(Dialog.CREATE);
     expect(memberServiceMock.getAll).toHaveBeenCalled();
     expect(memberServiceMock.getSummary).toHaveBeenCalled();
   });
@@ -162,7 +179,7 @@ describe('PublicMemberView', () => {
 
     component.onCreate(data);
 
-    expect(component.creating).toBeTrue();
+    expect(component.dialog).toBe(Dialog.CREATE);
     expect(component.saving).toBeFalse();
     expect(component.creationError).not.toBe('');
   });
@@ -219,7 +236,7 @@ describe('PublicMemberView', () => {
     component.onCreateKey(new Key());
 
     expect(fixture.nativeElement.textContent).not.toContain('Nueva llave');
-    expect(component.creatingKey).toBeFalse();
+    expect(component.dialog).not.toBe(Dialog.KEY_CREATE);
     expect(memberKeyServiceMock.create).not.toHaveBeenCalled();
   });
 
@@ -235,7 +252,7 @@ describe('PublicMemberView', () => {
     component.onCreateKeyOpen();
 
     expect(fixture.nativeElement.textContent).toContain('Nueva llave');
-    expect(component.creatingKey).toBeTrue();
+    expect(component.dialog).toBe(Dialog.KEY_CREATE);
   });
 
   it('should create a key and refresh assignments without leaving the keys tab', () => {
@@ -252,13 +269,15 @@ describe('PublicMemberView', () => {
     form.form.markAsDirty();
     form.onSave();
 
-    expect(memberKeyServiceMock.create).toHaveBeenCalledOnceWith(jasmine.objectContaining({
-      description: 'Nueva',
-      available: true
-    }));
+    expect(memberKeyServiceMock.create).toHaveBeenCalledOnceWith(
+      jasmine.objectContaining({
+        description: 'Nueva',
+        available: true
+      })
+    );
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
     expect(component.selectedTab).toBe('keys');
-    expect(component.creatingKey).toBeFalse();
+    expect(component.dialog).not.toBe(Dialog.KEY_CREATE);
     expect(component.savingKey).toBeFalse();
   });
 
@@ -271,7 +290,7 @@ describe('PublicMemberView', () => {
 
     component.onCreateKey(new Key());
 
-    expect(component.creatingKey).toBeTrue();
+    expect(component.dialog).toBe(Dialog.KEY_CREATE);
     expect(component.savingKey).toBeFalse();
     expect(component.keyCreationError).not.toBe('');
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
@@ -287,17 +306,229 @@ describe('PublicMemberView', () => {
 
     component.onCreateKey(key);
     component.onCreateKey(key);
-    component.onKeyDrawerVisibleChange(false);
+    component.onDrawerVisibleChange(false);
 
     expect(memberKeyServiceMock.create).toHaveBeenCalledTimes(1);
-    expect(component.creatingKey).toBeTrue();
+    expect(component.dialog).toBe(Dialog.KEY_CREATE);
     expect(component.savingKey).toBeTrue();
 
     response.next(key);
     response.complete();
 
-    expect(component.creatingKey).toBeFalse();
+    expect(component.dialog).not.toBe(Dialog.KEY_CREATE);
     expect(component.savingKey).toBeFalse();
+  });
+
+  it('should own the member drawer and load private data by profile number', () => {
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12, memberNumber: 37 }));
+    fixture.detectChanges();
+
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(memberEndpointMock.get).toHaveBeenCalledOnceWith(12);
+    expect(fixture.nativeElement.querySelector('assoc-member-info')).not.toBeNull();
+  });
+
+  it('should not request or edit private data with public member read permission alone', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission === UcroniaPermissions.directory.member.read);
+    fixture.destroy();
+    fixture = TestBed.createComponent(PublicMemberView);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onShowMemberEdit();
+    fixture.detectChanges();
+
+    expect(memberEndpointMock.get).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(component.privateMember).toBeNull();
+    expect(fixture.nativeElement.textContent).not.toContain('La siguiente información es privada');
+  });
+
+  it('should cancel stale private requests when another member is selected or the drawer closes', () => {
+    const stale = new Subject<Member>();
+    const current = Object.assign(new Member(), { number: 20 });
+    memberEndpointMock.get.and.returnValues(stale, of(current));
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onShowMember(Object.assign(new PublicMember(), { number: 20 }));
+    stale.next(Object.assign(new Member(), { number: 12 }));
+
+    expect(component.privateMember).toBe(current);
+
+    component.onDrawerVisibleChange(false);
+
+    expect(component.privateMember).toBeNull();
+    expect(component.dialog).toBe(Dialog.NONE);
+  });
+
+  it('should retry private loading from the view after an error', () => {
+    memberEndpointMock.get.and.returnValue(throwError(() => new Error('Failed')));
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+
+    expect(component.memberPrivateError).toBeTrue();
+    expect(component.loadingMember).toBeFalse();
+
+    memberEndpointMock.get.and.returnValue(of(new Member()));
+    component.loadPrivateMember();
+
+    expect(component.memberPrivateError).toBeFalse();
+    expect(memberEndpointMock.get).toHaveBeenCalledTimes(2);
+  });
+
+  it('should retain assigned options and submit a full member update from the view', () => {
+    const member = Object.assign(new Member(), {
+      number: 12,
+      memberNumber: 37,
+      key: 7,
+      feeType: { number: 3, name: 'Assigned fee', amount: 5 },
+      contactChannels: [{ method: { number: 8, name: 'Email' }, detail: 'ana@example.org' }]
+    });
+    memberEndpointMock.get.and.returnValue(of(member));
+    memberEndpointMock.update.and.returnValue(of(member));
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onShowMemberEdit();
+    const change: MemberUpdate = {
+      name: { firstName: 'Ana', lastName: '' },
+      feeType: 3,
+      address: '',
+      comments: '',
+      key: undefined,
+      contactChannels: [],
+      active: false,
+      renew: false
+    };
+
+    expect(component.optionsReady).toBeTrue();
+    expect(component.feeTypes.map(fee => fee.number)).toContain(3);
+    expect(component.keys.map(key => key.number)).toContain(7);
+    expect(component.contactMethods.map(method => method.number)).toContain(8);
+
+    component.onUpdateMember(change);
+
+    expect(memberEndpointMock.update).toHaveBeenCalledOnceWith(12, change);
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(component.selectedData.memberNumber).toBe(37);
+  });
+
+  it('should retain member edit errors and allow cancelling back to details', () => {
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onShowMemberEdit();
+    memberEndpointMock.update.and.returnValue(throwError(() => new Error('Failed')));
+    component.onUpdateMember({
+      name: { firstName: 'Ana', lastName: '' },
+      feeType: 3,
+      contactChannels: [],
+      active: true,
+      renew: true
+    });
+
+    expect(component.dialog).toBe(Dialog.EDIT);
+    expect(component.memberSaving).toBeFalse();
+    expect(component.memberEditError).not.toBe('');
+
+    component.onCancelMemberEdit();
+
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(component.memberEditError).toBe('');
+  });
+
+  it('should cancel option loading when member editing is cancelled', () => {
+    const options = new Subject<Key[]>();
+    memberKeyServiceMock.getAllAvailable.and.returnValue(options);
+    component.onShowMember(new PublicMember());
+    component.onShowMemberEdit();
+    component.onCancelMemberEdit();
+    options.next([new Key()]);
+    options.complete();
+
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(component.optionsReady).toBeFalse();
+    expect(component.loadingOptions).toBeFalse();
+  });
+
+  it('should own key editing and reload assignments on success', () => {
+    component.onShowKey({ number: 3, available: false, description: 'Principal' });
+    component.onShowKeyEdit();
+    fixture.detectChanges();
+    const form = fixture.debugElement.query(By.directive(MemberKeyForm)).componentInstance as MemberKeyForm;
+    form.form.patchValue({ available: true, description: '' });
+    form.form.markAsDirty();
+    memberKeyServiceMock.getAll.calls.reset();
+    form.onSave();
+
+    expect(memberKeyServiceMock.update).toHaveBeenCalledOnceWith({ number: 3, available: true, description: '' });
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
+  });
+
+  it('should guard key mutations independently of creation permission', () => {
+    authServiceMock.hasPermission.and.callFake(
+      permission => permission !== UcroniaPermissions.key.update && permission !== UcroniaPermissions.key.delete
+    );
+    fixture.destroy();
+    fixture = TestBed.createComponent(PublicMemberView);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    component.onShowKey({ number: 3, available: true, description: '' });
+    component.onShowKeyEdit();
+    component.onUpdateKey(new Key());
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    component.onDeleteKey(new Event('click'));
+
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+    expect(memberKeyServiceMock.update).not.toHaveBeenCalled();
+    expect(confirm).not.toHaveBeenCalled();
+  });
+
+  it('should confirm key deletion in the view and block duplicate requests while saving', () => {
+    const response = new Subject<Key>();
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    memberKeyServiceMock.delete.and.returnValue(response);
+    component.onShowKey({ number: 3, available: true, description: '' });
+    component.onDeleteKey(new Event('click'));
+
+    expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
+
+    const confirmation = confirm.calls.mostRecent().args[0];
+    confirmation.accept?.();
+    confirmation.accept?.();
+    component.onDrawerVisibleChange(false);
+
+    expect(memberKeyServiceMock.delete).toHaveBeenCalledOnceWith(3);
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+    expect(component.savingKey).toBeTrue();
+
+    response.next(new Key());
+    response.complete();
+
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(component.savingKey).toBeFalse();
+  });
+
+  it('should keep key details open after a failed deletion', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    memberKeyServiceMock.delete.and.returnValue(throwError(() => new Error('Failed')));
+    component.onShowKey({ number: 3, available: true, description: '' });
+    component.onDeleteKey(new Event('click'));
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+    expect(component.keyCreationError).not.toBe('');
+    expect(component.savingKey).toBeFalse();
+  });
+
+  it('should queue a refresh when keys change during loading', () => {
+    const response = new Subject<KeyAssignment[]>();
+    const updated: KeyAssignment[] = [{ number: 3, available: true, description: 'New' }];
+    memberKeyServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.and.returnValues(response, of(updated));
+    component.loadKeys();
+    component.loadKeys();
+    response.next([]);
+    response.complete();
+
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(2);
+    expect(component.keyAssignments).toEqual(updated);
+    expect(component.loadingKeys).toBeFalse();
   });
 
   it('should create', () => {

@@ -1,8 +1,5 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '@bernardo-mg/authentication';
-import { UcroniaPermissions } from '@ucronia/auth';
 import { KeyAssignment } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -13,29 +10,32 @@ import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
-import { finalize } from 'rxjs';
-import { MemberKeyInfo } from '../member-key-info/member-key-info';
-import { MemberKeyService } from '../member-key-service';
 
 @Component({
   selector: 'assoc-member-key-list',
-  imports: [MemberKeyInfo, FormsModule, ButtonModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, MessageModule, SelectModule, TableModule, TagModule],
+  imports: [
+    FormsModule,
+    ButtonModule,
+    CardModule,
+    IconFieldModule,
+    InputIconModule,
+    InputTextModule,
+    MessageModule,
+    SelectModule,
+    TableModule,
+    TagModule
+  ],
   templateUrl: './member-key-list.html'
 })
-export class MemberKeyList implements OnInit {
+export class MemberKeyList implements OnChanges {
 
-  private readonly service = inject(MemberKeyService);
+  public readonly data = input<KeyAssignment[]>([]);
+  public readonly loading = input(false);
+  public readonly error = input(false);
 
-  private readonly destroyRef = inject(DestroyRef);
+  public readonly show = output<KeyAssignment>();
+  public readonly retry = output<void>();
 
-  private reloadRequested = false;
-
-  public readonly canRead = inject(AuthService).hasPermission(UcroniaPermissions.key.read);
-
-  public selectedData: KeyAssignment | undefined;
-  public data: KeyAssignment[] = [];
-  public loading = false;
-  public error = false;
   public query = '';
   public assignment: 'all' | 'assigned' | 'unassigned' = 'all';
   public first = 0;
@@ -46,16 +46,16 @@ export class MemberKeyList implements OnInit {
   ];
 
   public get assigned(): number {
-    return this.data.filter(key => key.member != null).length;
+    return this.data().filter(key => key.member != null).length;
   }
 
   public get unassigned(): number {
-    return this.data.length - this.assigned;
+    return this.data().length - this.assigned;
   }
 
   public get filtered(): KeyAssignment[] {
     const query = this.query.trim().toLocaleLowerCase('es').replace(/#/g, '');
-    return this.data.filter(key => {
+    return this.data().filter(key => {
       const assigned = key.member != null;
       if (this.assignment === 'assigned' && !assigned) {
         return false;
@@ -69,52 +69,14 @@ export class MemberKeyList implements OnInit {
     });
   }
 
-  public ngOnInit(): void {
-    this.load();
-  }
-
-  public onShowInfo(data: KeyAssignment): void {
-    if (this.canRead) {
-      this.selectedData = data;
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      this.first = 0;
     }
   }
 
   public onFilter(): void {
     this.first = 0;
-  }
-
-  public load(): void {
-    if (!this.canRead) {
-      return;
-    }
-    if (this.loading) {
-      this.reloadRequested = true;
-      return;
-    }
-    this.loading = true;
-    this.error = false;
-    this.service
-      .getAll()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => {
-          this.loading = false;
-          if (this.reloadRequested && !this.destroyRef.destroyed) {
-            this.reloadRequested = false;
-            this.load();
-          }
-        })
-      )
-      .subscribe({
-        next: data => {
-          this.data = data;
-          this.first = 0;
-        },
-        error: () => {
-          this.error = true;
-          this.data = [];
-        }
-      });
   }
 
 }

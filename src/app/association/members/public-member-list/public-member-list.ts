@@ -3,12 +3,11 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
-import { MemberInfo } from '../member-info/member-info';
 import { PublicMemberRenewTag } from '../public-member-renew-tag/public-member-renew-tag';
 
 @Component({
   selector: 'assoc-public-member-list',
-  imports: [ButtonModule, MemberInfo, TableModule, PublicMemberRenewTag],
+  imports: [ButtonModule, TableModule, PublicMemberRenewTag],
   templateUrl: './public-member-list.html'
 })
 export class PublicMemberList {
@@ -19,7 +18,9 @@ export class PublicMemberList {
   public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly updated = output<void>();
+  public readonly canRead = input(false);
+
+  public readonly show = output<PublicMember>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 

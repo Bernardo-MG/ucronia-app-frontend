@@ -24,7 +24,7 @@
         <p-sortIcon field="memberNumber" />
       </th>
       <th class="w-48">Llave</th>
-      @if (memberInfo.canRead) {
+      @if (canRead()) {
         <th class="w-16"><span class="sr-only">Acciones</span></th>
       }
     </tr>
@@ -50,7 +50,7 @@
           <span class="text-gray-400">—</span>
         }
       </td>
-      @if (memberInfo.canRead) {
+      @if (canRead()) {
         <td class="text-right">
           <p-button
             type="button"
@@ -59,10 +59,9 @@
             rounded
             text
             ariaLabel="Ver información del socio"
-            (onClick)="memberInfo.open(member)" />
+            (onClick)="show.emit(member)" />
         </td>
       }
     </tr>
   </ng-template>
 </p-table>
-<assoc-member-info #memberInfo (updated)="updated.emit()" />
