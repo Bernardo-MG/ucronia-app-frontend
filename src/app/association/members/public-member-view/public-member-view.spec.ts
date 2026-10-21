@@ -26,7 +26,8 @@ describe('PublicMemberView', () => {
   const memberProfileServiceMock = jasmine.createSpyObj<MemberProfileService>('MemberProfileService', [
     'create',
     'getOne',
-    'update'
+    'update',
+    'delete'
   ]);
   const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', [
     'getAll',
@@ -42,6 +43,8 @@ describe('PublicMemberView', () => {
 
   beforeEach(async () => {
     authServiceMock.hasPermission.and.returnValue(true);
+    memberProfileServiceMock.delete.calls.reset();
+    memberProfileServiceMock.delete.and.returnValue(of(new Member()));
     memberProfileServiceMock.getOne.calls.reset();
     memberProfileServiceMock.update.calls.reset();
     memberProfileServiceMock.getOne.and.returnValue(of(new Member()));
@@ -604,6 +607,146 @@ describe('PublicMemberView', () => {
 
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
     expect(component.dialog).toBe(Dialog.KEY_CREATE);
+  });
+
+  it('should confirm member deletion using the standard footer action', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12, memberNumber: 37 }));
+    fixture.detectChanges();
+    const action = fixture.nativeElement.querySelector('[data-action="delete"] button') as HTMLButtonElement;
+
+    expect(action).not.toBeNull();
+
+    action.click();
+
+    expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
+    const confirmation = confirm.calls.mostRecent().args[0];
+
+    expect(confirmation.target).toBe(action);
+    expect(confirmation.rejectButtonProps?.label).toBe('Cancelar');
+    expect(confirmation.acceptButtonProps?.label).toBe('Borrar');
+
+    memberServiceMock.getAll.calls.reset();
+    memberServiceMock.getSummary.calls.reset();
+    memberKeyServiceMock.getAll.calls.reset();
+    confirmation.accept?.();
+
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(memberServiceMock.getAll).toHaveBeenCalledTimes(1);
+    expect(memberServiceMock.getSummary).toHaveBeenCalledTimes(1);
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
+    expect(component.status.saving).toBeFalse();
+  });
+
+  it('should hide member deletion and reject forced deletion without its permission', () => {
+    authServiceMock.hasPermission.and.callFake(
+      permission => permission !== UcroniaPermissions.directory.memberProfile.delete
+    );
+    fixture.destroy();
+    fixture = TestBed.createComponent(PublicMemberView);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    fixture.detectChanges();
+    component.onDeleteMember(new Event('click'));
+
+    expect(fixture.nativeElement.querySelector('[data-action="delete"]')).toBeNull();
+    expect(confirm).not.toHaveBeenCalled();
+    expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
+  });
+
+  it('should allow deletion without private profile read, edit or key read permission', () => {
+    authServiceMock.hasPermission.and.callFake(
+      permission =>
+        permission === UcroniaPermissions.directory.member.read ||
+        permission === UcroniaPermissions.directory.memberProfile.delete
+    );
+    fixture.destroy();
+    fixture = TestBed.createComponent(PublicMemberView);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12, memberNumber: 37 }));
+    component.onDeleteMember(new Event('click'));
+    memberKeyServiceMock.getAll.calls.reset();
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(memberProfileServiceMock.getOne).not.toHaveBeenCalled();
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.NONE);
+  });
+
+  it('should keep the member drawer open after deletion fails and allow retry', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    memberProfileServiceMock.delete.and.returnValue(throwError(() => new Error('Failed')));
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    memberServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.calls.reset();
+    component.onDeleteMember(new Event('click'));
+    confirm.calls.mostRecent().args[0].accept?.();
+    fixture.detectChanges();
+
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(component.status.saving).toBeFalse();
+    expect(fixture.nativeElement.textContent).toContain('No se pudo borrar el socio');
+    expect(memberServiceMock.getAll).not.toHaveBeenCalled();
+    expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
+
+    memberProfileServiceMock.delete.and.returnValue(of(new Member()));
+    component.onDeleteMember(new Event('click'));
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledTimes(2);
+  });
+
+  it('should prevent duplicate member deletions and closing before completion', () => {
+    const response = new Subject<Member>();
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    memberProfileServiceMock.delete.and.returnValue(response);
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onDeleteMember(new Event('click'));
+    const confirmation = confirm.calls.mostRecent().args[0];
+    confirmation.accept?.();
+    confirmation.accept?.();
+    component.onDeleteMember(new Event('click'));
+    component.onDrawerVisibleChange(false);
+
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(confirm).toHaveBeenCalledTimes(1);
+    expect(component.dialog).toBe(Dialog.INFO);
+    expect(component.status.saving).toBeTrue();
+
+    response.next(new Member());
+    response.complete();
+
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(component.status.saving).toBeFalse();
+  });
+
+  it('should ignore a delete confirmation for a member that is no longer selected', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onDeleteMember(new Event('click'));
+    const confirmation = confirm.calls.mostRecent().args[0];
+    component.onShowMember(Object.assign(new PublicMember(), { number: 20 }));
+    confirmation.accept?.();
+
+    expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
+  });
+
+  it('should ignore a delete confirmation accepted after leaving the view', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onDeleteMember(new Event('click'));
+    const confirmation = confirm.calls.mostRecent().args[0];
+    fixture.destroy();
+    confirmation.accept?.();
+
+    expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
   });
 
   it('should create', () => {

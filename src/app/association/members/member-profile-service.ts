@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { MemberCreation, MemberUpdate, UcroniaClient } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MemberProfileService {
@@ -37,6 +37,28 @@ export class MemberProfileService {
           detail: 'Socio actualizado',
           life: 3000
         });
+      })
+    );
+  }
+
+  public delete(number: number): Observable<Member> {
+    return this.ucroniaClient.memberProfile.delete(number).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Borrado',
+          detail: 'Socio borrado',
+          life: 3000
+        });
+      }),
+      catchError(error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo borrar el socio',
+          life: 5000
+        });
+        return throwError(() => error);
       })
     );
   }
