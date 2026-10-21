@@ -9,10 +9,10 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
-import { MemberCount, MemberCreation, MemberUpdate, UcroniaClient } from '@ucronia/api';
+import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod, FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
@@ -30,7 +30,8 @@ import {
   of,
   Subject,
   Subscription,
-  switchMap
+  switchMap,
+  tap
 } from 'rxjs';
 import { MemberCreationForm } from '../../members/member-creation-form/member-creation-form';
 import { Dialog } from '../members-dialog';
@@ -39,6 +40,7 @@ import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberKeyInfo } from '../member-key-info/member-key-info';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
 import { MemberKeyList } from '../member-key-list/member-key-list';
+import { MemberProfileService } from '../member-profile-service';
 import { MemberKeyService } from '../member-key-service';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
@@ -72,15 +74,13 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   private readonly service = inject(PublicMemberService);
 
-  private readonly client = inject(UcroniaClient);
+  private readonly memberProfileService = inject(MemberProfileService);
 
   private readonly feeTypeService = inject(FeeTypeService);
 
   private readonly contactMethodService = inject(ContactMethodService);
 
   private readonly keyService = inject(MemberKeyService);
-
-  private readonly messages = inject(MessageService);
 
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -90,35 +90,14 @@ export class PublicMemberView implements OnInit, OnDestroy {
   private memberRequest?: Subscription;
   private memberOptionsRequest?: Subscription;
 
-  public readonly permissions = {
-    read: inject(AuthService).hasPermission(UcroniaPermissions.directory.member.read),
-    readPrivate: inject(AuthService).hasPermission(UcroniaPermissions.directory.memberProfile.read),
-    edit: inject(AuthService).hasPermission(UcroniaPermissions.directory.memberProfile.update),
-    keysEdit: inject(AuthService).hasPermission(UcroniaPermissions.key.update),
-    keysDelete: inject(AuthService).hasPermission(UcroniaPermissions.key.delete),
-    keysCreate: inject(AuthService).hasPermission(UcroniaPermissions.key.create),
-    keysRead: inject(AuthService).hasPermission(UcroniaPermissions.key.read),
-    create: inject(AuthService).hasPermission(UcroniaPermissions.directory.memberProfile.create)
-  };
+  public readonly permissions: Permissions;
+
   public selectedTab = 'members';
   public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
   public selectedKey: KeyAssignment | undefined;
   public keyAssignments: KeyAssignment[] = [];
-  public loadingKeys = false;
-  public keysError = false;
   public privateMember: Member | null = null;
-  public loadingMember = false;
-  public memberPrivateError = false;
-  public memberSaving = false;
-  public memberEditError = '';
-  public savingKey = false;
-  public keyCreationError = '';
-  public keyFailures = new FailureStore();
-  public saving = false;
-  public loadingOptions = false;
-  public optionsReady = false;
-  public creationError = '';
   public feeTypes: FeeType[] = [];
   public contactMethods: ContactMethod[] = [];
   public keys: Key[] = [];
@@ -137,17 +116,35 @@ export class PublicMemberView implements OnInit, OnDestroy {
   private sort = new Sorting();
   public readonly status: Status = {
     loading: false,
-    loadingSummary: false
+    loadingSummary: false,
+    loadingKeys: false,
+    loadingMember: false,
+    loadingOptions: false,
+    saving: false,
+    optionsReady: false,
+    keysError: false,
+    memberPrivateError: false
   };
   public failures = new FailureStore();
+  public error = '';
   private nameFilter = '';
   public filterValue = '';
   private readonly filterSubject = new Subject<string>();
 
   constructor() {
-    const destroyRef = inject(DestroyRef);
+    const authService = inject(AuthService);
+    this.permissions = {
+      read: authService.hasPermission(UcroniaPermissions.directory.member.read),
+      readPrivate: authService.hasPermission(UcroniaPermissions.directory.memberProfile.read),
+      create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
+      edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
+      keysRead: authService.hasPermission(UcroniaPermissions.key.read),
+      keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
+      keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
+      keysDelete: authService.hasPermission(UcroniaPermissions.key.delete)
+    };
     this.filterSubject
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(destroyRef))
+      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
       .subscribe(filter => this.onFilter(filter));
   }
 
@@ -179,8 +176,8 @@ export class PublicMemberView implements OnInit, OnDestroy {
     ) {
       return;
     }
-    this.keyFailures.clear();
-    this.keyCreationError = '';
+    this.failures.clear();
+    this.error = '';
     this.dialog = Dialog.KEY_CREATE;
   }
 
@@ -189,51 +186,33 @@ export class PublicMemberView implements OnInit, OnDestroy {
       !this.permissions.keysRead ||
       !this.permissions.keysCreate ||
       this.dialog !== Dialog.KEY_CREATE ||
-      this.savingKey
+      this.status.saving
     ) {
       return;
     }
-    this.savingKey = true;
-    this.keyCreationError = '';
-    this.keyService
-      .create(data)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.savingKey = false))
-      )
-      .subscribe({
-        next: () => {
-          this.keyFailures.clear();
-          this.dialog = Dialog.NONE;
-          this.loadKeys();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.keyFailures = error.failures;
-          } else {
-            this.keyFailures.clear();
-          }
-          this.keyCreationError = 'No se pudo crear la llave. Revisa los datos e inténtalo de nuevo.';
-        }
-      });
+    this.call(
+      () => this.keyService.create(data),
+      () => this.loadKeys(),
+      'No se pudo crear la llave. Revisa los datos e inténtalo de nuevo.'
+    );
   }
 
   public loadKeys(): void {
     if (!this.permissions.keysRead) {
       return;
     }
-    if (this.loadingKeys) {
+    if (this.status.loadingKeys) {
       this.keysReloadRequested = true;
       return;
     }
-    this.loadingKeys = true;
-    this.keysError = false;
+    this.status.loadingKeys = true;
+    this.status.keysError = false;
     this.keyService
       .getAll()
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => {
-          this.loadingKeys = false;
+          this.status.loadingKeys = false;
           if (this.keysReloadRequested && !this.destroyRef.destroyed) {
             this.keysReloadRequested = false;
             this.loadKeys();
@@ -245,35 +224,35 @@ export class PublicMemberView implements OnInit, OnDestroy {
           this.keyAssignments = data;
         },
         error: () => {
-          this.keysError = true;
+          this.status.keysError = true;
           this.keyAssignments = [];
         }
       });
   }
 
   public onShowKey(data: KeyAssignment): void {
-    if (!this.permissions.keysRead || this.savingDialog) {
+    if (!this.permissions.keysRead || this.status.saving) {
       return;
     }
     this.selectedKey = data;
-    this.keyFailures.clear();
-    this.keyCreationError = '';
+    this.failures.clear();
+    this.error = '';
     this.dialog = Dialog.KEY_INFO;
   }
 
   public onShowKeyEdit(): void {
-    if (!this.permissions.keysRead || !this.permissions.keysEdit || !this.selectedKey || this.savingKey) {
+    if (!this.permissions.keysRead || !this.permissions.keysEdit || !this.selectedKey || this.status.saving) {
       return;
     }
-    this.keyFailures.clear();
-    this.keyCreationError = '';
+    this.failures.clear();
+    this.error = '';
     this.dialog = Dialog.KEY_EDIT;
   }
 
   public onCancelKeyEdit(): void {
-    if (!this.savingKey) {
-      this.keyFailures.clear();
-      this.keyCreationError = '';
+    if (!this.status.saving) {
+      this.failures.clear();
+      this.error = '';
       this.dialog = Dialog.KEY_INFO;
     }
   }
@@ -284,12 +263,16 @@ export class PublicMemberView implements OnInit, OnDestroy {
       !this.permissions.keysEdit ||
       !this.selectedKey ||
       this.dialog !== Dialog.KEY_EDIT ||
-      this.savingKey
+      this.status.saving
     ) {
       return;
     }
     const number = this.selectedKey.number;
-    this.callKey(() => this.keyService.update({ ...data, number }), 'No se pudo actualizar la llave.');
+    this.call(
+      () => this.keyService.update({ ...data, number }),
+      () => this.refreshKeysAndMembers(),
+      'No se pudo actualizar la llave.'
+    );
   }
 
   public onDeleteKey(event: Event): void {
@@ -298,7 +281,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
       !this.permissions.keysDelete ||
       !this.selectedKey ||
       this.dialog !== Dialog.KEY_INFO ||
-      this.savingKey
+      this.status.saving
     ) {
       return;
     }
@@ -312,71 +295,57 @@ export class PublicMemberView implements OnInit, OnDestroy {
       accept: () => {
         if (
           !this.destroyRef.destroyed &&
-          !this.savingKey &&
+          !this.status.saving &&
           this.dialog === Dialog.KEY_INFO &&
           this.selectedKey?.number === number
         ) {
-          this.callKey(() => this.keyService.delete(number), 'No se pudo borrar la llave.');
+          this.call(
+            () => this.keyService.delete(number),
+            () => this.refreshKeysAndMembers(),
+            'No se pudo borrar la llave.'
+          );
         }
       }
     });
   }
 
-  private callKey(action: () => Observable<Key>, message: string): void {
-    this.savingKey = true;
-    this.keyCreationError = '';
-    action()
-      .pipe(
-        finalize(() => (this.savingKey = false)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe({
-        next: () => {
-          this.dialog = Dialog.NONE;
-          this.keyFailures.clear();
-          this.loadKeys();
-          this.refresh();
-        },
-        error: error => {
-          this.keyFailures = error instanceof FailureResponse ? error.failures : new FailureStore();
-          this.keyCreationError = message;
-        }
-      });
-  }
-
   public onShowMember(member: PublicMember): void {
-    if (!this.permissions.read || this.savingDialog) {
+    if (!this.permissions.read || this.status.saving) {
       return;
     }
     this.memberOptionsRequest?.unsubscribe();
     this.memberRequest?.unsubscribe();
     this.selectedData = member;
     this.privateMember = null;
-    this.memberPrivateError = false;
+    this.status.memberPrivateError = false;
     this.dialog = Dialog.INFO;
-    this.loadingMember = false;
-    this.memberEditError = '';
+    this.status.loadingMember = false;
+    this.error = '';
     if (this.permissions.readPrivate) {
       this.loadPrivateMember();
     }
   }
 
   public loadPrivateMember(): void {
-    if (!this.permissions.read || !this.permissions.readPrivate || (this.dialog !== Dialog.INFO && this.dialog !== Dialog.EDIT)) {
+    if (
+      !this.permissions.read ||
+      !this.permissions.readPrivate ||
+      (this.dialog !== Dialog.INFO && this.dialog !== Dialog.EDIT)
+    ) {
       return;
     }
     this.memberRequest?.unsubscribe();
-    this.loadingMember = true;
-    this.memberPrivateError = false;
-    this.memberRequest = this.client.memberProfile
-      .get(this.selectedData.number)
+    this.status.loadingMember = true;
+    this.status.memberPrivateError = false;
+    this.memberRequest = this.memberProfileService
+      .getOne(this.selectedData.number)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.loadingMember = false))
+        finalize(() => (this.status.loadingMember = false))
       )
       .subscribe({
         next: member => (this.privateMember = member),
-        error: () => (this.memberPrivateError = true)
+        error: () => (this.status.memberPrivateError = true)
       });
   }
 
@@ -387,17 +356,17 @@ export class PublicMemberView implements OnInit, OnDestroy {
       !this.permissions.readPrivate ||
       this.dialog !== Dialog.INFO ||
       !this.privateMember ||
-      this.loadingMember ||
-      this.memberSaving
+      this.status.loadingMember ||
+      this.status.saving
     ) {
       return;
     }
     this.failures.clear();
-    this.memberEditError = '';
+    this.error = '';
     this.dialog = Dialog.EDIT;
-    this.optionsReady = false;
+    this.status.optionsReady = false;
     this.memberOptionsRequest?.unsubscribe();
-    this.loadingOptions = true;
+    this.status.loadingOptions = true;
     this.memberOptionsRequest = forkJoin({
       feeTypes: this.feeTypeService.getAllAvailable(),
       contactMethods: this.contactMethodService.getAllAvailable(),
@@ -405,7 +374,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
     })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.loadingOptions = false))
+        finalize(() => (this.status.loadingOptions = false))
       )
       .subscribe({
         next: options => {
@@ -424,20 +393,20 @@ export class PublicMemberView implements OnInit, OnDestroy {
           if (member.key != null && !this.keys.some(key => key.number === member.key)) {
             this.keys = [...this.keys, Object.assign(new Key(), { number: member.key })];
           }
-          this.optionsReady = true;
+          this.status.optionsReady = true;
         },
-        error: () => (this.memberEditError = 'No se pudieron cargar las opciones. Cancela y vuelve a intentarlo.')
+        error: () => (this.error = 'No se pudieron cargar las opciones. Cancela y vuelve a intentarlo.')
       });
   }
 
   public onCancelMemberEdit(): void {
-    if (this.memberSaving) {
+    if (this.status.saving) {
       return;
     }
     this.memberOptionsRequest?.unsubscribe();
-    this.optionsReady = false;
+    this.status.optionsReady = false;
     this.failures.clear();
-    this.memberEditError = '';
+    this.error = '';
     this.dialog = Dialog.INFO;
   }
 
@@ -447,43 +416,23 @@ export class PublicMemberView implements OnInit, OnDestroy {
       !this.permissions.edit ||
       !this.permissions.readPrivate ||
       !this.privateMember ||
-      !this.optionsReady ||
+      !this.status.optionsReady ||
       this.dialog !== Dialog.EDIT ||
-      this.memberSaving
+      this.status.saving
     ) {
       return;
     }
-    this.memberSaving = true;
-    this.memberEditError = '';
-    this.client.memberProfile
-      .update(this.selectedData.number, data)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.memberSaving = false))
-      )
-      .subscribe({
-        next: updated => {
-          this.privateMember = updated;
-          this.selectedData = {
-            number: updated.number,
-            memberNumber: updated.memberNumber,
-            name: updated.name,
-            key: updated.key,
-            renew: updated.renew
-          };
-          this.dialog = Dialog.INFO;
-          this.failures.clear();
-          this.messages.add({ severity: 'info', summary: 'Actualizado', detail: 'Socio actualizado', life: 3000 });
-          this.refresh();
-          if (this.selectedTab === 'keys') {
-            this.loadKeys();
-          }
-        },
-        error: error => {
-          this.failures = error instanceof FailureResponse ? error.failures : new FailureStore();
-          this.memberEditError = 'No se pudo actualizar el socio. Revisa los datos e inténtalo de nuevo.';
+    const number = this.selectedData.number;
+    this.call(
+      () => this.memberProfileService.update(number, data),
+      () => {
+        this.refresh();
+        if (this.selectedTab === 'keys') {
+          this.loadKeys();
         }
-      });
+      },
+      'No se pudo actualizar el socio. Revisa los datos e inténtalo de nuevo.'
+    );
   }
 
   public onCreateOpen(): void {
@@ -492,10 +441,10 @@ export class PublicMemberView implements OnInit, OnDestroy {
     }
     this.dialog = Dialog.CREATE;
     this.failures.clear();
-    this.creationError = '';
-    this.optionsReady = false;
+    this.error = '';
+    this.status.optionsReady = false;
     this.memberOptionsRequest?.unsubscribe();
-    this.loadingOptions = true;
+    this.status.loadingOptions = true;
     this.memberOptionsRequest = forkJoin({
       feeTypes: this.feeTypeService.getAllAvailable(),
       contactMethods: this.contactMethodService.getAllAvailable(),
@@ -503,65 +452,40 @@ export class PublicMemberView implements OnInit, OnDestroy {
     })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.loadingOptions = false))
+        finalize(() => (this.status.loadingOptions = false))
       )
       .subscribe({
         next: options => {
           this.feeTypes = options.feeTypes;
           this.contactMethods = options.contactMethods;
           this.keys = options.keys;
-          this.optionsReady = true;
+          this.status.optionsReady = true;
         },
-        error: () =>
-          (this.creationError = 'No se pudieron cargar las opciones del formulario. Cierra y vuelve a intentarlo.')
+        error: () => (this.error = 'No se pudieron cargar las opciones del formulario. Cierra y vuelve a intentarlo.')
       });
   }
 
-  public get savingDialog(): boolean {
-    return this.saving || this.savingKey || this.memberSaving;
-  }
-
   public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible && !this.savingDialog) {
+    if (!visible && !this.status.saving) {
       this.memberOptionsRequest?.unsubscribe();
       this.memberRequest?.unsubscribe();
-      this.optionsReady = false;
+      this.status.optionsReady = false;
       this.privateMember = null;
       this.failures.clear();
-      this.keyFailures.clear();
-      this.creationError = '';
-      this.keyCreationError = '';
-      this.memberEditError = '';
+      this.error = '';
       this.dialog = Dialog.NONE;
     }
   }
 
   public onCreate(data: MemberCreation): void {
-    if (!this.permissions.create || this.dialog !== Dialog.CREATE || !this.optionsReady || this.saving) {
+    if (!this.permissions.create || this.dialog !== Dialog.CREATE || !this.status.optionsReady || this.status.saving) {
       return;
     }
-    this.saving = true;
-    this.creationError = '';
-    this.client.memberProfile
-      .create(data)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.saving = false))
-      )
-      .subscribe({
-        next: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.messages.add({ severity: 'info', summary: 'Creado', detail: 'Socio creado', life: 3000 });
-          this.refresh();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else this.failures.clear();
-          this.creationError = 'No se pudo crear el socio. Revisa los datos e inténtalo de nuevo.';
-        }
-      });
+    this.call(
+      () => this.memberProfileService.create(data),
+      () => this.refresh(),
+      'No se pudo crear el socio. Revisa los datos e inténtalo de nuevo.'
+    );
   }
 
   // EVENT HANDLERS
@@ -619,9 +543,62 @@ export class PublicMemberView implements OnInit, OnDestroy {
       .subscribe(summary => (this.memberCount = summary));
   }
 
+  private refreshKeysAndMembers(): void {
+    this.loadKeys();
+    this.refresh();
+  }
+
+  private call<T>(action: () => Observable<T>, onSuccess: () => void, message: string): void {
+    this.status.saving = true;
+    this.error = '';
+    action()
+      .pipe(
+        // Cancellation must not run the successful-completion handler.
+        tap({
+          complete: () => {
+            this.failures.clear();
+            this.privateMember = null;
+            this.status.optionsReady = false;
+            this.dialog = Dialog.NONE;
+            onSuccess();
+          }
+        }),
+        finalize(() => (this.status.saving = false)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({ error: error => this.handleError(error, message) });
+  }
+
+  private handleError(error: unknown, message: string): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+    this.error = message;
+  }
+
+}
+
+interface Permissions {
+  read: boolean;
+  readPrivate: boolean;
+  create: boolean;
+  edit: boolean;
+  keysRead: boolean;
+  keysCreate: boolean;
+  keysEdit: boolean;
+  keysDelete: boolean;
 }
 
 interface Status {
   loading: boolean;
   loadingSummary: boolean;
+  loadingKeys: boolean;
+  loadingMember: boolean;
+  loadingOptions: boolean;
+  saving: boolean;
+  optionsReady: boolean;
+  keysError: boolean;
+  memberPrivateError: boolean;
 }
