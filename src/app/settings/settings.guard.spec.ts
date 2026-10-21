@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { settingsPermissions } from './settings-permissions';
 import { SettingsGuard } from './settings.guard';
 
@@ -28,6 +29,14 @@ describe('SettingsGuard', () => {
     });
 
     router = TestBed.inject(Router);
+  });
+
+  it('does not grant settings access through member profile or key read permission', () => {
+    authService.hasAnyPermission.and.callFake(permissions => permissions.some(permission =>
+      permission === UcroniaPermissions.directory.memberProfile.read || permission === UcroniaPermissions.key.read
+    ));
+
+    expect(runGuard()).toEqual(router.createUrlTree(['/']));
   });
 
   it('allows access when the user has a settings permission', () => {

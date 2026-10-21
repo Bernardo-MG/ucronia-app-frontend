@@ -2,7 +2,7 @@ import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
-import { KeyService } from '@app/settings/key-service';
+import { MemberKeyService } from '@app/association/members/member-key-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -44,7 +44,7 @@ export class DirectoryView implements OnInit {
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
-  private readonly keyService = inject(KeyService);
+  private readonly keyService = inject(MemberKeyService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;

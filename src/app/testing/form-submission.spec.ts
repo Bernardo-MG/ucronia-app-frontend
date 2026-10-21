@@ -29,7 +29,6 @@ import { UserForm } from '@app/security/users/user-form/user-form';
 import { ContactMethodForm } from '@app/settings/contact-method-form/contact-method-form';
 import { FeeTypeForm } from '@app/settings/fee-type-form/fee-type-form';
 import { GameTableForm } from '@app/settings/game-table-form/game-table-form';
-import { KeyForm } from '@app/settings/key-form/key-form';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 
 import { RoleChangePermission } from '@app/security/roles/role-change-permission/role-change-permission';
@@ -61,8 +60,7 @@ const cases = [
   { type: FeeTypeForm, values: { number: 2, name: 'Monthly', amount: 15 }, invalid: 'amount', expected: { number: 2, name: 'Monthly', amount: 15 } },
   { type: GameTableForm, values: { number: 2, name: 'Table A', description: 'Main room' }, invalid: 'description', expected: { number: 2, name: 'Table A', description: 'Main room' } },
   { type: NameForm, values: { number: 2, name: 'Le Guin' }, invalid: 'name', expected: { number: 2, name: 'Le Guin' } },
-  { type: MemberKeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } },
-  { type: KeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } }
+  { type: MemberKeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } }
 ];
 
 type ManagedForm = InstanceType<typeof cases[number]['type']>;

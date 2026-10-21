@@ -4,7 +4,6 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Key } from '@ucronia/domain';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { ToggleSwitchModule } from 'primeng/toggleswitch';
@@ -14,7 +13,6 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
   imports: [DrawerFormActions,
     ReactiveFormsModule,
     InputTextModule,
-    InputNumberModule,
     ToggleSwitchModule,
     MessageModule
   ],

@@ -13,13 +13,10 @@ import { FeeTypeService } from './fee-type-service';
 import { FeeTypeView } from './fee-type-view/fee-type-view';
 import { GameTableService } from './game-table-service';
 import { GameTableView } from './game-table-view/game-table-view';
-import { KeyService } from './key-service';
-import { KeyView } from './key-view/key-view';
 
-type SettingsView = KeyView | FeeTypeView | ContactMethodView | GameTableView;
+type SettingsView = FeeTypeView | ContactMethodView | GameTableView;
 
 const cases = [
-  { view: KeyView, service: KeyService, form: 'assoc-key-form' },
   { view: FeeTypeView, service: FeeTypeService, form: 'assoc-fee-type-form' },
   { view: ContactMethodView, service: ContactMethodService, form: 'assoc-contact-method-form' },
   { view: GameTableView, service: GameTableService, form: 'assoc-game-table-form' }
