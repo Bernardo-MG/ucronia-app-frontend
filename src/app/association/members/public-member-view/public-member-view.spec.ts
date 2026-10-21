@@ -7,7 +7,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, Page } from '@bernardo-mg/request';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
+import { FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
 import { Dialog } from '../members-dialog';
@@ -377,7 +377,7 @@ describe('PublicMemberView', () => {
     expect(memberProfileServiceMock.getOne).toHaveBeenCalledTimes(2);
   });
 
-  it('should retain assigned options and submit a full member update from the view', () => {
+  it('should retain assigned profile options without loading keys when editing a member', () => {
     const member = Object.assign(new Member(), {
       number: 12,
       memberNumber: 37,
@@ -394,7 +394,7 @@ describe('PublicMemberView', () => {
       feeType: 3,
       address: '',
       comments: '',
-      key: undefined,
+      key: 7,
       contactChannels: [],
       active: false,
       renew: false
@@ -402,7 +402,7 @@ describe('PublicMemberView', () => {
 
     expect(component.status.optionsReady).toBeTrue();
     expect(component.feeTypes.map(fee => fee.number)).toContain(3);
-    expect(component.keys.map(key => key.number)).toContain(7);
+    expect(memberKeyServiceMock.getAllAvailable).not.toHaveBeenCalled();
     expect(component.contactMethods.map(method => method.number)).toContain(8);
 
     component.onUpdateMember(change);
@@ -435,12 +435,12 @@ describe('PublicMemberView', () => {
   });
 
   it('should cancel option loading when member editing is cancelled', () => {
-    const options = new Subject<Key[]>();
-    memberKeyServiceMock.getAllAvailable.and.returnValue(options);
+    const options = new Subject<FeeType[]>();
+    feeTypeServiceMock.getAllAvailable.and.returnValue(options);
     component.onShowMember(new PublicMember());
     component.onShowMemberEdit();
     component.onCancelMemberEdit();
-    options.next([new Key()]);
+    options.next([]);
     options.complete();
 
     expect(component.dialog).toBe(Dialog.INFO);
@@ -747,6 +747,16 @@ describe('PublicMemberView', () => {
     confirmation.accept?.();
 
     expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
+  });
+
+  it('should allow member editing even when key options cannot be loaded', () => {
+    memberKeyServiceMock.getAllAvailable.and.returnValue(throwError(() => new Error('Key access denied')));
+    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    component.onShowMemberEdit();
+
+    expect(component.dialog).toBe(Dialog.EDIT);
+    expect(component.status.optionsReady).toBeTrue();
+    expect(memberKeyServiceMock.getAllAvailable).not.toHaveBeenCalled();
   });
 
   it('should create', () => {

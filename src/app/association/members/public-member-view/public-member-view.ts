@@ -364,8 +364,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
     this.status.loadingOptions = true;
     this.memberOptionsRequest = forkJoin({
       feeTypes: this.feeTypeService.getAllAvailable(),
-      contactMethods: this.contactMethodService.getAllAvailable(),
-      keys: this.keyService.getAllAvailable()
+      contactMethods: this.contactMethodService.getAllAvailable()
     })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -376,7 +375,6 @@ export class PublicMemberView implements OnInit, OnDestroy {
           const member = this.privateMember!;
           this.feeTypes = options.feeTypes;
           this.contactMethods = options.contactMethods;
-          this.keys = options.keys;
           if (!this.feeTypes.some(fee => fee.number === member.feeType.number)) {
             this.feeTypes = [...this.feeTypes, member.feeType];
           }
@@ -384,9 +382,6 @@ export class PublicMemberView implements OnInit, OnDestroy {
             if (!this.contactMethods.some(method => method.number === channel.method.number)) {
               this.contactMethods = [...this.contactMethods, channel.method];
             }
-          }
-          if (member.key != null && !this.keys.some(key => key.number === member.key)) {
-            this.keys = [...this.keys, Object.assign(new Key(), { number: member.key })];
           }
           this.status.optionsReady = true;
         },
