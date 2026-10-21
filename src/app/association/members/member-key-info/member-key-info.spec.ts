@@ -4,6 +4,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Key, KeyAssignment } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
 import { MemberKeyService } from '../member-key-service';
@@ -15,9 +16,13 @@ describe('MemberKeyInfo', () => {
   let key: KeyAssignment;
 
   const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
-  const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['update']);
+  const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['update', 'delete']);
+
+  const confirmationServiceMock = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', ['confirm']);
 
   beforeEach(async () => {
+    confirmationServiceMock.confirm.calls.reset();
+    memberKeyServiceMock.delete.calls.reset();
     key = {
       number: 3,
       available: false,
@@ -27,11 +32,13 @@ describe('MemberKeyInfo', () => {
     authServiceMock.hasPermission.and.returnValue(true);
     memberKeyServiceMock.update.calls.reset();
     memberKeyServiceMock.update.and.returnValue(of(key));
+    memberKeyServiceMock.delete.and.returnValue(of(key));
 
     await TestBed.configureTestingModule({
       imports: [MemberKeyInfo],
       providers: [
         provideNoopAnimations(),
+        { provide: ConfirmationService, useValue: confirmationServiceMock },
         { provide: AuthService, useValue: authServiceMock },
         { provide: MemberKeyService, useValue: memberKeyServiceMock }
       ]
@@ -41,6 +48,98 @@ describe('MemberKeyInfo', () => {
     component = fixture.componentInstance;
     fixture.componentRef.setInput('data', key);
     fixture.detectChanges();
+  });
+
+  it('should confirm deletion before calling the service and refresh after success', () => {
+    const updated = spyOn(component.updated, 'emit');
+    const close = spyOn(component.close, 'emit');
+    const action = fixture.nativeElement.querySelector('[data-action="delete"] button') as HTMLButtonElement;
+
+    action.click();
+
+    expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
+    expect(confirmationServiceMock.confirm).toHaveBeenCalledTimes(1);
+    const confirmation = confirmationServiceMock.confirm.calls.mostRecent().args[0];
+
+    expect(confirmation.target).toBe(action);
+    expect(confirmation.acceptButtonProps?.label).toBe('Borrar');
+    expect(confirmation.rejectButtonProps?.label).toBe('Cancelar');
+
+    confirmation.accept?.();
+
+    expect(memberKeyServiceMock.delete).toHaveBeenCalledOnceWith(3);
+    expect(updated).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledTimes(1);
+    expect(component.saving).toBeFalse();
+  });
+
+  it('should hide deletion and reject forced deletion without key delete permission', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.delete);
+    fixture.destroy();
+    fixture = TestBed.createComponent(MemberKeyInfo);
+    component = fixture.componentInstance;
+    fixture.componentRef.setInput('data', key);
+    fixture.detectChanges();
+    component.onDelete(new Event('click'));
+
+    expect(fixture.nativeElement.querySelector('[data-action="delete"]')).toBeNull();
+    expect(confirmationServiceMock.confirm).not.toHaveBeenCalled();
+    expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
+  });
+
+  it('should keep details open after a failed delete and allow retry', () => {
+    const updated = spyOn(component.updated, 'emit');
+    const close = spyOn(component.close, 'emit');
+    memberKeyServiceMock.delete.and.returnValue(throwError(() => new Error('Failed')));
+    component.onDelete(new Event('click'));
+    confirmationServiceMock.confirm.calls.mostRecent().args[0].accept?.();
+    fixture.detectChanges();
+
+    expect(component.saving).toBeFalse();
+    expect(fixture.nativeElement.textContent).toContain('No se pudo borrar la llave');
+    expect(updated).not.toHaveBeenCalled();
+    expect(close).not.toHaveBeenCalled();
+
+    memberKeyServiceMock.delete.and.returnValue(of(key));
+    component.onDelete(new Event('click'));
+    confirmationServiceMock.confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(updated).toHaveBeenCalledTimes(1);
+    expect(close).toHaveBeenCalledTimes(1);
+  });
+
+  it('should prevent duplicate deletion and closing during the request', () => {
+    const response = new Subject<Key>();
+    const close = spyOn(component.close, 'emit');
+    memberKeyServiceMock.delete.and.returnValue(response);
+    component.onDelete(new Event('click'));
+    const confirmation = confirmationServiceMock.confirm.calls.mostRecent().args[0];
+    confirmation.accept?.();
+    confirmation.accept?.();
+    component.onDelete(new Event('click'));
+    component.onDrawerVisibleChange(false);
+    component.onShowEdit();
+
+    expect(memberKeyServiceMock.delete).toHaveBeenCalledTimes(1);
+    expect(confirmationServiceMock.confirm).toHaveBeenCalledTimes(1);
+    expect(component.saving).toBeTrue();
+    expect(component.editing).toBeFalse();
+    expect(close).not.toHaveBeenCalled();
+
+    response.next(key);
+    response.complete();
+
+    expect(component.saving).toBeFalse();
+    expect(close).toHaveBeenCalledTimes(1);
+  });
+
+  it('should ignore a confirmation accepted after the drawer was destroyed', () => {
+    component.onDelete(new Event('click'));
+    const confirmation = confirmationServiceMock.confirm.calls.mostRecent().args[0];
+    fixture.destroy();
+    confirmation.accept?.();
+
+    expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
   });
 
   it('should create', () => {

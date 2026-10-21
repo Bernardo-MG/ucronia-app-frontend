@@ -27,6 +27,9 @@
         <shared-drawer-header title="Detalle de llave" icon="pi pi-key" subtitle="Socios / Llaves" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        @if (error) {
+          <p-message severity="error">{{ error }}</p-message>
+        }
         <div class="space-y-5">
           <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
             <div class="flex items-start gap-4 p-5">
@@ -61,8 +64,8 @@
         </div>
       </div>
       <ng-template #footer>
-        <shared-drawer-actions [showDelete]="false" [showEdit]="permissions.edit"
-          editLabel="Editar llave" (edit)="onShowEdit()" />
+        <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="saving"
+          editLabel="Editar llave" (delete)="onDelete($event)" (edit)="onShowEdit()" />
       </ng-template>
     }
   </p-drawer>

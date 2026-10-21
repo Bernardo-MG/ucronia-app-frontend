@@ -3,6 +3,7 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { KeyAssignment } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
 import { MemberKeyInfo } from '../member-key-info/member-key-info';
 import { By } from '@angular/platform-browser';
@@ -41,6 +42,7 @@ describe('MemberKeyList', () => {
       imports: [MemberKeyList],
       providers: [
         provideNoopAnimations(),
+        ConfirmationService,
         { provide: AuthService, useValue: authServiceMock },
         { provide: MemberKeyService, useValue: memberKeyServiceMock }
       ]

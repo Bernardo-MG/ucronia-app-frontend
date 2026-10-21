@@ -7,6 +7,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Key, KeyAssignment } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { DrawerModule } from 'primeng/drawer';
 import { MessageModule } from 'primeng/message';
 import { finalize } from 'rxjs';
@@ -22,9 +23,12 @@ export class MemberKeyInfo {
 
   private readonly service = inject(MemberKeyService);
 
+  private readonly confirmationService = inject(ConfirmationService);
+
   private readonly destroyRef = inject(DestroyRef);
 
   public readonly permissions = {
+    delete: inject(AuthService).hasPermission(UcroniaPermissions.key.delete),
     read: inject(AuthService).hasPermission(UcroniaPermissions.key.read),
     edit: inject(AuthService).hasPermission(UcroniaPermissions.key.update)
   };
@@ -60,6 +64,42 @@ export class MemberKeyInfo {
     if (!visible && !this.saving) {
       this.close.emit();
     }
+  }
+
+  public onDelete(event: Event): void {
+    if (!this.permissions.read || !this.permissions.delete || this.saving || this.editing) {
+      return;
+    }
+    const number = this.data().number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar? Esta acción no es reversible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
+      accept: () => {
+        if (this.destroyRef.destroyed || this.saving || this.editing || this.data().number !== number) {
+          return;
+        }
+        this.saving = true;
+        this.error = '';
+        this.service.delete(number)
+          .pipe(
+            finalize(() => (this.saving = false)),
+            takeUntilDestroyed(this.destroyRef)
+          )
+          .subscribe({
+            next: () => {
+              this.failures.clear();
+              this.updated.emit();
+              this.close.emit();
+            },
+            error: () => {
+              this.error = 'No se pudo borrar la llave. Inténtalo de nuevo.';
+            }
+          });
+      }
+    });
   }
 
   public onUpdate(data: Key): void {

@@ -4,7 +4,7 @@ import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { KeyCreation, KeyUpdate, UcroniaClient } from '@ucronia/api';
 import { Key, KeyAssignment } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class MemberKeyService {
@@ -56,6 +56,29 @@ export class MemberKeyService {
             detail: 'Llave actualizada',
             life: 3000
           });
+        })
+      );
+  }
+
+  public delete(number: number): Observable<Key> {
+    return this.ucroniaClient.key.delete(number)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Borrado',
+            detail: 'Llave borrada',
+            life: 3000
+          });
+        }),
+        catchError(error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'No se pudo borrar la llave',
+            life: 5000
+          });
+          return throwError(() => error);
         })
       );
   }

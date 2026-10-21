@@ -9,7 +9,7 @@ import { MemberKeyService } from './member-key-service';
 describe('MemberKeyService', () => {
   let service: MemberKeyService;
 
-  const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['assignments', 'page', 'create', 'update']);
+  const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['assignments', 'page', 'create', 'update', 'delete']);
 
   const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
 
@@ -17,6 +17,7 @@ describe('MemberKeyService', () => {
     messageServiceMock.add.calls.reset();
     keyEndpointMock.create.calls.reset();
     keyEndpointMock.update.calls.reset();
+    keyEndpointMock.delete.calls.reset();
     keyEndpointMock.page.calls.reset();
     keyEndpointMock.assignments.calls.reset();
     keyEndpointMock.assignments.and.returnValue(
@@ -56,6 +57,33 @@ describe('MemberKeyService', () => {
 
     expect(result).toBe(failure);
     expect(messageServiceMock.add).not.toHaveBeenCalled();
+  });
+
+  it('should delete by key number and show the success message', () => {
+    const key = Object.assign(new Key(), { number: 7 });
+    keyEndpointMock.delete.and.returnValue(of(key));
+    let result: Key | undefined;
+
+    service.delete(7).subscribe(data => (result = data));
+
+    expect(keyEndpointMock.delete).toHaveBeenCalledOnceWith(7);
+    expect(result).toBe(key);
+    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+      severity: 'info', summary: 'Borrado', detail: 'Llave borrada', life: 3000
+    });
+  });
+
+  it('should propagate deletion failures and show the error message', () => {
+    const failure = new Error('Delete failed');
+    keyEndpointMock.delete.and.returnValue(throwError(() => failure));
+    let result: unknown;
+
+    service.delete(7).subscribe({ error: error => (result = error) });
+
+    expect(result).toBe(failure);
+    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+      severity: 'error', summary: 'Error', detail: 'No se pudo borrar la llave', life: 5000
+    });
   });
 
   it('should be created', () => {
