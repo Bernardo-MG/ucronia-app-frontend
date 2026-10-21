@@ -1,0 +1,271 @@
+<div class="mx-auto max-w-screen-2xl space-y-5 p-4 md:p-6">
+  <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h1 class="text-3xl font-bold tracking-tight text-gray-950">Socios</h1>
+      <p class="mt-1 text-sm text-gray-500">Consulta los socios y la asignación de llaves de la asociación</p>
+    </div>
+    @if (selectedTab === 'members' && permissions.create) {
+      <p-button type="button" label="Nuevo socio" icon="pi pi-plus" (onClick)="onCreateOpen()" />
+    }
+    @if (selectedTab === 'keys' && permissions.keysRead && permissions.keysCreate) {
+      <p-button type="button" label="Nueva llave" icon="pi pi-plus" (onClick)="onCreateKeyOpen()" />
+    }
+  </header>
+
+  <p-tabs [value]="selectedTab" (valueChange)="onTabChange($event)">
+    <p-tablist>
+      <p-tab value="members"><i class="pi pi-users mr-2" aria-hidden="true"></i>Socios</p-tab>
+      @if (permissions.keysRead) {
+        <p-tab value="keys"><i class="pi pi-key mr-2" aria-hidden="true"></i>Llaves</p-tab>
+      }
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="members">
+        <div class="space-y-5">
+          <p-card styleClass="overflow-hidden">
+            <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-green-50 text-green-600">
+                  <i class="pi pi-users text-xl"></i>
+                </span>
+                <div>
+                  <strong class="block text-2xl leading-none">{{ active }}</strong>
+                  <span class="text-sm text-gray-500">socios activos</span>
+                </div>
+              </div>
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-12 shrink-0 items-center justify-center rounded-full bg-amber-50 text-amber-600">
+                  <i class="pi pi-exclamation-triangle text-xl"></i>
+                </span>
+                <div>
+                  <strong class="block text-2xl leading-none">{{ notRenewing }}</strong>
+                  <span class="text-sm text-gray-500">no renuevan</span>
+                </div>
+              </div>
+            </div>
+          </p-card>
+
+          <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+            <div class="border-b border-gray-200 p-4">
+              <p-iconfield class="block w-full">
+                <p-inputicon class="pi pi-search" />
+                <input
+                  pInputText
+                  type="search"
+                  [(ngModel)]="filterValue"
+                  (ngModelChange)="onFilterChange($event)"
+                  placeholder="Buscar por nombre…"
+                  aria-label="Buscar socios por nombre"
+                  class="w-full"
+                  maxlength="50" />
+              </p-iconfield>
+              <p class="mt-3 text-sm text-gray-500">{{ data.totalElements }} socios</p>
+            </div>
+
+            <assoc-public-member-list
+              [loading]="status.loading"
+              [members]="data.content"
+              [rows]="data.size"
+              [page]="data.page"
+              [totalRecords]="data.totalElements"
+              (changeDirection)="onChangeDirection($event)"
+              (changePage)="load($event)"
+              [canRead]="permissions.read"
+              (show)="onShowMember($event)" />
+          </section>
+        </div>
+      </p-tabpanel>
+      @if (permissions.keysRead) {
+        <p-tabpanel value="keys">
+          @if (selectedTab === 'keys') {
+            <assoc-member-key-list
+              [data]="keyAssignments"
+              [loading]="status.loadingKeys"
+              [error]="status.keysError"
+              (retry)="loadKeys()"
+              (show)="onShowKey($event)" />
+          }
+        </p-tabpanel>
+      }
+    </p-tabpanels>
+  </p-tabs>
+</div>
+
+<p-drawer
+  [visible]="dialog !== Dialog.NONE"
+  (visibleChange)="onDrawerVisibleChange($event)"
+  [closable]="!status.saving"
+  [dismissible]="!status.saving"
+  [closeOnEscape]="!status.saving"
+  position="right"
+  [style]="{ width: 'min(44rem, 100vw)' }">
+  @switch (dialog) {
+    @case (Dialog.CREATE) {
+      <ng-template #header><shared-drawer-header title="Crear socio" icon="pi pi-users" /></ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        @if (error) {
+          <p-message severity="error">{{ error }}</p-message>
+        }
+        @if (status.loadingOptions) {
+          <p role="status">Cargando opciones…</p>
+        }
+        <assoc-member-creation-form
+          #fieldsMemberCreationForm
+          formId="public-member-view-create"
+          [showActions]="false"
+          [loading]="status.saving || status.loadingOptions || !status.optionsReady"
+          [failures]="failures"
+          [feeTypes]="feeTypes"
+          [contactMethods]="contactMethods"
+          [keys]="keys"
+          (save)="onCreate($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="public-member-view-create"
+          submitLabel="Crear socio"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsMemberCreationForm.saveEnabled || !status.optionsReady"
+          [loading]="status.saving || status.loadingOptions"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+    @case (Dialog.KEY_CREATE) {
+      <ng-template #header>
+        <shared-drawer-header title="Crear llave" icon="pi pi-key" />
+      </ng-template>
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+        @if (error) {
+          <p-message severity="error">{{ error }}</p-message>
+        }
+        <assoc-member-key-form
+          #fieldsAssocKeyForm
+          formId="public-member-view-create-key"
+          [showActions]="false"
+          [loading]="status.saving"
+          [failures]="failures"
+          (save)="onCreateKey($event)" />
+      </div>
+      <ng-template #footer>
+        <shared-drawer-form-actions
+          formId="public-member-view-create-key"
+          submitLabel="Crear llave"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocKeyForm.saveEnabled"
+          [loading]="fieldsAssocKeyForm.formStatus.loading"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      </ng-template>
+    }
+    @case (Dialog.KEY_INFO) {
+      @if (selectedKey) {
+        <ng-template #header>
+          <shared-drawer-header title="Detalle de llave" icon="pi pi-key" subtitle="Socios / Llaves" />
+        </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          @if (error) {
+            <p-message severity="error">{{ error }}</p-message>
+          }
+          <assoc-member-key-info [data]="selectedKey" />
+        </div>
+        <ng-template #footer>
+          <shared-drawer-actions
+            [showDelete]="permissions.keysDelete"
+            [showEdit]="permissions.keysEdit"
+            [loading]="status.saving"
+            editLabel="Editar llave"
+            (delete)="onDeleteKey($event)"
+            (edit)="onShowKeyEdit()" />
+        </ng-template>
+      }
+    }
+    @case (Dialog.KEY_EDIT) {
+      @if (selectedKey) {
+        <ng-template #header>
+          <shared-drawer-header title="Editar llave" icon="pi pi-pencil" />
+        </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          @if (error) {
+            <p-message severity="error">{{ error }}</p-message>
+          }
+          <assoc-member-key-form
+            #fieldsKeyEditForm
+            formId="public-member-view-edit-key"
+            [showActions]="false"
+            [loading]="status.saving"
+            [data]="selectedKey"
+            [failures]="failures"
+            (save)="onUpdateKey($event)" />
+        </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="public-member-view-edit-key"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsKeyEditForm.saveEnabled"
+            [loading]="status.saving"
+            (cancelForm)="onCancelKeyEdit()" />
+        </ng-template>
+      }
+    }
+    @case (Dialog.INFO) {
+      <ng-template #header>
+        <shared-drawer-header title="Información del socio" icon="pi pi-user" />
+      </ng-template>
+      <assoc-member-info
+        [publicData]="selectedData"
+        [data]="privateMember"
+        [showPrivate]="permissions.readPrivate"
+        [loading]="status.loadingMember"
+        [error]="status.memberPrivateError"
+        (retry)="loadPrivateMember()" />
+      <ng-template #footer>
+        <shared-drawer-actions
+          [showDelete]="false"
+          [showEdit]="permissions.edit"
+          editLabel="Editar socio"
+          [editDisabled]="status.loadingMember || !permissions.readPrivate || !privateMember"
+          (edit)="onShowMemberEdit()" />
+        @if (permissions.edit && !permissions.readPrivate) {
+          <p class="mt-2 text-sm text-gray-500">
+            Necesitas permiso de lectura de perfiles de socios para cargar el formulario completo.
+          </p>
+        }
+      </ng-template>
+    }
+    @case (Dialog.EDIT) {
+      @if (privateMember) {
+        <ng-template #header>
+          <shared-drawer-header title="Editar socio" icon="pi pi-pencil" />
+        </ng-template>
+        <div class="w-full min-w-0 px-2 py-4 sm:px-4">
+          @if (error) {
+            <p-message severity="error">{{ error }}</p-message>
+          }
+          @if (status.loadingOptions) {
+            <p role="status">Cargando opciones…</p>
+          }
+          <assoc-member-edition-form
+            #fieldsMemberEditionForm
+            formId="public-member-view-edit-member"
+            [showActions]="false"
+            [data]="privateMember"
+            [feeTypes]="feeTypes"
+            [contactMethods]="contactMethods"
+            [keys]="keys"
+            [failures]="failures"
+            [loading]="status.saving || status.loadingOptions || !status.optionsReady"
+            (save)="onUpdateMember($event)" />
+        </div>
+        <ng-template #footer>
+          <shared-drawer-form-actions
+            formId="public-member-view-edit-member"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsMemberEditionForm.saveEnabled || !status.optionsReady"
+            [loading]="status.saving || status.loadingOptions"
+            (cancelForm)="onCancelMemberEdit()" />
+        </ng-template>
+      }
+    }
+  }
+</p-drawer>

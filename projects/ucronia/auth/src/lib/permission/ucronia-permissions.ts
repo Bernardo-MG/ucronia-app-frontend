@@ -99,6 +99,12 @@ export const UcroniaPermissions = {
       delete: { resource: 'PROFILE', action: 'DELETE' }
     }
   },
+  key: {
+    read: { resource: 'KEY', action: 'READ' },
+    create: { resource: 'KEY', action: 'CREATE' },
+    update: { resource: 'KEY', action: 'UPDATE' },
+    delete: { resource: 'KEY', action: 'DELETE' }
+  },
   myFees: {
     read: { resource: 'MY_FEES', action: 'READ' },
     create: { resource: 'MY_FEES', action: 'CREATE' },

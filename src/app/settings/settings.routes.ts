@@ -36,11 +36,6 @@ export const settingsRoutes: Routes = [
         loadComponent: () => import('./game-table-view/game-table-view').then(m => m.GameTableView)
       },
       {
-        path: 'keys',
-        canActivate: [ResourceGuard(UcroniaPermissions.directory.memberProfile.read)],
-        loadComponent: () => import('./key-view/key-view').then(m => m.KeyView)
-      },
-      {
         path: 'contact-methods',
         canActivate: [ResourceGuard(UcroniaPermissions.directory.contactMethod.read)],
         loadComponent: () => import('./contact-method-view/contact-method-view').then(m => m.ContactMethodView)

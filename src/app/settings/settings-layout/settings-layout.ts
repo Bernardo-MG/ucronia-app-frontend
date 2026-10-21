@@ -67,15 +67,6 @@ export class SettingsLayout {
       });
     }
 
-    if (authService.hasPermission(UcroniaPermissions.directory.memberProfile.read)
-    ) {
-      catalogItems.push({
-        label: 'Llaves',
-        icon: 'pi pi-key',
-        routerLink: 'keys'
-      });
-    }
-
     if (authService.hasPermission(UcroniaPermissions.directory.contactMethod.read)
     ) {
       catalogItems.push({
