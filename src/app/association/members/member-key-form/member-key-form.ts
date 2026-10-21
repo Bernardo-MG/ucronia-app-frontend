@@ -10,12 +10,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-member-key-form',
-  imports: [DrawerFormActions,
-    ReactiveFormsModule,
-    InputTextModule,
-    ToggleSwitchModule,
-    MessageModule
-  ],
+  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, ToggleSwitchModule, MessageModule],
   templateUrl: './member-key-form.html'
 })
 export class MemberKeyForm {

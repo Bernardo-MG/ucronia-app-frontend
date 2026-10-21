@@ -23,8 +23,8 @@ import { TabsModule } from 'primeng/tabs';
 import { debounceTime, distinctUntilChanged, finalize, forkJoin, of, Subject, switchMap } from 'rxjs';
 import { MemberCreationForm } from '../../members/member-creation-form/member-creation-form';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
-import { MemberKeyService } from '../member-key-service';
 import { MemberKeyList } from '../member-key-list/member-key-list';
+import { MemberKeyService } from '../member-key-service';
 import { PublicMemberList } from '../public-member-list/public-member-list';
 import { PublicMemberService } from '../public-member-service';
 

@@ -2,7 +2,6 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, OnDestroy, output, signal, viewChild } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
-import { MemberKeyService } from '../member-key-service';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -19,6 +18,7 @@ import { Drawer, DrawerModule } from 'primeng/drawer';
 import { MessageModule } from 'primeng/message';
 import { forkJoin, Subscription } from 'rxjs';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
+import { MemberKeyService } from '../member-key-service';
 
 @Component({
   selector: 'assoc-member-info',
