@@ -7,7 +7,7 @@
     @if (selectedTab === 'members' && permissions.create) {
       <p-button type="button" label="Nuevo socio" icon="pi pi-plus" (onClick)="onCreateOpen()" />
     }
-    @if (selectedTab === 'keys' && permissions.keysRead && permissions.keysCreate) {
+    @if (selectedTab === 'keys' && permissions.keyAssignmentsRead && permissions.keysCreate) {
       <p-button type="button" label="Nueva llave" icon="pi pi-plus" (onClick)="onCreateKeyOpen()" />
     }
   </header>
@@ -15,7 +15,7 @@
   <p-tabs [value]="selectedTab" (valueChange)="onTabChange($event)">
     <p-tablist>
       <p-tab value="members"><i class="pi pi-users mr-2" aria-hidden="true"></i>Socios</p-tab>
-      @if (permissions.keysRead) {
+      @if (permissions.keyAssignmentsRead) {
         <p-tab value="keys"><i class="pi pi-key mr-2" aria-hidden="true"></i>Llaves</p-tab>
       }
     </p-tablist>
@@ -75,7 +75,7 @@
           </section>
         </div>
       </p-tabpanel>
-      @if (permissions.keysRead) {
+      @if (permissions.keyAssignmentsRead) {
         <p-tabpanel value="keys">
           @if (selectedTab === 'keys') {
             <assoc-member-key-list
@@ -117,7 +117,6 @@
           [failures]="failures"
           [feeTypes]="feeTypes"
           [contactMethods]="contactMethods"
-          [keys]="keys"
           (save)="onCreate($event)" />
       </div>
       <ng-template #footer>

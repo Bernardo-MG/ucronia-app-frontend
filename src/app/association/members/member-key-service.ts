@@ -13,15 +13,6 @@ export class MemberKeyService {
 
   private readonly messageService = inject(MessageService);
 
-  public getAllAvailable(): Observable<Key[]> {
-    const sorting = new Sorting([
-      new SortingProperty('number'),
-      new SortingProperty('description')
-    ]);
-
-    return getAllPages((page, size) => this.ucroniaClient.key.page(page, size, sorting));
-  }
-
   public create(data: Key): Observable<Key> {
     const create: KeyCreation = {
       available: data.available,
@@ -85,7 +76,7 @@ export class MemberKeyService {
 
   public getAll(): Observable<KeyAssignment[]> {
     const sorting = new Sorting([new SortingProperty('number')]);
-    return getAllPages((page, size) => this.ucroniaClient.key.assignments(page, size, sorting));
+    return getAllPages((page, size) => this.ucroniaClient.keyAssignment.page(page, size, sorting));
   }
 
 }

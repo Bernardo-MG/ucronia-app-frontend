@@ -63,7 +63,6 @@ export class PublicMemberView implements OnInit, OnDestroy {
   public privateMember: Member | null = null;
   public feeTypes: FeeType[] = [];
   public contactMethods: ContactMethod[] = [];
-  public keys: Key[] = [];
   public data = new Page<PublicMember>();
   public selectedData = new PublicMember();
   private memberCount = new MemberCount();
@@ -102,7 +101,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
       create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
       edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
       delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete),
-      keysRead: authService.hasPermission(UcroniaPermissions.key.read),
+      keyAssignmentsRead: authService.hasPermission(UcroniaPermissions.keyAssignment.read),
       keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
       keysDelete: authService.hasPermission(UcroniaPermissions.key.delete)
@@ -122,7 +121,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   }
 
   public onTabChange(value: string | number | undefined): void {
-    if (value === 'keys' && !this.permissions.keysRead) {
+    if (value === 'keys' && !this.permissions.keyAssignmentsRead) {
       return;
     }
     this.selectedTab = value === 'keys' ? 'keys' : 'members';
@@ -133,7 +132,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public onCreateKeyOpen(): void {
     if (
-      !this.permissions.keysRead ||
+      !this.permissions.keyAssignmentsRead ||
       !this.permissions.keysCreate ||
       this.selectedTab !== 'keys' ||
       this.dialog !== Dialog.NONE
@@ -147,7 +146,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public onCreateKey(data: Key): void {
     if (
-      !this.permissions.keysRead ||
+      !this.permissions.keyAssignmentsRead ||
       !this.permissions.keysCreate ||
       this.dialog !== Dialog.KEY_CREATE ||
       this.status.saving
@@ -162,7 +161,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   }
 
   public loadKeys(): void {
-    if (!this.permissions.keysRead) {
+    if (!this.permissions.keyAssignmentsRead) {
       return;
     }
     if (this.status.loadingKeys) {
@@ -195,7 +194,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   }
 
   public onShowKey(data: KeyAssignment): void {
-    if (!this.permissions.keysRead || this.status.saving) {
+    if (!this.permissions.keyAssignmentsRead || this.status.saving) {
       return;
     }
     this.selectedKey = data;
@@ -205,7 +204,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   }
 
   public onShowKeyEdit(): void {
-    if (!this.permissions.keysRead || !this.permissions.keysEdit || !this.selectedKey || this.status.saving) {
+    if (!this.permissions.keyAssignmentsRead || !this.permissions.keysEdit || !this.selectedKey || this.status.saving) {
       return;
     }
     this.failures.clear();
@@ -223,7 +222,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public onUpdateKey(data: Key): void {
     if (
-      !this.permissions.keysRead ||
+      !this.permissions.keyAssignmentsRead ||
       !this.permissions.keysEdit ||
       !this.selectedKey ||
       this.dialog !== Dialog.KEY_EDIT ||
@@ -241,7 +240,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public onDeleteKey(event: Event): void {
     if (
-      !this.permissions.keysRead ||
+      !this.permissions.keyAssignmentsRead ||
       !this.permissions.keysDelete ||
       !this.selectedKey ||
       this.dialog !== Dialog.KEY_INFO ||
@@ -437,8 +436,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
     this.status.loadingOptions = true;
     this.memberOptionsRequest = forkJoin({
       feeTypes: this.feeTypeService.getAllAvailable(),
-      contactMethods: this.contactMethodService.getAllAvailable(),
-      keys: this.keyService.getAllAvailable()
+      contactMethods: this.contactMethodService.getAllAvailable()
     })
       .pipe(
         takeUntilDestroyed(this.destroyRef),
@@ -448,7 +446,6 @@ export class PublicMemberView implements OnInit, OnDestroy {
         next: options => {
           this.feeTypes = options.feeTypes;
           this.contactMethods = options.contactMethods;
-          this.keys = options.keys;
           this.status.optionsReady = true;
         },
         error: () => (this.error = 'No se pudieron cargar las opciones del formulario. Cierra y vuelve a intentarlo.')
@@ -576,7 +573,7 @@ interface Permissions {
   create: boolean;
   edit: boolean;
   delete: boolean;
-  keysRead: boolean;
+  keyAssignmentsRead: boolean;
   keysCreate: boolean;
   keysEdit: boolean;
   keysDelete: boolean;

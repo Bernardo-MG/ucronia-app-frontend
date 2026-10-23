@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { Key, KeyAssignment } from '@ucronia/domain';
+import { Key } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { KeyCreation } from '../../members/key-creation';
 import { KeyUpdate } from '../../members/key-update';
@@ -31,26 +31,6 @@ export class KeyEndpoint {
     );
     return this.http
       .get<PaginatedResponse<Key>>(`${this.apiUrl}/profile/key`, { params })
-      .pipe(catchError(this.errorInterceptor.handle));
-  }
-
-  public assignments(
-    page: number | undefined = undefined,
-    size: number | undefined = undefined,
-    sort: Sorting | undefined = undefined
-  ): Observable<Page<KeyAssignment>> {
-    let params = new HttpParams();
-    if (page) {
-      params = params.set('page', page);
-    }
-    if (size) {
-      params = params.set('size', size);
-    }
-    sort?.properties.forEach(property => {
-      params = params.append('sort', `${String(property.property)}|${property.direction}`);
-    });
-    return this.http
-      .get<PaginatedResponse<KeyAssignment>>(`${this.apiUrl}/profile/key/assignments`, { params })
       .pipe(catchError(this.errorInterceptor.handle));
   }
 

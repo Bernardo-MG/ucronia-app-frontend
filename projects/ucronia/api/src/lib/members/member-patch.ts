@@ -4,7 +4,6 @@ import { ProfilePatchChannel } from "../profile/profile-patch";
 export class MemberPatch {
   public identifier?: string;
   public feeType = 0;
-  public key?: number;
   public name?: MemberName;
   public birthDate?: Date;
   public contactChannels?: ProfilePatchChannel[] = [];

@@ -20,7 +20,7 @@ describe('MemberKeyList', () => {
         number: 1,
         available: false,
         description: 'Principal',
-        member: { number: 10, memberNumber: 37, name: 'Ana García' }
+        profile: { number: 10, name: 'Ana García' }
       },
       { number: 2, available: true, description: 'Lateral' }
     ];
@@ -36,9 +36,9 @@ describe('MemberKeyList', () => {
     const content = fixture.nativeElement.textContent;
 
     expect(content).toContain('Ana García');
-    expect(content).toContain('Socio #37');
+    expect(content).toContain('Perfil #10');
     expect(content).toContain('No disponible');
-    expect(content).toContain('Sin socio asignado');
+    expect(content).toContain('Sin perfil asignado');
     expect(component.assigned).toBe(1);
     expect(component.unassigned).toBe(1);
   });
@@ -54,7 +54,7 @@ describe('MemberKeyList', () => {
   });
 
   it('should retain local search and assignment filters', () => {
-    component.query = '#37';
+    component.query = '#10';
 
     expect(component.filtered.map(key => key.number)).toEqual([1]);
 
@@ -82,4 +82,28 @@ describe('MemberKeyList', () => {
 
     expect(component.first).toBe(0);
   });
+
+  it('should treat an explicit null profile as unassigned', () => {
+    fixture.componentRef.setInput('data', [{ number: 3, available: false, description: 'Lateral', profile: null }]);
+    fixture.detectChanges();
+
+    expect(component.assigned).toBe(0);
+    expect(component.unassigned).toBe(1);
+    expect(fixture.nativeElement.textContent).toContain('Sin perfil asignado');
+  });
+
+  it('should retain two keys assigned to the same profile', () => {
+    const profile = { number: 10, name: 'Ana García' };
+    fixture.componentRef.setInput('data', [
+      { number: 1, available: true, description: 'Principal', profile },
+      { number: 2, available: true, description: 'Lateral', profile }
+    ]);
+    fixture.detectChanges();
+
+    component.query = '#10';
+
+    expect(component.assigned).toBe(2);
+    expect(component.filtered.map(key => key.number)).toEqual([1, 2]);
+  });
+
 });

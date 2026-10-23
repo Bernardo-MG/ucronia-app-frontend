@@ -17,9 +17,9 @@ describe('KeyEndpoint', () => {
 
   afterEach(() => http.verify());
 
-  it('should request a page of key assignments', () => {
-    endpoint.assignments(2, 100).subscribe();
-    const request = http.expectOne('/api/profile/key/assignments?page=2&size=100');
+  it('should request a page of keys', () => {
+    endpoint.page(2, 100).subscribe();
+    const request = http.expectOne('/api/profile/key?page=2&size=100');
 
     expect(request.request.method).toBe('GET');
 

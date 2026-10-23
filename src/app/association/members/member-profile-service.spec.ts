@@ -114,7 +114,6 @@ describe('MemberProfileService', () => {
       address: '',
       comments: '',
       contactChannels: [],
-      key: undefined,
       active: false,
       renew: false
     };

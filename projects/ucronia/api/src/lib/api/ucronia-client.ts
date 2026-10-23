@@ -8,6 +8,7 @@ import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
 import { GameTableEndpoint } from './endpoint/game-table-endpoint';
 import { GuestEndpoint } from './endpoint/guest-endpoint';
+import { KeyAssignmentEndpoint } from './endpoint/key-assignment-endpoint';
 import { KeyEndpoint } from './endpoint/key-endpoint';
 import { LibraryEndpoint } from './endpoint/library-endpoint';
 import { MemberEndpoint } from './endpoint/member-endpoint';
@@ -49,6 +50,10 @@ export class UcroniaClient {
 
   public get memberProfile() {
     return new MemberEndpoint(this.http, this.base_url);
+  }
+
+  public get keyAssignment() {
+    return new KeyAssignmentEndpoint(this.http, this.base_url);
   }
 
   public get key() {

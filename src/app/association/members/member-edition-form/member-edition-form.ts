@@ -35,11 +35,7 @@ export class MemberEditionForm {
 
   public readonly today = new Date();
 
-  // Full PUT updates must retain the key while assignment is managed separately.
-  private assignedKey: number | undefined;
-
   @Input() public set data(member: Member) {
-    this.assignedKey = member.key ?? undefined;
     this.form.reset({
       feeType: member.feeType.number,
       identifier: member.identifier ?? '',
@@ -128,7 +124,6 @@ export class MemberEditionForm {
       address: value.address ?? '',
       comments: value.comments ?? '',
       contactChannels: this.contactChannels.getRawValue(),
-      key: this.assignedKey,
       active: value.active ?? false,
       renew: value.renew ?? false
     };

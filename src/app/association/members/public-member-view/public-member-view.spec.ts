@@ -31,7 +31,6 @@ describe('PublicMemberView', () => {
   ]);
   const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', [
     'getAll',
-    'getAllAvailable',
     'create',
     'update',
     'delete'
@@ -57,12 +56,10 @@ describe('PublicMemberView', () => {
     memberProfileServiceMock.create.and.returnValue(of(new Member()));
     feeTypeServiceMock.getAllAvailable.calls.reset();
     contactMethodServiceMock.getAllAvailable.calls.reset();
-    memberKeyServiceMock.getAllAvailable.calls.reset();
     memberKeyServiceMock.create.calls.reset();
     memberKeyServiceMock.create.and.returnValue(of(new Key()));
     feeTypeServiceMock.getAllAvailable.and.returnValue(of([]));
     contactMethodServiceMock.getAllAvailable.and.returnValue(of([]));
-    memberKeyServiceMock.getAllAvailable.and.returnValue(of([]));
     memberKeyServiceMock.getAll.calls.reset();
     memberKeyServiceMock.getAll.and.returnValue(of([]));
     memberServiceMock.getAll.and.returnValue(of(new Page<PublicMember>()));
@@ -143,7 +140,6 @@ describe('PublicMemberView', () => {
 
     expect(feeTypeServiceMock.getAllAvailable).not.toHaveBeenCalled();
     expect(contactMethodServiceMock.getAllAvailable).not.toHaveBeenCalled();
-    expect(memberKeyServiceMock.getAllAvailable).not.toHaveBeenCalled();
     expect(memberProfileServiceMock.create).not.toHaveBeenCalled();
 
     publicFixture.destroy();
@@ -196,8 +192,8 @@ describe('PublicMemberView', () => {
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
   });
 
-  it('should hide the keys tab and reject forced selection without key read permission', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.read);
+  it('should hide the keys tab and reject forced selection without key assignment read permission', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.keyAssignment.read);
     const restrictedFixture = TestBed.createComponent(PublicMemberView);
 
     restrictedFixture.detectChanges();
@@ -381,7 +377,6 @@ describe('PublicMemberView', () => {
     const member = Object.assign(new Member(), {
       number: 12,
       memberNumber: 37,
-      key: 7,
       feeType: { number: 3, name: 'Assigned fee', amount: 5 },
       contactChannels: [{ method: { number: 8, name: 'Email' }, detail: 'ana@example.org' }]
     });
@@ -394,7 +389,6 @@ describe('PublicMemberView', () => {
       feeType: 3,
       address: '',
       comments: '',
-      key: 7,
       contactChannels: [],
       active: false,
       renew: false
@@ -402,7 +396,6 @@ describe('PublicMemberView', () => {
 
     expect(component.status.optionsReady).toBeTrue();
     expect(component.feeTypes.map(fee => fee.number)).toContain(3);
-    expect(memberKeyServiceMock.getAllAvailable).not.toHaveBeenCalled();
     expect(component.contactMethods.map(method => method.number)).toContain(8);
 
     component.onUpdateMember(change);
@@ -749,17 +742,39 @@ describe('PublicMemberView', () => {
     expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
   });
 
-  it('should allow member editing even when key options cannot be loaded', () => {
-    memberKeyServiceMock.getAllAvailable.and.returnValue(throwError(() => new Error('Key access denied')));
-    component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
-    component.onShowMemberEdit();
+  it('should allow member editing without key permissions', () => {
+    authServiceMock.hasPermission.and.callFake(
+      permission => permission !== UcroniaPermissions.key.read && permission !== UcroniaPermissions.keyAssignment.read
+    );
+    const restrictedFixture = TestBed.createComponent(PublicMemberView);
+    const restricted = restrictedFixture.componentInstance;
+    restrictedFixture.detectChanges();
 
-    expect(component.dialog).toBe(Dialog.EDIT);
-    expect(component.status.optionsReady).toBeTrue();
-    expect(memberKeyServiceMock.getAllAvailable).not.toHaveBeenCalled();
+    restricted.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    restricted.onShowMemberEdit();
+
+    expect(restricted.dialog).toBe(Dialog.EDIT);
+    expect(restricted.status.optionsReady).toBeTrue();
+    expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
+
+    restrictedFixture.destroy();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should load assignments with assignment read permission even without key read permission', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.read);
+    const authorizedFixture = TestBed.createComponent(PublicMemberView);
+
+    authorizedFixture.detectChanges();
+    authorizedFixture.componentInstance.onTabChange('keys');
+    authorizedFixture.detectChanges();
+
+    expect(authorizedFixture.nativeElement.querySelector('p-tab[value="keys"]')).not.toBeNull();
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
+
+    authorizedFixture.destroy();
   });
 });

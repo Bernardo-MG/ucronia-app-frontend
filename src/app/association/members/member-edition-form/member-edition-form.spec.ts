@@ -19,7 +19,6 @@ describe('MemberEditionForm', () => {
       address: 'Calle Mayor',
       comments: 'Prefiere correo',
       feeType: { number: 3, name: 'General', amount: 25 },
-      key: 7,
       name: { firstName: 'Ana', lastName: 'López', nickname: '', fullName: 'Ana López' },
       contactChannels: [{ method: { number: 4, name: 'Email' }, detail: 'ana@example.org' }]
     });
@@ -62,7 +61,7 @@ describe('MemberEditionForm', () => {
     expect(component.form.valid).toBeTrue();
   });
 
-  it('clears optional profile values while preserving the assigned key in the full update', () => {
+  it('clears optional profile values in the full update', () => {
     const saved = spyOn(component.save, 'emit');
 
     editForm(component.form, {
@@ -80,7 +79,6 @@ describe('MemberEditionForm', () => {
       identifier: '',
       address: '',
       comments: '',
-      key: 7,
       birthDate: undefined,
       contactChannels: [],
       active: false,
@@ -94,17 +92,18 @@ describe('MemberEditionForm', () => {
     component.onSave();
 
     expect(component.form.contains('key')).toBeFalse();
-    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ key: 7, address: 'Nueva dirección' }));
+    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ address: 'Nueva dirección' }));
+    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
   });
 
-  it('keeps an unassigned member unassigned when editing other fields', () => {
+  it('does not include legacy key data in the member update', () => {
     const saved = spyOn(component.save, 'emit');
-    fixture.componentRef.setInput('data', { ...member, key: undefined });
+    fixture.componentRef.setInput('data', { ...member, key: 7 });
     fixture.detectChanges();
 
     editForm(component.form, { address: 'Nueva dirección' });
     component.onSave();
 
-    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ key: undefined }));
+    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
   });
 });

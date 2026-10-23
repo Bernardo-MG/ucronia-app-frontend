@@ -25,6 +25,8 @@ export * from './lib/members/member-creation';
 export * from './lib/members/member-patch';
 export * from './lib/members/member-update';
 export * from './lib/members/member-summary';
+export * from './lib/members/key-assignment-creation';
+export * from './lib/members/key-assignment-update';
 export * from './lib/members/key-creation';
 export * from './lib/members/key-update';
 export * from './lib/members/profile-membership-conversion';
