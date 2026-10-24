@@ -1,0 +1,35 @@
+<form [attr.id]="formId()" [formGroup]="form" (ngSubmit)="onSave()" novalidate class="w-full min-w-0 space-y-5">
+  <section class="space-y-5 rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div class="flex flex-col gap-2">
+      <label for="assignmentMemberInput" class="block font-medium text-gray-950">
+        Socio <span class="text-red-600" aria-hidden="true">*</span>
+      </label>
+      <p-select
+        inputId="assignmentMemberInput"
+        [options]="options"
+        optionLabel="label"
+        optionValue="number"
+        formControlName="profile"
+        [filter]="true"
+        filterBy="label"
+        [showClear]="true"
+        [invalid]="isFieldInvalid('profile')"
+        placeholder="Selecciona un socio"
+        emptyMessage="No hay socios disponibles"
+        emptyFilterMessage="No se encontraron socios"
+        appendTo="body"
+        class="w-full" />
+      @for (failure of failures().getFailures('profile'); track failure) {
+        <p-message severity="error" size="small" variant="simple">{{ failure.message }}</p-message>
+      }
+    </div>
+  </section>
+  @if (showActions()) {
+    <shared-drawer-form-actions
+      submitLabel="Asignar llave"
+      submitIcon="pi pi-check"
+      [disabled]="!saveEnabled"
+      [loading]="formStatus.loading"
+      (cancelForm)="cancelEdition.emit()" />
+  }
+</form>

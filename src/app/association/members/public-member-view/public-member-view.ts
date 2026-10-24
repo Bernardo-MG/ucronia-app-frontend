@@ -25,6 +25,7 @@ import { debounceTime, distinctUntilChanged, finalize, forkJoin, Observable, of,
 import { MemberCreationForm } from '../../members/member-creation-form/member-creation-form';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberInfo } from '../member-info/member-info';
+import { MemberKeyAssignmentForm } from '../member-key-assignment-form/member-key-assignment-form';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
 import { MemberKeyInfo } from '../member-key-info/member-key-info';
 import { MemberKeyList } from '../member-key-list/member-key-list';
@@ -36,7 +37,7 @@ import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [MemberInfo, MemberEditionForm, MemberKeyInfo, DrawerActions, MemberKeyForm, TabsModule, MemberKeyList, DrawerHeader, DrawerFormActions, DrawerModule, ButtonModule, MessageModule, MemberCreationForm, FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
+  imports: [MemberKeyAssignmentForm, MemberInfo, MemberEditionForm, MemberKeyInfo, DrawerActions, MemberKeyForm, TabsModule, MemberKeyList, DrawerHeader, DrawerFormActions, DrawerModule, ButtonModule, MessageModule, MemberCreationForm, FormsModule, CardModule, IconFieldModule, InputIconModule, InputTextModule, PublicMemberList],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit, OnDestroy {
@@ -49,6 +50,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
 
+  private assignmentMembersRequest?: Subscription;
   private keysReloadRequested = false;
   private memberRequest?: Subscription;
   private memberOptionsRequest?: Subscription;
@@ -60,6 +62,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   public readonly Dialog = Dialog;
   public selectedKey: KeyAssignment | undefined;
   public keyAssignments: KeyAssignment[] = [];
+  public assignmentMembers: PublicMember[] = [];
   public privateMember: Member | null = null;
   public feeTypes: FeeType[] = [];
   public contactMethods: ContactMethod[] = [];
@@ -80,6 +83,8 @@ export class PublicMemberView implements OnInit, OnDestroy {
     loading: false,
     loadingSummary: false,
     loadingKeys: false,
+    loadingAssignmentMembers: false,
+    assignmentMembersError: false,
     loadingMember: false,
     loadingOptions: false,
     saving: false,
@@ -102,6 +107,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
       edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
       delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete),
       keyAssignmentsRead: authService.hasPermission(UcroniaPermissions.keyAssignment.read),
+      keyAssignmentsCreate: authService.hasPermission(UcroniaPermissions.keyAssignment.create),
       keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
       keysDelete: authService.hasPermission(UcroniaPermissions.key.delete)
@@ -116,6 +122,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.assignmentMembersRequest?.unsubscribe();
     this.memberRequest?.unsubscribe();
     this.memberOptionsRequest?.unsubscribe();
   }
@@ -201,6 +208,84 @@ export class PublicMemberView implements OnInit, OnDestroy {
     this.failures.clear();
     this.error = '';
     this.dialog = Dialog.KEY_INFO;
+  }
+
+  public onShowKeyAssignment(): void {
+    if (
+      !this.permissions.keyAssignmentsRead ||
+      !this.permissions.keyAssignmentsCreate ||
+      !this.permissions.read ||
+      this.dialog !== Dialog.KEY_INFO ||
+      !this.selectedKey ||
+      this.selectedKey.profile ||
+      this.status.saving
+    ) {
+      return;
+    }
+    this.failures.clear();
+    this.error = '';
+    this.assignmentMembers = [];
+    this.dialog = Dialog.KEY_ASSIGN;
+    this.loadAssignmentMembers();
+  }
+
+  public loadAssignmentMembers(): void {
+    if (
+      !this.permissions.keyAssignmentsRead ||
+      !this.permissions.keyAssignmentsCreate ||
+      !this.permissions.read ||
+      this.dialog !== Dialog.KEY_ASSIGN ||
+      !this.selectedKey ||
+      this.selectedKey.profile ||
+      this.status.saving
+    ) {
+      return;
+    }
+    this.assignmentMembersRequest?.unsubscribe();
+    this.status.loadingAssignmentMembers = true;
+    this.status.assignmentMembersError = false;
+    this.assignmentMembers = [];
+    this.assignmentMembersRequest = this.service.getAllAvailable()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => (this.status.loadingAssignmentMembers = false))
+      )
+      .subscribe({
+        next: members => (this.assignmentMembers = members),
+        error: () => (this.status.assignmentMembersError = true)
+      });
+  }
+
+  public onCancelKeyAssignment(): void {
+    if (!this.status.saving) {
+      this.assignmentMembersRequest?.unsubscribe();
+      this.assignmentMembers = [];
+      this.failures.clear();
+      this.error = '';
+      this.dialog = Dialog.KEY_INFO;
+    }
+  }
+
+  public onAssignKey(profile: number): void {
+    if (
+      !this.permissions.keyAssignmentsRead ||
+      !this.permissions.keyAssignmentsCreate ||
+      !this.permissions.read ||
+      this.dialog !== Dialog.KEY_ASSIGN ||
+      !this.selectedKey ||
+      this.selectedKey.profile ||
+      this.status.saving ||
+      this.status.loadingAssignmentMembers ||
+      this.status.assignmentMembersError ||
+      !this.assignmentMembers.some(member => member.number === profile)
+    ) {
+      return;
+    }
+    this.call(
+      () => this.keyService.assign(this.selectedKey!.number, profile),
+      () => this.loadKeys(),
+      'No se pudo asignar la llave. Revisa los datos e inténtalo de nuevo.'
+    );
   }
 
   public onShowKeyEdit(): void {
@@ -454,6 +539,8 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible && !this.status.saving) {
+      this.assignmentMembersRequest?.unsubscribe();
+      this.assignmentMembers = [];
       this.memberOptionsRequest?.unsubscribe();
       this.memberRequest?.unsubscribe();
       this.status.optionsReady = false;
@@ -574,6 +661,7 @@ interface Permissions {
   edit: boolean;
   delete: boolean;
   keyAssignmentsRead: boolean;
+  keyAssignmentsCreate: boolean;
   keysCreate: boolean;
   keysEdit: boolean;
   keysDelete: boolean;
@@ -583,6 +671,8 @@ interface Status {
   loading: boolean;
   loadingSummary: boolean;
   loadingKeys: boolean;
+  loadingAssignmentMembers: boolean;
+  assignmentMembersError: boolean;
   loadingMember: boolean;
   loadingOptions: boolean;
   saving: boolean;
