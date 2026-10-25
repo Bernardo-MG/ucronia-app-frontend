@@ -119,15 +119,6 @@
           [contactMethods]="contactMethods"
           (save)="onCreate($event)" />
       </div>
-      <ng-template #footer>
-        <shared-drawer-form-actions
-          formId="public-member-view-create"
-          submitLabel="Crear socio"
-          submitIcon="pi pi-plus"
-          [disabled]="!fieldsMemberCreationForm.saveEnabled || !status.optionsReady"
-          [loading]="status.saving || status.loadingOptions"
-          (cancelForm)="onDrawerVisibleChange(false)" />
-      </ng-template>
     }
     @case (Dialog.KEY_CREATE) {
       <ng-template #header>
@@ -145,15 +136,6 @@
           [failures]="failures"
           (save)="onCreateKey($event)" />
       </div>
-      <ng-template #footer>
-        <shared-drawer-form-actions
-          formId="public-member-view-create-key"
-          submitLabel="Crear llave"
-          submitIcon="pi pi-plus"
-          [disabled]="!fieldsAssocKeyForm.saveEnabled"
-          [loading]="fieldsAssocKeyForm.formStatus.loading"
-          (cancelForm)="onDrawerVisibleChange(false)" />
-      </ng-template>
     }
     @case (Dialog.KEY_INFO) {
       @if (selectedKey) {
@@ -165,24 +147,8 @@
             <p-message severity="error">{{ error }}</p-message>
           }
           <assoc-member-key-info [data]="selectedKey" />
-          @if (!selectedKey.profile && permissions.keyAssignmentsCreate && permissions.read) {
-            <p-button
-              class="mt-5 block"
-              label="Asignar socio"
-              icon="pi pi-user-plus"
-              [disabled]="status.saving"
-              (onClick)="onShowKeyAssignment()" />
-          }
+
         </div>
-        <ng-template #footer>
-          <shared-drawer-actions
-            [showDelete]="permissions.keysDelete"
-            [showEdit]="permissions.keysEdit"
-            [loading]="status.saving"
-            editLabel="Editar llave"
-            (delete)="onDeleteKey($event)"
-            (edit)="onShowKeyEdit()" />
-        </ng-template>
       }
     }
     @case (Dialog.KEY_ASSIGN) {
@@ -210,15 +176,6 @@
             [loading]="status.saving || status.loadingAssignmentMembers || status.assignmentMembersError"
             (save)="onAssignKey($event)" />
         </div>
-        <ng-template #footer>
-          <shared-drawer-form-actions
-            formId="public-member-view-assign-key"
-            submitLabel="Asignar llave"
-            submitIcon="pi pi-check"
-            [disabled]="!fieldsKeyAssignmentForm.saveEnabled"
-            [loading]="status.saving || status.loadingAssignmentMembers"
-            (cancelForm)="onCancelKeyAssignment()" />
-        </ng-template>
       }
     }
     @case (Dialog.KEY_EDIT) {
@@ -239,15 +196,6 @@
             [failures]="failures"
             (save)="onUpdateKey($event)" />
         </div>
-        <ng-template #footer>
-          <shared-drawer-form-actions
-            formId="public-member-view-edit-key"
-            submitLabel="Guardar cambios"
-            submitIcon="pi pi-check"
-            [disabled]="!fieldsKeyEditForm.saveEnabled"
-            [loading]="status.saving"
-            (cancelForm)="onCancelKeyEdit()" />
-        </ng-template>
       }
     }
     @case (Dialog.INFO) {
@@ -266,21 +214,6 @@
         [loading]="status.loadingMember"
         [error]="status.memberPrivateError"
         (retry)="loadPrivateMember()" />
-      <ng-template #footer>
-        <shared-drawer-actions
-          [showDelete]="permissions.delete"
-          [loading]="status.saving"
-          [showEdit]="permissions.edit"
-          editLabel="Editar socio"
-          [editDisabled]="status.loadingMember || !permissions.readPrivate || !privateMember"
-          (delete)="onDeleteMember($event)"
-          (edit)="onShowMemberEdit()" />
-        @if (permissions.edit && !permissions.readPrivate) {
-          <p class="mt-2 text-sm text-gray-500">
-            Necesitas permiso de lectura de perfiles de socios para cargar el formulario completo.
-          </p>
-        }
-      </ng-template>
     }
     @case (Dialog.EDIT) {
       @if (privateMember) {
@@ -305,16 +238,99 @@
             [loading]="status.saving || status.loadingOptions || !status.optionsReady"
             (save)="onUpdateMember($event)" />
         </div>
-        <ng-template #footer>
+      }
+    }
+  }
+
+  <ng-template #footer>
+    @switch (dialog) {
+      @case (Dialog.CREATE) {
+        <shared-drawer-form-actions
+          formId="public-member-view-create"
+          submitLabel="Crear socio"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsMemberCreationForm()?.saveEnabled || !status.optionsReady"
+          [loading]="status.saving || status.loadingOptions"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      }
+      @case (Dialog.KEY_CREATE) {
+        <shared-drawer-form-actions
+          formId="public-member-view-create-key"
+          submitLabel="Crear llave"
+          submitIcon="pi pi-plus"
+          [disabled]="!fieldsAssocKeyForm()?.saveEnabled"
+          [loading]="status.saving"
+          (cancelForm)="onDrawerVisibleChange(false)" />
+      }
+      @case (Dialog.KEY_INFO) {
+        @if (selectedKey) {
+          <shared-drawer-actions
+            [showDelete]="permissions.keysDelete"
+            [showEdit]="permissions.keysEdit"
+            [loading]="status.saving"
+            editLabel="Editar llave"
+            (delete)="onDeleteKey($event)"
+            (edit)="onShowKeyEdit()">
+            <div drawerActionsEnd>
+              @if (!selectedKey.profile && permissions.keyAssignmentsCreate && permissions.read) {
+                <p-button
+                  label="Asignar socio"
+                  icon="pi pi-user-plus"
+                  [disabled]="status.saving"
+                  (onClick)="onShowKeyAssignment()" />
+              }
+            </div>
+          </shared-drawer-actions>
+        }
+      }
+      @case (Dialog.KEY_ASSIGN) {
+        @if (selectedKey) {
+          <shared-drawer-form-actions
+            formId="public-member-view-assign-key"
+            submitLabel="Asignar llave"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsKeyAssignmentForm()?.saveEnabled"
+            [loading]="status.saving || status.loadingAssignmentMembers"
+            (cancelForm)="onCancelKeyAssignment()" />
+        }
+      }
+      @case (Dialog.KEY_EDIT) {
+        @if (selectedKey) {
+          <shared-drawer-form-actions
+            formId="public-member-view-edit-key"
+            submitLabel="Guardar cambios"
+            submitIcon="pi pi-check"
+            [disabled]="!fieldsKeyEditForm()?.saveEnabled"
+            [loading]="status.saving"
+            (cancelForm)="onCancelKeyEdit()" />
+        }
+      }
+      @case (Dialog.INFO) {
+        <shared-drawer-actions
+          [showDelete]="permissions.delete"
+          [loading]="status.saving"
+          [showEdit]="permissions.edit"
+          editLabel="Editar socio"
+          [editDisabled]="status.loadingMember || !permissions.readPrivate || !privateMember"
+          (delete)="onDeleteMember($event)"
+          (edit)="onShowMemberEdit()" />
+        @if (permissions.edit && !permissions.readPrivate) {
+          <p class="mt-2 text-sm text-gray-500">
+            Necesitas permiso de lectura de perfiles de socios para cargar el formulario completo.
+          </p>
+        }
+      }
+      @case (Dialog.EDIT) {
+        @if (privateMember) {
           <shared-drawer-form-actions
             formId="public-member-view-edit-member"
             submitLabel="Guardar cambios"
             submitIcon="pi pi-check"
-            [disabled]="!fieldsMemberEditionForm.saveEnabled || !status.optionsReady"
+            [disabled]="!fieldsMemberEditionForm()?.saveEnabled || !status.optionsReady"
             [loading]="status.saving || status.loadingOptions"
             (cancelForm)="onCancelMemberEdit()" />
-        </ng-template>
+        }
       }
     }
-  }
+  </ng-template>
 </p-drawer>

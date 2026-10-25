@@ -3,6 +3,7 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
+import { editForm } from '@app/testing/form-test-helpers';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { MemberCount } from '@ucronia/api';
@@ -77,6 +78,67 @@ describe('PublicMemberView - assign key', () => {
     expect(component.assignmentMembers).toEqual([member]);
     expect(memberServiceMock.getAllAvailable).toHaveBeenCalledTimes(1);
     expect(profileServiceMock.getOne).not.toHaveBeenCalled();
+  });
+
+  it('saves the assignment through the drawer footer using native form submission', async () => {
+    component.onShowKeyAssignment();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
+    const submit = footer?.querySelector<HTMLButtonElement>('button[data-action="submit"]');
+    const form = component.fieldsKeyAssignmentForm();
+
+    expect(submit).withContext('the assignment drawer must render a submit action in its footer').toBeTruthy();
+    expect(submit?.form?.id).toBe('public-member-view-assign-key');
+    expect(submit?.disabled).toBeTrue();
+    expect(form).toBeDefined();
+    if (!form || !submit) {
+      return;
+    }
+    editForm(form.form, { profile: 12 });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(submit.disabled).toBeFalse();
+    submit.click();
+    fixture.detectChanges();
+
+    expect(keyServiceMock.assign).toHaveBeenCalledOnceWith(7, 12);
+    expect(component.dialog).toBe(Dialog.NONE);
+  });
+
+  it('cancels assignment through the drawer footer without saving', async () => {
+    component.onShowKeyAssignment();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
+    const cancel = footer?.querySelector<HTMLButtonElement>('button[data-action="cancel"]');
+
+    expect(cancel).withContext('the assignment drawer must render a cancel action in its footer').toBeTruthy();
+    cancel?.click();
+    fixture.detectChanges();
+
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+  });
+
+  it('keeps the footer connected to the key editing form when switching drawer modes', async () => {
+    component.onShowKeyEdit();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
+    const submit = footer?.querySelector<HTMLButtonElement>('button[data-action="submit"]');
+
+    expect(submit?.form?.id).toBe('public-member-view-edit-key');
+    expect(submit?.disabled).toBeTrue();
+    expect(component.fieldsKeyEditForm()).toBeDefined();
   });
 
   it('hides and rejects assignment without assignment creation permission', async () => {

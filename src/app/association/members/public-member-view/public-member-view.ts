@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, viewChild } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ContactMethodService } from '@app/settings/contact-method-service';
@@ -54,6 +54,12 @@ export class PublicMemberView implements OnInit, OnDestroy {
   private keysReloadRequested = false;
   private memberRequest?: Subscription;
   private memberOptionsRequest?: Subscription;
+
+  public readonly fieldsMemberCreationForm = viewChild<MemberCreationForm>('fieldsMemberCreationForm');
+  public readonly fieldsAssocKeyForm = viewChild<MemberKeyForm>('fieldsAssocKeyForm');
+  public readonly fieldsKeyAssignmentForm = viewChild<MemberKeyAssignmentForm>('fieldsKeyAssignmentForm');
+  public readonly fieldsKeyEditForm = viewChild<MemberKeyForm>('fieldsKeyEditForm');
+  public readonly fieldsMemberEditionForm = viewChild<MemberEditionForm>('fieldsMemberEditionForm');
 
   public readonly permissions: Permissions;
 
