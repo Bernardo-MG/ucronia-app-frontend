@@ -11,7 +11,7 @@
         [members]="members()"
         (selectMember)="onSelectMember($event)"
         (clearMember)="onClearMember()"
-        (searchMember)="onSearchMember($event)" />
+        (searchMember)="searchMember.emit($event)" />
       @if (isFieldInvalid('profile')) {
         <p-message severity="error" size="small" variant="simple">Seleccione un socio válido</p-message>
       }

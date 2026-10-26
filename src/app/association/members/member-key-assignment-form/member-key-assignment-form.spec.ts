@@ -34,6 +34,7 @@ describe('MemberKeyAssignmentForm', () => {
 
     component.onSelectMember(component.members()[0]);
     component.onSave();
+
     expect(save).toHaveBeenCalledOnceWith(12);
   });
 
@@ -56,11 +57,13 @@ describe('MemberKeyAssignmentForm', () => {
 
     expect(save).not.toHaveBeenCalled();
   });
+
   it('forwards typed searches through the shared member search and clears the previous selection', () => {
     const search = spyOn(component.searchMember, 'emit');
     const memberSearch = fixture.debugElement.query(By.directive(MemberSearch)).componentInstance as MemberSearch;
     component.onSelectMember(component.members()[0]);
 
+    memberSearch.onMemberChange('Luis');
     memberSearch.searchMember.emit({ query: 'Luis' });
 
     expect(search).toHaveBeenCalledOnceWith({ query: 'Luis' });

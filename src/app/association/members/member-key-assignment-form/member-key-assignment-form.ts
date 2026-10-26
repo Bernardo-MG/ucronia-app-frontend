@@ -35,6 +35,10 @@ export class MemberKeyAssignmentForm {
     this.formStatus.loading = value;
   }
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled && this.members().some(member => member.number === this.form.controls.profile.value);
+  }
+
   public onSelectMember(member: PublicMember): void {
     if (!member || !this.members().some(option => option.number === member.number)) {
       return;
@@ -46,15 +50,6 @@ export class MemberKeyAssignmentForm {
   public onClearMember(): void {
     this.form.controls.profile.setValue(null);
     this.form.controls.profile.markAsDirty();
-  }
-
-  public onSearchMember(event: MemberSearchEvent): void {
-    this.onClearMember();
-    this.searchMember.emit(event);
-  }
-
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled && this.members().some(member => member.number === this.form.controls.profile.value);
   }
 
   public isFieldInvalid(property: string): boolean {

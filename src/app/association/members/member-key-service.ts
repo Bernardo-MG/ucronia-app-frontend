@@ -6,7 +6,9 @@ import { Key, KeyAssignment } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class MemberKeyService {
 
   private readonly ucroniaClient = inject(UcroniaClient);

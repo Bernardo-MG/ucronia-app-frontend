@@ -14,7 +14,7 @@
         <ui-detail-field
           icon="pi pi-id-card"
           name="N.º socio"
-          [value]="member.memberNumber === null ? '—' : '#' + member.memberNumber" />
+          [value]="member.memberNumber === null || member.memberNumber === undefined ? '—' : '#' + member.memberNumber" />
         <ui-status-detail
           icon="pi pi-replay"
           name="Renovación"

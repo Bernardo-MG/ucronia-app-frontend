@@ -5,7 +5,7 @@ import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { MemberKeyService } from './member-key-service';
 
-describe('MemberKeyService - assign', () => {
+describe('MemberKeyService - assignments', () => {
   let service: MemberKeyService;
 
   const endpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['create', 'update']);
@@ -55,6 +55,7 @@ describe('MemberKeyService - assign', () => {
     expect(result).toBe(failure);
     expect(messageServiceMock.add).not.toHaveBeenCalled();
   });
+
   it('updates an existing assignment with the new profile number', () => {
     let result: KeyAssignment | undefined;
 

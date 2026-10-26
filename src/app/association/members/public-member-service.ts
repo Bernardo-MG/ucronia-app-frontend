@@ -11,24 +11,19 @@ export class PublicMemberService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
+  private readonly defaultSorting = [
+    new SortingProperty('name.firstName'),
+    new SortingProperty('name.lastName'),
+    new SortingProperty('memberNumber')
+  ];
+
   public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<Page<PublicMember>> {
-    const sorting = new Sorting(
-      mergeProperties(sort.properties, [
-        new SortingProperty('name.firstName'),
-        new SortingProperty('name.lastName'),
-        new SortingProperty('memberNumber')
-      ])
-    );
+    const sorting = new Sorting(mergeProperties(sort.properties, this.defaultSorting));
     return this.ucroniaClient.member.page(page, undefined, sorting, name);
   }
 
   public searchMembers(query: string): Observable<PublicMember[]> {
-    const sorting = new Sorting([
-      new SortingProperty('name.firstName'),
-      new SortingProperty('name.lastName'),
-      new SortingProperty('memberNumber')
-    ]);
-
+    const sorting = new Sorting(this.defaultSorting);
     return this.ucroniaClient.member.page(undefined, 10, sorting, query.trim())
       .pipe(map(page => page.content));
   }

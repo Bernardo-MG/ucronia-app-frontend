@@ -76,4 +76,20 @@ describe('MemberKeyForm', () => {
     expect(emitted).not.toHaveBeenCalled();
   });
 
+  it('should reset edits and touched state when another key is loaded', () => {
+    fixture.componentRef.setInput('data', Object.assign(new Key(), { number: 10, description: 'Principal' }));
+    fixture.detectChanges();
+    component.form.patchValue({ description: 'Changed' });
+    component.form.markAsDirty();
+    component.form.markAllAsTouched();
+
+    fixture.componentRef.setInput('data', Object.assign(new Key(), { number: 20, description: 'Lateral' }));
+    fixture.detectChanges();
+
+    expect(component.form.getRawValue()).toEqual({ number: 20, available: true, description: 'Lateral' });
+    expect(component.form.pristine).toBeTrue();
+    expect(component.form.untouched).toBeTrue();
+    expect(component.saveEnabled).toBeFalse();
+  });
+
 });

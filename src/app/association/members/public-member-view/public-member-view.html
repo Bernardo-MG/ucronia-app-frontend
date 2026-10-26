@@ -147,14 +147,16 @@
             <p-message severity="error">{{ error }}</p-message>
           }
           <assoc-member-key-info [data]="selectedKey" />
-
         </div>
       }
     }
     @case (Dialog.KEY_ASSIGN) {
       @if (selectedKey) {
         <ng-template #header>
-          <shared-drawer-header [title]="selectedKey.profile ? 'Reasignar llave' : 'Asignar llave'" icon="pi pi-user-plus" [subtitle]="'Llave #' + selectedKey.number" />
+          <shared-drawer-header
+            [title]="selectedKey.profile ? 'Reasignar llave' : 'Asignar llave'"
+            icon="pi pi-user-plus"
+            [subtitle]="'Llave #' + selectedKey.number" />
         </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           @if (error) {

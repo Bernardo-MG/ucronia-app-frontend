@@ -24,11 +24,11 @@ export class PublicMemberList {
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
 
-  public get first() {
+  public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
-  public onPageChange(event: TablePageEvent) {
+  public onPageChange(event: TablePageEvent): void {
     const page = event.first / event.rows + 1;
     this.changePage.emit(page);
   }

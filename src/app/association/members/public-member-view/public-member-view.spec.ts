@@ -777,4 +777,19 @@ describe('PublicMemberView', () => {
 
     authorizedFixture.destroy();
   });
+  it('should cancel member and summary loading when the view is destroyed', () => {
+    const members = new Subject<Page<PublicMember>>();
+    const summary = new Subject<MemberCount>();
+    memberServiceMock.getAll.and.returnValue(members);
+    memberServiceMock.getSummary.and.returnValue(summary);
+    component.refresh();
+
+    fixture.destroy();
+
+    expect(members.observed).toBeFalse();
+    expect(summary.observed).toBeFalse();
+    expect(component.status.loading).toBeFalse();
+    expect(component.status.loadingSummary).toBeFalse();
+  });
+
 });

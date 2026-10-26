@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Profile } from '@ucronia/domain';
 import { AutoComplete } from 'primeng/autocomplete';
 
 import { MemberSearch } from './member-search';
@@ -8,12 +9,9 @@ describe('MemberSearch', () => {
   let component: MemberSearch;
   let fixture: ComponentFixture<MemberSearch>;
 
-  const member: any = {
-    number: '1',
-    name: {
-      fullName: 'John Doe'
-    }
-  };
+  const member = new Profile();
+  member.number = 1;
+  member.name.fullName = 'John Doe';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -84,6 +82,14 @@ describe('MemberSearch', () => {
     component.onMemberChange(member);
 
     expect(emitSpy).not.toHaveBeenCalled();
+  });
+
+  it('emits clearMember when the autocomplete clears its value', () => {
+    const emitSpy = spyOn(component.clearMember, 'emit');
+
+    component.onMemberChange(null);
+
+    expect(emitSpy).toHaveBeenCalledTimes(1);
   });
 
 });

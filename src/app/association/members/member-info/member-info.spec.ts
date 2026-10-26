@@ -50,4 +50,12 @@ describe('MemberInfo', () => {
 
     expect(retry).toHaveBeenCalledTimes(1);
   });
+  it('should show a placeholder when the public member number is missing', () => {
+    fixture.componentRef.setInput('publicData', new PublicMember());
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.textContent).toContain('—');
+    expect(fixture.nativeElement.textContent).not.toContain('#undefined');
+  });
+
 });

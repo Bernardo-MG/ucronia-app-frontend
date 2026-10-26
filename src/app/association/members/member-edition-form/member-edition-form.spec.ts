@@ -85,6 +85,7 @@ describe('MemberEditionForm', () => {
       renew: false
     });
   });
+
   it('does not assign a key through form values', () => {
     const saved = spyOn(component.save, 'emit');
 
