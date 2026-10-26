@@ -26,14 +26,14 @@ import { UserForm } from '@app/security/users/user-form/user-form';
 import { ContactMethodForm } from '@app/settings/contact-method-form/contact-method-form';
 import { FeeTypeForm } from '@app/settings/fee-type-form/fee-type-form';
 import { GameTableForm } from '@app/settings/game-table-form/game-table-form';
-import { KeyForm } from '@app/settings/key-form/key-form';
+import { MemberKeyForm } from '@app/association/members/member-key-form/member-key-form';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 
 const forms = [ActivityForm, ProfileCreationForm, ProfileEditionForm, FeeCreationForm,
   FeeEditionForm, FeePaymentsForm, FileForm, TransactionForm, ImageForm,
   LibraryBookCreationForm, LibraryBookEditionForm, LibraryBookLendingForm,
   LibraryBookReturnForm, ScheduledGameForm, RoleForm, UserTokenExtendForm,
-  UserForm, ContactMethodForm, FeeTypeForm, GameTableForm, NameForm, KeyForm];
+  UserForm, ContactMethodForm, FeeTypeForm, GameTableForm, NameForm, MemberKeyForm];
 
 type DrawerForm = InstanceType<typeof forms[number]>;
 

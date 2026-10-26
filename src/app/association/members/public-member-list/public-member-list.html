@@ -1,0 +1,56 @@
+<p-table
+  lazy="true"
+  dataKey="number"
+  [loading]="loading()"
+  [value]="members()"
+  paginator="true"
+  [rows]="rows()"
+  [totalRecords]="totalRecords()"
+  [first]="first"
+  showCurrentPageReport="true"
+  currentPageReportTemplate="{first}–{last} de {totalRecords}"
+  (onSort)="changeDirection.emit($event)"
+  (onPage)="onPageChange($event)"
+  responsiveLayout="scroll"
+  styleClass="p-datatable-striped">
+  <ng-template #header>
+    <tr>
+      <th pSortableColumn="fullName">
+        Nombre
+        <p-sortIcon field="fullName" />
+      </th>
+      <th pSortableColumn="memberNumber" class="w-40">
+        N.º socio
+        <p-sortIcon field="memberNumber" />
+      </th>
+      @if (canRead()) {
+        <th class="w-16"><span class="sr-only">Acciones</span></th>
+      }
+    </tr>
+  </ng-template>
+
+  <ng-template #body let-member>
+    <tr class="transition-colors hover:bg-primary-50/40">
+      <td>
+        <span class="font-semibold text-gray-950">{{ member.name.fullName }}</span>
+        <assoc-public-member-renew-tag [renew]="member.renew" />
+        @if (member.name.nickname) {
+          <span class="mt-1 block text-xs text-gray-500">{{ member.name.nickname }}</span>
+        }
+      </td>
+      <td class="font-mono text-sm text-gray-600">#{{ member.memberNumber }}</td>
+      @if (canRead()) {
+        <td class="text-right">
+          <p-button
+            type="button"
+            icon="pi pi-eye"
+            severity="secondary"
+            rounded
+            text
+            ariaLabel="Ver información del socio"
+            (onClick)="show.emit(member)" />
+        </td>
+      }
+    </tr>
+  </ng-template>
+</p-table>

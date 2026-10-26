@@ -3,6 +3,8 @@ import { ContactChannel } from "../profile/profile";
 
 export class Member {
   public number = -1;
+  // TODO: shouldn't be optional
+  public memberNumber?: number | null;
   public identifier = '';
   public birthDate = new Date();
   public name = new MemberName();
@@ -11,7 +13,6 @@ export class Member {
   public comments = '';
   public types: string[] = [];
   public feeType = new MemberFeeType();
-  public key?: number;
   public active = false;
   public renew = false;
   public audit?: AuditDetails;

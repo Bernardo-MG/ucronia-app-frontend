@@ -4,6 +4,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { of } from 'rxjs';
 import { ActivityForm } from '@app/association/activities/activity-form/activity-form';
+import { MemberCreationForm } from '@app/association/members/member-creation-form/member-creation-form';
+import { MemberKeyForm } from '@app/association/members/member-key-form/member-key-form';
+import { MemberEditionForm } from '@app/association/members/member-edition-form/member-edition-form';
 import { ProfileCreationForm } from '@app/association/directory/profile-creation-form/profile-creation-form';
 import { ProfileEditionForm } from '@app/association/directory/profile-edition-form/profile-edition-form';
 import { FeeCreationForm } from '@app/association/fees/fee-creation-form/fee-creation-form';
@@ -26,7 +29,6 @@ import { UserForm } from '@app/security/users/user-form/user-form';
 import { ContactMethodForm } from '@app/settings/contact-method-form/contact-method-form';
 import { FeeTypeForm } from '@app/settings/fee-type-form/fee-type-form';
 import { GameTableForm } from '@app/settings/game-table-form/game-table-form';
-import { KeyForm } from '@app/settings/key-form/key-form';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 
 import { RoleChangePermission } from '@app/security/roles/role-change-permission/role-change-permission';
@@ -34,6 +36,8 @@ import { RoleChangePermission } from '@app/security/roles/role-change-permission
 const date = new Date(2026, 0, 15, 12);
 const permission = { name: 'book:read', resource: 'book', action: 'read' };
 const cases = [
+  { type: MemberCreationForm, values: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' } }, invalid: 'feeType', expected: jasmine.objectContaining({ feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, active: true, renew: true, contactChannels: [] }) },
+  { type: MemberEditionForm, values: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, active: false, renew: false }, invalid: 'feeType', expected: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, identifier: '', birthDate: undefined, address: '', comments: '', active: false, renew: false, contactChannels: [] } },
   { type: ActivityForm, values: { title: 'Club meeting', dates: [{ day: date, startHour: date, endHour: date }] }, invalid: 'title', expected: jasmine.objectContaining({ title: 'Club meeting', dates: [{ start: date, end: date }] }) },
   { type: ProfileCreationForm, values: { name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } }, invalid: 'name.firstName', expected: jasmine.objectContaining({ name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } }) },
   { type: ProfileEditionForm, values: { name: { firstName: 'Ana', nickname: '', lastName: 'López' } }, invalid: 'name.firstName', expected: jasmine.objectContaining({ types: [], name: { firstName: 'Ana', nickname: '', lastName: 'López' } }) },
@@ -56,7 +60,7 @@ const cases = [
   { type: FeeTypeForm, values: { number: 2, name: 'Monthly', amount: 15 }, invalid: 'amount', expected: { number: 2, name: 'Monthly', amount: 15 } },
   { type: GameTableForm, values: { number: 2, name: 'Table A', description: 'Main room' }, invalid: 'description', expected: { number: 2, name: 'Table A', description: 'Main room' } },
   { type: NameForm, values: { number: 2, name: 'Le Guin' }, invalid: 'name', expected: { number: 2, name: 'Le Guin' } },
-  { type: KeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } }
+  { type: MemberKeyForm, values: { number: 2, available: true, description: 'Front door' }, expected: { number: 2, available: true, description: 'Front door' } }
 ];
 
 type ManagedForm = InstanceType<typeof cases[number]['type']>;
