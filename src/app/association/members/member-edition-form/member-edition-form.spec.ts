@@ -19,7 +19,6 @@ describe('MemberEditionForm', () => {
       address: 'Calle Mayor',
       comments: 'Prefiere correo',
       feeType: { number: 3, name: 'General', amount: 25 },
-      key: 7,
       name: { firstName: 'Ana', lastName: 'López', nickname: '', fullName: 'Ana López' },
       contactChannels: [{ method: { number: 4, name: 'Email' }, detail: 'ana@example.org' }]
     });
@@ -35,7 +34,8 @@ describe('MemberEditionForm', () => {
     expect(component.form.controls.renew.value).toBeFalse();
     expect(component.form.controls.birthDate.value).toEqual(member.birthDate);
     expect(component.form.controls.feeType.value).toBe(3);
-    expect(component.form.controls.key.value).toBe(7);
+    expect(component.form.contains('key')).toBeFalse();
+    expect(fixture.nativeElement.querySelector('#keyInput')).toBeNull();
     expect(component.contactChannels.getRawValue()).toEqual([{ method: 4, detail: 'ana@example.org' }]);
     expect(component.form.pristine).toBeTrue();
   });
@@ -61,14 +61,13 @@ describe('MemberEditionForm', () => {
     expect(component.form.valid).toBeTrue();
   });
 
-  it('emits the complete update and clears removed optional values and channels', () => {
+  it('clears optional profile values in the full update', () => {
     const saved = spyOn(component.save, 'emit');
 
     editForm(component.form, {
       identifier: '',
       address: '',
       comments: '',
-      key: null,
       birthDate: null
     });
     component.removeContactChannel(0);
@@ -80,11 +79,32 @@ describe('MemberEditionForm', () => {
       identifier: '',
       address: '',
       comments: '',
-      key: undefined,
       birthDate: undefined,
       contactChannels: [],
       active: false,
       renew: false
     });
+  });
+
+  it('does not assign a key through form values', () => {
+    const saved = spyOn(component.save, 'emit');
+
+    editForm(component.form, { key: 99, address: 'Nueva dirección' });
+    component.onSave();
+
+    expect(component.form.contains('key')).toBeFalse();
+    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ address: 'Nueva dirección' }));
+    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
+  });
+
+  it('does not include legacy key data in the member update', () => {
+    const saved = spyOn(component.save, 'emit');
+    fixture.componentRef.setInput('data', { ...member, key: 7 });
+    fixture.detectChanges();
+
+    editForm(component.form, { address: 'Nueva dirección' });
+    component.onSave();
+
+    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
   });
 });

@@ -17,6 +17,8 @@ describe('MemberCreationForm', () => {
     expect(component.form.controls.renew.value).toBeTrue();
     expect(component.form.controls.feeType.hasError('required')).toBeTrue();
     expect(fixture.nativeElement.querySelector('p-selectbutton')).toBeNull();
+    expect(component.form.contains('key')).toBeFalse();
+    expect(fixture.nativeElement.querySelector('#keyInput')).toBeNull();
   });
 
   it('requires a name and fee type', () => {
@@ -39,7 +41,6 @@ describe('MemberCreationForm', () => {
     editForm(component.form, {
       feeType: 3,
       name: { firstName: 'Ana', nickname: '', lastName: 'López' },
-      key: 5,
       address: 'Calle Mayor'
     });
     component.addContactChannel();
@@ -50,7 +51,6 @@ describe('MemberCreationForm', () => {
       jasmine.objectContaining({
         feeType: 3,
         name: { firstName: 'Ana', nickname: '', lastName: 'López' },
-        key: 5,
         address: 'Calle Mayor',
         birthDate: undefined,
         active: true,
@@ -58,6 +58,7 @@ describe('MemberCreationForm', () => {
         contactChannels: [{ method: 4, detail: 'ana@example.org' }]
       })
     );
+    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
   });
 
   it('does not submit an incomplete contact channel', () => {

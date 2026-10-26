@@ -6,7 +6,6 @@ export interface MemberUpdate {
   active: boolean;
   renew: boolean;
   identifier?: string;
-  key?: number;
   birthDate?: Date;
   address?: string;
   comments?: string;

@@ -26,7 +26,7 @@ export class MemberKeyForm {
 
   @Input() public set data(value: Key | undefined) {
     if (value) {
-      this.form.patchValue(value as any);
+      this.form.reset({ number: value.number, available: value.available, description: value.description });
       this.isEdit = true;
     } else {
       this.form.reset({ number: null, available: true, description: '' });

@@ -4,7 +4,6 @@ export class MemberCreation {
   public contactChannels: { method: number, detail: string }[] = [];
   public address = '';
   public comments = '';
-  public key?: number;
   public active = true;
   public renew = true;
 

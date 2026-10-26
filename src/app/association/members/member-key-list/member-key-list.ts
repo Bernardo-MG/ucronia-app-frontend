@@ -35,7 +35,7 @@ export class MemberKeyList implements OnChanges {
   ];
 
   public get assigned(): number {
-    return this.data().filter(key => key.member != null).length;
+    return this.data().filter(key => key.profile != null).length;
   }
 
   public get unassigned(): number {
@@ -45,14 +45,14 @@ export class MemberKeyList implements OnChanges {
   public get filtered(): KeyAssignment[] {
     const query = this.query.trim().toLocaleLowerCase('es').replace(/#/g, '');
     return this.data().filter(key => {
-      const assigned = key.member != null;
+      const assigned = key.profile != null;
       if (this.assignment === 'assigned' && !assigned) {
         return false;
       }
       if (this.assignment === 'unassigned' && assigned) {
         return false;
       }
-      return `${key.number} ${key.description} ${key.member?.name ?? ''} ${key.member?.memberNumber ?? ''}`
+      return `${key.number} ${key.description} ${key.profile?.name ?? ''} ${key.profile?.number ?? ''}`
         .toLocaleLowerCase('es')
         .includes(query);
     });

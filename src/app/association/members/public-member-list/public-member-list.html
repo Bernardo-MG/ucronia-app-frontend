@@ -23,7 +23,6 @@
         N.º socio
         <p-sortIcon field="memberNumber" />
       </th>
-      <th class="w-48">Llave</th>
       @if (canRead()) {
         <th class="w-16"><span class="sr-only">Acciones</span></th>
       }
@@ -40,16 +39,6 @@
         }
       </td>
       <td class="font-mono text-sm text-gray-600">#{{ member.memberNumber }}</td>
-      <td>
-        @if (member.key) {
-          <span class="inline-flex items-center gap-2 text-gray-700">
-            <i class="pi pi-key" aria-hidden="true"></i>
-            Llave {{ member.key }}
-          </span>
-        } @else {
-          <span class="text-gray-400">—</span>
-        }
-      </td>
       @if (canRead()) {
         <td class="text-right">
           <p-button

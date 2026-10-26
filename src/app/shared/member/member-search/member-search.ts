@@ -10,16 +10,23 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
   imports: [FormsModule, ReactiveFormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
   templateUrl: './member-search.html'
 })
-export class MemberSearch {
+export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> {
 
   public readonly inputId = input('memberSearchInput');
   public readonly disabled = input(false);
 
-  public readonly members = input<Profile[]>([]);
-  public readonly member = input(new Profile());
+  public readonly members = input<T[]>([]);
+  public readonly member = input<T | null>(null);
 
   public readonly searchMember = output<MemberSearchEvent>();
-  public readonly selectMember = output<Profile>();
+  public readonly selectMember = output<T>();
+  public readonly clearMember = output<void>();
+
+  public onMemberChange(value: T | string | null): void {
+    if (!value || typeof value === 'string') {
+      this.clearMember.emit();
+    }
+  }
 
 }
 

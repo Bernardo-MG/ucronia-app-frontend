@@ -7,7 +7,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, Page } from '@bernardo-mg/request';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
+import { FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
 import { Dialog } from '../members-dialog';
@@ -31,7 +31,6 @@ describe('PublicMemberView', () => {
   ]);
   const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', [
     'getAll',
-    'getAllAvailable',
     'create',
     'update',
     'delete'
@@ -57,12 +56,10 @@ describe('PublicMemberView', () => {
     memberProfileServiceMock.create.and.returnValue(of(new Member()));
     feeTypeServiceMock.getAllAvailable.calls.reset();
     contactMethodServiceMock.getAllAvailable.calls.reset();
-    memberKeyServiceMock.getAllAvailable.calls.reset();
     memberKeyServiceMock.create.calls.reset();
     memberKeyServiceMock.create.and.returnValue(of(new Key()));
     feeTypeServiceMock.getAllAvailable.and.returnValue(of([]));
     contactMethodServiceMock.getAllAvailable.and.returnValue(of([]));
-    memberKeyServiceMock.getAllAvailable.and.returnValue(of([]));
     memberKeyServiceMock.getAll.calls.reset();
     memberKeyServiceMock.getAll.and.returnValue(of([]));
     memberServiceMock.getAll.and.returnValue(of(new Page<PublicMember>()));
@@ -143,7 +140,6 @@ describe('PublicMemberView', () => {
 
     expect(feeTypeServiceMock.getAllAvailable).not.toHaveBeenCalled();
     expect(contactMethodServiceMock.getAllAvailable).not.toHaveBeenCalled();
-    expect(memberKeyServiceMock.getAllAvailable).not.toHaveBeenCalled();
     expect(memberProfileServiceMock.create).not.toHaveBeenCalled();
 
     publicFixture.destroy();
@@ -196,8 +192,8 @@ describe('PublicMemberView', () => {
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
   });
 
-  it('should hide the keys tab and reject forced selection without key read permission', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.read);
+  it('should hide the keys tab and reject forced selection without key assignment read permission', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.keyAssignment.read);
     const restrictedFixture = TestBed.createComponent(PublicMemberView);
 
     restrictedFixture.detectChanges();
@@ -377,11 +373,10 @@ describe('PublicMemberView', () => {
     expect(memberProfileServiceMock.getOne).toHaveBeenCalledTimes(2);
   });
 
-  it('should retain assigned options and submit a full member update from the view', () => {
+  it('should retain assigned profile options without loading keys when editing a member', () => {
     const member = Object.assign(new Member(), {
       number: 12,
       memberNumber: 37,
-      key: 7,
       feeType: { number: 3, name: 'Assigned fee', amount: 5 },
       contactChannels: [{ method: { number: 8, name: 'Email' }, detail: 'ana@example.org' }]
     });
@@ -394,7 +389,6 @@ describe('PublicMemberView', () => {
       feeType: 3,
       address: '',
       comments: '',
-      key: undefined,
       contactChannels: [],
       active: false,
       renew: false
@@ -402,7 +396,6 @@ describe('PublicMemberView', () => {
 
     expect(component.status.optionsReady).toBeTrue();
     expect(component.feeTypes.map(fee => fee.number)).toContain(3);
-    expect(component.keys.map(key => key.number)).toContain(7);
     expect(component.contactMethods.map(method => method.number)).toContain(8);
 
     component.onUpdateMember(change);
@@ -435,12 +428,12 @@ describe('PublicMemberView', () => {
   });
 
   it('should cancel option loading when member editing is cancelled', () => {
-    const options = new Subject<Key[]>();
-    memberKeyServiceMock.getAllAvailable.and.returnValue(options);
+    const options = new Subject<FeeType[]>();
+    feeTypeServiceMock.getAllAvailable.and.returnValue(options);
     component.onShowMember(new PublicMember());
     component.onShowMemberEdit();
     component.onCancelMemberEdit();
-    options.next([new Key()]);
+    options.next([]);
     options.complete();
 
     expect(component.dialog).toBe(Dialog.INFO);
@@ -749,7 +742,54 @@ describe('PublicMemberView', () => {
     expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
   });
 
+  it('should allow member editing without key permissions', () => {
+    authServiceMock.hasPermission.and.callFake(
+      permission => permission !== UcroniaPermissions.key.read && permission !== UcroniaPermissions.keyAssignment.read
+    );
+    const restrictedFixture = TestBed.createComponent(PublicMemberView);
+    const restricted = restrictedFixture.componentInstance;
+    restrictedFixture.detectChanges();
+
+    restricted.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
+    restricted.onShowMemberEdit();
+
+    expect(restricted.dialog).toBe(Dialog.EDIT);
+    expect(restricted.status.optionsReady).toBeTrue();
+    expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
+
+    restrictedFixture.destroy();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should load assignments with assignment read permission even without key read permission', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.read);
+    const authorizedFixture = TestBed.createComponent(PublicMemberView);
+
+    authorizedFixture.detectChanges();
+    authorizedFixture.componentInstance.onTabChange('keys');
+    authorizedFixture.detectChanges();
+
+    expect(authorizedFixture.nativeElement.querySelector('p-tab[value="keys"]')).not.toBeNull();
+    expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
+
+    authorizedFixture.destroy();
+  });
+  it('should cancel member and summary loading when the view is destroyed', () => {
+    const members = new Subject<Page<PublicMember>>();
+    const summary = new Subject<MemberCount>();
+    memberServiceMock.getAll.and.returnValue(members);
+    memberServiceMock.getSummary.and.returnValue(summary);
+    component.refresh();
+
+    fixture.destroy();
+
+    expect(members.observed).toBeFalse();
+    expect(summary.observed).toBeFalse();
+    expect(component.status.loading).toBeFalse();
+    expect(component.status.loadingSummary).toBeFalse();
+  });
+
 });

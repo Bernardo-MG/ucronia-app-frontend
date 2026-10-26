@@ -27,8 +27,8 @@
           pInputText
           type="search"
           class="w-full"
-          placeholder="Buscar por llave o socio…"
-          aria-label="Buscar por llave o socio"
+          placeholder="Buscar por llave o perfil…"
+          aria-label="Buscar por llave o perfil"
           [(ngModel)]="query"
           (ngModelChange)="onFilter()" />
       </p-iconfield>
@@ -65,7 +65,7 @@
             <th pSortableColumn="number">Llave <p-sortIcon field="number" /></th>
             <th pSortableColumn="description">Descripción <p-sortIcon field="description" /></th>
             <th>Asignación</th>
-            <th pSortableColumn="member.name">Socio asignado <p-sortIcon field="member.name" /></th>
+            <th pSortableColumn="profile.name">Perfil asignado <p-sortIcon field="profile.name" /></th>
             <th class="w-40"></th>
           </tr>
         </ng-template>
@@ -82,16 +82,16 @@
             </td>
             <td>
               <p-tag
-                [value]="key.member ? 'Asignada' : 'Sin asignar'"
-                [severity]="key.member ? 'success' : 'secondary'" />
+                [value]="key.profile ? 'Asignada' : 'Sin asignar'"
+                [severity]="key.profile ? 'success' : 'secondary'" />
             </td>
             <td>
-              @if (key.member) {
-                <span class="block font-medium">{{ key.member.name }}</span>
-                <span class="block text-sm text-gray-500">Socio #{{ key.member.memberNumber }}</span>
+              @if (key.profile) {
+                <span class="block font-medium">{{ key.profile.name }}</span>
+                <span class="block text-sm text-gray-500">Perfil #{{ key.profile.number }}</span>
               } @else {
                 <span class="block">—</span>
-                <span class="block text-sm text-gray-500">Sin socio asignado</span>
+                <span class="block text-sm text-gray-500">Sin perfil asignado</span>
               }
             </td>
             <td class="w-40">

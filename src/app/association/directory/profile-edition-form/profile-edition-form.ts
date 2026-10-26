@@ -6,7 +6,7 @@ import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Va
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { ContactMethod, FeeType, Key } from '@ucronia/domain';
+import { ContactMethod, FeeType } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -38,7 +38,6 @@ export class ProfileEditionForm {
   public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly feeTypes = input<FeeType[]>([]);
-  public readonly keys = input<Key[]>([]);
 
   @Input() public set data(value: FullProfile) {
     this.form.patchValue(value as any);
@@ -131,7 +130,6 @@ export class ProfileEditionForm {
       feeType: this.fb.group({
         number: [null]
       }),
-      key: [null],
       active: [false],
       renew: [false]
     });

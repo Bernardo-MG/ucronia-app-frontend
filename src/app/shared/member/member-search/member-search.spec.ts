@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Profile } from '@ucronia/domain';
 import { AutoComplete } from 'primeng/autocomplete';
 
 import { MemberSearch } from './member-search';
@@ -8,19 +9,16 @@ describe('MemberSearch', () => {
   let component: MemberSearch;
   let fixture: ComponentFixture<MemberSearch>;
 
-  const member: any = {
-    number: '1',
-    name: {
-      fullName: 'John Doe'
-    }
-  };
+  const member = new Profile();
+  member.number = 1;
+  member.name.fullName = 'John Doe';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [MemberSearch]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MemberSearch);
+    fixture = TestBed.createComponent<MemberSearch>(MemberSearch);
     component = fixture.componentInstance;
 
     fixture.componentRef.setInput('members', [member]);
@@ -70,4 +68,28 @@ describe('MemberSearch', () => {
 
     expect(emitSpy).toHaveBeenCalledOnceWith(member);
   });
+  it('emits clearMember when the user types instead of selecting a suggestion', () => {
+    const emitSpy = spyOn(component.clearMember, 'emit');
+
+    component.onMemberChange('another member');
+
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not clear a selected suggestion', () => {
+    const emitSpy = spyOn(component.clearMember, 'emit');
+
+    component.onMemberChange(member);
+
+    expect(emitSpy).not.toHaveBeenCalled();
+  });
+
+  it('emits clearMember when the autocomplete clears its value', () => {
+    const emitSpy = spyOn(component.clearMember, 'emit');
+
+    component.onMemberChange(null);
+
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
 });

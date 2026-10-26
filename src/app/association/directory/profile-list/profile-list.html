@@ -10,7 +10,6 @@
       <th class="min-w-40">Tipo</th>
       <th class="min-w-56">Contacto</th>
       <th class="min-w-32">Estado</th>
-      <th class="min-w-32">Llave</th>
       <th class="w-16"><span class="sr-only">Acciones</span></th>
     </tr>
   </ng-template>
@@ -39,16 +38,6 @@
           }
         } @else {
           <span aria-label="No aplicable">—</span>
-        }
-      </td>
-      <td>
-        @if (profile.key) {
-          <span class="inline-flex items-center gap-2 text-gray-700">
-            <i class="pi pi-key text-primary-600" aria-hidden="true"></i>
-            Llave {{ profile.key }}
-          </span>
-        } @else {
-          <span aria-label="Sin llave">—</span>
         }
       </td>
       <td class="text-right">

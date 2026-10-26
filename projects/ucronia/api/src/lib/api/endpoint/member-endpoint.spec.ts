@@ -27,8 +27,7 @@ describe('MemberEndpoint full update', () => {
       identifier: '',
       address: '',
       comments: '',
-      birthDate: undefined,
-      key: undefined
+      birthDate: undefined
     };
 
     endpoint.update(10, data).subscribe();
@@ -36,7 +35,7 @@ describe('MemberEndpoint full update', () => {
 
     expect(request.request.method).toBe('PUT');
     expect(request.request.body).toBe(data);
-    expect(data.key).toBeUndefined();
+    expect(request.request.body.key).toBeUndefined();
 
     request.flush({ content: Object.assign(new Member(), { number: 10, memberNumber: 15 }) });
   });

@@ -19,7 +19,7 @@ describe('MemberKeyInfo', () => {
       number: 3,
       available: false,
       description: 'Principal',
-      member: { number: 10, memberNumber: 37, name: 'Ana García' }
+      profile: { number: 10, name: 'Ana García' }
     };
     fixture.componentRef.setInput('data', key);
     fixture.detectChanges();
@@ -36,7 +36,7 @@ describe('MemberKeyInfo', () => {
     expect(content).toContain('Principal');
     expect(content).toContain('Perdida');
     expect(content).toContain('Ana García');
-    expect(content).toContain('Socio #37');
+    expect(content).toContain('Perfil #10');
     expect(fixture.nativeElement.querySelector('p-drawer')).toBeNull();
     expect(fixture.nativeElement.querySelector('shared-drawer-actions')).toBeNull();
   });
@@ -45,7 +45,7 @@ describe('MemberKeyInfo', () => {
     fixture.componentRef.setInput('data', { number: 2, available: true, description: '' });
     fixture.detectChanges();
 
-    expect(fixture.nativeElement.textContent).toContain('Sin socio asignado');
+    expect(fixture.nativeElement.textContent).toContain('Sin perfil asignado');
     expect(fixture.nativeElement.textContent).toContain('Sin información');
   });
 });

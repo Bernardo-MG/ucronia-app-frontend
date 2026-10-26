@@ -4,7 +4,7 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { MemberUpdate } from '@ucronia/api';
-import { ContactMethod, FeeType, Key, Member } from '@ucronia/domain';
+import { ContactMethod, FeeType, Member } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputGroupModule } from 'primeng/inputgroup';
@@ -29,7 +29,6 @@ export class MemberEditionForm {
   public readonly failures = input(new FailureStore());
   public readonly feeTypes = input<FeeType[]>([]);
   public readonly contactMethods = input<ContactMethod[]>([]);
-  public readonly keys = input<Key[]>([]);
 
   public readonly save = output<MemberUpdate>();
   public readonly cancelEdition = output<void>();
@@ -48,7 +47,6 @@ export class MemberEditionForm {
       birthDate: member.birthDate ?? null,
       address: member.address ?? '',
       comments: member.comments ?? '',
-      key: member.key ?? null,
       active: member.active,
       renew: member.renew
     });
@@ -75,7 +73,6 @@ export class MemberEditionForm {
     address: ['', Validators.maxLength(250)],
     comments: ['', Validators.maxLength(250)],
     contactChannels: this.fb.array([]),
-    key: this.fb.control<number | null>(null),
     active: [true],
     renew: [true]
   });
@@ -127,7 +124,6 @@ export class MemberEditionForm {
       address: value.address ?? '',
       comments: value.comments ?? '',
       contactChannels: this.contactChannels.getRawValue(),
-      key: value.key ?? undefined,
       active: value.active ?? false,
       renew: value.renew ?? false
     };

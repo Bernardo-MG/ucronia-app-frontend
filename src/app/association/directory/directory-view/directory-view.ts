@@ -2,7 +2,6 @@ import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
-import { MemberKeyService } from '@app/association/members/member-key-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -11,7 +10,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { ContactMethod, FeeType, Key, MemberStatus } from '@ucronia/domain';
+import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -44,7 +43,6 @@ export class DirectoryView implements OnInit {
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
-  private readonly keyService = inject(MemberKeyService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -62,7 +60,6 @@ export class DirectoryView implements OnInit {
   public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
   public feeTypes: FeeType[] = [];
-  public keys: Key[] = [];
   public profiles = new Page<FullProfile>();
   public summary = new DirectorySummary();
 
@@ -98,15 +95,13 @@ export class DirectoryView implements OnInit {
       forkJoin({
         profile: this.directoryService.getOne(this.selectedData.number),
         contactMethodSelection: this.contactMethodService.getAllAvailable(),
-        feeTypes: this.feeTypeService.getAllAvailable(),
-        keys: this.keyService.getAllAvailable()
+        feeTypes: this.feeTypeService.getAllAvailable()
       })
     )
-      .subscribe(({ profile, contactMethodSelection, feeTypes, keys }) => {
+      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
         this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
         this.feeTypes = feeTypes;
-        this.keys = keys;
       });
   }
 
