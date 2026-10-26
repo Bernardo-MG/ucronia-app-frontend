@@ -4,5 +4,5 @@
   </p-inputgroup-addon>
   <p-autocomplete [inputId]="inputId()" [disabled]="disabled()" ariaLabel="Buscar socio" class="w-full" name="memberSearch" [ngModel]="member()" [suggestions]="members()" optionLabel="name.fullName" dataKey="number"
     [forceSelection]="true" placeholder="Buscar socio..." (completeMethod)="searchMember.emit({ query: $event.query })"
-    (onSelect)="selectMember.emit($event.value)" appendTo="body" />
+    (onSelect)="selectMember.emit($event.value)" (ngModelChange)="onMemberChange($event)" (onClear)="clearMember.emit()" appendTo="body" />
 </p-inputgroup>

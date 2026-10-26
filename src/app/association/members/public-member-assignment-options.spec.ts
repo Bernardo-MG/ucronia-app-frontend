@@ -16,18 +16,19 @@ describe('PublicMemberService - assignment options', () => {
     service = TestBed.inject(PublicMemberService);
   });
 
-  it('loads every public member page and retains profile numbers independently of member numbers', () => {
-    const first = Object.assign(new PublicMember(), { number: 12, memberNumber: 37 });
-    const second = Object.assign(new PublicMember(), { number: 15, memberNumber: 42 });
-    endpointMock.page.and.returnValues(
-      of(Object.assign(new Page<PublicMember>(), { content: [first], page: 1, last: false })),
-      of(Object.assign(new Page<PublicMember>(), { content: [second], page: 2, last: true }))
-    );
+  it('searches the first ten public members by name and retains their profile numbers', () => {
+    const member = Object.assign(new PublicMember(), { number: 12, memberNumber: 37 });
+    endpointMock.page.and.returnValue(of(Object.assign(new Page<PublicMember>(), { content: [member] })));
     let result: PublicMember[] = [];
 
-    service.getAllAvailable().subscribe(members => (result = members));
+    service.searchMembers(' Ana ').subscribe(members => (result = members));
 
-    expect(result).toEqual([first, second]);
-    expect(endpointMock.page.calls.allArgs().map(args => args.slice(0, 2))).toEqual([[1, 100], [2, 100]]);
+    expect(result).toEqual([member]);
+    expect(endpointMock.page).toHaveBeenCalledTimes(1);
+    const [page, size, sorting, name] = endpointMock.page.calls.mostRecent().args;
+    expect(page).toBeUndefined();
+    expect(size).toBe(10);
+    expect(name).toBe('Ana');
+    expect(sorting?.properties.map(property => property.property)).toEqual(['name.firstName', 'name.lastName', 'memberNumber']);
   });
 });

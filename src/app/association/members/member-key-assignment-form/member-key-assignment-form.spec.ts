@@ -1,4 +1,6 @@
 import { ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { MemberSearch } from '@app/shared/member/member-search/member-search';
 import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { PublicMember } from '@ucronia/domain';
 import { MemberKeyAssignmentForm } from './member-key-assignment-form';
@@ -27,13 +29,11 @@ describe('MemberKeyAssignmentForm', () => {
     expect(save).not.toHaveBeenCalled();
   });
 
-  it('displays the member number but emits the profile number', () => {
+  it('selects a search result and emits its profile number', () => {
     const save = spyOn(component.save, 'emit');
 
-    editForm(component.form, { profile: 12 });
+    component.onSelectMember(component.members()[0]);
     component.onSave();
-
-    expect(component.options).toEqual([{ number: 12, label: '#37 - Ana López' }]);
     expect(save).toHaveBeenCalledOnceWith(12);
   });
 
@@ -56,4 +56,26 @@ describe('MemberKeyAssignmentForm', () => {
 
     expect(save).not.toHaveBeenCalled();
   });
+  it('forwards typed searches through the shared member search and clears the previous selection', () => {
+    const search = spyOn(component.searchMember, 'emit');
+    const memberSearch = fixture.debugElement.query(By.directive(MemberSearch)).componentInstance as MemberSearch;
+    component.onSelectMember(component.members()[0]);
+
+    memberSearch.searchMember.emit({ query: 'Luis' });
+
+    expect(search).toHaveBeenCalledOnceWith({ query: 'Luis' });
+    expect(component.form.controls.profile.value).toBeNull();
+    expect(component.saveEnabled).toBeFalse();
+  });
+
+  it('clears the selected profile when the search input is cleared', () => {
+    const memberSearch = fixture.debugElement.query(By.directive(MemberSearch)).componentInstance as MemberSearch;
+    component.onSelectMember(component.members()[0]);
+
+    memberSearch.clearMember.emit();
+
+    expect(component.form.controls.profile.value).toBeNull();
+    expect(component.saveEnabled).toBeFalse();
+  });
+
 });

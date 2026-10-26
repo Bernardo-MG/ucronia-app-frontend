@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { MemberCount, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { PublicMember } from '@ucronia/domain';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +22,15 @@ export class PublicMemberService {
     return this.ucroniaClient.member.page(page, undefined, sorting, name);
   }
 
-  public getAllAvailable(): Observable<PublicMember[]> {
+  public searchMembers(query: string): Observable<PublicMember[]> {
     const sorting = new Sorting([
       new SortingProperty('name.firstName'),
       new SortingProperty('name.lastName'),
       new SortingProperty('memberNumber')
     ]);
 
-    return getAllPages((page, size) => this.ucroniaClient.member.page(page, size, sorting));
+    return this.ucroniaClient.member.page(undefined, 10, sorting, query.trim())
+      .pipe(map(page => page.content));
   }
 
   public getSummary(): Observable<MemberCount> {

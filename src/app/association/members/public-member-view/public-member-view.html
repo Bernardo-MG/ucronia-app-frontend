@@ -173,7 +173,8 @@
             [showActions]="false"
             [members]="assignmentMembers"
             [failures]="failures"
-            [loading]="status.saving || status.loadingAssignmentMembers || status.assignmentMembersError"
+            [loading]="status.saving"
+            (searchMember)="loadAssignmentMembers($event.query)"
             (save)="onAssignKey($event)" />
         </div>
       }
@@ -289,7 +290,7 @@
             formId="public-member-view-assign-key"
             [submitLabel]="selectedKey.profile ? 'Reasignar llave' : 'Asignar llave'"
             submitIcon="pi pi-check"
-            [disabled]="!fieldsKeyAssignmentForm()?.saveEnabled"
+            [disabled]="!fieldsKeyAssignmentForm()?.saveEnabled || status.loadingAssignmentMembers || status.assignmentMembersError"
             [loading]="status.saving || status.loadingAssignmentMembers"
             (cancelForm)="onCancelKeyAssignment()" />
         }

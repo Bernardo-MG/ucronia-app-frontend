@@ -23,7 +23,7 @@ describe('PublicMemberView - assign key', () => {
   let component: PublicMemberView;
 
   const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
-  const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('PublicMemberService', ['getAll', 'getSummary', 'getAllAvailable']);
+  const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('PublicMemberService', ['getAll', 'getSummary', 'searchMembers']);
   const keyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['getAll', 'assign', 'reassign']);
   const profileServiceMock = jasmine.createSpyObj<MemberProfileService>('MemberProfileService', ['getOne']);
   const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
@@ -35,8 +35,8 @@ describe('PublicMemberView - assign key', () => {
 
   beforeEach(async () => {
     authServiceMock.hasPermission.and.returnValue(true);
-    memberServiceMock.getAllAvailable.calls.reset();
-    memberServiceMock.getAllAvailable.and.returnValue(of([member]));
+    memberServiceMock.searchMembers.calls.reset();
+    memberServiceMock.searchMembers.and.returnValue(of([member]));
     memberServiceMock.getAll.and.returnValue(of(new Page<PublicMember>()));
     memberServiceMock.getSummary.and.returnValue(of(new MemberCount()));
     keyServiceMock.getAll.calls.reset();
@@ -78,13 +78,17 @@ describe('PublicMemberView - assign key', () => {
     fixture.detectChanges();
 
     expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
+    expect(component.assignmentMembers).toEqual([]);
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
+    component.loadAssignmentMembers('Ana');
     expect(component.assignmentMembers).toEqual([member]);
-    expect(memberServiceMock.getAllAvailable).toHaveBeenCalledTimes(1);
+    expect(memberServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana');
     expect(profileServiceMock.getOne).not.toHaveBeenCalled();
   });
 
   it('saves the assignment through the drawer footer using native form submission', async () => {
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -115,6 +119,7 @@ describe('PublicMemberView - assign key', () => {
 
   it('cancels assignment through the drawer footer without saving', async () => {
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -157,7 +162,7 @@ describe('PublicMemberView - assign key', () => {
     restricted.onAssignKey(12);
 
     expect(assignmentButton(restrictedFixture)).toBeUndefined();
-    expect(memberServiceMock.getAllAvailable).not.toHaveBeenCalled();
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
     restrictedFixture.destroy();
   });
@@ -172,12 +177,12 @@ describe('PublicMemberView - assign key', () => {
     restricted.onShowKeyAssignment();
 
     expect(restricted.dialog).toBe(Dialog.KEY_INFO);
-    expect(memberServiceMock.getAllAvailable).not.toHaveBeenCalled();
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
     restrictedFixture.destroy();
   });
 
   it('reassigns an assigned key through the drawer footer and refreshes the list', async () => {
-    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
     component.selectedTab = 'keys';
     component.onShowKey(assigned);
     fixture.detectChanges();
@@ -195,6 +200,8 @@ describe('PublicMemberView - assign key', () => {
     const form = component.fieldsKeyAssignmentForm();
     const submit = drawer.container?.querySelector<HTMLButtonElement>('[data-pc-section="footer"] button[data-action="submit"]');
 
+    form?.searchMember.emit({ query: 'Luis' });
+    fixture.detectChanges();
     expect(component.assignmentMembers).toEqual([other]);
     expect(submit?.form?.id).toBe('public-member-view-assign-key');
     expect(submit?.textContent).toContain('Reasignar llave');
@@ -203,7 +210,7 @@ describe('PublicMemberView - assign key', () => {
     if (!form || !submit) {
       return;
     }
-    editForm(form.form, { profile: 15 });
+    form.onSelectMember(other);
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
@@ -220,10 +227,11 @@ describe('PublicMemberView - assign key', () => {
 
   it('allows reassignment with update permission and without creation permission', () => {
     component.permissions.keyAssignmentsCreate = false;
-    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
     component.onShowKey(assigned);
 
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
     component.onAssignKey(15);
 
     expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
@@ -240,19 +248,21 @@ describe('PublicMemberView - assign key', () => {
 
     expect(drawer.container?.textContent).not.toContain('Cambiar socio');
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
     component.dialog = Dialog.KEY_ASSIGN;
     component.assignmentMembers = [other];
     component.onAssignKey(15);
 
-    expect(memberServiceMock.getAllAvailable).not.toHaveBeenCalled();
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
     expect(keyServiceMock.reassign).not.toHaveBeenCalled();
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
   });
 
   it('rejects reassigning the key to its current profile', () => {
-    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
     component.onShowKey(assigned);
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
 
     component.onAssignKey(12);
 
@@ -261,10 +271,11 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('preserves the drawer and choices when reassignment fails', () => {
-    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
     keyServiceMock.reassign.and.returnValue(throwError(() => new Error('Unavailable')));
     component.onShowKey(assigned);
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
 
     component.onAssignKey(15);
 
@@ -279,6 +290,7 @@ describe('PublicMemberView - assign key', () => {
   it('assigns by profile number and refreshes the key list on the same tab', () => {
     component.selectedTab = 'keys';
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
 
     component.onAssignKey(37);
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
@@ -294,6 +306,7 @@ describe('PublicMemberView - assign key', () => {
   it('retains the form and member choices when assignment fails', () => {
     keyServiceMock.assign.and.returnValue(throwError(() => new Error('Conflict')));
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
 
     component.onAssignKey(12);
 
@@ -306,8 +319,9 @@ describe('PublicMemberView - assign key', () => {
 
   it('cancels member loading and ignores late responses when returning to key details', () => {
     const pending = new Subject<PublicMember[]>();
-    memberServiceMock.getAllAvailable.and.returnValue(pending);
+    memberServiceMock.searchMembers.and.returnValue(pending);
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
     component.onAssignKey(12);
 
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
@@ -321,18 +335,44 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('allows retrying failed member loading before assigning', () => {
-    memberServiceMock.getAllAvailable.and.returnValue(throwError(() => new Error('Unavailable')));
+    memberServiceMock.searchMembers.and.returnValue(throwError(() => new Error('Unavailable')));
     component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
     component.onAssignKey(12);
 
     expect(component.status.assignmentMembersError).toBeTrue();
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
 
-    memberServiceMock.getAllAvailable.and.returnValue(of([member]));
+    memberServiceMock.searchMembers.and.returnValue(of([member]));
     component.loadAssignmentMembers();
 
     expect(component.status.assignmentMembersError).toBeFalse();
     expect(component.assignmentMembers).toEqual([member]);
+  });
+
+  it('cancels an older search and ignores its late results', () => {
+    const pending = new Subject<PublicMember[]>();
+    memberServiceMock.searchMembers.and.returnValue(pending);
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    memberServiceMock.searchMembers.and.returnValue(of([other]));
+
+    component.loadAssignmentMembers('Luis');
+    pending.next([member]);
+
+    expect(pending.observed).toBeFalse();
+    expect(component.assignmentMembers).toEqual([other]);
+    expect(memberServiceMock.searchMembers).toHaveBeenCalledWith('Luis');
+  });
+
+  it('clears suggestions without requesting members for a blank search', () => {
+    component.onShowKeyAssignment();
+    component.assignmentMembers = [member];
+
+    component.loadAssignmentMembers('   ');
+
+    expect(component.assignmentMembers).toEqual([]);
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
   });
 
   function assignmentButton(viewFixture: ComponentFixture<PublicMemberView>): HTMLButtonElement | undefined {

@@ -1,15 +1,15 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PublicMember } from '@ucronia/domain';
 import { MessageModule } from 'primeng/message';
-import { SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'assoc-member-key-assignment-form',
-  imports: [ReactiveFormsModule, DrawerFormActions, MessageModule, SelectModule],
+  imports: [ReactiveFormsModule, DrawerFormActions, MessageModule, MemberSearch],
   templateUrl: './member-key-assignment-form.html'
 })
 export class MemberKeyAssignmentForm {
@@ -22,6 +22,7 @@ export class MemberKeyAssignmentForm {
   public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<number>();
+  public readonly searchMember = output<MemberSearchEvent>();
   public readonly cancelEdition = output<void>();
 
   public readonly form = this.fb.group({
@@ -34,11 +35,22 @@ export class MemberKeyAssignmentForm {
     this.formStatus.loading = value;
   }
 
-  public get options(): { number: number, label: string }[] {
-    return this.members().map(member => ({
-      number: member.number,
-      label: member.memberNumber == null ? member.name.fullName : `#${member.memberNumber} - ${member.name.fullName}`
-    }));
+  public onSelectMember(member: PublicMember): void {
+    if (!member || !this.members().some(option => option.number === member.number)) {
+      return;
+    }
+    this.form.controls.profile.setValue(member.number);
+    this.form.controls.profile.markAsDirty();
+  }
+
+  public onClearMember(): void {
+    this.form.controls.profile.setValue(null);
+    this.form.controls.profile.markAsDirty();
+  }
+
+  public onSearchMember(event: MemberSearchEvent): void {
+    this.onClearMember();
+    this.searchMember.emit(event);
   }
 
   public get saveEnabled(): boolean {

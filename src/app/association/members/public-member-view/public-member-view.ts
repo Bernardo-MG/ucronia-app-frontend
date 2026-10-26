@@ -51,6 +51,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
 
   private assignmentMembersRequest?: Subscription;
+  private assignmentMemberQuery = '';
   private keysReloadRequested = false;
   private memberRequest?: Subscription;
   private memberOptionsRequest?: Subscription;
@@ -235,10 +236,11 @@ export class PublicMemberView implements OnInit, OnDestroy {
     this.error = '';
     this.assignmentMembers = [];
     this.dialog = Dialog.KEY_ASSIGN;
-    this.loadAssignmentMembers();
+    this.assignmentMemberQuery = '';
+    this.status.assignmentMembersError = false;
   }
 
-  public loadAssignmentMembers(): void {
+  public loadAssignmentMembers(query: string = this.assignmentMemberQuery): void {
     if (
       !this.canAssignKey ||
       this.dialog !== Dialog.KEY_ASSIGN ||
@@ -248,10 +250,14 @@ export class PublicMemberView implements OnInit, OnDestroy {
       return;
     }
     this.assignmentMembersRequest?.unsubscribe();
-    this.status.loadingAssignmentMembers = true;
-    this.status.assignmentMembersError = false;
+    this.assignmentMemberQuery = query.trim();
     this.assignmentMembers = [];
-    this.assignmentMembersRequest = this.service.getAllAvailable()
+    this.status.assignmentMembersError = false;
+    if (!this.assignmentMemberQuery) {
+      return;
+    }
+    this.status.loadingAssignmentMembers = true;
+    this.assignmentMembersRequest = this.service.searchMembers(this.assignmentMemberQuery)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => (this.status.loadingAssignmentMembers = false))

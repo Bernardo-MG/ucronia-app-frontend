@@ -20,7 +20,7 @@ describe('MemberSearch', () => {
       imports: [MemberSearch]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MemberSearch);
+    fixture = TestBed.createComponent<MemberSearch>(MemberSearch);
     component = fixture.componentInstance;
 
     fixture.componentRef.setInput('members', [member]);
@@ -70,4 +70,20 @@ describe('MemberSearch', () => {
 
     expect(emitSpy).toHaveBeenCalledOnceWith(member);
   });
+  it('emits clearMember when the user types instead of selecting a suggestion', () => {
+    const emitSpy = spyOn(component.clearMember, 'emit');
+
+    component.onMemberChange('another member');
+
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('does not clear a selected suggestion', () => {
+    const emitSpy = spyOn(component.clearMember, 'emit');
+
+    component.onMemberChange(member);
+
+    expect(emitSpy).not.toHaveBeenCalled();
+  });
+
 });
