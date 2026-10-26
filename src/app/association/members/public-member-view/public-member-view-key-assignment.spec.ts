@@ -24,11 +24,12 @@ describe('PublicMemberView - assign key', () => {
 
   const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
   const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('PublicMemberService', ['getAll', 'getSummary', 'getAllAvailable']);
-  const keyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['getAll', 'assign']);
+  const keyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['getAll', 'assign', 'reassign']);
   const profileServiceMock = jasmine.createSpyObj<MemberProfileService>('MemberProfileService', ['getOne']);
   const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', ['getAllAvailable']);
   const member = Object.assign(new PublicMember(), { number: 12, memberNumber: 37, name: { fullName: 'Ana López' } });
+  const other = Object.assign(new PublicMember(), { number: 15, memberNumber: 42, name: { fullName: 'Luis García' } });
   const key: KeyAssignment = { number: 7, available: true, description: 'Principal' };
   const assigned: KeyAssignment = { ...key, profile: { number: 12, name: 'Ana López' } };
 
@@ -41,6 +42,8 @@ describe('PublicMemberView - assign key', () => {
     keyServiceMock.getAll.calls.reset();
     keyServiceMock.getAll.and.returnValue(of([assigned]));
     keyServiceMock.assign.calls.reset();
+    keyServiceMock.reassign.calls.reset();
+    keyServiceMock.reassign.and.returnValue(of({ ...key, profile: { number: 15, name: 'Luis García' } }));
     keyServiceMock.assign.and.returnValue(of(assigned));
     profileServiceMock.getOne.calls.reset();
 
@@ -173,15 +176,104 @@ describe('PublicMemberView - assign key', () => {
     restrictedFixture.destroy();
   });
 
-  it('does not create another assignment for an assigned key', () => {
+  it('reassigns an assigned key through the drawer footer and refreshes the list', async () => {
+    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    component.selectedTab = 'keys';
+    component.onShowKey(assigned);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const button = Array.from(drawer.container?.querySelectorAll<HTMLButtonElement>('button') ?? [])
+      .find(action => action.textContent?.trim() === 'Cambiar socio');
+
+    expect(button).toBeDefined();
+    button?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const form = component.fieldsKeyAssignmentForm();
+    const submit = drawer.container?.querySelector<HTMLButtonElement>('[data-pc-section="footer"] button[data-action="submit"]');
+
+    expect(component.assignmentMembers).toEqual([other]);
+    expect(submit?.form?.id).toBe('public-member-view-assign-key');
+    expect(submit?.textContent).toContain('Reasignar llave');
+    expect(form).toBeDefined();
+    expect(submit).toBeTruthy();
+    if (!form || !submit) {
+      return;
+    }
+    editForm(form.form, { profile: 15 });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(submit.disabled).toBeFalse();
+    submit.click();
+    fixture.detectChanges();
+
+    expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    expect(keyServiceMock.getAll).toHaveBeenCalledTimes(1);
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(component.selectedTab).toBe('keys');
+  });
+
+  it('allows reassignment with update permission and without creation permission', () => {
+    component.permissions.keyAssignmentsCreate = false;
+    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
     component.onShowKey(assigned);
 
     component.onShowKeyAssignment();
+    component.onAssignKey(15);
+
+    expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+  });
+
+  it('hides and rejects reassignment without assignment update permission', async () => {
+    component.permissions.keyAssignmentsEdit = false;
+    component.onShowKey(assigned);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+
+    expect(drawer.container?.textContent).not.toContain('Cambiar socio');
+    component.onShowKeyAssignment();
+    component.dialog = Dialog.KEY_ASSIGN;
+    component.assignmentMembers = [other];
+    component.onAssignKey(15);
+
+    expect(memberServiceMock.getAllAvailable).not.toHaveBeenCalled();
+    expect(keyServiceMock.reassign).not.toHaveBeenCalled();
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+  });
+
+  it('rejects reassigning the key to its current profile', () => {
+    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    component.onShowKey(assigned);
+    component.onShowKeyAssignment();
+
     component.onAssignKey(12);
 
-    expect(component.dialog).toBe(Dialog.KEY_INFO);
-    expect(memberServiceMock.getAllAvailable).not.toHaveBeenCalled();
+    expect(keyServiceMock.reassign).not.toHaveBeenCalled();
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
+  });
+
+  it('preserves the drawer and choices when reassignment fails', () => {
+    memberServiceMock.getAllAvailable.and.returnValue(of([member, other]));
+    keyServiceMock.reassign.and.returnValue(throwError(() => new Error('Unavailable')));
+    component.onShowKey(assigned);
+    component.onShowKeyAssignment();
+
+    component.onAssignKey(15);
+
+    expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
+    expect(component.assignmentMembers).toEqual([other]);
+    expect(component.selectedKey).toEqual(assigned);
+    expect(component.status.saving).toBeFalse();
+    expect(component.error).not.toBe('');
+    expect(keyServiceMock.getAll).not.toHaveBeenCalled();
   });
 
   it('assigns by profile number and refreshes the key list on the same tab', () => {

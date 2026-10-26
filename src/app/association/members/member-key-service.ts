@@ -88,6 +88,20 @@ export class MemberKeyService {
       );
   }
 
+  public reassign(number: number, profile: number): Observable<KeyAssignment> {
+    return this.ucroniaClient.keyAssignment.update(number, { profile })
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Asignación de llave actualizada',
+            life: 3000
+          });
+        })
+      );
+  }
+
   public getAll(): Observable<KeyAssignment[]> {
     const sorting = new Sorting([new SortingProperty('number')]);
     return getAllPages((page, size) => this.ucroniaClient.keyAssignment.page(page, size, sorting));

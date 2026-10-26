@@ -8,7 +8,7 @@ import { MemberKeyService } from './member-key-service';
 describe('MemberKeyService - assign', () => {
   let service: MemberKeyService;
 
-  const endpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['create']);
+  const endpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['create', 'update']);
   const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
   const assignment: KeyAssignment = {
     number: 7,
@@ -19,6 +19,8 @@ describe('MemberKeyService - assign', () => {
 
   beforeEach(() => {
     endpointMock.create.calls.reset();
+    endpointMock.update.calls.reset();
+    endpointMock.update.and.returnValue(of(assignment));
     messageServiceMock.add.calls.reset();
     endpointMock.create.and.returnValue(of(assignment));
 
@@ -53,4 +55,28 @@ describe('MemberKeyService - assign', () => {
     expect(result).toBe(failure);
     expect(messageServiceMock.add).not.toHaveBeenCalled();
   });
+  it('updates an existing assignment with the new profile number', () => {
+    let result: KeyAssignment | undefined;
+
+    service.reassign(7, 12).subscribe(value => (result = value));
+
+    expect(endpointMock.update).toHaveBeenCalledOnceWith(7, { profile: 12 });
+    expect(endpointMock.create).not.toHaveBeenCalled();
+    expect(result).toBe(assignment);
+    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+      severity: 'info', summary: 'Actualizado', detail: 'Asignación de llave actualizada', life: 3000
+    });
+  });
+
+  it('propagates reassignment failure without showing a success message', () => {
+    const failure = new Error('Unavailable');
+    endpointMock.update.and.returnValue(throwError(() => failure));
+    let result: unknown;
+
+    service.reassign(7, 12).subscribe({ error: error => (result = error) });
+
+    expect(result).toBe(failure);
+    expect(messageServiceMock.add).not.toHaveBeenCalled();
+  });
+
 });

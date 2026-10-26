@@ -114,6 +114,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
       delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete),
       keyAssignmentsRead: authService.hasPermission(UcroniaPermissions.keyAssignment.read),
       keyAssignmentsCreate: authService.hasPermission(UcroniaPermissions.keyAssignment.create),
+      keyAssignmentsEdit: authService.hasPermission(UcroniaPermissions.keyAssignment.update),
       keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
       keysDelete: authService.hasPermission(UcroniaPermissions.key.delete)
@@ -216,14 +217,16 @@ export class PublicMemberView implements OnInit, OnDestroy {
     this.dialog = Dialog.KEY_INFO;
   }
 
+  public get canAssignKey(): boolean {
+    return this.permissions.keyAssignmentsRead && this.permissions.read && !!this.selectedKey &&
+      (this.selectedKey.profile ? this.permissions.keyAssignmentsEdit : this.permissions.keyAssignmentsCreate);
+  }
+
   public onShowKeyAssignment(): void {
     if (
-      !this.permissions.keyAssignmentsRead ||
-      !this.permissions.keyAssignmentsCreate ||
-      !this.permissions.read ||
+      !this.canAssignKey ||
       this.dialog !== Dialog.KEY_INFO ||
       !this.selectedKey ||
-      this.selectedKey.profile ||
       this.status.saving
     ) {
       return;
@@ -237,12 +240,9 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public loadAssignmentMembers(): void {
     if (
-      !this.permissions.keyAssignmentsRead ||
-      !this.permissions.keyAssignmentsCreate ||
-      !this.permissions.read ||
+      !this.canAssignKey ||
       this.dialog !== Dialog.KEY_ASSIGN ||
       !this.selectedKey ||
-      this.selectedKey.profile ||
       this.status.saving
     ) {
       return;
@@ -257,7 +257,7 @@ export class PublicMemberView implements OnInit, OnDestroy {
         finalize(() => (this.status.loadingAssignmentMembers = false))
       )
       .subscribe({
-        next: members => (this.assignmentMembers = members),
+        next: members => (this.assignmentMembers = members.filter(member => member.number !== this.selectedKey?.profile?.number)),
         error: () => (this.status.assignmentMembersError = true)
       });
   }
@@ -274,12 +274,9 @@ export class PublicMemberView implements OnInit, OnDestroy {
 
   public onAssignKey(profile: number): void {
     if (
-      !this.permissions.keyAssignmentsRead ||
-      !this.permissions.keyAssignmentsCreate ||
-      !this.permissions.read ||
+      !this.canAssignKey ||
       this.dialog !== Dialog.KEY_ASSIGN ||
       !this.selectedKey ||
-      this.selectedKey.profile ||
       this.status.saving ||
       this.status.loadingAssignmentMembers ||
       this.status.assignmentMembersError ||
@@ -288,7 +285,9 @@ export class PublicMemberView implements OnInit, OnDestroy {
       return;
     }
     this.call(
-      () => this.keyService.assign(this.selectedKey!.number, profile),
+      () => this.selectedKey!.profile
+        ? this.keyService.reassign(this.selectedKey!.number, profile)
+        : this.keyService.assign(this.selectedKey!.number, profile),
       () => this.loadKeys(),
       'No se pudo asignar la llave. Revisa los datos e inténtalo de nuevo.'
     );
@@ -668,6 +667,7 @@ interface Permissions {
   delete: boolean;
   keyAssignmentsRead: boolean;
   keyAssignmentsCreate: boolean;
+  keyAssignmentsEdit: boolean;
   keysCreate: boolean;
   keysEdit: boolean;
   keysDelete: boolean;

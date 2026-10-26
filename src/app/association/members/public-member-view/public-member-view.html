@@ -154,7 +154,7 @@
     @case (Dialog.KEY_ASSIGN) {
       @if (selectedKey) {
         <ng-template #header>
-          <shared-drawer-header title="Asignar llave" icon="pi pi-user-plus" [subtitle]="'Llave #' + selectedKey.number" />
+          <shared-drawer-header [title]="selectedKey.profile ? 'Reasignar llave' : 'Asignar llave'" icon="pi pi-user-plus" [subtitle]="'Llave #' + selectedKey.number" />
         </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           @if (error) {
@@ -272,9 +272,9 @@
             (delete)="onDeleteKey($event)"
             (edit)="onShowKeyEdit()">
             <div drawerActionsEnd>
-              @if (!selectedKey.profile && permissions.keyAssignmentsCreate && permissions.read) {
+              @if (canAssignKey) {
                 <p-button
-                  label="Asignar socio"
+                  [label]="selectedKey.profile ? 'Cambiar socio' : 'Asignar socio'"
                   icon="pi pi-user-plus"
                   [disabled]="status.saving"
                   (onClick)="onShowKeyAssignment()" />
@@ -287,7 +287,7 @@
         @if (selectedKey) {
           <shared-drawer-form-actions
             formId="public-member-view-assign-key"
-            submitLabel="Asignar llave"
+            [submitLabel]="selectedKey.profile ? 'Reasignar llave' : 'Asignar llave'"
             submitIcon="pi pi-check"
             [disabled]="!fieldsKeyAssignmentForm()?.saveEnabled"
             [loading]="status.saving || status.loadingAssignmentMembers"
