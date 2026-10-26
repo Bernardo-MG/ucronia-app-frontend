@@ -68,4 +68,26 @@ export class MemberProfileService {
       );
   }
 
+  public delete(number: number): Observable<Member> {
+    return this.ucroniaClient.memberProfile.delete(number).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Borrado',
+          detail: 'Socio borrado',
+          life: 3000
+        });
+      }),
+      catchError(error => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'No se pudo borrar el socio',
+          life: 5000
+        });
+        return throwError(() => error);
+      })
+    );
+  }
+
 }
