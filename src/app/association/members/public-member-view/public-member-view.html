@@ -2,7 +2,7 @@
   <header class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
     <div>
       <h1 class="text-3xl font-bold tracking-tight text-gray-950">Socios</h1>
-      <p class="mt-1 text-sm text-gray-500">Consulta los socios y la asignación de llaves de la asociación</p>
+      <p class="mt-1 text-sm text-gray-500">Consulta los socios</p>
     </div>
     @if (selectedTab === 'members' && permissions.create) {
       <p-button type="button" label="Nuevo socio" icon="pi pi-plus" (onClick)="onCreateOpen()" />
