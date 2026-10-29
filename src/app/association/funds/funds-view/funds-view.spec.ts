@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { TransactionSummary } from '@ucronia/domain';
+import { Transaction, TransactionSummary } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 import { TransactionCalendarService } from '../transaction-calendar-service';
 import { TransactionReportService } from '../transaction-report-service';
@@ -30,7 +30,7 @@ describe('FundsView', () => {
 
   const transactionCalendarServiceMock = jasmine.createSpyObj<TransactionCalendarService>(
     'TransactionCalendarService',
-    ['getRange']
+    ['getRange', 'getCalendarInRange']
   );
 
   beforeEach(async () => {
@@ -43,6 +43,7 @@ describe('FundsView', () => {
     transactionCalendarServiceMock.getRange.and.returnValue(
       of([])
     );
+    transactionCalendarServiceMock.getCalendarInRange.and.returnValue(of([]));
 
     await TestBed.configureTestingModule({
       imports: [
@@ -63,6 +64,27 @@ describe('FundsView', () => {
     fixture = TestBed.createComponent(FundsView);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('reloads the selected month after a refresh', () => {
+    component.loadCalendar(new Date(2026, 0, 1));
+    component.loadCalendar();
+    expect(transactionCalendarServiceMock.getCalendarInRange).toHaveBeenCalledWith(2026, 0);
+    expect(transactionCalendarServiceMock.getCalendarInRange.calls.mostRecent().args).toEqual([2026, 0]);
+  });
+
+  it('ignores an older calendar response after selecting a new month', () => {
+    const january = new Subject<Transaction[]>();
+    const february = new Subject<Transaction[]>();
+    transactionCalendarServiceMock.getCalendarInRange.and.returnValues(january, february);
+
+    component.loadCalendar(new Date(2026, 0, 1));
+    component.loadCalendar(new Date(2026, 1, 1));
+    expect(january.observed).toBeFalse();
+
+    january.next([{ index: 1 } as Transaction]);
+    february.next([{ index: 2 } as Transaction]);
+    expect(component.transactions.map(t => t.index)).toEqual([2]);
   });
 
   it('should create', () => {

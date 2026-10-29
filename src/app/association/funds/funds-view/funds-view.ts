@@ -14,7 +14,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
@@ -41,6 +41,8 @@ export class FundsView implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
 
   public months: Date[] = [];
+  private selectedCalendarMonth?: Date;
+  private calendarRequest?: Subscription;
 
   public readonly status: Status = {
     loading: false,
@@ -186,9 +188,15 @@ export class FundsView implements OnInit {
 
   // DATA LOADING
 
-  public loadCalendar(month: Date = this.getDefaultMonth()) {
+  public loadCalendar(month?: Date): void {
+    const selectedMonth = month ?? this.selectedCalendarMonth ?? this.getDefaultMonth();
+    this.selectedCalendarMonth = selectedMonth;
+
+    // Prevent an older month's response from replacing the current month's events.
+    this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
-    this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
+    this.calendarRequest = this.transactionCalendarService
+      .getCalendarInRange(selectedMonth.getFullYear(), selectedMonth.getMonth())
       .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }
