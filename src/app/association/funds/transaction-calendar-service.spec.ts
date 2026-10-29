@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
 import { Transaction } from '@ucronia/domain';
-import { addDays, lastDayOfMonth, startOfMonth } from 'date-fns';
 import { firstValueFrom, of, throwError } from 'rxjs';
 import { TransactionCalendarService } from './transaction-calendar-service';
 
@@ -27,14 +26,22 @@ describe('TransactionCalendarService', () => {
     return { page: 1, last: true, content };
   }
 
-  it('requests the selected local month with seven-day margins', async () => {
+  it('requests exactly the Monday-first calendar grid with inclusive end of day', async () => {
     page.and.returnValue(of(lastPage()));
     await firstValueFrom(service.getCalendarInRange(2026, 6)); // July (zero-based)
     const args = page.calls.mostRecent().args;
     expect(args[0]).toBe(1);
     expect(args[1]).toBe(100);
-    expect(args[4].getTime()).toBe(addDays(startOfMonth(new Date(2026, 6)), -7).getTime());
-    expect(args[5].getTime()).toBe(addDays(lastDayOfMonth(new Date(2026, 6)), 7).getTime());
+    expect(args[4]).toEqual(new Date(2026, 5, 29, 0, 0, 0, 0));
+    expect(args[5]).toEqual(new Date(2026, 7, 2, 23, 59, 59, 999));
+  });
+
+  it('includes only visible adjacent-month days for February 2026', async () => {
+    page.and.returnValue(of(lastPage()));
+    await firstValueFrom(service.getCalendarInRange(2026, 1));
+    const args = page.calls.mostRecent().args;
+    expect(args[4]).toEqual(new Date(2026, 0, 26, 0, 0, 0, 0));
+    expect(args[5]).toEqual(new Date(2026, 2, 1, 23, 59, 59, 999));
   });
 
   it('handles month ranges spanning a year boundary', async () => {
@@ -51,8 +58,10 @@ describe('TransactionCalendarService', () => {
     const args = page.calls.mostRecent().args;
     expect(args[4].getHours()).toBe(0);
     expect(args[4].getMinutes()).toBe(0);
-    expect(args[5].getHours()).toBe(0);
-    expect(args[5].getMinutes()).toBe(0);
+    expect(args[5].getHours()).toBe(23);
+    expect(args[5].getMinutes()).toBe(59);
+    expect(args[5].getSeconds()).toBe(59);
+    expect(args[5].getMilliseconds()).toBe(999);
   });
 
   it('combines transactions from all pages', async () => {

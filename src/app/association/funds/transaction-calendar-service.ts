@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
-import { Page } from '@bernardo-mg/request';
 import { Month } from '@bernardo-mg/ui';
 import { UcroniaClient } from '@ucronia/api';
 import { Transaction } from '@ucronia/domain';
-import { addDays, lastDayOfMonth, startOfMonth } from 'date-fns';
+import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from 'date-fns';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,14 +15,12 @@ export class TransactionCalendarService {
 
   public getCalendarInRange(year: number, month: number): Observable<Transaction[]> {
     const date = new Date(year, month);
-    const from = startOfMonth(date);
-    const to = lastDayOfMonth(date);
-
-    const fromWithMargin = addDays(from, -7);
-    const toWithMargin = addDays(to, 7);
+    // Match the Monday-first grid in calendar-month.html.
+    const from = startOfWeek(startOfMonth(date), { weekStartsOn: 1 });
+    const to = endOfWeek(endOfMonth(date), { weekStartsOn: 1 });
 
     return getAllPages((page, size) => this.ucroniaClient.transaction
-      .page(page, size, undefined, undefined, fromWithMargin, toWithMargin));
+      .page(page, size, undefined, undefined, from, to));
   }
 
   public getRange(): Observable<Month[]> {
