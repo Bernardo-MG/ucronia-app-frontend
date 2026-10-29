@@ -149,4 +149,60 @@ describe('CalendarMonth', () => {
 
   });
 
+  describe('drawer', () => {
+    it('closes an expanded day when the same day is selected again', () => {
+      const date = new Date(component.viewDate);
+      const events: CalendarEvent[] = [{ start: date, title: 'Payment' }];
+      component.onSelectDay({ date, events });
+      expect(component.activeDayIsOpen).toBeTrue();
+      component.onSelectDay({ date, events });
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+
+    it('does not open an empty day after another day was expanded', () => {
+      component.month = new Date(2024, 5, 1);
+      const first = new Date(2024, 5, 10);
+      component.onSelectDay({ date: first, events: [{ start: first, title: 'Payment' }] });
+      component.onSelectDay({ date: new Date(2024, 5, 11), events: [] });
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+
+    it('does not change the displayed month or open state for an adjacent-month day', () => {
+      component.month = new Date(2024, 5, 1);
+      const oldViewDate = component.viewDate;
+      component.onSelectDay({ date: new Date(2024, 6, 1), events: [{ start: new Date(2024, 6, 1), title: 'Payment' }] });
+      expect(component.viewDate).toBe(oldViewDate);
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+
+    it('closes the expanded day when navigating to another month', () => {
+      const date = new Date(component.viewDate);
+      component.onSelectDay({ date, events: [{ start: date, title: 'Payment' }] });
+      component.onGoTo({ value: new Date(2024, 3, 1) });
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+  });
+
+  describe('badges', () => {
+    it('sets badge counts for days with zero, one, and multiple events', () => {
+      const date = new Date(2024, 3, 1);
+      const event: CalendarEvent = { start: date, title: 'Payment' };
+      const days = [[], [event], [event, event]].map(events => ({ events, badgeTotal: -1 }));
+      component.beforeMonthViewRender({ body: days as any });
+      expect(days.map(day => day.badgeTotal)).toEqual([0, 1, 2]);
+    });
+  });
+
+  describe('selection months', () => {
+    it('preserves a month across a refresh even when the date within that month differs', () => {
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.detectChanges();
+      component.onGoTo({ value: new Date(2024, 0, 29) });
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 15), new Date(2024, 1, 15)]);
+      fixture.detectChanges();
+      expect(component.viewDate.getMonth()).toBe(0);
+      expect(component.month).toBe(component.selectionMonths[0].value);
+    });
+  });
+
 });
