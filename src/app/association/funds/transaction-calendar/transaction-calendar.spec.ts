@@ -1,3 +1,4 @@
+import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionCalendar } from './transaction-calendar';
 
@@ -7,7 +8,8 @@ describe('TransactionCalendar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TransactionCalendar]
+      imports: [TransactionCalendar],
+      providers: [{ provide: LOCALE_ID, useValue: 'es-ES' }]
     })
       .compileComponents();
 
@@ -31,9 +33,18 @@ describe('TransactionCalendar', () => {
     expect(component.events.length).toBe(3);
     expect(component.events[0].color).toEqual(component.events[1].color);
     expect(component.events[2].color).not.toEqual(component.events[0].color);
-    expect(component.events[0].title).toBe('Income (25€)');
-    expect(component.events[2].title).toBe('Expense (-10€)');
+    expect(component.events[0].title).toBe('Income (25,00 €)');
+    expect(component.events[2].title).toBe('Expense (-10,00 €)');
+    expect(component.events[1].title).toBe('Zero (0,00 €)');
     expect(component.events.map(e => e.meta?.transactionId)).toEqual([1, 2, 3]);
+  });
+
+  it('formats decimal amounts using the configured locale', () => {
+    fixture.componentRef.setInput('transactions', [
+      { index: 1, description: 'Membership', amount: 1250.5, date: new Date() }
+    ]);
+    fixture.detectChanges();
+    expect(component.events[0].title).toBe('Membership (1250,50 €)'.replace('1250', '1.250'));
   });
 
   it('preserves the original UTC instant in calendar events', () => {

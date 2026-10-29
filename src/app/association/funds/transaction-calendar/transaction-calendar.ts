@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, LOCALE_ID, OnChanges, output, SimpleChanges } from '@angular/core';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarMonth } from '@bernardo-mg/ui';
 import { Transaction } from '@ucronia/domain';
@@ -18,6 +18,11 @@ export class TransactionCalendar implements OnChanges {
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<number>();
 
+  private readonly currencyFormatter = new Intl.NumberFormat(inject(LOCALE_ID), {
+    style: 'currency',
+    currency: 'EUR'
+  });
+
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   public ngOnChanges({ transactions }: SimpleChanges): void {
@@ -30,7 +35,7 @@ export class TransactionCalendar implements OnChanges {
           color = Colors.red;
         }
         return {
-          title: `${t.description} (${t.amount}€)`,
+          title: `${t.description} (${this.currencyFormatter.format(t.amount)})`,
           color: color,
           start: t.date,
           meta: {
