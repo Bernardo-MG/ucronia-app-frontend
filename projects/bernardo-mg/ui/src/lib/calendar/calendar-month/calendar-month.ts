@@ -48,7 +48,6 @@ export class CalendarMonth implements OnChanges {
       this.selectionMonths = this.months()
         .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
       this.updateCurrentMonth();
-      this.loadInitialMonth();
     }
   }
 
@@ -70,24 +69,15 @@ export class CalendarMonth implements OnChanges {
     body.forEach((day) => day.badgeTotal = day.events.length);
   }
 
-  private updateCurrentMonth() {
-    if (!this.months().length) {
-      this.viewDate = new Date();
-    } else {
-      const exists = this.months().some(m => m === this.viewDate);
-      if (!exists) {
-        // Choose latest date
-        this.viewDate = this.months()[this.months().length - 1];
-      }
-    }
-  }
-
-  private loadInitialMonth() {
-    if (this.months().length > 0) {
-      this.month = this.months()[0];
-    } else {
+  private updateCurrentMonth(): void {
+    const months = this.months();
+    if (!months.length) {
       this.month = new Date();
+      return;
     }
+
+    const selectedMonth = months.find(m => isSameMonth(m, this.viewDate));
+    this.month = selectedMonth ?? months[months.length - 1];
   }
 
 }

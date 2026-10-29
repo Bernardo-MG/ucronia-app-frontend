@@ -68,9 +68,8 @@ describe('CalendarMonth', () => {
       expect(component.selectionMonths[0].label).toBe(format(months[0], 'yyyy MMMM'));
     });
 
-    it('should call updateCurrentMonth and loadInitialMonth when months change', () => {
+    it('should call updateCurrentMonth when months change', () => {
       spyOn<any>(component, 'updateCurrentMonth');
-      spyOn<any>(component, 'loadInitialMonth');
 
       component.ngOnChanges({
         months: {
@@ -82,7 +81,42 @@ describe('CalendarMonth', () => {
       });
 
       expect(component['updateCurrentMonth']).toHaveBeenCalled();
-      expect(component['loadInitialMonth']).toHaveBeenCalled();
+    });
+
+
+    it('should preserve the selected month when months are refreshed with new Date instances', () => {
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.detectChanges();
+      component.onGoTo({ value: new Date(2024, 0, 15) });
+
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.detectChanges();
+
+      expect(component.viewDate.getFullYear()).toBe(2024);
+      expect(component.viewDate.getMonth()).toBe(0);
+      expect(component.month).toBe(component.selectionMonths[0].value);
+    });
+
+    it('should select the latest available month when the selected month is absent', () => {
+      component.month = new Date(2023, 5, 1);
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.detectChanges();
+
+      expect(component.viewDate.getFullYear()).toBe(2024);
+      expect(component.viewDate.getMonth()).toBe(1);
+      expect(component.month).toBe(component.selectionMonths[1].value);
+    });
+
+    it('should default to the current month when no months are available', () => {
+      component.month = new Date(2020, 0, 1);
+      const before = new Date();
+      fixture.componentRef.setInput('months', []);
+      fixture.detectChanges();
+      const after = new Date();
+
+      expect(component.viewDate.getTime()).toBeGreaterThanOrEqual(before.getTime());
+      expect(component.viewDate.getTime()).toBeLessThanOrEqual(after.getTime());
+      expect(component.month).toBe(component.viewDate);
     });
 
   });
