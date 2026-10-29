@@ -87,6 +87,33 @@ describe('FundsView', () => {
     expect(component.transactions.map(t => t.index)).toEqual([2]);
   });
 
+  it('refreshes available months after updating a transaction', () => {
+    transactionServiceMock.update.and.returnValue(of({} as Transaction));
+    transactionCalendarServiceMock.getRange.and.returnValue(of([
+      { year: 2026, month: 1 },
+      { year: 2026, month: 3 }
+    ]));
+
+    component.loadCalendar(new Date(2026, 0, 1));
+    component.onUpdate({ index: 1 } as Transaction);
+
+    expect(component.months.map(m => m.getMonth())).toEqual([0, 2]);
+    expect(transactionCalendarServiceMock.getCalendarInRange.calls.mostRecent().args).toEqual([2026, 0]);
+  });
+
+  it('falls back to the newest available month if the selected month disappears', () => {
+    transactionServiceMock.update.and.returnValue(of({} as Transaction));
+    transactionCalendarServiceMock.getRange.and.returnValue(of([
+      { year: 2026, month: 2 },
+      { year: 2026, month: 4 }
+    ]));
+
+    component.loadCalendar(new Date(2026, 0, 1));
+    component.onUpdate({ index: 1 } as Transaction);
+
+    expect(transactionCalendarServiceMock.getCalendarInRange.calls.mostRecent().args).toEqual([2026, 3]);
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });

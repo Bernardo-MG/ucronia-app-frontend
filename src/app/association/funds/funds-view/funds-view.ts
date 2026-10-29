@@ -85,22 +85,10 @@ export class FundsView implements OnInit {
   }
 
   public ngOnInit(): void {
-    // Read range
-    this.transactionCalendarService.getRange()
-      .subscribe(months => {
-        // To show in the selection box we have to reverse the order
-        // TODO: months should start in 0
-        this.months = months
-          .map(m => new Date(m.year, m.month - 1));
-        // TODO: then sort the months instead of reversing
-        this.months = [...this.months].reverse();
-        if (!this.status.loadingCalendar) {
-          this.loadCalendar();
-        }
-        if (!this.status.loadingList) {
-          this.loadList();
-        }
-      });
+    this.refreshMonths(() => {
+      this.loadCalendar();
+      this.loadList();
+    });
 
     // Read summary
     this.status.loadingSummary = true;
@@ -114,14 +102,14 @@ export class FundsView implements OnInit {
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.load()
+      () => this.refreshMonths(() => this.load())
     );
   }
 
   public onUpdate(toUpdate: Transaction): void {
     this.call(
       () => this.service.update(toUpdate),
-      () => this.load()
+      () => this.refreshMonths(() => this.load())
     );
   }
 
@@ -141,7 +129,7 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(this.selectedData.index),
-        () => this.load()
+        () => this.refreshMonths(() => this.load())
       )
     });
   }
@@ -219,6 +207,25 @@ export class FundsView implements OnInit {
   }
 
   // PRIVATE METHODS
+
+  private refreshMonths(onSuccess: () => void): void {
+    this.transactionCalendarService.getRange()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(months => {
+        // The backend returns months in ascending chronological order.
+        this.months = months.map(m => new Date(m.year, m.month - 1));
+
+        // Keep the displayed month if it is still available; otherwise
+        // select the newest available month (or today when there are none).
+        if (!this.selectedCalendarMonth || !this.months.some(m =>
+          m.getFullYear() === this.selectedCalendarMonth!.getFullYear() &&
+          m.getMonth() === this.selectedCalendarMonth!.getMonth())) {
+          this.selectedCalendarMonth = this.months.at(-1) ?? new Date();
+        }
+
+        onSuccess();
+      });
+  }
 
   private call(
     action: () => Observable<any>,
