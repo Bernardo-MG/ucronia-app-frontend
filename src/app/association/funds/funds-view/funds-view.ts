@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -39,6 +40,7 @@ export class FundsView implements OnInit {
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly destroyRef = inject(DestroyRef);
 
   public months: Date[] = [];
   private selectedCalendarMonth?: Date;
@@ -197,7 +199,7 @@ export class FundsView implements OnInit {
     this.status.loadingCalendar = true;
     this.calendarRequest = this.transactionCalendarService
       .getCalendarInRange(selectedMonth.getFullYear(), selectedMonth.getMonth())
-      .pipe(finalize(() => this.status.loadingCalendar = false))
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }
 
