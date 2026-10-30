@@ -15,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, Subscription } from 'rxjs';
+import { finalize, Observable, Subject, Subscription } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
@@ -64,6 +64,7 @@ export class FundsView implements OnInit {
   public transactions: Transaction[] = [];
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
+  public readonly transactionsChanged$ = new Subject<void>();
 
   public display = FundsDisplay.CALENDAR;
 
@@ -90,11 +91,7 @@ export class FundsView implements OnInit {
       this.loadList();
     });
 
-    // Read summary
-    this.status.loadingSummary = true;
-    this.transactionBalanceService.summary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(s => this.summary = s);
+    this.loadSummary();
   }
 
   // EVENT HANDLERS
@@ -102,14 +99,14 @@ export class FundsView implements OnInit {
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.refreshMonths(() => this.load())
+      () => this.refreshAfterChange()
     );
   }
 
   public onUpdate(toUpdate: Transaction): void {
     this.call(
       () => this.service.update(toUpdate),
-      () => this.refreshMonths(() => this.load())
+      () => this.refreshAfterChange()
     );
   }
 
@@ -129,7 +126,7 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(this.selectedData.index),
-        () => this.refreshMonths(() => this.load())
+        () => this.refreshAfterChange()
       )
     });
   }
@@ -207,6 +204,19 @@ export class FundsView implements OnInit {
   }
 
   // PRIVATE METHODS
+
+  private refreshAfterChange(): void {
+    this.refreshMonths(() => this.load());
+    this.loadSummary();
+    this.transactionsChanged$.next();
+  }
+
+  private loadSummary(): void {
+    this.status.loadingSummary = true;
+    this.transactionBalanceService.summary()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
+      .subscribe(s => this.summary = s);
+  }
 
   private refreshMonths(onSuccess: () => void): void {
     this.transactionCalendarService.getRange()

@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { Select } from 'primeng/select';
-import { BehaviorSubject, finalize, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, finalize, Observable, startWith, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 
 @Component({
@@ -17,6 +17,7 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
 
   private readonly service = inject(TransactionBalanceService);
   private readonly selectedRange$ = new BehaviorSubject<number>(6);
+  public readonly refresh = input<Observable<void>>();
 
   public readonly ranges = [
     { label: '3 meses', value: 3 },
@@ -117,9 +118,12 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
   }
 
   private setupBalanceReload(): void {
-    this.selectedRange$
+    combineLatest([
+      this.selectedRange$,
+      this.refresh()?.pipe(startWith(undefined)) ?? [undefined]
+    ])
       .pipe(
-        switchMap(range => {
+        switchMap(([range]) => {
           const now = new Date();
           const end = new Month(
             now.getFullYear(),
