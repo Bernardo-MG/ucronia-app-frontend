@@ -253,13 +253,7 @@ export class FundsView implements OnInit {
   }
 
   private getDefaultMonth() {
-    let month;
-    if (this.months.length) {
-      month = this.months[0];
-    } else {
-      month = new Date();
-    }
-    return month
+    return this.months.at(-1) ?? new Date();
   }
 
 }
