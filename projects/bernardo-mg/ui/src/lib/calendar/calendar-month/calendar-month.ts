@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { format, isSameDay, isSameMonth } from 'date-fns';
-import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
-
 
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, CalendarMonthViewComponent],
+  imports: [CommonModule, FormsModule, SelectModule, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
@@ -45,8 +43,10 @@ export class CalendarMonth implements OnChanges {
 
   public ngOnChanges({ months }: SimpleChanges): void {
     if (months) {
-      this.selectionMonths = this.months()
-        .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
+      this.selectionMonths = this.months().map(month => ({
+        value: month,
+        label: format(month, 'yyyy MMMM')
+      }));
       this.updateCurrentMonth();
     }
   }
@@ -71,14 +71,15 @@ export class CalendarMonth implements OnChanges {
 
   private updateCurrentMonth(): void {
     const months = this.months();
-    const selectedMonth = months.find(m => isSameMonth(m, this.viewDate));
-    const nextMonth = selectedMonth ?? months[months.length - 1] ?? new Date();
+    const month = months.find(m => isSameMonth(m, this.viewDate))
+      ?? months.at(-1)
+      ?? new Date();
 
-    if (!isSameMonth(this.viewDate, nextMonth)) {
+    if (!isSameMonth(this.viewDate, month)) {
       this.activeDayIsOpen = false;
     }
 
-    this.month = nextMonth;
+    this.month = month;
   }
 
 }

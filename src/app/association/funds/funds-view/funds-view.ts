@@ -179,7 +179,7 @@ export class FundsView implements OnInit {
   // DATA LOADING
 
   public loadCalendar(month?: Date): void {
-    const selectedMonth = month ?? this.selectedCalendarMonth ?? this.getDefaultMonth();
+    const selectedMonth = month ?? this.selectedCalendarMonth ?? this.months.at(-1) ?? new Date();
     this.selectedCalendarMonth = selectedMonth;
 
     // Prevent an older month's response from replacing the current month's events.
@@ -250,10 +250,6 @@ export class FundsView implements OnInit {
     } else {
       this.failures.clear();
     }
-  }
-
-  private getDefaultMonth() {
-    return this.months.at(-1) ?? new Date();
   }
 
 }

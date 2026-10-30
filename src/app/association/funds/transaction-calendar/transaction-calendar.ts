@@ -27,22 +27,12 @@ export class TransactionCalendar implements OnChanges {
 
   public ngOnChanges({ transactions }: SimpleChanges): void {
     if (transactions) {
-      this.events = this.transactions().map(t => {
-        let color;
-        if (t.amount >= 0) {
-          color = Colors.blue;
-        } else {
-          color = Colors.red;
-        }
-        return {
-          title: `${t.description} (${this.currencyFormatter.format(t.amount)})`,
-          color: color,
-          start: t.date,
-          meta: {
-            transactionId: t.index,
-          }
-        };
-      });
+      this.events = this.transactions().map(t => ({
+        title: `${t.description} (${this.currencyFormatter.format(t.amount)})`,
+        color: t.amount >= 0 ? Colors.blue : Colors.red,
+        start: t.date,
+        meta: { transactionId: t.index }
+      }));
     }
   }
 

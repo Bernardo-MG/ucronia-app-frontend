@@ -7,7 +7,7 @@ import { endOfMonth, endOfWeek, startOfMonth, startOfWeek } from 'date-fns';
 import { Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class TransactionCalendarService {
 
@@ -15,7 +15,6 @@ export class TransactionCalendarService {
 
   public getCalendarInRange(year: number, month: number): Observable<Transaction[]> {
     const date = new Date(year, month);
-    // Match the Monday-first grid in calendar-month.html.
     const from = startOfWeek(startOfMonth(date), { weekStartsOn: 1 });
     const to = endOfWeek(endOfMonth(date), { weekStartsOn: 1 });
 
