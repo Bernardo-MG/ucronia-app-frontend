@@ -71,13 +71,14 @@ export class CalendarMonth implements OnChanges {
 
   private updateCurrentMonth(): void {
     const months = this.months();
-    if (!months.length) {
-      this.month = new Date();
-      return;
+    const selectedMonth = months.find(m => isSameMonth(m, this.viewDate));
+    const nextMonth = selectedMonth ?? months[months.length - 1] ?? new Date();
+
+    if (!isSameMonth(this.viewDate, nextMonth)) {
+      this.activeDayIsOpen = false;
     }
 
-    const selectedMonth = months.find(m => isSameMonth(m, this.viewDate));
-    this.month = selectedMonth ?? months[months.length - 1];
+    this.month = nextMonth;
   }
 
 }
