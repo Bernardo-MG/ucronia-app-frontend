@@ -153,6 +153,45 @@ describe('FundsView', () => {
       .toEqual([2026, 3]);
   });
 
+  it('refreshes months after creating a transaction without reordering the backend result', () => {
+    transactionServiceMock.create.and.returnValue(of({} as Transaction));
+    transactionCalendarServiceMock.getRange.and.returnValue(of([
+      { year: 2025, month: 12 },
+      { year: 2026, month: 2 },
+      { year: 2026, month: 4 }
+    ]));
+
+    component.onCreate({ index: 1 } as Transaction);
+
+    expect(component.months.map(m => [m.getFullYear(), m.getMonth()])).toEqual([
+      [2025, 11], [2026, 1], [2026, 3]
+    ]);
+    expect(transactionCalendarServiceMock.getCalendarInRange.calls.mostRecent().args)
+      .toEqual([2026, 3]);
+  });
+
+  it('refreshes months after confirming deletion and falls back to the newest remaining month', () => {
+    const confirmationService = TestBed.inject(ConfirmationService);
+    const confirmSpy = spyOn(confirmationService, 'confirm').and.stub();
+    transactionServiceMock.delete.and.returnValue(of({}));
+    transactionCalendarServiceMock.getRange.and.returnValue(of([
+      { year: 2026, month: 2 },
+      { year: 2026, month: 4 }
+    ]));
+    component.selectedData = { index: 17 } as Transaction;
+    component.loadCalendar(new Date(2026, 0, 1));
+
+    component.onDelete({ currentTarget: null } as unknown as Event);
+    const accept = confirmSpy.calls.mostRecent().args[0].accept;
+    expect(accept).toBeDefined();
+    accept!();
+
+    expect(transactionServiceMock.delete).toHaveBeenCalledWith(17);
+    expect(component.months.map(m => m.getMonth())).toEqual([1, 3]);
+    expect(transactionCalendarServiceMock.getCalendarInRange.calls.mostRecent().args)
+      .toEqual([2026, 3]);
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
   });
