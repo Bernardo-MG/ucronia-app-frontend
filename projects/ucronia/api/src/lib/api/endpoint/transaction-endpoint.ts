@@ -168,21 +168,13 @@ export class TransactionEndpoint {
     return this.http.get<SimpleResponse<TransactionMonthsRange>>(`${this.apiUrl}/transaction/range`)
       .pipe(
         catchError(this.errorInterceptor.handle),
-        map(response => response.content),
-        map(r => this.mapTransactionMonthsRange(r))
+        map(response => response.content.months)
       );
   }
 
   private mapTransactionMonthlyBalance(balance: TransactionMonthlyBalance): TransactionMonthlyBalance {
     balance.month = new Date(balance.month);
     return balance;
-  }
-
-  private mapTransactionMonthsRange(range: TransactionMonthsRange): Month[] {
-    return range.months.map(m => {
-      const date = new Date(m);
-      return new Month(date.getFullYear(), date.getMonth() + 1);
-    });
   }
 
 }
