@@ -104,10 +104,22 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
       .pipe(
         switchMap(range => {
           const now = new Date();
-          const end = new Month(now.getFullYear(), now.getMonth() + 1);
-          const startDate = new Date(now);
-          startDate.setMonth(startDate.getMonth() - range);
-          const start = new Month(startDate.getFullYear(), startDate.getMonth() + 1);
+
+          const end = new Month(
+            now.getFullYear(),
+            now.getMonth() + 1
+          );
+
+          const startDate = new Date(
+            now.getFullYear(),
+            now.getMonth() - (range - 1),
+            1
+          );
+
+          const start = new Month(
+            startDate.getFullYear(),
+            startDate.getMonth() + 1
+          );
 
           this.loading = true;
 
