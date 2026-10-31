@@ -1,6 +1,7 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit, inject, output } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject, output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { MembershipEvolutionMonth } from '@ucronia/domain';
@@ -17,6 +18,7 @@ import { MembershipEvolutionService } from '../membership-evolution-service';
 export class MembershipEvolutionChartView implements OnInit, OnDestroy {
 
   private readonly service = inject(MembershipEvolutionService);
+  private readonly destroyRef = inject(DestroyRef);
 
   public readonly startMonthChange = output<string>();
   public readonly endMonthChange = output<string>();
@@ -125,7 +127,8 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
 
           return this.service.monthly(start, end)
             .pipe(finalize(() => (this.loading = false)));
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(data => {
         this.balance = data;
