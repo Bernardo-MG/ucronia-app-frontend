@@ -20,12 +20,12 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 export class CalendarMonth implements OnChanges {
 
   public readonly loading = input(false);
-  public readonly events = input<CalendarEvent<any>[]>([]);
+  public readonly events = input<CalendarEvent<unknown>[]>([]);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
-  public readonly pickDate = output<CalendarEvent<any>>();
+  public readonly pickDate = output<CalendarEvent<unknown>>();
 
   public _month = new Date();
   public get month() {
@@ -59,7 +59,7 @@ export class CalendarMonth implements OnChanges {
     this.changeMonth.emit(event.value);
   }
 
-  public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+  public onSelectDay({ date, events }: { date: Date; events: CalendarEvent<unknown>[] }): void {
     if (isSameMonth(date, this.viewDate)) {
       const sameDay = isSameDay(this.viewDate, date);
       this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;

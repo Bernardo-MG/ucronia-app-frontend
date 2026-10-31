@@ -37,9 +37,11 @@ export class TransactionCalendar implements OnChanges {
     }
   }
 
-  public onPickDate(event: CalendarEvent<{ transactionId: number }>) {
-    if (event.meta) {
-      this.pickDate.emit(event.meta.transactionId);
+  public onPickDate(event: CalendarEvent<unknown>): void {
+    const meta = event.meta;
+    if (typeof meta === 'object' && meta !== null && 'transactionId' in meta
+      && typeof meta.transactionId === 'number') {
+      this.pickDate.emit(meta.transactionId);
     }
   }
 
