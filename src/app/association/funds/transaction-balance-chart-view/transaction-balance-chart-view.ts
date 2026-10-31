@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
@@ -16,6 +17,7 @@ import { TransactionBalanceService } from '../transaction-balance-service';
 export class TransactionBalanceChartView implements OnInit, OnDestroy {
 
   private readonly service = inject(TransactionBalanceService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly selectedRange$ = new BehaviorSubject<number>(6);
   public readonly refresh = input<Observable<void>>();
 
@@ -149,7 +151,8 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
             .pipe(
               finalize(() => this.loading = false)
             );
-        })
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(balance => {
         this.balance = balance;
