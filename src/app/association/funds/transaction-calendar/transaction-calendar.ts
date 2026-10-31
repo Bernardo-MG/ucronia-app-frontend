@@ -14,6 +14,7 @@ export class TransactionCalendar implements OnChanges {
   public readonly transactions = input<Transaction[]>([]);
   public readonly loading = input(false);
   public readonly months = input<Date[]>([]);
+  public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<number>();

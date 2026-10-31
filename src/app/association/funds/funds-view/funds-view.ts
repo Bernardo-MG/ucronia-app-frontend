@@ -43,7 +43,7 @@ export class FundsView implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   public months: Date[] = [];
-  private selectedCalendarMonth?: Date;
+  public selectedCalendarMonth?: Date;
   private calendarRequest?: Subscription;
 
   public readonly status: Status = {

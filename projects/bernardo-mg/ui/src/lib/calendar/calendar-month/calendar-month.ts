@@ -22,6 +22,7 @@ export class CalendarMonth implements OnChanges {
   public readonly loading = input(false);
   public readonly events = input<CalendarEvent<any>[]>([]);
   public readonly months = input<Date[]>([]);
+  public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<any>>();
@@ -41,18 +42,19 @@ export class CalendarMonth implements OnChanges {
 
   public activeDayIsOpen = false;
 
-  public ngOnChanges({ months }: SimpleChanges): void {
+  public ngOnChanges({ months, selectedMonth }: SimpleChanges): void {
     if (months) {
       this.selectionMonths = this.months().map(month => ({
         value: month,
         label: format(month, 'yyyy MMMM')
       }));
+    }
+    if (months || selectedMonth) {
       this.updateCurrentMonth();
     }
   }
 
   public onGoTo(event: SelectChangeEvent) {
-    this.viewDate = event.value;
     this.activeDayIsOpen = false;
     this.changeMonth.emit(event.value);
   }
@@ -70,10 +72,7 @@ export class CalendarMonth implements OnChanges {
   }
 
   private updateCurrentMonth(): void {
-    const months = this.months();
-    const month = months.find(m => isSameMonth(m, this.viewDate))
-      ?? months.at(-1)
-      ?? new Date();
+    const month = this.selectedMonth() ?? this.months().at(-1) ?? new Date();
 
     if (!isSameMonth(this.viewDate, month)) {
       this.activeDayIsOpen = false;

@@ -70,7 +70,7 @@
       </div>
       @switch (display) {
         @case(FundsDisplay.CALENDAR) {
-          <assoc-transaction-calendar [transactions]="transactions" [months]="months" [loading]="status.loadingCalendar"
+          <assoc-transaction-calendar [transactions]="transactions" [months]="months" [selectedMonth]="selectedCalendarMonth" [loading]="status.loadingCalendar"
             (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
         }
         @case (FundsDisplay.LIST) {
