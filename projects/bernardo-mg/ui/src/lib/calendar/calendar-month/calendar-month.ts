@@ -27,13 +27,8 @@ export class CalendarMonth implements OnChanges {
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<unknown>>();
 
-  public _month = new Date();
-  public get month() {
-    return this._month;
-  }
-  public set month(value: Date) {
-    this._month = value;
-    this.viewDate = value;
+  public get month(): Date {
+    return this.viewDate;
   }
 
   public selectionMonths: { value: Date, label: string }[] = [];
@@ -60,11 +55,15 @@ export class CalendarMonth implements OnChanges {
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent<unknown>[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      const sameDay = isSameDay(this.viewDate, date);
-      this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;
-      this.viewDate = date;
+    if (!isSameMonth(date, this.viewDate)) {
+      return;
     }
+
+    const isCurrentDay = isSameDay(date, this.viewDate);
+    const isOpenDay = isCurrentDay && this.activeDayIsOpen;
+
+    this.activeDayIsOpen = events.length > 0 && !isOpenDay;
+    this.viewDate = date;
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
@@ -78,7 +77,7 @@ export class CalendarMonth implements OnChanges {
       this.activeDayIsOpen = false;
     }
 
-    this.month = month;
+    this.viewDate = month;
   }
 
 }
