@@ -6,7 +6,7 @@ import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { Select } from 'primeng/select';
-import { BehaviorSubject, combineLatest, finalize, Observable, startWith, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, defer, finalize, Observable, startWith, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 
 @Component({
@@ -144,13 +144,13 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
             startDate.getMonth() + 1
           );
 
-          this.loading = true;
-
-          return this.service
-            .monthly(start, end)
-            .pipe(
+          // Defer setting loading until the previous request has been canceled.
+          return defer(() => {
+            this.loading = true;
+            return this.service.monthly(start, end).pipe(
               finalize(() => this.loading = false)
             );
+          });
         }),
         takeUntilDestroyed(this.destroyRef)
       )
