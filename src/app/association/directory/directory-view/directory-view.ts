@@ -16,7 +16,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, forkJoin, Observable } from 'rxjs';
+import { finalize, forkJoin, Observable, Subscription } from 'rxjs';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';
 import { GuestList } from '../guest-list/guest-list';
@@ -40,6 +40,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 export class DirectoryView implements OnInit {
 
   private readonly directoryService = inject(DirectoryService);
+  private listRequest?: Subscription;
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
@@ -195,7 +196,8 @@ export class DirectoryView implements OnInit {
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
-    this.withLoading(
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
       this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
     )
       .subscribe(response => {

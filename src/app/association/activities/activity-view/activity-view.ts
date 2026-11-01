@@ -16,7 +16,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { ActivityForm } from '../activity-form/activity-form';
 import { ActivityInfo } from '../activity-info/activity-info';
 import { ActivityList } from '../activity-list/activity-list';
@@ -29,6 +29,7 @@ import { ActivityService } from '../activity-service';
 export class ActivityView implements OnInit {
 
   private readonly service = inject(ActivityService);
+  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -139,8 +140,9 @@ export class ActivityView implements OnInit {
   // DATA LOADING
 
   public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
     this.status.loading = true;
-    this.service.getAll(page, this.sort)
+    this.listRequest = this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.status.loading = false))
       .subscribe(activities => this.activities = activities);
   }

@@ -12,7 +12,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
-import { finalize, Observable, of, switchMap } from 'rxjs';
+import { finalize, Observable, of, switchMap, Subscription } from 'rxjs';
 import { downloadFile } from '../file-download';
 import { FileForm, FileFormData } from '../file-form/file-form';
 import { FileInfo } from '../file-info/file-info';
@@ -26,6 +26,7 @@ import { FileService } from '../file-service';
 })
 export class FileView implements OnInit {
   private readonly service = inject(FileService);
+  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly Dialog = Dialog;
@@ -57,10 +58,11 @@ export class FileView implements OnInit {
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.status.loading = true;
     const request = this.currentFolderNumber === null ? this.service.getRootFiles(page, this.sort)
       : this.service.getFolderFiles(this.currentFolderNumber, page, this.sort);
-    request
+    this.listRequest = request
       .pipe(finalize(() => this.status.loading = false))
       .subscribe(data => this.data = data);
   }

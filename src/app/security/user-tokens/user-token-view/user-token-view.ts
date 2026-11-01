@@ -9,7 +9,7 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { SecurityPermissions } from '@bernardo-mg/security';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';
 import { UserTokenList } from '../user-token-list/user-token-list';
@@ -22,6 +22,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 export class UserTokenView implements OnInit {
 
   private readonly service = inject(UserTokenService);
+  private listRequest?: Subscription;
 
   public readonly editable: boolean;
   public readonly Dialog = Dialog;
@@ -85,9 +86,10 @@ export class UserTokenView implements OnInit {
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
 
-    this.service.getAll(page, this.sort)
+    this.listRequest = this.service.getAll(page, this.sort)
       .pipe(finalize(() => this.loading = false))
       .subscribe(response => {
         this.data = response;

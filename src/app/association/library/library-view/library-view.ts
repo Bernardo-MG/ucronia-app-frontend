@@ -17,7 +17,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, switchMap } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, switchMap, Subscription } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -42,6 +42,8 @@ export class LibraryView implements OnInit {
 
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
+  private listRequest?: Subscription;
+  private memberSearchRequest?: Subscription;
   private readonly lendingsService = inject(LibraryLendingService);
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -362,7 +364,8 @@ export class LibraryView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }) {
-    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+    this.memberSearchRequest?.unsubscribe();
+    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
       });
@@ -393,13 +396,15 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
-    this.withLoading(
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
       this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.nameFilter)
     ).subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
-    this.withLoading(
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
       this.lendingsService.getAll(page, new Sorting([]))
         .pipe(
           switchMap((response) => this.resolveBorrowerNames(response.content)

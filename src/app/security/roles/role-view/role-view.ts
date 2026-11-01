@@ -9,7 +9,7 @@ import { SecurityPermissions } from '@bernardo-mg/security';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { RoleChangePermission } from '../role-change-permission/role-change-permission';
 import { RoleForm } from '../role-form/role-form';
 import { RoleInfo } from '../role-info/role-info';
@@ -26,6 +26,7 @@ export class RoleView implements OnInit {
   private readonly drawer = viewChild(Drawer);
 
   private readonly service = inject(RoleService);
+  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -151,9 +152,10 @@ export class RoleView implements OnInit {
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
 
-    this.service.getAll(page, this.sort)
+    this.listRequest = this.service.getAll(page, this.sort)
       .pipe(
         finalize(() => this.finishLoading())
       )

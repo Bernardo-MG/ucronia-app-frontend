@@ -43,6 +43,7 @@ import { PublicMemberService } from '../public-member-service';
 export class PublicMemberView implements OnInit {
 
   private readonly service = inject(PublicMemberService);
+  private listRequest?: Subscription;
   private readonly memberProfileService = inject(MemberProfileService);
   private readonly feeTypeService = inject(FeeTypeService);
   private readonly contactMethodService = inject(ContactMethodService);
@@ -556,8 +557,9 @@ export class PublicMemberView implements OnInit {
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.status.loading = true;
-    this.service
+    this.listRequest = this.service
       .getAll(page, this.sort, this.nameFilter)
       .pipe(
         switchMap(response => {

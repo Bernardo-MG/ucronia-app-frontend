@@ -36,6 +36,7 @@ import { TransactionService } from '../transaction-service';
 export class FundsView implements OnInit {
 
   private readonly service = inject(TransactionService);
+  private listRequest?: Subscription;
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
@@ -189,8 +190,9 @@ export class FundsView implements OnInit {
   }
 
   public loadList(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
     this.status.loadingList = true;
-    this.service.getAll(page, this.descriptionFilter, this.sort)
+    this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
       .pipe(finalize(() => this.status.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
   }

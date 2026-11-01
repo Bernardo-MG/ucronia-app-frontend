@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { LoginRegister } from '@bernardo-mg/security';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { AccessAuditLoginService } from '../access-audit-login-service';
 import { AuditLoginList } from '../audit-login-list/audit-login-list';
 
@@ -14,6 +14,7 @@ import { AuditLoginList } from '../audit-login-list/audit-login-list';
 export class AuditView implements OnInit {
 
   private readonly service = inject(AccessAuditLoginService);
+  private listRequest?: Subscription;
 
   public data = new Page<LoginRegister>();
   public loading = false;
@@ -37,9 +38,10 @@ export class AuditView implements OnInit {
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
 
-    this.service.getAll(
+    this.listRequest = this.service.getAll(
       page,
       this.sort
     )
