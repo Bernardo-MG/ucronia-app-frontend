@@ -46,6 +46,8 @@ export class FundsView implements OnInit {
   public months: Date[] = [];
   public selectedCalendarMonth?: Date;
   private calendarRequest?: Subscription;
+  private monthsRequest?: Subscription;
+  private summaryRequest?: Subscription;
 
   public readonly status: Status = {
     loading: false,
@@ -214,14 +216,16 @@ export class FundsView implements OnInit {
   }
 
   private loadSummary(): void {
+    this.summaryRequest?.unsubscribe();
     this.status.loadingSummary = true;
-    this.transactionBalanceService.summary()
+    this.summaryRequest = this.transactionBalanceService.summary()
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
       .subscribe(s => this.summary = s);
   }
 
   private refreshMonths(onSuccess: () => void): void {
-    this.transactionCalendarService.getRange()
+    this.monthsRequest?.unsubscribe();
+    this.monthsRequest = this.transactionCalendarService.getRange()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(months => {
         // The backend returns months in ascending chronological order.
