@@ -44,7 +44,7 @@ describe('TransactionCalendar', () => {
       { index: 1, description: 'Membership', amount: 1250.5, date: new Date() }
     ]);
     fixture.detectChanges();
-    expect(component.events[0].title).toBe('Membership (1.250,50 €)'.replace('1250', '1.250'));
+    expect(component.events[0].title).toBe('Membership (1250,50 €)');
   });
 
   it('preserves the original UTC instant in calendar events', () => {
