@@ -134,7 +134,7 @@ describe('FundsView', () => {
   it('refreshes months after confirming deletion and falls back to the newest remaining month', () => {
     const confirmationService = TestBed.inject(ConfirmationService);
     const confirmSpy = spyOn(confirmationService, 'confirm').and.stub();
-    transactionServiceMock.delete.and.returnValue(of({}));
+    transactionServiceMock.delete.and.returnValue(of(new Transaction()));
     transactionCalendarServiceMock.getRange.and.returnValue(of([
       { year: 2026, month: 2 },
       { year: 2026, month: 4 }
