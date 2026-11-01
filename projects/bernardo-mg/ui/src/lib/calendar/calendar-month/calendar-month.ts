@@ -4,12 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { format, isSameDay, isSameMonth } from 'date-fns';
+import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, FormsModule, SelectModule, CalendarMonthViewComponent],
+  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
@@ -29,6 +30,22 @@ export class CalendarMonth implements OnChanges {
 
   public get month(): Date {
     return this.selectionMonths.find(({ value }) => isSameMonth(value, this.viewDate))?.value ?? this.viewDate;
+  }
+
+  public get selectionDisabled(): boolean {
+    return this.loading() || this.selectionMonths.length === 0;
+  }
+
+  public get canGoPrevious(): boolean {
+    return !this.loading() && this.monthIndex > 0;
+  }
+
+  public get canGoNext(): boolean {
+    return !this.loading() && this.monthIndex >= 0 && this.monthIndex < this.selectionMonths.length - 1;
+  }
+
+  private get monthIndex(): number {
+    return this.selectionMonths.findIndex(({ value }) => isSameMonth(value, this.viewDate));
   }
 
   public selectionMonths: { value: Date, label: string }[] = [];
@@ -52,6 +69,18 @@ export class CalendarMonth implements OnChanges {
   public onGoTo(event: SelectChangeEvent) {
     this.activeDayIsOpen = false;
     this.changeMonth.emit(event.value);
+  }
+
+  public onGoPrevious(): void {
+    if (this.canGoPrevious) {
+      this.changeMonth.emit(this.selectionMonths[this.monthIndex - 1].value);
+    }
+  }
+
+  public onGoNext(): void {
+    if (this.canGoNext) {
+      this.changeMonth.emit(this.selectionMonths[this.monthIndex + 1].value);
+    }
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent<unknown>[] }): void {
