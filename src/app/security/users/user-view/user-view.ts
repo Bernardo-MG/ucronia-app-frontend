@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, viewChild } from '@angular/core';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -10,7 +11,7 @@ import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
-import { finalize, forkJoin, Observable, of, switchMap, Subscription } from 'rxjs';
+import { finalize, forkJoin, Observable, of, Subscription, switchMap } from 'rxjs';
 import { UserEditionFormData, UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
 import { UserDeleteEvent, UserList, UserStatusChange } from '../user-list/user-list';
@@ -22,6 +23,8 @@ import { UserService } from '../user-service';
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
 
   private readonly drawer = viewChild(Drawer);
 
@@ -40,7 +43,18 @@ export class UserView implements OnInit {
   public failures = new FailureStore();
   public roleSelection: Role[] = [];
   public members: Profile[] = [];
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
 
   private sort = new Sorting();
 
@@ -95,13 +109,16 @@ export class UserView implements OnInit {
   }
 
   public onShowUser(user: User): void {
+    this.detailRequest.cancel();
     this.selectedData = user;
+    this.member = new Profile();
     this.loading = true;
 
     this.service.getProfile(user.username)
       .pipe(
         finalize(() => this.finishLoading())
       )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(member => {
         this.member = member ?? new Profile();
         this.dialog = Dialog.INFO;
@@ -149,12 +166,14 @@ export class UserView implements OnInit {
   }
 
   public onStartInvitation(): void {
+    this.detailRequest.cancel();
     this.loading = true;
 
     this.service.getAllRoles()
       .pipe(
         finalize(() => this.finishLoading())
       )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(roles => {
         this.roleSelection = roles;
         this.dialog = Dialog.INVITE;
@@ -162,6 +181,7 @@ export class UserView implements OnInit {
   }
 
   public onStartEditing(user: User): void {
+    this.detailRequest.cancel();
     this.selectedData = user;
     this.loading = true;
     this.members = [];
@@ -171,7 +191,8 @@ export class UserView implements OnInit {
       member: this.service.getProfile(user.username)
     }).pipe(
       finalize(() => this.finishLoading())
-    ).subscribe(({ roles, member }) => {
+    ).pipe(this.detailRequest.untilCancelled())
+      .subscribe(({ roles, member }) => {
       this.roleSelection = roles;
       this.member = member ?? new Profile();
       this.dialog = Dialog.EDIT;

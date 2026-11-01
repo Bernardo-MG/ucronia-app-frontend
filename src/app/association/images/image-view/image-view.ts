@@ -1,9 +1,10 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -12,7 +13,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
-import { finalize, Observable, of, switchMap, Subscription } from 'rxjs';
+import { finalize, Observable, of, Subscription, switchMap } from 'rxjs';
 import { ImageForm, ImageFormData } from '../image-form/image-form';
 import { ImageInfo } from '../image-info/image-info';
 import { ImageList } from '../image-list/image-list';
@@ -24,6 +25,8 @@ import { ImageService } from '../image-service';
   templateUrl: './image-view.html'
 })
 export class ImageView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
   private readonly service = inject(ImageService);
   private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
@@ -38,7 +41,18 @@ export class ImageView implements OnInit {
   public selectedData = new Asset();
   public currentFolderNumber: number | null = null;
   public folderName = '';
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
   public failures = new FailureStore();
   private sort = new Sorting([new SortingProperty('name')]);
 
@@ -142,11 +156,13 @@ export class ImageView implements OnInit {
   }
 
   public onShowInfo(image: Asset): void {
+    this.detailRequest.cancel();
     this.selectedData = image;
     this.dialog = Dialog.INFO;
     this.status.loading = true;
     this.service.get(image.number)
       .pipe(finalize(() => this.status.loading = false))
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(data => this.selectedData = data);
   }
 

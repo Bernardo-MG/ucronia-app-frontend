@@ -1,9 +1,10 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -12,7 +13,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
-import { finalize, Observable, of, switchMap, Subscription } from 'rxjs';
+import { finalize, Observable, of, Subscription, switchMap } from 'rxjs';
 import { downloadFile } from '../file-download';
 import { FileForm, FileFormData } from '../file-form/file-form';
 import { FileInfo } from '../file-info/file-info';
@@ -25,6 +26,8 @@ import { FileService } from '../file-service';
   templateUrl: './file-view.html'
 })
 export class FileView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
   private readonly service = inject(FileService);
   private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
@@ -39,7 +42,18 @@ export class FileView implements OnInit {
   public selectedData = new Asset();
   public currentFolderNumber: number | null = null;
   public folderName = '';
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
   public failures = new FailureStore();
   private sort = new Sorting([new SortingProperty('name')]);
 
@@ -143,11 +157,13 @@ export class FileView implements OnInit {
   }
 
   public onShowInfo(file: Asset): void {
+    this.detailRequest.cancel();
     this.selectedData = file;
     this.dialog = Dialog.INFO;
     this.status.loading = true;
     this.service.get(file.number)
       .pipe(finalize(() => this.status.loading = false))
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(data => this.selectedData = data);
   }
 

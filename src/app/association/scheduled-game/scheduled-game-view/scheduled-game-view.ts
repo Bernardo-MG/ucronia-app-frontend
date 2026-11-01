@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -16,7 +17,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { finalize, forkJoin, Observable, of, switchMap, Subscription } from 'rxjs';
+import { finalize, forkJoin, Observable, of, Subscription, switchMap } from 'rxjs';
 import { ScheduledGameForm } from '../scheduled-game-form/scheduled-game-form';
 import { ScheduledGameInfo } from '../scheduled-game-info/scheduled-game-info';
 import { ScheduledGameList } from '../scheduled-game-list/scheduled-game-list';
@@ -28,6 +29,8 @@ import { ScheduledGameService } from '../scheduled-game-service';
   templateUrl: './scheduled-game-view.html'
 })
 export class ScheduledGameView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
 
   private readonly service = inject(ScheduledGameService);
   private listRequest?: Subscription;
@@ -54,7 +57,18 @@ export class ScheduledGameView implements OnInit {
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();
   public selectedTable: GameTable | undefined;
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
   public failures = new FailureStore();
 
   private sort = new Sorting();
@@ -135,6 +149,7 @@ export class ScheduledGameView implements OnInit {
   }
 
   public onShowInfo(scheduledGame: ScheduledGame) {
+    this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
     this.selectedTable = undefined;
 
@@ -150,6 +165,7 @@ export class ScheduledGameView implements OnInit {
           }))
         )
     )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(({ loadedGame, master, table }) => {
         this.selectedData = loadedGame;
         this.selectedMaster = master;

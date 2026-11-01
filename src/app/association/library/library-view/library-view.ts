@@ -2,6 +2,7 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
@@ -17,7 +18,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, switchMap, Subscription } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, Subscription, switchMap } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -39,6 +40,8 @@ import { librarySettingsPermissions } from '../settings/library-settings-permiss
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
 
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
@@ -80,7 +83,18 @@ export class LibraryView implements OnInit {
     loadingExcel: false
   };
 
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
 
   public readonly Dialog = Dialog;
 
@@ -201,6 +215,8 @@ export class LibraryView implements OnInit {
   }
 
   public onShowEdit() {
+    this.detailRequest.cancel();
+    this.selectedBookBorrowerNames = {};
     this.dialog = Dialog.EDIT;
     this.withLoading(
       this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
@@ -212,6 +228,7 @@ export class LibraryView implements OnInit {
           )
         )
     )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(({ book, borrowerNames }) => {
         this.selectedData = book;
         this.selectedBookBorrowerNames = borrowerNames;
@@ -261,12 +278,15 @@ export class LibraryView implements OnInit {
   }
 
   public onShowBook(book: FictionBook | GameBook) {
+    this.detailRequest.cancel();
+    this.selectedBookBorrowerNames = {};
+    this.dialog = Dialog.INFO;
     this.selectedData = book;
     this.resolveBorrowerNames(book.lendings)
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe((borrowerNames) => {
         this.selectedBookBorrowerNames = borrowerNames;
       });
-    this.dialog = Dialog.INFO;
   }
 
   public downloadExcel() {
@@ -278,6 +298,7 @@ export class LibraryView implements OnInit {
   }
 
   public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
+    this.detailRequest.cancel();
     this.selectedData = event.book;
     if (event.dialog === Dialog.EDIT) {
       this.onShowEdit();
@@ -289,6 +310,7 @@ export class LibraryView implements OnInit {
         this.withLoading(
           this.service.getBorrower(this.borrower)
         )
+          .pipe(this.detailRequest.untilCancelled())
           .subscribe((profile) => {
             this.selectedBorrower = profile;
             this.dialog = event.dialog;

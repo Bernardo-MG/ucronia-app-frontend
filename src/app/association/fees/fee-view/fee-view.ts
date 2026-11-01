@@ -1,9 +1,10 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -14,7 +15,7 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, switchMap, tap, Subscription } from 'rxjs';
+import { finalize, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
@@ -31,6 +32,8 @@ import { FeeSummaryService } from '../fee-summary-service';
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
 
   private readonly feeCalendarService = inject(FeeCalendarService);
   private calendarRequest?: Subscription;
@@ -58,7 +61,18 @@ export class FeeView implements OnInit {
 
   public failures = new FailureStore();
 
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
 
   public Dialog = Dialog;
 
@@ -156,9 +170,15 @@ export class FeeView implements OnInit {
   }
 
   public onSelectFee(fee: { member: number, date: Date }) {
-    this.service.getOne(fee.member, fee.date)
-      .subscribe(fee => this.selectedData = fee);
+    this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
+    this.status.loading = true;
+    this.service.getOne(fee.member, fee.date)
+      .pipe(
+        finalize(() => this.status.loading = false),
+        this.detailRequest.untilCancelled()
+      )
+      .subscribe(fee => this.selectedData = fee);
   }
 
   public onChangeMemberStatus(active: MemberStatus) {
