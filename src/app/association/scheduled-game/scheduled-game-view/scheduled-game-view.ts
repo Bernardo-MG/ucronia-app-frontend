@@ -16,7 +16,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
-import { finalize, forkJoin, Observable, of, switchMap } from 'rxjs';
+import { finalize, forkJoin, Observable, of, switchMap, Subscription } from 'rxjs';
 import { ScheduledGameForm } from '../scheduled-game-form/scheduled-game-form';
 import { ScheduledGameInfo } from '../scheduled-game-info/scheduled-game-info';
 import { ScheduledGameList } from '../scheduled-game-list/scheduled-game-list';
@@ -30,6 +30,8 @@ import { ScheduledGameService } from '../scheduled-game-service';
 export class ScheduledGameView implements OnInit {
 
   private readonly service = inject(ScheduledGameService);
+  private listRequest?: Subscription;
+  private memberSearchRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -156,7 +158,8 @@ export class ScheduledGameView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
-    this.withLoading(
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
       this.service.getAll(page, this.sort)
     )
       .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
@@ -180,7 +183,8 @@ export class ScheduledGameView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }) {
-    this.service.searchMembers(event.query?.trim())
+    this.memberSearchRequest?.unsubscribe();
+    this.memberSearchRequest = this.service.searchMembers(event.query?.trim())
       .subscribe(members => {
         this.members = members;
       });

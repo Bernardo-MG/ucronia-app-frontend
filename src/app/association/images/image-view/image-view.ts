@@ -12,7 +12,7 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
 import { InputTextModule } from 'primeng/inputtext';
-import { finalize, Observable, of, switchMap } from 'rxjs';
+import { finalize, Observable, of, switchMap, Subscription } from 'rxjs';
 import { ImageForm, ImageFormData } from '../image-form/image-form';
 import { ImageInfo } from '../image-info/image-info';
 import { ImageList } from '../image-list/image-list';
@@ -25,6 +25,7 @@ import { ImageService } from '../image-service';
 })
 export class ImageView implements OnInit {
   private readonly service = inject(ImageService);
+  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly Dialog = Dialog;
@@ -56,10 +57,11 @@ export class ImageView implements OnInit {
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.status.loading = true;
     const request = this.currentFolderNumber === null ? this.service.getRootImages(page, this.sort)
       : this.service.getFolderImages(this.currentFolderNumber, page, this.sort);
-    request
+    this.listRequest = request
       .pipe(finalize(() => this.status.loading = false))
       .subscribe(data => this.data = data);
   }

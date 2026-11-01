@@ -14,7 +14,7 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, switchMap, tap } from 'rxjs';
+import { finalize, Observable, switchMap, tap, Subscription } from 'rxjs';
 import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
@@ -33,6 +33,8 @@ import { FeeSummaryService } from '../fee-summary-service';
 export class FeeView implements OnInit {
 
   private readonly feeCalendarService = inject(FeeCalendarService);
+  private calendarRequest?: Subscription;
+  private memberSearchRequest?: Subscription;
   private readonly reportService = inject(FeeSummaryService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
@@ -165,17 +167,19 @@ export class FeeView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }) {
-    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+    this.memberSearchRequest?.unsubscribe();
+    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
       });
   }
 
   public loadCalendar(year: number) {
+    this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
 
     this.filter.year = year;
-    this.feeCalendarService.getCalendar(year, this.filter.status)
+    this.calendarRequest = this.feeCalendarService.getCalendar(year, this.filter.status)
       .pipe(finalize(() => this.status.loadingCalendar = false))
       .subscribe(data => this.feeCalendar = data);
   }
@@ -205,9 +209,10 @@ export class FeeView implements OnInit {
   }
 
   private loadRange() {
+    this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
 
-    this.feeCalendarService.getRange()
+    this.calendarRequest = this.feeCalendarService.getRange()
       .pipe(
         tap(range => {
           this.filter.range = range;

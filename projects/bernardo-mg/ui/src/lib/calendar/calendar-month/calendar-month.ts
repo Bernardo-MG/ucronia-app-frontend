@@ -7,7 +7,6 @@ import { format, isSameDay, isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { SelectChangeEvent, SelectModule } from 'primeng/select';
 
-
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
@@ -22,19 +21,31 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 export class CalendarMonth implements OnChanges {
 
   public readonly loading = input(false);
-  public readonly events = input<CalendarEvent<any>[]>([]);
+  public readonly events = input<CalendarEvent<unknown>[]>([]);
   public readonly months = input<Date[]>([]);
+  public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
-  public readonly pickDate = output<CalendarEvent<any>>();
+  public readonly pickDate = output<CalendarEvent<unknown>>();
 
-  public _month = new Date();
-  public get month() {
-    return this._month;
+  public get month(): Date {
+    return this.selectionMonths.find(({ value }) => isSameMonth(value, this.viewDate))?.value ?? this.viewDate;
   }
-  public set month(value: Date) {
-    this._month = value;
-    this.viewDate = value;
+
+  public get selectionDisabled(): boolean {
+    return this.loading() || this.selectionMonths.length === 0;
+  }
+
+  public get canGoPrevious(): boolean {
+    return !this.loading() && this.monthIndex > 0;
+  }
+
+  public get canGoNext(): boolean {
+    return !this.loading() && this.monthIndex >= 0 && this.monthIndex < this.selectionMonths.length - 1;
+  }
+
+  private get monthIndex(): number {
+    return this.selectionMonths.findIndex(({ value }) => isSameMonth(value, this.viewDate));
   }
 
   public selectionMonths: { value: Date, label: string }[] = [];
@@ -43,51 +54,59 @@ export class CalendarMonth implements OnChanges {
 
   public activeDayIsOpen = false;
 
-  public ngOnChanges({ months }: SimpleChanges): void {
+  public ngOnChanges({ months, selectedMonth }: SimpleChanges): void {
     if (months) {
-      this.selectionMonths = this.months()
-        .map(m => { return { value: m, label: format(m, 'yyyy MMMM') } });
+      this.selectionMonths = this.months().map(month => ({
+        value: month,
+        label: format(month, 'yyyy MMMM')
+      }));
+    }
+    if (months || selectedMonth) {
       this.updateCurrentMonth();
-      this.loadInitialMonth();
     }
   }
 
   public onGoTo(event: SelectChangeEvent) {
-    this.viewDate = event.value;
     this.activeDayIsOpen = false;
     this.changeMonth.emit(event.value);
   }
 
-  public onSelectDay({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      const sameDay = isSameDay(this.viewDate, date);
-      this.activeDayIsOpen = !(this.activeDayIsOpen && sameDay) && events.length > 0;
-      this.viewDate = date;
+  public onGoPrevious(): void {
+    if (this.canGoPrevious) {
+      this.changeMonth.emit(this.selectionMonths[this.monthIndex - 1].value);
     }
+  }
+
+  public onGoNext(): void {
+    if (this.canGoNext) {
+      this.changeMonth.emit(this.selectionMonths[this.monthIndex + 1].value);
+    }
+  }
+
+  public onSelectDay({ date, events }: { date: Date; events: CalendarEvent<unknown>[] }): void {
+    if (!isSameMonth(date, this.viewDate)) {
+      return;
+    }
+
+    const isCurrentDay = isSameDay(date, this.viewDate);
+    const isOpenDay = isCurrentDay && this.activeDayIsOpen;
+
+    this.activeDayIsOpen = events.length > 0 && !isOpenDay;
+    this.viewDate = date;
   }
 
   public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach((day) => day.badgeTotal = day.events.length);
   }
 
-  private updateCurrentMonth() {
-    if (!this.months().length) {
-      this.viewDate = new Date();
-    } else {
-      const exists = this.months().some(m => m === this.viewDate);
-      if (!exists) {
-        // Choose latest date
-        this.viewDate = this.months()[this.months().length - 1];
-      }
-    }
-  }
+  private updateCurrentMonth(): void {
+    const month = this.selectedMonth() ?? this.months().at(-1) ?? new Date();
 
-  private loadInitialMonth() {
-    if (this.months().length > 0) {
-      this.month = this.months()[0];
-    } else {
-      this.month = new Date();
+    if (!isSameMonth(this.viewDate, month)) {
+      this.activeDayIsOpen = false;
     }
+
+    this.viewDate = month;
   }
 
 }

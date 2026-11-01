@@ -10,7 +10,7 @@ import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { Drawer, DrawerModule } from 'primeng/drawer';
-import { finalize, forkJoin, Observable, of, switchMap } from 'rxjs';
+import { finalize, forkJoin, Observable, of, switchMap, Subscription } from 'rxjs';
 import { UserEditionFormData, UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
 import { UserDeleteEvent, UserList, UserStatusChange } from '../user-list/user-list';
@@ -26,6 +26,8 @@ export class UserView implements OnInit {
   private readonly drawer = viewChild(Drawer);
 
   private readonly service = inject(UserService);
+  private listRequest?: Subscription;
+  private memberSearchRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -177,16 +179,18 @@ export class UserView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }): void {
-    this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
+    this.memberSearchRequest?.unsubscribe();
+    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
       .subscribe(members => {
         this.members = members;
       });
   }
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
 
-    this.service.getAll(page, this.sort)
+    this.listRequest = this.service.getAll(page, this.sort)
       .pipe(
         finalize(() => this.finishLoading())
       )

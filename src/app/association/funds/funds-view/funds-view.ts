@@ -1,5 +1,6 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -14,7 +15,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subject, Subscription } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
 import { TransactionBalanceService } from '../transaction-balance-service';
@@ -35,12 +36,18 @@ import { TransactionService } from '../transaction-service';
 export class FundsView implements OnInit {
 
   private readonly service = inject(TransactionService);
+  private listRequest?: Subscription;
   private readonly transactionCalendarService = inject(TransactionCalendarService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly reportService = inject(TransactionReportService);
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly destroyRef = inject(DestroyRef);
 
   public months: Date[] = [];
+  public selectedCalendarMonth?: Date;
+  private calendarRequest?: Subscription;
+  private monthsRequest?: Subscription;
+  private summaryRequest?: Subscription;
 
   public readonly status: Status = {
     loading: false,
@@ -60,6 +67,7 @@ export class FundsView implements OnInit {
   public transactions: Transaction[] = [];
   public transactionsPage = new Page<Transaction>();
   public summary = new TransactionSummary();
+  public readonly transactionsChanged$ = new Subject<void>();
 
   public display = FundsDisplay.CALENDAR;
 
@@ -81,28 +89,12 @@ export class FundsView implements OnInit {
   }
 
   public ngOnInit(): void {
-    // Read range
-    this.transactionCalendarService.getRange()
-      .subscribe(months => {
-        // To show in the selection box we have to reverse the order
-        // TODO: months should start in 0
-        this.months = months
-          .map(m => new Date(m.year, m.month - 1));
-        // TODO: then sort the months instead of reversing
-        this.months = [...this.months].reverse();
-        if (!this.status.loadingCalendar) {
-          this.loadCalendar();
-        }
-        if (!this.status.loadingList) {
-          this.loadList();
-        }
-      });
+    this.refreshMonths(() => {
+      this.loadCalendar();
+      this.loadList();
+    });
 
-    // Read summary
-    this.status.loadingSummary = true;
-    this.transactionBalanceService.summary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(s => this.summary = s);
+    this.loadSummary();
   }
 
   // EVENT HANDLERS
@@ -110,14 +102,14 @@ export class FundsView implements OnInit {
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.load()
+      () => this.refreshAfterChange()
     );
   }
 
   public onUpdate(toUpdate: Transaction): void {
     this.call(
       () => this.service.update(toUpdate),
-      () => this.load()
+      () => this.refreshAfterChange()
     );
   }
 
@@ -137,7 +129,7 @@ export class FundsView implements OnInit {
       },
       accept: () => this.call(
         () => this.service.delete(this.selectedData.index),
-        () => this.load()
+        () => this.refreshAfterChange()
       )
     });
   }
@@ -186,16 +178,23 @@ export class FundsView implements OnInit {
 
   // DATA LOADING
 
-  public loadCalendar(month: Date = this.getDefaultMonth()) {
+  public loadCalendar(month?: Date): void {
+    const selectedMonth = month ?? this.selectedCalendarMonth ?? this.months.at(-1) ?? new Date();
+    this.selectedCalendarMonth = selectedMonth;
+
+    // Prevent an older month's response from replacing the current month's events.
+    this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
-    this.transactionCalendarService.getCalendarInRange(month.getFullYear(), month.getMonth())
-      .pipe(finalize(() => this.status.loadingCalendar = false))
+    this.calendarRequest = this.transactionCalendarService
+      .getCalendarInRange(selectedMonth.getFullYear(), selectedMonth.getMonth())
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingCalendar = false))
       .subscribe(transactions => this.transactions = transactions);
   }
 
   public loadList(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
     this.status.loadingList = true;
-    this.service.getAll(page, this.descriptionFilter, this.sort)
+    this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
       .pipe(finalize(() => this.status.loadingList = false))
       .subscribe(transactions => this.transactionsPage = transactions);
   }
@@ -209,6 +208,40 @@ export class FundsView implements OnInit {
   }
 
   // PRIVATE METHODS
+
+  private refreshAfterChange(): void {
+    this.refreshMonths(() => this.load());
+    this.loadSummary();
+    this.transactionsChanged$.next();
+  }
+
+  private loadSummary(): void {
+    this.summaryRequest?.unsubscribe();
+    this.status.loadingSummary = true;
+    this.summaryRequest = this.transactionBalanceService.summary()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
+      .subscribe(s => this.summary = s);
+  }
+
+  private refreshMonths(onSuccess: () => void): void {
+    this.monthsRequest?.unsubscribe();
+    this.monthsRequest = this.transactionCalendarService.getRange()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(months => {
+        // The backend returns months in ascending chronological order.
+        this.months = months.map(m => new Date(m.year, m.month - 1));
+
+        // Keep the displayed month if it is still available; otherwise
+        // select the newest available month (or today when there are none).
+        if (!this.selectedCalendarMonth || !this.months.some(m =>
+          m.getFullYear() === this.selectedCalendarMonth!.getFullYear() &&
+          m.getMonth() === this.selectedCalendarMonth!.getMonth())) {
+          this.selectedCalendarMonth = this.months.at(-1) ?? new Date();
+        }
+
+        onSuccess();
+      });
+  }
 
   private call(
     action: () => Observable<any>,
@@ -233,16 +266,6 @@ export class FundsView implements OnInit {
     } else {
       this.failures.clear();
     }
-  }
-
-  private getDefaultMonth() {
-    let month;
-    if (this.months.length) {
-      month = this.months[0];
-    } else {
-      month = new Date();
-    }
-    return month
   }
 
 }

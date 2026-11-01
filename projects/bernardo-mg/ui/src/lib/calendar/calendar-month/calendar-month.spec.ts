@@ -39,12 +39,16 @@ describe('CalendarMonth', () => {
 
   describe('Dates', () => {
 
-    it('should update viewDate when onGoTo is called', () => {
-      const month = new Date("2024-2");
+    it('should update viewDate when the parent selects a new month', () => {
+      const month = new Date(2024, 1, 1);
+      const previousDate = component.viewDate;
       component.onGoTo({ value: month });
 
-      expect(component.viewDate.getFullYear()).toEqual(month.getFullYear());
-      expect(component.viewDate.getMonth()).toEqual(month.getMonth());
+      expect(component.viewDate).toBe(previousDate);
+      fixture.componentRef.setInput('selectedMonth', month);
+      fixture.detectChanges();
+
+      expect(component.viewDate).toBe(month);
     });
 
   });
@@ -68,9 +72,8 @@ describe('CalendarMonth', () => {
       expect(component.selectionMonths[0].label).toBe(format(months[0], 'yyyy MMMM'));
     });
 
-    it('should call updateCurrentMonth and loadInitialMonth when months change', () => {
+    it('should call updateCurrentMonth when months change', () => {
       spyOn<any>(component, 'updateCurrentMonth');
-      spyOn<any>(component, 'loadInitialMonth');
 
       component.ngOnChanges({
         months: {
@@ -82,7 +85,40 @@ describe('CalendarMonth', () => {
       });
 
       expect(component['updateCurrentMonth']).toHaveBeenCalled();
-      expect(component['loadInitialMonth']).toHaveBeenCalled();
+    });
+
+
+    it('should preserve the selected month when months are refreshed with new Date instances', () => {
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.componentRef.setInput('selectedMonth', new Date(2024, 0, 15));
+      fixture.detectChanges();
+
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.detectChanges();
+
+      expect(component.viewDate.getFullYear()).toBe(2024);
+      expect(component.viewDate.getMonth()).toBe(0);
+      expect(component.month).toBe(component.selectionMonths[0].value);
+    });
+
+    it('should select the latest available month when the selected month is absent', () => {
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.detectChanges();
+
+      expect(component.viewDate.getFullYear()).toBe(2024);
+      expect(component.viewDate.getMonth()).toBe(1);
+      expect(component.month).toBe(component.selectionMonths[1].value);
+    });
+
+    it('should default to the current month when no months are available', () => {
+      const before = new Date();
+      fixture.componentRef.setInput('months', []);
+      fixture.detectChanges();
+      const after = new Date();
+
+      expect(component.viewDate.getTime()).toBeGreaterThanOrEqual(before.getTime());
+      expect(component.viewDate.getTime()).toBeLessThanOrEqual(after.getTime());
+      expect(component.month).toBe(component.viewDate);
     });
 
   });
@@ -113,6 +149,74 @@ describe('CalendarMonth', () => {
       expect(component.viewDate.getMonth()).toEqual(oldViewDate.getMonth());
     });
 
+  });
+
+  describe('drawer', () => {
+    it('closes an expanded day when the same day is selected again', () => {
+      const date = new Date(component.viewDate);
+      const events: CalendarEvent[] = [{ start: date, title: 'Payment' }];
+      component.onSelectDay({ date, events });
+      expect(component.activeDayIsOpen).toBeTrue();
+      component.onSelectDay({ date, events });
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+
+    it('does not open an empty day after another day was expanded', () => {
+      fixture.componentRef.setInput('selectedMonth', new Date(2024, 5, 1));
+      fixture.detectChanges();
+      const first = new Date(2024, 5, 10);
+      component.onSelectDay({ date: first, events: [{ start: first, title: 'Payment' }] });
+      component.onSelectDay({ date: new Date(2024, 5, 11), events: [] });
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+
+    it('does not change the displayed month or open state for an adjacent-month day', () => {
+      fixture.componentRef.setInput('selectedMonth', new Date(2024, 5, 1));
+      fixture.detectChanges();
+      const oldViewDate = component.viewDate;
+      component.onSelectDay({ date: new Date(2024, 6, 1), events: [{ start: new Date(2024, 6, 1), title: 'Payment' }] });
+      expect(component.viewDate).toBe(oldViewDate);
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+
+    it('closes the expanded day when navigating to another month', () => {
+      const date = new Date(component.viewDate);
+      component.onSelectDay({ date, events: [{ start: date, title: 'Payment' }] });
+      component.onGoTo({ value: new Date(2024, 3, 1) });
+      expect(component.activeDayIsOpen).toBeFalse();
+    });
+  });
+
+  describe('badges', () => {
+    it('sets badge counts for days with zero, one, and multiple events', () => {
+      const date = new Date(2024, 3, 1);
+      const event: CalendarEvent = { start: date, title: 'Payment' };
+      const days = [[], [event], [event, event]].map(events => ({ events, badgeTotal: -1 }));
+      component.beforeMonthViewRender({ body: days as any });
+      expect(days.map(day => day.badgeTotal)).toEqual([0, 1, 2]);
+    });
+  });
+
+  describe('selection months', () => {
+    it('keeps the month selector matched after a day is selected', () => {
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.componentRef.setInput('selectedMonth', new Date(2024, 0, 1));
+      fixture.detectChanges();
+      const date = new Date(2024, 0, 15);
+      component.onSelectDay({ date, events: [{ start: date, title: 'Payment' }] });
+
+      expect(component.month).toBe(component.selectionMonths[0].value);
+    });
+
+    it('preserves a month across a refresh even when the date within that month differs', () => {
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 1), new Date(2024, 1, 1)]);
+      fixture.componentRef.setInput('selectedMonth', new Date(2024, 0, 29));
+      fixture.detectChanges();
+      fixture.componentRef.setInput('months', [new Date(2024, 0, 15), new Date(2024, 1, 15)]);
+      fixture.detectChanges();
+      expect(component.viewDate.getMonth()).toBe(0);
+      expect(component.month).toBe(component.selectionMonths[0].value);
+    });
   });
 
 });
