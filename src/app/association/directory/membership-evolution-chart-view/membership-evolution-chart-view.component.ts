@@ -7,7 +7,7 @@ import { Month } from '@bernardo-mg/ui';
 import { MembershipEvolutionMonth } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { Select } from 'primeng/select';
-import { BehaviorSubject, finalize, switchMap } from 'rxjs';
+import { BehaviorSubject, defer, finalize, switchMap } from 'rxjs';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 
 @Component({
@@ -123,10 +123,12 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
             startDate.getMonth() + 1
           );
 
-          this.loading = true;
-
-          return this.service.monthly(start, end)
-            .pipe(finalize(() => (this.loading = false)));
+          return defer(() => {
+            this.loading = true;
+            return this.service.monthly(start, end).pipe(
+              finalize(() => this.loading = false)
+            );
+          });
         }),
         takeUntilDestroyed(this.destroyRef)
       )
