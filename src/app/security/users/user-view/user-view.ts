@@ -90,6 +90,7 @@ export class UserView implements OnInit {
   }
 
   public onUpdate(toUpdate: UserEditionFormData): void {
+    const username = this.selectedData.username;
     const user: UserUpdate = {
       name: toUpdate.name,
       email: toUpdate.email,
@@ -101,8 +102,8 @@ export class UserView implements OnInit {
     const currentMemberNumber = this.member?.number ?? -1;
 
     this.call(
-      () => this.service.update(this.selectedData.username, user).pipe(
-        switchMap(updated => memberNumber !== currentMemberNumber ? this.service.assignProfile(this.selectedData.username, memberNumber) : of(updated))
+      () => this.service.update(username, user).pipe(
+        switchMap(updated => memberNumber !== currentMemberNumber ? this.service.assignProfile(username, memberNumber) : of(updated))
       ),
       () => this.load()
     );

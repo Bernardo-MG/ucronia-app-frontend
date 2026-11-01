@@ -168,17 +168,24 @@ export class FileView implements OnInit {
   }
 
   public onCreate(data: FileFormData): void {
-    if (data.content) {
-      this.call(() => this.service.create(data.metadata, data.content!)
-        .pipe(switchMap(file => this.currentFolderNumber === null ? of(file)
-          : this.service.move(file.number, this.currentFolderNumber))));
+    const content = data.content;
+    if (content) {
+      const metadata = { ...data.metadata };
+      const folderNumber = this.currentFolderNumber;
+      this.call(() => this.service.create(metadata, content)
+        .pipe(switchMap(file => folderNumber === null ? of(file)
+          : this.service.move(file.number, folderNumber))));
     }
   }
 
   public onUpdate(data: FileFormData): void {
-    this.call(() => this.service.update(data.metadata, data.content)
-      .pipe(switchMap(file => data.metadata.folderNumber === this.selectedData.folderNumber ? of(file)
-        : this.service.move(file.number, data.metadata.folderNumber))));
+    const metadata = { ...data.metadata };
+    const content = data.content;
+    const folderNumber = metadata.folderNumber;
+    const moveRequired = folderNumber !== this.selectedData.folderNumber;
+    this.call(() => this.service.update(metadata, content)
+      .pipe(switchMap(file => moveRequired
+        ? this.service.move(file.number, folderNumber) : of(file))));
   }
 
   public download(file: Asset): void {

@@ -169,16 +169,22 @@ export class ImageView implements OnInit {
   public onCreate(data: ImageFormData): void {
     const file = data.file;
     if (file) {
-      this.call(() => this.service.create(data.image, file)
-        .pipe(switchMap(image => this.currentFolderNumber === null ? of(image)
-          : this.service.move(image.number, this.currentFolderNumber))));
+      const metadata = { ...data.image };
+      const folderNumber = this.currentFolderNumber;
+      this.call(() => this.service.create(metadata, file)
+        .pipe(switchMap(image => folderNumber === null ? of(image)
+          : this.service.move(image.number, folderNumber))));
     }
   }
 
   public onUpdate(data: ImageFormData): void {
-    this.call(() => this.service.update(data.image, data.file)
-      .pipe(switchMap(image => data.image.folderNumber === this.selectedData.folderNumber ? of(image)
-        : this.service.move(image.number, data.image.folderNumber))));
+    const metadata = { ...data.image };
+    const file = data.file;
+    const folderNumber = metadata.folderNumber;
+    const moveRequired = folderNumber !== this.selectedData.folderNumber;
+    this.call(() => this.service.update(metadata, file)
+      .pipe(switchMap(image => moveRequired
+        ? this.service.move(image.number, folderNumber) : of(image))));
   }
 
   public onDelete(event: Event): void {
