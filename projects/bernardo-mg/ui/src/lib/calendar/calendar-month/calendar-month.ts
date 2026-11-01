@@ -28,7 +28,7 @@ export class CalendarMonth implements OnChanges {
   public readonly pickDate = output<CalendarEvent<unknown>>();
 
   public get month(): Date {
-    return this.viewDate;
+    return this.selectionMonths.find(({ value }) => isSameMonth(value, this.viewDate))?.value ?? this.viewDate;
   }
 
   public selectionMonths: { value: Date, label: string }[] = [];

@@ -16,15 +16,11 @@ import { MemberFees, MemberFeesFee } from '../domain/member-fees';
 })
 export class FeeCalendar implements OnChanges {
 
-  public range = input(new YearsRange());
-  /**
-   * Loading flag. Shows the loading visual cue.
-   */
+  public readonly range = input(new YearsRange());
   public readonly loading = input(false);
   public readonly year = input(new Date().getFullYear());
   public readonly feeCalendar = input<MemberFees[]>([]);
 
-  // TODO: maybe use bidirectional property
   public readonly goToYear = output<number>();
   public readonly selectFee = output<{ member: number, date: Date }>();
 
@@ -36,7 +32,9 @@ export class FeeCalendar implements OnChanges {
 
   public currentYear = new Date().getFullYear();
 
-  private index = 0;
+  private get index(): number {
+    return this.range().years.indexOf(this.currentYear);
+  }
 
   public get selectionDisabled() {
     return this.loading() || (this.range().years.length === 0);
@@ -54,14 +52,7 @@ export class FeeCalendar implements OnChanges {
     return [...this.range().years].reverse();
   }
 
-  public ngOnChanges({ range, year }: SimpleChanges): void {
-    if (range) {
-
-      if (range.currentValue.years.length) {
-        this.index = range.currentValue.years.indexOf(this.currentYear);
-      }
-    }
-
+  public ngOnChanges({ year }: SimpleChanges): void {
     if (year) {
       this.currentYear = year.currentValue;
     }
@@ -69,20 +60,21 @@ export class FeeCalendar implements OnChanges {
 
   public onGoTo(event: SelectChangeEvent) {
     this.currentYear = Number(event.value);
-    this.index = this.range().years.indexOf(this.currentYear);
     this.goToYear.emit(this.currentYear);
   }
 
   public onGoPrevious() {
-    this.index = this.index - 1;
-    this.currentYear = Number(this.range().years[this.index]);
-    this.goToYear.emit(this.currentYear);
+    if (this.canGoPrevious) {
+      this.currentYear = Number(this.range().years[this.index - 1]);
+      this.goToYear.emit(this.currentYear);
+    }
   }
 
   public onGoNext() {
-    this.index = this.index + 1;
-    this.currentYear = Number(this.range().years[this.index]);
-    this.goToYear.emit(this.currentYear);
+    if (this.canGoNext) {
+      this.currentYear = Number(this.range().years[this.index + 1]);
+      this.goToYear.emit(this.currentYear);
+    }
   }
 
   public hasMonth(months: MemberFeesFee[], month: number): boolean {
@@ -91,7 +83,7 @@ export class FeeCalendar implements OnChanges {
 
   public onSelectFee(member: number, months: MemberFeesFee[], month: number) {
     const calendarMonth = this.getCalendarMonth(months, month);
-    this.selectFee.emit({ member: member, date: calendarMonth.month })
+    this.selectFee.emit({ member, date: calendarMonth.month });
   }
 
   public isPaid(months: MemberFeesFee[], month: number): boolean {
