@@ -120,7 +120,7 @@
           <p-autocomplete name="authorSearch" [ngModel]="authorSearchValue" [ngModelOptions]="{ standalone: true }"
             [suggestions]="authorSearchResults" optionLabel="name" dataKey="number" [forceSelection]="true"
             placeholder="Buscar autor..." (completeMethod)="onSearchAuthors($event)"
-            (onSelect)="onSelectAuthor($event.value)" appendTo="body" />
+            (onSelect)="onSelectAuthor($event.value)" (onClear)="onClearAuthorSearch()" appendTo="body" />
         </p-inputgroup>
 
         @if (selectedAuthors.length) {
@@ -147,7 +147,7 @@
           <p-autocomplete name="publisherSearch" [ngModel]="publisherSearchValue"
             [ngModelOptions]="{ standalone: true }" [suggestions]="publisherSearchResults" optionLabel="name"
             dataKey="number" [forceSelection]="true" placeholder="Buscar editorial..."
-            (completeMethod)="onSearchPublishers($event)" (onSelect)="onSelectPublisher($event.value)"
+            (completeMethod)="onSearchPublishers($event)" (onSelect)="onSelectPublisher($event.value)" (onClear)="onClearPublisherSearch()"
             appendTo="body" />
         </p-inputgroup>
 
@@ -195,7 +195,7 @@
             <p-autocomplete name="donorSearch" [ngModel]="donorSearchValue" [ngModelOptions]="{ standalone: true }"
               [suggestions]="donorSearchResults" optionLabel="name.fullName" dataKey="number"
               [forceSelection]="true" placeholder="Buscar donante..." (completeMethod)="onSearchDonors($event)"
-              (onSelect)="onSelectDonor($event.value)" appendTo="body" />
+              (onSelect)="onSelectDonor($event.value)" (onClear)="onClearDonorSearch()" appendTo="body" />
           </p-inputgroup>
 
           @if (selectedDonors.length) {

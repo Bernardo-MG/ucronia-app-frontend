@@ -1,4 +1,5 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, DestroyRef, inject, input, Input, output } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
@@ -11,6 +12,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
+import { Subscription } from 'rxjs';
 import { LibraryConfig } from '../library-config';
 import { LibraryService } from '../library-service';
 
@@ -22,6 +24,10 @@ import { LibraryService } from '../library-service';
 export class LibraryBookEditionForm {
 
   private readonly service = inject(LibraryService);
+  private readonly destroyRef = inject(DestroyRef);
+  private authorSearchRequest?: Subscription;
+  private publisherSearchRequest?: Subscription;
+  private donorSearchRequest?: Subscription;
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
@@ -33,6 +39,9 @@ export class LibraryBookEditionForm {
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: FictionBook | GameBook) {
+    this.onClearAuthorSearch();
+    this.onClearPublisherSearch();
+    this.onClearDonorSearch();
     this.isGameBook = Object.prototype.hasOwnProperty.call(value, 'gameSystem');
 
     this.form.reset({
@@ -168,8 +177,23 @@ export class LibraryBookEditionForm {
   }
 
   public onSearchAuthors(event: { query: string }): void {
-    this.service.searchAuthors(event.query?.trim())
+    this.authorSearchRequest?.unsubscribe();
+    this.authorSearchResults = [];
+    const query = event.query?.trim();
+    if (!query) {
+      return;
+    }
+
+    this.authorSearchRequest = this.service.searchAuthors(query)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(authors => this.authorSearchResults = authors);
+  }
+
+  public onClearAuthorSearch(): void {
+    this.authorSearchRequest?.unsubscribe();
+    this.authorSearchRequest = undefined;
+    this.authorSearchValue = undefined;
+    this.authorSearchResults = [];
   }
 
   public onSelectAuthor(author: Author): void {
@@ -185,8 +209,7 @@ export class LibraryBookEditionForm {
       this.form.markAsDirty();
     }
 
-    this.authorSearchValue = undefined;
-    this.authorSearchResults = [];
+    this.onClearAuthorSearch();
   }
 
   public onRemoveAuthor(author: Author): void {
@@ -197,8 +220,23 @@ export class LibraryBookEditionForm {
   }
 
   public onSearchPublishers(event: { query: string }): void {
-    this.service.searchPublishers(event.query?.trim())
+    this.publisherSearchRequest?.unsubscribe();
+    this.publisherSearchResults = [];
+    const query = event.query?.trim();
+    if (!query) {
+      return;
+    }
+
+    this.publisherSearchRequest = this.service.searchPublishers(query)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(publishers => this.publisherSearchResults = publishers);
+  }
+
+  public onClearPublisherSearch(): void {
+    this.publisherSearchRequest?.unsubscribe();
+    this.publisherSearchRequest = undefined;
+    this.publisherSearchValue = undefined;
+    this.publisherSearchResults = [];
   }
 
   public onSelectPublisher(publisher: Publisher): void {
@@ -214,8 +252,7 @@ export class LibraryBookEditionForm {
       this.form.markAsDirty();
     }
 
-    this.publisherSearchValue = undefined;
-    this.publisherSearchResults = [];
+    this.onClearPublisherSearch();
   }
 
   public onRemovePublisher(publisher: Publisher): void {
@@ -226,8 +263,23 @@ export class LibraryBookEditionForm {
   }
 
   public onSearchDonors(event: { query: string }): void {
-    this.service.searchDonors(event.query?.trim())
+    this.donorSearchRequest?.unsubscribe();
+    this.donorSearchResults = [];
+    const query = event.query?.trim();
+    if (!query) {
+      return;
+    }
+
+    this.donorSearchRequest = this.service.searchDonors(query)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(donors => this.donorSearchResults = donors);
+  }
+
+  public onClearDonorSearch(): void {
+    this.donorSearchRequest?.unsubscribe();
+    this.donorSearchRequest = undefined;
+    this.donorSearchValue = undefined;
+    this.donorSearchResults = [];
   }
 
   public onSelectDonor(donor: Donor): void {
@@ -243,8 +295,7 @@ export class LibraryBookEditionForm {
       this.form.markAsDirty();
     }
 
-    this.donorSearchValue = undefined;
-    this.donorSearchResults = [];
+    this.onClearDonorSearch();
   }
 
   public onRemoveDonor(donor: Donor): void {
