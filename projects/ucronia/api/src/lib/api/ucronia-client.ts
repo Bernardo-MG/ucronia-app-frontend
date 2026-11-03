@@ -19,6 +19,7 @@ import { ScheduledGameEndpoint } from './endpoint/scheduled-game-endpoint';
 import { SettingEndpoint } from './endpoint/setting-endpoint';
 import { SponsorEndpoint } from './endpoint/sponsor-endpoint';
 import { TransactionEndpoint } from './endpoint/transaction-endpoint';
+import { TransactionTypeEndpoint } from './endpoint/transaction-type-endpoint';
 import { UserEndpoint } from './endpoint/user-profile-endpoint';
 
 export const UCRONIA_API_BASE_URL = new InjectionToken<string>('UCRONIA_API_BASE_URL');
@@ -74,6 +75,10 @@ export class UcroniaClient {
 
   public get transaction() {
     return new TransactionEndpoint(this.http, this.base_url);
+  }
+
+  public get transactionType() {
+    return new TransactionTypeEndpoint(this.http, this.base_url);
   }
 
   public get myFees() {

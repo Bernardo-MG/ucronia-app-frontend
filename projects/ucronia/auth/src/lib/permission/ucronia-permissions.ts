@@ -123,6 +123,9 @@ export const UcroniaPermissions = {
     update: { resource: 'SCHEDULED_GAME', action: 'UPDATE' },
     delete: { resource: 'SCHEDULED_GAME', action: 'DELETE' }
   },
+  transactionType: {
+    create: { resource: 'TRANSACTION_TYPE', action: 'CREATE' }
+  },
   transaction: {
     read: { resource: 'TRANSACTION', action: 'READ' },
     create: { resource: 'TRANSACTION', action: 'CREATE' },

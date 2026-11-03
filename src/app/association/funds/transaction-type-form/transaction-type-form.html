@@ -1,0 +1,21 @@
+<p-drawer header="Nuevo tipo de transacción" [visible]="true" position="right"
+  [closable]="!saving" [dismissible]="!saving" [closeOnEscape]="!saving"
+  (visibleChange)="!$event && closed.emit()">
+  <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
+    <fieldset [disabled]="saving" class="space-y-4">
+      <div>
+        <label for="transaction-type-description" class="block">Descripción</label>
+        <input pInputText id="transaction-type-description" formControlName="description"
+          maxlength="200" required class="w-full" />
+      </div>
+      <div>
+        <label for="transaction-type-color" class="block">Color</label>
+        <input id="transaction-type-color" type="color" formControlName="color" />
+      </div>
+    </fieldset>
+    @if (failed) {
+      <p role="alert" class="text-red-700">No se pudo crear el tipo de transacción.</p>
+    }
+    <p-button type="submit" label="Crear tipo" [disabled]="form.invalid || saving" [loading]="saving" />
+  </form>
+</p-drawer>

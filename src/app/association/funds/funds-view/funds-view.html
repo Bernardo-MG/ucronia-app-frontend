@@ -7,6 +7,10 @@
     <div class="flex flex-wrap gap-2">
       <p-button type="button" label="Exportar Excel" icon="pi pi-download" severity="secondary" outlined
         [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (onClick)="downloadExcel()" />
+      @if (permissions.createType) {
+        <p-button type="button" label="Nuevo tipo de transacción" icon="pi pi-tag" severity="secondary"
+          (onClick)="showTypeForm = true" />
+      }
       @if (permissions.create) {
         <p-button type="button" label="Nueva transacción" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE"
           [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
@@ -82,6 +86,10 @@
       }
     </div>
   </section>
+
+  @if (showTypeForm) {
+    <assoc-transaction-type-form (closed)="showTypeForm = false" />
+  }
 
   <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
     position="right" [style]="{ width: 'min(44rem, 100vw)' }">
