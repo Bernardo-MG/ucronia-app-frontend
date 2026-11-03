@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { ContactMethodForm } from './contact-method-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,13 +9,19 @@ describe('ContactMethodForm', () => {
   let component: ContactMethodForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(ContactMethodForm);
+    TestBed.configureTestingModule({
+      imports: [ContactMethodForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(ContactMethodForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
   it('requires a nonempty contact method name', () => {
     expect(component.form.invalid).toBeTrue();
-    editForm(component.form, { name: 'Email' });
+    component.form.patchValue({ name: 'Email' });
+    component.form.get('name')?.markAsDirty();
     expect(component.form.valid).toBeTrue();
   });
 

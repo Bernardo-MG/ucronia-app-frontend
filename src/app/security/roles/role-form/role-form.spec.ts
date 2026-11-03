@@ -1,5 +1,4 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { RoleForm } from './role-form';
 import { ResourcePermission } from '@bernardo-mg/authentication';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -11,7 +10,12 @@ describe('RoleForm', () => {
   let component: RoleForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(RoleForm);
+    TestBed.configureTestingModule({
+      imports: [RoleForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(RoleForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -25,7 +29,8 @@ describe('RoleForm', () => {
   it('submits changed permissions with the role name', () => {
     const saved = spyOn(component.save, 'emit');
     const permission = { name: 'book:read', resource: 'book', action: 'read' } as ResourcePermission;
-    editForm(component.form, { name: 'Reader' });
+    component.form.patchValue({ name: 'Reader' });
+    component.form.get('name')?.markAsDirty();
     component.togglePermission(permission, true);
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith({ name: 'Reader', permissions: [permission] });

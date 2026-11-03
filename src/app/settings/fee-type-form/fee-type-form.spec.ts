@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { FeeTypeForm } from './fee-type-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,20 +9,29 @@ describe('FeeTypeForm', () => {
   let component: FeeTypeForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(FeeTypeForm);
+    TestBed.configureTestingModule({
+      imports: [FeeTypeForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(FeeTypeForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
   it('requires both the name and amount', () => {
-    editForm(component.form, { name: 'Monthly' });
+    component.form.patchValue({ name: 'Monthly' });
+    component.form.get('name')?.markAsDirty();
     expect(component.form.invalid).toBeTrue();
-    editForm(component.form, { amount: 15 });
+    component.form.patchValue({ amount: 15 });
+    component.form.get('amount')?.markAsDirty();
     expect(component.form.valid).toBeTrue();
   });
 
   it('preserves a numeric amount when saving', () => {
     const saved = spyOn(component.save, 'emit');
-    editForm(component.form, { name: 'Monthly', amount: 15.5 });
+    component.form.patchValue({ name: 'Monthly', amount: 15.5 });
+    component.form.get('name')?.markAsDirty();
+    component.form.get('amount')?.markAsDirty();
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ name: 'Monthly', amount: 15.5 }));
   });

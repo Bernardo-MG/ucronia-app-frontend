@@ -1,5 +1,4 @@
 import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { UserForm } from './user-form';
 import { Role, User } from '@bernardo-mg/authentication';
 import { Profile } from '@ucronia/domain';
@@ -12,13 +11,21 @@ describe('UserForm', () => {
   let component: UserForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(UserForm);
+    TestBed.configureTestingModule({
+      imports: [UserForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(UserForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
   it('serializes role names when inviting a user', () => {
     const saved = spyOn(component.save, 'emit');
-    editForm(component.form, { username: 'ana', name: 'Ana', email: 'ana@example.com' });
+    component.form.patchValue({ username: 'ana', name: 'Ana', email: 'ana@example.com' });
+    component.form.get('username')?.markAsDirty();
+    component.form.get('name')?.markAsDirty();
+    component.form.get('email')?.markAsDirty();
     const role = new Role('Reader', []);
     component.toggleRole(role, true);
     component.toggleRole(role, true);

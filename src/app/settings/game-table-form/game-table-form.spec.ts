@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { GameTableForm } from './game-table-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,14 +9,21 @@ describe('GameTableForm', () => {
   let component: GameTableForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(GameTableForm);
+    TestBed.configureTestingModule({
+      imports: [GameTableForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(GameTableForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
   it('requires the table name and description', () => {
-    editForm(component.form, { name: 'Table A' });
+    component.form.patchValue({ name: 'Table A' });
+    component.form.get('name')?.markAsDirty();
     expect(component.form.invalid).toBeTrue();
-    editForm(component.form, { description: 'Main room' });
+    component.form.patchValue({ description: 'Main room' });
+    component.form.get('description')?.markAsDirty();
     expect(component.form.valid).toBeTrue();
   });
 });

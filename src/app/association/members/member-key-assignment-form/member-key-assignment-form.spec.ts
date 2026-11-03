@@ -1,7 +1,8 @@
-import { ComponentFixture } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { MemberSearch } from '@app/shared/member/member-search/member-search';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { PublicMember } from '@ucronia/domain';
 import { MemberKeyAssignmentForm } from './member-key-assignment-form';
 
@@ -10,7 +11,12 @@ describe('MemberKeyAssignmentForm', () => {
   let component: MemberKeyAssignmentForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(MemberKeyAssignmentForm);
+    TestBed.configureTestingModule({
+      imports: [MemberKeyAssignmentForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(MemberKeyAssignmentForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
     fixture.componentRef.setInput('members', [Object.assign(new PublicMember(), {
       number: 12,
@@ -41,7 +47,8 @@ describe('MemberKeyAssignmentForm', () => {
   it('does not submit a number outside the supplied member options', () => {
     const save = spyOn(component.save, 'emit');
 
-    editForm(component.form, { profile: 99 });
+    component.form.patchValue({ profile: 99 });
+    component.form.get('profile')?.markAsDirty();
     component.onSave();
 
     expect(save).not.toHaveBeenCalled();
@@ -49,7 +56,8 @@ describe('MemberKeyAssignmentForm', () => {
 
   it('does not submit while loading', () => {
     const save = spyOn(component.save, 'emit');
-    editForm(component.form, { profile: 12 });
+    component.form.patchValue({ profile: 12 });
+    component.form.get('profile')?.markAsDirty();
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 

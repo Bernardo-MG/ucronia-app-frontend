@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { Member } from '@ucronia/domain';
 import { MemberEditionForm } from './member-edition-form';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -26,7 +25,12 @@ describe('MemberEditionForm', () => {
       contactChannels: [{ method: { number: 4, name: 'Email' }, detail: 'ana@example.org' }]
     });
 
-    fixture = createFormFixture(MemberEditionForm);
+    TestBed.configureTestingModule({
+      imports: [MemberEditionForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(MemberEditionForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
     fixture.componentRef.setInput('data', member);
     fixture.detectChanges();
@@ -51,15 +55,19 @@ describe('MemberEditionForm', () => {
   });
 
   it('requires the name and fee type', () => {
-    editForm(component.form, { name: { firstName: '' } });
+    component.form.patchValue({ name: { firstName: '' } });
+    component.form.get('name')?.markAsDirty();
 
     expect(component.form.invalid).toBeTrue();
 
-    editForm(component.form, { name: { firstName: 'Ana' }, feeType: null });
+    component.form.patchValue({ name: { firstName: 'Ana' }, feeType: null });
+    component.form.get('name')?.markAsDirty();
+    component.form.get('feeType')?.markAsDirty();
 
     expect(component.form.invalid).toBeTrue();
 
-    editForm(component.form, { feeType: 3 });
+    component.form.patchValue({ feeType: 3 });
+    component.form.get('feeType')?.markAsDirty();
 
     expect(component.form.valid).toBeTrue();
   });
@@ -67,12 +75,16 @@ describe('MemberEditionForm', () => {
   it('clears optional profile values in the full update', () => {
     const saved = spyOn(component.save, 'emit');
 
-    editForm(component.form, {
+    component.form.patchValue({
       identifier: '',
       address: '',
       comments: '',
       birthDate: null
     });
+    component.form.get('identifier')?.markAsDirty();
+    component.form.get('address')?.markAsDirty();
+    component.form.get('comments')?.markAsDirty();
+    component.form.get('birthDate')?.markAsDirty();
     component.removeContactChannel(0);
     component.onSave();
 
@@ -92,7 +104,9 @@ describe('MemberEditionForm', () => {
   it('does not assign a key through form values', () => {
     const saved = spyOn(component.save, 'emit');
 
-    editForm(component.form, { key: 99, address: 'Nueva dirección' });
+    const values = { key: 99, address: 'Nueva dirección' };
+    component.form.patchValue(values);
+    component.form.get('address')?.markAsDirty();
     component.onSave();
 
     expect(component.form.contains('key')).toBeFalse();
@@ -105,7 +119,8 @@ describe('MemberEditionForm', () => {
     fixture.componentRef.setInput('data', { ...member, key: 7 });
     fixture.detectChanges();
 
-    editForm(component.form, { address: 'Nueva dirección' });
+    component.form.patchValue({ address: 'Nueva dirección' });
+    component.form.get('address')?.markAsDirty();
     component.onSave();
 
     expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();

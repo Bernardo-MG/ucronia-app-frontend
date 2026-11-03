@@ -3,7 +3,6 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
-import { editForm } from '@app/testing/form-test-helpers';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { MemberCount } from '@ucronia/api';
@@ -104,7 +103,8 @@ describe('PublicMemberView - assign key', () => {
     if (!form || !submit) {
       return;
     }
-    editForm(form.form, { profile: 12 });
+    form.form.patchValue({ profile: 12 });
+    form.form.get('profile')?.markAsDirty();
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();

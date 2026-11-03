@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { ProfileEditionForm } from './profile-edition-form';
 import { SelectButtonChangeEvent } from 'primeng/selectbutton';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -11,12 +10,18 @@ describe('ProfileEditionForm', () => {
   let component: ProfileEditionForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(ProfileEditionForm);
+    TestBed.configureTestingModule({
+      imports: [ProfileEditionForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(ProfileEditionForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
   it('requires a fee type only when the profile is a member', () => {
-    editForm(component.form, { name: { firstName: 'Ana' } });
+    component.form.patchValue({ name: { firstName: 'Ana' } });
+    component.form.get('name')?.markAsDirty();
     component.onTypeChange({ value: ['member'] } as SelectButtonChangeEvent);
     expect(component.form.get('feeType.number')?.hasError('required')).toBeTrue();
     component.onTypeChange({ value: ['guest'] } as SelectButtonChangeEvent);
@@ -26,7 +31,8 @@ describe('ProfileEditionForm', () => {
 
   it('includes the selected profile types when saving', () => {
     const saved = spyOn(component.save, 'emit');
-    editForm(component.form, { name: { firstName: 'Ana' } });
+    component.form.patchValue({ name: { firstName: 'Ana' } });
+    component.form.get('name')?.markAsDirty();
     component.onTypeChange({ value: ['guest', 'sponsor'] } as SelectButtonChangeEvent);
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ types: ['guest', 'sponsor'] }));

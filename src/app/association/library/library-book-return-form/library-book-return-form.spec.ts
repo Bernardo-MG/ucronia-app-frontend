@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { LibraryBookReturnForm } from './library-book-return-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,7 +9,12 @@ describe('LibraryBookReturnForm', () => {
   let component: LibraryBookReturnForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(LibraryBookReturnForm);
+    TestBed.configureTestingModule({
+      imports: [LibraryBookReturnForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(LibraryBookReturnForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -19,7 +23,8 @@ describe('LibraryBookReturnForm', () => {
     fixture.componentRef.setInput('book', 3);
     fixture.componentRef.setInput('borrower', 7);
     const returnDate = new Date(2026, 0, 15);
-    editForm(component.form, { returnDate });
+    component.form.patchValue({ returnDate });
+    component.form.get('returnDate')?.markAsDirty();
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith({ book: 3, borrower: 7, returnDate });
   });

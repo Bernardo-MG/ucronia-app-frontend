@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture } from '@app/testing/form-test-helpers';
 import { UserTokenExtendForm } from './user-token-extend-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,7 +9,12 @@ describe('UserTokenExtendForm', () => {
   let component: UserTokenExtendForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(UserTokenExtendForm);
+    TestBed.configureTestingModule({
+      imports: [UserTokenExtendForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(UserTokenExtendForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 

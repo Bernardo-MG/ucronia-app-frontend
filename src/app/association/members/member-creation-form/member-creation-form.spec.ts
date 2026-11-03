@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { MemberCreationForm } from './member-creation-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,7 +9,12 @@ describe('MemberCreationForm', () => {
   let component: MemberCreationForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(MemberCreationForm);
+    TestBed.configureTestingModule({
+      imports: [MemberCreationForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(MemberCreationForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -25,15 +29,18 @@ describe('MemberCreationForm', () => {
   });
 
   it('requires a name and fee type', () => {
-    editForm(component.form, { feeType: 3 });
+    component.form.patchValue({ feeType: 3 });
+    component.form.get('feeType')?.markAsDirty();
 
     expect(component.form.invalid).toBeTrue();
 
-    editForm(component.form, { name: { firstName: 'Ana' } });
+    component.form.patchValue({ name: { firstName: 'Ana' } });
+    component.form.get('name')?.markAsDirty();
 
     expect(component.form.valid).toBeTrue();
 
-    editForm(component.form, { feeType: null });
+    component.form.patchValue({ feeType: null });
+    component.form.get('feeType')?.markAsDirty();
 
     expect(component.form.invalid).toBeTrue();
   });
@@ -41,11 +48,14 @@ describe('MemberCreationForm', () => {
   it('emits the complete creation request with scalar lookup numbers', () => {
     const saved = spyOn(component.save, 'emit');
 
-    editForm(component.form, {
+    component.form.patchValue({
       feeType: 3,
       name: { firstName: 'Ana', nickname: '', lastName: 'López' },
       address: 'Calle Mayor'
     });
+    component.form.get('feeType')?.markAsDirty();
+    component.form.get('name')?.markAsDirty();
+    component.form.get('address')?.markAsDirty();
     component.addContactChannel();
     component.contactChannels.at(0).patchValue({ method: 4, detail: 'ana@example.org' });
     component.onSave();
@@ -67,7 +77,9 @@ describe('MemberCreationForm', () => {
   it('does not submit an incomplete contact channel', () => {
     const saved = spyOn(component.save, 'emit');
 
-    editForm(component.form, { feeType: 3, name: { firstName: 'Ana' } });
+    component.form.patchValue({ feeType: 3, name: { firstName: 'Ana' } });
+    component.form.get('feeType')?.markAsDirty();
+    component.form.get('name')?.markAsDirty();
     component.addContactChannel();
     component.onSave();
 

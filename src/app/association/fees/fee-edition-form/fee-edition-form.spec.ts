@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { FeeEditionForm } from './fee-edition-form';
 import { Fee } from '@ucronia/domain';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -11,7 +10,12 @@ describe('FeeEditionForm', () => {
   let component: FeeEditionForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(FeeEditionForm);
+    TestBed.configureTestingModule({
+      imports: [FeeEditionForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(FeeEditionForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -26,7 +30,8 @@ describe('FeeEditionForm', () => {
   it('submits the edited payment date in the transaction object', () => {
     const saved = spyOn(component.save, 'emit');
     const date = new Date(2026, 0, 15);
-    editForm(component.form, { transaction: { date } });
+    component.form.patchValue({ transaction: { date } });
+    component.form.get('transaction')?.markAsDirty();
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith({ transaction: { date } });
   });

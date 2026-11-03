@@ -1,5 +1,4 @@
 import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { Profile } from '@ucronia/domain';
 import { LibraryBookLendingForm } from './library-book-lending-form';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -11,7 +10,12 @@ describe('LibraryBookLendingForm', () => {
   let component: LibraryBookLendingForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(LibraryBookLendingForm);
+    TestBed.configureTestingModule({
+      imports: [LibraryBookLendingForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(LibraryBookLendingForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -20,7 +24,8 @@ describe('LibraryBookLendingForm', () => {
     fixture.componentRef.setInput('book', 3);
     component.onSelectMember(Object.assign(new Profile(), { number: 7 }));
     const lendingDate = new Date(2026, 0, 15);
-    editForm(component.form, { lendingDate });
+    component.form.patchValue({ lendingDate });
+    component.form.get('lendingDate')?.markAsDirty();
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith({ book: 3, borrower: 7, lendingDate });
   });

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { TransactionForm } from './transaction-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,7 +9,12 @@ describe('TransactionForm', () => {
   let component: TransactionForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(TransactionForm);
+    TestBed.configureTestingModule({
+      imports: [TransactionForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(TransactionForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -18,14 +22,19 @@ describe('TransactionForm', () => {
     it(`serializes ${type} with the correct amount sign`, () => {
       const saved = spyOn(component.save, 'emit');
       const date = new Date(2026, 0, 15);
-      editForm(component.form, { type, amount: 25, description: 'Club payment', date });
+      component.form.patchValue({ type, amount: 25, description: 'Club payment', date });
+      component.form.get('type')?.markAsDirty();
+      component.form.get('amount')?.markAsDirty();
+      component.form.get('description')?.markAsDirty();
+      component.form.get('date')?.markAsDirty();
       component.onSave();
       expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ amount, description: 'Club payment', date }));
     });
   }
 
   it('rejects nonpositive transaction amounts', () => {
-    editForm(component.form, { amount: 0 });
+    component.form.patchValue({ amount: 0 });
+    component.form.get('amount')?.markAsDirty();
     expect(component.form.get('amount')?.hasError('min')).toBeTrue();
   });
 });

@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture } from '@app/testing/form-test-helpers';
 import { FeePaymentsForm } from './fee-payments-form';
 import { Profile } from '@ucronia/domain';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -11,7 +10,12 @@ describe('FeePaymentsForm', () => {
   let component: FeePaymentsForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(FeePaymentsForm);
+    TestBed.configureTestingModule({
+      imports: [FeePaymentsForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(FeePaymentsForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 

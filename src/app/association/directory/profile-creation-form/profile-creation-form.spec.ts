@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { ProfileCreationForm } from './profile-creation-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
@@ -10,18 +9,25 @@ describe('ProfileCreationForm', () => {
   let component: ProfileCreationForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(ProfileCreationForm);
+    TestBed.configureTestingModule({
+      imports: [ProfileCreationForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(ProfileCreationForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
   it('accepts a first name without optional surname or nickname', () => {
-    editForm(component.form, { name: { firstName: 'Ana' } });
+    component.form.patchValue({ name: { firstName: 'Ana' } });
+    component.form.get('name')?.markAsDirty();
     expect(component.form.valid).toBeTrue();
   });
 
   it('keeps all three name parts in the nested public payload', () => {
     const saved = spyOn(component.save, 'emit');
-    editForm(component.form, { name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } });
+    component.form.patchValue({ name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } });
+    component.form.get('name')?.markAsDirty();
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith({ name: { firstName: 'Ana', nickname: 'An', lastName: 'López' } });
   });

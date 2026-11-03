@@ -1,20 +1,25 @@
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { Author } from '@ucronia/domain';
 import { of } from 'rxjs';
 import { LibraryService } from '../library-service';
 import { LibraryBookEditionForm } from './library-book-edition-form';
-import { provideZonelessChangeDetection } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup } from '@angular/forms';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { LibraryConfig } from '@app/association/library/library-config';
 
 describe('LibraryBookEditionForm', () => {
   function createForm(): LibraryBookEditionForm {
-    return createFormFixture(LibraryBookEditionForm, [{ provide: LibraryService, useValue: {
+    TestBed.configureTestingModule({
+      imports: [LibraryBookEditionForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations(), { provide: LibraryService, useValue: {
       getGameSystems: () => of({ content: [], last: true }),
       getBookTypes: () => of({ content: [], last: true })
-    } }]).componentInstance;
+    } }]
+    });
+    const fixture = TestBed.createComponent(LibraryBookEditionForm);
+    fixture.detectChanges();
+    return fixture.componentInstance;
   }
 
   it('prevents duplicate author selections and allows removal', () => {
@@ -30,7 +35,9 @@ describe('LibraryBookEditionForm', () => {
 
   it('omits an empty donation from the update payload', () => {
     const component = createForm();
-    editForm(component.form, { title: { title: 'A book' }, language: 'en' });
+    component.form.patchValue({ title: { title: 'A book' }, language: 'en' });
+    component.form.get('title')?.markAsDirty();
+    component.form.get('language')?.markAsDirty();
     const saved = spyOn(component.save, 'emit');
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ donation: undefined }));

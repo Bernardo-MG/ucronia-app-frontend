@@ -1,25 +1,39 @@
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
-import { LibraryBookCreationForm } from './library-book-creation-form';
-import { provideZonelessChangeDetection } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormGroup } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { LibraryBookCreationForm } from './library-book-creation-form';
+import { FormGroup } from '@angular/forms';
 import { of } from 'rxjs';
 import { LibraryConfig } from '@app/association/library/library-config';
 
 describe('LibraryBookCreationForm', () => {
+  let component: LibraryBookCreationForm;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [LibraryBookCreationForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    const fixture = TestBed.createComponent(LibraryBookCreationForm);
+    fixture.detectChanges();
+    component = fixture.componentInstance;
+  });
+
   it('rejects malformed ISBNs but accepts an omitted optional ISBN', () => {
-    const component = createFormFixture(LibraryBookCreationForm).componentInstance;
-    editForm(component.form, { title: { title: 'A book' }, language: 'en', isbn: 'invalid' });
+    component.form.patchValue({ title: { title: 'A book' }, language: 'en', isbn: 'invalid' });
+    component.form.get('title')?.markAsDirty();
+    component.form.get('language')?.markAsDirty();
+    component.form.get('isbn')?.markAsDirty();
     expect(component.form.get('isbn')?.invalid).toBeTrue();
     component.form.get('isbn')?.setValue('');
     expect(component.saveEnabled).toBeTrue();
   });
 
   it('includes the selected book kind in the creation payload', () => {
-    const component = createFormFixture(LibraryBookCreationForm).componentInstance;
     component.kind = 'fiction';
-    editForm(component.form, { title: { title: 'A book' }, language: 'en' });
+    component.form.patchValue({ title: { title: 'A book' }, language: 'en' });
+    component.form.get('title')?.markAsDirty();
+    component.form.get('language')?.markAsDirty();
     const saved = spyOn(component.save, 'emit');
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ kind: 'fiction' }));

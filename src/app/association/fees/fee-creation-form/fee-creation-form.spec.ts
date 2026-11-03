@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
 import { FeeCreationForm } from './fee-creation-form';
 import { Profile } from '@ucronia/domain';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -11,7 +10,12 @@ describe('FeeCreationForm', () => {
   let component: FeeCreationForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(FeeCreationForm);
+    TestBed.configureTestingModule({
+      imports: [FeeCreationForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(FeeCreationForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -19,7 +23,8 @@ describe('FeeCreationForm', () => {
     const saved = spyOn(component.save, 'emit');
     const month = new Date(2026, 0, 1);
     component.onSelectMember(Object.assign(new Profile(), { number: 7 }));
-    editForm(component.form, { month });
+    component.form.patchValue({ month });
+    component.form.get('month')?.markAsDirty();
     component.onSave();
     expect(saved).toHaveBeenCalledOnceWith({ member: 7, month });
   });
