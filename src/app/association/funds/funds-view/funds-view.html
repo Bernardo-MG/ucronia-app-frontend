@@ -18,77 +18,98 @@
     </div>
   </header>
 
-  <p-card styleClass="overflow-hidden">
-    <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
-        <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700">
-          <i class="pi pi-wallet text-2xl" aria-hidden="true"></i>
-        </span>
-        <div class="min-w-0">
-          <span class="block text-sm text-gray-500">Saldo actual</span>
-          @if (status.loadingSummary) {
-            <p-skeleton width="9rem" height="2rem" />
-          } @else {
-            <strong class="block truncate text-2xl text-gray-950 md:text-3xl">
-              {{ summary.total | currency:'EUR':'symbol':'1.2-2' }}
-            </strong>
-          }
-        </div>
-      </div>
-      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
-        <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
-          <i class="pi pi-chart-line text-2xl" aria-hidden="true"></i>
-        </span>
-        <div class="min-w-0">
-          <span class="block text-sm text-gray-500">Resultado acumulado</span>
-          @if (status.loadingSummary) {
-            <p-skeleton width="9rem" height="2rem" />
-          } @else {
-            <strong class="block truncate text-2xl md:text-3xl"
-              [class.text-green-600]="summary.results >= 0" [class.text-red-600]="summary.results < 0">
-              {{ summary.results | currency:'EUR':'symbol':'1.2-2' }}
-            </strong>
-          }
-        </div>
-      </div>
-    </div>
-  </p-card>
-
-  <p-card>
-    <assoc-transaction-balance-chart-view [refresh]="transactionsChanged$" />
-  </p-card>
-
-  <section>
-    <div class="mb-4">
-      <h2 class="text-xl font-semibold text-gray-950">Movimientos</h2>
-      <p class="mt-1 text-sm text-gray-500">Consulta y gestiona las transacciones de la asociación</p>
-    </div>
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
-        <assoc-transaction-display-selector [display]="display" (view)="display = $event" />
-        @if (display === FundsDisplay.LIST) {
-          <div class="min-w-0 flex-1">
-            <ui-text-filter label="Buscar movimientos" placeholder="Buscar por descripción..."
-              [value]="descriptionFilter" (filter)="onFilter($event)" />
-          </div>
-        }
-      </div>
-      @switch (display) {
-        @case(FundsDisplay.CALENDAR) {
-          <assoc-transaction-calendar [transactions]="transactions" [months]="months" [selectedMonth]="selectedCalendarMonth" [loading]="status.loadingCalendar"
-            (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
-        }
-        @case (FundsDisplay.LIST) {
-          <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
-            [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
-            (changeDirection)="onChangeDirection($event)" (changePage)="loadList($event)" />
-        }
+  <p-tabs [value]="selectedTab" (valueChange)="selectedTab = $event ?? selectedTab">
+    <p-tablist>
+      <p-tab value="transactions">Movimientos</p-tab>
+      @if (permissions.readTypes) {
+        <p-tab value="types">Tipos de transacción</p-tab>
       }
-    </div>
-  </section>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="transactions">
+        <div class="space-y-5">
+          <p-card styleClass="overflow-hidden">
+            <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700">
+                  <i class="pi pi-wallet text-2xl" aria-hidden="true"></i>
+                </span>
+                <div class="min-w-0">
+                  <span class="block text-sm text-gray-500">Saldo actual</span>
+                  @if (status.loadingSummary) {
+                    <p-skeleton width="9rem" height="2rem" />
+                  } @else {
+                    <strong class="block truncate text-2xl text-gray-950 md:text-3xl">
+                      {{ summary.total | currency:'EUR':'symbol':'1.2-2' }}
+                    </strong>
+                  }
+                </div>
+              </div>
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
+                  <i class="pi pi-chart-line text-2xl" aria-hidden="true"></i>
+                </span>
+                <div class="min-w-0">
+                  <span class="block text-sm text-gray-500">Resultado acumulado</span>
+                  @if (status.loadingSummary) {
+                    <p-skeleton width="9rem" height="2rem" />
+                  } @else {
+                    <strong class="block truncate text-2xl md:text-3xl"
+                      [class.text-green-600]="summary.results >= 0" [class.text-red-600]="summary.results < 0">
+                      {{ summary.results | currency:'EUR':'symbol':'1.2-2' }}
+                    </strong>
+                  }
+                </div>
+              </div>
+            </div>
+          </p-card>
+
+          <p-card>
+            <assoc-transaction-balance-chart-view [refresh]="transactionsChanged$" />
+          </p-card>
+
+          <section>
+            <div class="mb-4">
+              <h2 class="text-xl font-semibold text-gray-950">Movimientos</h2>
+              <p class="mt-1 text-sm text-gray-500">Consulta y gestiona las transacciones de la asociación</p>
+            </div>
+            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
+                <assoc-transaction-display-selector [display]="display" (view)="display = $event" />
+                @if (display === FundsDisplay.LIST) {
+                  <div class="min-w-0 flex-1">
+                    <ui-text-filter label="Buscar movimientos" placeholder="Buscar por descripción..."
+                      [value]="descriptionFilter" (filter)="onFilter($event)" />
+                  </div>
+                }
+              </div>
+              @switch (display) {
+                @case(FundsDisplay.CALENDAR) {
+                  <assoc-transaction-calendar [transactions]="transactions" [months]="months" [selectedMonth]="selectedCalendarMonth" [loading]="status.loadingCalendar"
+                    (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+                }
+                @case (FundsDisplay.LIST) {
+                  <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
+                    [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
+                    (changeDirection)="onChangeDirection($event)" (changePage)="loadList($event)" />
+                }
+              }
+            </div>
+          </section>
+        </div>
+      </p-tabpanel>
+      @if (permissions.readTypes) {
+        <p-tabpanel value="types">
+          @if (selectedTab === 'types') {
+            <assoc-transaction-type-list [version]="transactionTypesVersion" />
+          }
+        </p-tabpanel>
+      }
+    </p-tabpanels>
+  </p-tabs>
 
   @if (showTypeForm) {
-    <assoc-transaction-type-form (closed)="showTypeForm = false" />
+    <assoc-transaction-type-form (created)="transactionTypesVersion = transactionTypesVersion + 1" (closed)="showTypeForm = false" />
   }
 
   <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"

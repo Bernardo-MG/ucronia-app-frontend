@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { ErrorRequestInterceptor, SimpleResponse } from '@bernardo-mg/request';
+import { ErrorRequestInterceptor, Page, SimpleResponse } from '@bernardo-mg/request';
+import { TransactionType } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 
 export class TransactionTypeEndpoint {
@@ -11,6 +12,12 @@ export class TransactionTypeEndpoint {
     private apiUrl: string
   ) { }
 
+  public page(page = 1, size = 10): Observable<Page<TransactionType>> {
+    return this.http.get<Page<TransactionType>>(`${this.apiUrl}/transaction/type`, {
+      params: { page, size, sort: 'number|asc' }
+    }).pipe(catchError(this.errorInterceptor.handle));
+  }
+
   public create(data: { description: string; color: string }): Observable<TransactionType> {
     return this.http.post<SimpleResponse<TransactionType>>(`${this.apiUrl}/transaction/type`, data)
       .pipe(
@@ -19,10 +26,4 @@ export class TransactionTypeEndpoint {
       );
   }
 
-}
-
-interface TransactionType {
-  number: number;
-  description: string;
-  color: string;
 }

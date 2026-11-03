@@ -27,12 +27,14 @@ import { TransactionForm } from '../transaction-form/transaction-form';
 import { TransactionInfo } from '../transaction-info/transaction-info';
 import { TransactionList } from '../transaction-list/transaction-list';
 import { TransactionReportService } from '../transaction-report-service';
+import { TabsModule } from 'primeng/tabs';
+import { TransactionTypeList } from '../transaction-type-list/transaction-type-list';
 import { TransactionTypeForm } from '../transaction-type-form/transaction-type-form';
 import { TransactionService } from '../transaction-service';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [TransactionTypeForm, DrawerHeader, DrawerFormActions, DrawerActions, CurrencyPipe, CardModule, ButtonModule, DrawerModule, SkeletonModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView],
+  imports: [TabsModule, TransactionTypeList, TransactionTypeForm, DrawerHeader, DrawerFormActions, DrawerActions, CurrencyPipe, CardModule, ButtonModule, DrawerModule, SkeletonModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -64,6 +66,8 @@ export class FundsView implements OnInit {
   public readonly Dialog = Dialog;
   public readonly FundsDisplay = FundsDisplay;
 
+  public selectedTab: string | number = 'transactions';
+  public transactionTypesVersion = 0;
   public showTypeForm = false;
 
   public selectedData = new Transaction();
@@ -99,6 +103,7 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
+      readTypes: authService.hasPermission(UcroniaPermissions.transactionType.read),
       createType: authService.hasPermission(UcroniaPermissions.transactionType.create),
       create: authService.hasPermission(UcroniaPermissions.transaction.create),
       edit: authService.hasPermission(UcroniaPermissions.transaction.update),
@@ -308,6 +313,7 @@ export class FundsView implements OnInit {
 }
 
 interface Permissions {
+  readTypes: boolean;
   createType: boolean;
   create: boolean;
   edit: boolean;

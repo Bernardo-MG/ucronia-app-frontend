@@ -44,4 +44,5 @@ export * from './lib/transactions/transaction';
 export * from './lib/transactions/transaction-monthly-balance';
 export * from './lib/transactions/transaction-months-range';
 export * from './lib/transactions/transaction-summary';
+export * from './lib/transactions/transaction-type';
 

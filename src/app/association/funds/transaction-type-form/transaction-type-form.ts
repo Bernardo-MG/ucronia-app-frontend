@@ -18,6 +18,7 @@ export class TransactionTypeForm {
   private readonly messages = inject(MessageService);
   private readonly untilDestroyed = takeUntilDestroyed();
 
+  public readonly created = output<void>();
   public readonly closed = output<void>();
   public readonly form = inject(FormBuilder).nonNullable.group({
     description: ['', [Validators.required, Validators.maxLength(200), Validators.pattern(/\S/)]],
@@ -40,6 +41,7 @@ export class TransactionTypeForm {
       .subscribe({
         next: () => {
           this.messages.add({ severity: 'info', summary: 'Tipo de transacción creado', life: 3000 });
+          this.created.emit();
           this.closed.emit();
         },
         error: () => this.failed = true
