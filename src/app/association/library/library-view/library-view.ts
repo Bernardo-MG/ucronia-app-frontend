@@ -178,6 +178,9 @@ export class LibraryView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const source = this.getSelectedSource();
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -191,13 +194,24 @@ export class LibraryView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.deleteBook(this.getSelectedSource(), this.selectedData.number),
-        () => {
-          this.load(this.data.page);
-          this.loadSummary();
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.getSelectedSource() !== source ||
+          this.selectedData.number !== number
+        ) {
+          return;
         }
-      )
+
+        this.call(
+          () => this.service.deleteBook(source, number),
+          () => {
+            this.load(this.data.page);
+            this.loadSummary();
+          }
+        );
+      }
     });
   }
 

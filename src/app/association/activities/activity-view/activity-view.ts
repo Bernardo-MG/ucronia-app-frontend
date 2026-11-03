@@ -104,6 +104,8 @@ export class ActivityView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -117,10 +119,20 @@ export class ActivityView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selectedData.number),
-        () => this.load()
-      )
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.number !== number
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.service.delete(number),
+          () => this.load()
+        );
+      }
     });
   }
 

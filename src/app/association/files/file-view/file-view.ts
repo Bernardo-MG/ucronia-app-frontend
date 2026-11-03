@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -26,6 +26,8 @@ import { FileService } from '../file-service';
   templateUrl: './file-view.html'
 })
 export class FileView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly detailRequest = new DetailRequest();
   private readonly service = inject(FileService);
@@ -196,13 +198,25 @@ export class FileView implements OnInit {
   }
 
   public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
       icon: 'pi pi-info-circle',
       rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
       acceptButtonProps: { label: 'Borrar', severity: 'danger' },
-      accept: () => this.call(() => this.service.delete(this.selectedData.number))
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.number !== number
+        ) {
+          return;
+        }
+
+        this.call(() => this.service.delete(number));
+      }
     });
   }
 

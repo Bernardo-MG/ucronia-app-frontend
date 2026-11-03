@@ -176,6 +176,8 @@ export class DirectoryView implements OnInit {
   }
 
   public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
@@ -189,14 +191,23 @@ export class DirectoryView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () =>
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.number !== number
+        ) {
+          return;
+        }
+
         this.call(
-          () => this.directoryService.delete(this.selectedData.number),
+          () => this.directoryService.delete(number),
           () => {
             this.load();
             this.loadSummary();
           }
-        )
+        );
+      }
     });
   }
 

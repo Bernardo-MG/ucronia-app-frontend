@@ -128,6 +128,8 @@ export class FundsView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const index = this.selectedData.index;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -141,10 +143,20 @@ export class FundsView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selectedData.index),
-        () => this.refreshAfterChange()
-      )
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.index !== index
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.service.delete(index),
+          () => this.refreshAfterChange()
+        );
+      }
     });
   }
 

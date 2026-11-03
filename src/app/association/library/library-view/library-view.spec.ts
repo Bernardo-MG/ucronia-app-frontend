@@ -209,4 +209,28 @@ describe('Library request routing', () => {
     component.load(2);
     expect(load).toHaveBeenCalledOnceWith(2);
   });
+
+  it('ignores a delete confirmation after another book is selected', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    libraryServiceMock.deleteBook.calls.reset();
+    component.selectedData = Object.assign(new GameBook(), { number: 12 });
+    component.onDelete(new Event('click'));
+
+    component.selectedData = Object.assign(new GameBook(), { number: 20 });
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
+
+  it('ignores a delete confirmation after the view is destroyed', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    libraryServiceMock.deleteBook.calls.reset();
+    component.selectedData = Object.assign(new GameBook(), { number: 12 });
+    component.onDelete(new Event('click'));
+
+    fixture.destroy();
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
 });

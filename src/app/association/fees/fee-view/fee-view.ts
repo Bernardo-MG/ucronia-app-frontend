@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -31,6 +31,8 @@ import { FeeSummaryService } from '../fee-summary-service';
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly detailRequest = new DetailRequest();
 
@@ -145,6 +147,9 @@ export class FeeView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const memberNumber = this.selectedData.member.number;
+    const month = new Date(this.selectedData.month.getTime());
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -158,14 +163,24 @@ export class FeeView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () =>
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.member.number !== memberNumber ||
+          this.selectedData.month.getTime() !== month.getTime()
+        ) {
+          return;
+        }
+
         this.call(
-          () => this.service.delete(this.selectedData.member.number, this.selectedData.month),
+          () => this.service.delete(memberNumber, month),
           () => {
             this.loadRange();
             this.loadSummary();
           }
-        )
+        );
+      }
     });
   }
 

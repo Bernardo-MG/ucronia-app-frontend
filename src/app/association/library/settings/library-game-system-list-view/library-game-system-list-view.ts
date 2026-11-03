@@ -1,5 +1,5 @@
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
@@ -20,6 +20,8 @@ import { GameSystemService } from '../game-system-service';
   templateUrl: './library-game-system-list-view.html'
 })
 export class LibraryGameSystemListView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly service = inject(GameSystemService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -80,6 +82,8 @@ export class LibraryGameSystemListView implements OnInit {
   }
 
   public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selected.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -93,12 +97,22 @@ export class LibraryGameSystemListView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selected.number),
-        () => {
-          this.load(this.data.page);
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selected.number !== number
+        ) {
+          return;
         }
-      )
+
+        this.call(
+          () => this.service.delete(number),
+          () => {
+            this.load(this.data.page);
+          }
+        );
+      }
     });
   }
 
