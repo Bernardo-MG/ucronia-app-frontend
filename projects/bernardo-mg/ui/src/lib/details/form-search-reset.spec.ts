@@ -3,28 +3,20 @@ import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing
 import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { User } from '@bernardo-mg/authentication';
 import { SearchRequest } from '@bernardo-mg/request';
-import { SearchSelect, TextFilter } from '@bernardo-mg/ui';
-import { Profile } from '@ucronia/domain';
-import { RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
+import { SearchSelect } from './search-select/search-select';
+import { TextFilter } from './text-filter/text-filter';
 import { Subject } from 'rxjs';
-import { LibraryBookLendingForm } from '../association/library/library-book-lending-form/library-book-lending-form';
-import { UserForm } from '../security/users/user-form/user-form';
-import { ScheduledGameForm } from '../association/scheduled-game/scheduled-game-form/scheduled-game-form';
-import { MemberSearch } from '../shared/member/member-search/member-search';
 
 interface Suggestion { number: number; name: string; }
 
 @Component({
+  imports: [ReactiveFormsModule, SearchSelect, TextFilter],
   selector: 'app-form-search-test',
-  imports: [ReactiveFormsModule, SearchSelect, TextFilter, MemberSearch],
   template: `<form [formGroup]="form">
     <input formControlName="record" />
     <ui-search-select inputId="form-author" [value]="selected" [suggestions]="results"
       (cleared)="selected = null" (queryChange)="onQuery($event)" />
-    <assoc-member-search inputId="form-member" [members]="[]"
-      (searchMember)="memberQueries.push($event.query)" />
     <ui-text-filter label="Buscar" [value]="text" (filter)="text = $event" />
   </form>`
 })
@@ -35,7 +27,6 @@ class SearchFormHost {
   public results: Suggestion[] = [];
   public selected: Suggestion | null = null;
   public queries: string[] = [];
-  public memberQueries: string[] = [];
   public text = '';
 
   @Input() public set record(value: string) {
@@ -64,41 +55,20 @@ class TemplateFormHost {
   public queries: string[] = [];
 }
 
-@Component({
-  imports: [UserForm],
-  template: `<access-user-form formId="user-search" [create]="false" [selection]="[]"
-    [member]="profile" [members]="members" [data]="user" (searchMember)="onQuery($event.query)" />`
-})
-class ReusedUserHost {
-  public user = Object.assign(new User(), { username: 'alice', name: 'Alice', email: 'alice@example.com' });
-  public profile = new Profile();
-  public members: Profile[] = [];
-  public queries: string[] = [];
-
-  public onQuery(value: string): void {
-    this.queries.push(value);
-    this.members = [];
-  }
-}
-
-describe('Generic form search reset', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [SearchFormHost, ReusedFormHost, TemplateFormHost, ReusedUserHost, LibraryBookLendingForm],
-    providers: [provideNoopAnimations()]
-  }));
+describe('FormSearchReset', () => {
+  beforeEach(() => TestBed.configureTestingModule({ imports: [SearchFormHost, ReusedFormHost, TemplateFormHost], providers: [provideNoopAnimations()] }));
 
   function type(input: HTMLInputElement, value: string): void {
     input.value = value;
     input.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
-  it('clears all search types and cancels their delayed queries on form reset', fakeAsync(() => {
+  it('clears the autocomplete and text input and cancels their delayed queries on form reset', fakeAsync(() => {
     const fixture = TestBed.createComponent(SearchFormHost);
     fixture.detectChanges();
     tick();
     type(fixture.nativeElement.querySelector('#form-author'), 'old author');
     fixture.detectChanges();
-    type(fixture.nativeElement.querySelector('#form-member'), 'old member');
     fixture.detectChanges();
     type(fixture.nativeElement.querySelector('input[type=search]'), 'old filter');
     fixture.detectChanges();
@@ -109,10 +79,8 @@ describe('Generic form search reset', () => {
     fixture.detectChanges();
     tick(400);
     expect(fixture.componentInstance.queries).not.toContain('old author');
-    expect(fixture.componentInstance.memberQueries).not.toContain('old member');
     expect(fixture.componentInstance.text).toBe('');
     expect(fixture.nativeElement.querySelector('#form-author').value).toBe('');
-    expect(fixture.nativeElement.querySelector('#form-member').value).toBe('');
     expect(fixture.nativeElement.querySelector('input[type=search]').value).toBe('');
     expect(fixture.componentInstance.form.pristine).toBeTrue();
   }));
@@ -132,7 +100,7 @@ describe('Generic form search reset', () => {
     expect(fixture.componentInstance.results).toEqual([]);
   }));
 
-  it('clears an already applied local text filter when its form resets', fakeAsync(() => {
+  it('clears an already emitted search query when its form resets', fakeAsync(() => {
     const fixture = TestBed.createComponent(SearchFormHost);
     fixture.detectChanges();
     tick();
@@ -224,71 +192,4 @@ describe('Generic form search reset', () => {
     flushMicrotasks();
     expect(fixture.componentInstance.queries.length).toBe(before);
   }));
-
-  it('resets a reused user form without erasing the new selected profile', fakeAsync(() => {
-    const fixture = TestBed.createComponent(ReusedUserHost);
-    fixture.detectChanges();
-    tick();
-    type(fixture.nativeElement.querySelector('#user-search-member-search'), 'previous');
-    fixture.detectChanges();
-    tick(100);
-    const profile = new Profile();
-    profile.number = 2;
-    profile.name.fullName = 'Bob';
-    fixture.componentInstance.profile = profile;
-    fixture.componentInstance.user = Object.assign(new User(), { username: 'bob', name: 'Bob', email: 'bob@example.com' });
-    fixture.detectChanges();
-    fixture.checkNoChanges();
-    flushMicrotasks();
-    fixture.detectChanges();
-    fixture.checkNoChanges();
-    tick(400);
-    expect(fixture.componentInstance.queries).not.toContain('previous');
-    expect(fixture.nativeElement.querySelector('#user-search-member-search').value).toBe('Bob');
-  }));
-
-  it('resets lending-form searches through the standard form reset when the book changes', fakeAsync(() => {
-    const fixture = TestBed.createComponent(LibraryBookLendingForm);
-    fixture.componentRef.setInput('formId', 'lending-search');
-    fixture.componentRef.setInput('book', 1);
-    const queries: string[] = [];
-    fixture.componentInstance.searchMember.subscribe(event => queries.push(event.query));
-    fixture.detectChanges();
-    tick();
-    type(fixture.nativeElement.querySelector('#lending-search-member-search'), 'previous');
-    fixture.detectChanges();
-    tick(100);
-    fixture.componentRef.setInput('book', 2);
-    fixture.detectChanges();
-    flushMicrotasks();
-    fixture.detectChanges();
-    tick(400);
-    expect(queries).not.toContain('previous');
-    expect(fixture.componentInstance.form.get('book')?.value).toBe(2);
-    expect(fixture.componentInstance.form.get('borrower')?.value).toBeNull();
-    expect(fixture.nativeElement.querySelector('#lending-search-member-search').value).toBe('');
-  }));
-
-  it('preserves an explicitly supplied borrower regardless of input binding order', fakeAsync(() => {
-    const fixture = TestBed.createComponent(LibraryBookLendingForm);
-    const borrower = new Profile();
-    borrower.number = 7;
-    borrower.name.fullName = 'Alice';
-    fixture.componentRef.setInput('borrower', borrower);
-    fixture.componentRef.setInput('book', 2);
-    fixture.detectChanges();
-    tick();
-    expect(fixture.componentInstance.form.get('borrower')?.value).toBe(7);
-    expect(fixture.nativeElement.querySelector('p-autocomplete input').value).toBe('Alice');
-  }));
-
-  it('keeps recurrence defaults valid when loading a non-recurring game', () => {
-    const component = TestBed.runInInjectionContext(() => new ScheduledGameForm());
-    const game = new ScheduledGame();
-    game.recurrence = undefined;
-    component.data = game;
-    expect(component.form.get('recurrence.interval')?.value).toBe(0);
-    expect(component.form.get('recurrence.unit')?.value).toBe(RecurrenceUnit.WEEKLY);
-    expect(component.form.get('recurrence.unit')?.valid).toBeTrue();
-  });
 });

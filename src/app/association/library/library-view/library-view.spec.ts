@@ -13,6 +13,7 @@ import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 import { LibrarySummary } from '../model/library-summary';
 import { Display, LibraryView } from './library-view';
+import { runInInjectionContext } from '@angular/core';
 
 describe('LibraryView', () => {
   let component: LibraryView;
@@ -187,5 +188,25 @@ describe('LibraryView', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+});
+
+describe('Library request routing', () => {
+  it('disables loan searches while routing pagination to the active tab', () => {
+    TestBed.configureTestingModule({ providers: [
+      { provide: LibraryService, useValue: {} },
+      { provide: LibraryLendingService, useValue: {} },
+      { provide: BookReportService, useValue: {} },
+      { provide: ConfirmationService, useValue: {} },
+      { provide: AuthService, useValue: { hasPermission: () => false, hasAnyPermission: () => false } }
+    ] });
+    const component = TestBed.runInInjectionContext(() => new LibraryView());
+    const load = spyOn(component, 'loadLendings');
+    component.display = component.Display.LENDINGS;
+    component.onFilter('title');
+    expect(load).not.toHaveBeenCalled();
+    load.calls.reset();
+    component.load(2);
+    expect(load).toHaveBeenCalledOnceWith(2);
   });
 });
