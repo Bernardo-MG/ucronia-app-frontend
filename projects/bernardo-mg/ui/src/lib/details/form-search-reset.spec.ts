@@ -12,7 +12,7 @@ interface Suggestion { number: number; name: string; }
 
 @Component({
   imports: [ReactiveFormsModule, SearchSelect, TextFilter],
-  selector: 'app-form-search-test',
+  selector: 'ui-form-search-test',
   template: `<form [formGroup]="form">
     <input formControlName="record" />
     <ui-search-select inputId="form-author" [value]="selected" [suggestions]="results"
@@ -41,7 +41,7 @@ class SearchFormHost {
 
 @Component({
   imports: [SearchFormHost],
-  template: '<app-form-search-test [record]="record" />'
+  template: '<ui-form-search-test [record]="record" />'
 })
 class ReusedFormHost {
   public record = 'first';
