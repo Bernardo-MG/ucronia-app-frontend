@@ -459,16 +459,30 @@ export class LibraryView implements OnInit {
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
+    const dialog = this.dialog;
+    const selectedData = this.selectedData;
+    const selectedLending = this.selectedLending;
+    const ownsDrawer = () => !this.destroyRef.destroyed
+      && this.dialog === dialog
+      && this.selectedData === selectedData
+      && this.selectedLending === selectedLending;
+
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
+          if (this.destroyRef.destroyed) return;
+
+          if (ownsDrawer()) {
+            this.failures.clear();
+            this.dialog = Dialog.NONE;
+          }
           onSuccess();
         },
-        error: error => this.handleError(error)
+        error: error => {
+          if (ownsDrawer()) this.handleError(error);
+        }
       });
   }
 

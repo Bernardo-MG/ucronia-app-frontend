@@ -5,7 +5,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { BookLending, GameBook, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
@@ -232,5 +232,33 @@ describe('Library request routing', () => {
     confirm.calls.mostRecent().args[0].accept?.();
 
     expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
+  it('refreshes the list without closing a drawer opened during a return', () => {
+    const response = new Subject<BookLending>();
+    libraryServiceMock.return.and.returnValue(response);
+    const load = spyOn(component, 'load');
+    component.dialog = Dialog.LENDING_RETURN;
+    component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
+
+    component.onShowLending(new BookLending());
+    response.next(new BookLending());
+    response.complete();
+
+    expect(load).toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+  });
+
+  it('ignores an error from a return after the drawer has been replaced', () => {
+    const response = new Subject<BookLending>();
+    libraryServiceMock.return.and.returnValue(response);
+    component.dialog = Dialog.LENDING_RETURN;
+    component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
+
+    component.onShowLending(new BookLending());
+    const clear = spyOn(component.failures, 'clear');
+    response.error(new Error('Return failed'));
+
+    expect(clear).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
   });
 });

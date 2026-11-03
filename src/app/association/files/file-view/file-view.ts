@@ -233,28 +233,54 @@ export class FileView implements OnInit {
   }
 
   private call(action: () => Observable<Asset>): void {
+    const dialog = this.dialog;
+    const selectedData = this.selectedData;
+    const folderNumber = this.currentFolderNumber;
+    const ownsDrawer = () => !this.destroyRef.destroyed
+      && this.dialog === dialog
+      && this.selectedData === selectedData
+      && this.currentFolderNumber === folderNumber;
+
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
+          if (this.destroyRef.destroyed) return;
+
+          if (ownsDrawer()) {
+            this.failures.clear();
+            this.dialog = Dialog.NONE;
+          }
           this.load(this.data.page);
         },
         error: error => {
-          this.failures = error instanceof FailureResponse ? error.failures : new FailureStore();
+          if (ownsDrawer()) {
+            this.failures = error instanceof FailureResponse ? error.failures : new FailureStore();
+          }
         }
       });
   }
 
   private callFolder(action: () => Observable<AssetFolder>): void {
+    const dialog = this.dialog;
+    const selectedData = this.selectedData;
+    const folderNumber = this.currentFolderNumber;
+    const ownsDrawer = () => !this.destroyRef.destroyed
+      && this.dialog === dialog
+      && this.selectedData === selectedData
+      && this.currentFolderNumber === folderNumber;
+
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
-          this.dialog = Dialog.NONE;
+          if (this.destroyRef.destroyed) return;
+
+          if (ownsDrawer()) {
+            this.dialog = Dialog.NONE;
+          }
           this.loadFolders();
           this.load();
         }
