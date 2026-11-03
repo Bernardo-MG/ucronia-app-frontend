@@ -7,18 +7,16 @@ import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, Subscription, switchMap } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -36,17 +34,19 @@ import { librarySettingsPermissions } from '../settings/library-settings-permiss
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  imports: [TextFilter, LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly detailRequest = new DetailRequest();
 
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
   private listRequest?: Subscription;
-  private memberSearchRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
   private readonly lendingsService = inject(LibraryLendingService);
   private readonly confirmationService = inject(ConfirmationService);
 
@@ -54,7 +54,6 @@ export class LibraryView implements OnInit {
 
   private nameFilter = '';
   public filterValue = '';
-  private readonly filterSubject = new Subject<string>();
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedBorrower = new Profile();
@@ -92,6 +91,8 @@ export class LibraryView implements OnInit {
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
+      this.memberSearch.cancel();
+      this.members = [];
       this.currentDialog = value;
     }
   }
@@ -117,7 +118,6 @@ export class LibraryView implements OnInit {
 
   constructor() {
     const authService = inject(AuthService);
-    const destroyRef = inject(DestroyRef);
 
     // Check permissions
     this.permissions = {
@@ -127,13 +127,6 @@ export class LibraryView implements OnInit {
       delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
     };
 
-    this.filterSubject
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        takeUntilDestroyed(destroyRef)
-      )
-      .subscribe(filter => this.onFilter(filter));
 
   }
 
@@ -377,20 +370,19 @@ export class LibraryView implements OnInit {
   }
 
   public onFilter(filter: string) {
+    if (this.display !== Display.BOOKS) return;
+    this.filterValue = filter;
     this.nameFilter = filter;
     this.load();
   }
 
   public onFilterChange(filter: string): void {
-    this.filterSubject.next(filter);
+    this.onFilter(filter);
   }
 
-  public onSearchMembers(event: { query: string }) {
-    this.memberSearchRequest?.unsubscribe();
-    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
-      .subscribe(members => {
-        this.members = members;
-      });
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .subscribe(members => this.members = members);
   }
 
   // DIALOGS
@@ -418,10 +410,15 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
+    if (this.display === Display.LENDINGS) {
+      this.loadLendings(page);
+      return;
+    }
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
       this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.nameFilter)
-    ).subscribe(response => this.data = response);
+    ).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
@@ -435,10 +432,11 @@ export class LibraryView implements OnInit {
             )
           )
         )
-    ).subscribe(({ response, lendingBorrowerNames }) => {
-      this.lendings = response;
-      this.lendingBorrowerNames = lendingBorrowerNames;
-    });
+    ).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ response, lendingBorrowerNames }) => {
+        this.lendings = response;
+        this.lendingBorrowerNames = lendingBorrowerNames;
+      });
   }
 
   // PRIVATE METHODS

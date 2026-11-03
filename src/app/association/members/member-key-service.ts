@@ -104,6 +104,7 @@ export class MemberKeyService {
       );
   }
 
+  // TODO: Add backend key/profile text search and assignment status filtering.
   public getAll(): Observable<KeyAssignment[]> {
     const sorting = new Sorting([new SortingProperty('number')]);
     return getAllPages((page, size) => this.ucroniaClient.keyAssignment.page(page, size, sorting));

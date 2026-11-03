@@ -1,18 +1,15 @@
 import { Component, input, output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchSelect } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'assoc-member-search',
-  imports: [FormsModule, ReactiveFormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
+  imports: [SearchSelect],
   templateUrl: './member-search.html'
 })
 export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> {
 
-  public readonly inputId = input('memberSearchInput');
+  public readonly inputId = input.required<string>();
   public readonly disabled = input(false);
 
   public readonly members = input<T[]>([]);

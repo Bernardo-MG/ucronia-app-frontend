@@ -50,7 +50,7 @@ describe('FeeCalendarService', () => {
       createMember(2, false)
     ])));
 
-    service.getCalendar(2025, MemberStatus.All).subscribe(calendar => {
+    service.getCalendar(2025).subscribe(calendar => {
       expect(calendar.length).toBe(2);
       expect(calendar[0].member.number).toBe(1);
       expect(calendar[0].member.active).toBeTrue();
@@ -70,7 +70,7 @@ describe('FeeCalendarService', () => {
     );
   });
 
-  it('should filter the calendar by member status', () => {
+  it('preserves fees even when member metadata is missing', () => {
     const response = new Page<Fee>();
     response.page = 1;
     response.last = true;
@@ -83,12 +83,14 @@ describe('FeeCalendarService', () => {
       createMember(1, true)
     ])));
 
-    service.getCalendar(2025, MemberStatus.Active).subscribe(calendar => {
-      expect(calendar.map(entry => entry.member.number)).toEqual([1]);
+    service.getCalendar(2025).subscribe(calendar => {
+      expect(calendar.map(entry => entry.member.number)).toEqual([1, 2]);
+      expect(calendar[1].member.name.fullName).toBe('Member 2');
+      expect(calendar[1].member.active).toBeUndefined();
     });
 
     expect(mockUcroniaClient.memberProfile.page).toHaveBeenCalledOnceWith(
-      1, 100, undefined, MemberStatus.Active
+      1, 100, undefined, MemberStatus.All
     );
   });
 });

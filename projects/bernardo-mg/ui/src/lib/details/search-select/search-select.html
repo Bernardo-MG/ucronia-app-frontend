@@ -1,0 +1,9 @@
+<p-inputgroup uiFormSearchReset (searchReset)="onFormReset()">
+  <p-inputgroup-addon><i class="pi pi-search" aria-hidden="true"></i></p-inputgroup-addon>
+  <p-autocomplete [inputId]="inputId()" [ariaLabel]="label()" [disabled]="disabled()"
+    [ngModel]="viewValue" [ngModelOptions]="{ standalone: true }" [suggestions]="suggestions()"
+    [optionLabel]="optionLabel()" dataKey="number" [forceSelection]="true"
+    [delay]="0" [minLength]="1" [maxlength]="100" [placeholder]="placeholder()" class="w-full" inputStyleClass="w-full"
+    (input)="onInput($event)" (completeMethod)="onSearch($event.query)" (ngModelChange)="onValueChange($event)"
+    (onSelect)="onSelect($event.value)" appendTo="body" />
+</p-inputgroup>

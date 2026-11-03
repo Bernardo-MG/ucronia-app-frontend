@@ -1,11 +1,12 @@
-import { Component, inject, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
 import { MemberStatus, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
@@ -24,13 +25,15 @@ import { UserService } from '../user-service';
 })
 export class UserView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
+
   private readonly detailRequest = new DetailRequest();
 
   private readonly drawer = viewChild(Drawer);
 
   private readonly service = inject(UserService);
   private listRequest?: Subscription;
-  private memberSearchRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly permissions: Permissions;
@@ -52,6 +55,8 @@ export class UserView implements OnInit {
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
+      this.memberSearch.cancel();
+      this.members = [];
       this.currentDialog = value;
     }
   }
@@ -194,18 +199,15 @@ export class UserView implements OnInit {
       finalize(() => this.finishLoading())
     ).pipe(this.detailRequest.untilCancelled())
       .subscribe(({ roles, member }) => {
-      this.roleSelection = roles;
-      this.member = member ?? new Profile();
-      this.dialog = Dialog.EDIT;
-    });
+        this.roleSelection = roles;
+        this.member = member ?? new Profile();
+        this.dialog = Dialog.EDIT;
+      });
   }
 
   public onSearchMembers(event: { query: string }): void {
-    this.memberSearchRequest?.unsubscribe();
-    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
-      .subscribe(members => {
-        this.members = members;
-      });
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .subscribe(members => this.members = members);
   }
 
   public load(page: number | undefined = undefined): void {
@@ -216,6 +218,7 @@ export class UserView implements OnInit {
       .pipe(
         finalize(() => this.finishLoading())
       )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
         this.data = response;
       });

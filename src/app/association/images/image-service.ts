@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { AssetFolder, Asset } from '@ucronia/domain';
+import { Asset, AssetFolder } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { Observable, tap } from 'rxjs';
 
@@ -16,6 +16,7 @@ export class ImageService {
     return this.client.asset.image.page(page, size, sort);
   }
 
+  // TODO: Add backend image name/description search before enabling picker filtering.
   public getAllForSelection(): Observable<Asset[]> {
     const sorting = new Sorting([new SortingProperty('name')]);
     return getAllPages((page, size) => this.getAll(page, sorting, size));
@@ -25,11 +26,13 @@ export class ImageService {
     return this.client.asset.folder.folders();
   }
 
+  // TODO: Add backend asset-type filtering to the folder listing API.
   public getFolderImages(folderNumber: number, page: number | undefined, sort: Sorting,
     size: number | undefined = undefined): Observable<Page<Asset>> {
     return this.client.asset.folder.page(folderNumber, 'IMAGE', page, size, sort);
   }
 
+  // TODO: Add backend asset-type filtering to the folder listing API.
   public getRootImages(page: number | undefined, sort: Sorting,
     size: number | undefined = undefined): Observable<Page<Asset>> {
     return this.client.asset.folder.page(null, 'IMAGE', page, size, sort);

@@ -7,12 +7,12 @@ import { BookLending, GameBook, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { BookReportService } from '../book-report-service';
+import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 import { LibrarySummary } from '../model/library-summary';
-import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
-import { LibraryView, Display } from './library-view';
+import { Display, LibraryView } from './library-view';
 
 describe('LibraryView', () => {
   let component: LibraryView;
@@ -28,8 +28,6 @@ describe('LibraryView', () => {
       'getAllFictionBooks',
       'getGameSystems',
       'getBookTypes',
-      'searchAuthors',
-      'searchPublishers',
       'setAuthors',
       'setPublishers',
       'setGameSystem',

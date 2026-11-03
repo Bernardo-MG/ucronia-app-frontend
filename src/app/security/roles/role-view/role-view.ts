@@ -144,7 +144,7 @@ export class RoleView implements OnInit {
     this.selectedData = role;
     this.loading = true;
 
-    this.service.getAvailablePermissions(role.name)
+    this.service.getAllPermissions()
       .pipe(
         finalize(() => this.finishLoading())
       )

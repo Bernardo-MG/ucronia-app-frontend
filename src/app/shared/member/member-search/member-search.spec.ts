@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Profile } from '@ucronia/domain';
 import { AutoComplete } from 'primeng/autocomplete';
@@ -21,6 +21,7 @@ describe('MemberSearch', () => {
     fixture = TestBed.createComponent<MemberSearch>(MemberSearch);
     component = fixture.componentInstance;
 
+    fixture.componentRef.setInput('inputId', 'member-search-test');
     fixture.componentRef.setInput('members', [member]);
     fixture.detectChanges();
   });
@@ -37,22 +38,16 @@ describe('MemberSearch', () => {
     expect(autoComplete.suggestions).toEqual([member]);
   });
 
-  it('should emit searchMember when completeMethod is fired', () => {
+  it('emits the trimmed member query after the shared debounce', fakeAsync(() => {
     const emitSpy = spyOn(component.searchMember, 'emit');
-
-    const autoComplete = fixture.debugElement.query(
-      By.directive(AutoComplete)
-    ).componentInstance as AutoComplete;
-
-    autoComplete.completeMethod.emit({
-      originalEvent: new Event('input'),
-      query: 'john'
-    });
-
-    expect(emitSpy).toHaveBeenCalledOnceWith({
-      query: 'john'
-    });
-  });
+    const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+    input.value = ' john ';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    tick(299);
+    expect(emitSpy).not.toHaveBeenCalledWith({ query: 'john' });
+    tick(1);
+    expect(emitSpy).toHaveBeenCalledWith({ query: 'john' });
+  }));
 
   it('should emit selectMember when onSelect is fired', () => {
     const emitSpy = spyOn(component.selectMember, 'emit');

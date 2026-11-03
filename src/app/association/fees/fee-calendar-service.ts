@@ -14,7 +14,8 @@ export class FeeCalendarService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getCalendar(year: number, status: MemberStatus): Observable<MemberFees[]> {
+  // TODO: Add backend fee filtering by member status before restoring the status selector.
+  public getCalendar(year: number): Observable<MemberFees[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('member.name.firstName'),
@@ -28,7 +29,7 @@ export class FeeCalendarService {
     const fees = getAllPages((page, size) => this.ucroniaClient.fee
       .page(page, size, sorting, startOfYear(date), endOfYear(date)));
     const members = getAllPages((page, size) => this.ucroniaClient.memberProfile
-      .page(page, size, undefined, status));
+      .page(page, size, undefined, MemberStatus.All));
 
     return forkJoin({ fees, members })
       .pipe(
@@ -41,16 +42,15 @@ export class FeeCalendarService {
     const membersByNumber = new Map(members.map(member => [member.number, member]));
 
     fees
-      .filter(fee => membersByNumber.has(fee.member.number))
       .forEach(fee => {
         let calendarEntry = memberFees.get(fee.member.number);
         if (!calendarEntry) {
-          const member = membersByNumber.get(fee.member.number) as Member;
+          const member = membersByNumber.get(fee.member.number);
           calendarEntry = {
             member: {
-              number: member.number,
-              name: member.name,
-              active: member.active
+              number: fee.member.number,
+              name: member?.name ?? fee.member.name,
+              active: member?.active
             },
             fees: []
           };

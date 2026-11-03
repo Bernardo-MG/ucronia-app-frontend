@@ -202,7 +202,7 @@ describe('PublicMemberView - assign key', () => {
 
     form?.searchMember.emit({ query: 'Luis' });
     fixture.detectChanges();
-    expect(component.assignmentMembers).toEqual([other]);
+    expect(component.assignmentMembers).toEqual([member, other]);
     expect(submit?.form?.id).toBe('public-member-view-assign-key');
     expect(submit?.textContent).toContain('Reasignar llave');
     expect(form).toBeDefined();
@@ -280,7 +280,7 @@ describe('PublicMemberView - assign key', () => {
     component.onAssignKey(15);
 
     expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
-    expect(component.assignmentMembers).toEqual([other]);
+    expect(component.assignmentMembers).toEqual([member, other]);
     expect(component.selectedKey).toEqual(assigned);
     expect(component.status.saving).toBeFalse();
     expect(component.error).not.toBe('');

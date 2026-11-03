@@ -53,15 +53,12 @@ describe('MemberKeyList', () => {
     expect(fixture.nativeElement.querySelector('assoc-member-key-info')).toBeNull();
   });
 
-  it('should retain local search and assignment filters', () => {
-    component.query = '#10';
-
-    expect(component.filtered.map(key => key.number)).toEqual([1]);
-
-    component.query = '';
-    component.assignment = 'unassigned';
-
-    expect(component.filtered.map(key => key.number)).toEqual([2]);
+  it('disables unsupported local search and shows all backend results', () => {
+    const input = fixture.nativeElement.querySelector('input[type="search"]');
+    expect(input.disabled).toBeTrue();
+    expect(input.placeholder).toBe('Búsqueda no disponible');
+    expect(fixture.nativeElement.querySelector('p-select')).toBeNull();
+    expect(fixture.nativeElement.querySelectorAll('tbody tr').length).toBe(2);
   });
 
   it('should emit retry requests without loading data itself', () => {
@@ -100,10 +97,9 @@ describe('MemberKeyList', () => {
     ]);
     fixture.detectChanges();
 
-    component.query = '#10';
 
     expect(component.assigned).toBe(2);
-    expect(component.filtered.map(key => key.number)).toEqual([1, 2]);
+    expect(component.data().map(key => key.number)).toEqual([1, 2]);
   });
 
 });

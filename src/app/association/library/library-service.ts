@@ -245,6 +245,7 @@ export class LibraryService {
     return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
   }
 
+  // TODO: Add backend name search before enabling the authors search picker.
   public getAuthors(page: number | undefined = undefined): Observable<Page<Author>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
@@ -253,42 +254,13 @@ export class LibraryService {
     return this.ucroniaClient.library.author.page(page, undefined, sorting);
   }
 
-  public searchAuthors(query: string): Observable<Author[]> {
-    const sorting = new Sorting(
-      [new SortingProperty('name')]
-    );
-
-    const search = query?.trim().toLowerCase();
-
-    return this.ucroniaClient.library.author.page(undefined, 1000, sorting)
-      .pipe(
-        map(page => page.content as Author[]),
-        map(authors => authors.filter(author => author.name.toLowerCase().includes(search))),
-        map(authors => authors.slice(0, 10))
-      );
-  }
-
+  // TODO: Add backend name search before enabling the publishers search picker.
   public getPublishers(page: number | undefined = undefined): Observable<Page<Publisher>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
     return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
-  }
-
-  public searchPublishers(query: string): Observable<Publisher[]> {
-    const sorting = new Sorting(
-      [new SortingProperty('name')]
-    );
-
-    const search = query?.trim().toLowerCase();
-
-    return this.ucroniaClient.library.publisher.page(undefined, 1000, sorting)
-      .pipe(
-        map(page => page.content as Publisher[]),
-        map(publishers => publishers.filter(publisher => publisher.name.toLowerCase().includes(search))),
-        map(publishers => publishers.slice(0, 10))
-      );
   }
 
   public getDonors(page: number | undefined = undefined): Observable<Page<Profile>> {

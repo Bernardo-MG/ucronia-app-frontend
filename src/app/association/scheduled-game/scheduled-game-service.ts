@@ -65,6 +65,7 @@ export class ScheduledGameService {
       );
   }
 
+  // TODO: Add backend text search and status filtering before enabling these search controls.
   public getAll(
     page: number | undefined = undefined,
     sort: Sorting

@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Page } from '@bernardo-mg/request';
-import { Author, Donor, GameBook, Publisher } from '@ucronia/domain';
+import { Donor, GameBook } from '@ucronia/domain';
 import { of, Subject } from 'rxjs';
 import { LibraryConfig } from '../library-config';
 import { LibraryService } from '../library-service';
@@ -14,7 +14,7 @@ describe('LibraryBookEditionForm search cancellation', () => {
 
   beforeEach(async () => {
     service = jasmine.createSpyObj<LibraryService>('LibraryService', [
-      'searchAuthors', 'searchPublishers', 'searchDonors', 'getGameSystems', 'getBookTypes'
+      'searchDonors', 'getGameSystems', 'getBookTypes'
     ]);
     const page = Object.assign(new Page<never>(), { last: true, totalPages: 1 });
     service.getGameSystems.and.returnValue(of(page));
@@ -26,28 +26,13 @@ describe('LibraryBookEditionForm search cancellation', () => {
         { provide: LibraryService, useValue: service },
         { provide: LibraryConfig, useValue: { getLanguages: () => [] } }
       ]
-    }).overrideComponent(LibraryBookEditionForm, {
-      set: { template: '', imports: [] }
     }).compileComponents();
     fixture = TestBed.createComponent(LibraryBookEditionForm);
     component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
   const cases = [
-    {
-      name: 'authors', method: 'searchAuthors',
-      search: (form: LibraryBookEditionForm, query: string) => form.onSearchAuthors({ query }),
-      clear: (form: LibraryBookEditionForm) => form.onClearAuthorSearch(),
-      select: (form: LibraryBookEditionForm) => form.onSelectAuthor(new Author()),
-      results: (form: LibraryBookEditionForm) => form.authorSearchResults
-    },
-    {
-      name: 'publishers', method: 'searchPublishers',
-      search: (form: LibraryBookEditionForm, query: string) => form.onSearchPublishers({ query }),
-      clear: (form: LibraryBookEditionForm) => form.onClearPublisherSearch(),
-      select: (form: LibraryBookEditionForm) => form.onSelectPublisher(new Publisher()),
-      results: (form: LibraryBookEditionForm) => form.publisherSearchResults
-    },
     {
       name: 'donors', method: 'searchDonors',
       search: (form: LibraryBookEditionForm, query: string) => form.onSearchDonors({ query }),
@@ -92,14 +77,15 @@ describe('LibraryBookEditionForm search cancellation', () => {
         expect(test.results(component)).toEqual([]);
       });
 
-      it('cancels when another book is loaded into the form', () => {
+      it('cancels when another book is loaded into the form', fakeAsync(() => {
         const pending = new Subject<never[]>();
         service[test.method].and.returnValue(pending);
         test.search(component, 'query');
         component.data = new GameBook();
+        flushMicrotasks();
         expect(pending.observed).toBeFalse();
         expect(test.results(component)).toEqual([]);
-      });
+      }));
 
       it('cancels on destruction', () => {
         const pending = new Subject<never[]>();
@@ -111,19 +97,11 @@ describe('LibraryBookEditionForm search cancellation', () => {
     });
   }
 
-  it('keeps different search fields independent', () => {
-    const authors = new Subject<Author[]>();
-    const publishers = new Subject<Publisher[]>();
-    const donors = new Subject<Donor[]>();
-    service.searchAuthors.and.returnValue(authors);
-    service.searchPublishers.and.returnValue(publishers);
-    service.searchDonors.and.returnValue(donors);
-    component.onSearchAuthors({ query: 'author' });
-    component.onSearchPublishers({ query: 'publisher' });
-    component.onSearchDonors({ query: 'donor' });
-    component.onClearAuthorSearch();
-    expect(authors.observed).toBeFalse();
-    expect(publishers.observed).toBeTrue();
-    expect(donors.observed).toBeTrue();
+  it('disables author and publisher searches until supported by the backend', () => {
+    const inputs = fixture.nativeElement.querySelectorAll('ui-search-select input');
+    expect(inputs[0].disabled).toBeTrue();
+    expect(inputs[1].disabled).toBeTrue();
+    expect(inputs[0].placeholder).toBe('Búsqueda no disponible');
+    expect(inputs[1].placeholder).toBe('Búsqueda no disponible');
   });
 });

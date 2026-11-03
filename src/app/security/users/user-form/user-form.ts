@@ -5,13 +5,14 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
+  imports: [TextFilter, DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
@@ -29,7 +30,7 @@ export class UserForm implements OnChanges {
   public readonly members = input<Profile[]>([]);
 
   @Input() public set data(value: User) {
-    this.form.patchValue(value as any);
+    this.form.reset(value as any);
     this.username = value.username;
     this.roles = [...value.roles];
   }
@@ -47,7 +48,6 @@ export class UserForm implements OnChanges {
   public readonly form: FormGroup;
   public username = '';
   public roles: Role[] = [];
-  public roleFilter = '';
   public selectedMember = new Profile();
 
   public get saveEnabled(): boolean {
@@ -73,14 +73,12 @@ export class UserForm implements OnChanges {
     }
   }
 
-  public get filteredRoles(): Role[] {
-    const filter = this.roleFilter.trim().toLocaleLowerCase();
+  public get roleOptions(): Role[] {
     const roles = new Map<string, Role>();
 
     [...this.roles, ...this.selection()].forEach(role => roles.set(role.name, role));
 
     return Array.from(roles.values())
-      .filter(role => !filter || role.name.toLocaleLowerCase().includes(filter))
       .sort((first, second) => first.name.localeCompare(second.name));
   }
 

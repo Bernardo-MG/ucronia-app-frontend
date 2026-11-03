@@ -64,7 +64,8 @@
         <assoc-transaction-display-selector [display]="display" (view)="display = $event" />
         @if (display === FundsDisplay.LIST) {
           <div class="min-w-0 flex-1">
-            <ui-text-filter (filter)="onFilter($event)" />
+            <ui-text-filter label="Buscar movimientos" placeholder="Buscar por descripción..."
+              [value]="descriptionFilter" (filter)="onFilter($event)" />
           </div>
         }
       </div>

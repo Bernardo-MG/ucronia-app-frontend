@@ -1,33 +1,27 @@
-import { Component, DestroyRef, inject, input, Input, output } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
-import { FailureStore, Page } from '@bernardo-mg/request';
+import { FailureStore, Page, SearchRequest } from '@bernardo-mg/request';
+import { SearchSelect } from '@bernardo-mg/ui';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
-import { AutoCompleteModule } from 'primeng/autocomplete';
 import { DatePickerModule } from 'primeng/datepicker';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
-import { Subscription } from 'rxjs';
 import { LibraryConfig } from '../library-config';
 import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-edition-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
+  imports: [SearchSelect, DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule],
   templateUrl: './library-book-edition-form.html'
 })
 export class LibraryBookEditionForm {
 
+  public readonly searchId = crypto.randomUUID();
   private readonly service = inject(LibraryService);
-  private readonly destroyRef = inject(DestroyRef);
-  private authorSearchRequest?: Subscription;
-  private publisherSearchRequest?: Subscription;
-  private donorSearchRequest?: Subscription;
+  private readonly donorSearch = new SearchRequest();
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
@@ -39,9 +33,6 @@ export class LibraryBookEditionForm {
   public readonly failures = input(new FailureStore());
 
   @Input() public set data(value: FictionBook | GameBook) {
-    this.onClearAuthorSearch();
-    this.onClearPublisherSearch();
-    this.onClearDonorSearch();
     this.isGameBook = Object.prototype.hasOwnProperty.call(value, 'gameSystem');
 
     this.form.reset({
@@ -75,15 +66,11 @@ export class LibraryBookEditionForm {
     name: 'Sin tipo'
   };
 
-  public authorSearchValue: Author | undefined;
 
-  public publisherSearchValue: Publisher | undefined;
 
   public donorSearchValue: Donor | undefined;
 
-  public authorSearchResults: Author[] = [];
 
-  public publisherSearchResults: Publisher[] = [];
 
   public donorSearchResults: Donor[] = [];
 
@@ -176,26 +163,6 @@ export class LibraryBookEditionForm {
     }
   }
 
-  public onSearchAuthors(event: { query: string }): void {
-    this.authorSearchRequest?.unsubscribe();
-    this.authorSearchResults = [];
-    const query = event.query?.trim();
-    if (!query) {
-      return;
-    }
-
-    this.authorSearchRequest = this.service.searchAuthors(query)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(authors => this.authorSearchResults = authors);
-  }
-
-  public onClearAuthorSearch(): void {
-    this.authorSearchRequest?.unsubscribe();
-    this.authorSearchRequest = undefined;
-    this.authorSearchValue = undefined;
-    this.authorSearchResults = [];
-  }
-
   public onSelectAuthor(author: Author): void {
     if (!author) {
       return;
@@ -209,7 +176,6 @@ export class LibraryBookEditionForm {
       this.form.markAsDirty();
     }
 
-    this.onClearAuthorSearch();
   }
 
   public onRemoveAuthor(author: Author): void {
@@ -217,26 +183,6 @@ export class LibraryBookEditionForm {
 
     this.form.get('authors')?.setValue(authors);
     this.form.markAsDirty();
-  }
-
-  public onSearchPublishers(event: { query: string }): void {
-    this.publisherSearchRequest?.unsubscribe();
-    this.publisherSearchResults = [];
-    const query = event.query?.trim();
-    if (!query) {
-      return;
-    }
-
-    this.publisherSearchRequest = this.service.searchPublishers(query)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(publishers => this.publisherSearchResults = publishers);
-  }
-
-  public onClearPublisherSearch(): void {
-    this.publisherSearchRequest?.unsubscribe();
-    this.publisherSearchRequest = undefined;
-    this.publisherSearchValue = undefined;
-    this.publisherSearchResults = [];
   }
 
   public onSelectPublisher(publisher: Publisher): void {
@@ -252,7 +198,6 @@ export class LibraryBookEditionForm {
       this.form.markAsDirty();
     }
 
-    this.onClearPublisherSearch();
   }
 
   public onRemovePublisher(publisher: Publisher): void {
@@ -263,21 +208,12 @@ export class LibraryBookEditionForm {
   }
 
   public onSearchDonors(event: { query: string }): void {
-    this.donorSearchRequest?.unsubscribe();
-    this.donorSearchResults = [];
-    const query = event.query?.trim();
-    if (!query) {
-      return;
-    }
-
-    this.donorSearchRequest = this.service.searchDonors(query)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(donors => this.donorSearchResults = donors);
+    this.donorSearch.search(event.query, query => this.service.searchDonors(query))
+      .subscribe(results => this.donorSearchResults = results);
   }
 
   public onClearDonorSearch(): void {
-    this.donorSearchRequest?.unsubscribe();
-    this.donorSearchRequest = undefined;
+    this.donorSearch.cancel();
     this.donorSearchValue = undefined;
     this.donorSearchResults = [];
   }

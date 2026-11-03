@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
@@ -39,6 +40,8 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly detailRequest = new DetailRequest();
 
@@ -219,6 +222,7 @@ export class DirectoryView implements OnInit {
     this.listRequest = this.withLoading(
       this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
     )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
         this.profiles = response;
       });

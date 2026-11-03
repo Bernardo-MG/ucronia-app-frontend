@@ -1,21 +1,5 @@
-<p-inputgroup>
-  <p-inputgroup-addon>
-    <i class="pi pi-search"></i>
-  </p-inputgroup-addon>
-  <p-autocomplete
-    [inputId]="inputId()"
-    [disabled]="disabled()"
-    ariaLabel="Buscar socio"
-    class="w-full"
-    name="memberSearch"
-    [ngModel]="member()"
-    [suggestions]="members()"
-    optionLabel="name.fullName"
-    dataKey="number"
-    [forceSelection]="true"
-    placeholder="Buscar socio..."
-    (completeMethod)="searchMember.emit({ query: $event.query })"
-    (onSelect)="selectMember.emit($event.value)"
-    (ngModelChange)="onMemberChange($event)"
-    appendTo="body" />
-</p-inputgroup>
+<ui-search-select [inputId]="inputId()" label="Buscar socio" placeholder="Buscar socio..."
+  [disabled]="disabled()" [value]="(member()?.number || 0) > 0 ? member() : null"
+  [suggestions]="members()" optionLabel="name.fullName"
+  (queryChange)="searchMember.emit({ query: $event })" (selected)="selectMember.emit($event)"
+  (cleared)="clearMember.emit()" />

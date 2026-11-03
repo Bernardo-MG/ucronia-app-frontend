@@ -112,16 +112,9 @@
       <h3 class="font-semibold text-gray-950">Autoría y edición</h3>
 
       <div>
-        <label class="block font-medium text-gray-950">Autores</label>
-        <p-inputgroup class="mt-2">
-          <p-inputgroup-addon>
-            <i class="pi pi-search" aria-hidden="true"></i>
-          </p-inputgroup-addon>
-          <p-autocomplete name="authorSearch" [ngModel]="authorSearchValue" [ngModelOptions]="{ standalone: true }"
-            [suggestions]="authorSearchResults" optionLabel="name" dataKey="number" [forceSelection]="true"
-            placeholder="Buscar autor..." (completeMethod)="onSearchAuthors($event)"
-            (onSelect)="onSelectAuthor($event.value)" (onClear)="onClearAuthorSearch()" appendTo="body" />
-        </p-inputgroup>
+        <label [for]="(formId() || searchId) + '-author-search'" class="block font-medium text-gray-950">Autores</label>
+        <ui-search-select [inputId]="(formId() || searchId) + '-author-search'" label="Buscar autor"
+          placeholder="Búsqueda no disponible" [disabled]="true" />
 
         @if (selectedAuthors.length) {
           <div class="mt-3 flex flex-wrap gap-2">
@@ -139,17 +132,9 @@
       </div>
 
       <div>
-        <label class="block font-medium text-gray-950">Editoriales</label>
-        <p-inputgroup class="mt-2">
-          <p-inputgroup-addon>
-            <i class="pi pi-search" aria-hidden="true"></i>
-          </p-inputgroup-addon>
-          <p-autocomplete name="publisherSearch" [ngModel]="publisherSearchValue"
-            [ngModelOptions]="{ standalone: true }" [suggestions]="publisherSearchResults" optionLabel="name"
-            dataKey="number" [forceSelection]="true" placeholder="Buscar editorial..."
-            (completeMethod)="onSearchPublishers($event)" (onSelect)="onSelectPublisher($event.value)" (onClear)="onClearPublisherSearch()"
-            appendTo="body" />
-        </p-inputgroup>
+        <label [for]="(formId() || searchId) + '-publisher-search'" class="block font-medium text-gray-950">Editoriales</label>
+        <ui-search-select [inputId]="(formId() || searchId) + '-publisher-search'" label="Buscar editorial"
+          placeholder="Búsqueda no disponible" [disabled]="true" />
 
         @if (selectedPublishers.length) {
           <div class="mt-3 flex flex-wrap gap-2">
@@ -187,16 +172,13 @@
         </div>
 
         <div>
-          <label class="block font-medium text-gray-950">Donantes</label>
-          <p-inputgroup class="mt-2">
-            <p-inputgroup-addon>
-              <i class="pi pi-search" aria-hidden="true"></i>
-            </p-inputgroup-addon>
-            <p-autocomplete name="donorSearch" [ngModel]="donorSearchValue" [ngModelOptions]="{ standalone: true }"
-              [suggestions]="donorSearchResults" optionLabel="name.fullName" dataKey="number"
-              [forceSelection]="true" placeholder="Buscar donante..." (completeMethod)="onSearchDonors($event)"
-              (onSelect)="onSelectDonor($event.value)" (onClear)="onClearDonorSearch()" appendTo="body" />
-          </p-inputgroup>
+          <label [for]="(formId() || searchId) + '-donor-search'" class="block font-medium text-gray-950">Donantes</label>
+          <ui-search-select [inputId]="(formId() || searchId) + '-donor-search'" label="Buscar donante"
+          placeholder="Buscar donante..." [disabled]="formStatus.loading" [value]="donorSearchValue"
+          [clearOnSelect]="true"
+          [suggestions]="donorSearchResults" optionLabel="name.fullName"
+          (queryChange)="onSearchDonors({ query: $event })" (selected)="onSelectDonor($event)"
+          (cleared)="onClearDonorSearch()" />
 
           @if (selectedDonors.length) {
             <div class="mt-3 flex flex-wrap gap-2">

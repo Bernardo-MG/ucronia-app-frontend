@@ -5,7 +5,7 @@ import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security'
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus, Profile } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, combineLatest, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -86,18 +86,7 @@ export class UserService {
 
   // ROLES
 
-  public getAvailableRoles(username: string): Observable<Role[]> {
-    return combineLatest([
-      this.getOne(username),
-      this.getAllRoles()
-    ]).pipe(
-      map(([user, roles]) => {
-        const userRoles = user.roles?.map(r => r.name) ?? [];
-        return roles.filter(role => !userRoles.includes(role.name));
-      })
-    );
-  }
-
+  // TODO: Add backend role name search before enabling the role search control.
   public getAllRoles(): Observable<Role[]> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
@@ -157,46 +146,6 @@ export class UserService {
 
     return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
       .pipe(map(page => page.content as Member[]));
-  }
-
-  public getAvailableMembers(username: string): Observable<Member[]> {
-    return combineLatest([
-      this.getProfile(username),
-      this.getAllMembers()
-    ]).pipe(
-      map(([member, members]) => {
-        if (!member) {
-          return members;
-        }
-        return members.filter(m => m.number !== member.number);
-      })
-    );
-  }
-
-  private getAllMembers(): Observable<Member[]> {
-    const sorting = new Sorting(
-      [
-        new SortingProperty('name.firstName'),
-        new SortingProperty('name.lastName'),
-        new SortingProperty('number')
-      ]
-    );
-    const pageSize = 100;
-
-    return this.ucroniaClient.memberProfile.page(undefined, pageSize, sorting, MemberStatus.All)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.ucroniaClient.memberProfile.page(nextPage, pageSize, sorting, MemberStatus.All);
-          }
-          return of();
-        }),
-        // accumulate members from all pages into one array
-        reduce((members: Member[], res?: Page<Member>) => {
-          return res ? [...members, ...res.content] : members;
-        }, [])
-      );
   }
 
 }

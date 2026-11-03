@@ -216,6 +216,7 @@ export class FundsView implements OnInit {
     this.status.loadingList = true;
     this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
       .pipe(finalize(() => this.status.loadingList = false))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(transactions => this.transactionsPage = transactions);
   }
 

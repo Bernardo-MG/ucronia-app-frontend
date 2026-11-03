@@ -4,12 +4,13 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-role-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
+  imports: [TextFilter, DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './role-form.html'
 })
 export class RoleForm {
@@ -25,7 +26,7 @@ export class RoleForm {
   public readonly selection = input<ResourcePermission[]>([]);
 
   @Input() public set data(value: Role) {
-    this.form.patchValue(value as any);
+    this.form.reset(value as any);
     this.isEdit = true;
     this.permissions = [...value.permissions];
   }
@@ -37,7 +38,6 @@ export class RoleForm {
 
   public permissions: ResourcePermission[] = [];
 
-  public filterValue = '';
 
   public readonly formStatus: FormStatus;
 
@@ -59,21 +59,9 @@ export class RoleForm {
   }
 
   public get permissionGroups(): PermissionGroup[] {
-    const filter = this.filterValue.trim().toLocaleLowerCase();
     const groups = new Map<string, ResourcePermission[]>();
 
     this.selection()
-      .filter(permission => {
-        if (!filter) {
-          return true;
-        }
-
-        return [
-          permission.resource,
-          permission.action,
-          permission.name
-        ].some(value => value.toLocaleLowerCase().includes(filter));
-      })
       .forEach(permission => {
         const permissions = groups.get(permission.resource) ?? [];
 

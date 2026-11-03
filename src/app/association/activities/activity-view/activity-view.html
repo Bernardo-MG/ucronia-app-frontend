@@ -40,15 +40,11 @@
     </div>
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
       <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
-        <p-iconfield class="w-full lg:max-w-xl">
-          <p-inputicon class="pi pi-search" />
-          <input pInputText type="search" [(ngModel)]="filterValue" placeholder="Buscar por título o lugar…"
-            aria-label="Buscar actividades por título o lugar" class="w-full" maxlength="100" />
-        </p-iconfield>
-        <p-selectbutton class="lg:ml-auto" [options]="displayOptions" [(ngModel)]="selectedDisplay"
+        <ui-text-filter class="block w-full lg:max-w-xl" label="Buscar actividades" placeholder="Búsqueda no disponible" [disabled]="true" />
+        <p-selectbutton class="lg:ml-auto" [options]="displayOptions" [(ngModel)]="selectedDisplay" (ngModelChange)="load()"
           optionLabel="label" optionValue="value" aria-label="Filtrar actividades por fecha" />
       </div>
-      <app-activity-list [loading]="status.loading" [data]="filteredActivities" [rows]="activities.size"
+      <app-activity-list [loading]="status.loading" [data]="activities.content" [rows]="activities.size"
         [page]="activities.page" [totalRecords]="activities.totalElements" (show)="onShowInfo($event)"
         (changeDirection)="onChangeDirection($event)" (changePage)="load($event)" />
     </div>

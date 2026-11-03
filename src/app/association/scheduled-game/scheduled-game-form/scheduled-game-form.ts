@@ -16,8 +16,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-scheduled-game-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule,
-    MessageModule, SelectModule, TextareaModule, ToggleSwitchModule, MemberSearch],
+  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule, MessageModule, SelectModule, TextareaModule, ToggleSwitchModule, MemberSearch],
   templateUrl: './scheduled-game-form.html'
 })
 export class ScheduledGameForm implements OnChanges {
@@ -37,7 +36,10 @@ export class ScheduledGameForm implements OnChanges {
   public readonly selectedMaster = input(new Profile());
 
   @Input() public set data(value: ScheduledGame) {
-    this.form.patchValue(value as any);
+    this.form.reset({
+      ...value,
+      recurrence: value.recurrence ?? { interval: 0, unit: RecurrenceUnit.WEEKLY }
+    });
     this.recurring = value.recurrence ? value.recurrence?.interval > 0 : false;
     this.showImageField = !!value.image;
   }

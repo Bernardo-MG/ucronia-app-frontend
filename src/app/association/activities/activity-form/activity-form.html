@@ -24,7 +24,7 @@
             <div class="mt-3">
               <label for="imageInput" class="block font-medium text-gray-950">Imagen</label>
               <p-select inputId="imageInput" formControlName="image" [options]="imageOptions" optionLabel="name"
-                optionValue="url" [filter]="true" filterBy="name,description" filterPlaceholder="Buscar imágenes…"
+                optionValue="url"
                 placeholder="Selecciona una imagen" emptyFilterMessage="No se han encontrado imágenes"
                 emptyMessage="No hay imágenes disponibles" [showClear]="true" appendTo="body" class="mt-2 w-full">
                 <ng-template #selectedItem let-image>

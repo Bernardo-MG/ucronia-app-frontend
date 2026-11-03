@@ -29,7 +29,7 @@
       <td>
         <span class="block font-medium text-gray-950">{{ memberFees.member.name.fullName }}</span>
         <span class="mt-1 text-xs text-gray-500">#{{ memberFees.member.number }}</span>
-        @if (!memberFees.member.active) {
+        @if (memberFees.member.active === false) {
           <p-badge class="ml-2" value="Inactivo" severity="warn" badgeSize="small" />
         }
       </td>

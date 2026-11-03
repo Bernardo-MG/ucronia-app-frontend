@@ -13,5 +13,5 @@ export class MemberFeesFee {
 export class MemberFeesMember {
   public number = -1;
   public name = new MemberName();
-  public active = false;
+  public active?: boolean;
 }
