@@ -100,7 +100,6 @@ export class PublicMemberView implements OnInit {
   };
   public failures = new FailureStore();
   public error = '';
-  private nameFilter = '';
   public filterValue = '';
 
   constructor() {
@@ -538,7 +537,6 @@ export class PublicMemberView implements OnInit {
 
   public onFilter(filter: string): void {
     this.filterValue = filter;
-    this.nameFilter = filter;
     this.load();
   }
 
@@ -557,12 +555,12 @@ export class PublicMemberView implements OnInit {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
     this.listRequest = this.service
-      .getAll(page, this.sort, this.nameFilter)
+      .getAll(page, this.sort, this.filterValue)
       .pipe(
         switchMap(response => {
           if (response.content.length === 0 && response.page > 1) {
             const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
-            return this.service.getAll(previousPage, this.sort, this.nameFilter);
+            return this.service.getAll(previousPage, this.sort, this.filterValue);
           }
           return of(response);
         }),

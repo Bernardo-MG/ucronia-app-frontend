@@ -52,7 +52,6 @@ export class LibraryView implements OnInit {
 
   public failures = new FailureStore();
 
-  private nameFilter = '';
   public filterValue = '';
 
   public selectedData: FictionBook | GameBook = new GameBook();
@@ -386,7 +385,6 @@ export class LibraryView implements OnInit {
   public onFilter(filter: string) {
     if (this.display !== Display.BOOKS) return;
     this.filterValue = filter;
-    this.nameFilter = filter;
     this.load();
   }
 
@@ -430,7 +428,7 @@ export class LibraryView implements OnInit {
     }
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
-      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.nameFilter)
+      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.filterValue)
     ).pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => this.data = response);
   }

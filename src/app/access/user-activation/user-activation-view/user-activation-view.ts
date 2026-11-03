@@ -67,7 +67,11 @@ export class UserActivationView {
 
     this.service.activateUser(this.user.token, password)
       .pipe(
-        tap({ complete: () => { this.step = Step.FINISHED; } }),
+        tap({
+          complete: () => {
+            this.step = Step.FINISHED;
+          }
+        }),
         finalize(() => this.status.loading = false),
         takeUntil(this.tokenChanged),
         takeUntilDestroyed(this.destroyRef)

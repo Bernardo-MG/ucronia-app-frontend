@@ -63,7 +63,11 @@ export class PasswordResetView {
 
     this.service.resetPassword(this.token, password)
       .pipe(
-        tap({ complete: () => { this.status = 'finished'; } }),
+        tap({
+          complete: () => {
+            this.status = 'finished';
+          }
+        }),
         finalize(() => this.loading = false),
         takeUntil(this.tokenChanged),
         takeUntilDestroyed(this.destroyRef)

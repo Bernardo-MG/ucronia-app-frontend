@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, Input, input, output } from '@angular/core';
+import { Component, Input, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -33,7 +33,7 @@ export class TextFilter {
       map(value => value.trim()),
       switchMap(value => value ? timer(300).pipe(map(() => value)) : of('')),
       distinctUntilChanged(),
-      takeUntilDestroyed(inject(DestroyRef))
+      takeUntilDestroyed()
     ).subscribe(value => this.filter.emit(value));
   }
 

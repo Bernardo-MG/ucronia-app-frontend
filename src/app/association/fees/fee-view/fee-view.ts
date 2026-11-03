@@ -1,3 +1,4 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { DetailRequest } from '@app/shared/request/detail-request';
@@ -207,7 +208,10 @@ export class FeeView implements OnInit {
 
     this.filter.year = year;
     this.calendarRequest = this.feeCalendarService.getCalendar(year)
-      .pipe(finalize(() => this.status.loadingCalendar = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingCalendar = false)
+      )
       .subscribe(data => this.feeCalendar = data);
   }
 
@@ -248,6 +252,7 @@ export class FeeView implements OnInit {
         switchMap(() =>
           this.feeCalendarService.getCalendar(this.filter.year)
         ),
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => this.status.loadingCalendar = false)
       )
       .subscribe(data => {

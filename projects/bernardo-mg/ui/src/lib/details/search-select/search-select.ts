@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, input, output } from '@angular/core';
+import { Component, effect, input, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/autocomplete';
@@ -34,7 +34,7 @@ export class SearchSelect<T> {
     this.queries.pipe(
       map(query => query.trim()),
       switchMap(query => query ? timer(300).pipe(map(() => query)) : of('')),
-      takeUntilDestroyed(inject(DestroyRef))
+      takeUntilDestroyed()
     ).subscribe(query => this.queryChange.emit(query));
 
     effect(() => {

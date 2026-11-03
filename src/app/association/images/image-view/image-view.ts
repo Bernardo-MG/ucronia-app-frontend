@@ -1,3 +1,4 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DetailRequest } from '@app/shared/request/detail-request';
@@ -31,6 +32,7 @@ export class ImageView implements OnInit {
   private readonly detailRequest = new DetailRequest();
   private readonly service = inject(ImageService);
   private listRequest?: Subscription;
+  private folderRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
   public readonly Dialog = Dialog;
@@ -78,7 +80,10 @@ export class ImageView implements OnInit {
     const request = this.currentFolderNumber === null ? this.service.getRootImages(page, this.sort)
       : this.service.getFolderImages(this.currentFolderNumber, page, this.sort);
     this.listRequest = request
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe(data => this.data = data);
   }
 
@@ -287,7 +292,9 @@ export class ImageView implements OnInit {
   }
 
   private loadFolders(): void {
-    this.service.getFolders()
+    this.folderRequest?.unsubscribe();
+    this.folderRequest = this.service.getFolders()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(folders => this.folders = folders);
   }
 
