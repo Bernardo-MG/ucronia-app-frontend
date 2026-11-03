@@ -130,6 +130,7 @@ export class ImageView implements OnInit {
   public onDeleteFolder(event: Event): void {
     const folder = this.folders.find(item => item.number === this.currentFolderNumber);
     if (!folder) return;
+    const { number, parentNumber } = folder;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar esta carpeta vacía?',
@@ -137,14 +138,20 @@ export class ImageView implements OnInit {
       rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
       acceptButtonProps: { label: 'Borrar', severity: 'danger' },
       accept: () => {
+        if (this.destroyRef.destroyed || this.currentFolderNumber !== number) return;
+
         this.status.loading = true;
-        this.service.deleteFolder(folder.number)
+        this.service.deleteFolder(number)
           .pipe(finalize(() => this.status.loading = false))
           .subscribe({
             next: () => {
-              this.currentFolderNumber = folder.parentNumber;
+              if (this.destroyRef.destroyed) return;
+
               this.loadFolders();
-              this.load();
+              if (this.currentFolderNumber === number) {
+                this.currentFolderNumber = parentNumber;
+                this.load();
+              }
             }
           });
       }
