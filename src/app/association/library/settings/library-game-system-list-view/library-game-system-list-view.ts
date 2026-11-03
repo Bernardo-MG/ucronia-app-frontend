@@ -1,3 +1,4 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
@@ -12,7 +13,7 @@ import { GameSystem } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { GameSystemService } from '../game-system-service';
 
 @Component({
@@ -22,6 +23,7 @@ import { GameSystemService } from '../game-system-service';
 export class LibraryGameSystemListView implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef);
+  private listRequest?: Subscription;
 
   private readonly service = inject(GameSystemService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -185,9 +187,13 @@ export class LibraryGameSystemListView implements OnInit {
   // DATA LOADING
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe(response => this.data = response);
   }
 

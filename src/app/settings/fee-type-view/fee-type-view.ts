@@ -1,5 +1,6 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -10,7 +11,7 @@ import { FeeType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { FeeTypeForm } from '../fee-type-form/fee-type-form';
 import { FeeTypeList } from '../fee-type-list/fee-type-list';
 import { FeeTypeService } from '../fee-type-service';
@@ -21,6 +22,9 @@ import { FeeTypeService } from '../fee-type-service';
   templateUrl: './fee-type-view.html'
 })
 export class FeeTypeView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
+  private listRequest?: Subscription;
 
   private readonly feeTypeService = inject(FeeTypeService);
 
@@ -104,10 +108,14 @@ export class FeeTypeView implements OnInit {
   // DATA LOADING
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
 
-    this.feeTypeService.getAll(page)
-      .pipe(finalize(() => this.loading = false))
+    this.listRequest = this.feeTypeService.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe(response => this.feeTypeData = response);
   }
 
