@@ -1,6 +1,7 @@
 import { CurrencyPipe } from '@angular/common';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -34,6 +35,8 @@ import { TransactionService } from '../transaction-service';
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
+
+  private readonly detailRequest = new DetailRequest();
 
   private readonly service = inject(TransactionService);
   private listRequest?: Subscription;
@@ -75,7 +78,18 @@ export class FundsView implements OnInit {
 
   private sort = new Sorting();
 
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
 
   constructor() {
     const authService = inject(AuthService);
@@ -114,6 +128,8 @@ export class FundsView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const index = this.selectedData.index;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -127,17 +143,33 @@ export class FundsView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selectedData.index),
-        () => this.refreshAfterChange()
-      )
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.index !== index
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.service.delete(index),
+          () => this.refreshAfterChange()
+        );
+      }
     });
   }
 
   public onShowInfo(transactionId: number) {
-    this.service.getOne(transactionId)
-      .subscribe(transaction => this.selectedData = transaction);
+    this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
+    this.status.loading = true;
+    this.service.getOne(transactionId)
+      .pipe(
+        finalize(() => this.status.loading = false),
+        this.detailRequest.untilCancelled()
+      )
+      .subscribe(transaction => this.selectedData = transaction);
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -196,6 +228,7 @@ export class FundsView implements OnInit {
     this.status.loadingList = true;
     this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
       .pipe(finalize(() => this.status.loadingList = false))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(transactions => this.transactionsPage = transactions);
   }
 

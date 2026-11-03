@@ -11,6 +11,7 @@ export class LibraryLendingService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
+  // TODO: Add backend loan title search before enabling the lending search control.
   public getAll(page: number | undefined = undefined, sort: Sorting): Observable<Page<BookLending>> {
     return this.ucroniaClient.library.lending.page(page, undefined, sort);
   }

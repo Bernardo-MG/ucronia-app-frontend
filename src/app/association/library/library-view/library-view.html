@@ -44,11 +44,9 @@
 
   <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
     <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
-      <p-iconfield class="w-full lg:max-w-xl">
-        <p-inputicon class="pi pi-search" />
-        <input pInputText type="search" [(ngModel)]="filterValue" (ngModelChange)="onFilterChange($event)"
-          placeholder="Buscar por título…" aria-label="Buscar en la biblioteca" class="w-full" maxlength="50" />
-      </p-iconfield>
+      <ui-text-filter class="block w-full lg:max-w-xl" label="Buscar en la biblioteca" [placeholder]="display === Display.BOOKS ? 'Buscar por título...' : 'Búsqueda no disponible'"
+          [disabled]="display !== Display.BOOKS"
+          [value]="display === Display.BOOKS ? filterValue : ''" (filter)="onFilter($event)" />
 
       @if(display === Display.BOOKS) {
         <p-selectbutton [options]="bookOptions" [(ngModel)]="selectedBookView" optionLabel="label" optionValue="value"

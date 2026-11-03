@@ -22,6 +22,7 @@ export class PublicMemberService {
     return this.ucroniaClient.member.page(page, undefined, sorting, name);
   }
 
+  // TODO: Support assigned-profile exclusion in the backend if required by the key picker.
   public searchMembers(query: string): Observable<PublicMember[]> {
     const sorting = new Sorting(this.defaultSorting);
     return this.ucroniaClient.member.page(undefined, 10, sorting, query.trim())

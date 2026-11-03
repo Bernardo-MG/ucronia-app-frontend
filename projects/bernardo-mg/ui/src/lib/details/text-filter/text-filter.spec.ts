@@ -28,6 +28,7 @@ describe('TextFilter', () => {
     fixture.detectChanges();
 
     expect(component.filterValue).toBe('abc');
+    tick(300);
   }));
 
   it('should not emit before debounceTime', fakeAsync(() => {
@@ -43,6 +44,7 @@ describe('TextFilter', () => {
     tick(290);
 
     expect(spy).not.toHaveBeenCalled();
+    tick(10);
   }));
 
   it('should emit filter value after debounceTime', fakeAsync(() => {
@@ -129,4 +131,69 @@ describe('TextFilter', () => {
     expect(spy).toHaveBeenCalledTimes(1);
   }));
 
+  it('uses an implicit label without generated IDs', () => {
+    const first = TestBed.createComponent(TextFilter);
+    const second = TestBed.createComponent(TextFilter);
+    first.componentRef.setInput('label', 'Buscar socios');
+    first.detectChanges();
+    second.detectChanges();
+    const input = first.nativeElement.querySelector('input') as HTMLInputElement;
+    expect(input.id).toBe('');
+    expect(input.closest('label')?.textContent?.trim()).toBe('Buscar socios');
+    expect(second.nativeElement.querySelector('input').id).toBe('');
+  });
+
+  it('accepts a parent value without emitting a search', async () => {
+    await fixture.whenStable();
+    const emitted = jasmine.createSpy();
+    component.filter.subscribe(emitted);
+    fixture.componentRef.setInput('value', 'Existing query');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(component.filterValue).toBe('Existing query');
+    expect(fixture.nativeElement.querySelector('input').value).toBe('Existing query');
+    expect(emitted).not.toHaveBeenCalled();
+  });
+
+  it('trims and debounces the latest typed query', fakeAsync(() => {
+    const emitted = jasmine.createSpy();
+    fixture.componentInstance.filter.subscribe(emitted);
+    fixture.componentInstance.onInput('  old ');
+    tick(150);
+    fixture.componentInstance.onInput('  new ');
+    tick(299);
+    expect(emitted).not.toHaveBeenCalled();
+    tick(1);
+    expect(emitted).toHaveBeenCalledOnceWith('new');
+  }));
+
+  it('clears immediately and cancels the delayed query', fakeAsync(() => {
+    const emitted = jasmine.createSpy();
+    fixture.componentInstance.filter.subscribe(emitted);
+    fixture.componentInstance.onInput('pending');
+    tick(100);
+    fixture.componentInstance.onInput('');
+    expect(emitted).toHaveBeenCalledOnceWith('');
+    tick(300);
+    expect(emitted).toHaveBeenCalledTimes(1);
+  }));
+
+  it('deduplicates normalized queries', fakeAsync(() => {
+    const emitted = jasmine.createSpy();
+    fixture.componentInstance.filter.subscribe(emitted);
+    fixture.componentInstance.onInput('name');
+    tick(300);
+    fixture.componentInstance.onInput(' name ');
+    tick(300);
+    expect(emitted).toHaveBeenCalledOnceWith('name');
+  }));
+
+  it('cancels pending emissions on destruction', fakeAsync(() => {
+    const emitted = jasmine.createSpy();
+    fixture.componentInstance.filter.subscribe(emitted);
+    fixture.componentInstance.onInput('pending');
+    fixture.destroy();
+    tick(300);
+    expect(emitted).not.toHaveBeenCalled();
+  }));
 });

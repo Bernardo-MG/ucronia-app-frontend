@@ -1,13 +1,20 @@
-import { ComponentFixture } from '@angular/core/testing';
-import { createFormFixture, editForm } from '@app/testing/form-test-helpers';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberCreationForm } from './member-creation-form';
+import { provideZonelessChangeDetection } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
 describe('MemberCreationForm', () => {
   let fixture: ComponentFixture<MemberCreationForm>;
   let component: MemberCreationForm;
 
   beforeEach(() => {
-    fixture = createFormFixture(MemberCreationForm);
+    TestBed.configureTestingModule({
+      imports: [MemberCreationForm],
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
+    });
+    fixture = TestBed.createComponent(MemberCreationForm);
+    fixture.detectChanges();
     component = fixture.componentInstance;
   });
 
@@ -22,15 +29,18 @@ describe('MemberCreationForm', () => {
   });
 
   it('requires a name and fee type', () => {
-    editForm(component.form, { feeType: 3 });
+    component.form.patchValue({ feeType: 3 });
+    component.form.get('feeType')?.markAsDirty();
 
     expect(component.form.invalid).toBeTrue();
 
-    editForm(component.form, { name: { firstName: 'Ana' } });
+    component.form.patchValue({ name: { firstName: 'Ana' } });
+    component.form.get('name')?.markAsDirty();
 
     expect(component.form.valid).toBeTrue();
 
-    editForm(component.form, { feeType: null });
+    component.form.patchValue({ feeType: null });
+    component.form.get('feeType')?.markAsDirty();
 
     expect(component.form.invalid).toBeTrue();
   });
@@ -38,11 +48,14 @@ describe('MemberCreationForm', () => {
   it('emits the complete creation request with scalar lookup numbers', () => {
     const saved = spyOn(component.save, 'emit');
 
-    editForm(component.form, {
+    component.form.patchValue({
       feeType: 3,
       name: { firstName: 'Ana', nickname: '', lastName: 'López' },
       address: 'Calle Mayor'
     });
+    component.form.get('feeType')?.markAsDirty();
+    component.form.get('name')?.markAsDirty();
+    component.form.get('address')?.markAsDirty();
     component.addContactChannel();
     component.contactChannels.at(0).patchValue({ method: 4, detail: 'ana@example.org' });
     component.onSave();
@@ -64,11 +77,101 @@ describe('MemberCreationForm', () => {
   it('does not submit an incomplete contact channel', () => {
     const saved = spyOn(component.save, 'emit');
 
-    editForm(component.form, { feeType: 3, name: { firstName: 'Ana' } });
+    component.form.patchValue({ feeType: 3, name: { firstName: 'Ana' } });
+    component.form.get('feeType')?.markAsDirty();
+    component.form.get('name')?.markAsDirty();
     component.addContactChannel();
     component.onSave();
 
     expect(component.form.invalid).toBeTrue();
     expect(saved).not.toHaveBeenCalled();
+  });
+});
+
+describe('MemberCreationForm form submission', () => {
+  const scenario = { values: { feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' } }, invalid: 'feeType', expected: jasmine.objectContaining({ feeType: 3, name: { firstName: 'Ana', nickname: '', lastName: 'López' }, active: true, renew: true, contactChannels: [] }) };
+
+  let fixture: ComponentFixture<MemberCreationForm>;
+  let component: MemberCreationForm;
+  let emitted: jasmine.Spy;
+  let form: FormGroup;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [MemberCreationForm],
+      providers: [
+        provideZonelessChangeDetection(),
+        provideNoopAnimations()
+      ]
+    });
+    fixture = TestBed.createComponent(MemberCreationForm);
+    component = fixture.componentInstance;
+    form = component.form as FormGroup;
+    fixture.componentRef.setInput('showActions', false);
+    fixture.componentRef.setInput('formId', 'form-contract');
+
+    form.patchValue(scenario.values);
+
+    form.markAsPristine();
+    emitted = spyOn(component.save, 'emit');
+    fixture.detectChanges();
+    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+  });
+
+  function edit(): void {
+    form.markAsDirty();
+  }
+
+  function submit(): void {
+    fixture.nativeElement.querySelector('form').dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+  }
+
+  it('does not submit valid unchanged data', () => {
+    expect(component.saveEnabled).toBeFalse();
+    submit();
+    expect(emitted).not.toHaveBeenCalled();
+  });
+
+  it('emits the public payload once through native submission', () => {
+    edit();
+    submit();
+    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+  });
+
+  it('blocks loading submissions and allows retry with the preserved edits', () => {
+    edit();
+    fixture.componentRef.setInput('loading', true);
+    expect(component.formStatus.loading).toBeTrue();
+    expect(form.disabled).toBeTrue();
+    submit();
+    expect(emitted).not.toHaveBeenCalled();
+    fixture.componentRef.setInput('loading', false);
+    expect(form.enabled).toBeTrue();
+    expect(form.dirty).toBeTrue();
+    submit();
+    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+  });
+
+  it('rejects a real invalid field and exposes its validation state', () => {
+    form.get(scenario.invalid)!.setValue(null);
+    edit();
+    expect(form.invalid).toBeTrue();
+    submit();
+    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(emitted).not.toHaveBeenCalled();
+  });
+
+  it('hides inline actions when the drawer owns them', () => {
+    expect(fixture.nativeElement.querySelector('[data-action="submit"]')).toBeNull();
+    expect(fixture.nativeElement.querySelector('[data-action="cancel"]')).toBeNull();
+  });
+
+  it('cancels inline editing without submitting', () => {
+    const cancelled = spyOn(component.cancelEdition, 'emit');
+    fixture.componentRef.setInput('showActions', true);
+    fixture.detectChanges();
+    fixture.nativeElement.querySelector('[data-action="cancel"]').click();
+    expect(cancelled).toHaveBeenCalledTimes(1);
+    expect(emitted).not.toHaveBeenCalled();
   });
 });

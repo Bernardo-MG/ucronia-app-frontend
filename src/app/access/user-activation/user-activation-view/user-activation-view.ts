@@ -1,10 +1,11 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
-import { finalize, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, EMPTY, finalize, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
 
@@ -19,6 +20,8 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
 })
 export class UserActivationView {
 
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly tokenChanged = new Subject<void>();
   private readonly service = inject(AccessUserActivateService);
 
   public status: Status = {
@@ -40,13 +43,12 @@ export class UserActivationView {
   constructor() {
     const route = inject(ActivatedRoute);
 
-    // Validate token from route
-    route.paramMap.subscribe(params => {
-      const token = params.get('token');
-      if (token) {
-        this.validateToken(token);
-      }
-    });
+    route.paramMap.pipe(
+      map(params => params.get('token')),
+      distinctUntilChanged(),
+      switchMap(token => this.validateToken(token)),
+      takeUntilDestroyed()
+    ).subscribe();
   }
 
   /**
@@ -55,17 +57,28 @@ export class UserActivationView {
    * @param password password for the user
    */
   public onActivateUser(password: string): void {
+    if (!this.user.token || this.status.validating || this.status.loading) {
+      return;
+    }
+
     this.status.loading = true;
 
     this.failures.clear();
 
-    this.service.activateUser(this.user.token, password).subscribe({
-      complete: () => {
-        this.step = Step.FINISHED;
-        this.status.loading = false;
-      },
-      error: error => this.handleError(error)
-    });
+    this.service.activateUser(this.user.token, password)
+      .pipe(
+        tap({
+          complete: () => {
+            this.step = Step.FINISHED;
+          }
+        }),
+        finalize(() => this.status.loading = false),
+        takeUntil(this.tokenChanged),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe({
+        error: error => this.handleError(error)
+      });
   }
 
   private handleError(error: unknown): void {
@@ -76,29 +89,34 @@ export class UserActivationView {
     }
   }
 
-  /**
-   * Validates the received token.
-   * 
-   * @param token token to validate
-   */
-  private validateToken(token: string): void {
+  private validateToken(token: string | null) {
+    this.tokenChanged.next();
+    this.user = { username: '', token: '' };
+    this.failures.clear();
+
+    if (!token) {
+      this.step = Step.INVALID_TOKEN;
+      return EMPTY;
+    }
+
+    this.step = Step.VALID_TOKEN;
     this.status.validating = true;
-    this.service.validateToken(token)
-      .pipe(finalize(() => this.status.validating = false))
-      .subscribe({
-        next: response => {
-          if (response.content.valid) {
-            this.user.token = token;
-            this.user.username = response.content.username;
-          } else {
-            this.step = Step.INVALID_TOKEN;
-          }
-        },
-        error: response => {
+    return this.service.validateToken(token).pipe(
+      tap(response => {
+        if (!response.content.valid) {
           this.step = Step.INVALID_TOKEN;
-          this.handleError(response);
+          return;
         }
-      });
+
+        this.user = { token, username: response.content.username };
+      }),
+      catchError(error => {
+        this.step = Step.INVALID_TOKEN;
+        this.handleError(error);
+        return EMPTY;
+      }),
+      finalize(() => this.status.validating = false)
+    );
   }
 
 }

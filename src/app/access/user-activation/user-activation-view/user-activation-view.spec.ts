@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, ParamMap, provideRouter } from '@angular/router';
 import { User } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
-import { of, throwError } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivationView, Step } from './user-activation-view';
 
 describe('UserActivationView', () => {
   let component: UserActivationView;
   let fixture: ComponentFixture<UserActivationView>;
+
+  let routeParams: Subject<ParamMap>;
 
   const mockSecurityClient = {
     user: {
@@ -21,6 +23,7 @@ describe('UserActivationView', () => {
   };
 
   beforeEach(async () => {
+    routeParams = new Subject<ParamMap>();
     await TestBed.configureTestingModule({
       imports: [
         UserActivationView
@@ -28,7 +31,8 @@ describe('UserActivationView', () => {
       providers: [
         AccessUserActivateService,
         { provide: SecurityClient, useValue: mockSecurityClient },
-        provideRouter([])
+        provideRouter([]),
+        { provide: ActivatedRoute, useValue: { paramMap: routeParams } }
       ]
     })
       .compileComponents();
@@ -50,7 +54,7 @@ describe('UserActivationView', () => {
         of({ content: { valid: true, username: 'testuser' } })
       );
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.user.username).toBe('testuser');
     });
@@ -61,7 +65,7 @@ describe('UserActivationView', () => {
         of({ content: { valid: true, username: 'testuser' } })
       );
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.step).toBe(Step.VALID_TOKEN);
     });
@@ -72,7 +76,7 @@ describe('UserActivationView', () => {
         of({ content: { valid: false, username: '' } })
       );
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.step).toBe(Step.INVALID_TOKEN);
     });
@@ -81,7 +85,7 @@ describe('UserActivationView', () => {
       const service = TestBed.inject(AccessUserActivateService);
       spyOn(service, 'validateToken').and.returnValue(throwError(() => new Error('Error')));
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.step).toBe(Step.INVALID_TOKEN);
     });

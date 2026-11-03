@@ -1,11 +1,13 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -39,6 +41,10 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 })
 export class DirectoryView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly detailRequest = new DetailRequest();
+
   private readonly directoryService = inject(DirectoryService);
   private listRequest?: Subscription;
   private readonly directorySummaryService = inject(DirectorySummaryService);
@@ -70,7 +76,18 @@ export class DirectoryView implements OnInit {
 
   private sort = new Sorting();
 
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
 
   constructor() {
     const authService = inject(AuthService);
@@ -91,6 +108,7 @@ export class DirectoryView implements OnInit {
   // EVENT HANDLERS
 
   public onShowEdit() {
+    this.detailRequest.cancel();
     this.dialog = Dialog.EDIT;
     this.withLoading(
       forkJoin({
@@ -99,6 +117,7 @@ export class DirectoryView implements OnInit {
         feeTypes: this.feeTypeService.getAllAvailable()
       })
     )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
         this.selectedData = profile;
         this.contactMethodSelection = contactMethodSelection;
@@ -107,10 +126,13 @@ export class DirectoryView implements OnInit {
   }
 
   public onShowInfo(profile: FullProfile) {
+    this.detailRequest.cancel();
+    this.selectedData = profile;
     this.dialog = Dialog.INFO;
     this.withLoading(
       this.directoryService.getOne(profile.number)
     )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(profile => this.selectedData = profile);
   }
 
@@ -154,6 +176,8 @@ export class DirectoryView implements OnInit {
   }
 
   public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
@@ -167,14 +191,23 @@ export class DirectoryView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () =>
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.number !== number
+        ) {
+          return;
+        }
+
         this.call(
-          () => this.directoryService.delete(this.selectedData.number),
+          () => this.directoryService.delete(number),
           () => {
             this.load();
             this.loadSummary();
           }
-        )
+        );
+      }
     });
   }
 
@@ -200,6 +233,7 @@ export class DirectoryView implements OnInit {
     this.listRequest = this.withLoading(
       this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
     )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(response => {
         this.profiles = response;
       });

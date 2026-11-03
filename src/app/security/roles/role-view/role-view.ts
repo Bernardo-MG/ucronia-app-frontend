@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, viewChild } from '@angular/core';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -23,6 +24,8 @@ import { RoleService } from '../role-service';
 })
 export class RoleView implements OnInit {
 
+  private readonly detailRequest = new DetailRequest();
+
   private readonly drawer = viewChild(Drawer);
 
   private readonly service = inject(RoleService);
@@ -37,7 +40,18 @@ export class RoleView implements OnInit {
   public loading = false;
   public failures = new FailureStore();
   public resourcePermissions: ResourcePermission[] = [];
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
 
   private sort = new Sorting();
 
@@ -62,6 +76,7 @@ export class RoleView implements OnInit {
   }
 
   public onShowInfo(role: Role): void {
+    this.detailRequest.cancel();
     this.selectedData = role;
     this.dialog = Dialog.INFO;
   }
@@ -125,13 +140,15 @@ export class RoleView implements OnInit {
   }
 
   public onChangePermissions(role: Role): void {
+    this.detailRequest.cancel();
     this.selectedData = role;
     this.loading = true;
 
-    this.service.getAvailablePermissions(role.name)
+    this.service.getAllPermissions()
       .pipe(
         finalize(() => this.finishLoading())
       )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(permissions => {
         this.resourcePermissions = permissions;
         this.dialog = Dialog.PERMISSIONS;
@@ -139,12 +156,14 @@ export class RoleView implements OnInit {
   }
 
   public onStartCreation(): void {
+    this.detailRequest.cancel();
     this.loading = true;
 
     this.service.getAllPermissions()
       .pipe(
         finalize(() => this.finishLoading())
       )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(permissions => {
         this.resourcePermissions = permissions;
         this.dialog = Dialog.CREATE;

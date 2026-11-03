@@ -1,20 +1,19 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Activity } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { finalize, Observable, Subscription } from 'rxjs';
 import { ActivityForm } from '../activity-form/activity-form';
@@ -23,10 +22,12 @@ import { ActivityList } from '../activity-list/activity-list';
 import { ActivityService } from '../activity-service';
 
 @Component({
-  imports: [DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, ActivityList, ActivityInfo, ActivityForm],
+  imports: [TextFilter, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, ActivityList, ActivityInfo, ActivityForm],
   templateUrl: './activity-view.html'
 })
 export class ActivityView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly service = inject(ActivityService);
   private listRequest?: Subscription;
@@ -39,7 +40,6 @@ export class ActivityView implements OnInit {
   };
 
   public activities = new Page<Activity>();
-  public filterValue = '';
   public selectedDisplay = ActivityDisplay.UPCOMING;
   public readonly displayOptions = [
     { label: 'Próximas', value: ActivityDisplay.UPCOMING },
@@ -52,10 +52,6 @@ export class ActivityView implements OnInit {
   public dialog = Dialog.NONE;
 
   public failures = new FailureStore();
-
-  public get filteredActivities(): Activity[] {
-    return this.activities.content;
-  }
 
   public get upcomingSessions(): number {
     const now = new Date();
@@ -108,6 +104,8 @@ export class ActivityView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -121,10 +119,20 @@ export class ActivityView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selectedData.number),
-        () => this.load()
-      )
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.number !== number
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.service.delete(number),
+          () => this.load()
+        );
+      }
     });
   }
 
@@ -142,8 +150,11 @@ export class ActivityView implements OnInit {
   public load(page: number | undefined = undefined) {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
-    this.listRequest = this.service.getAll(page, this.sort)
+    this.listRequest = this.service.getAll(page, this.sort,
+      this.selectedDisplay === ActivityDisplay.UPCOMING ? new Date() : undefined,
+      this.selectedDisplay === ActivityDisplay.PAST ? new Date() : undefined)
       .pipe(finalize(() => this.status.loading = false))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(activities => this.activities = activities);
   }
 

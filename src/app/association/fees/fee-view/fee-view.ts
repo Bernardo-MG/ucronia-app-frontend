@@ -1,11 +1,12 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, SearchRequest } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Fee, FeeSummary, MemberStatus, Profile, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
@@ -14,7 +15,7 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, switchMap, tap, Subscription } from 'rxjs';
+import { finalize, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
 import { FeeCalendar } from '../fee-calendar/fee-calendar';
@@ -27,14 +28,18 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, DatePipe],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, FeePaymentsForm, FeeCreationForm, DatePipe],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly detailRequest = new DetailRequest();
+
   private readonly feeCalendarService = inject(FeeCalendarService);
   private calendarRequest?: Subscription;
-  private memberSearchRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
   private readonly reportService = inject(FeeSummaryService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
@@ -46,7 +51,6 @@ export class FeeView implements OnInit {
     loading: false
   };
   public readonly filter: Filter = {
-    status: MemberStatus.Active,
     range: new YearsRange(),
     year: new Date().getFullYear()
   };
@@ -58,7 +62,20 @@ export class FeeView implements OnInit {
 
   public failures = new FailureStore();
 
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.memberSearch.cancel();
+      this.members = [];
+      this.currentDialog = value;
+    }
+  }
 
   public Dialog = Dialog;
 
@@ -131,6 +148,9 @@ export class FeeView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const memberNumber = this.selectedData.member.number;
+    const month = new Date(this.selectedData.month.getTime());
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -144,34 +164,42 @@ export class FeeView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () =>
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.member.number !== memberNumber ||
+          this.selectedData.month.getTime() !== month.getTime()
+        ) {
+          return;
+        }
+
         this.call(
-          () => this.service.delete(this.selectedData.member.number, this.selectedData.month),
+          () => this.service.delete(memberNumber, month),
           () => {
             this.loadRange();
             this.loadSummary();
           }
-        )
+        );
+      }
     });
   }
 
   public onSelectFee(fee: { member: number, date: Date }) {
-    this.service.getOne(fee.member, fee.date)
-      .subscribe(fee => this.selectedData = fee);
+    this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
+    this.status.loading = true;
+    this.service.getOne(fee.member, fee.date)
+      .pipe(
+        finalize(() => this.status.loading = false),
+        this.detailRequest.untilCancelled()
+      )
+      .subscribe(fee => this.selectedData = fee);
   }
 
-  public onChangeMemberStatus(active: MemberStatus) {
-    this.filter.status = active;
-    this.loadCalendar(this.filter.year);
-  }
-
-  public onSearchMembers(event: { query: string }) {
-    this.memberSearchRequest?.unsubscribe();
-    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
-      .subscribe(members => {
-        this.members = members;
-      });
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .subscribe(members => this.members = members);
   }
 
   public loadCalendar(year: number) {
@@ -179,8 +207,11 @@ export class FeeView implements OnInit {
     this.status.loadingCalendar = true;
 
     this.filter.year = year;
-    this.calendarRequest = this.feeCalendarService.getCalendar(year, this.filter.status)
-      .pipe(finalize(() => this.status.loadingCalendar = false))
+    this.calendarRequest = this.feeCalendarService.getCalendar(year)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingCalendar = false)
+      )
       .subscribe(data => this.feeCalendar = data);
   }
 
@@ -219,8 +250,9 @@ export class FeeView implements OnInit {
           this.loadYear(range);
         }),
         switchMap(() =>
-          this.feeCalendarService.getCalendar(this.filter.year, this.filter.status)
+          this.feeCalendarService.getCalendar(this.filter.year)
         ),
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => this.status.loadingCalendar = false)
       )
       .subscribe(data => {
@@ -283,7 +315,6 @@ interface Status {
 }
 
 interface Filter {
-  status: MemberStatus;
   range: YearsRange;
   year: number;
 }

@@ -1,4 +1,4 @@
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -13,7 +13,7 @@ import { MessageModule } from 'primeng/message';
   imports: [DrawerFormActions, ReactiveFormsModule, DatePickerModule, MessageModule, MemberSearch],
   templateUrl: './library-book-lending-form.html'
 })
-export class LibraryBookLendingForm {
+export class LibraryBookLendingForm implements OnChanges {
 
   public readonly cancelEdition = output<void>();
 
@@ -32,14 +32,8 @@ export class LibraryBookLendingForm {
 
   public readonly today = new Date();
 
-  @Input() public set borrower(value: Profile) {
-    this.form.get('borrower')?.setValue(value.number);
-    this.memberName = value.name.fullName;
-  }
-
-  @Input() public set book(value: number) {
-    this.form.get('book')?.setValue(value);
-  }
+  @Input() public borrower: Profile | undefined;
+  @Input() public book = -1;
 
   public readonly formStatus: FormStatus;
 
@@ -63,6 +57,18 @@ export class LibraryBookLendingForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    const borrower = this.borrower && this.borrower.number > 0 ? this.borrower.number : null;
+    if (changes['book']) {
+      this.form.reset({ book: this.book, borrower, lendingDate: null });
+    } else if (changes['borrower']) {
+      this.form.get('borrower')?.setValue(borrower);
+    }
+    if (changes['book'] || changes['borrower']) {
+      this.memberName = this.borrower?.name.fullName ?? '';
+    }
+  }
+
   /**
    * Handler for the save event.
    */
@@ -77,6 +83,12 @@ export class LibraryBookLendingForm {
 
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+  }
+
+  public onClearMember(): void {
+    this.memberName = '';
+    this.form.get('borrower')?.reset();
+    this.form.get('borrower')?.markAsDirty();
   }
 
   public onSelectMember(member: Profile) {

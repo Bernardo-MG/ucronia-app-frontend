@@ -8,7 +8,8 @@ import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod, FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
@@ -16,12 +17,9 @@ import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { TabsModule } from 'primeng/tabs';
-import { debounceTime, distinctUntilChanged, finalize, forkJoin, Observable, of, Subject, Subscription, switchMap, tap } from 'rxjs';
+import { finalize, forkJoin, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { MemberCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberInfo } from '../member-info/member-info';
@@ -37,7 +35,7 @@ import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [MemberCreationForm, MemberEditionForm, MemberInfo, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [TextFilter, MemberCreationForm, MemberEditionForm, MemberInfo, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
@@ -51,7 +49,7 @@ export class PublicMemberView implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
 
-  private assignmentMembersRequest?: Subscription;
+  private readonly assignmentMemberSearch = new SearchRequest();
   private assignmentMemberQuery = '';
   private keysReloadRequested = false;
   private memberRequest?: Subscription;
@@ -102,9 +100,7 @@ export class PublicMemberView implements OnInit {
   };
   public failures = new FailureStore();
   public error = '';
-  private nameFilter = '';
   public filterValue = '';
-  private readonly filterSubject = new Subject<string>();
 
   constructor() {
     const authService = inject(AuthService);
@@ -121,9 +117,6 @@ export class PublicMemberView implements OnInit {
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
       keysDelete: authService.hasPermission(UcroniaPermissions.key.delete)
     };
-    this.filterSubject
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
-      .subscribe(filter => this.onFilter(filter));
   }
 
   public ngOnInit(): void {
@@ -242,7 +235,7 @@ export class PublicMemberView implements OnInit {
     ) {
       return;
     }
-    this.assignmentMembersRequest?.unsubscribe();
+    this.assignmentMemberSearch.cancel();
     this.assignmentMemberQuery = query.trim();
     this.assignmentMembers = [];
     this.status.assignmentMembersError = false;
@@ -250,14 +243,16 @@ export class PublicMemberView implements OnInit {
       return;
     }
     this.status.loadingAssignmentMembers = true;
-    this.assignmentMembersRequest = this.service.searchMembers(this.assignmentMemberQuery)
+    this.assignmentMemberSearch.search(this.assignmentMemberQuery,
+      value => this.service.searchMembers(value),
+      () => this.status.assignmentMembersError = true)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => (this.status.loadingAssignmentMembers = false))
       )
       .subscribe({
         next: members => {
-          this.assignmentMembers = members.filter(member => member.number !== this.selectedKey?.profile?.number);
+          this.assignmentMembers = members;
         },
         error: () => (this.status.assignmentMembersError = true)
       });
@@ -265,7 +260,7 @@ export class PublicMemberView implements OnInit {
 
   public onCancelKeyAssignment(): void {
     if (!this.status.saving) {
-      this.assignmentMembersRequest?.unsubscribe();
+      this.assignmentMemberSearch.cancel();
       this.assignmentMembers = [];
       this.failures.clear();
       this.error = '';
@@ -282,6 +277,7 @@ export class PublicMemberView implements OnInit {
       this.status.saving ||
       this.status.loadingAssignmentMembers ||
       this.status.assignmentMembersError ||
+      key.profile?.number === profile ||
       !this.assignmentMembers.some(member => member.number === profile)
     ) {
       return;
@@ -504,7 +500,7 @@ export class PublicMemberView implements OnInit {
 
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible && !this.status.saving) {
-      this.assignmentMembersRequest?.unsubscribe();
+      this.assignmentMemberSearch.cancel();
       this.assignmentMembers = [];
       this.memberOptionsRequest?.unsubscribe();
       this.memberRequest?.unsubscribe();
@@ -541,12 +537,12 @@ export class PublicMemberView implements OnInit {
   }
 
   public onFilter(filter: string): void {
-    this.nameFilter = filter;
+    this.filterValue = filter;
     this.load();
   }
 
   public onFilterChange(filter: string): void {
-    this.filterSubject.next(filter);
+    this.onFilter(filter);
   }
 
   // DATA LOADING
@@ -560,12 +556,12 @@ export class PublicMemberView implements OnInit {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
     this.listRequest = this.service
-      .getAll(page, this.sort, this.nameFilter)
+      .getAll(page, this.sort, this.filterValue)
       .pipe(
         switchMap(response => {
           if (response.content.length === 0 && response.page > 1) {
             const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
-            return this.service.getAll(previousPage, this.sort, this.nameFilter);
+            return this.service.getAll(previousPage, this.sort, this.filterValue);
           }
           return of(response);
         }),

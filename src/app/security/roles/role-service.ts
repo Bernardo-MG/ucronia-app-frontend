@@ -4,7 +4,7 @@ import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
-import { catchError, combineLatest, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, expand, Observable, of, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -27,18 +27,7 @@ export class RoleService {
     return this.securityClient.role.page(page, undefined, sorting);
   }
 
-  public getAvailablePermissions(role: string): Observable<ResourcePermission[]> {
-    return combineLatest([
-      this.getOne(role),
-      this.getAllPermissions()
-    ]).pipe(
-      map(([role, permissions]) => {
-        const rolePermissions = role.permissions?.map(p => `${p.resource}:${p.action}`) ?? [];
-        return permissions.filter(permission => !rolePermissions.includes(`${permission.resource}:${permission.action}`));
-      })
-    );
-  }
-
+  // TODO: Add backend permission search/eligibility support before enabling search.
   public getAllPermissions(): Observable<ResourcePermission[]> {
     const sorting = new Sorting(
       [new SortingProperty('resource'), new SortingProperty('action')]

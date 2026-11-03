@@ -1,13 +1,14 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { FormStatus } from '@bernardo-mg/form';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
+import { FormStatus } from '@bernardo-mg/form';
+import { TextFilter } from '@bernardo-mg/ui';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'access-role-change-permission',
-  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule],
+  imports: [TextFilter, DrawerFormActions, ReactiveFormsModule, ButtonModule],
   templateUrl: './role-change-permission.html'
 })
 export class RoleChangePermission implements OnChanges {
@@ -40,7 +41,6 @@ export class RoleChangePermission implements OnChanges {
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-  public filterValue = '';
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -55,11 +55,9 @@ export class RoleChangePermission implements OnChanges {
   }
 
   public get permissionGroups(): PermissionGroup[] {
-    const filter = this.filterValue.trim().toLocaleLowerCase();
     const groups = new Map<string, ResourcePermission[]>();
 
     this.allPermissions
-      .filter(permission => !filter || [permission.resource, permission.action, permission.name].some(value => value.toLocaleLowerCase().includes(filter)))
       .forEach(permission => {
         const permissions = groups.get(permission.resource) ?? [];
         permissions.push(permission);

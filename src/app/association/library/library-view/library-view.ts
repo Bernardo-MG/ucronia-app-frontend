@@ -2,22 +2,21 @@ import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingProperty } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { catchError, debounceTime, distinctUntilChanged, finalize, forkJoin, map, Observable, of, Subject, switchMap, Subscription } from 'rxjs';
+import { catchError, finalize, forkJoin, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';
 import { LibraryBookEditionForm } from '../library-book-edition-form/library-book-edition-form';
@@ -35,23 +34,25 @@ import { librarySettingsPermissions } from '../settings/library-settings-permiss
 
 @Component({
   selector: 'assoc-library-view',
-  imports: [LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, IconFieldModule, InputIconModule, InputTextModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  imports: [TextFilter, LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly detailRequest = new DetailRequest();
+
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
   private listRequest?: Subscription;
-  private memberSearchRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
   private readonly lendingsService = inject(LibraryLendingService);
   private readonly confirmationService = inject(ConfirmationService);
 
   public failures = new FailureStore();
 
-  private nameFilter = '';
   public filterValue = '';
-  private readonly filterSubject = new Subject<string>();
 
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedBorrower = new Profile();
@@ -80,7 +81,20 @@ export class LibraryView implements OnInit {
     loadingExcel: false
   };
 
-  public dialog = Dialog.NONE;
+  private currentDialog = Dialog.NONE;
+
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.memberSearch.cancel();
+      this.members = [];
+      this.currentDialog = value;
+    }
+  }
 
   public readonly Dialog = Dialog;
 
@@ -103,7 +117,6 @@ export class LibraryView implements OnInit {
 
   constructor() {
     const authService = inject(AuthService);
-    const destroyRef = inject(DestroyRef);
 
     // Check permissions
     this.permissions = {
@@ -113,13 +126,6 @@ export class LibraryView implements OnInit {
       delete: authService.hasPermission(UcroniaPermissions.library.book.delete)
     };
 
-    this.filterSubject
-      .pipe(
-        debounceTime(300),
-        distinctUntilChanged(),
-        takeUntilDestroyed(destroyRef)
-      )
-      .subscribe(filter => this.onFilter(filter));
 
   }
 
@@ -171,6 +177,9 @@ export class LibraryView implements OnInit {
   }
 
   public onDelete(event: Event) {
+    const dialog = this.dialog;
+    const source = this.getSelectedSource();
+    const number = this.selectedData.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -184,13 +193,24 @@ export class LibraryView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.deleteBook(this.getSelectedSource(), this.selectedData.number),
-        () => {
-          this.load(this.data.page);
-          this.loadSummary();
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.getSelectedSource() !== source ||
+          this.selectedData.number !== number
+        ) {
+          return;
         }
-      )
+
+        this.call(
+          () => this.service.deleteBook(source, number),
+          () => {
+            this.load(this.data.page);
+            this.loadSummary();
+          }
+        );
+      }
     });
   }
 
@@ -201,6 +221,8 @@ export class LibraryView implements OnInit {
   }
 
   public onShowEdit() {
+    this.detailRequest.cancel();
+    this.selectedBookBorrowerNames = {};
     this.dialog = Dialog.EDIT;
     this.withLoading(
       this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
@@ -212,6 +234,7 @@ export class LibraryView implements OnInit {
           )
         )
     )
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe(({ book, borrowerNames }) => {
         this.selectedData = book;
         this.selectedBookBorrowerNames = borrowerNames;
@@ -261,12 +284,15 @@ export class LibraryView implements OnInit {
   }
 
   public onShowBook(book: FictionBook | GameBook) {
+    this.detailRequest.cancel();
+    this.selectedBookBorrowerNames = {};
+    this.dialog = Dialog.INFO;
     this.selectedData = book;
     this.resolveBorrowerNames(book.lendings)
+      .pipe(this.detailRequest.untilCancelled())
       .subscribe((borrowerNames) => {
         this.selectedBookBorrowerNames = borrowerNames;
       });
-    this.dialog = Dialog.INFO;
   }
 
   public downloadExcel() {
@@ -278,6 +304,7 @@ export class LibraryView implements OnInit {
   }
 
   public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
+    this.detailRequest.cancel();
     this.selectedData = event.book;
     if (event.dialog === Dialog.EDIT) {
       this.onShowEdit();
@@ -289,6 +316,7 @@ export class LibraryView implements OnInit {
         this.withLoading(
           this.service.getBorrower(this.borrower)
         )
+          .pipe(this.detailRequest.untilCancelled())
           .subscribe((profile) => {
             this.selectedBorrower = profile;
             this.dialog = event.dialog;
@@ -355,20 +383,18 @@ export class LibraryView implements OnInit {
   }
 
   public onFilter(filter: string) {
-    this.nameFilter = filter;
+    if (this.display !== Display.BOOKS) return;
+    this.filterValue = filter;
     this.load();
   }
 
   public onFilterChange(filter: string): void {
-    this.filterSubject.next(filter);
+    this.onFilter(filter);
   }
 
-  public onSearchMembers(event: { query: string }) {
-    this.memberSearchRequest?.unsubscribe();
-    this.memberSearchRequest = this.service.searchMembers(event.query?.trim(), MemberStatus.Active)
-      .subscribe(members => {
-        this.members = members;
-      });
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .subscribe(members => this.members = members);
   }
 
   // DIALOGS
@@ -396,10 +422,15 @@ export class LibraryView implements OnInit {
   }
 
   public load(page: number | undefined = undefined) {
+    if (this.display === Display.LENDINGS) {
+      this.loadLendings(page);
+      return;
+    }
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
-      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.nameFilter)
-    ).subscribe(response => this.data = response);
+      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.filterValue)
+    ).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => this.data = response);
   }
 
   public loadLendings(page: number | undefined = undefined) {
@@ -413,10 +444,11 @@ export class LibraryView implements OnInit {
             )
           )
         )
-    ).subscribe(({ response, lendingBorrowerNames }) => {
-      this.lendings = response;
-      this.lendingBorrowerNames = lendingBorrowerNames;
-    });
+    ).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ response, lendingBorrowerNames }) => {
+        this.lendings = response;
+        this.lendingBorrowerNames = lendingBorrowerNames;
+      });
   }
 
   // PRIVATE METHODS
@@ -425,16 +457,30 @@ export class LibraryView implements OnInit {
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
+    const dialog = this.dialog;
+    const selectedData = this.selectedData;
+    const selectedLending = this.selectedLending;
+    const ownsDrawer = () => !this.destroyRef.destroyed
+      && this.dialog === dialog
+      && this.selectedData === selectedData
+      && this.selectedLending === selectedLending;
+
     this.status.loading = true;
     action()
       .pipe(finalize(() => this.status.loading = false))
       .subscribe({
         complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
+          if (this.destroyRef.destroyed) return;
+
+          if (ownsDrawer()) {
+            this.failures.clear();
+            this.dialog = Dialog.NONE;
+          }
           onSuccess();
         },
-        error: error => this.handleError(error)
+        error: error => {
+          if (ownsDrawer()) this.handleError(error);
+        }
       });
   }
 

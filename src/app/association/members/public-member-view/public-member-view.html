@@ -47,18 +47,8 @@
 
           <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
             <div class="border-b border-gray-200 p-4">
-              <p-iconfield class="block w-full">
-                <p-inputicon class="pi pi-search" />
-                <input
-                  pInputText
-                  type="search"
-                  [(ngModel)]="filterValue"
-                  (ngModelChange)="onFilterChange($event)"
-                  placeholder="Buscar por nombre…"
-                  aria-label="Buscar socios por nombre"
-                  class="w-full"
-                  maxlength="50" />
-              </p-iconfield>
+              <ui-text-filter class="block w-full lg:max-w-xl" label="Buscar socios" placeholder="Buscar por nombre..."
+          [value]="filterValue" (filter)="onFilter($event)" />
               <p class="mt-3 text-sm text-gray-500">{{ data.totalElements }} socios</p>
             </div>
 

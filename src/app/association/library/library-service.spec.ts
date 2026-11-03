@@ -4,6 +4,8 @@ import { UcroniaClient } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { LibraryService } from './library-service';
+import { Page, Sorting } from '@bernardo-mg/request';
+import { Profile } from '@ucronia/domain';
 
 describe('LibraryService', () => {
   let service: LibraryService;
@@ -114,5 +116,17 @@ describe('LibraryService', () => {
 
   it('should be created', () => {
     expect(service).toBeTruthy();
+  });
+});
+
+describe('library-service backend results', () => {
+  it('forwards donor search to the backend and preserves its response', () => {
+    const profiles = [Object.assign(new Profile(), { number: 1 }), Object.assign(new Profile(), { number: 2 })];
+    const page = jasmine.createSpy().and.returnValue(of(Object.assign(new Page<Profile>(), { content: profiles })));
+    TestBed.configureTestingModule({ providers: [MessageService,
+      { provide: UcroniaClient, useValue: { profile: { page } } }
+    ] });
+    TestBed.inject(LibraryService).searchDonors('Ana').subscribe(results => expect(results).toBe(profiles));
+    expect(page).toHaveBeenCalledOnceWith(undefined, 10, jasmine.any(Sorting), 'Ana');
   });
 });

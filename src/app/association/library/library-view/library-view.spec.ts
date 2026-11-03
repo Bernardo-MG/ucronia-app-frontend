@@ -5,14 +5,15 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { BookLending, GameBook, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { BookReportService } from '../book-report-service';
+import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 import { LibrarySummary } from '../model/library-summary';
-import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
-import { LibraryView, Display } from './library-view';
+import { Display, LibraryView } from './library-view';
+import { runInInjectionContext } from '@angular/core';
 
 describe('LibraryView', () => {
   let component: LibraryView;
@@ -28,8 +29,6 @@ describe('LibraryView', () => {
       'getAllFictionBooks',
       'getGameSystems',
       'getBookTypes',
-      'searchAuthors',
-      'searchPublishers',
       'setAuthors',
       'setPublishers',
       'setGameSystem',
@@ -189,5 +188,78 @@ describe('LibraryView', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('ignores a delete confirmation after another book is selected', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    libraryServiceMock.deleteBook.calls.reset();
+    component.selectedData = Object.assign(new GameBook(), { number: 12 });
+    component.onDelete(new Event('click'));
+
+    component.selectedData = Object.assign(new GameBook(), { number: 20 });
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
+
+  it('ignores a delete confirmation after the view is destroyed', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    libraryServiceMock.deleteBook.calls.reset();
+    component.selectedData = Object.assign(new GameBook(), { number: 12 });
+    component.onDelete(new Event('click'));
+
+    fixture.destroy();
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
+
+  it('refreshes the list without closing a drawer opened during a return', () => {
+    const response = new Subject<BookLending>();
+    libraryServiceMock.return.and.returnValue(response);
+    const load = spyOn(component, 'load');
+    component.dialog = Dialog.LENDING_RETURN;
+    component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
+
+    component.onShowLending(new BookLending());
+    response.next(new BookLending());
+    response.complete();
+
+    expect(load).toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+  });
+
+  it('ignores an error from a return after the drawer has been replaced', () => {
+    const response = new Subject<BookLending>();
+    libraryServiceMock.return.and.returnValue(response);
+    component.dialog = Dialog.LENDING_RETURN;
+    component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
+
+    component.onShowLending(new BookLending());
+    const clear = spyOn(component.failures, 'clear');
+    response.error(new Error('Return failed'));
+
+    expect(clear).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+  });
+});
+
+describe('Library request routing', () => {
+  it('disables loan searches while routing pagination to the active tab', () => {
+    TestBed.configureTestingModule({ providers: [
+      { provide: LibraryService, useValue: {} },
+      { provide: LibraryLendingService, useValue: {} },
+      { provide: BookReportService, useValue: {} },
+      { provide: ConfirmationService, useValue: {} },
+      { provide: AuthService, useValue: { hasPermission: () => false, hasAnyPermission: () => false } }
+    ] });
+    const component = TestBed.runInInjectionContext(() => new LibraryView());
+    const load = spyOn(component, 'loadLendings');
+    component.display = component.Display.LENDINGS;
+    component.onFilter('title');
+    expect(load).not.toHaveBeenCalled();
+    load.calls.reset();
+    component.load(2);
+    expect(load).toHaveBeenCalledOnceWith(2);
   });
 });

@@ -1,10 +1,11 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
-import { finalize, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, EMPTY, finalize, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { PasswordResetForm } from '../password-reset-form/password-reset-form';
 import { PasswordResetService } from '../password-reset-service';
 
@@ -19,6 +20,8 @@ import { PasswordResetService } from '../password-reset-service';
 })
 export class PasswordResetView {
 
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly tokenChanged = new Subject<void>();
   private readonly service = inject(PasswordResetService);
 
   /**
@@ -36,13 +39,12 @@ export class PasswordResetView {
   constructor() {
     const route = inject(ActivatedRoute);
 
-    // Validate token taken from route
-    route.paramMap.subscribe(params => {
-      const token = params.get('token');
-      if (token) {
-        this.validateToken(token);
-      }
-    });
+    route.paramMap.pipe(
+      map(params => params.get('token')),
+      distinctUntilChanged(),
+      switchMap(token => this.validateToken(token)),
+      takeUntilDestroyed()
+    ).subscribe();
   }
 
   /**
@@ -51,49 +53,63 @@ export class PasswordResetView {
    * @param password new password for the user
    */
   public onPasswordReset(password: string): void {
+    if (!this.token || this.validatingToken || this.loading) {
+      return;
+    }
+
     this.loading = true;
 
     this.failures.clear();
 
     this.service.resetPassword(this.token, password)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        tap({
+          complete: () => {
+            this.status = 'finished';
+          }
+        }),
+        finalize(() => this.loading = false),
+        takeUntil(this.tokenChanged),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
-        complete: () => {
-          this.status = 'finished';
-        },
         error: error => {
           if (error instanceof FailureResponse) {
             this.failures = error.failures;
           } else {
             this.failures.clear();
           }
-
-          return throwError(() => error);
         }
       });
   }
 
-  /**
-   * Validates the received token.
-   * 
-   * @param token token to validate
-   */
-  private validateToken(token: string): void {
+  private validateToken(token: string | null) {
+    this.tokenChanged.next();
+    this.token = '';
+    this.failures.clear();
+
+    if (!token) {
+      this.status = 'invalid_token';
+      return EMPTY;
+    }
+
+    this.status = 'valid_token';
     this.validatingToken = true;
-    this.service.validateToken(token)
-      .pipe(finalize(() => this.validatingToken = false))
-      .subscribe({
-        next: response => {
-          if (!response.valid) {
-            this.status = 'invalid_token';
-          } else {
-            this.token = token;
-          }
-        },
-        error: (error) => {
-          return throwError(() => error);
+    return this.service.validateToken(token).pipe(
+      tap(response => {
+        if (!response.valid) {
+          this.status = 'invalid_token';
+          return;
         }
-      });
+
+        this.token = token;
+      }),
+      catchError(() => {
+        this.status = 'invalid_token';
+        return EMPTY;
+      }),
+      finalize(() => this.validatingToken = false)
+    );
   }
 
 }

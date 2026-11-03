@@ -1,5 +1,6 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
@@ -12,7 +13,7 @@ import { Author } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { AuthorService } from '../author-service';
 
 @Component({
@@ -20,6 +21,9 @@ import { AuthorService } from '../author-service';
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {
+
+  private readonly destroyRef = inject(DestroyRef);
+  private listRequest?: Subscription;
 
   private readonly service = inject(AuthorService);
   private readonly confirmationService = inject(ConfirmationService);
@@ -80,6 +84,8 @@ export class LibraryAuthorListView implements OnInit {
   }
 
   public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selected.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -93,12 +99,22 @@ export class LibraryAuthorListView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selected.number),
-        () => {
-          this.load(this.data.page);
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selected.number !== number
+        ) {
+          return;
         }
-      )
+
+        this.call(
+          () => this.service.delete(number),
+          () => {
+            this.load(this.data.page);
+          }
+        );
+      }
     });
   }
 
@@ -168,9 +184,13 @@ export class LibraryAuthorListView implements OnInit {
   // DATA LOADING
 
   public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
     this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe(response => this.data = response);
   }
 

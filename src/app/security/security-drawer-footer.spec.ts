@@ -34,7 +34,7 @@ for (const type of [RoleView, UserView]) {
           { provide: ConfirmationService, useValue: {} },
           { provide: isRole ? RoleService : UserService, useValue: {
             getAll: () => of(Object.assign(new Page(), { content: [], totalElements: 0 })),
-            getAvailablePermissions: () => choices,
+            getAllPermissions: () => choices,
             getAllRoles: () => choices,
             getProfile: () => of(new Profile()),
             update

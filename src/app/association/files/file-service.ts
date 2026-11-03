@@ -25,11 +25,13 @@ export class FileService {
     return this.client.asset.folder.folders();
   }
 
+  // TODO: Add backend asset-type filtering to the folder listing API.
   public getFolderFiles(folderNumber: number, page: number | undefined, sort: Sorting,
     size: number | undefined = undefined): Observable<Page<Asset>> {
     return this.client.asset.folder.page(folderNumber, 'FILE', page, size, sort);
   }
 
+  // TODO: Add backend asset-type filtering to the folder listing API.
   public getRootFiles(page: number | undefined, sort: Sorting,
     size: number | undefined = undefined): Observable<Page<Asset>> {
     return this.client.asset.folder.page(null, 'FILE', page, size, sort);

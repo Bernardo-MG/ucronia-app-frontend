@@ -1,4 +1,4 @@
-import { Component, inject, input, output, Input } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -62,6 +62,12 @@ export class FeeCreationForm {
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property)
       || this.failures().hasFailures(property);
+  }
+
+  public onClearMember(): void {
+    this.selectedMember = undefined;
+    this.form.get('member')?.reset();
+    this.form.get('member')?.markAsDirty();
   }
 
   public onSelectMember(member: Profile): void {

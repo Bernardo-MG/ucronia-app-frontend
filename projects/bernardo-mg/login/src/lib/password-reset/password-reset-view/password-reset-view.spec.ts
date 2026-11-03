@@ -1,15 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
 import { UserTokenStatus } from '@bernardo-mg/authentication';
 import { FailureResponse } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
-import { NEVER, of, throwError } from 'rxjs';
+import { NEVER, of, Subject, throwError } from 'rxjs';
 import { PasswordResetService } from '../password-reset-service';
 import { PasswordResetView } from './password-reset-view';
 
 describe('PasswordResetView', () => {
   let component: PasswordResetView;
   let fixture: ComponentFixture<PasswordResetView>;
+
+  let routeParams: Subject<ReturnType<typeof convertToParamMap>>;
 
   const mockSecurityClient = {
     password: {
@@ -21,6 +23,7 @@ describe('PasswordResetView', () => {
   };
 
   beforeEach(async () => {
+    routeParams = new Subject();
     await TestBed.configureTestingModule({
       imports: [
         PasswordResetView
@@ -28,7 +31,8 @@ describe('PasswordResetView', () => {
       providers: [
         PasswordResetService,
         { provide: SecurityClient, useValue: mockSecurityClient },
-        provideRouter([])
+        provideRouter([]),
+        { provide: ActivatedRoute, useValue: { paramMap: routeParams } }
       ]
     })
       .compileComponents();
@@ -57,7 +61,7 @@ describe('PasswordResetView', () => {
       const service = TestBed.inject(PasswordResetService);
       spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
       expect(component.status).toBe('valid_token');
     });
 
@@ -65,7 +69,7 @@ describe('PasswordResetView', () => {
       const service = TestBed.inject(PasswordResetService);
       const spy = spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(spy).toHaveBeenCalledWith('token');
     });
@@ -74,7 +78,7 @@ describe('PasswordResetView', () => {
       const service = TestBed.inject(PasswordResetService);
       spyOn(service, 'validateToken').and.returnValue(of({ valid: false, username: 'username' }));
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
       expect(component.status).toBe('invalid_token');
     });
 
@@ -190,7 +194,7 @@ describe('PasswordResetView', () => {
 
       spyOn(service, 'validateToken').and.returnValue(NEVER);
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.validatingToken).toBeTrue();
     });
@@ -200,7 +204,7 @@ describe('PasswordResetView', () => {
 
       spyOn(service, 'validateToken').and.returnValue(of(new UserTokenStatus()));
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.validatingToken).toBeFalse();
     });
@@ -212,7 +216,7 @@ describe('PasswordResetView', () => {
         throwError(() => new Error('Password reset failed'))
       );
 
-      component['validateToken']('token');
+      routeParams.next(convertToParamMap({ token: 'token' }));
 
       expect(component.validatingToken).toBeFalse();
     });

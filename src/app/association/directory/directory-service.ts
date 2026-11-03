@@ -76,6 +76,7 @@ export class DirectoryService {
   }
 
   public update(toUpdate: FullProfile, previousTypes: string[], newTypes: string[]): Observable<Profile> {
+    const submitted = structuredClone(toUpdate);
 
     // Find added types
     const addedTypes = newTypes.filter(t => !previousTypes.includes(t));
@@ -86,23 +87,23 @@ export class DirectoryService {
     for (const type of addedTypes) {
       switch (type) {
         case 'member':
-          conversions.push(this.convertToMember(toUpdate.number, toUpdate.feeType?.number as number));
+          conversions.push(this.convertToMember(submitted.number, submitted.feeType?.number as number));
           break;
         case 'guest':
-          conversions.push(this.convertToGuest(toUpdate.number));
+          conversions.push(this.convertToGuest(submitted.number));
           break;
         case 'sponsor':
-          conversions.push(this.convertToSponsor(toUpdate.number));
+          conversions.push(this.convertToSponsor(submitted.number));
           break;
       }
     }
 
     if (conversions.length === 0) {
-      return this.updateProfileInfo(toUpdate);
+      return this.updateProfileInfo(submitted);
     }
 
     return forkJoin(conversions).pipe(
-      switchMap(() => this.updateProfileInfo(toUpdate))
+      switchMap(() => this.updateProfileInfo(submitted))
     );
   }
 
