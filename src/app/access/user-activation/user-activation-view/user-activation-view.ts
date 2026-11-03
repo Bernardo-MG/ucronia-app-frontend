@@ -1,11 +1,11 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
-import { catchError, distinctUntilChanged, EMPTY, finalize, map, switchMap, tap } from 'rxjs';
+import { catchError, distinctUntilChanged, EMPTY, finalize, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { AccessUserActivateService } from '../user-activate-service';
 import { UserActivationForm } from '../user-activation-form/user-activation-form.component';
 
@@ -20,6 +20,8 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
 })
 export class UserActivationView {
 
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly tokenChanged = new Subject<void>();
   private readonly service = inject(AccessUserActivateService);
 
   public status: Status = {
@@ -64,11 +66,13 @@ export class UserActivationView {
     this.failures.clear();
 
     this.service.activateUser(this.user.token, password)
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        tap({ complete: () => { this.step = Step.FINISHED; } }),
+        finalize(() => this.status.loading = false),
+        takeUntil(this.tokenChanged),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
-        complete: () => {
-          this.step = Step.FINISHED;
-        },
         error: error => this.handleError(error)
       });
   }
@@ -82,6 +86,7 @@ export class UserActivationView {
   }
 
   private validateToken(token: string | null) {
+    this.tokenChanged.next();
     this.user = { username: '', token: '' };
     this.failures.clear();
 

@@ -1,11 +1,11 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { BlockUIModule } from 'primeng/blockui';
 import { CardModule } from 'primeng/card';
-import { catchError, distinctUntilChanged, EMPTY, finalize, map, switchMap, tap } from 'rxjs';
+import { catchError, distinctUntilChanged, EMPTY, finalize, map, Subject, switchMap, takeUntil, tap } from 'rxjs';
 import { PasswordResetForm } from '../password-reset-form/password-reset-form';
 import { PasswordResetService } from '../password-reset-service';
 
@@ -20,6 +20,8 @@ import { PasswordResetService } from '../password-reset-service';
 })
 export class PasswordResetView {
 
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly tokenChanged = new Subject<void>();
   private readonly service = inject(PasswordResetService);
 
   /**
@@ -60,11 +62,13 @@ export class PasswordResetView {
     this.failures.clear();
 
     this.service.resetPassword(this.token, password)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        tap({ complete: () => { this.status = 'finished'; } }),
+        finalize(() => this.loading = false),
+        takeUntil(this.tokenChanged),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
-        complete: () => {
-          this.status = 'finished';
-        },
         error: error => {
           if (error instanceof FailureResponse) {
             this.failures = error.failures;
@@ -76,6 +80,7 @@ export class PasswordResetView {
   }
 
   private validateToken(token: string | null) {
+    this.tokenChanged.next();
     this.token = '';
     this.failures.clear();
 
