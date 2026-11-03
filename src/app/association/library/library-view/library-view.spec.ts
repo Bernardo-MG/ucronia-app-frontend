@@ -189,26 +189,6 @@ describe('LibraryView', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-});
-
-describe('Library request routing', () => {
-  it('disables loan searches while routing pagination to the active tab', () => {
-    TestBed.configureTestingModule({ providers: [
-      { provide: LibraryService, useValue: {} },
-      { provide: LibraryLendingService, useValue: {} },
-      { provide: BookReportService, useValue: {} },
-      { provide: ConfirmationService, useValue: {} },
-      { provide: AuthService, useValue: { hasPermission: () => false, hasAnyPermission: () => false } }
-    ] });
-    const component = TestBed.runInInjectionContext(() => new LibraryView());
-    const load = spyOn(component, 'loadLendings');
-    component.display = component.Display.LENDINGS;
-    component.onFilter('title');
-    expect(load).not.toHaveBeenCalled();
-    load.calls.reset();
-    component.load(2);
-    expect(load).toHaveBeenCalledOnceWith(2);
-  });
 
   it('ignores a delete confirmation after another book is selected', () => {
     const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
@@ -233,6 +213,7 @@ describe('Library request routing', () => {
 
     expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
   });
+
   it('refreshes the list without closing a drawer opened during a return', () => {
     const response = new Subject<BookLending>();
     libraryServiceMock.return.and.returnValue(response);
@@ -260,5 +241,25 @@ describe('Library request routing', () => {
 
     expect(clear).not.toHaveBeenCalled();
     expect(component.dialog).toBe(Dialog.LENDING_INFO);
+  });
+});
+
+describe('Library request routing', () => {
+  it('disables loan searches while routing pagination to the active tab', () => {
+    TestBed.configureTestingModule({ providers: [
+      { provide: LibraryService, useValue: {} },
+      { provide: LibraryLendingService, useValue: {} },
+      { provide: BookReportService, useValue: {} },
+      { provide: ConfirmationService, useValue: {} },
+      { provide: AuthService, useValue: { hasPermission: () => false, hasAnyPermission: () => false } }
+    ] });
+    const component = TestBed.runInInjectionContext(() => new LibraryView());
+    const load = spyOn(component, 'loadLendings');
+    component.display = component.Display.LENDINGS;
+    component.onFilter('title');
+    expect(load).not.toHaveBeenCalled();
+    load.calls.reset();
+    component.load(2);
+    expect(load).toHaveBeenCalledOnceWith(2);
   });
 });

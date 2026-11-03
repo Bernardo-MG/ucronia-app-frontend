@@ -22,6 +22,7 @@ describe('LibraryBookLendingForm', () => {
   it('includes the selected borrower and book in the lending event', () => {
     const saved = spyOn(component.save, 'emit');
     fixture.componentRef.setInput('book', 3);
+    fixture.detectChanges();
     component.onSelectMember(Object.assign(new Profile(), { number: 7 }));
     const lendingDate = new Date(2026, 0, 15);
     component.form.patchValue({ lendingDate });

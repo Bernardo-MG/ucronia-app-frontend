@@ -277,6 +277,7 @@ export class PublicMemberView implements OnInit {
       this.status.saving ||
       this.status.loadingAssignmentMembers ||
       this.status.assignmentMembersError ||
+      key.profile?.number === profile ||
       !this.assignmentMembers.some(member => member.number === profile)
     ) {
       return;

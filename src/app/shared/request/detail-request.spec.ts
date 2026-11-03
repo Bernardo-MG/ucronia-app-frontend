@@ -1,26 +1,19 @@
-import { DestroyRef } from '@angular/core';
+import { createEnvironmentInjector, EnvironmentInjector, runInInjectionContext } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { finalize, Subject } from 'rxjs';
 import { DetailRequest } from './detail-request';
 
 describe('DetailRequest', () => {
   let request: DetailRequest;
-  let destroyCallbacks: Set<() => void>;
+  let injector: EnvironmentInjector;
 
   beforeEach(() => {
-    destroyCallbacks = new Set();
-    TestBed.configureTestingModule({
-      providers: [{
-        provide: DestroyRef,
-        useValue: {
-          onDestroy: (callback: () => void) => {
-            destroyCallbacks.add(callback);
-            return () => destroyCallbacks.delete(callback);
-          }
-        }
-      }]
-    });
-    request = TestBed.runInInjectionContext(() => new DetailRequest());
+    injector = createEnvironmentInjector([], TestBed.inject(EnvironmentInjector));
+    request = runInInjectionContext(injector, () => new DetailRequest());
+  });
+
+  afterEach(() => {
+    if (!injector.destroyed) injector.destroy();
   });
 
   it('ignores an older response after selecting another record', () => {
@@ -60,10 +53,10 @@ describe('DetailRequest', () => {
     expect(loading).toBeTrue();
   });
 
-  it('cancels pending detail reads when the component is destroyed', () => {
+  it('cancels pending detail reads when its injection scope is destroyed', () => {
     const response = new Subject<string>();
     const subscription = response.pipe(request.untilCancelled()).subscribe();
-    for (const callback of [...destroyCallbacks]) callback();
+    injector.destroy();
     expect(subscription.closed).toBeTrue();
   });
 });
