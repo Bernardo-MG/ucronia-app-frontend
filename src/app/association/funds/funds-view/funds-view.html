@@ -101,7 +101,8 @@
       @if (permissions.readTypes) {
         <p-tabpanel value="types">
           @if (selectedTab === 'types') {
-            <assoc-transaction-type-list [version]="transactionTypesVersion" [canEdit]="permissions.editTypes" />
+            <assoc-transaction-type-list [version]="transactionTypesVersion" [canEdit]="permissions.editTypes"
+              [canDelete]="permissions.deleteTypes" />
           }
         </p-tabpanel>
       }

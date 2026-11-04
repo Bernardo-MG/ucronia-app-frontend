@@ -46,6 +46,7 @@
     <assoc-transaction-type-form [data]="type" (updated)="onUpdated($event)" (closed)="editing = false" />
   } @else {
     <p-drawer [visible]="true" position="right" [style]="{ width: 'min(44rem, 100vw)' }"
+      [closable]="!deleting" [dismissible]="!deleting" [closeOnEscape]="!deleting"
       (visibleChange)="!$event && closeDetails()">
       <ng-template #header>
         <shared-drawer-header title="Detalle del tipo de transacción" icon="pi pi-tag" />
@@ -68,9 +69,12 @@
           </dd>
         </dl>
       }
+      @if (deleteFailed) {
+        <p role="alert" class="mt-4 text-red-700">No se pudo borrar el tipo de transacción.</p>
+      }
       <ng-template #footer>
-        <shared-drawer-actions [showDelete]="false" [showEdit]="canEdit() && !!selectedType"
-          (edit)="editing = true" />
+        <shared-drawer-actions [showDelete]="canDelete() && !!selectedType" [showEdit]="canEdit() && !!selectedType"
+          [loading]="deleting" (delete)="confirmDelete($event)" (edit)="editing = true" />
       </ng-template>
     </p-drawer>
   }

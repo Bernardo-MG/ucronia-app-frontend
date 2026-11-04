@@ -3,6 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Page } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { TransactionType } from '@ucronia/domain';
+import { ConfirmationService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
 import { TransactionTypeList } from './transaction-type-list';
 
@@ -26,6 +27,7 @@ describe('TransactionTypeList', () => {
       imports: [TransactionTypeList],
       providers: [
         provideZonelessChangeDetection(),
+        ConfirmationService,
         { provide: UcroniaClient, useValue: { transactionType: { page } } }
       ]
     });
