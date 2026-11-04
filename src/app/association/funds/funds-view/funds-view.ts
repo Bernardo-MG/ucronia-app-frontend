@@ -103,6 +103,7 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
+      editTypes: authService.hasPermission(UcroniaPermissions.transactionType.update),
       readTypes: authService.hasPermission(UcroniaPermissions.transactionType.read),
       createType: authService.hasPermission(UcroniaPermissions.transactionType.create),
       create: authService.hasPermission(UcroniaPermissions.transaction.create),
@@ -313,6 +314,7 @@ export class FundsView implements OnInit {
 }
 
 interface Permissions {
+  editTypes: boolean;
   readTypes: boolean;
   createType: boolean;
   create: boolean;

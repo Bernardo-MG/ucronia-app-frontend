@@ -11,18 +11,20 @@ describe('TransactionTypeForm', () => {
 
   let component: TransactionTypeForm;
   let create: jasmine.Spy;
+  let update: jasmine.Spy;
   let notify: jasmine.Spy;
   let closed: jasmine.Spy;
 
   beforeEach(() => {
     create = jasmine.createSpy('create');
+    update = jasmine.createSpy('update');
     notify = jasmine.createSpy('add');
     TestBed.configureTestingModule({
       imports: [TransactionTypeForm],
       providers: [
         provideZonelessChangeDetection(),
         provideNoopAnimations(),
-        { provide: UcroniaClient, useValue: { transactionType: { create } } },
+        { provide: UcroniaClient, useValue: { transactionType: { create, update } } },
         { provide: MessageService, useValue: { add: notify } }
       ]
     });
@@ -87,4 +89,22 @@ describe('TransactionTypeForm', () => {
     expect(component.failed).toBeFalse();
     expect(closed).toHaveBeenCalledTimes(1);
   });
+  it('prefills the edit form and updates the selected type', () => {
+    const fixture = TestBed.createComponent(TransactionTypeForm);
+    fixture.componentRef.setInput('data', created);
+    fixture.detectChanges();
+    const form = fixture.componentInstance;
+    const updated = spyOn(form.updated, 'emit');
+    const saved = { ...created, description: 'Cuota' };
+    update.and.returnValue(of(saved));
+
+    expect(form.form.getRawValue()).toEqual({ description: created.description, color: created.color });
+    form.form.controls.description.setValue(' Cuota ');
+    form.save();
+
+    expect(update).toHaveBeenCalledOnceWith(created.number, { description: 'Cuota', color: created.color });
+    expect(updated).toHaveBeenCalledOnceWith(saved);
+    expect(create).not.toHaveBeenCalled();
+  });
+
 });

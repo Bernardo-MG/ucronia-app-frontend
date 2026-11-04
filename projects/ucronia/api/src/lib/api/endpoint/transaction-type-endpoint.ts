@@ -18,6 +18,16 @@ export class TransactionTypeEndpoint {
     }).pipe(catchError(this.errorInterceptor.handle));
   }
 
+  public get(number: number): Observable<TransactionType> {
+    return this.http.get<SimpleResponse<TransactionType>>(`${this.apiUrl}/transaction/type/${number}`)
+      .pipe(catchError(this.errorInterceptor.handle), map(response => response.content));
+  }
+
+  public update(number: number, data: { description: string; color: string }): Observable<TransactionType> {
+    return this.http.put<SimpleResponse<TransactionType>>(`${this.apiUrl}/transaction/type/${number}`, data)
+      .pipe(catchError(this.errorInterceptor.handle), map(response => response.content));
+  }
+
   public create(data: { description: string; color: string }): Observable<TransactionType> {
     return this.http.post<SimpleResponse<TransactionType>>(`${this.apiUrl}/transaction/type`, data)
       .pipe(
