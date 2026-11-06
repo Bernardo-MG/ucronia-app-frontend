@@ -1,12 +1,12 @@
-<section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" [attr.aria-busy]="loading">
-  @if (loading) {
+<section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm" [attr.aria-busy]="loading()">
+  @if (loading()) {
     <p class="p-4" role="status">Cargando tipos de transacción…</p>
-  } @else if (failed) {
+  } @else if (failed()) {
     <div class="space-y-2 p-4">
       <p role="alert">No se pudieron cargar los tipos de transacción.</p>
       <p-button type="button" label="Reintentar" (onClick)="load()" />
     </div>
-  } @else if (data.content.length === 0) {
+  } @else if (data().content.length === 0) {
     <p class="p-4">No hay tipos de transacción registrados.</p>
   } @else {
     <table class="w-full text-left">
@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        @for (type of data.content; track type.number) {
+        @for (type of data().content; track type.number) {
           <tr class="border-t border-gray-200">
             <td class="p-3">{{ type.number }}</td>
             <td class="break-all p-3">{{ type.description }}</td>
@@ -36,7 +36,7 @@
         }
       </tbody>
     </table>
-    <p-paginator [first]="(data.page - 1) * rows" [rows]="rows" [totalRecords]="data.totalElements"
+    <p-paginator [first]="(data().page - 1) * rows" [rows]="rows" [totalRecords]="data().totalElements"
       (onPageChange)="changePage($event)" />
   }
 </section>

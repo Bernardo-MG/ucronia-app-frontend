@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, input, OnChanges } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnChanges, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
@@ -38,12 +38,12 @@ export class TransactionTypeList implements OnChanges {
 
   public readonly version = input(0);
   public readonly rows = 10;
-  public data = new Page<TransactionType>();
-  public loading = false;
-  public failed = false;
+  public readonly data = signal(new Page<TransactionType>());
+  public readonly loading = signal(false);
+  public readonly failed = signal(false);
 
   public ngOnChanges(): void {
-    this.load(this.data.page || 1);
+    this.load(this.data().page || 1);
   }
 
   public showDetails(number: number): void {
@@ -113,10 +113,10 @@ export class TransactionTypeList implements OnChanges {
     this.load((event.page ?? 0) + 1);
   }
 
-  public load(page = this.data.page || 1): void {
+  public load(page = this.data().page || 1): void {
     this.request?.unsubscribe();
-    this.loading = true;
-    this.failed = false;
+    this.loading.set(true);
+    this.failed.set(false);
 
     const request = new Subscription();
     this.request = request;
@@ -127,13 +127,13 @@ export class TransactionTypeList implements OnChanges {
           if (data.content.length === 0 && page > 1) {
             this.load(Math.max(1, Math.min(page - 1, data.totalPages)));
           } else {
-            this.data = data;
-            this.loading = false;
+            this.data.set(data);
+            this.loading.set(false);
           }
         },
         error: () => {
-          this.loading = false;
-          this.failed = true;
+          this.loading.set(false);
+          this.failed.set(true);
         }
       }));
   }

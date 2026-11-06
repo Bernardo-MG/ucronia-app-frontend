@@ -35,7 +35,7 @@ describe('TransactionTypeList', () => {
     fixture.componentRef.setInput('version', 0);
   });
 
-  it('shows loading while requesting the first page and then renders the types', () => {
+  it('shows loading while requesting the first page and then renders the types', async () => {
     const result = new Subject<Page<TransactionType>>();
     page.and.returnValue(result);
 
@@ -46,12 +46,12 @@ describe('TransactionTypeList', () => {
 
     result.next(response());
     result.complete();
-    fixture.detectChanges();
+    await fixture.whenStable();
 
     const table = fixture.nativeElement.querySelector('table');
     expect(table.textContent).toContain('Donación');
     expect(table.textContent).toContain('#123456');
-    expect(fixture.componentInstance.loading).toBeFalse();
+    expect(fixture.componentInstance.loading()).toBeFalse();
   });
 
   it('converts the paginator index to a one-based page and refreshes that page', () => {
@@ -59,7 +59,7 @@ describe('TransactionTypeList', () => {
     fixture.componentInstance.changePage({ page: 1 });
 
     expect(page).toHaveBeenCalledWith(2, 10);
-    expect(fixture.componentInstance.data.page).toBe(2);
+    expect(fixture.componentInstance.data().page).toBe(2);
     page.calls.reset();
 
     fixture.componentRef.setInput('version', 1);
@@ -73,7 +73,7 @@ describe('TransactionTypeList', () => {
     fixture.detectChanges();
 
     expect(fixture.nativeElement.querySelector('[role="alert"]')).not.toBeNull();
-    expect(fixture.componentInstance.loading).toBeFalse();
+    expect(fixture.componentInstance.loading()).toBeFalse();
 
     page.and.returnValue(of(response()));
     fixture.nativeElement.querySelector('button').click();
