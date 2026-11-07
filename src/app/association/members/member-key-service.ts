@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { KeyCreation, KeyUpdate, UcroniaClient } from '@ucronia/api';
 import { Key, KeyAssignment } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, expand, Observable, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -107,7 +106,12 @@ export class MemberKeyService {
   // TODO: Add backend key/profile text search and assignment status filtering.
   public getAll(): Observable<KeyAssignment[]> {
     const sorting = new Sorting([new SortingProperty('number')]);
-    return getAllPages((page, size) => this.ucroniaClient.keyAssignment.page(page, size, sorting));
+    const pageSize = 100;
+    const endpoint = this.ucroniaClient.keyAssignment;
+    return endpoint.page(1, pageSize, sorting).pipe(
+      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
+      reduce((items, page) => items.concat(page.content), [] as KeyAssignment[])
+    );
   }
 
 }

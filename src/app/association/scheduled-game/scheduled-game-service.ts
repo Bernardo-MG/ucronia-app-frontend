@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { GameTable, MemberStatus, Profile, ScheduledGame } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, expand, map, Observable, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -112,7 +111,12 @@ export class ScheduledGameService {
   public getTables(): Observable<GameTable[]> {
     const sorting = new Sorting([new SortingProperty('name')]);
 
-    return getAllPages((page, size) => this.ucroniaClient.gameTable.page(page, size, sorting));
+    const pageSize = 100;
+    const endpoint = this.ucroniaClient.gameTable;
+    return endpoint.page(1, pageSize, sorting).pipe(
+      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
+      reduce((items, page) => items.concat(page.content), [] as GameTable[])
+    );
   }
 
   public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<Profile[]> {

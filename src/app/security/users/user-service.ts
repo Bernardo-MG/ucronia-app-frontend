@@ -5,7 +5,7 @@ import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security'
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus, Profile } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, expand, map, Observable, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -93,19 +93,12 @@ export class UserService {
     );
     const pageSize = 100;
 
-    return this.securityClient.role.page(undefined, pageSize, sorting)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.securityClient.role.page(nextPage, pageSize, sorting);
-          }
-          return of();
-        }),
-        reduce((roles: Role[], res?: Page<Role>) => {
-          return res ? [...roles, ...res.content] : roles;
-        }, [])
-      );
+    const endpoint = this.securityClient.role;
+
+    return endpoint.page(undefined, pageSize, sorting).pipe(
+      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
+      reduce((items, page) => items.concat(page.content), [] as Role[])
+    );
   }
 
   // Members

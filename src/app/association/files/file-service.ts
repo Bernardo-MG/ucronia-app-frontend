@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { Asset, AssetFolder } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { Observable, tap } from 'rxjs';
+import { EMPTY, expand, Observable, reduce, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class FileService {
@@ -18,7 +17,11 @@ export class FileService {
 
   public getAllForSelection(): Observable<Asset[]> {
     const sorting = new Sorting([new SortingProperty('name')]);
-    return getAllPages((page, size) => this.getAll(page, sorting, size));
+    const pageSize = 100;
+    return this.getAll(1, sorting, pageSize).pipe(
+      expand(page => page.last ? EMPTY : this.getAll(page.page + 1, sorting, pageSize)),
+      reduce((items, page) => items.concat(page.content), [] as Asset[])
+    );
   }
 
   public getFolders(): Observable<AssetFolder[]> {

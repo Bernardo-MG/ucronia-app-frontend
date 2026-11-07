@@ -1,10 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { ContactMethod } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, expand, Observable, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +27,12 @@ export class ContactMethodService {
       [new SortingProperty('name')]
     );
 
-    return getAllPages((page, size) => this.ucroniaClient.contactMethod.page(page, size, sorting));
+    const pageSize = 100;
+    const endpoint = this.ucroniaClient.contactMethod;
+    return endpoint.page(1, pageSize, sorting).pipe(
+      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
+      reduce((items, page) => items.concat(page.content), [] as ContactMethod[])
+    );
   }
 
   public create(data: ContactMethod): Observable<ContactMethod> {

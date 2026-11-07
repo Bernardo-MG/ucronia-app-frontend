@@ -9,6 +9,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
+import { EMPTY, expand, Observable, reduce } from 'rxjs';
 import { LibraryConfig } from '../library-config';
 import { LibraryService } from '../library-service';
 
@@ -280,22 +281,13 @@ export class LibraryBookEditionForm {
   }
 
   private loadSelection<T extends { number: number }>(
-    loader: (page?: number) => import('rxjs').Observable<Page<T>>,
-    setData: (data: T[]) => void,
-    page = 0,
-    current: T[] = []
+    loader: (page?: number) => Observable<Page<T>>,
+    setData: (data: T[]) => void
   ): void {
-    loader(page)
-      .subscribe(response => {
-        const data = [...current, ...response.content];
-
-        if (response.last || page >= response.totalPages - 1) {
-          setData(data);
-          return;
-        }
-
-        this.loadSelection(loader, setData, page + 1, data);
-      });
+    loader(0).pipe(
+      expand((page, index) => page.last || index >= page.totalPages - 1 ? EMPTY : loader(index + 1)),
+      reduce((items, page) => items.concat(page.content), [] as T[])
+    ).subscribe(setData);
   }
 
 }

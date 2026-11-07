@@ -4,7 +4,7 @@ import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
-import { catchError, expand, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, expand, Observable, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -34,20 +34,12 @@ export class RoleService {
     );
     const pageSize = 100;
 
-    return this.securityClient.permission.page(undefined, pageSize, sorting)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.securityClient.permission.page(nextPage, pageSize, sorting);
-          }
-          return of();
-        }),
-        // accumulate roles from all pages into one array
-        reduce((permissions: ResourcePermission[], res?: Page<ResourcePermission>) => {
-          return res ? [...permissions, ...res.content] : permissions;
-        }, [])
-      );
+    const endpoint = this.securityClient.permission;
+
+    return endpoint.page(undefined, pageSize, sorting).pipe(
+      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
+      reduce((items, page) => items.concat(page.content), [] as ResourcePermission[])
+    );
   }
 
   public create(role: Role): Observable<Role> {
