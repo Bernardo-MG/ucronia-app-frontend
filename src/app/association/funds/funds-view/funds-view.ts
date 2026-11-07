@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -10,12 +10,13 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Transaction, TransactionSummary } from '@ucronia/domain';
+import { Transaction, TransactionSummary, TransactionType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TabsModule } from 'primeng/tabs';
 import { finalize, Observable, Subject, Subscription } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
@@ -27,10 +28,9 @@ import { TransactionForm } from '../transaction-form/transaction-form';
 import { TransactionInfo } from '../transaction-info/transaction-info';
 import { TransactionList } from '../transaction-list/transaction-list';
 import { TransactionReportService } from '../transaction-report-service';
-import { TabsModule } from 'primeng/tabs';
-import { TransactionTypeList } from '../transaction-type-list/transaction-type-list';
-import { TransactionTypeForm } from '../transaction-type-form/transaction-type-form';
 import { TransactionService } from '../transaction-service';
+import { TransactionTypeForm } from '../transaction-type-form/transaction-type-form';
+import { TransactionTypeList } from '../transaction-type-list/transaction-type-list';
 
 @Component({
   selector: 'app-funds-view',
@@ -85,6 +85,10 @@ export class FundsView implements OnInit {
 
   private sort = new Sorting();
 
+  private typesRequest?: Subscription;
+  public readonly transactionTypes = signal<TransactionType[]>([]);
+  public readonly typesLoading = signal(false);
+
   private currentDialog = Dialog.NONE;
 
   public get dialog(): Dialog {
@@ -95,6 +99,10 @@ export class FundsView implements OnInit {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
+      this.typesRequest?.unsubscribe();
+      if (this.permissions.readTypes && (value === Dialog.CREATE || value === Dialog.EDIT)) {
+        this.loadTransactionTypes();
+      }
     }
   }
 
@@ -249,6 +257,17 @@ export class FundsView implements OnInit {
     } else {
       this.loadList();
     }
+  }
+
+  private loadTransactionTypes(): void {
+    this.typesRequest?.unsubscribe();
+    this.typesLoading.set(true);
+    this.typesRequest = this.service.getTypes()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typesLoading.set(false)))
+      .subscribe({
+        next: types => this.transactionTypes.set(types),
+        error: () => this.transactionTypes.set([])
+      });
   }
 
   // PRIVATE METHODS

@@ -132,7 +132,8 @@
         <shared-drawer-header title="Nueva transacción" icon="pi pi-wallet" subtitle="Registra un ingreso o un gasto" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false"
+            [types]="transactionTypes()" [loading]="status.loading || typesLoading()" [failures]="failures" (save)="onCreate($event)"
             />
         </div>
         <ng-template #footer>
@@ -150,7 +151,9 @@
         <shared-drawer-header title="Editar transacción" icon="pi pi-pencil" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false" [data]="selectedData" [loading]="status.loading" [failures]="failures"
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false"
+            [types]="transactionTypes()"
+            [data]="selectedData" [loading]="status.loading || typesLoading()" [failures]="failures"
             (save)="onUpdate($event)" />
         </div>
         <ng-template #footer>

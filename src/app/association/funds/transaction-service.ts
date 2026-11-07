@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Transaction } from '@ucronia/domain';
+import { Transaction, TransactionType } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, EMPTY, expand, Observable, reduce, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -12,6 +12,15 @@ export class TransactionService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
   private readonly messageService = inject(MessageService);
+
+  public getTypes(): Observable<TransactionType[]> {
+    const endpoint = this.ucroniaClient.transactionType;
+
+    return endpoint.page().pipe(
+      expand(page => page.page < page.totalPages ? endpoint.page(page.page + 1) : EMPTY),
+      reduce((types, page) => types.concat(page.content), [] as TransactionType[])
+    );
+  }
 
   public create(data: Transaction): Observable<Transaction> {
     return this.ucroniaClient.transaction.create(data)

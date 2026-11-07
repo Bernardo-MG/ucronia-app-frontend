@@ -10,25 +10,25 @@
         <div class="grid grid-cols-2 gap-3" role="group" aria-label="Tipo de movimiento">
           <button type="button"
             class="flex items-center justify-center gap-2 rounded-lg border px-4 py-4 font-medium transition-colors"
-            [class.border-green-600]="form.get('type')?.value === TransactionType.INCOME"
-            [class.bg-green-50]="form.get('type')?.value === TransactionType.INCOME"
-            [class.text-green-700]="form.get('type')?.value === TransactionType.INCOME"
-            [class.border-gray-300]="form.get('type')?.value !== TransactionType.INCOME"
-            [class.text-gray-700]="form.get('type')?.value !== TransactionType.INCOME"
-            [attr.aria-pressed]="form.get('type')?.value === TransactionType.INCOME"
-            (click)="setTransactionType(TransactionType.INCOME)">
+            [class.border-green-600]="form.get('type')?.value === TransactionDirection.INCOME"
+            [class.bg-green-50]="form.get('type')?.value === TransactionDirection.INCOME"
+            [class.text-green-700]="form.get('type')?.value === TransactionDirection.INCOME"
+            [class.border-gray-300]="form.get('type')?.value !== TransactionDirection.INCOME"
+            [class.text-gray-700]="form.get('type')?.value !== TransactionDirection.INCOME"
+            [attr.aria-pressed]="form.get('type')?.value === TransactionDirection.INCOME"
+            (click)="setTransactionType(TransactionDirection.INCOME)">
             <i class="pi pi-arrow-down" aria-hidden="true"></i>
             Ingreso
           </button>
           <button type="button"
             class="flex items-center justify-center gap-2 rounded-lg border px-4 py-4 font-medium transition-colors"
-            [class.border-red-500]="form.get('type')?.value === TransactionType.EXPENSE"
-            [class.bg-red-50]="form.get('type')?.value === TransactionType.EXPENSE"
-            [class.text-red-700]="form.get('type')?.value === TransactionType.EXPENSE"
-            [class.border-gray-300]="form.get('type')?.value !== TransactionType.EXPENSE"
-            [class.text-gray-700]="form.get('type')?.value !== TransactionType.EXPENSE"
-            [attr.aria-pressed]="form.get('type')?.value === TransactionType.EXPENSE"
-            (click)="setTransactionType(TransactionType.EXPENSE)">
+            [class.border-red-500]="form.get('type')?.value === TransactionDirection.EXPENSE"
+            [class.bg-red-50]="form.get('type')?.value === TransactionDirection.EXPENSE"
+            [class.text-red-700]="form.get('type')?.value === TransactionDirection.EXPENSE"
+            [class.border-gray-300]="form.get('type')?.value !== TransactionDirection.EXPENSE"
+            [class.text-gray-700]="form.get('type')?.value !== TransactionDirection.EXPENSE"
+            [attr.aria-pressed]="form.get('type')?.value === TransactionDirection.EXPENSE"
+            (click)="setTransactionType(TransactionDirection.EXPENSE)">
             <i class="pi pi-arrow-up" aria-hidden="true"></i>
             Gasto
           </button>
@@ -89,13 +89,22 @@
         </div>
       </div>
 
+      @if (types().length > 0) {
+        <div>
+          <label for="transaction-type" class="block font-medium text-gray-950">Tipo de transacción</label>
+          <p-select inputId="transaction-type" formControlName="transactionType" [options]="types()"
+            optionLabel="description" optionValue="number" placeholder="Sin tipo" [showClear]="true"
+            appendTo="body" class="mt-2 w-full" />
+        </div>
+      }
+
       <p class="flex items-center gap-2 rounded-lg p-3 text-sm"
-        [class.bg-green-50]="form.get('type')?.value === TransactionType.INCOME"
-        [class.text-green-700]="form.get('type')?.value === TransactionType.INCOME"
-        [class.bg-red-50]="form.get('type')?.value === TransactionType.EXPENSE"
-        [class.text-red-700]="form.get('type')?.value === TransactionType.EXPENSE">
+        [class.bg-green-50]="form.get('type')?.value === TransactionDirection.INCOME"
+        [class.text-green-700]="form.get('type')?.value === TransactionDirection.INCOME"
+        [class.bg-red-50]="form.get('type')?.value === TransactionDirection.EXPENSE"
+        [class.text-red-700]="form.get('type')?.value === TransactionDirection.EXPENSE">
         <i class="pi pi-info-circle" aria-hidden="true"></i>
-        @if (form.get('type')?.value === TransactionType.INCOME) {
+        @if (form.get('type')?.value === TransactionDirection.INCOME) {
           Este importe se sumará al saldo de la asociación.
         } @else {
           Este importe se restará del saldo de la asociación.
