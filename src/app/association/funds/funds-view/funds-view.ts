@@ -91,6 +91,10 @@ export class FundsView implements OnInit {
 
   private currentDialog = Dialog.NONE;
 
+  public get selectedTransactionType(): TransactionType | undefined {
+    return this.transactionTypes().find(type => type.number === this.selectedData.transactionType);
+  }
+
   public get dialog(): Dialog {
     return this.currentDialog;
   }
@@ -100,7 +104,7 @@ export class FundsView implements OnInit {
       this.detailRequest.cancel();
       this.currentDialog = value;
       this.typesRequest?.unsubscribe();
-      if (this.permissions.readTypes && (value === Dialog.CREATE || value === Dialog.EDIT)) {
+      if (this.permissions.readTypes && (value === Dialog.CREATE || value === Dialog.EDIT || value === Dialog.INFO)) {
         this.loadTransactionTypes();
       }
     }
