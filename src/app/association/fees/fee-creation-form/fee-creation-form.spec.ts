@@ -50,7 +50,6 @@ describe('FeeCreationForm form submission', () => {
     fixture = TestBed.createComponent(FeeCreationForm);
     component = fixture.componentInstance;
     form = component.form as FormGroup;
-    fixture.componentRef.setInput('showActions', false);
     fixture.componentRef.setInput('formId', 'form-contract');
 
     form.patchValue(scenario.values);
@@ -104,17 +103,8 @@ describe('FeeCreationForm form submission', () => {
     expect(emitted).not.toHaveBeenCalled();
   });
 
-  it('hides inline actions when the drawer owns them', () => {
+  it('leaves submit and cancel controls to the drawer', () => {
     expect(fixture.nativeElement.querySelector('[data-action="submit"]')).toBeNull();
     expect(fixture.nativeElement.querySelector('[data-action="cancel"]')).toBeNull();
-  });
-
-  it('cancels inline editing without submitting', () => {
-    const cancelled = spyOn(component.cancelEdition, 'emit');
-    fixture.componentRef.setInput('showActions', true);
-    fixture.detectChanges();
-    fixture.nativeElement.querySelector('[data-action="cancel"]').click();
-    expect(cancelled).toHaveBeenCalledTimes(1);
-    expect(emitted).not.toHaveBeenCalled();
   });
 });

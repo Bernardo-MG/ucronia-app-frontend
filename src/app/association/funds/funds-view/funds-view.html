@@ -115,7 +115,7 @@
       <ng-template #header>
         <shared-drawer-header title="Nuevo tipo de transacción" icon="pi pi-tag" />
       </ng-template>
-      <assoc-transaction-type-form #typeForm [showActions]="false" formId="transaction-type-create"
+      <assoc-transaction-type-form #typeForm formId="transaction-type-create"
         [loading]="typeLoading()" [failures]="typeFailures()" (save)="createType($event)" />
       @if (typeSaveError()) {
         <p role="alert" class="mt-4 text-red-700">No se pudo guardar el tipo de transacción.</p>
@@ -148,7 +148,7 @@
         <shared-drawer-header title="Nueva transacción" icon="pi pi-wallet" subtitle="Registra un ingreso o un gasto" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false"
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create"
             [types]="transactionTypes()" [loading]="status.loading || typesLoading()" [failures]="failures" (save)="onCreate($event)"
             />
         </div>
@@ -167,7 +167,7 @@
         <shared-drawer-header title="Editar transacción" icon="pi pi-pencil" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false"
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit"
             [types]="transactionTypes()"
             [data]="selectedData" [loading]="status.loading || typesLoading()" [failures]="failures"
             (save)="onUpdate($event)" />

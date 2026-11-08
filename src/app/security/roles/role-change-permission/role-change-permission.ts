@@ -1,6 +1,5 @@
 import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -8,7 +7,7 @@ import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'access-role-change-permission',
-  imports: [TextFilter, DrawerFormActions, ReactiveFormsModule, ButtonModule],
+  imports: [TextFilter, ReactiveFormsModule, ButtonModule],
   templateUrl: './role-change-permission.html'
 })
 export class RoleChangePermission implements OnChanges {
@@ -17,15 +16,11 @@ export class RoleChangePermission implements OnChanges {
   public readonly selection = input<ResourcePermission[]>([]);
   public readonly permissions = input<ResourcePermission[]>([]);
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
   public readonly save = output<ResourcePermission[]>();
-  public readonly cancelEdition = output<void>();
-
   public readonly form;
   public readonly formStatus: FormStatus;
 

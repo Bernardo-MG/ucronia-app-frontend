@@ -68,8 +68,4 @@
       <p-button class="mt-4 block" type="button" label="Añadir fecha" icon="pi pi-plus" severity="secondary" (onClick)="addDate()" outlined />
     </section>
   </div>
-  @if (showActions()) {
-    <shared-drawer-form-actions class="mt-6" submitLabel="Guardar cambios" submitIcon="pi pi-check"
-      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
-  }
 </form>

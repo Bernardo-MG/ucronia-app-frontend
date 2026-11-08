@@ -30,8 +30,4 @@
 
     <!-- Save button -->
   </section>
-  @if (showActions()) {
-    <shared-drawer-form-actions class="mt-6" submitLabel="Prestar libro" submitIcon="pi pi-arrow-right"
-      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
-  }
 </form>

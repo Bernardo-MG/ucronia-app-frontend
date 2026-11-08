@@ -49,7 +49,7 @@
       <ng-template #header>
         <shared-drawer-header title="Editar tipo de transacción" icon="pi pi-tag" />
       </ng-template>
-      <assoc-transaction-type-form #typeForm [showActions]="false" formId="transaction-type-edit" [data]="type"
+      <assoc-transaction-type-form #typeForm formId="transaction-type-edit" [data]="type"
         [loading]="typeLoading()" [failures]="typeFailures()" (save)="updateType($event, type.number)" />
       @if (typeSaveError()) {
         <p role="alert" class="mt-4 text-red-700">No se pudo guardar el tipo de transacción.</p>

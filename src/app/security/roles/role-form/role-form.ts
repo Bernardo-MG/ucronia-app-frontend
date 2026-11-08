@@ -1,6 +1,5 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,14 +9,12 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-role-form',
-  imports: [TextFilter, DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
+  imports: [TextFilter, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './role-form.html'
 })
 export class RoleForm {
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -34,8 +31,6 @@ export class RoleForm {
   public isEdit = false;
 
   public readonly save = output<Role>();
-  public readonly cancelEdition = output<void>();
-
   public permissions: ResourcePermission[] = [];
 
 

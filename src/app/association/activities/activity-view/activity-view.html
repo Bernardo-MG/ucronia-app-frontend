@@ -69,7 +69,7 @@
         <shared-drawer-header title="Nueva actividad" icon="pi pi-calendar" subtitle="Programa una actividad para la asociación" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-create" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -86,7 +86,7 @@
         <shared-drawer-header title="Editar actividad" icon="pi pi-pencil" subtitle="{{ selectedData.title }}" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [failures]="failures"
+        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-edit" [loading]="status.loading" [data]="selectedData" [failures]="failures"
           (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

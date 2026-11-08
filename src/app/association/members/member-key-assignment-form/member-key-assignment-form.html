@@ -20,12 +20,4 @@
       }
     </div>
   </section>
-  @if (showActions()) {
-    <shared-drawer-form-actions
-      submitLabel="Asignar llave"
-      submitIcon="pi pi-check"
-      [disabled]="!saveEnabled"
-      [loading]="formStatus.loading"
-      (cancelForm)="cancelEdition.emit()" />
-  }
 </form>

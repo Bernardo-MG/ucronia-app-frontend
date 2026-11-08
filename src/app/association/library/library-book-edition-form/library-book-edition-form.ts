@@ -1,7 +1,6 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { getAllPages } from '@app/shared/request/get-all-pages';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore, Page, SearchRequest } from '@bernardo-mg/request';
 import { SearchSelect } from '@bernardo-mg/ui';
@@ -16,7 +15,7 @@ import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-edition-form',
-  imports: [SearchSelect, DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule],
+  imports: [SearchSelect, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule],
   templateUrl: './library-book-edition-form.html'
 })
 export class LibraryBookEditionForm {
@@ -26,8 +25,6 @@ export class LibraryBookEditionForm {
   private readonly donorSearch = new SearchRequest();
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -46,8 +43,6 @@ export class LibraryBookEditionForm {
   }
 
   public readonly save = output<FictionBook | GameBook>();
-  public readonly cancelEdition = output<void>();
-
   public readonly formStatus: FormStatus;
 
   public readonly form: FormGroup;

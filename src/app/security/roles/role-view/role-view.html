@@ -54,7 +54,7 @@
       </ng-template>
 
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <access-role-form #fieldsAccessRoleForm formId="role-view-create" [showActions]="false" [selection]="resourcePermissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+          <access-role-form #fieldsAccessRoleForm formId="role-view-create" [selection]="resourcePermissions" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
         </div>
         <ng-template #footer>
           <shared-drawer-form-actions
@@ -73,7 +73,7 @@
       </ng-template>
 
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <access-role-change-permission #fieldsAccessRoleChangePermission formId="role-view-permissions" [showActions]="false" [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" />
+          <access-role-change-permission #fieldsAccessRoleChangePermission formId="role-view-permissions" [data]="selectedData" [selection]="resourcePermissions" [permissions]="selectedData.permissions" [loading]="loading" (save)="onSetRolePermissions($event)" />
         </div>
         <ng-template #footer>
           <shared-drawer-form-actions

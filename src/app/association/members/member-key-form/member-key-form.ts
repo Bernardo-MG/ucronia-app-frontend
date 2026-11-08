@@ -1,6 +1,5 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Key } from '@ucronia/domain';
@@ -10,14 +9,12 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-member-key-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, ToggleSwitchModule, MessageModule],
+  imports: [ReactiveFormsModule, InputTextModule, ToggleSwitchModule, MessageModule],
   templateUrl: './member-key-form.html'
 })
 export class MemberKeyForm {
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -35,8 +32,6 @@ export class MemberKeyForm {
   }
 
   public readonly save = output<Key>();
-  public readonly cancelEdition = output<void>();
-
   public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
 
