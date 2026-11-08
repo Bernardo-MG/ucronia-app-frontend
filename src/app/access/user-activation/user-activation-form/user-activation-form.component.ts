@@ -1,5 +1,3 @@
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
-
 import { Component, inject, input, output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
@@ -13,7 +11,7 @@ import { MessageModule } from 'primeng/message';
  */
 @Component({
   selector: 'access-user-activation-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationForm {

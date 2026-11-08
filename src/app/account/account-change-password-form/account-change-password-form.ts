@@ -1,15 +1,15 @@
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Component, inject, input, output, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PasswordChange } from '@bernardo-mg/security';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'account-change-password-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
+  imports: [ButtonModule, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './account-change-password-form.html'
 })
 export class AccountChangePasswordForm {
