@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
-import { catchError, EMPTY, expand, Observable, reduce, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -32,14 +33,10 @@ export class RoleService {
     const sorting = new Sorting(
       [new SortingProperty('resource'), new SortingProperty('action')]
     );
-    const pageSize = 100;
 
     const endpoint = this.securityClient.permission;
 
-    return endpoint.page(undefined, pageSize, sorting).pipe(
-      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
-      reduce((items, page) => items.concat(page.content), [] as ResourcePermission[])
-    );
+    return getAllPages((page, size) => endpoint.page(page, size, sorting), undefined);
   }
 
   public create(role: Role): Observable<Role> {

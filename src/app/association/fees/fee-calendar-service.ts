@@ -1,9 +1,10 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { Fee, Member, MemberStatus, YearsRange } from '@ucronia/domain';
 import { endOfYear, startOfYear } from 'date-fns';
-import { EMPTY, expand, forkJoin, map, Observable, reduce } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { MemberFees } from './domain/member-fees';
 
 @Injectable({
@@ -25,17 +26,10 @@ export class FeeCalendarService {
 
     const date = new Date(year, 0, 1);
 
-    const pageSize = 100;
     const feeEndpoint = this.ucroniaClient.fee;
-    const fees = feeEndpoint.page(1, pageSize, sorting, startOfYear(date), endOfYear(date)).pipe(
-      expand(page => page.last ? EMPTY : feeEndpoint.page(page.page + 1, pageSize, sorting, startOfYear(date), endOfYear(date))),
-      reduce((items, page) => items.concat(page.content), [] as Fee[])
-    );
+    const fees = getAllPages((page, size) => feeEndpoint.page(page, size, sorting, startOfYear(date), endOfYear(date)), 1);
     const memberEndpoint = this.ucroniaClient.memberProfile;
-    const members = memberEndpoint.page(1, pageSize, undefined, MemberStatus.All).pipe(
-      expand(page => page.last ? EMPTY : memberEndpoint.page(page.page + 1, pageSize, undefined, MemberStatus.All)),
-      reduce((items, page) => items.concat(page.content), [] as Member[])
-    );
+    const members = getAllPages((page, size) => memberEndpoint.page(page, size, undefined, MemberStatus.All), 1);
 
     return forkJoin({ fees, members })
       .pipe(

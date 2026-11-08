@@ -1,11 +1,12 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Role, User } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Member, MemberStatus, Profile } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
-import { catchError, EMPTY, expand, map, Observable, reduce, tap, throwError } from 'rxjs';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -91,14 +92,10 @@ export class UserService {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
-    const pageSize = 100;
 
     const endpoint = this.securityClient.role;
 
-    return endpoint.page(undefined, pageSize, sorting).pipe(
-      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, sorting)),
-      reduce((items, page) => items.concat(page.content), [] as Role[])
-    );
+    return getAllPages((page, size) => endpoint.page(page, size, sorting), undefined);
   }
 
   // Members

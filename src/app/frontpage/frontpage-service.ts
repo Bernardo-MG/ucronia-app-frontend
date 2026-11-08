@@ -1,7 +1,8 @@
 import { Injectable, inject } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { UcroniaClient } from '@ucronia/api';
 import { Activity, PublicSettings } from '@ucronia/domain';
-import { EMPTY, expand, Observable, reduce } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,8 @@ export class FrontpageService {
   }
 
   public getActivities(from: Date | undefined = undefined, to: Date | undefined = undefined): Observable<Activity[]> {
-    const pageSize = 100;
     const endpoint = this.ucroniaClient.activity;
-    return endpoint.page(1, pageSize, undefined, from, to).pipe(
-      expand(page => page.last ? EMPTY : endpoint.page(page.page + 1, pageSize, undefined, from, to)),
-      reduce((items, page) => items.concat(page.content), [] as Activity[])
-    );
+    return getAllPages((page, size) => endpoint.page(page, size, undefined, from, to), 1);
   }
 
 }
