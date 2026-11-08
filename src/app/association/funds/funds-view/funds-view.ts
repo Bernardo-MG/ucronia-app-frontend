@@ -126,12 +126,27 @@ export class FundsView implements OnInit {
   }
 
   public ngOnInit(): void {
+    if (this.permissions.readTypes) {
+      this.loadTransactionTypes();
+    }
+
     this.refreshMonths(() => {
       this.loadCalendar();
       this.loadList();
     });
 
     this.loadSummary();
+  }
+
+  public onTabChange(tab: string | number | undefined): void {
+    if (tab === undefined || tab === this.selectedTab) {
+      return;
+    }
+
+    this.selectedTab = tab;
+    if (tab === 'transactions' && this.permissions.readTypes) {
+      this.loadTransactionTypes();
+    }
   }
 
   // EVENT HANDLERS

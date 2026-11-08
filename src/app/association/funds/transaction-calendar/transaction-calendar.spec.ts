@@ -39,6 +39,22 @@ describe('TransactionCalendar', () => {
     expect(component.events.map(e => e.meta?.transactionId)).toEqual([1, 2, 3]);
   });
 
+  it('uses the assigned type color when the types arrive after the transactions', () => {
+    const date = new Date();
+    fixture.componentRef.setInput('transactions', [
+      { index: 1, description: 'Typed expense', amount: -25, date, transactionType: 10 },
+      { index: 2, description: 'Untyped expense', amount: -10, date }
+    ]);
+    fixture.detectChanges();
+    const fallback = component.events[0].color;
+
+    fixture.componentRef.setInput('types', [{ number: 10, description: 'Fee', color: '#123456' }]);
+    fixture.detectChanges();
+
+    expect(component.events[0].color).toEqual({ primary: '#123456', secondary: '#12345633' });
+    expect(component.events[1].color).toEqual(fallback);
+  });
+
   it('formats decimal amounts using the configured locale', () => {
     fixture.componentRef.setInput('transactions', [
       { index: 1, description: 'Membership', amount: 1250.5, date: new Date() }
