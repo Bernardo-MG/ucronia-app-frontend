@@ -69,6 +69,9 @@ export class FundsView implements OnInit {
   public selectedTab: string | number = 'transactions';
   public transactionTypesVersion = 0;
   public showTypeForm = false;
+  public readonly typeLoading = signal(false);
+  public readonly typeFailures = signal(new FailureStore());
+  public readonly typeSaveError = signal(false);
 
   public selectedData = new Transaction();
 
@@ -147,6 +150,36 @@ export class FundsView implements OnInit {
     if (tab === 'transactions' && this.permissions.readTypes) {
       this.loadTransactionTypes();
     }
+  }
+
+  public createType(values: Pick<TransactionType, 'description' | 'color'>): void {
+    if (this.typeLoading()) {
+      return;
+    }
+
+    this.typeLoading.set(true);
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+    this.service.saveType(values)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.transactionTypesVersion++;
+          this.closeTypeForm();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.typeFailures.set(error.failures);
+          }
+          this.typeSaveError.set(true);
+        }
+      });
+  }
+
+  public closeTypeForm(): void {
+    this.showTypeForm = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
   }
 
   // EVENT HANDLERS

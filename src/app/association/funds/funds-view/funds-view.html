@@ -109,7 +109,22 @@
   </p-tabs>
 
   @if (showTypeForm) {
-    <assoc-transaction-type-form (created)="transactionTypesVersion = transactionTypesVersion + 1" (closed)="showTypeForm = false" />
+    <p-drawer [visible]="true" position="right" [closable]="!typeLoading()"
+      [dismissible]="!typeLoading()" [closeOnEscape]="!typeLoading()"
+      (visibleChange)="!$event && closeTypeForm()">
+      <ng-template #header>
+        <shared-drawer-header title="Nuevo tipo de transacción" icon="pi pi-tag" />
+      </ng-template>
+      <assoc-transaction-type-form #typeForm [showActions]="false" formId="transaction-type-create"
+        [loading]="typeLoading()" [failures]="typeFailures()" (save)="createType($event)" />
+      @if (typeSaveError()) {
+        <p role="alert" class="mt-4 text-red-700">No se pudo guardar el tipo de transacción.</p>
+      }
+      <ng-template #footer>
+        <shared-drawer-form-actions formId="transaction-type-create" submitLabel="Crear tipo" submitIcon="pi pi-plus"
+          [disabled]="!typeForm.saveEnabled" [loading]="typeLoading()" (cancelForm)="closeTypeForm()" />
+      </ng-template>
+    </p-drawer>
   }
 
   <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"

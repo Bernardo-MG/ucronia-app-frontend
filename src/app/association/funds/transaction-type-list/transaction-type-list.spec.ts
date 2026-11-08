@@ -1,7 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Page } from '@bernardo-mg/request';
-import { UcroniaClient } from '@ucronia/api';
+import { TransactionService } from '../transaction-service';
 import { TransactionType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of, Subject, throwError } from 'rxjs';
@@ -28,7 +28,7 @@ describe('TransactionTypeList', () => {
       providers: [
         provideZonelessChangeDetection(),
         ConfirmationService,
-        { provide: UcroniaClient, useValue: { transactionType: { page } } }
+        { provide: TransactionService, useValue: { getTypesPage: page } }
       ]
     });
     fixture = TestBed.createComponent(TransactionTypeList);

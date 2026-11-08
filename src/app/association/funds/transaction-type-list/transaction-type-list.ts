@@ -1,24 +1,25 @@
 import { Component, DestroyRef, inject, input, OnChanges, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
+import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Page } from '@bernardo-mg/request';
-import { UcroniaClient } from '@ucronia/api';
+import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
 import { TransactionType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
+import { TransactionService } from '../transaction-service';
 import { TransactionTypeForm } from '../transaction-type-form/transaction-type-form';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { finalize, Subscription } from 'rxjs';
 
 @Component({
   selector: 'assoc-transaction-type-list',
-  imports: [ButtonModule, PaginatorModule, DrawerModule, DrawerActions, DrawerHeader, TransactionTypeForm],
+  imports: [ButtonModule, PaginatorModule, DrawerModule, DrawerActions, DrawerHeader, DrawerFormActions, TransactionTypeForm],
   templateUrl: './transaction-type-list.html'
 })
 export class TransactionTypeList implements OnChanges {
-  private readonly client = inject(UcroniaClient);
+  private readonly service = inject(TransactionService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
   private request?: Subscription;
@@ -35,6 +36,9 @@ export class TransactionTypeList implements OnChanges {
   public detailLoading = false;
   public detailFailed = false;
   public editing = false;
+  public readonly typeLoading = signal(false);
+  public readonly typeFailures = signal(new FailureStore());
+  public readonly typeSaveError = signal(false);
 
   public readonly version = input(0);
   public readonly rows = 10;
@@ -54,7 +58,7 @@ export class TransactionTypeList implements OnChanges {
     this.detailFailed = false;
     this.deleteFailed = false;
 
-    this.detailRequest = this.client.transactionType.get(number)
+    this.detailRequest = this.service.getType(number)
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.detailLoading = false))
       .subscribe({
         next: type => this.selectedType = type,
@@ -81,7 +85,7 @@ export class TransactionTypeList implements OnChanges {
 
         this.deleting = true;
         this.deleteFailed = false;
-        this.client.transactionType.delete(type.number)
+        this.service.deleteType(type.number)
           .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.deleting = false))
           .subscribe({
             next: () => {
@@ -104,9 +108,35 @@ export class TransactionTypeList implements OnChanges {
     this.selectedType = undefined;
   }
 
-  public onUpdated(type: TransactionType): void {
-    this.selectedType = type;
-    this.load();
+  public updateType(values: Pick<TransactionType, 'description' | 'color'>, number: number): void {
+    if (this.typeLoading()) {
+      return;
+    }
+
+    this.typeLoading.set(true);
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+    this.service.saveType(values, number)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
+      .subscribe({
+        next: type => {
+          this.selectedType = type;
+          this.closeTypeForm();
+          this.load();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.typeFailures.set(error.failures);
+          }
+          this.typeSaveError.set(true);
+        }
+      });
+  }
+
+  public closeTypeForm(): void {
+    this.editing = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
   }
 
   public changePage(event: PaginatorState): void {
@@ -120,7 +150,7 @@ export class TransactionTypeList implements OnChanges {
 
     const request = new Subscription();
     this.request = request;
-    request.add(this.client.transactionType.page(page, this.rows)
+    request.add(this.service.getTypesPage(page, this.rows)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: data => {

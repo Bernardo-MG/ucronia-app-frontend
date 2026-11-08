@@ -43,7 +43,22 @@
 
 @if (selectedNumber !== undefined) {
   @if (editing && selectedType; as type) {
-    <assoc-transaction-type-form [data]="type" (updated)="onUpdated($event)" (closed)="editing = false" />
+    <p-drawer [visible]="true" position="right" [closable]="!typeLoading()"
+      [dismissible]="!typeLoading()" [closeOnEscape]="!typeLoading()"
+      (visibleChange)="!$event && closeTypeForm()">
+      <ng-template #header>
+        <shared-drawer-header title="Editar tipo de transacción" icon="pi pi-tag" />
+      </ng-template>
+      <assoc-transaction-type-form #typeForm [showActions]="false" formId="transaction-type-edit" [data]="type"
+        [loading]="typeLoading()" [failures]="typeFailures()" (save)="updateType($event, type.number)" />
+      @if (typeSaveError()) {
+        <p role="alert" class="mt-4 text-red-700">No se pudo guardar el tipo de transacción.</p>
+      }
+      <ng-template #footer>
+        <shared-drawer-form-actions formId="transaction-type-edit" submitLabel="Guardar cambios" submitIcon="pi pi-check"
+          [disabled]="!typeForm.saveEnabled" [loading]="typeLoading()" (cancelForm)="closeTypeForm()" />
+      </ng-template>
+    </p-drawer>
   } @else {
     <p-drawer [visible]="true" position="right" [style]="{ width: 'min(44rem, 100vw)' }"
       [closable]="!deleting" [dismissible]="!deleting" [closeOnEscape]="!deleting"
