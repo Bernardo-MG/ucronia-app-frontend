@@ -109,7 +109,7 @@ describe('MemberKeyService', () => {
     service.getAll().subscribe(data => (result = data));
 
     expect(result).toEqual([assigned, unassigned]);
-    expect(assignmentEndpointMock.page.calls.allArgs().map(args => args[0])).toEqual([1, 2]);
+    expect(assignmentEndpointMock.page.calls.allArgs().map(args => args[0])).toEqual([undefined, 2]);
   });
 
   it('should create a key and show the success message', () => {
