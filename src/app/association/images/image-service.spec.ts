@@ -43,7 +43,7 @@ describe('ImageService', () => {
   it('should load all images ordered by name for selectors', () => {
     service.getAllForSelection().subscribe();
 
-    expect(client.asset.image.page).toHaveBeenCalledWith(1, 100, jasmine.anything());
+    expect(client.asset.image.page).toHaveBeenCalledWith(undefined, 100, jasmine.anything());
   });
 
   it('should load image content through the API client', () => {

@@ -1,5 +1,6 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore, Page, SearchRequest } from '@bernardo-mg/request';
@@ -9,6 +10,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
+import { Observable } from 'rxjs';
 import { LibraryConfig } from '../library-config';
 import { LibraryService } from '../library-service';
 
@@ -280,22 +282,11 @@ export class LibraryBookEditionForm {
   }
 
   private loadSelection<T extends { number: number }>(
-    loader: (page?: number) => import('rxjs').Observable<Page<T>>,
-    setData: (data: T[]) => void,
-    page = 0,
-    current: T[] = []
+    loader: (page: number | undefined, size: number) => Observable<Page<T>>,
+    setData: (data: T[]) => void
   ): void {
-    loader(page)
-      .subscribe(response => {
-        const data = [...current, ...response.content];
-
-        if (response.last || page >= response.totalPages - 1) {
-          setData(data);
-          return;
-        }
-
-        this.loadSelection(loader, setData, page + 1, data);
-      });
+    getAllPages(loader)
+      .subscribe(setData);
   }
 
 }

@@ -38,7 +38,7 @@ describe('FeeCalendarService', () => {
     const secondFee = createFee(1, new Date(2025, 1, 1), true);
     const inactiveFee = createFee(2, new Date(2025, 0, 1), true);
 
-    mockUcroniaClient.fee.page.and.callFake((page: number) => {
+    mockUcroniaClient.fee.page.and.callFake((page = 1) => {
       const response = new Page<Fee>();
       response.page = page;
       response.last = page === 2;
@@ -62,11 +62,11 @@ describe('FeeCalendarService', () => {
     });
 
     expect(mockUcroniaClient.fee.page).toHaveBeenCalledTimes(2);
-    expect(mockUcroniaClient.fee.page.calls.argsFor(0)[0]).toBe(1);
+    expect(mockUcroniaClient.fee.page.calls.argsFor(0)[0]).toBeUndefined();
     expect(mockUcroniaClient.fee.page.calls.argsFor(0)[1]).toBe(100);
     expect(mockUcroniaClient.fee.page.calls.argsFor(1)[0]).toBe(2);
     expect(mockUcroniaClient.memberProfile.page).toHaveBeenCalledOnceWith(
-      1, 100, undefined, MemberStatus.All
+      undefined, 100, undefined, MemberStatus.All
     );
   });
 
@@ -90,7 +90,7 @@ describe('FeeCalendarService', () => {
     });
 
     expect(mockUcroniaClient.memberProfile.page).toHaveBeenCalledOnceWith(
-      1, 100, undefined, MemberStatus.All
+      undefined, 100, undefined, MemberStatus.All
     );
   });
 });

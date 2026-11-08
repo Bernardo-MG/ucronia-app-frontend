@@ -28,7 +28,8 @@ export class ContactMethodService {
       [new SortingProperty('name')]
     );
 
-    return getAllPages((page, size) => this.ucroniaClient.contactMethod.page(page, size, sorting));
+    const endpoint = this.ucroniaClient.contactMethod;
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public create(data: ContactMethod): Observable<ContactMethod> {

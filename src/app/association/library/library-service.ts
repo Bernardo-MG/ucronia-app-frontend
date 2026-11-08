@@ -229,20 +229,20 @@ export class LibraryService {
     return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting, title);
   }
 
-  public getBookTypes(page: number | undefined = undefined): Observable<Page<BookType>> {
+  public getBookTypes(page: number | undefined = undefined, size?: number): Observable<Page<BookType>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.ucroniaClient.library.bookType.page(page, undefined, sorting);
+    return this.ucroniaClient.library.bookType.page(page, size, sorting);
   }
 
-  public getGameSystems(page: number | undefined = undefined): Observable<Page<GameSystem>> {
+  public getGameSystems(page: number | undefined = undefined, size?: number): Observable<Page<GameSystem>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
+    return this.ucroniaClient.library.gameSystem.page(page, size, sorting);
   }
 
   // TODO: Add backend name search before enabling the authors search picker.

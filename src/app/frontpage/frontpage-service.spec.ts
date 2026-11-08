@@ -35,6 +35,6 @@ describe('FrontpageService', () => {
 
     service.getActivities(from, undefined).subscribe();
 
-    expect(ucroniaClientMock.activity.page).toHaveBeenCalledWith(1, 100, undefined, from, undefined);
+    expect(ucroniaClientMock.activity.page).toHaveBeenCalledWith(undefined, 100, undefined, from, undefined);
   });
 });

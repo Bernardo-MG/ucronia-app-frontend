@@ -30,7 +30,7 @@ describe('TransactionCalendarService', () => {
     page.and.returnValue(of(lastPage()));
     await firstValueFrom(service.getCalendarInRange(2026, 6)); // July (zero-based)
     const args = page.calls.mostRecent().args;
-    expect(args[0]).toBe(1);
+    expect(args[0]).toBeUndefined();
     expect(args[1]).toBe(100);
     expect(args[4]).toEqual(new Date(2026, 5, 29, 0, 0, 0, 0));
     expect(args[5]).toEqual(new Date(2026, 7, 2, 23, 59, 59, 999));
@@ -67,13 +67,13 @@ describe('TransactionCalendarService', () => {
   it('combines transactions from all pages', async () => {
     const first = { index: 1, date: new Date('2026-07-15T22:30:00Z') } as Transaction;
     const second = { index: 2, date: new Date('2026-07-16T00:30:00Z') } as Transaction;
-    page.and.callFake((number: number) => of(number === 1
+    page.and.callFake((number = 1) => of(number === 1
       ? { page: 1, last: false, content: [first] }
       : { page: 2, last: true, content: [second] }));
     const result = await firstValueFrom(service.getCalendarInRange(2026, 6));
     expect(result).toEqual([first, second]);
     expect(page.calls.count()).toBe(2);
-    expect(page.calls.allArgs().map(args => args[0])).toEqual([1, 2]);
+    expect(page.calls.allArgs().map(args => args[0])).toEqual([undefined, 2]);
   });
 
   it('returns an empty array for an empty page', async () => {
