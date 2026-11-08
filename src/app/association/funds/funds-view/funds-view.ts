@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -10,12 +10,13 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Transaction, TransactionSummary } from '@ucronia/domain';
+import { Transaction, TransactionSummary, TransactionType } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
+import { TabsModule } from 'primeng/tabs';
 import { finalize, Observable, Subject, Subscription } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';
@@ -28,10 +29,12 @@ import { TransactionInfo } from '../transaction-info/transaction-info';
 import { TransactionList } from '../transaction-list/transaction-list';
 import { TransactionReportService } from '../transaction-report-service';
 import { TransactionService } from '../transaction-service';
+import { TransactionTypeForm } from '../transaction-type-form/transaction-type-form';
+import { TransactionTypeList } from '../transaction-type-list/transaction-type-list';
 
 @Component({
   selector: 'app-funds-view',
-  imports: [DrawerHeader, DrawerFormActions, DrawerActions, CurrencyPipe, CardModule, ButtonModule, DrawerModule, SkeletonModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView],
+  imports: [TabsModule, TransactionTypeList, TransactionTypeForm, DrawerHeader, DrawerFormActions, DrawerActions, CurrencyPipe, CardModule, ButtonModule, DrawerModule, SkeletonModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView],
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
@@ -63,6 +66,13 @@ export class FundsView implements OnInit {
   public readonly Dialog = Dialog;
   public readonly FundsDisplay = FundsDisplay;
 
+  public selectedTab: string | number = 'transactions';
+  public transactionTypesVersion = 0;
+  public showTypeForm = false;
+  public readonly typeLoading = signal(false);
+  public readonly typeFailures = signal(new FailureStore());
+  public readonly typeSaveError = signal(false);
+
   public selectedData = new Transaction();
 
   public descriptionFilter = '';
@@ -78,7 +88,15 @@ export class FundsView implements OnInit {
 
   private sort = new Sorting();
 
+  private typesRequest?: Subscription;
+  public readonly transactionTypes = signal<TransactionType[]>([]);
+  public readonly typesLoading = signal(false);
+
   private currentDialog = Dialog.NONE;
+
+  public get selectedTransactionType(): TransactionType | undefined {
+    return this.transactionTypes().find(type => type.number === this.selectedData.transactionType);
+  }
 
   public get dialog(): Dialog {
     return this.currentDialog;
@@ -88,6 +106,10 @@ export class FundsView implements OnInit {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
+      this.typesRequest?.unsubscribe();
+      if (this.permissions.readTypes && (value === Dialog.CREATE || value === Dialog.EDIT || value === Dialog.INFO)) {
+        this.loadTransactionTypes();
+      }
     }
   }
 
@@ -96,6 +118,10 @@ export class FundsView implements OnInit {
 
     // Check permissions
     this.permissions = {
+      deleteTypes: authService.hasPermission(UcroniaPermissions.transactionType.delete),
+      editTypes: authService.hasPermission(UcroniaPermissions.transactionType.update),
+      readTypes: authService.hasPermission(UcroniaPermissions.transactionType.read),
+      createType: authService.hasPermission(UcroniaPermissions.transactionType.create),
       create: authService.hasPermission(UcroniaPermissions.transaction.create),
       edit: authService.hasPermission(UcroniaPermissions.transaction.update),
       delete: authService.hasPermission(UcroniaPermissions.transaction.delete)
@@ -103,12 +129,57 @@ export class FundsView implements OnInit {
   }
 
   public ngOnInit(): void {
+    if (this.permissions.readTypes) {
+      this.loadTransactionTypes();
+    }
+
     this.refreshMonths(() => {
       this.loadCalendar();
       this.loadList();
     });
 
     this.loadSummary();
+  }
+
+  public onTabChange(tab: string | number | undefined): void {
+    if (tab === undefined || tab === this.selectedTab) {
+      return;
+    }
+
+    this.selectedTab = tab;
+    if (tab === 'transactions' && this.permissions.readTypes) {
+      this.loadTransactionTypes();
+    }
+  }
+
+  public createType(values: Pick<TransactionType, 'description' | 'color'>): void {
+    if (this.typeLoading()) {
+      return;
+    }
+
+    this.typeLoading.set(true);
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+    this.service.saveType(values)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.transactionTypesVersion++;
+          this.closeTypeForm();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.typeFailures.set(error.failures);
+          }
+          this.typeSaveError.set(true);
+        }
+      });
+  }
+
+  public closeTypeForm(): void {
+    this.showTypeForm = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
   }
 
   // EVENT HANDLERS
@@ -240,6 +311,17 @@ export class FundsView implements OnInit {
     }
   }
 
+  private loadTransactionTypes(): void {
+    this.typesRequest?.unsubscribe();
+    this.typesLoading.set(true);
+    this.typesRequest = this.service.getTypes()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typesLoading.set(false)))
+      .subscribe({
+        next: types => this.transactionTypes.set(types),
+        error: () => this.transactionTypes.set([])
+      });
+  }
+
   // PRIVATE METHODS
 
   private refreshAfterChange(): void {
@@ -304,6 +386,10 @@ export class FundsView implements OnInit {
 }
 
 interface Permissions {
+  deleteTypes: boolean;
+  editTypes: boolean;
+  readTypes: boolean;
+  createType: boolean;
   create: boolean;
   edit: boolean;
   delete: boolean;

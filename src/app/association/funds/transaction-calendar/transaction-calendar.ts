@@ -1,7 +1,7 @@
 import { Component, inject, input, LOCALE_ID, OnChanges, output, SimpleChanges } from '@angular/core';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarMonth } from '@bernardo-mg/ui';
-import { Transaction } from '@ucronia/domain';
+import { Transaction, TransactionType } from '@ucronia/domain';
 import { CalendarEvent } from 'angular-calendar';
 
 @Component({
@@ -12,6 +12,7 @@ import { CalendarEvent } from 'angular-calendar';
 export class TransactionCalendar implements OnChanges {
 
   public readonly transactions = input<Transaction[]>([]);
+  public readonly types = input<TransactionType[]>([]);
   public readonly loading = input(false);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
@@ -26,14 +27,20 @@ export class TransactionCalendar implements OnChanges {
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
-  public ngOnChanges({ transactions }: SimpleChanges): void {
-    if (transactions) {
-      this.events = this.transactions().map(t => ({
-        title: `${t.description} (${this.currencyFormatter.format(t.amount)})`,
-        color: t.amount >= 0 ? Colors.blue : Colors.red,
-        start: t.date,
-        meta: { transactionId: t.index }
-      }));
+  public ngOnChanges({ transactions, types }: SimpleChanges): void {
+    if (transactions || types) {
+      const colors = new Map(this.types().map(type => [type.number, type.color]));
+      this.events = this.transactions().map(t => {
+        const color = t.transactionType == null ? undefined : colors.get(t.transactionType);
+        return {
+          title: `${t.description} (${this.currencyFormatter.format(t.amount)})`,
+          color: color && /^#[0-9a-f]{6}$/i.test(color)
+            ? { primary: color, secondary: `${color}33` }
+            : t.amount >= 0 ? Colors.blue : Colors.red,
+          start: t.date,
+          meta: { transactionId: t.index }
+        };
+      });
     }
   }
 

@@ -7,81 +7,125 @@
     <div class="flex flex-wrap gap-2">
       <p-button type="button" label="Exportar Excel" icon="pi pi-download" severity="secondary" outlined
         [loading]="status.loadingExcel" [disabled]="status.loadingExcel" (onClick)="downloadExcel()" />
-      @if (permissions.create) {
+      @if (selectedTab === 'types' && permissions.readTypes && permissions.createType) {
+        <p-button type="button" label="Nuevo tipo de transacción" icon="pi pi-plus"
+          (onClick)="showTypeForm = true" />
+      } @else if (selectedTab === 'transactions' && permissions.create) {
         <p-button type="button" label="Nueva transacción" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE"
           [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
       }
     </div>
   </header>
 
-  <p-card styleClass="overflow-hidden">
-    <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
-        <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700">
-          <i class="pi pi-wallet text-2xl" aria-hidden="true"></i>
-        </span>
-        <div class="min-w-0">
-          <span class="block text-sm text-gray-500">Saldo actual</span>
-          @if (status.loadingSummary) {
-            <p-skeleton width="9rem" height="2rem" />
-          } @else {
-            <strong class="block truncate text-2xl text-gray-950 md:text-3xl">
-              {{ summary.total | currency:'EUR':'symbol':'1.2-2' }}
-            </strong>
-          }
-        </div>
-      </div>
-      <div class="flex items-center justify-center gap-4 p-4 md:px-8">
-        <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
-          <i class="pi pi-chart-line text-2xl" aria-hidden="true"></i>
-        </span>
-        <div class="min-w-0">
-          <span class="block text-sm text-gray-500">Resultado acumulado</span>
-          @if (status.loadingSummary) {
-            <p-skeleton width="9rem" height="2rem" />
-          } @else {
-            <strong class="block truncate text-2xl md:text-3xl"
-              [class.text-green-600]="summary.results >= 0" [class.text-red-600]="summary.results < 0">
-              {{ summary.results | currency:'EUR':'symbol':'1.2-2' }}
-            </strong>
-          }
-        </div>
-      </div>
-    </div>
-  </p-card>
-
-  <p-card>
-    <assoc-transaction-balance-chart-view [refresh]="transactionsChanged$" />
-  </p-card>
-
-  <section>
-    <div class="mb-4">
-      <h2 class="text-xl font-semibold text-gray-950">Movimientos</h2>
-      <p class="mt-1 text-sm text-gray-500">Consulta y gestiona las transacciones de la asociación</p>
-    </div>
-    <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
-        <assoc-transaction-display-selector [display]="display" (view)="display = $event" />
-        @if (display === FundsDisplay.LIST) {
-          <div class="min-w-0 flex-1">
-            <ui-text-filter label="Buscar movimientos" placeholder="Buscar por descripción..."
-              [value]="descriptionFilter" (filter)="onFilter($event)" />
-          </div>
-        }
-      </div>
-      @switch (display) {
-        @case(FundsDisplay.CALENDAR) {
-          <assoc-transaction-calendar [transactions]="transactions" [months]="months" [selectedMonth]="selectedCalendarMonth" [loading]="status.loadingCalendar"
-            (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
-        }
-        @case (FundsDisplay.LIST) {
-          <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
-            [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
-            (changeDirection)="onChangeDirection($event)" (changePage)="loadList($event)" />
-        }
+  <p-tabs [value]="selectedTab" (valueChange)="onTabChange($event)">
+    <p-tablist>
+      <p-tab value="transactions">Movimientos</p-tab>
+      @if (permissions.readTypes) {
+        <p-tab value="types">Tipos de transacción</p-tab>
       }
-    </div>
-  </section>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="transactions">
+        <div class="space-y-5">
+          <p-card styleClass="overflow-hidden">
+            <div class="grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-700">
+                  <i class="pi pi-wallet text-2xl" aria-hidden="true"></i>
+                </span>
+                <div class="min-w-0">
+                  <span class="block text-sm text-gray-500">Saldo actual</span>
+                  @if (status.loadingSummary) {
+                    <p-skeleton width="9rem" height="2rem" />
+                  } @else {
+                    <strong class="block truncate text-2xl text-gray-950 md:text-3xl">
+                      {{ summary.total | currency:'EUR':'symbol':'1.2-2' }}
+                    </strong>
+                  }
+                </div>
+              </div>
+              <div class="flex items-center justify-center gap-4 p-4 md:px-8">
+                <span class="flex size-14 shrink-0 items-center justify-center rounded-xl bg-green-50 text-green-600">
+                  <i class="pi pi-chart-line text-2xl" aria-hidden="true"></i>
+                </span>
+                <div class="min-w-0">
+                  <span class="block text-sm text-gray-500">Resultado acumulado</span>
+                  @if (status.loadingSummary) {
+                    <p-skeleton width="9rem" height="2rem" />
+                  } @else {
+                    <strong class="block truncate text-2xl md:text-3xl"
+                      [class.text-green-600]="summary.results >= 0" [class.text-red-600]="summary.results < 0">
+                      {{ summary.results | currency:'EUR':'symbol':'1.2-2' }}
+                    </strong>
+                  }
+                </div>
+              </div>
+            </div>
+          </p-card>
+
+          <p-card>
+            <assoc-transaction-balance-chart-view [refresh]="transactionsChanged$" />
+          </p-card>
+
+          <section>
+            <div class="mb-4">
+              <h2 class="text-xl font-semibold text-gray-950">Movimientos</h2>
+              <p class="mt-1 text-sm text-gray-500">Consulta y gestiona las transacciones de la asociación</p>
+            </div>
+            <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+              <div class="flex flex-col gap-3 border-b border-gray-200 p-4 lg:flex-row lg:items-center">
+                <assoc-transaction-display-selector [display]="display" (view)="display = $event" />
+                @if (display === FundsDisplay.LIST) {
+                  <div class="min-w-0 flex-1">
+                    <ui-text-filter label="Buscar movimientos" placeholder="Buscar por descripción..."
+                      [value]="descriptionFilter" (filter)="onFilter($event)" />
+                  </div>
+                }
+              </div>
+              @switch (display) {
+                @case(FundsDisplay.CALENDAR) {
+                  <assoc-transaction-calendar [transactions]="transactions" [types]="transactionTypes()" [months]="months" [selectedMonth]="selectedCalendarMonth" [loading]="status.loadingCalendar"
+                    (changeMonth)="loadCalendar($event)" (pickDate)="onShowInfo($event)" />
+                }
+                @case (FundsDisplay.LIST) {
+                  <assoc-transaction-list [loading]="status.loadingList" [data]="transactionsPage.content" [rows]="transactionsPage.size"
+                    [page]="transactionsPage.page" [totalRecords]="transactionsPage.totalElements" (show)="onShowInfo($event)"
+                    (changeDirection)="onChangeDirection($event)" (changePage)="loadList($event)" />
+                }
+              }
+            </div>
+          </section>
+        </div>
+      </p-tabpanel>
+      @if (permissions.readTypes) {
+        <p-tabpanel value="types">
+          @if (selectedTab === 'types') {
+            <assoc-transaction-type-list [version]="transactionTypesVersion" [canEdit]="permissions.editTypes"
+              [canDelete]="permissions.deleteTypes" />
+          }
+        </p-tabpanel>
+      }
+    </p-tabpanels>
+  </p-tabs>
+
+  @if (showTypeForm) {
+    <p-drawer [visible]="true" position="right" [closable]="!typeLoading()"
+      [dismissible]="!typeLoading()" [closeOnEscape]="!typeLoading()"
+      (visibleChange)="!$event && closeTypeForm()">
+      <ng-template #header>
+        <shared-drawer-header title="Nuevo tipo de transacción" icon="pi pi-tag" />
+      </ng-template>
+      <assoc-transaction-type-form #typeForm [showActions]="false" formId="transaction-type-create"
+        [loading]="typeLoading()" [failures]="typeFailures()" (save)="createType($event)" />
+      @if (typeSaveError()) {
+        <p role="alert" class="mt-4 text-red-700">No se pudo guardar el tipo de transacción.</p>
+      }
+      <ng-template #footer>
+        <shared-drawer-form-actions formId="transaction-type-create" submitLabel="Crear tipo" submitIcon="pi pi-plus"
+          [disabled]="!typeForm.saveEnabled" [loading]="typeLoading()" (cancelForm)="closeTypeForm()" />
+      </ng-template>
+    </p-drawer>
+  }
 
   <p-drawer [visible]="dialog !== Dialog.NONE" (visibleChange)="onDrawerVisibleChange($event)" [closable]="true"
     position="right" [style]="{ width: 'min(44rem, 100vw)' }">
@@ -91,7 +135,8 @@
         <shared-drawer-header title="Detalle de la transacción" icon="pi pi-wallet" subtitle="Movimiento #{{ selectedData.index }}" />
       </ng-template>
         <div class="w-full space-y-4 px-2 py-4 sm:px-4">
-          <assoc-transaction-info [transaction]="selectedData" [loading]="status.loading" />
+          <assoc-transaction-info [transaction]="selectedData" [type]="selectedTransactionType"
+            [loading]="status.loading" />
         </div>
         <ng-template #footer>
         <shared-drawer-actions [showDelete]="permissions.delete" [showEdit]="permissions.edit" [loading]="status.loading"
@@ -103,7 +148,8 @@
         <shared-drawer-header title="Nueva transacción" icon="pi pi-wallet" subtitle="Registra un ingreso o un gasto" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-create" [showActions]="false"
+            [types]="transactionTypes()" [loading]="status.loading || typesLoading()" [failures]="failures" (save)="onCreate($event)"
             />
         </div>
         <ng-template #footer>
@@ -121,7 +167,9 @@
         <shared-drawer-header title="Editar transacción" icon="pi pi-pencil" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false" [data]="selectedData" [loading]="status.loading" [failures]="failures"
+          <assoc-transaction-form #fieldsAssocTransactionForm formId="funds-view-edit" [showActions]="false"
+            [types]="transactionTypes()"
+            [data]="selectedData" [loading]="status.loading || typesLoading()" [failures]="failures"
             (save)="onUpdate($event)" />
         </div>
         <ng-template #footer>

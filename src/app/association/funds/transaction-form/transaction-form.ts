@@ -3,21 +3,23 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Transaction } from '@ucronia/domain';
+import { Transaction, TransactionType } from '@ucronia/domain';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MessageModule } from 'primeng/message';
+import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-transaction-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule],
+  imports: [DrawerFormActions, ReactiveFormsModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule, SelectModule],
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm {
 
   public readonly formId = input<string | null>(null);
   public readonly showActions = input(true);
+  public readonly types = input<TransactionType[]>([]);
 
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -28,7 +30,8 @@ export class TransactionForm {
   @Input() public set data(value: Transaction) {
     this.form.patchValue({
       ...value,
-      type: value.amount < 0 ? TransactionType.EXPENSE : TransactionType.INCOME,
+      transactionType: value.transactionType ?? null,
+      type: value.amount < 0 ? TransactionDirection.EXPENSE : TransactionDirection.INCOME,
       amount: Math.abs(value.amount)
     });
   }
@@ -42,7 +45,7 @@ export class TransactionForm {
 
   public readonly today = new Date();
 
-  public readonly TransactionType = TransactionType;
+  public readonly TransactionDirection = TransactionDirection;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
@@ -53,7 +56,8 @@ export class TransactionForm {
 
     this.form = fb.group({
       index: [0],
-      type: [TransactionType.INCOME, Validators.required],
+      transactionType: fb.control<number | null>(null),
+      type: [TransactionDirection.INCOME, Validators.required],
       description: ['', Validators.required],
       date: [null, Validators.required],
       amount: [null, [Validators.required, Validators.min(0.01)]]
@@ -62,7 +66,7 @@ export class TransactionForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public setTransactionType(type: TransactionType): void {
+  public setTransactionType(type: TransactionDirection): void {
     this.form.get('type')?.setValue(type);
   }
 
@@ -73,9 +77,18 @@ export class TransactionForm {
     this.form.markAllAsTouched();
     if (this.saveEnabled) {
       const { type, ...transaction } = this.form.value;
-      transaction.amount = type === TransactionType.EXPENSE
+      transaction.amount = type === TransactionDirection.EXPENSE
         ? -Math.abs(transaction.amount)
         : Math.abs(transaction.amount);
+      if (!this.form.get('transactionType')?.dirty) {
+        delete transaction.transactionType;
+      } else if (transaction.transactionType == null) {
+        if (transaction.index) {
+          transaction.transactionType = 0;
+        } else {
+          delete transaction.transactionType;
+        }
+      }
       this.save.emit(transaction);
     }
   }
@@ -86,7 +99,7 @@ export class TransactionForm {
 
 }
 
-enum TransactionType {
+enum TransactionDirection {
   INCOME = 'income',
   EXPENSE = 'expense'
 }

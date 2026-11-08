@@ -5,5 +5,6 @@ export class Transaction {
   public description = '';
   public date = new Date();
   public amount = 0;
+  public transactionType?: number;
   public audit?: AuditDetails;
 }
