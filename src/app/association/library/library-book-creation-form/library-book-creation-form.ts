@@ -1,6 +1,5 @@
 import { Component, inject, input, output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Language, Title } from '@ucronia/domain';
@@ -11,14 +10,12 @@ import { LibraryConfig } from '../library-config';
 
 @Component({
   selector: 'assoc-library-book-creation-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, SelectModule],
+  imports: [ReactiveFormsModule, InputTextModule, MessageModule, SelectModule],
   templateUrl: './library-book-creation-form.html'
 })
 export class LibraryBookCreationForm {
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -26,8 +23,6 @@ export class LibraryBookCreationForm {
   public readonly failures = input(new FailureStore());
 
   public readonly save = output<LibraryBookCreationFormData>();
-  public readonly cancelEdition = output<void>();
-
   public readonly formStatus: FormStatus;
 
   public readonly form: FormGroup;

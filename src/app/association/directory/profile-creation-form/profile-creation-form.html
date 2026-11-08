@@ -22,8 +22,4 @@
       }
     }
   </section>
-  @if (showActions()) {
-    <shared-drawer-form-actions class="mt-6" submitLabel="Crear perfil" submitIcon="pi pi-plus"
-      [disabled]="!saveEnabled" [loading]="formStatus.loading" (cancelForm)="cancelEdition.emit()" />
-  }
 </form>

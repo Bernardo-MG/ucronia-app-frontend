@@ -93,7 +93,7 @@
       <ng-template #header>
         <shared-drawer-header title="Nuevo archivo" icon="pi pi-file" />
       </ng-template>
-      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures"
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-create" [loading]="status.loading" [failures]="failures"
         (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
@@ -110,7 +110,7 @@
       <ng-template #header>
         <shared-drawer-header title="Editar archivo" icon="pi pi-pencil" subtitle="Archivo #{{ selectedData.number }} · {{ selectedData.name }}" />
       </ng-template>
-      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-edit" [showActions]="false" [data]="selectedData" [folders]="folders" [loading]="status.loading"
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-file-form #fieldsAssocFileForm formId="file-view-edit" [data]="selectedData" [folders]="folders" [loading]="status.loading"
         [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

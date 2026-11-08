@@ -93,7 +93,7 @@
       </ng-template>
 
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" [members]="members"
+        <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-create" [loading]="status.loading" [failures]="failures" [members]="members"
           [tables]="tables"
           (save)="onCreate($event)"
           (searchMember)="onSearchMembers($event)" />
@@ -115,7 +115,7 @@
       </ng-template>
 
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [members]="members"
+        <assoc-scheduled-game-form #fieldsAssocScheduledGameForm formId="scheduled-game-view-edit" [loading]="status.loading" [data]="selectedData" [members]="members"
           [tables]="tables"
           [selectedMaster]="selectedMaster" [failures]="failures" (save)="onUpdate($event)"
           (searchMember)="onSearchMembers($event)" />

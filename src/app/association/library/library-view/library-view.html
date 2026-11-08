@@ -100,7 +100,7 @@
             [subtitle]="selectedLending.book.title.fullTitle" />
         </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-library-book-return-form #lendingReturnForm formId="library-lending-return" [showActions]="false"
+          <assoc-library-book-return-form #lendingReturnForm formId="library-lending-return"
             [loading]="status.loading" [failures]="failures" [borrower]="selectedLending.borrower"
             [borrowerName]="lendingBorrowerNames[selectedLending.borrower] || ''"
             [book]="selectedLending.book.number" [lentDate]="selectedLending.lendingDate"
@@ -130,7 +130,7 @@
         <shared-drawer-header title="Editar libro" icon="pi pi-pencil" subtitle="Libro #{{ selectedData.number }} · {{ selectedData.title.fullTitle }}" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-library-book-edition-form #fieldsAssocLibraryBookEditionForm formId="library-view-edit" [showActions]="false" [data]="selectedData" [loading]="status.loading" [failures]="failures"
+          <assoc-library-book-edition-form #fieldsAssocLibraryBookEditionForm formId="library-view-edit" [data]="selectedData" [loading]="status.loading" [failures]="failures"
             (save)="onSaveBook($event)" />
         </div>
         <ng-template #footer>
@@ -149,7 +149,7 @@
         <shared-drawer-header title="Nuevo libro" icon="pi pi-book" subtitle="Añade una obra al catálogo de la biblioteca" />
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <assoc-library-book-creation-form #fieldsAssocLibraryBookCreationForm formId="library-view-creation" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
+          <assoc-library-book-creation-form #fieldsAssocLibraryBookCreationForm formId="library-view-creation" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)"
             />
         </div>
         <ng-template #footer>
@@ -169,7 +169,7 @@
         <shared-drawer-header title="Devolver libro" icon="pi pi-undo" />
       </ng-template>
           <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-            <assoc-library-book-return-form #fieldsAssocLibraryBookReturnForm formId="library-view-lendings-return" [showActions]="false" [loading]="status.loading" [failures]="failures" [borrower]="borrower"
+            <assoc-library-book-return-form #fieldsAssocLibraryBookReturnForm formId="library-view-lendings-return" [loading]="status.loading" [failures]="failures" [borrower]="borrower"
               [borrowerName]="selectedBorrower.name.fullName"
               [book]="selectedData.number" [lentDate]="lentDate" (save)="onReturn($event)" />
           </div>
@@ -187,7 +187,7 @@
         <shared-drawer-header title="Prestar libro" icon="pi pi-arrow-right" />
       </ng-template>
           <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-            <assoc-library-book-lending-form #fieldsAssocLibraryBookLendingForm formId="library-view-lendings-lend" [showActions]="false" [loading]="status.loading" [failures]="failures" [book]="selectedData.number"
+            <assoc-library-book-lending-form #fieldsAssocLibraryBookLendingForm formId="library-view-lendings-lend" [loading]="status.loading" [failures]="failures" [book]="selectedData.number"
               [members]="members" (save)="onLend($event)" (searchMember)="onSearchMembers($event)" />
           </div>
           <ng-template #footer>

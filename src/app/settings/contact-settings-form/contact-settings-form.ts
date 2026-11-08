@@ -1,14 +1,14 @@
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'assoc-contact-settings-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule],
+  imports: [ButtonModule, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule],
   templateUrl: './contact-settings-form.html'
 })
 export class ContactSettingsForm implements OnChanges {

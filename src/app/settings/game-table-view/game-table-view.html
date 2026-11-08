@@ -31,7 +31,7 @@
         <shared-drawer-header title="Crear mesa de juego" icon="pi pi-table" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-create" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -48,7 +48,7 @@
         <shared-drawer-header title="Editar mesa de juego" icon="pi pi-pencil" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+        <assoc-game-table-form #fieldsAssocGameTableForm formId="game-table-view-edit" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions

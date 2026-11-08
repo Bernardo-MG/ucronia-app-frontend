@@ -3,7 +3,6 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod, FeeType } from '@ucronia/domain';
@@ -19,18 +18,14 @@ import { FullProfile } from '../model/full-profile';
 
 @Component({
   selector: 'assoc-profile-edition-form',
-  imports: [InputGroupModule, InputGroupAddonModule, DrawerFormActions, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
+  imports: [InputGroupModule, InputGroupAddonModule, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm {
 
   private readonly fb = inject(FormBuilder);
 
-  public readonly cancelEdition = output<void>();
-
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }

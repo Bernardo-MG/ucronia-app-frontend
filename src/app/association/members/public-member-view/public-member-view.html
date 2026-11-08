@@ -102,7 +102,6 @@
         <assoc-member-creation-form
           #fieldsMemberCreationForm
           formId="public-member-view-create"
-          [showActions]="false"
           [loading]="status.saving || status.loadingOptions || !status.optionsReady"
           [failures]="failures"
           [feeTypes]="feeTypes"
@@ -121,7 +120,6 @@
         <assoc-member-key-form
           #fieldsAssocKeyForm
           formId="public-member-view-create-key"
-          [showActions]="false"
           [loading]="status.saving"
           [failures]="failures"
           (save)="onCreateKey($event)" />
@@ -162,7 +160,6 @@
           <assoc-member-key-assignment-form
             #fieldsKeyAssignmentForm
             formId="public-member-view-assign-key"
-            [showActions]="false"
             [members]="assignmentMembers"
             [failures]="failures"
             [loading]="status.saving"
@@ -183,7 +180,6 @@
           <assoc-member-key-form
             #fieldsKeyEditForm
             formId="public-member-view-edit-key"
-            [showActions]="false"
             [loading]="status.saving"
             [data]="selectedKey"
             [failures]="failures"
@@ -223,7 +219,6 @@
           <assoc-member-edition-form
             #fieldsMemberEditionForm
             formId="public-member-view-edit-member"
-            [showActions]="false"
             [data]="privateMember"
             [feeTypes]="feeTypes"
             [contactMethods]="contactMethods"

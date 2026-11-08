@@ -88,5 +88,4 @@ describe('MemberKeyAssignmentForm', () => {
     expect(component.form.controls.profile.value).toBeNull();
     expect(component.saveEnabled).toBeFalse();
   });
-
 });

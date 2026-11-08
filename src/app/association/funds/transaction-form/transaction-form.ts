@@ -1,6 +1,5 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Transaction, TransactionType } from '@ucronia/domain';
@@ -12,13 +11,12 @@ import { TextareaModule } from 'primeng/textarea';
 
 @Component({
   selector: 'assoc-transaction-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule, SelectModule],
+  imports: [ReactiveFormsModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule, SelectModule],
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm {
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
   public readonly types = input<TransactionType[]>([]);
 
   @Input() public set loading(loading: boolean) {
@@ -37,8 +35,6 @@ export class TransactionForm {
   }
 
   public readonly save = output<Transaction>();
-  public readonly cancelEdition = output<void>();
-
   public readonly formStatus: FormStatus;
 
   public readonly form: FormGroup;

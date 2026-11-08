@@ -1,7 +1,6 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -12,14 +11,12 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-form',
-  imports: [TextFilter, DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
+  imports: [TextFilter, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -41,7 +38,6 @@ export class UserForm implements OnChanges {
 
   public readonly save = output<UserFormData>();
   public readonly update = output<UserEditionFormData>();
-  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public readonly formStatus: FormStatus;

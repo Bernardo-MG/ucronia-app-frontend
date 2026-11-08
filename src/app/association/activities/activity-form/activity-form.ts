@@ -1,6 +1,5 @@
 import { Component, inject, Input, input, OnInit, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Activity, Asset } from '@ucronia/domain';
@@ -15,15 +14,13 @@ import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
+  imports: [ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
     MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
 export class ActivityForm implements OnInit {
 
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -58,8 +55,6 @@ export class ActivityForm implements OnInit {
   }
 
   public readonly save = output<Activity>();
-  public readonly cancelEdition = output<void>();
-
   public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
   public imageOptions: ActivityImageOption[] = [];

@@ -36,6 +36,9 @@
     </p-iconfield>
   </div>
 
-  <shared-drawer-form-actions submitLabel="Guardar cambios" submitIcon="pi pi-check" [showCancel]="false"
-      [disabled]="!saveEnabled" [loading]="formStatus.loading" />
+  <div class="flex justify-end">
+    <button pButton type="submit" data-action="submit" class="h-11 rounded-lg px-4"
+      label="Guardar cambios" icon="pi pi-check" [disabled]="!saveEnabled || formStatus.loading"
+      [loading]="formStatus.loading"></button>
+  </div>
 </form>

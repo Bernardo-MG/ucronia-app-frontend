@@ -16,8 +16,4 @@
       }
     </div>
   </fieldset>
-  @if (showActions()) {
-    <shared-drawer-form-actions [disabled]="!saveEnabled" [loading]="formStatus.loading"
-      submitLabel="Guardar cambios" submitIcon="pi pi-check" (cancelForm)="cancelEdition.emit()" />
-  }
 </form>

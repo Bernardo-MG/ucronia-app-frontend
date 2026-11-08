@@ -1,6 +1,5 @@
 import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Asset, AssetFolder } from '@ucronia/domain';
@@ -17,7 +16,7 @@ export interface FileFormData {
 
 @Component({
   selector: 'assoc-file-form',
-  imports: [DrawerFormActions, InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  imports: [InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
   templateUrl: './file-form.html'
 })
 export class FileForm implements OnChanges {
@@ -26,16 +25,12 @@ export class FileForm implements OnChanges {
   public readonly data = input<Asset | undefined>();
   public readonly folders = input<AssetFolder[]>([]);
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
   public readonly failures = input(new FailureStore());
   public readonly save = output<FileFormData>();
-  public readonly cancelEdition = output<void>();
-
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
   public file?: File;
