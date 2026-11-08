@@ -18,7 +18,7 @@ export class FileService {
 
   public getAllForSelection(): Observable<Asset[]> {
     const sorting = new Sorting([new SortingProperty('name')]);
-    return getAllPages((page, size) => this.getAll(page, sorting, size), 1);
+    return getAllPages((page, size) => this.getAll(page, sorting, size));
   }
 
   public getFolders(): Observable<AssetFolder[]> {

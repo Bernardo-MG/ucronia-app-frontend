@@ -285,7 +285,7 @@ export class LibraryBookEditionForm {
     loader: (page: number | undefined, size: number) => Observable<Page<T>>,
     setData: (data: T[]) => void
   ): void {
-    getAllPages(loader, 0, (page, index) => index < page.totalPages - 1 ? index + 1 : undefined)
+    getAllPages(loader)
       .subscribe(setData);
   }
 

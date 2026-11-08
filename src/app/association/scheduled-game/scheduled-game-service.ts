@@ -113,7 +113,7 @@ export class ScheduledGameService {
     const sorting = new Sorting([new SortingProperty('name')]);
 
     const endpoint = this.ucroniaClient.gameTable;
-    return getAllPages((page, size) => endpoint.page(page, size, sorting), 1);
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<Profile[]> {

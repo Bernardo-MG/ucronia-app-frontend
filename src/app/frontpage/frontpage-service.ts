@@ -17,7 +17,7 @@ export class FrontpageService {
 
   public getActivities(from: Date | undefined = undefined, to: Date | undefined = undefined): Observable<Activity[]> {
     const endpoint = this.ucroniaClient.activity;
-    return getAllPages((page, size) => endpoint.page(page, size, undefined, from, to), 1);
+    return getAllPages((page, size) => endpoint.page(page, size, undefined, from, to));
   }
 
 }

@@ -108,7 +108,7 @@ export class MemberKeyService {
   public getAll(): Observable<KeyAssignment[]> {
     const sorting = new Sorting([new SortingProperty('number')]);
     const endpoint = this.ucroniaClient.keyAssignment;
-    return getAllPages((page, size) => endpoint.page(page, size, sorting), 1);
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
 }

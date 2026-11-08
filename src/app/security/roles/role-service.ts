@@ -36,7 +36,7 @@ export class RoleService {
 
     const endpoint = this.securityClient.permission;
 
-    return getAllPages((page, size) => endpoint.page(page, size, sorting), undefined);
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public create(role: Role): Observable<Role> {

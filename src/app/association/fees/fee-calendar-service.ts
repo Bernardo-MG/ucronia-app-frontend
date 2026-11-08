@@ -27,9 +27,9 @@ export class FeeCalendarService {
     const date = new Date(year, 0, 1);
 
     const feeEndpoint = this.ucroniaClient.fee;
-    const fees = getAllPages((page, size) => feeEndpoint.page(page, size, sorting, startOfYear(date), endOfYear(date)), 1);
+    const fees = getAllPages((page, size) => feeEndpoint.page(page, size, sorting, startOfYear(date), endOfYear(date)));
     const memberEndpoint = this.ucroniaClient.memberProfile;
-    const members = getAllPages((page, size) => memberEndpoint.page(page, size, undefined, MemberStatus.All), 1);
+    const members = getAllPages((page, size) => memberEndpoint.page(page, size, undefined, MemberStatus.All));
 
     return forkJoin({ fees, members })
       .pipe(

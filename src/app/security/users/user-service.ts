@@ -95,7 +95,7 @@ export class UserService {
 
     const endpoint = this.securityClient.role;
 
-    return getAllPages((page, size) => endpoint.page(page, size, sorting), undefined);
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   // Members

@@ -29,7 +29,7 @@ export class ContactMethodService {
     );
 
     const endpoint = this.ucroniaClient.contactMethod;
-    return getAllPages((page, size) => endpoint.page(page, size, sorting), 1);
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public create(data: ContactMethod): Observable<ContactMethod> {

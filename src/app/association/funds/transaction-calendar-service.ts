@@ -25,7 +25,7 @@ export class TransactionCalendarService {
     const to = endOfWeek(endOfMonth(date), { weekStartsOn: 1 });
 
     const endpoint = this.ucroniaClient.transaction;
-    return getAllPages((page, size) => endpoint.page(page, size, this.calendarSorting, undefined, from, to), 1);
+    return getAllPages((page, size) => endpoint.page(page, size, this.calendarSorting, undefined, from, to));
   }
 
   public getRange(): Observable<Month[]> {

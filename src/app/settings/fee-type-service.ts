@@ -29,7 +29,7 @@ export class FeeTypeService {
     );
 
     const endpoint = this.ucroniaClient.feeType;
-    return getAllPages((page, size) => endpoint.page(page, size, sorting), 1);
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public create(data: FeeType): Observable<FeeType> {
