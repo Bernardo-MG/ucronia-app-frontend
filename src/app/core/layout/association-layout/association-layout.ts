@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '@bernardo-mg/authentication';
 import { librarySettingsPermissions } from '@app/association/library/settings/library-settings-permissions';
+import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -26,6 +27,7 @@ export class AssociationLayout {
   constructor() {
     const authService = inject(AuthService);
     authService.securityDetails
+      .pipe(takeUntilDestroyed())
       .subscribe(details => {
         const items = this.getAssociationItems(authService);
         const adminItems = this.getAdminItems(authService);

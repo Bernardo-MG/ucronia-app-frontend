@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
 import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -22,6 +23,7 @@ export enum AccountSection {
 })
 export class AccountView {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AccountService);
 
   public account = new Account();
@@ -47,7 +49,10 @@ export class AccountView {
     this.failures.clear();
 
     this.service.changePassword(data)
-      .pipe(finalize(() => this.passwordLoading = false))
+      .pipe(
+        finalize(() => this.passwordLoading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         error: error => this.handleError(error)
       });
@@ -60,8 +65,9 @@ export class AccountView {
     this.service.getAccount()
       .pipe(
         tap(account => this.account = account),
-        switchMap(account => this.service.getProfile()),
-        finalize(() => this.accountLoading = false)
+        switchMap(() => this.service.getProfile()),
+        finalize(() => this.accountLoading = false),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(profile => this.profile = profile);
   }

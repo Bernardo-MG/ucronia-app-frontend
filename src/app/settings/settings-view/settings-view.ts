@@ -1,5 +1,6 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -14,6 +15,7 @@ import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-setting
 })
 export class SettingsView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AssociationSettingsService);
   public calendar = '';
 
@@ -40,7 +42,10 @@ export class SettingsView implements OnInit {
       googleMaps: this.service.getMap(),
       teamUp: this.service.getCalendar()
     })
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(r => {
         this.email = r.email;
         this.instagram = r.instagram;
@@ -72,7 +77,10 @@ export class SettingsView implements OnInit {
       this.loading = true;
 
       forkJoin(updates)
-        .pipe(finalize(() => this.loading = false))
+        .pipe(
+          finalize(() => this.loading = false),
+          takeUntilDestroyed(this.destroyRef)
+        )
         .subscribe();
     }
   }

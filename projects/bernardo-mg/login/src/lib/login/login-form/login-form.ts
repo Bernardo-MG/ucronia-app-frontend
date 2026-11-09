@@ -1,5 +1,5 @@
 import { FormStatus } from '@bernardo-mg/form';
-import { Component, inject, Input, output } from '@angular/core';
+import { Component, inject, Input, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -18,9 +18,9 @@ import { MessageModule } from 'primeng/message';
 })
 export class LoginForm {
 
-  @Input()
-  public failedLogin = false;
+  public readonly failedLogin = input(false);
 
+  // Keep the setter so form status updates synchronously with each input assignment.
   @Input()
   public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -31,13 +31,12 @@ export class LoginForm {
   public readonly rememberMe = output<boolean>();
 
   public readonly form: FormGroup;
-  public readonly formStatus: FormStatus;
-
   public get loginEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  public passwordVisible = false;
+  protected readonly formStatus: FormStatus;
+  protected passwordVisible = false;
 
   public constructor() {
     const formBuilder = inject(FormBuilder);
@@ -49,6 +48,7 @@ export class LoginForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onLogin(): void {
     if (!this.loginEnabled) {
       if (this.form.invalid) {
@@ -64,25 +64,27 @@ export class LoginForm {
     );
   }
 
-  public onLostPassword(): void {
+  protected onLostPassword(): void {
     if (!this.formStatus.loading) {
       this.lostPassword.emit();
     }
   }
 
-  public onRememberMe(checked: boolean): void {
+  protected onRememberMe(checked: boolean): void {
     if (!this.formStatus.loading) {
       this.rememberMe.emit(checked);
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
+  protected togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property);
   }
 
-  public togglePasswordVisibility(): void {
-    this.passwordVisible = !this.passwordVisible;
-  }
 }
 
 export class LoginEvent {

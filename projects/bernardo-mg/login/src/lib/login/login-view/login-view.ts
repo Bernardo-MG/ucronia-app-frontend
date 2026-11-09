@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { LoginEvent, LoginForm } from '../login-form/login-form';
@@ -10,6 +11,7 @@ import { LoginService } from '../login-service';
   styleUrl: './login-view.sass'
 })
 export class LoginView {
+  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
 
   private readonly service = inject(LoginService);
@@ -33,7 +35,8 @@ export class LoginView {
 
     this.service.login(login, this.rememberMe)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: user => {

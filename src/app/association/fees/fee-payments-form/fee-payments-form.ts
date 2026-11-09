@@ -21,8 +21,8 @@ export class FeePaymentsForm {
   private readonly fb = inject(FormBuilder);
 
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
+  // Keep the setter so form status updates synchronously with each input assignment.
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -32,20 +32,16 @@ export class FeePaymentsForm {
   public readonly searchMember = output<MemberSearchEvent>();
 
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
   }
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  public selectedMember?: Profile;
-
-  public readonly today = new Date();
+  protected selectedMember?: Profile;
+  protected readonly today = new Date();
 
   constructor() {
     this.form = this.fb.group({
@@ -57,13 +53,14 @@ export class FeePaymentsForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onClearMember(): void {
+  // Event handlers
+  protected onClearMember(): void {
     this.selectedMember = undefined;
     this.form.get('member')?.reset();
     this.form.get('member')?.markAsDirty();
   }
 
-  public onMonthSelect(date: Date, index: number) {
+  protected onMonthSelect(date: Date, index: number) {
     const controlValue = this.months.at(index).value;
 
     const currentDate = controlValue instanceof Date
@@ -78,7 +75,7 @@ export class FeePaymentsForm {
   /**
    * Handler for the save event.
    */
-  public onSave(): void {
+  protected onSave(): void {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
@@ -100,16 +97,18 @@ export class FeePaymentsForm {
     }
   }
 
+  // Public methods
   public addDate() {
     this.months.push(this.fb.control(undefined, Validators.required));
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
   public removeDate(index: number): void {
     this.months.removeAt(index);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
 }

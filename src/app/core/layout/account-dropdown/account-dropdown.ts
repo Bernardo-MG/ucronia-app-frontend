@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { MenuItem } from 'primeng/api';
@@ -20,6 +21,7 @@ export class AccountDropdown {
 
   constructor() {
     this.authService.securityDetails
+      .pipe(takeUntilDestroyed())
       .subscribe(u => this.name = u.username);
 
     this.accountItems.push(

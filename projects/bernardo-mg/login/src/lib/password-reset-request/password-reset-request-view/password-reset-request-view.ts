@@ -1,5 +1,6 @@
 
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CardModule } from 'primeng/card';
 import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
 import { PasswordResetRequestService } from '../password-reset-request-service';
@@ -13,6 +14,7 @@ import { PasswordResetRequestService } from '../password-reset-request-service';
 })
 export class PasswordResetRequestView {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(PasswordResetRequestService);
 
   public finished = false;
@@ -24,7 +26,9 @@ export class PasswordResetRequestView {
    */
   public onPasswordResetRequest(password: string) {
     // TODO: should change flag on subscription
-    this.service.requestPasswordReset(password).subscribe();
+    this.service.requestPasswordReset(password)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
     this.finished = true;
   }
 

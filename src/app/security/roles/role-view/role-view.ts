@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -24,7 +25,7 @@ import { RoleService } from '../role-service';
 })
 export class RoleView implements OnInit {
   private readonly confirmationService = inject(ConfirmationService);
-
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(RoleService);
 
   public data = new Page<Role>();
@@ -99,7 +100,8 @@ export class RoleView implements OnInit {
 
     this.service.getAllPermissions()
       .pipe(
-        finalize(() => this.finishLoading())
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .pipe(this.detailRequest.untilCancelled())
       .subscribe(permissions => {
@@ -173,7 +175,8 @@ export class RoleView implements OnInit {
 
     this.service.getAllPermissions()
       .pipe(
-        finalize(() => this.finishLoading())
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .pipe(this.detailRequest.untilCancelled())
       .subscribe(permissions => {
@@ -188,7 +191,8 @@ export class RoleView implements OnInit {
 
     this.listRequest = this.service.getAll(page, this.sort)
       .pipe(
-        finalize(() => this.finishLoading())
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(response => {
         this.data = response;
@@ -203,7 +207,8 @@ export class RoleView implements OnInit {
 
     action()
       .pipe(
-        finalize(() => this.finishLoading())
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         complete: () => {

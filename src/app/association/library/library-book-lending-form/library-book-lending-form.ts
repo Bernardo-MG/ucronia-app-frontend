@@ -13,32 +13,27 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {
-  @Input() public book = -1;
-
-  @Input() public borrower: Profile | undefined;
-
+  public readonly book = input(-1);
+  public readonly borrower = input<Profile>();
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
+
+  // Keep the setter so form status updates synchronously with each input assignment.
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
+
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
-  public memberName = '';
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
-  public readonly today = new Date();
+  protected readonly today = new Date();
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -53,19 +48,17 @@ export class LibraryBookLendingForm implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    const borrower = this.borrower && this.borrower.number > 0 ? this.borrower.number : null;
+    const borrower = this.borrower();
+    const borrowerNumber = borrower && borrower.number > 0 ? borrower.number : null;
     if (changes['book']) {
-      this.form.reset({ book: this.book, borrower, lendingDate: null });
+      this.form.reset({ book: this.book(), borrower: borrowerNumber, lendingDate: null });
     } else if (changes['borrower']) {
-      this.form.get('borrower')?.setValue(borrower);
-    }
-    if (changes['book'] || changes['borrower']) {
-      this.memberName = this.borrower?.name.fullName ?? '';
+      this.form.get('borrower')?.setValue(borrowerNumber);
     }
   }
 
-  public onClearMember(): void {
-    this.memberName = '';
+  // Event handlers
+  protected onClearMember(): void {
     this.form.get('borrower')?.reset();
     this.form.get('borrower')?.markAsDirty();
   }
@@ -90,7 +83,8 @@ export class LibraryBookLendingForm implements OnChanges {
     this.form.get('borrower')?.setValue(member.number);
   }
 
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 

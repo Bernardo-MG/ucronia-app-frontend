@@ -1,5 +1,6 @@
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -21,6 +22,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 })
 export class UserTokenView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(UserTokenService);
 
   public data = new Page<UserToken>();
@@ -102,7 +104,10 @@ export class UserTokenView implements OnInit {
     this.loading = true;
 
     this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(response => {
         this.data = response;
       });
@@ -115,7 +120,10 @@ export class UserTokenView implements OnInit {
     this.loading = true;
 
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
