@@ -13,32 +13,32 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {
+  @Input() public book = -1;
+
+  @Input() public borrower: Profile | undefined;
+
+  public readonly failures = input(new FailureStore());
 
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public readonly today = new Date();
-
-  @Input() public borrower: Profile | undefined;
-  @Input() public book = -1;
+  public readonly form: FormGroup;
 
   public readonly formStatus: FormStatus;
-
-  public readonly form: FormGroup;
 
   public memberName = '';
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
+  public readonly today = new Date();
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -64,6 +64,12 @@ export class LibraryBookLendingForm implements OnChanges {
     }
   }
 
+  public onClearMember(): void {
+    this.memberName = '';
+    this.form.get('borrower')?.reset();
+    this.form.get('borrower')?.markAsDirty();
+  }
+
   /**
    * Handler for the save event.
    */
@@ -76,22 +82,16 @@ export class LibraryBookLendingForm implements OnChanges {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
-  }
-
-  public onClearMember(): void {
-    this.memberName = '';
-    this.form.get('borrower')?.reset();
-    this.form.get('borrower')?.markAsDirty();
-  }
-
   public onSelectMember(member: Profile) {
     if (!member) {
       return;
     }
 
     this.form.get('borrower')?.setValue(member.number);
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

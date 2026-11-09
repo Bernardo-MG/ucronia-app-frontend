@@ -22,18 +22,18 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 export class UserTokenView implements OnInit {
 
   private readonly service = inject(UserTokenService);
-  private listRequest?: Subscription;
-
-  public readonly editable: boolean;
-  public readonly Dialog = Dialog;
 
   public data = new Page<UserToken>();
-  public selectedData = new UserToken();
-  public loading = false;
+  public readonly Dialog = Dialog;
   public dialog = Dialog.NONE;
-  public failures = new FailureStore();
 
-  private sort = new Sorting();
+  public readonly editable: boolean;
+  public failures = new FailureStore();
+  public loading = false;
+  public selectedData = new UserToken();
+  private listRequest?: Subscription;
+
+  private readonly sort = new Sorting();
 
   public constructor() {
     const authService = inject(AuthService);
@@ -47,14 +47,28 @@ export class UserTokenView implements OnInit {
     this.load();
   }
 
-  public onShowInfo(token: UserToken): void {
-    this.selectedData = token;
+  public onCancelEdit(): void {
+    this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
-  public onStartExtend(token: UserToken): void {
-    this.selectedData = token;
-    this.dialog = Dialog.EXTEND;
+  public onChangeDirection(sorting: SortingEvent): void {
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
+
+    this.load(this.data.page);
+  }
+
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
   }
 
   public onExtendExpiration(date: Date): void {
@@ -73,16 +87,14 @@ export class UserTokenView implements OnInit {
     );
   }
 
-  public onChangeDirection(sorting: SortingEvent): void {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
+  public onShowInfo(token: UserToken): void {
+    this.selectedData = token;
+    this.dialog = Dialog.INFO;
+  }
 
-    this.sort.addField(
-      new SortingProperty(sorting.field, direction)
-    );
-
-    this.load(this.data.page);
+  public onStartExtend(token: UserToken): void {
+    this.selectedData = token;
+    this.dialog = Dialog.EXTEND;
   }
 
   public load(page: number | undefined = undefined): void {
@@ -94,18 +106,6 @@ export class UserTokenView implements OnInit {
       .subscribe(response => {
         this.data = response;
       });
-  }
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
   }
 
   private call(

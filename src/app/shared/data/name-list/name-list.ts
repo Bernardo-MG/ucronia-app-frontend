@@ -13,10 +13,10 @@ export class NameList {
 
   public readonly data = input<Page<any>>(new Page<any>());
   public readonly loading = input<boolean>(false);
+  public readonly pageChange = output<number>();
 
   public readonly show = output<any>();
   public readonly sortChange = output<{ field: string; order: number }>();
-  public readonly pageChange = output<number>();
 
   public get first() {
     const page = this.data().page || 1;

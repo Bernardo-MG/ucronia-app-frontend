@@ -24,15 +24,7 @@ import { FullProfile } from '../model/full-profile';
 export class ProfileEditionForm {
 
   private readonly fb = inject(FormBuilder);
-
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
-  public readonly feeTypes = input<FeeType[]>([]);
 
   @Input() public set data(value: FullProfile) {
     this.form.patchValue(value as any);
@@ -62,37 +54,40 @@ export class ProfileEditionForm {
     this.updateFeeTypeValidator();
   }
 
+  public readonly failures = input(new FailureStore());
+  public readonly feeTypes = input<FeeType[]>([]);
+
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly save = output<FullProfile>();
 
-  public readonly today = new Date();
+  public get contactChannels(): FormArray {
+    return this.form.get('contactChannels') as FormArray;
+  }
+  public readonly form: FormGroup;
 
-  public lockedTypes: string[] = [];
+  public readonly formStatus: FormStatus;
+
+  public get games(): FormArray {
+    return this.form.get('games') as FormArray;
+  }
 
   public get isGuest(): boolean {
     return this.selected.includes('guest');
-  }
-
-  public get isSponsor(): boolean {
-    return this.selected.includes('sponsor');
   }
 
   public get isMember(): boolean {
     return this.selected.includes('member');
   }
 
-  public get contactChannels(): FormArray {
-    return this.form.get('contactChannels') as FormArray;
+  public get isSponsor(): boolean {
+    return this.selected.includes('sponsor');
   }
 
-  public get games(): FormArray {
-    return this.form.get('games') as FormArray;
-  }
-
-  public get years(): FormArray {
-    return this.form.get('years') as FormArray;
-  }
-
-  public selected: string[] = [];
+  public lockedTypes: string[] = [];
 
   public readonly options = [
     { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
@@ -100,11 +95,16 @@ export class ProfileEditionForm {
     { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
 
-  public readonly formStatus: FormStatus;
-  public readonly form: FormGroup;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
+  }
+
+  public selected: string[] = [];
+
+  public readonly today = new Date();
+
+  public get years(): FormArray {
+    return this.form.get('years') as FormArray;
   }
 
   constructor() {
@@ -132,6 +132,18 @@ export class ProfileEditionForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      const value: FullProfile = {
+        ...this.form.value,
+        types: [...this.selected]
+      };
+      this.save.emit(value);
+    }
+  }
+
   public onTypeChange(event: SelectButtonChangeEvent) {
     const attempted: string[] = event.value ?? [];
 
@@ -152,41 +164,29 @@ export class ProfileEditionForm {
     );
   }
 
-  public removeContactChannel(index: number): void {
-    this.contactChannels.removeAt(index);
-  }
-
   public addGame(): void {
     this.games.push(this.fb.control(null));
-  }
-
-  public removeGame(index: number): void {
-    this.games.removeAt(index);
   }
 
   public addYear(): void {
     this.years.push(this.fb.control<number | null>(null, Validators.required));
   }
 
-  public removeYear(index: number): void {
-    this.years.removeAt(index);
-  }
-
-  public onSave(): void {
-    this.form.markAllAsTouched();
-
-    if (this.saveEnabled) {
-      const value: FullProfile = {
-        ...this.form.value,
-        types: [...this.selected]
-      };
-      this.save.emit(value);
-    }
-  }
-
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property)
       || this.failures().hasFailures(property);
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
+  }
+
+  public removeGame(index: number): void {
+    this.games.removeAt(index);
+  }
+
+  public removeYear(index: number): void {
+    this.years.removeAt(index);
   }
 
   private updateFeeTypeValidator() {

@@ -1,6 +1,5 @@
-import { Component, inject, input, output } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
@@ -14,17 +13,15 @@ import { ProfileTypeTag } from '../profile-type-tag/profile-type-tag';
 })
 export class ProfileList {
 
-  private readonly confirmationService = inject(ConfirmationService);
-
   public readonly loading = input(false);
+  public readonly page = input(0);
   public readonly profiles = input<FullProfile[]>([]);
   public readonly rows = input(0);
-  public readonly page = input(0);
   public readonly totalRecords = input(0);
-
-  public readonly show = output<FullProfile>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+
+  public readonly show = output<FullProfile>();
 
   public get first() {
     return Math.max(0, (this.page() - 1) * this.rows());

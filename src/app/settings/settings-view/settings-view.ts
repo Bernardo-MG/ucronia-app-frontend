@@ -15,14 +15,14 @@ import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-setting
 export class SettingsView implements OnInit {
 
   private readonly service = inject(AssociationSettingsService);
-
-  public email = '';
-  public instagram = '';
-  public map = '';
   public calendar = '';
 
   public readonly editable;
+
+  public email = '';
+  public instagram = '';
   public loading = false;
+  public map = '';
 
   constructor() {
     const authService = inject(AuthService);

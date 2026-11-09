@@ -12,22 +12,22 @@ import { MessageModule } from 'primeng/message';
 })
 export class NameForm {
 
+  @Input() public set data(value: NameFormData) {
+    this.form.patchValue(value);
+  }
+
+  public readonly failures = input(new FailureStore());
+
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
-  @Input() public set data(value: NameFormData) {
-    this.form.patchValue(value);
-  }
-
   public readonly save = output<NameFormData>();
 
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
+
+  public readonly formStatus: FormStatus;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

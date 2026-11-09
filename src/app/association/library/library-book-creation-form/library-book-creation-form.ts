@@ -15,21 +15,21 @@ import { LibraryConfig } from '../library-config';
 })
 export class LibraryBookCreationForm {
 
+  public readonly failures = input(new FailureStore());
+
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<LibraryBookCreationFormData>();
-  public readonly formStatus: FormStatus;
 
   public readonly form: FormGroup;
-
-  public readonly languages: Language[] = [];
+  public readonly formStatus: FormStatus;
 
   public kind: 'fiction' | 'game' = 'game';
+
+  public readonly languages: Language[] = [];
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

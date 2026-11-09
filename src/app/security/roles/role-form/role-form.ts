@@ -14,44 +14,35 @@ import { MessageModule } from 'primeng/message';
 })
 export class RoleForm {
 
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
-  public readonly selection = input<ResourcePermission[]>([]);
-
   @Input() public set data(value: Role) {
     this.form.reset(value as any);
     this.isEdit = true;
     this.permissions = [...value.permissions];
   }
 
-  public isEdit = false;
+  public readonly failures = input(new FailureStore());
+
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+  public readonly selection = input<ResourcePermission[]>([]);
 
   public readonly save = output<Role>();
-  public permissions: ResourcePermission[] = [];
+
+  public get allVisibleSelected(): boolean {
+    const groups = this.permissionGroups;
+
+    return groups.length > 0
+      && groups.every(group => this.isGroupSelected(group));
+  }
+
+  public readonly form: FormGroup;
 
 
   public readonly formStatus: FormStatus;
 
-  public readonly form: FormGroup;
-
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
-
-  constructor() {
-    const fb = inject(FormBuilder);
-
-    this.form = fb.group({
-      name: ['', Validators.required],
-      permissions: [[]]
-    });
-
-    this.formStatus = new FormStatus(this.form);
-  }
+  public isEdit = false;
 
   public get permissionGroups(): PermissionGroup[] {
     const groups = new Map<string, ResourcePermission[]>();
@@ -75,12 +66,10 @@ export class RoleForm {
         return first.resource.localeCompare(second.resource);
       });
   }
+  public permissions: ResourcePermission[] = [];
 
-  public get allVisibleSelected(): boolean {
-    const groups = this.permissionGroups;
-
-    return groups.length > 0
-      && groups.every(group => this.isGroupSelected(group));
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
   }
 
   public get visibleSelectionIndeterminate(): boolean {
@@ -89,6 +78,17 @@ export class RoleForm {
     });
 
     return hasSelection && !this.allVisibleSelected;
+  }
+
+  constructor() {
+    const fb = inject(FormBuilder);
+
+    this.form = fb.group({
+      name: ['', Validators.required],
+      permissions: [[]]
+    });
+
+    this.formStatus = new FormStatus(this.form);
   }
 
   public onSave(): void {
@@ -100,21 +100,31 @@ export class RoleForm {
     }
   }
 
+  public clearSelection(): void {
+    this.permissions = [];
+    this.form.markAsDirty();
+  }
+
+  public clearVisibleSelection(): void {
+    this.permissionGroups.forEach(group => {
+      this.toggleGroup(group, false);
+    });
+  }
+
+  public formatLabel(value: string): string {
+    const label = value
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[._-]+/g, ' ')
+      .trim();
+
+    return label
+      ? label.charAt(0).toLocaleUpperCase() + label.slice(1)
+      : value;
+  }
+
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property)
       || this.failures().hasFailures(property);
-  }
-
-  public isSelected(permission: ResourcePermission): boolean {
-    return this.permissions.some(selected => {
-      return this.permissionKey(selected) === this.permissionKey(permission);
-    });
-  }
-
-  public isGroupSelected(group: PermissionGroup): boolean {
-    return group.permissions.every(permission => {
-      return this.isSelected(permission);
-    });
   }
 
   public isGroupPartiallySelected(group: PermissionGroup): boolean {
@@ -125,10 +135,34 @@ export class RoleForm {
     return selected > 0 && selected < group.permissions.length;
   }
 
+  public isGroupSelected(group: PermissionGroup): boolean {
+    return group.permissions.every(permission => {
+      return this.isSelected(permission);
+    });
+  }
+
+  public isSelected(permission: ResourcePermission): boolean {
+    return this.permissions.some(selected => {
+      return this.permissionKey(selected) === this.permissionKey(permission);
+    });
+  }
+
+  public selectAllVisible(): void {
+    this.permissionGroups.forEach(group => {
+      this.toggleGroup(group, true);
+    });
+  }
+
   public selectedInGroup(group: PermissionGroup): number {
     return group.permissions.filter(permission => {
       return this.isSelected(permission);
     }).length;
+  }
+
+  public toggleGroup(group: PermissionGroup, checked: boolean): void {
+    group.permissions.forEach(permission => {
+      this.togglePermission(permission, checked);
+    });
   }
 
   public togglePermission(permission: ResourcePermission, checked: boolean): void {
@@ -141,40 +175,6 @@ export class RoleForm {
     }
 
     this.form.markAsDirty();
-  }
-
-  public toggleGroup(group: PermissionGroup, checked: boolean): void {
-    group.permissions.forEach(permission => {
-      this.togglePermission(permission, checked);
-    });
-  }
-
-  public selectAllVisible(): void {
-    this.permissionGroups.forEach(group => {
-      this.toggleGroup(group, true);
-    });
-  }
-
-  public clearVisibleSelection(): void {
-    this.permissionGroups.forEach(group => {
-      this.toggleGroup(group, false);
-    });
-  }
-
-  public clearSelection(): void {
-    this.permissions = [];
-    this.form.markAsDirty();
-  }
-
-  public formatLabel(value: string): string {
-    const label = value
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      .replace(/[._-]+/g, ' ')
-      .trim();
-
-    return label
-      ? label.charAt(0).toLocaleUpperCase() + label.slice(1)
-      : value;
   }
 
   private permissionKey(permission: ResourcePermission): string {

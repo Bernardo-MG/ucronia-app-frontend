@@ -13,20 +13,20 @@ import { FormSearchReset } from '../form-search-reset';
   templateUrl: './text-filter.html'
 })
 export class TextFilter {
+  public readonly disabled = input(false);
 
   public readonly label = input('Buscar');
-  public readonly showLabel = input(false);
   public readonly placeholder = input('Buscar...');
-  public readonly disabled = input(false);
+  public readonly showLabel = input(false);
+
+  @Input() public set value(value: string) {
+    this.filterValue = value;
+  }
 
   public readonly filter = output<string>();
 
   public filterValue = '';
   private readonly changes = new Subject<string>();
-
-  @Input() public set value(value: string) {
-    this.filterValue = value;
-  }
 
   constructor() {
     this.changes.pipe(

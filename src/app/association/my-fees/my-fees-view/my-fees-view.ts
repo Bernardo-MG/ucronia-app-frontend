@@ -14,21 +14,21 @@ import { MyFeesService } from '../my-fees-service';
 export class MyFeesView implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
 
   private readonly service = inject(MyFeesService);
+
+  public data = new Page<Fee>();
 
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }
-
-  public data = new Page<Fee>();
   public hasFees = false;
 
   /**
    * Loading flag.
    */
   public loading = false;
+  private listRequest?: Subscription;
 
   public ngOnInit(): void {
     this.loading = true;

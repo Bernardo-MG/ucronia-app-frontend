@@ -10,22 +10,22 @@ import { CalendarEvent } from 'angular-calendar';
   templateUrl: './transaction-calendar.html'
 })
 export class TransactionCalendar implements OnChanges {
-
-  public readonly transactions = input<Transaction[]>([]);
-  public readonly types = input<TransactionType[]>([]);
   public readonly loading = input(false);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
 
+  public readonly transactions = input<Transaction[]>([]);
+  public readonly types = input<TransactionType[]>([]);
+
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<number>();
+
+  public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   private readonly currencyFormatter = new Intl.NumberFormat(inject(LOCALE_ID), {
     style: 'currency',
     currency: 'EUR'
   });
-
-  public events: CalendarEvent<{ transactionId: number }>[] = [];
 
   public ngOnChanges({ transactions, types }: SimpleChanges): void {
     if (transactions || types) {

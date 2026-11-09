@@ -19,17 +19,17 @@ import { MessageModule } from 'primeng/message';
 })
 export class PasswordResetForm {
 
+  public readonly failures = input(new FailureStore());
+
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<string>();
 
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
+
+  public readonly formStatus: FormStatus;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
@@ -68,8 +68,20 @@ export class PasswordResetForm {
   }
 
   /**
+   * Indicates if the passwords match. If both are empty they are considered to not be matching.
+   *
+   * @returns true if the passwords match, false otherwise
+   */
+  isPasswordsMatching(): boolean {
+    const password = this.form.get('password')?.getRawValue();
+    const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
+
+    return (password.length > 0) && (password === confirmPassword);
+  }
+
+  /**
    * Indicates if the password mismatch warning should be shown.
-   * 
+   *
    * @returns true if the password mismatch warning should be shown, false otherwise
    */
   public showPasswordMismatchWarning(): boolean {
@@ -84,18 +96,6 @@ export class PasswordResetForm {
     }
 
     return show;
-  }
-
-  /**
-   * Indicates if the passwords match. If both are empty they are considered to not be matching.
-   * 
-   * @returns true if the passwords match, false otherwise
-   */
-  isPasswordsMatching(): boolean {
-    const password = this.form.get('password')?.getRawValue();
-    const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
-
-    return (password.length > 0) && (password === confirmPassword);
   }
 
 }

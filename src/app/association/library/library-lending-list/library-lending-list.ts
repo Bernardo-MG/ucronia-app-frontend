@@ -12,17 +12,17 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   templateUrl: './library-lending-list.html'
 })
 export class LibraryLendingList {
+  public readonly borrowerNames = input<Record<number, string>>({});
+  public readonly lendings = input<BookLending[]>([]);
 
   public readonly loading = input(false);
-  public readonly lendings = input<BookLending[]>([]);
-  public readonly borrowerNames = input<Record<number, string>>({});
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-  
-  public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
   public readonly showLending = output<BookLending>();
+
+  public readonly sort = output<SortingProperty>();
 
   public get first() {
     return (this.page() - 1) * this.rows();

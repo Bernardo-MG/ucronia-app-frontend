@@ -16,7 +16,7 @@ export class MemberStatusSelector {
 
   public readonly filter = output<MemberStatus>();
 
-  public memberStatusOptions: any[] = [{ label: 'Todos', value: MemberStatus.All }, { label: 'Activos', value: MemberStatus.Active }, { label: 'Baja', value: MemberStatus.Inactive }];
+  public readonly memberStatusOptions: any[] = [{ label: 'Todos', value: MemberStatus.All }, { label: 'Activos', value: MemberStatus.Active }, { label: 'Baja', value: MemberStatus.Inactive }];
   public selectedMemberStatus: MemberStatus = MemberStatus.All;
 
 }

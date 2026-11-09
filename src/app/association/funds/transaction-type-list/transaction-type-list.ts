@@ -19,51 +19,79 @@ import { finalize, Subscription } from 'rxjs';
   templateUrl: './transaction-type-list.html'
 })
 export class TransactionTypeList implements OnChanges {
-  private readonly service = inject(TransactionService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
-  private request?: Subscription;
-
-  private detailRequest?: Subscription;
+  private readonly service = inject(TransactionService);
 
   public readonly canDelete = input(false);
-  public deleting = false;
-  public deleteFailed = false;
 
   public readonly canEdit = input(false);
-  public selectedNumber?: number;
-  public selectedType?: TransactionType;
-  public detailLoading = false;
-  public detailFailed = false;
-  public editing = false;
-  public readonly typeLoading = signal(false);
-  public readonly typeFailures = signal(new FailureStore());
-  public readonly typeSaveError = signal(false);
 
   public readonly version = input(0);
-  public readonly rows = 10;
   public readonly data = signal(new Page<TransactionType>());
-  public readonly loading = signal(false);
+  public deleteFailed = false;
+  public deleting = false;
+  public detailFailed = false;
+  public detailLoading = false;
+  public editing = false;
   public readonly failed = signal(false);
+  public readonly loading = signal(false);
+  public readonly rows = 10;
+  public selectedNumber?: number;
+  public selectedType?: TransactionType;
+  public readonly typeFailures = signal(new FailureStore());
+  public readonly typeLoading = signal(false);
+  public readonly typeSaveError = signal(false);
+
+  private detailRequest?: Subscription;
+  private request?: Subscription;
 
   public ngOnChanges(): void {
     this.load(this.data().page || 1);
   }
 
-  public showDetails(number: number): void {
-    this.detailRequest?.unsubscribe();
-    this.selectedNumber = number;
-    this.selectedType = undefined;
-    this.detailLoading = true;
-    this.detailFailed = false;
-    this.deleteFailed = false;
+  public load(page = this.data().page || 1): void {
+    this.request?.unsubscribe();
+    this.loading.set(true);
+    this.failed.set(false);
 
-    this.detailRequest = this.service.getType(number)
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.detailLoading = false))
+    const request = new Subscription();
+    this.request = request;
+    request.add(this.service.getTypesPage(page, this.rows)
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: type => this.selectedType = type,
-        error: () => this.detailFailed = true
-      });
+        next: data => {
+          if (data.content.length === 0 && page > 1) {
+            this.load(Math.max(1, Math.min(page - 1, data.totalPages)));
+          } else {
+            this.data.set(data);
+            this.loading.set(false);
+          }
+        },
+        error: () => {
+          this.loading.set(false);
+          this.failed.set(true);
+        }
+      }));
+  }
+
+  public changePage(event: PaginatorState): void {
+    this.load((event.page ?? 0) + 1);
+  }
+
+  public closeDetails(): void {
+    if (this.deleting) {
+      return;
+    }
+    this.detailRequest?.unsubscribe();
+    this.selectedNumber = undefined;
+    this.selectedType = undefined;
+  }
+
+  public closeTypeForm(): void {
+    this.editing = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
   }
 
   public confirmDelete(event: Event): void {
@@ -99,13 +127,20 @@ export class TransactionTypeList implements OnChanges {
     });
   }
 
-  public closeDetails(): void {
-    if (this.deleting) {
-      return;
-    }
+  public showDetails(number: number): void {
     this.detailRequest?.unsubscribe();
-    this.selectedNumber = undefined;
+    this.selectedNumber = number;
     this.selectedType = undefined;
+    this.detailLoading = true;
+    this.detailFailed = false;
+    this.deleteFailed = false;
+
+    this.detailRequest = this.service.getType(number)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.detailLoading = false))
+      .subscribe({
+        next: type => this.selectedType = type,
+        error: () => this.detailFailed = true
+      });
   }
 
   public updateType(values: Pick<TransactionType, 'description' | 'color'>, number: number): void {
@@ -131,40 +166,5 @@ export class TransactionTypeList implements OnChanges {
           this.typeSaveError.set(true);
         }
       });
-  }
-
-  public closeTypeForm(): void {
-    this.editing = false;
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-  }
-
-  public changePage(event: PaginatorState): void {
-    this.load((event.page ?? 0) + 1);
-  }
-
-  public load(page = this.data().page || 1): void {
-    this.request?.unsubscribe();
-    this.loading.set(true);
-    this.failed.set(false);
-
-    const request = new Subscription();
-    this.request = request;
-    request.add(this.service.getTypesPage(page, this.rows)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: data => {
-          if (data.content.length === 0 && page > 1) {
-            this.load(Math.max(1, Math.min(page - 1, data.totalPages)));
-          } else {
-            this.data.set(data);
-            this.loading.set(false);
-          }
-        },
-        error: () => {
-          this.loading.set(false);
-          this.failed.set(true);
-        }
-      }));
   }
 }

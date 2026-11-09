@@ -12,14 +12,14 @@ import { ImageContent } from '../image-content/image-content';
   templateUrl: './image-list.html'
 })
 export class ImageList {
-  public readonly loading = input(false);
   public readonly images = input<Asset[]>([]);
-  public readonly rows = input(0);
+  public readonly loading = input(false);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-  public readonly show = output<Asset>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+  public readonly show = output<Asset>();
 
   public get first(): number {
     return (this.page() - 1) * this.rows();

@@ -32,37 +32,15 @@ import { FeeSummaryService } from '../fee-summary-service';
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
+  private readonly confirmationService = inject(ConfirmationService);
 
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly detailRequest = new DetailRequest();
-
   private readonly feeCalendarService = inject(FeeCalendarService);
-  private calendarRequest?: Subscription;
-  private readonly memberSearch = new SearchRequest();
   private readonly reportService = inject(FeeSummaryService);
-  private readonly confirmationService = inject(ConfirmationService);
   private readonly service = inject(FeeService);
 
-  public readonly permissions: Permissions;
-  public readonly status: Status = {
-    loadingCalendar: false,
-    loadingSummary: false,
-    loading: false
-  };
-  public readonly filter: Filter = {
-    range: new YearsRange(),
-    year: new Date().getFullYear()
-  };
-
-  public selectedData = new Fee();
-  public summary = new FeeSummary();
-  public members: Profile[] = [];
-  public feeCalendar: MemberFees[] = [];
-
-  public failures = new FailureStore();
-
-  private currentDialog = Dialog.NONE;
+  public readonly creationItems: MenuItem[] = [];
 
   public get dialog(): Dialog {
     return this.currentDialog;
@@ -77,9 +55,31 @@ export class FeeView implements OnInit {
     }
   }
 
-  public Dialog = Dialog;
+  public readonly Dialog = Dialog;
 
-  public readonly creationItems: MenuItem[] = [];
+  public failures = new FailureStore();
+  public feeCalendar: MemberFees[] = [];
+  public readonly filter: Filter = {
+    range: new YearsRange(),
+    year: new Date().getFullYear()
+  };
+  public members: Profile[] = [];
+
+  public readonly permissions: Permissions;
+
+  public selectedData = new Fee();
+  public readonly status: Status = {
+    loadingCalendar: false,
+    loadingSummary: false,
+    loading: false
+  };
+  public summary = new FeeSummary();
+  private calendarRequest?: Subscription;
+
+  private currentDialog = Dialog.NONE;
+
+  private readonly detailRequest = new DetailRequest();
+  private readonly memberSearch = new SearchRequest();
 
   constructor() {
     const authService = inject(AuthService);
@@ -112,29 +112,11 @@ export class FeeView implements OnInit {
     this.loadSummary();
   }
 
-  // EVENT HANDLERS
+  // DIALOGS
 
-  public onUpdate(toUpdate: FeeEditionEvent): void {
-    const update = {
-      transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
-    }
-    this.call(
-      () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
-      () => {
-        this.loadRange();
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onPay(data: FeesPaymentEvent): void {
-    this.call(
-      () => this.service.pay(data),
-      () => {
-        this.loadRange();
-        this.loadSummary();
-      }
-    );
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
   }
 
   public onCreateUnpaid(data: FeeCreationEvent): void {
@@ -185,6 +167,28 @@ export class FeeView implements OnInit {
     });
   }
 
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onPay(data: FeesPaymentEvent): void {
+    this.call(
+      () => this.service.pay(data),
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
+    );
+  }
+
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .subscribe(members => this.members = members);
+  }
+
   public onSelectFee(fee: { member: number, date: Date }) {
     this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
@@ -197,9 +201,19 @@ export class FeeView implements OnInit {
       .subscribe(fee => this.selectedData = fee);
   }
 
-  public onSearchMembers(event: { query: string }): void {
-    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
-      .subscribe(members => this.members = members);
+  // EVENT HANDLERS
+
+  public onUpdate(toUpdate: FeeEditionEvent): void {
+    const update = {
+      transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
+    }
+    this.call(
+      () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
+    );
   }
 
   public loadCalendar(year: number) {
@@ -213,30 +227,6 @@ export class FeeView implements OnInit {
         finalize(() => this.status.loadingCalendar = false)
       )
       .subscribe(data => this.feeCalendar = data);
-  }
-
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  // DATA LOADING
-
-  private loadSummary() {
-    this.status.loadingSummary = true;
-
-    this.reportService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(response => this.summary = response);
   }
 
   private loadRange() {
@@ -258,6 +248,16 @@ export class FeeView implements OnInit {
       .subscribe(data => {
         this.feeCalendar = data;
       });
+  }
+
+  // DATA LOADING
+
+  private loadSummary() {
+    this.status.loadingSummary = true;
+
+    this.reportService.getSummary()
+      .pipe(finalize(() => this.status.loadingSummary = false))
+      .subscribe(response => this.summary = response);
   }
 
   private loadYear(range: YearsRange) {

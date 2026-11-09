@@ -3,7 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
-import { BookLending, GameBook, Profile } from '@ucronia/domain';
+import { BookLending, BookType, Donor, GameBook, GameSystem, Profile } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of, Subject } from 'rxjs';
 import { BookReportService } from '../book-report-service';
@@ -13,7 +13,6 @@ import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 import { LibrarySummary } from '../model/library-summary';
 import { Display, LibraryView } from './library-view';
-import { runInInjectionContext } from '@angular/core';
 
 describe('LibraryView', () => {
   let component: LibraryView;
@@ -29,6 +28,7 @@ describe('LibraryView', () => {
       'getAllFictionBooks',
       'getGameSystems',
       'getBookTypes',
+      'searchDonors',
       'setAuthors',
       'setPublishers',
       'setGameSystem',
@@ -68,6 +68,12 @@ describe('LibraryView', () => {
     );
     libraryServiceMock.getAllGameBooks.and.returnValue(
       of(new Page<GameBook>())
+    );
+    libraryServiceMock.getGameSystems.and.returnValue(
+      of(Object.assign(new Page<GameSystem>(), { last: true }))
+    );
+    libraryServiceMock.getBookTypes.and.returnValue(
+      of(Object.assign(new Page<BookType>(), { last: true }))
     );
     libraryServiceMock.getSummary.and.returnValue(
       of(new LibrarySummary())
@@ -109,6 +115,41 @@ describe('LibraryView', () => {
     const permittedFixture = TestBed.createComponent(LibraryView);
     permittedFixture.detectChanges();
     expect(permittedFixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).not.toBeNull();
+  });
+
+  it('loads game systems and book types for the edition form in the view', () => {
+    const gameSystem = new GameSystem();
+    const bookType = new BookType();
+    libraryServiceMock.getGameSystems.and.returnValue(
+      of(Object.assign(new Page<GameSystem>(), { last: true, content: [gameSystem] }))
+    );
+    libraryServiceMock.getBookTypes.and.returnValue(
+      of(Object.assign(new Page<BookType>(), { last: true, content: [bookType] }))
+    );
+    libraryServiceMock.getOneBook.and.returnValue(of(new GameBook()));
+
+    component.onShowEdit();
+
+    expect(component.gameSystems).toEqual([gameSystem]);
+    expect(component.bookTypes).toEqual([bookType]);
+  });
+
+  it('cancels the previous donor query and clears results in the view', () => {
+    const previous = new Subject<Donor[]>();
+    const latest = new Subject<Donor[]>();
+    const donor = new Donor();
+    libraryServiceMock.searchDonors.and.returnValues(previous, latest);
+
+    component.onSearchDonors('old');
+    component.onSearchDonors('new');
+    latest.next([donor]);
+    previous.next([]);
+
+    expect(previous.observed).toBeFalse();
+    expect(component.donorSearchResults).toEqual([donor]);
+
+    component.onClearDonorSearch();
+    expect(component.donorSearchResults).toEqual([]);
   });
 
   it('opens the selected lending in the info drawer and closes it', () => {

@@ -19,9 +19,9 @@ import { Navbar } from '../navbar/navbar';
 })
 export class AssociationLayout {
 
-  public menus: MenuItem[] = [];
-
   public menuActive = false;
+
+  public menus: MenuItem[] = [];
 
   constructor() {
     const authService = inject(AuthService);
@@ -51,40 +51,6 @@ export class AssociationLayout {
 
   public onToggleMenu(status: boolean) {
     this.menuActive = status;
-  }
-
-  public closeMenu() {
-    this.menuActive = false;
-  }
-
-  private getAssociationItems(authService: AuthService): MenuItem[] {
-    const items = [];
-    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
-      items.push(
-        {
-          label: 'Socios',
-          routerLink: '/association/members',
-          icon: 'pi pi-users'
-        });
-    }
-    if (authService.hasPermission(UcroniaPermissions.myFees.read)) {
-      items.push(
-        {
-          label: 'Mis cuotas',
-          routerLink: '/association/myFees',
-          icon: 'pi pi-money-bill'
-        });
-    }
-    const canReadBooks = authService.hasPermission(UcroniaPermissions.library.book.read);
-    if (canReadBooks || authService.hasAnyPermission(librarySettingsPermissions)) {
-      items.push(
-        {
-          label: 'Biblioteca',
-          routerLink: canReadBooks ? '/association/library' : '/association/library/settings',
-          icon: 'pi pi-book'
-        });
-    }
-    return items;
   }
 
   private getAdminItems(authService: AuthService): MenuItem[] {
@@ -147,6 +113,40 @@ export class AssociationLayout {
     }
 
     return items;
+  }
+
+  private getAssociationItems(authService: AuthService): MenuItem[] {
+    const items = [];
+    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
+      items.push(
+        {
+          label: 'Socios',
+          routerLink: '/association/members',
+          icon: 'pi pi-users'
+        });
+    }
+    if (authService.hasPermission(UcroniaPermissions.myFees.read)) {
+      items.push(
+        {
+          label: 'Mis cuotas',
+          routerLink: '/association/myFees',
+          icon: 'pi pi-money-bill'
+        });
+    }
+    const canReadBooks = authService.hasPermission(UcroniaPermissions.library.book.read);
+    if (canReadBooks || authService.hasAnyPermission(librarySettingsPermissions)) {
+      items.push(
+        {
+          label: 'Biblioteca',
+          routerLink: canReadBooks ? '/association/library' : '/association/library/settings',
+          icon: 'pi pi-book'
+        });
+    }
+    return items;
+  }
+
+  public closeMenu() {
+    this.menuActive = false;
   }
 
 }

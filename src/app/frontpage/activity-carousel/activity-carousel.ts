@@ -13,10 +13,10 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './activity-carousel.html'
 })
 export class ActivityCarousel {
-
-  public readonly loading = input(false);
   public readonly data = input<Activity[]>([]);
   public readonly display = input<ActivityDisplay>('upcoming');
+
+  public readonly loading = input(false);
   public readonly displayChange = output<ActivityDisplay>();
 
   public readonly displayOptions = [

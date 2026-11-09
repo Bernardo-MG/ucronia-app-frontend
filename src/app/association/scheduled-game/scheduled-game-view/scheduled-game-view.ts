@@ -27,36 +27,12 @@ import { ScheduledGameService } from '../scheduled-game-service';
   templateUrl: './scheduled-game-view.html'
 })
 export class ScheduledGameView implements OnInit {
+  private readonly confirmationService = inject(ConfirmationService);
 
   private readonly destroyRef = inject(DestroyRef);
 
-  private readonly detailRequest = new DetailRequest();
-
   private readonly service = inject(ScheduledGameService);
-  private listRequest?: Subscription;
-  private readonly memberSearch = new SearchRequest();
-  private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
-  public readonly status: Status = {
-    loading: false
-  };
-
-  public scheduledGames = new Page<ScheduledGame>();
-  public selectedStatus: CalendarStatus | 'all' = 'all';
-  public readonly statusOptions: StatusOption[] = [
-    { label: 'Todas', value: 'all' },
-    { label: 'Borrador', value: CalendarStatus.DRAFT },
-    { label: 'Publicada', value: CalendarStatus.PUBLISHED }
-  ];
-
-  public members: Profile[] = [];
-  public tables: GameTable[] = [];
-  public selectedData = new ScheduledGame();
-  public selectedMaster = new Profile();
-  public selectedTable: GameTable | undefined;
-  private currentDialog = Dialog.NONE;
 
   public get dialog(): Dialog {
     return this.currentDialog;
@@ -70,17 +46,41 @@ export class ScheduledGameView implements OnInit {
       this.currentDialog = value;
     }
   }
-  public failures = new FailureStore();
-
-  private sort = new Sorting();
 
   public get draftCount(): number {
     return this.scheduledGames.content.filter(game => game.status === CalendarStatus.DRAFT).length;
   }
+  public failures = new FailureStore();
+
+  public members: Profile[] = [];
+
+  public readonly permissions: Permissions;
 
   public get publishedCount(): number {
     return this.scheduledGames.content.filter(game => game.status === CalendarStatus.PUBLISHED).length;
   }
+
+  public scheduledGames = new Page<ScheduledGame>();
+  public selectedData = new ScheduledGame();
+  public selectedMaster = new Profile();
+  public readonly selectedStatus: CalendarStatus | 'all' = 'all';
+  public selectedTable: GameTable | undefined;
+  public readonly status: Status = {
+    loading: false
+  };
+  public readonly statusOptions: StatusOption[] = [
+    { label: 'Todas', value: 'all' },
+    { label: 'Borrador', value: CalendarStatus.DRAFT },
+    { label: 'Publicada', value: CalendarStatus.PUBLISHED }
+  ];
+  public tables: GameTable[] = [];
+  private currentDialog = Dialog.NONE;
+
+  private readonly detailRequest = new DetailRequest();
+  private listRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
+
+  private readonly sort = new Sorting();
 
   constructor() {
     const authService = inject(AuthService);
@@ -97,6 +97,11 @@ export class ScheduledGameView implements OnInit {
     this.loadTables();
   }
 
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
@@ -109,13 +114,6 @@ export class ScheduledGameView implements OnInit {
   public onCreate(toCreate: ScheduledGame): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: ScheduledGame): void {
-    this.call(
-      () => this.service.update(toUpdate),
       () => this.load()
     );
   }
@@ -153,64 +151,11 @@ export class ScheduledGameView implements OnInit {
     });
   }
 
-  public onShowEdit() {
-    this.dialog = Dialog.EDIT;
-  }
-
-  public onShowInfo(scheduledGame: ScheduledGame) {
-    this.detailRequest.cancel();
-    this.dialog = Dialog.INFO;
-    this.selectedTable = undefined;
-
-    this.withLoading(
-      this.service.getOne(scheduledGame.number)
-        .pipe(
-          switchMap(loadedGame => forkJoin({
-            loadedGame: of(loadedGame),
-            master: this.service.getMaster(loadedGame.master),
-            table: !loadedGame.table
-              ? of(undefined)
-              : this.service.getTable(loadedGame.table)
-          }))
-        )
-    )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(({ loadedGame, master, table }) => {
-        this.selectedData = loadedGame;
-        this.selectedMaster = master;
-        this.selectedTable = table;
-      });
-  }
-
-  public load(page: number | undefined = undefined) {
-    this.listRequest?.unsubscribe();
-    this.listRequest = this.withLoading(
-      this.service.getAll(page, this.sort)
-    )
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
-  }
-
-  private loadTables(): void {
-    this.service.getTables()
-      .subscribe(tables => this.tables = tables);
-  }
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
       this.dialog = Dialog.NONE;
     }
-  }
-
-  public onSearchMembers(event: { query: string }): void {
-    this.memberSearch.search(event.query, query => this.service.searchMembers(query))
-      .subscribe(members => this.members = members);
   }
 
   public onPublish(event: Event): void {
@@ -244,6 +189,61 @@ export class ScheduledGameView implements OnInit {
         );
       }
     });
+  }
+
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query))
+      .subscribe(members => this.members = members);
+  }
+
+  public onShowEdit() {
+    this.dialog = Dialog.EDIT;
+  }
+
+  public onShowInfo(scheduledGame: ScheduledGame) {
+    this.detailRequest.cancel();
+    this.dialog = Dialog.INFO;
+    this.selectedTable = undefined;
+
+    this.withLoading(
+      this.service.getOne(scheduledGame.number)
+        .pipe(
+          switchMap(loadedGame => forkJoin({
+            loadedGame: of(loadedGame),
+            master: this.service.getMaster(loadedGame.master),
+            table: !loadedGame.table
+              ? of(undefined)
+              : this.service.getTable(loadedGame.table)
+          }))
+        )
+    )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(({ loadedGame, master, table }) => {
+        this.selectedData = loadedGame;
+        this.selectedMaster = master;
+        this.selectedTable = table;
+      });
+  }
+
+  public onUpdate(toUpdate: ScheduledGame): void {
+    this.call(
+      () => this.service.update(toUpdate),
+      () => this.load()
+    );
+  }
+
+  public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.service.getAll(page, this.sort)
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
+  }
+
+  private loadTables(): void {
+    this.service.getTables()
+      .subscribe(tables => this.tables = tables);
   }
 
   private call(

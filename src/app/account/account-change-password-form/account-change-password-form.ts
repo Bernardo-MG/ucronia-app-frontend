@@ -14,17 +14,21 @@ import { MessageModule } from 'primeng/message';
 })
 export class AccountChangePasswordForm {
 
+  public readonly failures = input(new FailureStore());
+
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
 
   public readonly save = output<PasswordChange>();
 
   public readonly form;
 
   public readonly formStatus: FormStatus;
+
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   private readonly passwordsMatch: ValidatorFn = (
     control: AbstractControl
@@ -36,10 +40,6 @@ export class AccountChangePasswordForm {
       ? null
       : { passwordsMismatch: true };
   };
-
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
 
   constructor() {
     const formBuilder = inject(FormBuilder);
@@ -72,16 +72,16 @@ export class AccountChangePasswordForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property)
-      || this.failures().hasFailures(property);
-  }
-
   public hasPasswordMismatch(): boolean {
     const passwordRepeat = this.form.controls.passwordRepeat;
 
     return passwordRepeat.touched
       && this.form.hasError('passwordsMismatch');
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
 
 }

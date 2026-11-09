@@ -19,27 +19,27 @@ export class TeamupCalendar {
     }
   }
 
-  public readonly showLogo = input(false);
-
-  public readonly showSearch = input(false);
-
-  public readonly showProfile = input(false);
-
-  public readonly showSidePanel = input(false);
-
   public readonly disableSidePanel = input(false);
 
-  public readonly showViewSelector = input(false);
-
-  public readonly showMenu = input(false);
-
-  public readonly showAgendaHeader = input(false);
+  public readonly height = input('800px');
 
   public readonly showAgendaDetails = input(false);
 
-  public readonly showYearViewHeader = input(false);
+  public readonly showAgendaHeader = input(false);
 
-  public readonly height = input('800px');
+  public readonly showLogo = input(false);
+
+  public readonly showMenu = input(false);
+
+  public readonly showProfile = input(false);
+
+  public readonly showSearch = input(false);
+
+  public readonly showSidePanel = input(false);
+
+  public readonly showViewSelector = input(false);
+
+  public readonly showYearViewHeader = input(false);
 
   public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 

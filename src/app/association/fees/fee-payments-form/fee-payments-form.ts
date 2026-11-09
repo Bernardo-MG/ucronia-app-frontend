@@ -20,24 +20,20 @@ export class FeePaymentsForm {
 
   private readonly fb = inject(FormBuilder);
 
+  public readonly failures = input(new FailureStore());
+
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public selectedMember?: Profile;
-
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
 
-  public readonly today = new Date();
+  public readonly formStatus: FormStatus;
 
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
@@ -46,6 +42,10 @@ export class FeePaymentsForm {
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
+  public selectedMember?: Profile;
+
+  public readonly today = new Date();
 
   constructor() {
     this.form = this.fb.group({
@@ -61,28 +61,6 @@ export class FeePaymentsForm {
     this.selectedMember = undefined;
     this.form.get('member')?.reset();
     this.form.get('member')?.markAsDirty();
-  }
-
-  public onSelectMember(member: Profile) {
-    if (!member) {
-      return;
-    }
-
-    this.selectedMember = member;
-    this.form.get('member')?.setValue(member.number);
-    this.form.get('member')?.markAsTouched();
-
-    if (this.months.length === 0) {
-      this.addDate();
-    }
-  }
-
-  public addDate() {
-    this.months.push(this.fb.control(undefined, Validators.required));
-  }
-
-  public removeDate(index: number): void {
-    this.months.removeAt(index);
   }
 
   public onMonthSelect(date: Date, index: number) {
@@ -108,8 +86,30 @@ export class FeePaymentsForm {
     }
   }
 
+  public onSelectMember(member: Profile) {
+    if (!member) {
+      return;
+    }
+
+    this.selectedMember = member;
+    this.form.get('member')?.setValue(member.number);
+    this.form.get('member')?.markAsTouched();
+
+    if (this.months.length === 0) {
+      this.addDate();
+    }
+  }
+
+  public addDate() {
+    this.months.push(this.fb.control(undefined, Validators.required));
+  }
+
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
+  }
+
+  public removeDate(index: number): void {
+    this.months.removeAt(index);
   }
 
 }

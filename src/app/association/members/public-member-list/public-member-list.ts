@@ -12,17 +12,17 @@ import { PublicMemberRenewTag } from '../public-member-renew-tag/public-member-r
 })
 export class PublicMemberList {
 
-  public readonly loading = input(false);
-  public readonly members = input<PublicMember[]>([]);
-  public readonly rows = input(0);
-  public readonly page = input(0);
-  public readonly totalRecords = input(0);
-
   public readonly canRead = input(false);
 
-  public readonly show = output<PublicMember>();
+  public readonly loading = input(false);
+  public readonly members = input<PublicMember[]>([]);
+  public readonly page = input(0);
+  public readonly rows = input(0);
+  public readonly totalRecords = input(0);
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+
+  public readonly show = output<PublicMember>();
 
   public get first(): number {
     return (this.page() - 1) * this.rows();

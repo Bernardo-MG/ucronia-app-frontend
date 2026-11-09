@@ -24,19 +24,19 @@ export class AccountView {
 
   private readonly service = inject(AccountService);
 
-  public readonly AccountSection = AccountSection;
-
   public account = new Account();
-
-  public profile: Profile | undefined;
 
   public accountLoading = false;
 
-  public passwordLoading = false;
+  public readonly AccountSection = AccountSection;
+
+  public activeSection = AccountSection.Profile;
 
   public failures = new FailureStore();
 
-  public activeSection = AccountSection.Profile;
+  public passwordLoading = false;
+
+  public profile: Profile | undefined;
 
   constructor() {
     this.loadAccount();
@@ -51,6 +51,19 @@ export class AccountView {
       .subscribe({
         error: error => this.handleError(error)
       });
+  }
+
+  private loadAccount(): void {
+    this.accountLoading = true;
+    this.profile = new Profile();
+
+    this.service.getAccount()
+      .pipe(
+        tap(account => this.account = account),
+        switchMap(account => this.service.getProfile()),
+        finalize(() => this.accountLoading = false)
+      )
+      .subscribe(profile => this.profile = profile);
   }
 
   public scrollTo(section: AccountSection): void {
@@ -68,19 +81,6 @@ export class AccountView {
       top,
       behavior: 'smooth'
     });
-  }
-
-  private loadAccount(): void {
-    this.accountLoading = true;
-    this.profile = new Profile();
-
-    this.service.getAccount()
-      .pipe(
-        tap(account => this.account = account),
-        switchMap(account => this.service.getProfile()),
-        finalize(() => this.accountLoading = false)
-      )
-      .subscribe(profile => this.profile = profile);
   }
 
   private handleError(error: unknown): void {

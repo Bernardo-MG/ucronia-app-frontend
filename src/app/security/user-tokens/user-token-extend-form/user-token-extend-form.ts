@@ -12,28 +12,28 @@ import { MessageModule } from 'primeng/message';
 })
 export class UserTokenExtendForm {
 
+  @Input() public set expirationDate(value: Date) {
+    this.form.get('expirationDate')?.setValue(value);
+  }
+
+  public readonly failures = input(new FailureStore());
+
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
-  @Input() public set expirationDate(value: Date) {
-    this.form.get('expirationDate')?.setValue(value);
-  }
-
-  public readonly formStatus: FormStatus;
+  public readonly save = output<Date>();
 
   public readonly form;
 
-  public readonly save = output<Date>();
-
-  public readonly today = new Date();
+  public readonly formStatus: FormStatus;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
+  public readonly today = new Date();
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -45,10 +45,6 @@ export class UserTokenExtendForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -56,6 +52,10 @@ export class UserTokenExtendForm {
       // Valid form, can emit data
       this.save.emit(this.form.value.expirationDate as Date);
     }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
 }

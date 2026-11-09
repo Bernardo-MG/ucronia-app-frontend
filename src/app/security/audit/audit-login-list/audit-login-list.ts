@@ -14,8 +14,8 @@ export class AuditLoginList {
 
   public readonly loading = input(false);
   public readonly logins = input<LoginRegister[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
 
   public readonly changeDirection = output<SortingEvent>();

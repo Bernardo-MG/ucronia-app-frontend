@@ -23,24 +23,12 @@ import { RoleService } from '../role-service';
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
-
-  private readonly detailRequest = new DetailRequest();
-
-  private readonly drawer = viewChild(Drawer);
-
-  private readonly service = inject(RoleService);
-  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
+  private readonly service = inject(RoleService);
 
   public data = new Page<Role>();
-  public selectedData = new Role();
-  public loading = false;
-  public failures = new FailureStore();
-  public resourcePermissions: ResourcePermission[] = [];
-  private currentDialog = Dialog.NONE;
+  public readonly Dialog = Dialog;
 
   public get dialog(): Dialog {
     return this.currentDialog;
@@ -52,8 +40,20 @@ export class RoleView implements OnInit {
       this.currentDialog = value;
     }
   }
+  public failures = new FailureStore();
+  public loading = false;
 
-  private sort = new Sorting();
+  public readonly permissions: Permissions;
+  public resourcePermissions: ResourcePermission[] = [];
+  public selectedData = new Role();
+  private currentDialog = Dialog.NONE;
+
+  private readonly detailRequest = new DetailRequest();
+
+  private readonly drawer = viewChild(Drawer);
+  private listRequest?: Subscription;
+
+  private readonly sort = new Sorting();
 
   constructor() {
     const authService = inject(AuthService);
@@ -75,9 +75,8 @@ export class RoleView implements OnInit {
     this.load();
   }
 
-  public onShowInfo(role: Role): void {
-    this.detailRequest.cancel();
-    this.selectedData = role;
+  public onCancelEdit(): void {
+    this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
@@ -93,24 +92,26 @@ export class RoleView implements OnInit {
     this.load(this.data.page);
   }
 
+  public onChangePermissions(role: Role): void {
+    this.detailRequest.cancel();
+    this.selectedData = role;
+    this.loading = true;
+
+    this.service.getAllPermissions()
+      .pipe(
+        finalize(() => this.finishLoading())
+      )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(permissions => {
+        this.resourcePermissions = permissions;
+        this.dialog = Dialog.PERMISSIONS;
+      });
+  }
+
   public onCreate(role: Role): void {
     this.call(
       () => this.service.create(role),
       () => this.load()
-    );
-  }
-
-  public onSetRolePermissions(
-    permissions: ResourcePermission[]
-  ): void {
-    const updatedRole = new Role(
-      this.selectedData.name,
-      permissions
-    );
-
-    this.call(
-      () => this.service.update(updatedRole),
-      () => this.load(this.data.page)
     );
   }
 
@@ -139,20 +140,31 @@ export class RoleView implements OnInit {
     });
   }
 
-  public onChangePermissions(role: Role): void {
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onSetRolePermissions(
+    permissions: ResourcePermission[]
+  ): void {
+    const updatedRole = new Role(
+      this.selectedData.name,
+      permissions
+    );
+
+    this.call(
+      () => this.service.update(updatedRole),
+      () => this.load(this.data.page)
+    );
+  }
+
+  public onShowInfo(role: Role): void {
     this.detailRequest.cancel();
     this.selectedData = role;
-    this.loading = true;
-
-    this.service.getAllPermissions()
-      .pipe(
-        finalize(() => this.finishLoading())
-      )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(permissions => {
-        this.resourcePermissions = permissions;
-        this.dialog = Dialog.PERMISSIONS;
-      });
+    this.dialog = Dialog.INFO;
   }
 
   public onStartCreation(): void {
@@ -183,24 +195,6 @@ export class RoleView implements OnInit {
       });
   }
 
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  private finishLoading(): void {
-    this.loading = false;
-    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
-    this.drawer()?.cd.markForCheck();
-  }
-
   private call(
     action: () => Observable<unknown>,
     onSuccess: () => void
@@ -219,6 +213,12 @@ export class RoleView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private finishLoading(): void {
+    this.loading = false;
+    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    this.drawer()?.cd.markForCheck();
   }
 
   private handleError(error: unknown): void {

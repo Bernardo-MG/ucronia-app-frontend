@@ -12,11 +12,11 @@ import { TagModule } from 'primeng/tag';
   templateUrl: './transaction-list.html'
 })
 export class TransactionList {
+  public readonly data = input<Transaction[]>([]);
 
   public readonly loading = input(false);
-  public readonly data = input<Transaction[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
 
   public readonly changeDirection = output<SortingEvent>();

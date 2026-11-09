@@ -14,14 +14,14 @@ import { FrontpageService } from '../frontpage-service';
 })
 export class Frontpage implements OnInit {
 
-  private service = inject(FrontpageService);
-
-  public calendarCode: string | undefined;
-  public locationCode: string | undefined;
-  public settings = new PublicSettings();
+  private readonly service = inject(FrontpageService);
   public activities: Activity[] = [];
+
+  public readonly calendarCode: string | undefined;
   public loadingActivities = false;
+  public readonly locationCode: string | undefined;
   public selectedActivityDisplay: ActivityDisplay = 'upcoming';
+  public settings = new PublicSettings();
 
   public ngOnInit(): void {
     this.service.getSettings()

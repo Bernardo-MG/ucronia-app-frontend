@@ -23,17 +23,16 @@ import { FeeTypeService } from '../fee-type-service';
 })
 export class FeeTypeView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
-
-  private readonly feeTypeService = inject(FeeTypeService);
-
   private readonly confirmationService = inject(ConfirmationService);
 
-  public readonly permissions: Permissions;
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly feeTypeService = inject(FeeTypeService);
   public readonly Dialog = Dialog;
 
-  public selectedData = new FeeType();
+  public dialog = Dialog.NONE;
+
+  public failures = new FailureStore();
   public feeTypeData = new Page<FeeType>();
 
   /**
@@ -41,9 +40,10 @@ export class FeeTypeView implements OnInit {
    */
   public loading = false;
 
-  public failures = new FailureStore();
+  public readonly permissions: Permissions;
 
-  public dialog = Dialog.NONE;
+  public selectedData = new FeeType();
+  private listRequest?: Subscription;
 
   constructor() {
     const authService = inject(AuthService);
@@ -60,36 +60,15 @@ export class FeeTypeView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowInfo(data: FeeType): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
   public onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
-  }
-
-  public onShowEdit(feeType: FeeType) {
-    this.failures.clear();
-    this.selectedData = feeType;
-    this.dialog = Dialog.EDIT;
   }
 
   public onCreate(toCreate: FeeType): void {
     this.call(
       () => this.feeTypeService.create(toCreate),
       () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: FeeType): void {
-    this.call(
-      () => this.feeTypeService.update(toUpdate),
-      () => this.load(this.feeTypeData.page)
     );
   }
 
@@ -105,6 +84,36 @@ export class FeeTypeView implements OnInit {
     });
   }
 
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onShowEdit(feeType: FeeType) {
+    this.failures.clear();
+    this.selectedData = feeType;
+    this.dialog = Dialog.EDIT;
+  }
+
+  // EVENT HANDLERS
+
+  public onShowInfo(data: FeeType): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(toUpdate: FeeType): void {
+    this.call(
+      () => this.feeTypeService.update(toUpdate),
+      () => this.load(this.feeTypeData.page)
+    );
+  }
+
   // DATA LOADING
 
   public load(page: number | undefined = undefined): void {
@@ -117,15 +126,6 @@ export class FeeTypeView implements OnInit {
         finalize(() => this.loading = false)
       )
       .subscribe(response => this.feeTypeData = response);
-  }
-
-  // DIALOGS
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
   }
 
   // PRIVATE METHODS

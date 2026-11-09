@@ -19,25 +19,25 @@ import { MessageModule } from 'primeng/message';
 export class LoginForm {
 
   @Input()
+  public failedLogin = false;
+
+  @Input()
   public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  @Input()
-  public failedLogin = false;
-
   public readonly login = output<LoginEvent>();
-  public readonly rememberMe = output<boolean>();
   public readonly lostPassword = output<void>();
+  public readonly rememberMe = output<boolean>();
 
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
 
-  public passwordVisible = false;
-
   public get loginEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
+  public passwordVisible = false;
 
   public constructor() {
     const formBuilder = inject(FormBuilder);
@@ -47,10 +47,6 @@ export class LoginForm {
       password: ['', Validators.required]
     });
     this.formStatus = new FormStatus(this.form);
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property);
   }
 
   public onLogin(): void {
@@ -68,16 +64,20 @@ export class LoginForm {
     );
   }
 
+  public onLostPassword(): void {
+    if (!this.formStatus.loading) {
+      this.lostPassword.emit();
+    }
+  }
+
   public onRememberMe(checked: boolean): void {
     if (!this.formStatus.loading) {
       this.rememberMe.emit(checked);
     }
   }
 
-  public onLostPassword(): void {
-    if (!this.formStatus.loading) {
-      this.lostPassword.emit();
-    }
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property);
   }
 
   public togglePasswordVisibility(): void {

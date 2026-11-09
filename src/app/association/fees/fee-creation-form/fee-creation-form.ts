@@ -16,25 +16,25 @@ import { MessageModule } from 'primeng/message';
 })
 export class FeeCreationForm {
 
+  public readonly failures = input(new FailureStore());
+
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
-
-  public selectedMember?: Profile;
+  public readonly form: FormGroup;
 
   public readonly formStatus: FormStatus;
-  public readonly form: FormGroup;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
+  public selectedMember?: Profile;
 
   constructor() {
     const fb = inject(FormBuilder);
@@ -47,23 +47,18 @@ export class FeeCreationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  public onClearMember(): void {
+    this.selectedMember = undefined;
+    this.form.get('member')?.reset();
+    this.form.get('member')?.markAsDirty();
+  }
+
   public onSave(): void {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property)
-      || this.failures().hasFailures(property);
-  }
-
-  public onClearMember(): void {
-    this.selectedMember = undefined;
-    this.form.get('member')?.reset();
-    this.form.get('member')?.markAsDirty();
   }
 
   public onSelectMember(member: Profile): void {
@@ -76,6 +71,11 @@ export class FeeCreationForm {
     const memberControl = this.form.get('member');
     memberControl?.setValue(member.number);
     memberControl?.markAsTouched();
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
 
 }

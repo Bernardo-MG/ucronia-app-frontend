@@ -19,11 +19,11 @@ export class PasswordResetRequestForm {
     this.formStatus.loading = loading;
   }
 
-  public readonly formStatus: FormStatus;
-
   public readonly save = output<string>();
 
   public readonly form: FormGroup;
+
+  public readonly formStatus: FormStatus;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
@@ -38,10 +38,6 @@ export class PasswordResetRequestForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property);
-  }
-
   /**
    * Handler for the save event.
    */
@@ -52,6 +48,10 @@ export class PasswordResetRequestForm {
       // Valid form, can emit data
       this.save.emit(this.form.value.email);
     }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property);
   }
 
 }

@@ -12,16 +12,16 @@ import { TagModule } from 'primeng/tag';
   templateUrl: './activity-list.html'
 })
 export class ActivityList {
+  public readonly data = input<Activity[]>([]);
 
   public readonly loading = input(false);
-  public readonly data = input<Activity[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-
-  public readonly show = output<Activity>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+
+  public readonly show = output<Activity>();
 
   public get first() {
     return (this.page() - 1) * this.rows();
@@ -32,15 +32,15 @@ export class ActivityList {
     this.changePage.emit(page);
   }
 
+  public getDatesLabel(activity: Activity): string {
+    return `${activity.dates.length} ${activity.dates.length === 1 ? 'fecha' : 'fechas'}`;
+  }
+
   public getNextDate(activity: Activity): ActivityDate | undefined {
     const now = new Date();
     return [...activity.dates]
       .filter(date => new Date(date.end) >= now)
       .sort((first, second) => new Date(first.start).getTime() - new Date(second.start).getTime())[0];
-  }
-
-  public getDatesLabel(activity: Activity): string {
-    return `${activity.dates.length} ${activity.dates.length === 1 ? 'fecha' : 'fechas'}`;
   }
 
 }

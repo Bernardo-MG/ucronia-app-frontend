@@ -15,42 +15,19 @@ import { LibraryConfig } from '../library-config';
 export class LibraryBookInfo {
 
   private readonly config = inject(LibraryConfig);
-
-  public readonly loading = input(false);
-  public readonly showLending = output<BookLending>();
   public readonly book = input<FictionBook | GameBook>(new GameBook());
   public readonly borrowerNames = input<Record<number, string>>({});
 
-  public languages: Language[] = this.config.getLanguages();
-
-  public get isGame(): boolean {
-    return Object.prototype.hasOwnProperty.call(this.book(), 'gameSystem');
-  }
+  public readonly loading = input(false);
+  public readonly showLending = output<BookLending>();
 
   public get authors(): string {
     return this.book().authors.map(author => author.name).join(', ');
   }
 
-  public get publishers(): string {
-    return this.book().publishers.map(publisher => publisher.name).join(', ');
-  }
-
-  public get language(): string {
-    const language = this.languages.find(item => item.code === this.book().language);
-    return language ? language.name : this.book().language;
-  }
-
   public get bookType(): BookType | undefined {
     if (this.isGame) {
       return (this.book() as GameBook).bookType;
-    }
-
-    return undefined;
-  }
-
-  public get gameSystem(): GameSystem | undefined {
-    if (this.isGame) {
-      return (this.book() as GameBook).gameSystem;
     }
 
     return undefined;
@@ -64,6 +41,29 @@ export class LibraryBookInfo {
     }
 
     return donation.donors.map(donor => donor.name.fullName).join(', ');
+  }
+
+  public get gameSystem(): GameSystem | undefined {
+    if (this.isGame) {
+      return (this.book() as GameBook).gameSystem;
+    }
+
+    return undefined;
+  }
+
+  public get isGame(): boolean {
+    return Object.prototype.hasOwnProperty.call(this.book(), 'gameSystem');
+  }
+
+  public get language(): string {
+    const language = this.languages.find(item => item.code === this.book().language);
+    return language ? language.name : this.book().language;
+  }
+
+  public readonly languages: Language[] = this.config.getLanguages();
+
+  public get publishers(): string {
+    return this.book().publishers.map(publisher => publisher.name).join(', ');
   }
 
 }

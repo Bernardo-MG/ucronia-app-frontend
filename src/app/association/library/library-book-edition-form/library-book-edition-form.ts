@@ -1,17 +1,14 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { getAllPages } from '@app/shared/request/get-all-pages';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
-import { FailureStore, Page, SearchRequest } from '@bernardo-mg/request';
+import { FailureStore } from '@bernardo-mg/request';
 import { SearchSelect } from '@bernardo-mg/ui';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
-import { Observable } from 'rxjs';
 import { LibraryConfig } from '../library-config';
-import { LibraryService } from '../library-service';
 
 @Component({
   selector: 'assoc-library-book-edition-form',
@@ -19,19 +16,10 @@ import { LibraryService } from '../library-service';
   templateUrl: './library-book-edition-form.html'
 })
 export class LibraryBookEditionForm {
-
-  public readonly searchId = crypto.randomUUID();
-  private readonly service = inject(LibraryService);
-  private readonly donorSearch = new SearchRequest();
-
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
+  public readonly bookTypes = input<BookType[]>([]);
 
   @Input() public set data(value: FictionBook | GameBook) {
+    this.onClearDonorSearch();
     this.isGameBook = Object.prototype.hasOwnProperty.call(value, 'gameSystem');
 
     this.form.reset({
@@ -41,44 +29,62 @@ export class LibraryBookEditionForm {
       bookType: this.isGameBook ? (value as GameBook).bookType : undefined
     });
   }
+  public readonly donorSearchResults = input<Donor[]>([]);
+
+  public readonly failures = input(new FailureStore());
+
+  public readonly formId = input<string | null>(null);
+  public readonly gameSystems = input<GameSystem[]>([]);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+  public readonly clearDonorSearch = output<void>();
 
   public readonly save = output<FictionBook | GameBook>();
-  public readonly formStatus: FormStatus;
+
+  public readonly searchDonors = output<string>();
+
+  public get bookTypeOptions(): Array<{ number: number | undefined; name: string }> {
+    return [this.noBookTypeOption, ...this.bookTypes()];
+  }
+
+
+
+  public donorSearchValue: Donor | undefined;
 
   public readonly form: FormGroup;
+  public readonly formStatus: FormStatus;
+
+  public get gameSystemOptions(): Array<{ number: number | undefined; name: string }> {
+    return [this.noGameSystemOption, ...this.gameSystems()];
+  }
+
+  public isGameBook = false;
 
   public readonly languages: Language[] = [];
-
-  public gameSystems: GameSystem[] = [];
-
-  public bookTypes: BookType[] = [];
-
-  public readonly noGameSystemOption = {
-    number: undefined,
-    name: 'Sin sistema'
-  };
 
   public readonly noBookTypeOption = {
     number: undefined,
     name: 'Sin tipo'
   };
 
+  public readonly noGameSystemOption = {
+    number: undefined,
+    name: 'Sin sistema'
+  };
 
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
-  public donorSearchValue: Donor | undefined;
-
-
-
-  public donorSearchResults: Donor[] = [];
-
-  public isGameBook = false;
+  public readonly searchId = crypto.randomUUID();
 
   public get selectedAuthors(): Author[] {
     return this.form.get('authors')?.value ?? [];
   }
 
-  public get selectedPublishers(): Publisher[] {
-    return this.form.get('publishers')?.value ?? [];
+  public get selectedBookTypeNumber(): number | undefined {
+    return this.form.get('bookType')?.value?.number;
   }
 
   public get selectedDonors(): Donor[] {
@@ -89,20 +95,8 @@ export class LibraryBookEditionForm {
     return this.form.get('gameSystem')?.value?.number;
   }
 
-  public get selectedBookTypeNumber(): number | undefined {
-    return this.form.get('bookType')?.value?.number;
-  }
-
-  public get gameSystemOptions(): Array<{ number: number | undefined; name: string }> {
-    return [this.noGameSystemOption, ...this.gameSystems];
-  }
-
-  public get bookTypeOptions(): Array<{ number: number | undefined; name: string }> {
-    return [this.noBookTypeOption, ...this.bookTypes];
-  }
-
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
+  public get selectedPublishers(): Publisher[] {
+    return this.form.get('publishers')?.value ?? [];
   }
 
   constructor() {
@@ -133,16 +127,32 @@ export class LibraryBookEditionForm {
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
 
-    this.loadSelection(
-      this.service.getGameSystems.bind(this.service),
-      gameSystems => this.gameSystems = gameSystems
-    );
+  public onClearDonorSearch(): void {
+    this.donorSearchValue = undefined;
+    this.clearDonorSearch.emit();
+  }
 
-    this.loadSelection(
-      this.service.getBookTypes.bind(this.service),
-      bookTypes => this.bookTypes = bookTypes
-    );
+  public onRemoveAuthor(author: Author): void {
+    const authors = this.selectedAuthors.filter(selected => selected.number !== author.number);
+
+    this.form.get('authors')?.setValue(authors);
+    this.form.markAsDirty();
+  }
+
+  public onRemoveDonor(donor: Donor): void {
+    const donors = this.selectedDonors.filter(selected => selected.number !== donor.number);
+
+    this.form.get('donation')?.get('donors')?.setValue(donors);
+    this.form.markAsDirty();
+  }
+
+  public onRemovePublisher(publisher: Publisher): void {
+    const publishers = this.selectedPublishers.filter(selected => selected.number !== publisher.number);
+
+    this.form.get('publishers')?.setValue(publishers);
+    this.form.markAsDirty();
   }
 
   public onSave(): void {
@@ -160,6 +170,10 @@ export class LibraryBookEditionForm {
     }
   }
 
+  public onSearchDonors(event: { query: string }): void {
+    this.searchDonors.emit(event.query);
+  }
+
   public onSelectAuthor(author: Author): void {
     if (!author) {
       return;
@@ -175,44 +189,21 @@ export class LibraryBookEditionForm {
 
   }
 
-  public onRemoveAuthor(author: Author): void {
-    const authors = this.selectedAuthors.filter(selected => selected.number !== author.number);
-
-    this.form.get('authors')?.setValue(authors);
-    this.form.markAsDirty();
-  }
-
-  public onSelectPublisher(publisher: Publisher): void {
-    if (!publisher) {
+  public onSelectBookType(number: number | undefined): void {
+    if (number === undefined || number === null) {
+      this.form.get('bookType')?.setValue(undefined);
+      this.form.markAsDirty();
       return;
     }
 
-    const publishers = this.selectedPublishers;
-    const alreadySelected = publishers.some(selected => selected.number === publisher.number);
+    const bookType = this.bookTypes().find(type => type.number === number);
 
-    if (!alreadySelected) {
-      this.form.get('publishers')?.setValue([...publishers, publisher]);
-      this.form.markAsDirty();
+    if (!bookType) {
+      return;
     }
 
-  }
-
-  public onRemovePublisher(publisher: Publisher): void {
-    const publishers = this.selectedPublishers.filter(selected => selected.number !== publisher.number);
-
-    this.form.get('publishers')?.setValue(publishers);
+    this.form.get('bookType')?.setValue(bookType);
     this.form.markAsDirty();
-  }
-
-  public onSearchDonors(event: { query: string }): void {
-    this.donorSearch.search(event.query, query => this.service.searchDonors(query))
-      .subscribe(results => this.donorSearchResults = results);
-  }
-
-  public onClearDonorSearch(): void {
-    this.donorSearch.cancel();
-    this.donorSearchValue = undefined;
-    this.donorSearchResults = [];
   }
 
   public onSelectDonor(donor: Donor): void {
@@ -231,13 +222,6 @@ export class LibraryBookEditionForm {
     this.onClearDonorSearch();
   }
 
-  public onRemoveDonor(donor: Donor): void {
-    const donors = this.selectedDonors.filter(selected => selected.number !== donor.number);
-
-    this.form.get('donation')?.get('donors')?.setValue(donors);
-    this.form.markAsDirty();
-  }
-
   public onSelectGameSystem(number: number | undefined): void {
     if (number === undefined || number === null) {
       this.form.get('gameSystem')?.setValue(undefined);
@@ -245,7 +229,7 @@ export class LibraryBookEditionForm {
       return;
     }
 
-    const gameSystem = this.gameSystems.find(system => system.number === number);
+    const gameSystem = this.gameSystems().find(system => system.number === number);
 
     if (!gameSystem) {
       return;
@@ -255,33 +239,23 @@ export class LibraryBookEditionForm {
     this.form.markAsDirty();
   }
 
-  public onSelectBookType(number: number | undefined): void {
-    if (number === undefined || number === null) {
-      this.form.get('bookType')?.setValue(undefined);
+  public onSelectPublisher(publisher: Publisher): void {
+    if (!publisher) {
+      return;
+    }
+
+    const publishers = this.selectedPublishers;
+    const alreadySelected = publishers.some(selected => selected.number === publisher.number);
+
+    if (!alreadySelected) {
+      this.form.get('publishers')?.setValue([...publishers, publisher]);
       this.form.markAsDirty();
-      return;
     }
 
-    const bookType = this.bookTypes.find(type => type.number === number);
-
-    if (!bookType) {
-      return;
-    }
-
-    this.form.get('bookType')?.setValue(bookType);
-    this.form.markAsDirty();
   }
 
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  private loadSelection<T extends { number: number }>(
-    loader: (page: number | undefined, size: number) => Observable<Page<T>>,
-    setData: (data: T[]) => void
-  ): void {
-    getAllPages(loader)
-      .subscribe(setData);
   }
 
 }

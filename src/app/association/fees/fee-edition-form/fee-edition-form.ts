@@ -16,30 +16,30 @@ import { MessageModule } from 'primeng/message';
 })
 export class FeeEditionForm {
 
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
-
   @Input() public set data(value: Fee) {
     this.form.reset({ transaction: { date: value.transaction?.date ?? null } });
     this.fee = value;
   }
 
-  public readonly save = output<FeeEditionEvent>();
-  public readonly formStatus: FormStatus;
+  public readonly failures = input(new FailureStore());
 
-  public readonly form: FormGroup;
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
+  public readonly save = output<FeeEditionEvent>();
 
   public fee = new Fee();
 
-  public readonly today = new Date();
+  public readonly form: FormGroup;
+  public readonly formStatus: FormStatus;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
+  public readonly today = new Date();
 
   constructor() {
     const fb = inject(FormBuilder);

@@ -16,52 +16,56 @@ import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { finalize, Observable, Subscription } from 'rxjs';
-import { ActivityForm } from '../activity-form/activity-form';
+import { ActivityForm, ActivityImageOption } from '../activity-form/activity-form';
 import { ActivityInfo } from '../activity-info/activity-info';
 import { ActivityList } from '../activity-list/activity-list';
 import { ActivityService } from '../activity-service';
+import { ImageService } from '../../images/image-service';
 
 @Component({
   imports: [TextFilter, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, ActivityList, ActivityInfo, ActivityForm],
   templateUrl: './activity-view.html'
 })
 export class ActivityView implements OnInit {
-
-  private readonly destroyRef = inject(DestroyRef);
-
-  private readonly service = inject(ActivityService);
-  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
 
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
-  public readonly status: Status = {
-    loading: false
-  };
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly imageService = inject(ImageService);
+
+  private readonly service = inject(ActivityService);
 
   public activities = new Page<Activity>();
-  public selectedDisplay = ActivityDisplay.UPCOMING;
+  public readonly Dialog = Dialog;
+
+  public dialog = Dialog.NONE;
   public readonly displayOptions = [
     { label: 'Próximas', value: ActivityDisplay.UPCOMING },
     { label: 'Todas', value: ActivityDisplay.ALL },
     { label: 'Pasadas', value: ActivityDisplay.PAST }
   ];
-  private sort = new Sorting();
-  public selectedData = new Activity();
-
-  public dialog = Dialog.NONE;
 
   public failures = new FailureStore();
+  public imageOptions: ActivityImageOption[] = [];
+
+  public get locationCount(): number {
+    return new Set(this.activities.content.map(activity => activity.location).filter(Boolean)).size;
+  }
+
+  public readonly permissions: Permissions;
+  public selectedData = new Activity();
+  public selectedDisplay = ActivityDisplay.UPCOMING;
+  public readonly status: Status = {
+    loading: false
+  };
 
   public get upcomingSessions(): number {
     const now = new Date();
     return this.activities.content.flatMap(activity => activity.dates)
       .filter(date => new Date(date.end) >= now).length;
   }
-
-  public get locationCount(): number {
-    return new Set(this.activities.content.map(activity => activity.location).filter(Boolean)).size;
-  }
+  private imageOptionsRequest?: Subscription;
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
 
   constructor() {
     const authService = inject(AuthService);
@@ -78,6 +82,13 @@ export class ActivityView implements OnInit {
     this.load();
   }
 
+  // DIALOGS
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
   // EVENT HANDLERS
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -92,13 +103,6 @@ export class ActivityView implements OnInit {
   public onCreate(toCreate: Activity): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: Activity): void {
-    this.call(
-      () => this.service.update(toUpdate),
       () => this.load()
     );
   }
@@ -136,13 +140,33 @@ export class ActivityView implements OnInit {
     });
   }
 
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
   public onShowEdit() {
     this.dialog = Dialog.EDIT;
+    this.loadImageOptions();
   }
 
   public onShowInfo(activity: Activity) {
     this.selectedData = activity;
     this.dialog = Dialog.INFO;
+  }
+
+  public onStartCreation(): void {
+    this.dialog = Dialog.CREATE;
+    this.loadImageOptions();
+  }
+
+  public onUpdate(toUpdate: Activity): void {
+    this.call(
+      () => this.service.update(toUpdate),
+      () => this.load()
+    );
   }
 
   // DATA LOADING
@@ -158,18 +182,19 @@ export class ActivityView implements OnInit {
       .subscribe(activities => this.activities = activities);
   }
 
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
+  private loadImageOptions(): void {
+    this.imageOptionsRequest?.unsubscribe();
+    this.imageOptions = [];
+    this.imageOptionsRequest = this.imageService.getAllForSelection()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(images => {
+        this.imageOptions = images.map(image => ({
+          name: image.name,
+          description: image.description,
+          number: image.number,
+          url: this.imageService.contentUrl(image.number)
+        }));
+      });
   }
 
   // PRIVATE METHODS

@@ -38,65 +38,16 @@ import { TransactionTypeList } from '../transaction-type-list/transaction-type-l
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
-
-  private readonly detailRequest = new DetailRequest();
-
-  private readonly service = inject(TransactionService);
-  private listRequest?: Subscription;
-  private readonly transactionCalendarService = inject(TransactionCalendarService);
-  private readonly transactionBalanceService = inject(TransactionBalanceService);
-  private readonly reportService = inject(TransactionReportService);
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly reportService = inject(TransactionReportService);
 
-  public months: Date[] = [];
-  public selectedCalendarMonth?: Date;
-  private calendarRequest?: Subscription;
-  private monthsRequest?: Subscription;
-  private summaryRequest?: Subscription;
-
-  public readonly status: Status = {
-    loading: false,
-    loadingCalendar: false,
-    loadingList: false,
-    loadingExcel: false,
-    loadingSummary: false
-  };
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
-  public readonly FundsDisplay = FundsDisplay;
-
-  public selectedTab: string | number = 'transactions';
-  public transactionTypesVersion = 0;
-  public showTypeForm = false;
-  public readonly typeLoading = signal(false);
-  public readonly typeFailures = signal(new FailureStore());
-  public readonly typeSaveError = signal(false);
-
-  public selectedData = new Transaction();
+  private readonly service = inject(TransactionService);
+  private readonly transactionBalanceService = inject(TransactionBalanceService);
+  private readonly transactionCalendarService = inject(TransactionCalendarService);
 
   public descriptionFilter = '';
-
-  public transactions: Transaction[] = [];
-  public transactionsPage = new Page<Transaction>();
-  public summary = new TransactionSummary();
-  public readonly transactionsChanged$ = new Subject<void>();
-
-  public display = FundsDisplay.CALENDAR;
-
-  public failures = new FailureStore();
-
-  private sort = new Sorting();
-
-  private typesRequest?: Subscription;
-  public readonly transactionTypes = signal<TransactionType[]>([]);
-  public readonly typesLoading = signal(false);
-
-  private currentDialog = Dialog.NONE;
-
-  public get selectedTransactionType(): TransactionType | undefined {
-    return this.transactionTypes().find(type => type.number === this.selectedData.transactionType);
-  }
+  public readonly Dialog = Dialog;
 
   public get dialog(): Dialog {
     return this.currentDialog;
@@ -112,6 +63,55 @@ export class FundsView implements OnInit {
       }
     }
   }
+
+  public display = FundsDisplay.CALENDAR;
+
+  public failures = new FailureStore();
+  public readonly FundsDisplay = FundsDisplay;
+
+  public months: Date[] = [];
+  public readonly permissions: Permissions;
+  public selectedCalendarMonth?: Date;
+
+  public selectedData = new Transaction();
+
+  public selectedTab: string | number = 'transactions';
+
+  public get selectedTransactionType(): TransactionType | undefined {
+    return this.transactionTypes().find(type => type.number === this.selectedData.transactionType);
+  }
+  public showTypeForm = false;
+
+  public readonly status: Status = {
+    loading: false,
+    loadingCalendar: false,
+    loadingList: false,
+    loadingExcel: false,
+    loadingSummary: false
+  };
+  public summary = new TransactionSummary();
+
+  public transactions: Transaction[] = [];
+  public readonly transactionsChanged$ = new Subject<void>();
+  public transactionsPage = new Page<Transaction>();
+  public readonly transactionTypes = signal<TransactionType[]>([]);
+  public transactionTypesVersion = 0;
+  public readonly typeFailures = signal(new FailureStore());
+  public readonly typeLoading = signal(false);
+  public readonly typeSaveError = signal(false);
+  public readonly typesLoading = signal(false);
+  private calendarRequest?: Subscription;
+
+  private currentDialog = Dialog.NONE;
+
+  private readonly detailRequest = new DetailRequest();
+  private listRequest?: Subscription;
+  private monthsRequest?: Subscription;
+
+  private sort = new Sorting();
+  private summaryRequest?: Subscription;
+
+  private typesRequest?: Subscription;
 
   constructor() {
     const authService = inject(AuthService);
@@ -141,45 +141,19 @@ export class FundsView implements OnInit {
     this.loadSummary();
   }
 
-  public onTabChange(tab: string | number | undefined): void {
-    if (tab === undefined || tab === this.selectedTab) {
-      return;
-    }
+  // DIALOGS
 
-    this.selectedTab = tab;
-    if (tab === 'transactions' && this.permissions.readTypes) {
-      this.loadTransactionTypes();
-    }
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
   }
 
-  public createType(values: Pick<TransactionType, 'description' | 'color'>): void {
-    if (this.typeLoading()) {
-      return;
-    }
-
-    this.typeLoading.set(true);
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-    this.service.saveType(values)
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
-      .subscribe({
-        next: () => {
-          this.transactionTypesVersion++;
-          this.closeTypeForm();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.typeFailures.set(error.failures);
-          }
-          this.typeSaveError.set(true);
-        }
-      });
-  }
-
-  public closeTypeForm(): void {
-    this.showTypeForm = false;
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
+  public onChangeDirection(sorting: SortingEvent) {
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+    this.sort = new Sorting([new SortingProperty(sorting.field, direction)]);
+    this.loadList();
   }
 
   // EVENT HANDLERS
@@ -187,13 +161,6 @@ export class FundsView implements OnInit {
   public onCreate(toCreate: Transaction): void {
     this.call(
       () => this.service.create(toCreate),
-      () => this.refreshAfterChange()
-    );
-  }
-
-  public onUpdate(toUpdate: Transaction): void {
-    this.call(
-      () => this.service.update(toUpdate),
       () => this.refreshAfterChange()
     );
   }
@@ -231,6 +198,18 @@ export class FundsView implements OnInit {
     });
   }
 
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onFilter(filter: string) {
+    this.descriptionFilter = filter;
+    this.loadList();
+  }
+
   public onShowInfo(transactionId: number) {
     this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
@@ -243,39 +222,29 @@ export class FundsView implements OnInit {
       .subscribe(transaction => this.selectedData = transaction);
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-    this.sort = new Sorting([new SortingProperty(sorting.field, direction)]);
-    this.loadList();
+  public onTabChange(tab: string | number | undefined): void {
+    if (tab === undefined || tab === this.selectedTab) {
+      return;
+    }
+
+    this.selectedTab = tab;
+    if (tab === 'transactions' && this.permissions.readTypes) {
+      this.loadTransactionTypes();
+    }
   }
 
-  public onFilter(filter: string) {
-    this.descriptionFilter = filter;
-    this.loadList();
+  public onUpdate(toUpdate: Transaction): void {
+    this.call(
+      () => this.service.update(toUpdate),
+      () => this.refreshAfterChange()
+    );
   }
 
-  // REPORT
-
-  public downloadExcel() {
-    this.status.loadingExcel = true;
-    this.reportService.downloadExcelReport()
-      .pipe(finalize(() => this.status.loadingExcel = false))
-      .subscribe();
-  }
-
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
+  private load() {
+    if (this.display === FundsDisplay.CALENDAR) {
+      this.loadCalendar();
+    } else {
+      this.loadList();
     }
   }
 
@@ -303,12 +272,12 @@ export class FundsView implements OnInit {
       .subscribe(transactions => this.transactionsPage = transactions);
   }
 
-  private load() {
-    if (this.display === FundsDisplay.CALENDAR) {
-      this.loadCalendar();
-    } else {
-      this.loadList();
-    }
+  private loadSummary(): void {
+    this.summaryRequest?.unsubscribe();
+    this.status.loadingSummary = true;
+    this.summaryRequest = this.transactionBalanceService.summary()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
+      .subscribe(s => this.summary = s);
   }
 
   private loadTransactionTypes(): void {
@@ -330,14 +299,6 @@ export class FundsView implements OnInit {
     this.transactionsChanged$.next();
   }
 
-  private loadSummary(): void {
-    this.summaryRequest?.unsubscribe();
-    this.status.loadingSummary = true;
-    this.summaryRequest = this.transactionBalanceService.summary()
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
-      .subscribe(s => this.summary = s);
-  }
-
   private refreshMonths(onSuccess: () => void): void {
     this.monthsRequest?.unsubscribe();
     this.monthsRequest = this.transactionCalendarService.getRange()
@@ -356,6 +317,45 @@ export class FundsView implements OnInit {
 
         onSuccess();
       });
+  }
+
+  public closeTypeForm(): void {
+    this.showTypeForm = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+  }
+
+  public createType(values: Pick<TransactionType, 'description' | 'color'>): void {
+    if (this.typeLoading()) {
+      return;
+    }
+
+    this.typeLoading.set(true);
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+    this.service.saveType(values)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.transactionTypesVersion++;
+          this.closeTypeForm();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.typeFailures.set(error.failures);
+          }
+          this.typeSaveError.set(true);
+        }
+      });
+  }
+
+  // REPORT
+
+  public downloadExcel() {
+    this.status.loadingExcel = true;
+    this.reportService.downloadExcelReport()
+      .pipe(finalize(() => this.status.loadingExcel = false))
+      .subscribe();
   }
 
   private call(

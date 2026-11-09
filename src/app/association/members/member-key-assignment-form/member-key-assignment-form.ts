@@ -14,9 +14,13 @@ import { MessageModule } from 'primeng/message';
 export class MemberKeyAssignmentForm {
 
   private readonly fb = inject(FormBuilder);
+  public readonly failures = input(new FailureStore());
 
   public readonly formId = input<string | null>(null);
-  public readonly failures = input(new FailureStore());
+
+  @Input() public set loading(value: boolean) {
+    this.formStatus.loading = value;
+  }
   public readonly members = input<PublicMember[]>([]);
 
   public readonly save = output<number>();
@@ -27,12 +31,21 @@ export class MemberKeyAssignmentForm {
 
   public readonly formStatus = new FormStatus(this.form);
 
-  @Input() public set loading(value: boolean) {
-    this.formStatus.loading = value;
-  }
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && this.members().some(member => member.number === this.form.controls.profile.value);
+  }
+
+  public onClearMember(): void {
+    this.form.controls.profile.setValue(null);
+    this.form.controls.profile.markAsDirty();
+  }
+
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      this.save.emit(this.form.controls.profile.value!);
+    }
   }
 
   public onSelectMember(member: PublicMember): void {
@@ -43,21 +56,8 @@ export class MemberKeyAssignmentForm {
     this.form.controls.profile.markAsDirty();
   }
 
-  public onClearMember(): void {
-    this.form.controls.profile.setValue(null);
-    this.form.controls.profile.markAsDirty();
-  }
-
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  public onSave(): void {
-    this.form.markAllAsTouched();
-
-    if (this.saveEnabled) {
-      this.save.emit(this.form.controls.profile.value!);
-    }
   }
 
 }

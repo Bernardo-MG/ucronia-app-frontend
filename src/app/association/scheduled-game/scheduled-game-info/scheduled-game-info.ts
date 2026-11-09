@@ -12,9 +12,22 @@ import { TagModule } from 'primeng/tag';
 })
 export class ScheduledGameInfo {
   public readonly data = input(new ScheduledGame());
+  public readonly loading = input(false);
   public readonly master = input(new Profile());
   public readonly table = input<GameTable | undefined>(undefined);
-  public readonly loading = input(false);
+
+  public getRecurrenceName(): string {
+    const recurrence = this.data().recurrence;
+    if (!recurrence?.interval) return 'Sin recurrencia';
+
+    let unit = recurrence.unit;
+    switch (recurrence.unit) {
+      case RecurrenceUnit.DAILY: unit = recurrence.interval === 1 ? 'día' : 'días'; break;
+      case RecurrenceUnit.WEEKLY: unit = recurrence.interval === 1 ? 'semana' : 'semanas'; break;
+      case RecurrenceUnit.MONTHLY: unit = recurrence.interval === 1 ? 'mes' : 'meses'; break;
+    }
+    return `Cada ${recurrence.interval} ${unit}`;
+  }
 
   public getStatusName(status: CalendarStatus): string {
     switch (status) {
@@ -36,18 +49,5 @@ export class ScheduledGameInfo {
       case CalendarStatus.REJECTED: return 'danger';
       default: return 'secondary';
     }
-  }
-
-  public getRecurrenceName(): string {
-    const recurrence = this.data().recurrence;
-    if (!recurrence?.interval) return 'Sin recurrencia';
-
-    let unit = recurrence.unit;
-    switch (recurrence.unit) {
-      case RecurrenceUnit.DAILY: unit = recurrence.interval === 1 ? 'día' : 'días'; break;
-      case RecurrenceUnit.WEEKLY: unit = recurrence.interval === 1 ? 'semana' : 'semanas'; break;
-      case RecurrenceUnit.MONTHLY: unit = recurrence.interval === 1 ? 'mes' : 'meses'; break;
-    }
-    return `Cada ${recurrence.interval} ${unit}`;
   }
 }

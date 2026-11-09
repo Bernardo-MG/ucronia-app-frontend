@@ -11,7 +11,7 @@ import { PasswordResetService } from '../password-reset-service';
 
 /**
  * Password reset. Changes the password for an existing user, this user is identified by a token.
- * 
+ *
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
@@ -21,20 +21,20 @@ import { PasswordResetService } from '../password-reset-service';
 export class PasswordResetView {
 
   private readonly destroyRef = inject(DestroyRef);
-  private readonly tokenChanged = new Subject<void>();
   private readonly service = inject(PasswordResetService);
+
+  public failures = new FailureStore();
+
+  public loading = false;
+
+  public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
 
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
    */
   public validatingToken = false;
-
-  public loading = false;
-
-  public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
   private token = '';
-
-  public failures = new FailureStore();
+  private readonly tokenChanged = new Subject<void>();
 
   constructor() {
     const route = inject(ActivatedRoute);
@@ -49,7 +49,7 @@ export class PasswordResetView {
 
   /**
    * Resets the password. The user is identified by the token.
-   * 
+   *
    * @param password new password for the user
    */
   public onPasswordReset(password: string): void {

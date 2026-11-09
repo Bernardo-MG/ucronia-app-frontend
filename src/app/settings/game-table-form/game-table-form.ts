@@ -13,23 +13,23 @@ import { TextareaModule } from 'primeng/textarea';
   templateUrl: './game-table-form.html'
 })
 export class GameTableForm {
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
   @Input() public set data(value: GameTable) {
     this.form.patchValue(value);
     this.isEdit = true;
   }
 
-  public isEdit = false;
+  public readonly failures = input(new FailureStore());
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly save = output<GameTable>();
 
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
+
+  public isEdit = false;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;

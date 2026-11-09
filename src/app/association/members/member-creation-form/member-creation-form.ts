@@ -22,14 +22,21 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 export class MemberCreationForm {
 
   private readonly fb = inject(FormBuilder);
-
-  public readonly formId = input<string | null>(null);
+  public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly failures = input(new FailureStore());
   public readonly feeTypes = input<FeeType[]>([]);
-  public readonly contactMethods = input<ContactMethod[]>([]);
+
+  public readonly formId = input<string | null>(null);
+
+  @Input() public set loading(value: boolean) {
+    this.formStatus.loading = value;
+  }
 
   public readonly save = output<MemberCreation>();
-  public readonly today = new Date();
+
+  public get contactChannels(): FormArray {
+    return this.form.controls.contactChannels;
+  }
 
   public readonly form = this.fb.group({
     feeType: this.fb.control<number | null>(null, Validators.required),
@@ -49,34 +56,10 @@ export class MemberCreationForm {
 
   public readonly formStatus = new FormStatus(this.form);
 
-  @Input() public set loading(value: boolean) {
-    this.formStatus.loading = value;
-  }
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
-  public get contactChannels(): FormArray {
-    return this.form.controls.contactChannels;
-  }
-
-  public addContactChannel(): void {
-    this.contactChannels.push(
-      this.fb.group({
-        method: this.fb.control<number | null>(null, Validators.required),
-        detail: ['', [Validators.required, Validators.maxLength(50)]]
-      })
-    );
-  }
-
-  public removeContactChannel(index: number): void {
-    this.contactChannels.removeAt(index);
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
+  public readonly today = new Date();
 
   public onSave(): void {
     this.form.markAllAsTouched();
@@ -94,6 +77,23 @@ export class MemberCreationForm {
     data.active = value.active ?? true;
     data.renew = value.renew ?? true;
     this.save.emit(data);
+  }
+
+  public addContactChannel(): void {
+    this.contactChannels.push(
+      this.fb.group({
+        method: this.fb.control<number | null>(null, Validators.required),
+        detail: ['', [Validators.required, Validators.maxLength(50)]]
+      })
+    );
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
   }
 
 }

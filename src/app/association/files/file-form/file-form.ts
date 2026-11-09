@@ -23,17 +23,24 @@ export class FileForm implements OnChanges {
   private readonly fb = inject(FormBuilder);
 
   public readonly data = input<Asset | undefined>();
+
+  public readonly failures = input(new FailureStore());
   public readonly folders = input<AssetFolder[]>([]);
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly save = output<FileFormData>();
+  public file?: File;
+
+  public get folderOptions(): FolderOption[] {
+    return [
+      { name: 'Sin carpeta', number: null },
+      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
+    ];
+  }
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-  public file?: File;
 
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
@@ -72,13 +79,6 @@ export class FileForm implements OnChanges {
 
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  public get folderOptions(): FolderOption[] {
-    return [
-      { name: 'Sin carpeta', number: null },
-      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
-    ];
   }
 
   private folderPath(folder: AssetFolder): string {

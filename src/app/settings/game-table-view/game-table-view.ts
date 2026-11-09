@@ -22,21 +22,21 @@ import { GameTableService } from '../game-table-service';
 })
 export class GameTableView implements OnInit {
 
+  private readonly confirmationService = inject(ConfirmationService);
+
   private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
 
   private readonly service = inject(GameTableService);
 
-  private readonly confirmationService = inject(ConfirmationService);
+  public data = new Page<GameTable>();
 
   public readonly Dialog = Dialog;
-  public readonly permissions: Permissions;
-
-  public data = new Page<GameTable>();
-  public selectedData = new GameTable();
   public dialog = Dialog.NONE;
   public failures = new FailureStore();
   public loading = false;
+  public readonly permissions: Permissions;
+  public selectedData = new GameTable();
+  private listRequest?: Subscription;
 
   constructor() {
     const authService = inject(AuthService);
@@ -51,28 +51,13 @@ export class GameTableView implements OnInit {
     this.load();
   }
 
-  public onShowInfo(data: GameTable): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
   public onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
-  public onShowEdit(table: GameTable): void {
-    this.failures.clear();
-    this.selectedData = table; this.dialog = Dialog.EDIT;
-  }
-
   public onCreate(table: GameTable): void {
     this.call(() => this.service.create(table), () => this.load());
-  }
-
-  public onUpdate(table: GameTable): void {
-    this.call(() => this.service.update(table), () => this.load(this.data.page));
   }
 
   public onDelete(event: Event): void {
@@ -87,6 +72,28 @@ export class GameTableView implements OnInit {
     });
   }
 
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onShowEdit(table: GameTable): void {
+    this.failures.clear();
+    this.selectedData = table; this.dialog = Dialog.EDIT;
+  }
+
+  public onShowInfo(data: GameTable): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(table: GameTable): void {
+    this.call(() => this.service.update(table), () => this.load(this.data.page));
+  }
+
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -96,13 +103,6 @@ export class GameTableView implements OnInit {
         finalize(() => this.loading = false)
       )
       .subscribe(data => this.data = data);
-  }
-
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
   }
 
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {

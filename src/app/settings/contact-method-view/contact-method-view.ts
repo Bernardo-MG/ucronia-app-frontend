@@ -23,27 +23,27 @@ import { ContactMethodService } from '../contact-method-service';
 })
 export class ContactMethodView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
+  private readonly confirmationService = inject(ConfirmationService);
 
   private readonly contactMethodService = inject(ContactMethodService);
 
-  private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
+  private readonly destroyRef = inject(DestroyRef);
+  public contactMethodData = new Page<ContactMethod>();
   public readonly Dialog = Dialog;
 
   public dialog = Dialog.NONE;
 
-  public selectedData = new ContactMethod();
-  public contactMethodData = new Page<ContactMethod>();
+  public failures = new FailureStore();
 
   /**
    * Loading flag.
    */
   public loading = false;
 
-  public failures = new FailureStore();
+  public readonly permissions: Permissions;
+
+  public selectedData = new ContactMethod();
+  private listRequest?: Subscription;
 
   constructor() {
     const authService = inject(AuthService);
@@ -60,36 +60,15 @@ export class ContactMethodView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowInfo(data: ContactMethod): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
   public onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
-  }
-
-  public onShowEdit(contactMethod: ContactMethod) {
-    this.failures.clear();
-    this.selectedData = contactMethod;
-    this.dialog = Dialog.EDIT;
   }
 
   public onCreate(toCreate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.create(toCreate),
       () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: ContactMethod): void {
-    this.call(
-      () => this.contactMethodService.update(toUpdate),
-      () => this.load(this.contactMethodData.page)
     );
   }
 
@@ -105,6 +84,36 @@ export class ContactMethodView implements OnInit {
     });
   }
 
+  // DIALOGS
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onShowEdit(contactMethod: ContactMethod) {
+    this.failures.clear();
+    this.selectedData = contactMethod;
+    this.dialog = Dialog.EDIT;
+  }
+
+  // EVENT HANDLERS
+
+  public onShowInfo(data: ContactMethod): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(toUpdate: ContactMethod): void {
+    this.call(
+      () => this.contactMethodService.update(toUpdate),
+      () => this.load(this.contactMethodData.page)
+    );
+  }
+
   // DATA LOADING
 
   public load(page: number | undefined = undefined): void {
@@ -117,15 +126,6 @@ export class ContactMethodView implements OnInit {
         finalize(() => this.loading = false)
       )
       .subscribe(response => this.contactMethodData = response);
-  }
-
-  // DIALOGS
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
   }
 
   // PRIVATE METHODS

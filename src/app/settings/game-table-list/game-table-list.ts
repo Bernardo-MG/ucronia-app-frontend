@@ -8,15 +8,15 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   templateUrl: './game-table-list.html'
 })
 export class GameTableList {
+  public readonly data = input<GameTable[]>([]);
 
   public readonly loading = input(false);
-  public readonly data = input<GameTable[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
+  public readonly changePage = output<number>();
 
   public readonly show = output<GameTable>();
-  public readonly changePage = output<number>();
 
   public get first(): number { return (this.page() - 1) * this.rows(); }
 

@@ -21,22 +21,22 @@ import { AuthorService } from '../author-service';
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {
-
-  private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
-
-  private readonly service = inject(AuthorService);
   private readonly confirmationService = inject(ConfirmationService);
 
-  public readonly permissions: Permissions;
+  private readonly destroyRef = inject(DestroyRef);
+
+  private readonly service = inject(AuthorService);
 
   public data = new Page<Author>();
-  public loading = false;
-  public failures = new FailureStore();
   public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
+  public failures = new FailureStore();
+  public loading = false;
+
+  public readonly permissions: Permissions;
   public selected = new Author();
-  private sort = new Sorting();
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
 
   constructor() {
     const authService = inject(AuthService);
@@ -53,34 +53,29 @@ export class LibraryAuthorListView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowCreate(): void {
-    this.selected = new Author();
-    this.dialog = Dialog.CREATE;
-    this.failures.clear();
-  }
-
-  public onShowInfo(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.INFO;
-    this.failures.clear();
-  }
-
-  public onShowEdit(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.EDIT;
-    this.failures.clear();
-  }
-
-  public onReject(): void {
-    this.dialog = Dialog.NONE;
-    this.failures.clear();
-  }
-
   public onCancelEdit(): void {
     this.dialog = Dialog.INFO;
     this.failures.clear();
+  }
+
+  public onCreate(data: any): void {
+    this.loading = true;
+    this.service.create(data)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
   }
 
   public onDelete(event: Event): void {
@@ -118,6 +113,20 @@ export class LibraryAuthorListView implements OnInit {
     });
   }
 
+  // DRAWER
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onReject(): void {
+    this.dialog = Dialog.NONE;
+    this.failures.clear();
+  }
+
   public onSave(data: any): void {
     if (this.dialog === Dialog.CREATE) {
       this.onCreate(data);
@@ -126,24 +135,30 @@ export class LibraryAuthorListView implements OnInit {
     }
   }
 
-  public onCreate(data: any): void {
-    this.loading = true;
-    this.service.create(data)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  // EVENT HANDLERS
+
+  public onShowCreate(): void {
+    this.selected = new Author();
+    this.dialog = Dialog.CREATE;
+    this.failures.clear();
+  }
+
+  public onShowEdit(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.EDIT;
+    this.failures.clear();
+  }
+
+  public onShowInfo(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.INFO;
+    this.failures.clear();
+  }
+
+  public onSort(sorting: { field: string; order: number }): void {
+    const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
+    this.sort.addField(new SortingProperty(sorting.field, direction));
+    this.load(this.data.page);
   }
 
   public onUpdate(data: any): void {
@@ -164,21 +179,6 @@ export class LibraryAuthorListView implements OnInit {
           }
         }
       });
-  }
-
-  public onSort(sorting: { field: string; order: number }): void {
-    const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
-    this.sort.addField(new SortingProperty(sorting.field, direction));
-    this.load(this.data.page);
-  }
-
-  // DRAWER
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
   }
 
   // DATA LOADING

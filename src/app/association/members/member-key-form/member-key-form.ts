@@ -14,13 +14,6 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class MemberKeyForm {
 
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
-
   @Input() public set data(value: Key | undefined) {
     if (value) {
       this.form.reset({ number: value.number, available: value.available, description: value.description });
@@ -31,9 +24,16 @@ export class MemberKeyForm {
     }
   }
 
+  public readonly failures = input(new FailureStore());
+
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
   public readonly save = output<Key>();
-  public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
+  public readonly formStatus: FormStatus;
 
   public isEdit = false;
 

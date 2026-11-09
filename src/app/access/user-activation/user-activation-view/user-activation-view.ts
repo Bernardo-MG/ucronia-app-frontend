@@ -11,7 +11,7 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
 
 /**
  * User activation. Activates a new user, and sets the password for it. The user is identified by a token.
- * 
+ *
  * This token is received through the route, and validated before allowing the user to do anything.
  */
 @Component({
@@ -21,24 +21,24 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
 export class UserActivationView {
 
   private readonly destroyRef = inject(DestroyRef);
-  private readonly tokenChanged = new Subject<void>();
   private readonly service = inject(AccessUserActivateService);
-
-  public status: Status = {
-    validating: false,
-    loading: false
-  };
-
-  public step = Step.VALID_TOKEN;
-
-  public user: { username: string, token: string } = { username: '', token: '' };
 
   /**
    * Failures when activating the user.
    */
   public failures = new FailureStore();
 
-  public Step = Step;
+  public readonly status: Status = {
+    validating: false,
+    loading: false
+  };
+
+  public step = Step.VALID_TOKEN;
+
+  public readonly Step = Step;
+
+  public user: { username: string, token: string } = { username: '', token: '' };
+  private readonly tokenChanged = new Subject<void>();
 
   constructor() {
     const route = inject(ActivatedRoute);
@@ -53,7 +53,7 @@ export class UserActivationView {
 
   /**
    * Activates the user with the received password. The user will be acquired by the backend from the token.
-   * 
+   *
    * @param password password for the user
    */
   public onActivateUser(password: string): void {

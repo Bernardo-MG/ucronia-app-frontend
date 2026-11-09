@@ -14,13 +14,6 @@ export class RoleInfo {
   public readonly data = input(new Role());
   public readonly loading = input(false);
 
-
-  public get resourceCount(): number {
-    return new Set(
-      this.data().permissions.map(permission => permission.resource)
-    ).size;
-  }
-
   public get permissionGroups(): PermissionGroup[] {
     const groups = new Map<string, ResourcePermission[]>();
 
@@ -38,6 +31,13 @@ export class RoleInfo {
         permissions: permissions.sort((first, second) => first.action.localeCompare(second.action))
       }))
       .sort((first, second) => first.resource.localeCompare(second.resource));
+  }
+
+
+  public get resourceCount(): number {
+    return new Set(
+      this.data().permissions.map(permission => permission.resource)
+    ).size;
   }
 
   public formatLabel(value: string): string {

@@ -19,8 +19,8 @@ export class GoogleMaps {
     }
   }
 
-  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
-
   public readonly height = input('400px');
+
+  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
 
 }

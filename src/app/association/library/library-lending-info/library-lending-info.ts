@@ -9,8 +9,8 @@ import { BookLending } from '@ucronia/domain';
   templateUrl: './library-lending-info.html'
 })
 export class LibraryLendingInfo {
+  public readonly borrowerName = input('');
 
   public readonly lending = input.required<BookLending>();
-  public readonly borrowerName = input('');
 
 }

@@ -16,17 +16,17 @@ import { MessageModule } from 'primeng/message';
 })
 export class UserActivationForm {
 
+  public readonly failures = input(new FailureStore());
+
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<string>();
 
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
+
+  public readonly formStatus: FormStatus;
 
   public get saveEnabled() {
     return this.formStatus.saveEnabled && this.isPasswordsMatching();
@@ -49,8 +49,24 @@ export class UserActivationForm {
   }
 
   /**
+   * Handler for the save event.
+   */
+  public onSave() {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value.password);
+    }
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+  }
+
+  /**
    * Indicates if the password mismatch warning should be shown.
-   * 
+   *
    * @returns true if the password mismatch warning should be shown, false otherwise
    */
   public showPasswordMismatchWarning(): boolean {
@@ -69,7 +85,7 @@ export class UserActivationForm {
 
   /**
    * Indicates if the passwords match. If both are empty they are considered to not be matching.
-   * 
+   *
    * @returns true if the passwords match, false otherwise
    */
   private isPasswordsMatching(): boolean {
@@ -77,22 +93,6 @@ export class UserActivationForm {
     const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
 
     return (password.length > 0) && (password === confirmPassword);
-  }
-
-  /**
-   * Handler for the save event.
-   */
-  public onSave() {
-    this.form.markAllAsTouched();
-
-    if (this.saveEnabled) {
-      // Valid form, can emit data
-      this.save.emit(this.form.value.password);
-    }
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

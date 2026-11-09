@@ -176,7 +176,7 @@
           <ui-search-select [inputId]="(formId() || searchId) + '-donor-search'" label="Buscar donante"
           placeholder="Buscar donante..." [disabled]="formStatus.loading" [value]="donorSearchValue"
           [clearOnSelect]="true"
-          [suggestions]="donorSearchResults" optionLabel="name.fullName"
+          [suggestions]="donorSearchResults()" optionLabel="name.fullName"
           (queryChange)="onSearchDonors({ query: $event })" (selected)="onSelectDonor($event)"
           (cleared)="onClearDonorSearch()" />
 

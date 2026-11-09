@@ -19,14 +19,24 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
   ]
 })
 export class CalendarMonth implements OnChanges {
+  public readonly events = input<CalendarEvent<unknown>[]>([]);
 
   public readonly loading = input(false);
-  public readonly events = input<CalendarEvent<unknown>[]>([]);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<unknown>>();
+
+  public activeDayIsOpen = false;
+
+  public get canGoNext(): boolean {
+    return !this.loading() && this.monthIndex >= 0 && this.monthIndex < this.selectionMonths.length - 1;
+  }
+
+  public get canGoPrevious(): boolean {
+    return !this.loading() && this.monthIndex > 0;
+  }
 
   public get month(): Date {
     return this.selectionMonths.find(({ value }) => isSameMonth(value, this.viewDate))?.value ?? this.viewDate;
@@ -36,23 +46,13 @@ export class CalendarMonth implements OnChanges {
     return this.loading() || this.selectionMonths.length === 0;
   }
 
-  public get canGoPrevious(): boolean {
-    return !this.loading() && this.monthIndex > 0;
-  }
-
-  public get canGoNext(): boolean {
-    return !this.loading() && this.monthIndex >= 0 && this.monthIndex < this.selectionMonths.length - 1;
-  }
-
-  private get monthIndex(): number {
-    return this.selectionMonths.findIndex(({ value }) => isSameMonth(value, this.viewDate));
-  }
-
   public selectionMonths: { value: Date, label: string }[] = [];
 
   public viewDate = new Date();
 
-  public activeDayIsOpen = false;
+  private get monthIndex(): number {
+    return this.selectionMonths.findIndex(({ value }) => isSameMonth(value, this.viewDate));
+  }
 
   public ngOnChanges({ months, selectedMonth }: SimpleChanges): void {
     if (months) {
@@ -66,9 +66,10 @@ export class CalendarMonth implements OnChanges {
     }
   }
 
-  public onGoTo(event: SelectChangeEvent) {
-    this.activeDayIsOpen = false;
-    this.changeMonth.emit(event.value);
+  public onGoNext(): void {
+    if (this.canGoNext) {
+      this.changeMonth.emit(this.selectionMonths[this.monthIndex + 1].value);
+    }
   }
 
   public onGoPrevious(): void {
@@ -77,10 +78,9 @@ export class CalendarMonth implements OnChanges {
     }
   }
 
-  public onGoNext(): void {
-    if (this.canGoNext) {
-      this.changeMonth.emit(this.selectionMonths[this.monthIndex + 1].value);
-    }
+  public onGoTo(event: SelectChangeEvent) {
+    this.activeDayIsOpen = false;
+    this.changeMonth.emit(event.value);
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent<unknown>[] }): void {

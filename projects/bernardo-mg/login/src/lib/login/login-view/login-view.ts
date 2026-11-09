@@ -10,9 +10,9 @@ import { LoginService } from '../login-service';
   styleUrl: './login-view.sass'
 })
 export class LoginView {
+  private readonly router = inject(Router);
 
   private readonly service = inject(LoginService);
-  private readonly router = inject(Router);
 
   public failedLogin = false;
   public loading = false;
@@ -50,11 +50,11 @@ export class LoginView {
       });
   }
 
-  public onRememberMe(remember: boolean): void {
-    this.rememberMe = remember;
-  }
-
   public onLostPassword(): void {
     this.router.navigate(['/password/reset']);
+  }
+
+  public onRememberMe(remember: boolean): void {
+    this.rememberMe = remember;
   }
 }

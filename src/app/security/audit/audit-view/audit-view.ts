@@ -14,12 +14,12 @@ import { AuditLoginList } from '../audit-login-list/audit-login-list';
 export class AuditView implements OnInit {
 
   private readonly service = inject(AccessAuditLoginService);
-  private listRequest?: Subscription;
 
   public data = new Page<LoginRegister>();
   public loading = false;
+  private listRequest?: Subscription;
 
-  private sort = new Sorting();
+  private readonly sort = new Sorting();
 
   public ngOnInit(): void {
     this.load();

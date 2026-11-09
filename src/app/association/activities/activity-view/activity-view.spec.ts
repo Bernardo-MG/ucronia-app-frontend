@@ -5,6 +5,7 @@ import { Activity } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ActivityService } from '../activity-service';
+import { ImageService } from '../../images/image-service';
 import { ActivityView } from './activity-view';
 
 describe('ActivityView', () => {
@@ -27,6 +28,7 @@ describe('ActivityView', () => {
       providers: [
         provideAnimationsAsync(),
         ConfirmationService,
+        { provide: ImageService, useValue: { getAllForSelection: () => of([]) } },
         { provide: ActivityService, useValue: activityServiceMock }
       ]
     })

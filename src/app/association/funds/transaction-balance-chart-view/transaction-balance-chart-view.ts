@@ -15,11 +15,13 @@ import { TransactionBalanceService } from '../transaction-balance-service';
   templateUrl: './transaction-balance-chart-view.html'
 })
 export class TransactionBalanceChartView implements OnInit, OnDestroy {
+  private readonly destroyRef = inject(DestroyRef);
 
   private readonly service = inject(TransactionBalanceService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly selectedRange$ = new BehaviorSubject<number>(6);
   public readonly refresh = input<Observable<void>>();
+
+  public balance: TransactionMonthlyBalance[] = [];
+  public loading = false;
 
   public readonly ranges = [
     { label: '3 meses', value: 3 },
@@ -27,11 +29,6 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
     { label: '1 año', value: 12 },
     { label: '2 años', value: 24 }
   ];
-
-  public balance: TransactionMonthlyBalance[] = [];
-  public loading = false;
-
-  private chart?: Chart;
 
   public get selectedRange(): number {
     return this.selectedRange$.value;
@@ -41,12 +38,15 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
     this.selectedRange$.next(value);
   }
 
-  public ngOnInit(): void {
-    this.setupBalanceReload();
-  }
+  private chart?: Chart;
+  private readonly selectedRange$ = new BehaviorSubject<number>(6);
 
   public ngOnDestroy(): void {
     this.chart?.destroy();
+  }
+
+  public ngOnInit(): void {
+    this.setupBalanceReload();
   }
 
   private loadChart(): void {

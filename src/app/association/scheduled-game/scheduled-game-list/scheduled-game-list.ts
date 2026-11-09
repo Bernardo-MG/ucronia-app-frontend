@@ -12,16 +12,16 @@ import { TagModule } from 'primeng/tag';
   templateUrl: './scheduled-game-list.html'
 })
 export class ScheduledGameList {
+  public readonly data = input<ScheduledGame[]>([]);
 
   public readonly loading = input(false);
-  public readonly data = input<ScheduledGame[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-
-  public readonly show = output<ScheduledGame>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+
+  public readonly show = output<ScheduledGame>();
 
   public get first() {
     return (this.page() - 1) * this.rows();

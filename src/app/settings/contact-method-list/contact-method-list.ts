@@ -9,15 +9,15 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   templateUrl: './contact-method-list.html'
 })
 export class ContactMethodList {
+  public readonly data = input<ContactMethod[]>([]);
 
   public readonly loading = input(false);
-  public readonly data = input<ContactMethod[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-  
-  public readonly show = output<ContactMethod>();
   public readonly changePage = output<number>();
+
+  public readonly show = output<ContactMethod>();
 
   public get first() {
     return (this.page() - 1) * this.rows();
