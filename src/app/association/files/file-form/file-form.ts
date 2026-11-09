@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -21,7 +21,7 @@ export interface FileFormData {
 })
 export class FileForm implements OnChanges {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly data = input<Asset | undefined>();
   public readonly failures = input(new FailureStore());
@@ -34,20 +34,21 @@ export class FileForm implements OnChanges {
   public readonly save = output<FileFormData>();
 
   public file?: File;
-  public get folderOptions(): FolderOption[] {
-    return [
-      { name: 'Sin carpeta', number: null },
-      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
-    ];
-  }
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
   }
 
+  protected get folderOptions(): FolderOption[] {
+    return [
+      { name: 'Sin carpeta', number: null },
+      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
+    ];
+  }
+
   public constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', Validators.maxLength(500)],
@@ -66,12 +67,12 @@ export class FileForm implements OnChanges {
   }
 
   // Event handlers
-  public onFileSelected(event: Event): void {
+  protected onFileSelected(event: Event): void {
     this.file = (event.target as HTMLInputElement).files?.[0];
     this.form.markAsDirty();
   }
 
-  public onSave(): void {
+  protected onSave(): void {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
@@ -79,8 +80,8 @@ export class FileForm implements OnChanges {
     }
   }
 
-  // Public methods
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
