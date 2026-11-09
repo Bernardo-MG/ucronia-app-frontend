@@ -81,16 +81,16 @@ export class LibraryBookEditionForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
     const config = inject(LibraryConfig);
 
     this.languages = config.getLanguages();
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       number: [undefined],
       index: [-1],
       isbn: ['', isbnValidator],
-      title: fb.group({
+      title: formBuilder.group({
         supertitle: [''],
         title: ['', Validators.required],
         subtitle: ['']
@@ -98,7 +98,7 @@ export class LibraryBookEditionForm {
       language: ['', Validators.required],
       publishDate: [''],
       authors: [[]],
-      donation: fb.group({
+      donation: formBuilder.group({
         date: [''],
         donors: [[]]
       }),

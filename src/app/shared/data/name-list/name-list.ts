@@ -11,13 +11,13 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 })
 export class NameList {
 
+  public readonly data = input<Page<any>>(new Page<any>());
   public readonly loading = input<boolean>(false);
 
   public readonly pageChange = output<number>();
   public readonly show = output<any>();
   public readonly sortChange = output<{ field: string; order: number }>();
 
-  public readonly data = input<Page<any>>(new Page<any>());
   public get first() {
     const page = this.data().page || 1;
     return (page - 1) * this.data().size;

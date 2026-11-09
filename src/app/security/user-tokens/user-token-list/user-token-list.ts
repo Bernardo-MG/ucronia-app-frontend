@@ -55,7 +55,6 @@ export class UserTokenList {
     this.changePage.emit(page);
   }
 
-  // Public methods
   public openActionsMenu(
     event: Event,
     token: UserToken
@@ -82,6 +81,7 @@ export class UserTokenList {
     this.actionsMenu.toggle(event);
   }
 
+  // Public methods
   public statusLabel(token: UserToken): TokenStatus {
     if (token.revoked) {
       return 'Revocado';

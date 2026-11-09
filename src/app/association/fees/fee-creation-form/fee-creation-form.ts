@@ -34,9 +34,9 @@ export class FeeCreationForm {
   public selectedMember?: Profile;
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       member: [null, Validators.required],
       month: [null, Validators.required]
     });

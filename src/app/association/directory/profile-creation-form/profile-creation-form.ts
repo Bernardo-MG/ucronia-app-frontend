@@ -29,10 +29,10 @@ export class ProfileCreationForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
-      name: fb.group({
+    this.form = formBuilder.group({
+      name: formBuilder.group({
         firstName: [null, Validators.required],
         nickname: [''],
         lastName: ['']

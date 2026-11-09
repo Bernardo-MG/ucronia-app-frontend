@@ -11,14 +11,13 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 })
 export class TransactionTypeList {
 
+  public readonly data = input.required<Page<TransactionType>>();
   public readonly failed = input(false);
   public readonly loading = input(false);
 
   public readonly pageChange = output<number>();
   public readonly retry = output<void>();
   public readonly show = output<number>();
-
-  public readonly data = input.required<Page<TransactionType>>();
 
   protected readonly rows = 10;
 

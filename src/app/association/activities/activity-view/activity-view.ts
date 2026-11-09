@@ -79,12 +79,15 @@ export class ActivityView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
+    this.status.loading = true;
+    this.listRequest = this.service.getAll(page, this.sort,
+      this.selectedDisplay === ActivityDisplay.UPCOMING ? new Date() : undefined,
+      this.selectedDisplay === ActivityDisplay.PAST ? new Date() : undefined)
+      .pipe(finalize(() => this.status.loading = false))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(activities => this.activities = activities);
   }
 
   public onCancelEdit(): void {
@@ -171,17 +174,6 @@ export class ActivityView implements OnInit {
   }
 
   // Data loading
-  public load(page: number | undefined = undefined) {
-    this.listRequest?.unsubscribe();
-    this.status.loading = true;
-    this.listRequest = this.service.getAll(page, this.sort,
-      this.selectedDisplay === ActivityDisplay.UPCOMING ? new Date() : undefined,
-      this.selectedDisplay === ActivityDisplay.PAST ? new Date() : undefined)
-      .pipe(finalize(() => this.status.loading = false))
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(activities => this.activities = activities);
-  }
-
   private loadImageOptions(): void {
     this.imageOptionsRequest?.unsubscribe();
     this.imageOptions = [];
@@ -216,6 +208,14 @@ export class ActivityView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

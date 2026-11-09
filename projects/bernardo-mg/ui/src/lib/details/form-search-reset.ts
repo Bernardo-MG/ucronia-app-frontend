@@ -7,9 +7,10 @@ import { asapScheduler, filter, observeOn } from 'rxjs';
 @Directive({ selector: '[uiFormSearchReset]' })
 export class FormSearchReset implements AfterViewInit {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly group = inject(FormGroupDirective, { optional: true });
   private readonly templateForm = inject(NgForm, { optional: true });
-  private readonly destroyRef = inject(DestroyRef);
+
   public readonly searchReset = output<void>();
 
   public ngAfterViewInit(): void {

@@ -106,12 +106,17 @@ export class FeeView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public loadCalendar(year: number) {
+    this.calendarRequest?.unsubscribe();
+    this.status.loadingCalendar = true;
+
+    this.filter.year = year;
+    this.calendarRequest = this.feeCalendarService.getCalendar(year)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingCalendar = false)
+      )
+      .subscribe(data => this.feeCalendar = data);
   }
 
   public onCancelEdit(): void {
@@ -216,19 +221,6 @@ export class FeeView implements OnInit {
   }
 
   // Data loading
-  public loadCalendar(year: number) {
-    this.calendarRequest?.unsubscribe();
-    this.status.loadingCalendar = true;
-
-    this.filter.year = year;
-    this.calendarRequest = this.feeCalendarService.getCalendar(year)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loadingCalendar = false)
-      )
-      .subscribe(data => this.feeCalendar = data);
-  }
-
   private loadRange() {
     this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
@@ -292,6 +284,14 @@ export class FeeView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

@@ -23,7 +23,7 @@ import { FullProfile } from '../model/full-profile';
 })
 export class ProfileEditionForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly contactMethods = input<ContactMethod[]>([]);
   @Input() public set data(value: FullProfile) {
@@ -32,7 +32,7 @@ export class ProfileEditionForm {
     this.contactChannels.clear();
     value.contactChannels?.forEach(channel => {
       this.contactChannels.push(
-        this.fb.group({
+        this.formBuilder.group({
           method: [channel.method],
           detail: [channel.detail]
         })
@@ -41,12 +41,12 @@ export class ProfileEditionForm {
 
     this.games.clear();
     value.games?.forEach(game => {
-      this.games.push(this.fb.control(game));
+      this.games.push(this.formBuilder.control(game));
     });
 
     this.years.clear();
     value.years?.forEach(year => {
-      this.years.push(this.fb.control(year));
+      this.years.push(this.formBuilder.control(year));
     });
 
     this.lockedTypes = [...value.types];
@@ -95,21 +95,21 @@ export class ProfileEditionForm {
   }
 
   public constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       number: [-1],
       identifier: [''],
       birthDate: [new Date()],
-      name: this.fb.group({
+      name: this.formBuilder.group({
         firstName: [null, Validators.required],
         nickname: [''],
         lastName: ['']
       }),
-      contactChannels: this.fb.array([]),
-      games: this.fb.array([]),
-      years: this.fb.array([]),
+      contactChannels: this.formBuilder.array([]),
+      games: this.formBuilder.array([]),
+      years: this.formBuilder.array([]),
       address: [''],
       comments: [''],
-      feeType: this.fb.group({
+      feeType: this.formBuilder.group({
         number: [null]
       }),
       active: [false],
@@ -122,11 +122,19 @@ export class ProfileEditionForm {
   // Event handlers
   public addContactChannel(): void {
     this.contactChannels.push(
-      this.fb.group({
+      this.formBuilder.group({
         method: [null],
         detail: ['']
       })
     );
+  }
+
+  public addGame(): void {
+    this.games.push(this.formBuilder.control(null));
+  }
+
+  public addYear(): void {
+    this.years.push(this.formBuilder.control<number | null>(null, Validators.required));
   }
 
   public onSave(): void {
@@ -152,20 +160,6 @@ export class ProfileEditionForm {
     this.updateFeeTypeValidator();
   }
 
-  // Public methods
-  public addGame(): void {
-    this.games.push(this.fb.control(null));
-  }
-
-  public addYear(): void {
-    this.years.push(this.fb.control<number | null>(null, Validators.required));
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property)
-      || this.failures().hasFailures(property);
-  }
-
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
   }
@@ -176,6 +170,12 @@ export class ProfileEditionForm {
 
   public removeYear(index: number): void {
     this.years.removeAt(index);
+  }
+
+  // Public methods
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
 
   // Private methods

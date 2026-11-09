@@ -49,19 +49,6 @@ export class LibraryBookList {
     this.pageChange.emit(page);
   }
 
-  // Public methods
-  public getAuthors(book: FictionBook | GameBook): string {
-    return book.authors.map(author => author.name).join(', ') || 'Autor desconocido';
-  }
-
-  public getSystem(book: FictionBook | GameBook): string {
-    return 'gameSystem' in book ? book.gameSystem?.name || '' : '';
-  }
-
-  public getType(book: FictionBook | GameBook): string {
-    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'Ficción';
-  }
-
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
     event.stopPropagation();
     this.editionMenuItems = [];
@@ -75,6 +62,19 @@ export class LibraryBookList {
     }
 
     this.editionMenu.toggle(event);
+  }
+
+  // Public methods
+  public getAuthors(book: FictionBook | GameBook): string {
+    return book.authors.map(author => author.name).join(', ') || 'Autor desconocido';
+  }
+
+  public getSystem(book: FictionBook | GameBook): string {
+    return 'gameSystem' in book ? book.gameSystem?.name || '' : '';
+  }
+
+  public getType(book: FictionBook | GameBook): string {
+    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'Ficción';
   }
 
 }

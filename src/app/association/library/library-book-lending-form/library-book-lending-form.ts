@@ -35,9 +35,9 @@ export class LibraryBookLendingForm implements OnChanges {
   protected readonly today = new Date();
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       lendingDate: [null, Validators.required],
       borrower: [-1, Validators.required],
       book: [-1, Validators.required]

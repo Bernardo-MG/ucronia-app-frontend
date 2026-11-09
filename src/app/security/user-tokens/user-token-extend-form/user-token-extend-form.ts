@@ -31,9 +31,9 @@ export class UserTokenExtendForm {
   public readonly today = new Date();
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       expirationDate: [new Date(), Validators.required]
     });
 

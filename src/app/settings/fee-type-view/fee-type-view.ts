@@ -57,12 +57,16 @@ export class FeeTypeView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.feeTypeService.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.feeTypeData = response);
   }
 
   public onCancelEdit(): void {
@@ -115,19 +119,6 @@ export class FeeTypeView implements OnInit {
     );
   }
 
-  // Data loading
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.feeTypeService.getAll(page)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => this.feeTypeData = response);
-  }
-
   // Private methods
   private call(
     action: () => Observable<any>,
@@ -147,6 +138,14 @@ export class FeeTypeView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

@@ -21,7 +21,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class MemberCreationForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly contactMethods = input<ContactMethod[]>([]);
   public readonly failures = input(new FailureStore());
@@ -36,18 +36,18 @@ export class MemberCreationForm {
   public get contactChannels(): FormArray {
     return this.form.controls.contactChannels;
   }
-  public readonly form = this.fb.group({
-    feeType: this.fb.control<number | null>(null, Validators.required),
+  public readonly form = this.formBuilder.group({
+    feeType: this.formBuilder.control<number | null>(null, Validators.required),
     identifier: ['', [Validators.maxLength(15)]],
-    name: this.fb.nonNullable.group({
+    name: this.formBuilder.nonNullable.group({
       firstName: ['', [Validators.required, Validators.maxLength(50)]],
       nickname: ['', Validators.maxLength(50)],
       lastName: ['', Validators.maxLength(50)]
     }),
-    birthDate: this.fb.control<Date | null>(null),
+    birthDate: this.formBuilder.control<Date | null>(null),
     address: ['', Validators.maxLength(250)],
     comments: ['', Validators.maxLength(250)],
-    contactChannels: this.fb.array([]),
+    contactChannels: this.formBuilder.array([]),
     active: [true],
     renew: [true]
   });
@@ -60,8 +60,8 @@ export class MemberCreationForm {
   // Event handlers
   public addContactChannel(): void {
     this.contactChannels.push(
-      this.fb.group({
-        method: this.fb.control<number | null>(null, Validators.required),
+      this.formBuilder.group({
+        method: this.formBuilder.control<number | null>(null, Validators.required),
         detail: ['', [Validators.required, Validators.maxLength(50)]]
       })
     );
@@ -85,7 +85,6 @@ export class MemberCreationForm {
     this.save.emit(data);
   }
 
-  // Public methods
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
   }

@@ -20,18 +20,18 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 })
 export class CalendarMonth implements OnChanges {
 
+  public readonly events = input<CalendarEvent<unknown>[]>([]);
   public readonly loading = input(false);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
+  public readonly pickDate = output<CalendarEvent<unknown>>();
 
   public activeDayIsOpen = false;
-  public readonly events = input<CalendarEvent<unknown>[]>([]);
   public get month(): Date {
     return this.selectionMonths.find(({ value }) => isSameMonth(value, this.viewDate))?.value ?? this.viewDate;
   }
-  public readonly pickDate = output<CalendarEvent<unknown>>();
   public selectionMonths: { value: Date, label: string }[] = [];
   public viewDate = new Date();
 
@@ -50,7 +50,6 @@ export class CalendarMonth implements OnChanges {
   }
 
   // Lifecycle hooks
-  // Lifecycle methods
   public ngOnChanges({ months, selectedMonth }: SimpleChanges): void {
     if (months) {
       this.selectionMonths = this.months().map(month => ({

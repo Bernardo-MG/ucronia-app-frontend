@@ -34,8 +34,8 @@ export class GameTableForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
-    this.form = fb.group({
+    const formBuilder = inject(FormBuilder);
+    this.form = formBuilder.group({
       number: [null],
       name: [null, Validators.required],
       description: [null, Validators.required]

@@ -33,9 +33,9 @@ export class PasswordResetForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.nonNullable.group(
+    this.form = formBuilder.nonNullable.group(
       {
         password: ['', Validators.required],
         confirmPassword: ['', [Validators.required]]

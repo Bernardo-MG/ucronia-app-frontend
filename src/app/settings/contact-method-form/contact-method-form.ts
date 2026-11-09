@@ -33,9 +33,9 @@ export class ContactMethodForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       number: [null],
       name: [null, Validators.required]
     });

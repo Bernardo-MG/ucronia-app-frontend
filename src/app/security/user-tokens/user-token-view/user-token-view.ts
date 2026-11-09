@@ -50,12 +50,18 @@ export class UserTokenView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
   }
 
   public onCancelEdit(): void {
@@ -108,21 +114,6 @@ export class UserTokenView implements OnInit {
     this.dialog = Dialog.EXTEND;
   }
 
-  // Data loading
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(
-        finalize(() => this.loading = false),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(response => {
-        this.data = response;
-      });
-  }
-
   // Private methods
   private call(
     action: () => Observable<unknown>,
@@ -143,6 +134,14 @@ export class UserTokenView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

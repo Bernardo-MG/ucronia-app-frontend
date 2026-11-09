@@ -91,6 +91,19 @@ export class ImageView implements OnInit {
     this.callFolder(() => this.service.createFolder(name, this.currentFolderNumber));
   }
 
+  protected load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.status.loading = true;
+    const request = this.currentFolderNumber === null ? this.service.getRootImages(page, this.sort)
+      : this.service.getFolderImages(this.currentFolderNumber, page, this.sort);
+    this.listRequest = request
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
+      .subscribe(data => this.data = data);
+  }
+
   protected onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
@@ -201,28 +214,6 @@ export class ImageView implements OnInit {
         ? this.service.move(image.number, folderNumber) : of(image))));
   }
 
-  // Data loading
-  protected load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.status.loading = true;
-    const request = this.currentFolderNumber === null ? this.service.getRootImages(page, this.sort)
-      : this.service.getFolderImages(this.currentFolderNumber, page, this.sort);
-    this.listRequest = request
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loading = false)
-      )
-      .subscribe(data => this.data = data);
-  }
-
-  private loadFolders(): void {
-    this.folderRequest?.unsubscribe();
-    this.folderRequest = this.service.getFolders()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(folders => this.folders = folders);
-  }
-
-  // Protected methods
   protected openFolder(number: number | null = null): void {
     this.currentFolderNumber = number;
     this.load();
@@ -246,6 +237,14 @@ export class ImageView implements OnInit {
     const name = this.folderName.trim();
     if (!folder || !name) return;
     this.callFolder(() => this.service.updateFolder({ ...folder, name }));
+  }
+
+  // Data loading
+  private loadFolders(): void {
+    this.folderRequest?.unsubscribe();
+    this.folderRequest = this.service.getFolders()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(folders => this.folders = folders);
   }
 
   // Private methods

@@ -15,6 +15,7 @@ import { librarySettingsOptions } from '../library-settings-permissions';
 export class LibrarySettingsLayout {
 
   private readonly authService = inject(AuthService);
+
   protected readonly options = librarySettingsOptions.filter(option => inject(AuthService).hasPermission(option.permission));
   protected readonly showLibraryLink = inject(AuthService).hasPermission(UcroniaPermissions.library.book.read);
 

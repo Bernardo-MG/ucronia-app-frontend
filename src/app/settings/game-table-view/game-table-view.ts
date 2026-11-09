@@ -51,6 +51,17 @@ export class GameTableView implements OnInit {
   }
 
   // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+    this.listRequest = this.service.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(data => this.data = data);
+  }
+
   public onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
@@ -92,18 +103,6 @@ export class GameTableView implements OnInit {
 
   public onUpdate(table: GameTable): void {
     this.call(() => this.service.update(table), () => this.load(this.data.page));
-  }
-
-  // Data loading
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-    this.listRequest = this.service.getAll(page)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(data => this.data = data);
   }
 
   // Private methods

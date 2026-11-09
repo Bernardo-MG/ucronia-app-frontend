@@ -71,8 +71,8 @@ export class RoleChangePermission implements OnChanges {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
-    this.form = fb.nonNullable.group({ permissions: [[] as ResourcePermission[]] });
+    const formBuilder = inject(FormBuilder);
+    this.form = formBuilder.nonNullable.group({ permissions: [[] as ResourcePermission[]] });
     this.formStatus = new FormStatus(this.form);
   }
 
@@ -88,17 +88,33 @@ export class RoleChangePermission implements OnChanges {
     this.selected = [];
   }
 
+  public clearVisibleSelection(): void {
+    this.permissionGroups.forEach(group => this.toggleGroup(group, false));
+  }
+
   public onSave(): void {
     if (this.saveEnabled) {
       this.save.emit(this.selected);
     }
   }
 
-  // Public methods
-  public clearVisibleSelection(): void {
-    this.permissionGroups.forEach(group => this.toggleGroup(group, false));
+  public selectAllVisible(): void {
+    this.permissionGroups.forEach(group => this.toggleGroup(group, true));
   }
 
+  public toggleGroup(group: PermissionGroup, checked: boolean): void {
+    group.permissions.forEach(permission => this.togglePermission(permission, checked));
+  }
+
+  public togglePermission(permission: ResourcePermission, checked: boolean): void {
+    if (checked && !this.isSelected(permission)) {
+      this.selected = [...this.selected, permission];
+    } else if (!checked) {
+      this.selected = this.selected.filter(selected => this.permissionKey(selected) !== this.permissionKey(permission));
+    }
+  }
+
+  // Public methods
   public formatLabel(value: string): string {
     const label = value.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/[._-]+/g, ' ').trim();
     return label ? label.charAt(0).toLocaleUpperCase() + label.slice(1) : value;
@@ -117,24 +133,8 @@ export class RoleChangePermission implements OnChanges {
     return this.selected.some(selected => this.permissionKey(selected) === this.permissionKey(permission));
   }
 
-  public selectAllVisible(): void {
-    this.permissionGroups.forEach(group => this.toggleGroup(group, true));
-  }
-
   public selectedInGroup(group: PermissionGroup): number {
     return group.permissions.filter(permission => this.isSelected(permission)).length;
-  }
-
-  public toggleGroup(group: PermissionGroup, checked: boolean): void {
-    group.permissions.forEach(permission => this.togglePermission(permission, checked));
-  }
-
-  public togglePermission(permission: ResourcePermission, checked: boolean): void {
-    if (checked && !this.isSelected(permission)) {
-      this.selected = [...this.selected, permission];
-    } else if (!checked) {
-      this.selected = this.selected.filter(selected => this.permissionKey(selected) !== this.permissionKey(permission));
-    }
   }
 
   // Private methods

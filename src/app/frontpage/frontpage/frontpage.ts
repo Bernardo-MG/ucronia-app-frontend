@@ -34,7 +34,7 @@ export class Frontpage implements OnInit {
     this.loadActivities('upcoming');
   }
 
-  // Data loading
+  // Event handlers
   public loadActivities(display: ActivityDisplay): void {
     const now = new Date();
     const from = display === 'upcoming' ? now : undefined;

@@ -55,9 +55,9 @@ export class UserForm implements OnChanges {
   public username = '';
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       username: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -106,15 +106,6 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
-  // Public methods
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  public isRoleSelected(role: Role): boolean {
-    return this.roles.some(selected => selected.name === role.name);
-  }
-
   public toggleRole(role: Role, checked: boolean): void {
     if (checked && !this.isRoleSelected(role)) {
       this.roles = [...this.roles, role];
@@ -123,6 +114,15 @@ export class UserForm implements OnChanges {
     }
 
     this.form.markAsDirty();
+  }
+
+  // Public methods
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
+  }
+
+  public isRoleSelected(role: Role): boolean {
+    return this.roles.some(selected => selected.name === role.name);
   }
 
 }

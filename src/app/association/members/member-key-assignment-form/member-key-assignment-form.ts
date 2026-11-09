@@ -13,10 +13,7 @@ import { MessageModule } from 'primeng/message';
 })
 export class MemberKeyAssignmentForm {
 
-  private readonly fb = inject(FormBuilder);
-  public readonly form = inject(FormBuilder).group({
-    profile: inject(FormBuilder).control<number | null>(null, Validators.required)
-  });
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
@@ -28,6 +25,9 @@ export class MemberKeyAssignmentForm {
   public readonly save = output<number>();
   public readonly searchMember = output<MemberSearchEvent>();
 
+  public readonly form = this.formBuilder.group({
+    profile: this.formBuilder.control<number | null>(null, Validators.required)
+  });
   public readonly formStatus = new FormStatus(this.form);
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && this.members().some(member => member.number === this.form.controls.profile.value);

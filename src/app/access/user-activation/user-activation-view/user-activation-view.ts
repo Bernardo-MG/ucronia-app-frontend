@@ -24,8 +24,8 @@ export class UserActivationView {
   private readonly service = inject(AccessUserActivateService);
 
   /**
-   * Failures when activating the user.
-   */
+  * Failures when activating the user.
+  */
   public failures = new FailureStore();
   public readonly status: Status = {
     validating: false,
@@ -49,14 +49,6 @@ export class UserActivationView {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
-
   /**
    * Activates the user with the received password. The user will be acquired by the backend from the token.
    *
@@ -88,6 +80,14 @@ export class UserActivationView {
   }
 
   // Private methods
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
   private validateToken(token: string | null) {
     this.tokenChanged.next();
     this.user = { username: '', token: '' };

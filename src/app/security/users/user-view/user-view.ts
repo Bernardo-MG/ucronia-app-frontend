@@ -73,12 +73,18 @@ export class UserView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        finalize(() => this.finishLoading())
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => {
+        this.data = response;
+      });
   }
 
   public onCancelEdit(): void {
@@ -227,21 +233,6 @@ export class UserView implements OnInit {
     );
   }
 
-  // Data loading
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(
-        finalize(() => this.finishLoading())
-      )
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(response => {
-        this.data = response;
-      });
-  }
-
   // Private methods
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {
     this.loading = true;
@@ -265,6 +256,14 @@ export class UserView implements OnInit {
     this.loading = false;
     // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
     this.drawer()?.cd.markForCheck();
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

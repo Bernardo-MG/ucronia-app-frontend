@@ -15,9 +15,9 @@ import { LibraryConfig } from '../library-config';
 export class LibraryBookInfo {
 
   private readonly config = inject(LibraryConfig);
-  public readonly languages: Language[] = inject(LibraryConfig).getLanguages();
 
   public readonly book = input<FictionBook | GameBook>(new GameBook());
+  public readonly borrowerNames = input<Record<number, string>>({});
   public readonly loading = input(false);
 
   public readonly showLending = output<BookLending>();
@@ -32,7 +32,6 @@ export class LibraryBookInfo {
 
     return undefined;
   }
-  public readonly borrowerNames = input<Record<number, string>>({});
   public get donors(): string {
     const donation = this.book().donation;
 
@@ -59,5 +58,7 @@ export class LibraryBookInfo {
   public get publishers(): string {
     return this.book().publishers.map(publisher => publisher.name).join(', ');
   }
+
+  protected readonly languages: Language[] = this.config.getLanguages();
 
 }

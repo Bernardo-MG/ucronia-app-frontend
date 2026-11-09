@@ -18,7 +18,7 @@ import { MessageModule } from 'primeng/message';
 })
 export class FeePaymentsForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
@@ -43,10 +43,10 @@ export class FeePaymentsForm {
   protected readonly today = new Date();
 
   public constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
-      months: this.fb.array([], Validators.required)
+      months: this.formBuilder.array([], Validators.required)
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -54,7 +54,7 @@ export class FeePaymentsForm {
 
   // Event handlers
   public addDate() {
-    this.months.push(this.fb.control(undefined, Validators.required));
+    this.months.push(this.formBuilder.control(undefined, Validators.required));
   }
 
   protected onClearMember(): void {
@@ -100,7 +100,6 @@ export class FeePaymentsForm {
     }
   }
 
-  // Public methods
   public removeDate(index: number): void {
     this.months.removeAt(index);
   }

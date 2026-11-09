@@ -37,10 +37,10 @@ export class FeeEditionForm {
   public readonly today = new Date();
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
-      transaction: fb.group({
+    this.form = formBuilder.group({
+      transaction: formBuilder.group({
         date: ['', Validators.required]
       })
     });

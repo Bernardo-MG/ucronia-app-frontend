@@ -42,11 +42,11 @@ export class TransactionForm {
   public readonly TransactionDirection = TransactionDirection;
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       index: [0],
-      transactionType: fb.control<number | null>(null),
+      transactionType: formBuilder.control<number | null>(null),
       type: [TransactionDirection.INCOME, Validators.required],
       description: ['', Validators.required],
       date: [null, Validators.required],
@@ -80,13 +80,13 @@ export class TransactionForm {
     }
   }
 
+  public setTransactionType(type: TransactionDirection): void {
+    this.form.get('type')?.setValue(type);
+  }
+
   // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  public setTransactionType(type: TransactionDirection): void {
-    this.form.get('type')?.setValue(type);
   }
 
 }

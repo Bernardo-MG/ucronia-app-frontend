@@ -15,11 +15,11 @@ registerLocaleData(localeEs);
 })
 export class LibraryBookLendings {
 
+  public readonly borrowerNames = input<Record<number, string>>({});
   public readonly lendings = input<BookLending[]>([]);
 
   public readonly showLending = output<BookLending>();
 
-  public readonly borrowerNames = input<Record<number, string>>({});
   public readonly history = computed(() => this.lendings()
     .map(lending => {
       const borrower = this.borrowerNames()[lending.borrower]?.trim() || `${lending.borrower}`;

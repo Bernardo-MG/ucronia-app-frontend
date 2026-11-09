@@ -144,22 +144,132 @@ export class FundsView implements OnInit {
   }
 
   // Event handlers
-  protected closeTypeDetails(): void {
-    if (this.deletingType) {
+  protected closeTypeEditForm(): void {
+    this.showTypeEditForm = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+  }
+
+  protected closeTypeForm(): void {
+    this.showTypeForm = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+  }
+
+  protected confirmDeleteType(event: Event): void {
+    const type = this.selectedType;
+    if (!type || !this.permissions.deleteTypes || this.deletingType) {
       return;
     }
 
-    this.typeDetailsRequest?.unsubscribe();
-    this.selectedTypeNumber = undefined;
-    this.selectedType = undefined;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar este tipo de transacción?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
+      accept: () => {
+        if (this.destroyRef.destroyed || this.selectedType !== type || this.showTypeEditForm || this.deletingType) {
+          return;
+        }
+
+        this.deletingType = true;
+        this.typeDeleteFailed = false;
+        this.service.deleteType(type.number)
+          .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.deletingType = false))
+          .subscribe({
+            next: () => {
+              this.deletingType = false;
+              this.closeTypeDetails();
+              this.loadTransactionTypePage();
+            },
+            error: () => this.typeDeleteFailed = true
+          });
+      }
+    });
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
+  protected createType(values: Pick<TransactionType, 'description' | 'color'>): void {
+    if (this.typeLoading()) {
+      return;
     }
+
+    this.typeLoading.set(true);
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+    this.service.saveType(values)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
+      .subscribe({
+        next: () => {
+          this.closeTypeForm();
+          this.loadTransactionTypePage();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.typeFailures.set(error.failures);
+          }
+          this.typeSaveError.set(true);
+        }
+      });
+  }
+
+  protected downloadExcel(): void {
+    this.status.loadingExcel = true;
+    this.status.errorExcel = false;
+    this.reportService.downloadExcelReport()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingExcel = false))
+      .subscribe({
+        error: () => this.status.errorExcel = true
+      });
+  }
+
+  public loadCalendar(month?: Date): void {
+    const selectedMonth = month ?? this.selectedCalendarMonth ?? this.months.at(-1) ?? new Date();
+    this.selectedCalendarMonth = selectedMonth;
+
+    this.calendarRequest?.unsubscribe();
+    this.status.loadingCalendar = true;
+    this.calendarRequest = this.transactionCalendarService
+      .getCalendarInRange(selectedMonth.getFullYear(), selectedMonth.getMonth())
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingCalendar = false))
+      .subscribe(transactions => this.transactions = transactions);
+  }
+
+  protected loadList(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.status.loadingList = true;
+    this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingList = false)
+      )
+      .subscribe(transactions => this.transactionsPage = transactions);
+  }
+
+  protected loadTransactionTypePage(page = this.transactionTypesPage.page || 1): void {
+    this.transactionTypesPageRequest?.unsubscribe();
+    this.transactionTypesPageLoading = true;
+    this.transactionTypesPageFailed = false;
+
+    const request = new Subscription();
+    this.transactionTypesPageRequest = request;
+    request.add(this.service.getTypesPage(page, 10)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: data => {
+          if (data.content.length === 0 && page > 1) {
+            this.loadTransactionTypePage(Math.max(1, Math.min(page - 1, data.totalPages)));
+            return;
+          }
+
+          this.transactionTypesPage = data;
+          this.transactionTypesPageLoading = false;
+        },
+        error: () => {
+          this.transactionTypesPageLoading = false;
+          this.transactionTypesPageFailed = true;
+        }
+      }));
   }
 
   protected onCancelEdit(): void {
@@ -265,190 +375,6 @@ export class FundsView implements OnInit {
     );
   }
 
-  // Data loading
-  private load(): void {
-    if (this.display === FundsDisplay.CALENDAR) {
-      this.loadCalendar();
-    } else {
-      this.loadList();
-    }
-  }
-
-  public loadCalendar(month?: Date): void {
-    const selectedMonth = month ?? this.selectedCalendarMonth ?? this.months.at(-1) ?? new Date();
-    this.selectedCalendarMonth = selectedMonth;
-
-    this.calendarRequest?.unsubscribe();
-    this.status.loadingCalendar = true;
-    this.calendarRequest = this.transactionCalendarService
-      .getCalendarInRange(selectedMonth.getFullYear(), selectedMonth.getMonth())
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingCalendar = false))
-      .subscribe(transactions => this.transactions = transactions);
-  }
-
-  protected loadList(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.status.loadingList = true;
-    this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loadingList = false)
-      )
-      .subscribe(transactions => this.transactionsPage = transactions);
-  }
-
-  private loadSummary(): void {
-    this.summaryRequest?.unsubscribe();
-    this.status.loadingSummary = true;
-    this.summaryRequest = this.transactionBalanceService.summary()
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
-      .subscribe(s => this.summary = s);
-  }
-
-  protected loadTransactionTypePage(page = this.transactionTypesPage.page || 1): void {
-    this.transactionTypesPageRequest?.unsubscribe();
-    this.transactionTypesPageLoading = true;
-    this.transactionTypesPageFailed = false;
-
-    const request = new Subscription();
-    this.transactionTypesPageRequest = request;
-    request.add(this.service.getTypesPage(page, 10)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: data => {
-          if (data.content.length === 0 && page > 1) {
-            this.loadTransactionTypePage(Math.max(1, Math.min(page - 1, data.totalPages)));
-            return;
-          }
-
-          this.transactionTypesPage = data;
-          this.transactionTypesPageLoading = false;
-        },
-        error: () => {
-          this.transactionTypesPageLoading = false;
-          this.transactionTypesPageFailed = true;
-        }
-      }));
-  }
-
-  private loadTransactionTypes(): void {
-    this.typesRequest?.unsubscribe();
-    this.typesLoading.set(true);
-    this.typesLoadFailed = false;
-    this.typesRequest = this.service.getTypes()
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typesLoading.set(false)))
-      .subscribe({
-        next: types => this.transactionTypes.set(types),
-        error: () => {
-          this.transactionTypes.set([]);
-          this.typesLoadFailed = true;
-        }
-      });
-  }
-
-  private refreshAfterChange(): void {
-    this.refreshMonths(() => this.load());
-    this.loadSummary();
-    this.transactionsChanged$.next();
-  }
-
-  private refreshMonths(onSuccess: () => void): void {
-    this.monthsRequest?.unsubscribe();
-    this.monthsRequest = this.transactionCalendarService.getRange()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(months => {
-        this.months = months.map(m => new Date(m.year, m.month - 1));
-
-        if (!this.selectedCalendarMonth || !this.months.some(m =>
-          m.getFullYear() === this.selectedCalendarMonth!.getFullYear() &&
-          m.getMonth() === this.selectedCalendarMonth!.getMonth())) {
-          this.selectedCalendarMonth = this.months.at(-1) ?? new Date();
-        }
-
-        onSuccess();
-      });
-  }
-
-  // Protected methods
-  protected closeTypeEditForm(): void {
-    this.showTypeEditForm = false;
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-  }
-
-  protected closeTypeForm(): void {
-    this.showTypeForm = false;
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-  }
-
-  protected confirmDeleteType(event: Event): void {
-    const type = this.selectedType;
-    if (!type || !this.permissions.deleteTypes || this.deletingType) {
-      return;
-    }
-
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar este tipo de transacción?',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
-      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
-      accept: () => {
-        if (this.destroyRef.destroyed || this.selectedType !== type || this.showTypeEditForm || this.deletingType) {
-          return;
-        }
-
-        this.deletingType = true;
-        this.typeDeleteFailed = false;
-        this.service.deleteType(type.number)
-          .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.deletingType = false))
-          .subscribe({
-            next: () => {
-              this.deletingType = false;
-              this.closeTypeDetails();
-              this.loadTransactionTypePage();
-            },
-            error: () => this.typeDeleteFailed = true
-          });
-      }
-    });
-  }
-
-  protected createType(values: Pick<TransactionType, 'description' | 'color'>): void {
-    if (this.typeLoading()) {
-      return;
-    }
-
-    this.typeLoading.set(true);
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-    this.service.saveType(values)
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
-      .subscribe({
-        next: () => {
-          this.closeTypeForm();
-          this.loadTransactionTypePage();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.typeFailures.set(error.failures);
-          }
-          this.typeSaveError.set(true);
-        }
-      });
-  }
-
-  protected downloadExcel(): void {
-    this.status.loadingExcel = true;
-    this.status.errorExcel = false;
-    this.reportService.downloadExcelReport()
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingExcel = false))
-      .subscribe({
-        error: () => this.status.errorExcel = true
-      });
-  }
-
   protected showTypeDetails(number: number): void {
     this.typeDetailsRequest?.unsubscribe();
     this.selectedTypeNumber = number;
@@ -490,6 +416,72 @@ export class FundsView implements OnInit {
       });
   }
 
+  // Data loading
+  private load(): void {
+    if (this.display === FundsDisplay.CALENDAR) {
+      this.loadCalendar();
+    } else {
+      this.loadList();
+    }
+  }
+
+  private loadSummary(): void {
+    this.summaryRequest?.unsubscribe();
+    this.status.loadingSummary = true;
+    this.summaryRequest = this.transactionBalanceService.summary()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingSummary = false))
+      .subscribe(s => this.summary = s);
+  }
+
+  private loadTransactionTypes(): void {
+    this.typesRequest?.unsubscribe();
+    this.typesLoading.set(true);
+    this.typesLoadFailed = false;
+    this.typesRequest = this.service.getTypes()
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typesLoading.set(false)))
+      .subscribe({
+        next: types => this.transactionTypes.set(types),
+        error: () => {
+          this.transactionTypes.set([]);
+          this.typesLoadFailed = true;
+        }
+      });
+  }
+
+  private refreshAfterChange(): void {
+    this.refreshMonths(() => this.load());
+    this.loadSummary();
+    this.transactionsChanged$.next();
+  }
+
+  private refreshMonths(onSuccess: () => void): void {
+    this.monthsRequest?.unsubscribe();
+    this.monthsRequest = this.transactionCalendarService.getRange()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(months => {
+        this.months = months.map(m => new Date(m.year, m.month - 1));
+
+        if (!this.selectedCalendarMonth || !this.months.some(m =>
+          m.getFullYear() === this.selectedCalendarMonth!.getFullYear() &&
+          m.getMonth() === this.selectedCalendarMonth!.getMonth())) {
+          this.selectedCalendarMonth = this.months.at(-1) ?? new Date();
+        }
+
+        onSuccess();
+      });
+  }
+
+  // Protected methods
+  protected closeTypeDetails(): void {
+    if (this.deletingType) {
+      return;
+    }
+
+    this.typeDetailsRequest?.unsubscribe();
+    this.selectedTypeNumber = undefined;
+    this.selectedType = undefined;
+  }
+
   // Private methods
   private call(
     action: () => Observable<unknown>,
@@ -509,6 +501,14 @@ export class FundsView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

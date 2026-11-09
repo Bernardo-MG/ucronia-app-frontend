@@ -39,14 +39,6 @@ export class AccountView {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
-
   protected onChangePassword(data: PasswordChange): void {
     this.passwordLoading = true;
     this.failures.clear();
@@ -59,6 +51,23 @@ export class AccountView {
       .subscribe({
         error: error => this.handleError(error)
       });
+  }
+
+  public scrollTo(section: AccountSection): void {
+    this.activeSection = section;
+
+    const target = document.getElementById(section);
+    if (!target) {
+      return;
+    }
+
+    const headerOffset = 96;
+    const top = window.scrollY + target.getBoundingClientRect().top - headerOffset;
+
+    window.scrollTo({
+      top,
+      behavior: 'smooth'
+    });
   }
 
   // Data loading
@@ -76,22 +85,13 @@ export class AccountView {
       .subscribe(profile => this.profile = profile);
   }
 
-  // Public methods
-  public scrollTo(section: AccountSection): void {
-    this.activeSection = section;
-
-    const target = document.getElementById(section);
-    if (!target) {
-      return;
+  // Private methods
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
     }
-
-    const headerOffset = 96;
-    const top = window.scrollY + target.getBoundingClientRect().top - headerOffset;
-
-    window.scrollTo({
-      top,
-      behavior: 'smooth'
-    });
   }
 
 }

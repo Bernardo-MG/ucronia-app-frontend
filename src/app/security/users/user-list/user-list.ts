@@ -57,7 +57,6 @@ export class UserList {
     this.changePage.emit(page);
   }
 
-  // Public methods
   public openEditionMenu(event: Event, user: User): void {
     this.editionMenuItems = [
       {

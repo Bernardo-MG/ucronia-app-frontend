@@ -124,13 +124,110 @@ export class PublicMemberView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown, message: string): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.status.loading = true;
+    this.listRequest = this.service
+      .getAll(page, this.sort, this.filterValue)
+      .pipe(
+        switchMap(response => {
+          if (response.content.length === 0 && response.page > 1) {
+            const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
+            return this.service.getAll(previousPage, this.sort, this.filterValue);
+          }
+          return of(response);
+        }),
+        finalize(() => (this.status.loading = false)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => (this.data = response));
+  }
+
+  public loadAssignmentMembers(query: string = this.assignmentMemberQuery): void {
+    if (
+      !this.canAssignKey ||
+      this.dialog !== Dialog.KEY_ASSIGN ||
+      this.status.saving
+    ) {
+      return;
     }
-    this.error = message;
+    this.assignmentMemberSearch.cancel();
+    this.assignmentMemberQuery = query.trim();
+    this.assignmentMembers = [];
+    this.status.assignmentMembersError = false;
+    if (!this.assignmentMemberQuery) {
+      return;
+    }
+    this.status.loadingAssignmentMembers = true;
+    this.assignmentMemberSearch.search(this.assignmentMemberQuery,
+      value => this.service.searchMembers(value),
+      () => this.status.assignmentMembersError = true)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => (this.status.loadingAssignmentMembers = false))
+      )
+      .subscribe({
+        next: members => {
+          this.assignmentMembers = members;
+        },
+        error: () => (this.status.assignmentMembersError = true)
+      });
+  }
+
+  public loadKeys(): void {
+    if (!this.permissions.keyAssignmentsRead) {
+      return;
+    }
+    if (this.status.loadingKeys) {
+      this.keysReloadRequested = true;
+      return;
+    }
+    this.status.loadingKeys = true;
+    this.status.keysError = false;
+    this.keyService
+      .getAll()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => {
+          this.status.loadingKeys = false;
+          if (this.keysReloadRequested && !this.destroyRef.destroyed) {
+            this.keysReloadRequested = false;
+            this.loadKeys();
+          }
+        })
+      )
+      .subscribe({
+        next: data => {
+          this.keyAssignments = data;
+        },
+        error: () => {
+          this.status.keysError = true;
+          this.keyAssignments = [];
+        }
+      });
+  }
+
+  public loadPrivateMember(): void {
+    if (
+      !this.permissions.read ||
+      !this.permissions.readPrivate ||
+      (this.dialog !== Dialog.INFO && this.dialog !== Dialog.EDIT)
+    ) {
+      return;
+    }
+    this.memberRequest?.unsubscribe();
+    this.status.loadingMember = true;
+    this.status.memberPrivateError = false;
+    this.memberRequest = this.memberProfileService
+      .getOne(this.selectedData.number)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => (this.status.loadingMember = false))
+      )
+      .subscribe({
+        next: member => (this.privateMember = member),
+        error: () => (this.status.memberPrivateError = true)
+      });
   }
 
   public onAssignKey(profile: number): void {
@@ -463,89 +560,6 @@ export class PublicMemberView implements OnInit {
   }
 
   // Data loading
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.status.loading = true;
-    this.listRequest = this.service
-      .getAll(page, this.sort, this.filterValue)
-      .pipe(
-        switchMap(response => {
-          if (response.content.length === 0 && response.page > 1) {
-            const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
-            return this.service.getAll(previousPage, this.sort, this.filterValue);
-          }
-          return of(response);
-        }),
-        finalize(() => (this.status.loading = false)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(response => (this.data = response));
-  }
-
-  public loadAssignmentMembers(query: string = this.assignmentMemberQuery): void {
-    if (
-      !this.canAssignKey ||
-      this.dialog !== Dialog.KEY_ASSIGN ||
-      this.status.saving
-    ) {
-      return;
-    }
-    this.assignmentMemberSearch.cancel();
-    this.assignmentMemberQuery = query.trim();
-    this.assignmentMembers = [];
-    this.status.assignmentMembersError = false;
-    if (!this.assignmentMemberQuery) {
-      return;
-    }
-    this.status.loadingAssignmentMembers = true;
-    this.assignmentMemberSearch.search(this.assignmentMemberQuery,
-      value => this.service.searchMembers(value),
-      () => this.status.assignmentMembersError = true)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.status.loadingAssignmentMembers = false))
-      )
-      .subscribe({
-        next: members => {
-          this.assignmentMembers = members;
-        },
-        error: () => (this.status.assignmentMembersError = true)
-      });
-  }
-
-  public loadKeys(): void {
-    if (!this.permissions.keyAssignmentsRead) {
-      return;
-    }
-    if (this.status.loadingKeys) {
-      this.keysReloadRequested = true;
-      return;
-    }
-    this.status.loadingKeys = true;
-    this.status.keysError = false;
-    this.keyService
-      .getAll()
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => {
-          this.status.loadingKeys = false;
-          if (this.keysReloadRequested && !this.destroyRef.destroyed) {
-            this.keysReloadRequested = false;
-            this.loadKeys();
-          }
-        })
-      )
-      .subscribe({
-        next: data => {
-          this.keyAssignments = data;
-        },
-        error: () => {
-          this.status.keysError = true;
-          this.keyAssignments = [];
-        }
-      });
-  }
-
   private loadMemberOptions(message: string, member?: Member): void {
     this.memberOptionsRequest?.unsubscribe();
     this.status.optionsReady = false;
@@ -578,29 +592,6 @@ export class PublicMemberView implements OnInit {
       });
   }
 
-  public loadPrivateMember(): void {
-    if (
-      !this.permissions.read ||
-      !this.permissions.readPrivate ||
-      (this.dialog !== Dialog.INFO && this.dialog !== Dialog.EDIT)
-    ) {
-      return;
-    }
-    this.memberRequest?.unsubscribe();
-    this.status.loadingMember = true;
-    this.status.memberPrivateError = false;
-    this.memberRequest = this.memberProfileService
-      .getOne(this.selectedData.number)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.status.loadingMember = false))
-      )
-      .subscribe({
-        next: member => (this.privateMember = member),
-        error: () => (this.status.memberPrivateError = true)
-      });
-  }
-
   private loadSummary(): void {
     this.status.loadingSummary = true;
     this.service
@@ -612,16 +603,15 @@ export class PublicMemberView implements OnInit {
       .subscribe(summary => (this.memberCount = summary));
   }
 
-  private refreshKeysAndMembers(): void {
-    this.loadKeys();
-    this.refresh();
-  }
-
-  // Public methods
   /** Reload the list and counters after a successful member save. */
   public refresh(): void {
     this.load(this.data.page > 0 ? this.data.page : undefined);
     this.loadSummary();
+  }
+
+  private refreshKeysAndMembers(): void {
+    this.loadKeys();
+    this.refresh();
   }
 
   // Private methods
@@ -644,6 +634,15 @@ export class PublicMemberView implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({ error: error => this.handleError(error, message) });
+  }
+
+  private handleError(error: unknown, message: string): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+    this.error = message;
   }
 
 }

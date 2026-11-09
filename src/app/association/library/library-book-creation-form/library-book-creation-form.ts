@@ -32,14 +32,14 @@ export class LibraryBookCreationForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
     const config = inject(LibraryConfig);
 
     this.languages = config.getLanguages();
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       isbn: ['', isbnValidator],
-      title: fb.group({
+      title: formBuilder.group({
         supertitle: [''],
         title: ['', Validators.required],
         subtitle: ['']

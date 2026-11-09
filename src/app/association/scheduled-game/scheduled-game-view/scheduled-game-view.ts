@@ -91,12 +91,13 @@ export class ScheduledGameView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown) {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.service.getAll(page, this.sort)
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
   }
 
   public onCancelEdit(): void {
@@ -236,15 +237,6 @@ export class ScheduledGameView implements OnInit {
   }
 
   // Data loading
-  public load(page: number | undefined = undefined) {
-    this.listRequest?.unsubscribe();
-    this.listRequest = this.withLoading(
-      this.service.getAll(page, this.sort)
-    )
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(scheduledGames => this.scheduledGames = scheduledGames);
-  }
-
   private loadTables(): void {
     this.service.getTables()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -270,6 +262,14 @@ export class ScheduledGameView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown) {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   private withLoading<T>(

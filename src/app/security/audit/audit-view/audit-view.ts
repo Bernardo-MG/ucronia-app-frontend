@@ -29,19 +29,6 @@ export class AuditView implements OnInit {
   }
 
   // Event handlers
-  public onChangeDirection(sorting: SortingEvent): void {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-
-    this.sort.addField(
-      new SortingProperty(sorting.field, direction)
-    );
-
-    this.load(this.data.page);
-  }
-
-  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -57,6 +44,18 @@ export class AuditView implements OnInit {
       .subscribe(response => {
         this.data = response;
       });
+  }
+
+  public onChangeDirection(sorting: SortingEvent): void {
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
+
+    this.load(this.data.page);
   }
 
 }

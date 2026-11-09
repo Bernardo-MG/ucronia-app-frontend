@@ -100,12 +100,15 @@ export class DirectoryView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => {
+        this.profiles = response;
+      });
   }
 
   public onCancelEdit(): void {
@@ -240,17 +243,6 @@ export class DirectoryView implements OnInit {
   }
 
   // Data loading
-  public load(page: number | undefined = undefined) {
-    this.listRequest?.unsubscribe();
-    this.listRequest = this.withLoading(
-      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
-    )
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(response => {
-        this.profiles = response;
-      });
-  }
-
   private loadSummary() {
     this.status.loadingSummary = true;
     this.directorySummaryService.getSummary()
@@ -280,6 +272,14 @@ export class DirectoryView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   private withLoading<T>(

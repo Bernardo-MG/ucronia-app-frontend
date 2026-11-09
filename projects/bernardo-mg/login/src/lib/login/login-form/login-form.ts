@@ -74,13 +74,13 @@ export class LoginForm {
     }
   }
 
+  protected togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
   // Protected methods
   protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property);
-  }
-
-  protected togglePasswordVisibility(): void {
-    this.passwordVisible = !this.passwordVisible;
   }
 
 }

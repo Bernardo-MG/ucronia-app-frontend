@@ -1,11 +1,11 @@
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -54,12 +54,15 @@ export class LibraryGameSystemListView implements OnInit {
   }
 
   // Event handlers
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.data = response);
   }
 
   public onCancelEdit(): void {
@@ -190,18 +193,6 @@ export class LibraryGameSystemListView implements OnInit {
       });
   }
 
-  // Data loading
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => this.data = response);
-  }
-
   // Private methods
   private call(
     action: () => Observable<any>,
@@ -218,6 +209,14 @@ export class LibraryGameSystemListView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
 }

@@ -13,6 +13,7 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 })
 export class LibraryLendingList {
 
+  public readonly borrowerNames = input<Record<number, string>>({});
   public readonly lendings = input<BookLending[]>([]);
   public readonly loading = input(false);
   public readonly page = input(0);
@@ -23,7 +24,6 @@ export class LibraryLendingList {
   public readonly showLending = output<BookLending>();
   public readonly sort = output<SortingProperty>();
 
-  public readonly borrowerNames = input<Record<number, string>>({});
   public get first() {
     return (this.page() - 1) * this.rows();
   }

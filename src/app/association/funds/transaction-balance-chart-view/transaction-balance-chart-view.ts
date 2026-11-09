@@ -19,6 +19,8 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(TransactionBalanceService);
 
+  public readonly refresh = input<Observable<void>>();
+
   public balance: TransactionMonthlyBalance[] = [];
   public loading = false;
   public readonly ranges = [
@@ -27,7 +29,6 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
     { label: '1 año', value: 12 },
     { label: '2 años', value: 24 }
   ];
-  public readonly refresh = input<Observable<void>>();
   public get selectedRange(): number {
     return this.selectedRange$.value;
   }

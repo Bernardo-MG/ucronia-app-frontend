@@ -139,12 +139,16 @@ export class LibraryView implements OnInit {
       .subscribe();
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
+  public load(page: number | undefined = undefined): void {
+    if (this.display === Display.LENDINGS) {
+      this.loadLendings(page);
+      return;
     }
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.filterValue)
+    ).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => this.data = response);
   }
 
   public onCancelEdit(): void {
@@ -435,18 +439,6 @@ export class LibraryView implements OnInit {
   }
 
   // Data loading
-  public load(page: number | undefined = undefined): void {
-    if (this.display === Display.LENDINGS) {
-      this.loadLendings(page);
-      return;
-    }
-    this.listRequest?.unsubscribe();
-    this.listRequest = this.withLoading(
-      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.filterValue)
-    ).pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(response => this.data = response);
-  }
-
   private loadEditOptions(): void {
     getAllPages((page, size) => this.service.getGameSystems(page, size))
       .pipe(
@@ -541,6 +533,14 @@ export class LibraryView implements OnInit {
     }
 
     return 'game';
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {

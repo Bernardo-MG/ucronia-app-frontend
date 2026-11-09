@@ -92,6 +92,29 @@ export class FileView implements OnInit {
     this.callFolder(() => this.service.createFolder(name, this.currentFolderNumber));
   }
 
+  protected download(file: Asset): void {
+    this.status.loading = true;
+    this.service.content(file.number)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
+      .subscribe(content => downloadFile(content, file.name));
+  }
+
+  protected load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.status.loading = true;
+    const request = this.currentFolderNumber === null ? this.service.getRootFiles(page, this.sort)
+      : this.service.getFolderFiles(this.currentFolderNumber, page, this.sort);
+    this.listRequest = request
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
+      .subscribe(data => this.data = data);
+  }
+
   protected onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
@@ -202,38 +225,6 @@ export class FileView implements OnInit {
         ? this.service.move(file.number, folderNumber) : of(file))));
   }
 
-  // Data loading
-  protected load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.status.loading = true;
-    const request = this.currentFolderNumber === null ? this.service.getRootFiles(page, this.sort)
-      : this.service.getFolderFiles(this.currentFolderNumber, page, this.sort);
-    this.listRequest = request
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loading = false)
-      )
-      .subscribe(data => this.data = data);
-  }
-
-  private loadFolders(): void {
-    this.folderRequest?.unsubscribe();
-    this.folderRequest = this.service.getFolders()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(folders => this.folders = folders);
-  }
-
-  // Protected methods
-  protected download(file: Asset): void {
-    this.status.loading = true;
-    this.service.content(file.number)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loading = false)
-      )
-      .subscribe(content => downloadFile(content, file.name));
-  }
-
   protected openFolder(number: number | null = null): void {
     this.currentFolderNumber = number;
     this.load();
@@ -257,6 +248,14 @@ export class FileView implements OnInit {
     const name = this.folderName.trim();
     if (!folder || !name) return;
     this.callFolder(() => this.service.updateFolder({ ...folder, name }));
+  }
+
+  // Data loading
+  private loadFolders(): void {
+    this.folderRequest?.unsubscribe();
+    this.folderRequest = this.service.getFolders()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(folders => this.folders = folders);
   }
 
   // Private methods

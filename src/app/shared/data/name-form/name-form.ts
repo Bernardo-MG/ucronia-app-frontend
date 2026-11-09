@@ -30,9 +30,9 @@ export class NameForm {
   }
 
   public constructor() {
-    const fb = inject(FormBuilder);
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       number: [],
       name: ['', [Validators.required, notEmptyStringValidator]]
     });

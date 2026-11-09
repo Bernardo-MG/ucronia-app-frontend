@@ -19,7 +19,7 @@ import { ImageContent } from '../../images/image-content/image-content';
 })
 export class ActivityForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   @Input() public set data(value: Activity) {
     this.form.patchValue({
@@ -62,13 +62,13 @@ export class ActivityForm {
   protected showImageField = false;
 
   public constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       number: [null],
       title: [null, Validators.required],
       description: [''],
       location: [''],
       image: [''],
-      dates: this.fb.array([])
+      dates: this.formBuilder.array([])
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -99,18 +99,18 @@ export class ActivityForm {
     }
   }
 
+  protected removeDate(index: number): void {
+    this.dates.removeAt(index);
+  }
+
   // Protected methods
   protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  protected removeDate(index: number): void {
-    this.dates.removeAt(index);
-  }
-
   // Private methods
   private createDateGroup(start?: Date, end?: Date): FormGroup {
-    return this.fb.group({
+    return this.formBuilder.group({
       day: [start ?? null, Validators.required],
       startHour: [start ?? null, Validators.required],
       endHour: [end ?? null, Validators.required]

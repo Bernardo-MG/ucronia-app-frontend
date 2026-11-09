@@ -20,7 +20,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class ScheduledGameForm implements OnChanges {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   @Input() public set data(value: ScheduledGame) {
     this.form.reset({
@@ -61,7 +61,7 @@ export class ScheduledGameForm implements OnChanges {
   public showImageField = false;
 
   public constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       number: [null],
       title: [null, Validators.required],
       gameType: [ScheduledGameType.ONESHOT, Validators.required],
@@ -71,7 +71,7 @@ export class ScheduledGameForm implements OnChanges {
       maxPlayers: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
       image: [''],
       start: [null, Validators.required],
-      recurrence: this.fb.group({
+      recurrence: this.formBuilder.group({
         interval: [0, [Validators.required, Validators.min(0), Validators.max(365)]],
         unit: [RecurrenceUnit.WEEKLY, Validators.required]
       }),

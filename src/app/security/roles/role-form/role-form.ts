@@ -87,6 +87,13 @@ export class RoleForm {
     this.permissions = [];
     this.form.markAsDirty();
   }
+
+  public clearVisibleSelection(): void {
+    this.permissionGroups.forEach(group => {
+      this.toggleGroup(group, false);
+    });
+  }
+
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -96,58 +103,18 @@ export class RoleForm {
     }
   }
 
-  // Public methods
-  public clearVisibleSelection(): void {
-    this.permissionGroups.forEach(group => {
-      this.toggleGroup(group, false);
-    });
-  }
-  public formatLabel(value: string): string {
-    const label = value
-      .replace(/([a-z])([A-Z])/g, '$1 $2')
-      .replace(/[._-]+/g, ' ')
-      .trim();
-
-    return label
-      ? label.charAt(0).toLocaleUpperCase() + label.slice(1)
-      : value;
-  }
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property)
-      || this.failures().hasFailures(property);
-  }
-  public isGroupPartiallySelected(group: PermissionGroup): boolean {
-    const selected = group.permissions.filter(permission => {
-      return this.isSelected(permission);
-    }).length;
-
-    return selected > 0 && selected < group.permissions.length;
-  }
-  public isGroupSelected(group: PermissionGroup): boolean {
-    return group.permissions.every(permission => {
-      return this.isSelected(permission);
-    });
-  }
-  public isSelected(permission: ResourcePermission): boolean {
-    return this.permissions.some(selected => {
-      return this.permissionKey(selected) === this.permissionKey(permission);
-    });
-  }
   public selectAllVisible(): void {
     this.permissionGroups.forEach(group => {
       this.toggleGroup(group, true);
     });
   }
-  public selectedInGroup(group: PermissionGroup): number {
-    return group.permissions.filter(permission => {
-      return this.isSelected(permission);
-    }).length;
-  }
+
   public toggleGroup(group: PermissionGroup, checked: boolean): void {
     group.permissions.forEach(permission => {
       this.togglePermission(permission, checked);
     });
   }
+
   public togglePermission(permission: ResourcePermission, checked: boolean): void {
     if (checked && !this.isSelected(permission)) {
       this.permissions = [...this.permissions, permission];
@@ -158,6 +125,49 @@ export class RoleForm {
     }
 
     this.form.markAsDirty();
+  }
+
+  // Public methods
+  public formatLabel(value: string): string {
+    const label = value
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[._-]+/g, ' ')
+      .trim();
+
+    return label
+      ? label.charAt(0).toLocaleUpperCase() + label.slice(1)
+      : value;
+  }
+
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
+  }
+
+  public isGroupPartiallySelected(group: PermissionGroup): boolean {
+    const selected = group.permissions.filter(permission => {
+      return this.isSelected(permission);
+    }).length;
+
+    return selected > 0 && selected < group.permissions.length;
+  }
+
+  public isGroupSelected(group: PermissionGroup): boolean {
+    return group.permissions.every(permission => {
+      return this.isSelected(permission);
+    });
+  }
+
+  public isSelected(permission: ResourcePermission): boolean {
+    return this.permissions.some(selected => {
+      return this.permissionKey(selected) === this.permissionKey(permission);
+    });
+  }
+
+  public selectedInGroup(group: PermissionGroup): number {
+    return group.permissions.filter(permission => {
+      return this.isSelected(permission);
+    }).length;
   }
 
   // Private methods

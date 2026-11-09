@@ -21,7 +21,7 @@ export interface ImageFormData {
 })
 export class ImageForm implements OnChanges {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly data = input<Asset | undefined>();
   public readonly failures = input(new FailureStore());
@@ -47,7 +47,7 @@ export class ImageForm implements OnChanges {
   }
 
   public constructor() {
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', Validators.maxLength(500)],

@@ -45,7 +45,7 @@ export class MyFeesView implements OnInit {
     });
   }
 
-  // Data loading
+  // Event handlers
   public load(page: number | undefined = undefined) {
     this.listRequest?.unsubscribe();
     this.loading = true;
