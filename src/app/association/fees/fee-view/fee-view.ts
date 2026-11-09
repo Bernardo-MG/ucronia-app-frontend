@@ -32,20 +32,18 @@ import { FeeSummaryService } from '../fee-summary-service';
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly feeCalendarService = inject(FeeCalendarService);
   private readonly reportService = inject(FeeSummaryService);
   private readonly service = inject(FeeService);
 
   public readonly creationItems: MenuItem[] = [];
-
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -54,9 +52,6 @@ export class FeeView implements OnInit {
       this.currentDialog = value;
     }
   }
-
-  public readonly Dialog = Dialog;
-
   public failures = new FailureStore();
   public feeCalendar: MemberFees[] = [];
   public readonly filter: Filter = {
@@ -64,9 +59,7 @@ export class FeeView implements OnInit {
     year: new Date().getFullYear()
   };
   public members: Profile[] = [];
-
   public readonly permissions: Permissions;
-
   public selectedData = new Fee();
   public readonly status: Status = {
     loadingCalendar: false,
@@ -74,14 +67,13 @@ export class FeeView implements OnInit {
     loading: false
   };
   public summary = new FeeSummary();
+
   private calendarRequest?: Subscription;
-
   private currentDialog = Dialog.NONE;
-
   private readonly detailRequest = new DetailRequest();
   private readonly memberSearch = new SearchRequest();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -92,6 +84,7 @@ export class FeeView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.loadRange();
 
@@ -112,7 +105,14 @@ export class FeeView implements OnInit {
     this.loadSummary();
   }
 
-  // DIALOGS
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
 
   public onCancelEdit(): void {
     this.failures.clear();
@@ -186,6 +186,7 @@ export class FeeView implements OnInit {
 
   public onSearchMembers(event: { query: string }): void {
     this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(members => this.members = members);
   }
 
@@ -201,8 +202,6 @@ export class FeeView implements OnInit {
       .subscribe(fee => this.selectedData = fee);
   }
 
-  // EVENT HANDLERS
-
   public onUpdate(toUpdate: FeeEditionEvent): void {
     const update = {
       transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
@@ -216,6 +215,7 @@ export class FeeView implements OnInit {
     );
   }
 
+  // Data loading
   public loadCalendar(year: number) {
     this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
@@ -250,13 +250,13 @@ export class FeeView implements OnInit {
       });
   }
 
-  // DATA LOADING
-
   private loadSummary() {
     this.status.loadingSummary = true;
-
     this.reportService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
       .subscribe(response => this.summary = response);
   }
 
@@ -273,15 +273,17 @@ export class FeeView implements OnInit {
     }
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -290,14 +292,6 @@ export class FeeView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
 }

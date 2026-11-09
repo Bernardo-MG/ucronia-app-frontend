@@ -19,14 +19,16 @@ export class AuditView implements OnInit {
 
   public data = new Page<LoginRegister>();
   public loading = false;
-  private listRequest?: Subscription;
 
+  private listRequest?: Subscription;
   private readonly sort = new Sorting();
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
+  // Event handlers
   public onChangeDirection(sorting: SortingEvent): void {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
@@ -39,6 +41,7 @@ export class AuditView implements OnInit {
     this.load(this.data.page);
   }
 
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;

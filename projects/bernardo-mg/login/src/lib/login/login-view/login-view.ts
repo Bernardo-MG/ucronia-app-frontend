@@ -11,9 +11,9 @@ import { LoginService } from '../login-service';
   styleUrl: './login-view.sass'
 })
 export class LoginView {
+
   private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
-
   private readonly service = inject(LoginService);
 
   public failedLogin = false;
@@ -29,6 +29,7 @@ export class LoginView {
       route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  // Event handlers
   public onLogin(login: LoginEvent): void {
     this.loading = true;
     this.failedLogin = false;
@@ -60,4 +61,5 @@ export class LoginView {
   public onRememberMe(remember: boolean): void {
     this.rememberMe = remember;
   }
+
 }

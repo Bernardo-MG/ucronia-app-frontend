@@ -24,19 +24,16 @@ import { UserService } from '../user-service';
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly service = inject(UserService);
 
   public data = new Page<User>();
   public readonly Dialog = Dialog;
-
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -49,21 +46,18 @@ export class UserView implements OnInit {
   public loading = false;
   public member = new Profile();
   public members: Profile[] = [];
-
   public readonly permissions: Permissions;
   public roleSelection: Role[] = [];
   public selectedData = new User();
+
   private currentDialog = Dialog.NONE;
-
   private readonly detailRequest = new DetailRequest();
-
   private readonly drawer = viewChild(Drawer);
   private listRequest?: Subscription;
   private readonly memberSearch = new SearchRequest();
-
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     this.permissions = {
@@ -73,8 +67,18 @@ export class UserView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   public onCancelEdit(): void {
@@ -133,6 +137,7 @@ export class UserView implements OnInit {
 
   public onSearchMembers(event: { query: string }): void {
     this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(members => this.members = members);
   }
 
@@ -222,6 +227,7 @@ export class UserView implements OnInit {
     );
   }
 
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -236,11 +242,13 @@ export class UserView implements OnInit {
       });
   }
 
+  // Private methods
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {
     this.loading = true;
 
     action()
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => this.finishLoading())
       )
       .subscribe({
@@ -257,14 +265,6 @@ export class UserView implements OnInit {
     this.loading = false;
     // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
     this.drawer()?.cd.markForCheck();
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
 }

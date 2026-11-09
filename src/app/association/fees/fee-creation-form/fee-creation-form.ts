@@ -17,7 +17,6 @@ import { MessageModule } from 'primeng/message';
 export class FeeCreationForm {
 
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -26,17 +25,15 @@ export class FeeCreationForm {
 
   public readonly save = output<FeeCreationEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
+
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public selectedMember?: Profile;
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -47,6 +44,7 @@ export class FeeCreationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onClearMember(): void {
     this.selectedMember = undefined;
     this.form.get('member')?.reset();
@@ -73,6 +71,7 @@ export class FeeCreationForm {
     memberControl?.markAsTouched();
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property)
       || this.failures().hasFailures(property);

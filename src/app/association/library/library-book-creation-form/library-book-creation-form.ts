@@ -16,7 +16,6 @@ import { LibraryConfig } from '../library-config';
 export class LibraryBookCreationForm {
 
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -26,16 +25,13 @@ export class LibraryBookCreationForm {
 
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public kind: 'fiction' | 'game' = 'game';
-
   public readonly languages: Language[] = [];
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
     const config = inject(LibraryConfig);
 
@@ -54,6 +50,7 @@ export class LibraryBookCreationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -65,6 +62,7 @@ export class LibraryBookCreationForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

@@ -39,17 +39,15 @@ import { librarySettingsPermissions } from '../settings/library-settings-permiss
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {
-  private readonly confirmationService = inject(ConfirmationService);
 
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly lendingsService = inject(LibraryLendingService);
-
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
 
   public readonly bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.GAME }, { label: 'Ficción', value: BookSelection.FICTION }];
   public bookTypes: BookType[] = [];
-
   public get borrower(): number {
     if (!this.selectedData.lendings.length) {
       return -1;
@@ -57,13 +55,11 @@ export class LibraryView implements OnInit {
 
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
   }
-
   public data = new Page<FictionBook | GameBook>();
-
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -76,37 +72,27 @@ export class LibraryView implements OnInit {
       this.currentDialog = value;
     }
   }
-
-  public readonly Dialog = Dialog;
-  public display = Display.BOOKS;
-
   public readonly Display = Display;
+  public display = Display.BOOKS;
   public donorSearchResults: Donor[] = [];
-
   public failures = new FailureStore();
-
   public filterValue = '';
   public gameSystems: GameSystem[] = [];
   public lendingBorrowerNames: Record<number, string> = {};
   public lendings = new Page<BookLending>();
-
   public get lentDate(): Date {
     // TODO: handle empty lendings
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
   public members: Profile[] = [];
-
   public readonly permissions: Permissions;
   public selectedBookBorrowerNames: Record<number, string> = {};
   public readonly selectedBookView = BookSelection.GAME;
   public selectedBorrower = new Profile();
-
   public selectedData: FictionBook | GameBook = new GameBook();
   public selectedLending = new BookLending();
   public readonly selectedTab = Display.BOOKS;
-
   public source: BookSelection = BookSelection.GAME;
-
   public readonly stateOptions: any[] = [{ label: 'Libros', value: Display.BOOKS }, { label: 'Préstamos', value: Display.LENDINGS }];
   public readonly status: Status = {
     loading: false,
@@ -116,15 +102,13 @@ export class LibraryView implements OnInit {
   public summary = new LibrarySummary();
 
   private currentDialog = Dialog.NONE;
-
   private readonly detailRequest = new DetailRequest();
   private readonly donorSearch = new SearchRequest();
   private listRequest?: Subscription;
   private readonly memberSearch = new SearchRequest();
-
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -138,12 +122,30 @@ export class LibraryView implements OnInit {
 
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
     this.loadSummary();
   }
 
-  // DIALOGS
+  // Event handlers
+  public downloadExcel(): void {
+    this.status.loadingExcel = true;
+    this.reportService.downloadExcelReport()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingExcel = false)
+      )
+      .subscribe();
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
 
   public onCancelEdit(): void {
     this.failures.clear();
@@ -180,8 +182,6 @@ export class LibraryView implements OnInit {
     this.donorSearch.cancel();
     this.donorSearchResults = [];
   }
-
-  // EVENT HANDLERS
 
   public onCreate(toCreate: LibraryBookCreationFormData): void {
     this.call(
@@ -294,11 +294,13 @@ export class LibraryView implements OnInit {
       search => this.service.searchDonors(search),
       error => this.handleError(error)
     )
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(results => this.donorSearchResults = results);
   }
 
   public onSearchMembers(event: { query: string }): void {
     this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(members => this.members = members);
   }
 
@@ -348,7 +350,10 @@ export class LibraryView implements OnInit {
     this.dialog = Dialog.INFO;
     this.selectedData = book;
     this.resolveBorrowerNames(book.lendings)
-      .pipe(this.detailRequest.untilCancelled())
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        this.detailRequest.untilCancelled()
+      )
       .subscribe((borrowerNames) => {
         this.selectedBookBorrowerNames = borrowerNames;
       });
@@ -378,6 +383,7 @@ export class LibraryView implements OnInit {
         )
     )
       .pipe(this.detailRequest.untilCancelled())
+    .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(({ book, borrowerNames }) => {
         this.selectedData = book;
         this.selectedBookBorrowerNames = borrowerNames;
@@ -412,6 +418,7 @@ export class LibraryView implements OnInit {
           this.service.getBorrower(this.borrower)
         )
           .pipe(this.detailRequest.untilCancelled())
+          .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe((profile) => {
             this.selectedBorrower = profile;
             this.dialog = event.dialog;
@@ -427,25 +434,8 @@ export class LibraryView implements OnInit {
     this.dialog = event.dialog;
   }
 
-  public getBookType(book: FictionBook | GameBook): BookType {
-    return (book as GameBook).bookType as BookType;
-  }
-
-  // DATA LOADING
-
-  public getGameSystem(book: FictionBook | GameBook): GameSystem {
-    return (book as GameBook).gameSystem as GameSystem;
-  }
-
-  private getSelectedSource(): 'game' | 'fiction' {
-    if (this.source === BookSelection.FICTION) {
-      return 'fiction';
-    }
-
-    return 'game';
-  }
-
-  public load(page: number | undefined = undefined) {
+  // Data loading
+  public load(page: number | undefined = undefined): void {
     if (this.display === Display.LENDINGS) {
       this.loadLendings(page);
       return;
@@ -459,15 +449,21 @@ export class LibraryView implements OnInit {
 
   private loadEditOptions(): void {
     getAllPages((page, size) => this.service.getGameSystems(page, size))
-      .pipe(this.detailRequest.untilCancelled())
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        this.detailRequest.untilCancelled()
+      )
       .subscribe(gameSystems => this.gameSystems = gameSystems);
 
     getAllPages((page, size) => this.service.getBookTypes(page, size))
-      .pipe(this.detailRequest.untilCancelled())
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        this.detailRequest.untilCancelled()
+      )
       .subscribe(bookTypes => this.bookTypes = bookTypes);
   }
 
-  public loadLendings(page: number | undefined = undefined) {
+  public loadLendings(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
       this.lendingsService.getAll(page, new Sorting([]))
@@ -485,27 +481,30 @@ export class LibraryView implements OnInit {
       });
   }
 
-  private loadSummary() {
+  private loadSummary(): void {
     this.status.loadingSummary = true;
     this.service.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(r => this.summary = r);
-  }
-
-  public downloadExcel() {
-    this.status.loadingExcel = true;
-    this.reportService.downloadExcelReport()
       .pipe(
-        finalize(() => this.status.loadingExcel = false))
-      .subscribe();
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
+      .subscribe(summary => this.summary = summary);
   }
 
-  // PRIVATE METHODS
+  // Public methods
+  public getBookType(book: FictionBook | GameBook): BookType {
+    return (book as GameBook).bookType as BookType;
+  }
 
+  public getGameSystem(book: FictionBook | GameBook): GameSystem {
+    return (book as GameBook).gameSystem as GameSystem;
+  }
+
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
-  ) {
+  ): void {
     const dialog = this.dialog;
     const selectedData = this.selectedData;
     const selectedLending = this.selectedLending;
@@ -516,7 +515,10 @@ export class LibraryView implements OnInit {
 
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           if (this.destroyRef.destroyed) return;
@@ -533,12 +535,12 @@ export class LibraryView implements OnInit {
       });
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
+  private getSelectedSource(): 'game' | 'fiction' {
+    if (this.source === BookSelection.FICTION) {
+      return 'fiction';
     }
+
+    return 'game';
   }
 
   private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
@@ -559,7 +561,7 @@ export class LibraryView implements OnInit {
       )
     )
       .pipe(
-        map((borrowers) =>
+        map(borrowers =>
           borrowers.reduce((names, borrower) => {
             names[borrower.number] = borrower.name;
             return names;
@@ -568,9 +570,7 @@ export class LibraryView implements OnInit {
       );
   }
 
-  private withLoading<T>(
-    observable: Observable<T>
-  ): Observable<T> {
+  private withLoading<T>(observable: Observable<T>): Observable<T> {
     this.status.loading = true;
 
     return observable.pipe(

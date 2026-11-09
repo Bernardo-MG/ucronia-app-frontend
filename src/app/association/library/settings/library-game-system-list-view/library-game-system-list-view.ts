@@ -21,24 +21,23 @@ import { GameSystemService } from '../game-system-service';
   templateUrl: './library-game-system-list-view.html'
 })
 export class LibraryGameSystemListView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly service = inject(GameSystemService);
 
   public data = new Page<GameSystem>();
-  public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
   public failures = new FailureStore();
   public loading = false;
-
   public readonly permissions: Permissions;
   public selected = new GameSystem();
+
   private listRequest?: Subscription;
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -49,8 +48,18 @@ export class LibraryGameSystemListView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   public onCancelEdit(): void {
@@ -61,7 +70,7 @@ export class LibraryGameSystemListView implements OnInit {
   public onCreate(data: any): void {
     this.loading = true;
     this.service.create(data)
-      .pipe(finalize(() => {
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => {
         this.loading = false;
         this.dialog = Dialog.NONE;
       }))
@@ -117,7 +126,6 @@ export class LibraryGameSystemListView implements OnInit {
   }
 
   // DRAWER
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
@@ -137,8 +145,6 @@ export class LibraryGameSystemListView implements OnInit {
       this.onUpdate(data);
     }
   }
-
-  // EVENT HANDLERS
 
   public onShowCreate(): void {
     this.selected = new GameSystem();
@@ -167,7 +173,7 @@ export class LibraryGameSystemListView implements OnInit {
   public onUpdate(data: any): void {
     this.loading = true;
     this.service.update(data)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -184,8 +190,7 @@ export class LibraryGameSystemListView implements OnInit {
       });
   }
 
-  // DATA LOADING
-
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -197,15 +202,14 @@ export class LibraryGameSystemListView implements OnInit {
       .subscribe(response => this.data = response);
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -214,14 +218,6 @@ export class LibraryGameSystemListView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
 }

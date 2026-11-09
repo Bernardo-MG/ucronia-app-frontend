@@ -22,7 +22,6 @@ export class FeePaymentsForm {
 
   public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
-  // Keep the setter so form status updates synchronously with each input assignment.
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -43,7 +42,7 @@ export class FeePaymentsForm {
   protected selectedMember?: Profile;
   protected readonly today = new Date();
 
-  constructor() {
+  public constructor() {
     this.form = this.fb.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
@@ -54,6 +53,10 @@ export class FeePaymentsForm {
   }
 
   // Event handlers
+  public addDate() {
+    this.months.push(this.fb.control(undefined, Validators.required));
+  }
+
   protected onClearMember(): void {
     this.selectedMember = undefined;
     this.form.get('member')?.reset();
@@ -98,10 +101,6 @@ export class FeePaymentsForm {
   }
 
   // Public methods
-  public addDate() {
-    this.months.push(this.fb.control(undefined, Validators.required));
-  }
-
   public removeDate(index: number): void {
     this.months.removeAt(index);
   }

@@ -10,10 +10,15 @@ import { CalendarEvent } from 'angular-calendar';
   templateUrl: './transaction-calendar.html'
 })
 export class TransactionCalendar implements OnChanges {
+
+  private readonly currencyFormatter = new Intl.NumberFormat(inject(LOCALE_ID), {
+    style: 'currency',
+    currency: 'EUR'
+  });
+
   public readonly loading = input(false);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
-
   public readonly transactions = input<Transaction[]>([]);
   public readonly types = input<TransactionType[]>([]);
 
@@ -22,11 +27,7 @@ export class TransactionCalendar implements OnChanges {
 
   public events: CalendarEvent<{ transactionId: number }>[] = [];
 
-  private readonly currencyFormatter = new Intl.NumberFormat(inject(LOCALE_ID), {
-    style: 'currency',
-    currency: 'EUR'
-  });
-
+  // Lifecycle hooks
   public ngOnChanges({ transactions, types }: SimpleChanges): void {
     if (transactions || types) {
       const colors = new Map(this.types().map(type => [type.number, type.color]));
@@ -44,6 +45,7 @@ export class TransactionCalendar implements OnChanges {
     }
   }
 
+  // Event handlers
   public onPickDate(event: CalendarEvent<unknown>): void {
     const meta = event.meta;
     if (typeof meta === 'object' && meta !== null && 'transactionId' in meta

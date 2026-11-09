@@ -40,56 +40,49 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
   private readonly contactMethodService = inject(ContactMethodService);
-
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly directoryService = inject(DirectoryService);
   private readonly directorySummaryService = inject(DirectorySummaryService);
   private readonly feeTypeService = inject(FeeTypeService);
+
   public contactMethodSelection: ContactMethod[] = [];
   public readonly Dialog = Dialog;
-
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
     }
   }
-
   public failures = new FailureStore();
   public feeTypes: FeeType[] = [];
   public readonly filter: Filter = {
     status: MemberStatus.Active,
     type: Profiletype.ALL
   };
-
   public readonly modalTitle = '';
-
   public readonly permissions: Permissions;
   public profiles = new Page<FullProfile>();
-
   public selectedData = new FullProfile();
   public readonly status: Status = {
     loading: false,
     loadingSummary: false
   };
   public summary = new DirectorySummary();
+
   protected readonly Profiletype = Profiletype;
 
   private currentDialog = Dialog.NONE;
-
   private readonly detailRequest = new DetailRequest();
   private listRequest?: Subscription;
-
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -100,12 +93,20 @@ export class DirectoryView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
     this.loadSummary();
   }
 
-  // DIALOGS
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
 
   public onCancelEdit(): void {
     this.failures.clear();
@@ -190,8 +191,6 @@ export class DirectoryView implements OnInit {
     this.load();
   }
 
-  // EVENT HANDLERS
-
   public onShowEdit() {
     this.detailRequest.cancel();
     this.dialog = Dialog.EDIT;
@@ -240,8 +239,7 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  // DATA LOADING
-
+  // Data loading
   public load(page: number | undefined = undefined) {
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
@@ -256,19 +254,24 @@ export class DirectoryView implements OnInit {
   private loadSummary() {
     this.status.loadingSummary = true;
     this.directorySummaryService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
       .subscribe(r => this.summary = r);
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -277,14 +280,6 @@ export class DirectoryView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
   private withLoading<T>(

@@ -15,9 +15,7 @@ export class UserTokenExtendForm {
   @Input() public set expirationDate(value: Date) {
     this.form.get('expirationDate')?.setValue(value);
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -26,16 +24,13 @@ export class UserTokenExtendForm {
   public readonly save = output<Date>();
 
   public readonly form;
-
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public readonly today = new Date();
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -45,6 +40,7 @@ export class UserTokenExtendForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -54,6 +50,7 @@ export class UserTokenExtendForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

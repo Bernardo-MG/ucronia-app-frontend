@@ -24,28 +24,23 @@ import { ContactMethodService } from '../contact-method-service';
 export class ContactMethodView implements OnInit {
 
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly contactMethodService = inject(ContactMethodService);
-
   private readonly destroyRef = inject(DestroyRef);
+
   public contactMethodData = new Page<ContactMethod>();
   public readonly Dialog = Dialog;
-
   public dialog = Dialog.NONE;
-
   public failures = new FailureStore();
-
   /**
    * Loading flag.
    */
   public loading = false;
-
   public readonly permissions: Permissions;
-
   public selectedData = new ContactMethod();
+
   private listRequest?: Subscription;
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -56,8 +51,18 @@ export class ContactMethodView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   public onCancelEdit(): void {
@@ -84,8 +89,6 @@ export class ContactMethodView implements OnInit {
     });
   }
 
-  // DIALOGS
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
@@ -98,8 +101,6 @@ export class ContactMethodView implements OnInit {
     this.selectedData = contactMethod;
     this.dialog = Dialog.EDIT;
   }
-
-  // EVENT HANDLERS
 
   public onShowInfo(data: ContactMethod): void {
     this.selectedData = data;
@@ -114,8 +115,7 @@ export class ContactMethodView implements OnInit {
     );
   }
 
-  // DATA LOADING
-
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -128,15 +128,17 @@ export class ContactMethodView implements OnInit {
       .subscribe(response => this.contactMethodData = response);
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void = () => { }
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -145,14 +147,6 @@ export class ContactMethodView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
 }

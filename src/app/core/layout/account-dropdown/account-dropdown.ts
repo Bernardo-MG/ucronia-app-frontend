@@ -16,10 +16,9 @@ export class AccountDropdown {
   private readonly authService = inject(AuthService);
 
   public readonly accountItems: MenuItem[] = [];
-
   public name = '';
 
-  constructor() {
+  public constructor() {
     this.authService.securityDetails
       .pipe(takeUntilDestroyed())
       .subscribe(u => this.name = u.username);

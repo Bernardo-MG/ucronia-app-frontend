@@ -21,7 +21,7 @@ export class SettingsLayout {
 
   protected readonly menuSections: MenuSection[];
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     const catalogItems = this.catalogItems(authService);
@@ -48,6 +48,7 @@ export class SettingsLayout {
     ];
   }
 
+  // Private methods
   private catalogItems(authService: AuthService): MenuItem[] {
     const catalogItems: MenuItem[] = [];
 

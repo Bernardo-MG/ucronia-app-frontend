@@ -27,14 +27,12 @@ export class ContactSettingsForm implements OnChanges {
    * Form structure.
    */
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const formBuilder = inject(FormBuilder);
 
     this.form = formBuilder.nonNullable.group({
@@ -47,6 +45,7 @@ export class ContactSettingsForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ email, instagram, googleMaps, teamUp }: SimpleChanges): void {
     if (instagram) {
       this.form.get('instagram')?.setValue(instagram.currentValue);
@@ -62,6 +61,7 @@ export class ContactSettingsForm implements OnChanges {
     }
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */

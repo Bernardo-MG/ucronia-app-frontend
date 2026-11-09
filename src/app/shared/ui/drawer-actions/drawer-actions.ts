@@ -8,6 +8,7 @@ import { ButtonModule } from 'primeng/button';
   host: { class: 'block w-full' }
 })
 export class DrawerActions {
+
   public readonly deleteDisabled = input(false);
   public readonly deleteLabel = input('Eliminar');
   public readonly editDisabled = input(false);
@@ -19,4 +20,5 @@ export class DrawerActions {
 
   public readonly delete = output<Event>();
   public readonly edit = output<void>();
+
 }

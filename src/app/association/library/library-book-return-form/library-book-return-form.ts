@@ -17,15 +17,12 @@ export class LibraryBookReturnForm {
   @Input() public set book(value: number) {
     this.form.get('book')?.setValue(value);
   }
-
   @Input() public set borrower(value: number) {
     this.form.get('borrower')?.setValue(value);
   }
   public readonly borrowerName = input('');
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
-
   public readonly lentDate = input(new Date());
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -34,20 +31,15 @@ export class LibraryBookReturnForm {
   public readonly save = output<BookReturnedEvent>();
 
   public readonly fee = new Fee();
-
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public readonly memberName = '';
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public readonly today = new Date();
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -59,6 +51,7 @@ export class LibraryBookReturnForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -71,6 +64,7 @@ export class LibraryBookReturnForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }

@@ -17,16 +17,15 @@ export class SettingsView implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AssociationSettingsService);
+
   public calendar = '';
-
   public readonly editable;
-
   public email = '';
   public instagram = '';
   public loading = false;
   public map = '';
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -34,6 +33,7 @@ export class SettingsView implements OnInit {
     this.editable = authService.hasPermission(UcroniaPermissions.associationSettings.update);
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
@@ -54,6 +54,7 @@ export class SettingsView implements OnInit {
       });
   }
 
+  // Event handlers
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
     const updates = [];
 

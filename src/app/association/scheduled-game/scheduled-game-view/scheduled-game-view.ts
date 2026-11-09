@@ -27,17 +27,15 @@ import { ScheduledGameService } from '../scheduled-game-service';
   templateUrl: './scheduled-game-view.html'
 })
 export class ScheduledGameView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly service = inject(ScheduledGameService);
-  public readonly Dialog = Dialog;
 
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -46,20 +44,15 @@ export class ScheduledGameView implements OnInit {
       this.currentDialog = value;
     }
   }
-
   public get draftCount(): number {
     return this.scheduledGames.content.filter(game => game.status === CalendarStatus.DRAFT).length;
   }
   public failures = new FailureStore();
-
   public members: Profile[] = [];
-
   public readonly permissions: Permissions;
-
   public get publishedCount(): number {
     return this.scheduledGames.content.filter(game => game.status === CalendarStatus.PUBLISHED).length;
   }
-
   public scheduledGames = new Page<ScheduledGame>();
   public selectedData = new ScheduledGame();
   public selectedMaster = new Profile();
@@ -74,15 +67,14 @@ export class ScheduledGameView implements OnInit {
     { label: 'Publicada', value: CalendarStatus.PUBLISHED }
   ];
   public tables: GameTable[] = [];
-  private currentDialog = Dialog.NONE;
 
+  private currentDialog = Dialog.NONE;
   private readonly detailRequest = new DetailRequest();
   private listRequest?: Subscription;
   private readonly memberSearch = new SearchRequest();
-
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     this.permissions = {
@@ -92,9 +84,19 @@ export class ScheduledGameView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
     this.loadTables();
+  }
+
+  // Event handlers
+  private handleError(error: unknown) {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   public onCancelEdit(): void {
@@ -193,6 +195,7 @@ export class ScheduledGameView implements OnInit {
 
   public onSearchMembers(event: { query: string }): void {
     this.memberSearch.search(event.query, query => this.service.searchMembers(query))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(members => this.members = members);
   }
 
@@ -232,6 +235,7 @@ export class ScheduledGameView implements OnInit {
     );
   }
 
+  // Data loading
   public load(page: number | undefined = undefined) {
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
@@ -243,17 +247,21 @@ export class ScheduledGameView implements OnInit {
 
   private loadTables(): void {
     this.service.getTables()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(tables => this.tables = tables);
   }
 
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
-
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -262,14 +270,6 @@ export class ScheduledGameView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown) {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
   private withLoading<T>(

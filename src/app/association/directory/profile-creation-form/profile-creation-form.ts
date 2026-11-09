@@ -15,22 +15,20 @@ import { MessageModule } from 'primeng/message';
 export class ProfileCreationForm {
 
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
   public readonly save = output<ProfileCreationFormData>();
+
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -44,6 +42,7 @@ export class ProfileCreationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -55,6 +54,7 @@ export class ProfileCreationForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }

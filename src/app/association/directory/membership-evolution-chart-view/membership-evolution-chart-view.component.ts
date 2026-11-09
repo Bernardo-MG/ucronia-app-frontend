@@ -16,26 +16,22 @@ import { MembershipEvolutionService } from '../membership-evolution-service';
   templateUrl: './membership-evolution-chart-view.component.html'
 })
 export class MembershipEvolutionChartView implements OnInit, OnDestroy {
+
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly service = inject(MembershipEvolutionService);
-  public readonly endMonthChange = output<string>();
 
+  public readonly endMonthChange = output<string>();
   public readonly startMonthChange = output<string>();
 
   public balance: MembershipEvolutionMonth[] = [];
-
   public chart: any;
-
   public loading = false;
-
   public readonly ranges = [
     { label: '3 meses', value: 3 },
     { label: '6 meses', value: 6 },
     { label: '1 año', value: 12 },
     { label: '2 años', value: 24 }
   ];
-
   public get selectedRange(): number {
     return this.selectedRange$.value;
   }
@@ -45,6 +41,7 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
 
   private readonly selectedRange$ = new BehaviorSubject<number>(12);
 
+  // Lifecycle hooks
   public ngOnDestroy(): void {
     if (this.chart) {
       this.chart.destroy();
@@ -55,6 +52,7 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
     this.setupBalanceReload();
   }
 
+  // Data loading
   private loadChart() {
     if (this.chart) {
       this.chart.destroy();
@@ -101,6 +99,7 @@ export class MembershipEvolutionChartView implements OnInit, OnDestroy {
     });
   }
 
+  // Private methods
   private setupBalanceReload() {
     this.selectedRange$
       .pipe(

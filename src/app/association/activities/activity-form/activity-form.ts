@@ -18,6 +18,7 @@ import { ImageContent } from '../../images/image-content/image-content';
   templateUrl: './activity-form.html'
 })
 export class ActivityForm {
+
   private readonly fb = inject(FormBuilder);
 
   @Input() public set data(value: Activity) {
@@ -40,12 +41,9 @@ export class ActivityForm {
       this.addDate();
     }
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   public readonly imageOptions = input<ActivityImageOption[]>([]);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -57,13 +55,13 @@ export class ActivityForm {
   }
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-  public showImageField = false;
 
-  constructor() {
+  protected showImageField = false;
+
+  public constructor() {
     this.form = this.fb.group({
       number: [null],
       title: [null, Validators.required],
@@ -75,6 +73,11 @@ export class ActivityForm {
 
     this.formStatus = new FormStatus(this.form);
     this.addDate();
+  }
+
+  // Event handlers
+  protected addDate(): void {
+    this.dates.push(this.createDateGroup());
   }
 
   public onSave(): void {
@@ -96,18 +99,16 @@ export class ActivityForm {
     }
   }
 
-  public addDate(): void {
-    this.dates.push(this.createDateGroup());
-  }
-
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public removeDate(index: number): void {
+  protected removeDate(index: number): void {
     this.dates.removeAt(index);
   }
 
+  // Private methods
   private createDateGroup(start?: Date, end?: Date): FormGroup {
     return this.fb.group({
       day: [start ?? null, Validators.required],

@@ -20,9 +20,7 @@ export class FeeEditionForm {
     this.form.reset({ transaction: { date: value.transaction?.date ?? null } });
     this.fee = value;
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -31,17 +29,14 @@ export class FeeEditionForm {
   public readonly save = output<FeeEditionEvent>();
 
   public fee = new Fee();
-
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public readonly today = new Date();
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -53,6 +48,7 @@ export class FeeEditionForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -61,6 +57,7 @@ export class FeeEditionForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

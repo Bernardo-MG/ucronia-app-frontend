@@ -13,16 +13,14 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {
+
   public readonly book = input(-1);
   public readonly borrower = input<Profile>();
   public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
-
-  // Keep the setter so form status updates synchronously with each input assignment.
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<BookLendingEvent>();
@@ -33,9 +31,10 @@ export class LibraryBookLendingForm implements OnChanges {
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+
   protected readonly today = new Date();
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -47,6 +46,7 @@ export class LibraryBookLendingForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges(changes: SimpleChanges): void {
     const borrower = this.borrower();
     const borrowerNumber = borrower && borrower.number > 0 ? borrower.number : null;

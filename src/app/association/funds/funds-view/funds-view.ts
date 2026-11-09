@@ -38,22 +38,25 @@ import { TransactionTypeList } from '../transaction-type-list/transaction-type-l
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly reportService = inject(TransactionReportService);
-
   private readonly service = inject(TransactionService);
   private readonly transactionBalanceService = inject(TransactionBalanceService);
   private readonly transactionCalendarService = inject(TransactionCalendarService);
 
-  public descriptionFilter = '';
-  public readonly Dialog = Dialog;
+  public months: Date[] = [];
+  public selectedData = new Transaction();
+  public transactions: Transaction[] = [];
 
-  public get dialog(): Dialog {
+  protected deletingType = false;
+  protected descriptionFilter = '';
+  protected readonly Dialog = Dialog;
+  protected get dialog(): Dialog {
     return this.currentDialog;
   }
-
-  public set dialog(value: Dialog) {
+  protected set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
@@ -63,57 +66,55 @@ export class FundsView implements OnInit {
       }
     }
   }
-
-  public display = FundsDisplay.CALENDAR;
-
-  public failures = new FailureStore();
-  public readonly FundsDisplay = FundsDisplay;
-
-  public months: Date[] = [];
-  public readonly permissions: Permissions;
-  public selectedCalendarMonth?: Date;
-
-  public selectedData = new Transaction();
-
-  public selectedTab: string | number = 'transactions';
-
-  public get selectedTransactionType(): TransactionType | undefined {
+  protected display = FundsDisplay.CALENDAR;
+  protected failures = new FailureStore();
+  protected readonly FundsDisplay = FundsDisplay;
+  protected readonly permissions: Permissions;
+  protected selectedCalendarMonth?: Date;
+  protected selectedTab: string | number = 'transactions';
+  protected get selectedTransactionType(): TransactionType | undefined {
     return this.transactionTypes().find(type => type.number === this.selectedData.transactionType);
   }
-  public showTypeForm = false;
-
-  public readonly status: Status = {
+  protected selectedType?: TransactionType;
+  protected selectedTypeNumber?: number;
+  protected showTypeEditForm = false;
+  protected showTypeForm = false;
+  protected readonly status: Status = {
     loading: false,
     loadingCalendar: false,
     loadingList: false,
     loadingExcel: false,
+    errorExcel: false,
     loadingSummary: false
   };
-  public summary = new TransactionSummary();
+  protected summary = new TransactionSummary();
+  protected readonly transactionsChanged$ = new Subject<void>();
+  protected transactionsPage = new Page<Transaction>();
+  protected readonly transactionTypes = signal<TransactionType[]>([]);
+  protected transactionTypesPage = new Page<TransactionType>();
+  protected transactionTypesPageFailed = false;
+  protected transactionTypesPageLoading = false;
+  protected typeDeleteFailed = false;
+  protected typeDetailsFailed = false;
+  protected typeDetailsLoading = false;
+  protected readonly typeFailures = signal(new FailureStore());
+  protected readonly typeLoading = signal(false);
+  protected readonly typeSaveError = signal(false);
+  protected typesLoadFailed = false;
+  protected readonly typesLoading = signal(false);
 
-  public transactions: Transaction[] = [];
-  public readonly transactionsChanged$ = new Subject<void>();
-  public transactionsPage = new Page<Transaction>();
-  public readonly transactionTypes = signal<TransactionType[]>([]);
-  public transactionTypesVersion = 0;
-  public readonly typeFailures = signal(new FailureStore());
-  public readonly typeLoading = signal(false);
-  public readonly typeSaveError = signal(false);
-  public readonly typesLoading = signal(false);
   private calendarRequest?: Subscription;
-
   private currentDialog = Dialog.NONE;
-
   private readonly detailRequest = new DetailRequest();
   private listRequest?: Subscription;
   private monthsRequest?: Subscription;
-
   private sort = new Sorting();
   private summaryRequest?: Subscription;
-
+  private transactionTypesPageRequest?: Subscription;
+  private typeDetailsRequest?: Subscription;
   private typesRequest?: Subscription;
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -128,6 +129,7 @@ export class FundsView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     if (this.permissions.readTypes) {
       this.loadTransactionTypes();
@@ -141,22 +143,37 @@ export class FundsView implements OnInit {
     this.loadSummary();
   }
 
-  // DIALOGS
+  // Event handlers
+  protected closeTypeDetails(): void {
+    if (this.deletingType) {
+      return;
+    }
 
-  public onCancelEdit(): void {
+    this.typeDetailsRequest?.unsubscribe();
+    this.selectedTypeNumber = undefined;
+    this.selectedType = undefined;
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+  protected onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
+  protected onChangeDirection(sorting: SortingEvent): void {
     const direction = sorting.order === 1
       ? SortingDirection.Ascending
       : SortingDirection.Descending;
     this.sort = new Sorting([new SortingProperty(sorting.field, direction)]);
     this.loadList();
   }
-
-  // EVENT HANDLERS
 
   public onCreate(toCreate: Transaction): void {
     this.call(
@@ -165,28 +182,17 @@ export class FundsView implements OnInit {
     );
   }
 
-  public onDelete(event: Event) {
+  public onDelete(event: Event): void {
     const dialog = this.dialog;
     const index = this.selectedData.index;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
       icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
       accept: () => {
-        if (
-          this.destroyRef.destroyed ||
-          this.dialog !== dialog ||
-          this.selectedData.index !== index
-        ) {
+        if (this.destroyRef.destroyed || this.dialog !== dialog || this.selectedData.index !== index) {
           return;
         }
 
@@ -198,39 +204,58 @@ export class FundsView implements OnInit {
     });
   }
 
-  public onDrawerVisibleChange(visible: boolean) {
+  protected onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
       this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }
 
-  public onFilter(filter: string) {
+  protected onEditType(): void {
+    this.showTypeEditForm = true;
+  }
+
+  protected onFilter(filter: string): void {
     this.descriptionFilter = filter;
     this.loadList();
   }
 
-  public onShowInfo(transactionId: number) {
+  protected onShowInfo(transactionId: number): void {
     this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
     this.status.loading = true;
     this.service.getOne(transactionId)
       .pipe(
         finalize(() => this.status.loading = false),
-        this.detailRequest.untilCancelled()
+        this.detailRequest.untilCancelled(),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(transaction => this.selectedData = transaction);
   }
 
-  public onTabChange(tab: string | number | undefined): void {
+  protected onTabChange(tab: string | number | undefined): void {
     if (tab === undefined || tab === this.selectedTab) {
       return;
     }
 
     this.selectedTab = tab;
     if (tab === 'transactions' && this.permissions.readTypes) {
+      this.transactionTypesPageRequest?.unsubscribe();
+      this.transactionTypesPageLoading = false;
       this.loadTransactionTypes();
+    } else if (tab === 'types' && this.permissions.readTypes) {
+      this.loadTransactionTypePage(1);
     }
+  }
+
+  protected onTypeDetailsVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.closeTypeDetails();
+    }
+  }
+
+  protected onTypePageChange(page: number): void {
+    this.loadTransactionTypePage(page);
   }
 
   public onUpdate(toUpdate: Transaction): void {
@@ -240,7 +265,8 @@ export class FundsView implements OnInit {
     );
   }
 
-  private load() {
+  // Data loading
+  private load(): void {
     if (this.display === FundsDisplay.CALENDAR) {
       this.loadCalendar();
     } else {
@@ -248,13 +274,10 @@ export class FundsView implements OnInit {
     }
   }
 
-  // DATA LOADING
-
   public loadCalendar(month?: Date): void {
     const selectedMonth = month ?? this.selectedCalendarMonth ?? this.months.at(-1) ?? new Date();
     this.selectedCalendarMonth = selectedMonth;
 
-    // Prevent an older month's response from replacing the current month's events.
     this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
     this.calendarRequest = this.transactionCalendarService
@@ -263,12 +286,14 @@ export class FundsView implements OnInit {
       .subscribe(transactions => this.transactions = transactions);
   }
 
-  public loadList(page: number | undefined = undefined) {
+  protected loadList(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.status.loadingList = true;
     this.listRequest = this.service.getAll(page, this.descriptionFilter, this.sort)
-      .pipe(finalize(() => this.status.loadingList = false))
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingList = false)
+      )
       .subscribe(transactions => this.transactionsPage = transactions);
   }
 
@@ -280,18 +305,46 @@ export class FundsView implements OnInit {
       .subscribe(s => this.summary = s);
   }
 
+  protected loadTransactionTypePage(page = this.transactionTypesPage.page || 1): void {
+    this.transactionTypesPageRequest?.unsubscribe();
+    this.transactionTypesPageLoading = true;
+    this.transactionTypesPageFailed = false;
+
+    const request = new Subscription();
+    this.transactionTypesPageRequest = request;
+    request.add(this.service.getTypesPage(page, 10)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: data => {
+          if (data.content.length === 0 && page > 1) {
+            this.loadTransactionTypePage(Math.max(1, Math.min(page - 1, data.totalPages)));
+            return;
+          }
+
+          this.transactionTypesPage = data;
+          this.transactionTypesPageLoading = false;
+        },
+        error: () => {
+          this.transactionTypesPageLoading = false;
+          this.transactionTypesPageFailed = true;
+        }
+      }));
+  }
+
   private loadTransactionTypes(): void {
     this.typesRequest?.unsubscribe();
     this.typesLoading.set(true);
+    this.typesLoadFailed = false;
     this.typesRequest = this.service.getTypes()
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typesLoading.set(false)))
       .subscribe({
         next: types => this.transactionTypes.set(types),
-        error: () => this.transactionTypes.set([])
+        error: () => {
+          this.transactionTypes.set([]);
+          this.typesLoadFailed = true;
+        }
       });
   }
-
-  // PRIVATE METHODS
 
   private refreshAfterChange(): void {
     this.refreshMonths(() => this.load());
@@ -304,11 +357,8 @@ export class FundsView implements OnInit {
     this.monthsRequest = this.transactionCalendarService.getRange()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(months => {
-        // The backend returns months in ascending chronological order.
         this.months = months.map(m => new Date(m.year, m.month - 1));
 
-        // Keep the displayed month if it is still available; otherwise
-        // select the newest available month (or today when there are none).
         if (!this.selectedCalendarMonth || !this.months.some(m =>
           m.getFullYear() === this.selectedCalendarMonth!.getFullYear() &&
           m.getMonth() === this.selectedCalendarMonth!.getMonth())) {
@@ -319,13 +369,53 @@ export class FundsView implements OnInit {
       });
   }
 
-  public closeTypeForm(): void {
+  // Protected methods
+  protected closeTypeEditForm(): void {
+    this.showTypeEditForm = false;
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+  }
+
+  protected closeTypeForm(): void {
     this.showTypeForm = false;
     this.typeFailures.set(new FailureStore());
     this.typeSaveError.set(false);
   }
 
-  public createType(values: Pick<TransactionType, 'description' | 'color'>): void {
+  protected confirmDeleteType(event: Event): void {
+    const type = this.selectedType;
+    if (!type || !this.permissions.deleteTypes || this.deletingType) {
+      return;
+    }
+
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Estás seguro de querer borrar este tipo de transacción?',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
+      accept: () => {
+        if (this.destroyRef.destroyed || this.selectedType !== type || this.showTypeEditForm || this.deletingType) {
+          return;
+        }
+
+        this.deletingType = true;
+        this.typeDeleteFailed = false;
+        this.service.deleteType(type.number)
+          .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.deletingType = false))
+          .subscribe({
+            next: () => {
+              this.deletingType = false;
+              this.closeTypeDetails();
+              this.loadTransactionTypePage();
+            },
+            error: () => this.typeDeleteFailed = true
+          });
+      }
+    });
+  }
+
+  protected createType(values: Pick<TransactionType, 'description' | 'color'>): void {
     if (this.typeLoading()) {
       return;
     }
@@ -337,8 +427,8 @@ export class FundsView implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
       .subscribe({
         next: () => {
-          this.transactionTypesVersion++;
           this.closeTypeForm();
+          this.loadTransactionTypePage();
         },
         error: error => {
           if (error instanceof FailureResponse) {
@@ -349,22 +439,68 @@ export class FundsView implements OnInit {
       });
   }
 
-  // REPORT
-
-  public downloadExcel() {
+  protected downloadExcel(): void {
     this.status.loadingExcel = true;
+    this.status.errorExcel = false;
     this.reportService.downloadExcelReport()
-      .pipe(finalize(() => this.status.loadingExcel = false))
-      .subscribe();
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.status.loadingExcel = false))
+      .subscribe({
+        error: () => this.status.errorExcel = true
+      });
   }
 
+  protected showTypeDetails(number: number): void {
+    this.typeDetailsRequest?.unsubscribe();
+    this.selectedTypeNumber = number;
+    this.selectedType = undefined;
+    this.typeDetailsLoading = true;
+    this.typeDetailsFailed = false;
+    this.typeDeleteFailed = false;
+
+    this.typeDetailsRequest = this.service.getType(number)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeDetailsLoading = false))
+      .subscribe({
+        next: type => this.selectedType = type,
+        error: () => this.typeDetailsFailed = true
+      });
+  }
+
+  protected updateType(values: Pick<TransactionType, 'description' | 'color'>, number: number): void {
+    if (this.typeLoading()) {
+      return;
+    }
+
+    this.typeLoading.set(true);
+    this.typeFailures.set(new FailureStore());
+    this.typeSaveError.set(false);
+    this.service.saveType(values, number)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
+      .subscribe({
+        next: type => {
+          this.selectedType = type;
+          this.closeTypeEditForm();
+          this.loadTransactionTypePage();
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.typeFailures.set(error.failures);
+          }
+          this.typeSaveError.set(true);
+        }
+      });
+  }
+
+  // Private methods
   private call(
-    action: () => Observable<any>,
+    action: () => Observable<unknown>,
     onSuccess: () => void
-  ) {
+  ): void {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -373,14 +509,6 @@ export class FundsView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
 }
@@ -400,6 +528,7 @@ interface Status {
   loadingCalendar: boolean;
   loadingList: boolean;
   loadingExcel: boolean;
+  errorExcel: boolean;
   loadingSummary: boolean;
 }
 

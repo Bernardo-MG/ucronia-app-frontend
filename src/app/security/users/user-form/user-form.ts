@@ -15,21 +15,18 @@ import { MessageModule } from 'primeng/message';
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
-  public readonly create = input(true);
 
+  public readonly create = input(true);
   @Input() public set data(value: User) {
     this.form.reset(value as any);
     this.username = value.username;
     this.roles = [...value.roles];
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
   @Input() public set member(value: Profile) {
     this.selectedMember = value ?? new Profile();
   }
@@ -39,10 +36,9 @@ export class UserForm implements OnChanges {
   public readonly save = output<UserFormData>();
   public readonly searchMember = output<MemberSearchEvent>();
   public readonly update = output<UserEditionFormData>();
+
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get roleOptions(): Role[] {
     const roles = new Map<string, Role>();
 
@@ -52,14 +48,13 @@ export class UserForm implements OnChanges {
       .sort((first, second) => first.name.localeCompare(second.name));
   }
   public roles: Role[] = [];
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
   public selectedMember = new Profile();
   public username = '';
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -72,12 +67,14 @@ export class UserForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ selection }: SimpleChanges): void {
     if (selection && this.create()) {
       this.roles = [];
     }
   }
 
+  // Event handlers
   public onRemoveMember(): void {
     this.selectedMember = new Profile();
     this.form.markAsDirty();
@@ -109,6 +106,7 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

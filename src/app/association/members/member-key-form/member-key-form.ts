@@ -23,25 +23,22 @@ export class MemberKeyForm {
       this.isEdit = false;
     }
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
   public readonly save = output<Key>();
+
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public isEdit = false;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -53,6 +50,7 @@ export class MemberKeyForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -61,6 +59,7 @@ export class MemberKeyForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

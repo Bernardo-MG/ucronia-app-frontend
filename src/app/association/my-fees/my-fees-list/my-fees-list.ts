@@ -23,6 +23,7 @@ export class MyFeesList {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);

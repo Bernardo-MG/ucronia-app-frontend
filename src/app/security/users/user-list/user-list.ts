@@ -30,21 +30,20 @@ export interface UserDeleteEvent {
   templateUrl: './user-list.html'
 })
 export class UserList {
-  public readonly editable = input(false);
 
+  public readonly editable = input(false);
   public readonly loading = input(false);
   public readonly page = input(0);
   public readonly rows = input(0);
   public readonly totalRecords = input(0);
   public readonly users = input<User[]>([]);
+
   public readonly active = output<UserStatusChange>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
-
   public readonly show = output<User>();
 
   public editionMenuItems: MenuItem[] = [];
-
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
@@ -52,11 +51,13 @@ export class UserList {
   @ViewChild('editionMenu')
   private readonly editionMenu!: Menu;
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 
+  // Public methods
   public openEditionMenu(event: Event, user: User): void {
     this.editionMenuItems = [
       {
@@ -76,4 +77,5 @@ export class UserList {
 
     this.editionMenu.toggle(event);
   }
+
 }

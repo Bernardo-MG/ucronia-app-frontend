@@ -28,13 +28,12 @@ export class UserTokenView implements OnInit {
   public data = new Page<UserToken>();
   public readonly Dialog = Dialog;
   public dialog = Dialog.NONE;
-
   public readonly editable: boolean;
   public failures = new FailureStore();
   public loading = false;
   public selectedData = new UserToken();
-  private listRequest?: Subscription;
 
+  private listRequest?: Subscription;
   private readonly sort = new Sorting();
 
   public constructor() {
@@ -45,8 +44,18 @@ export class UserTokenView implements OnInit {
     );
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   public onCancelEdit(): void {
@@ -99,6 +108,7 @@ export class UserTokenView implements OnInit {
     this.dialog = Dialog.EXTEND;
   }
 
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -113,6 +123,7 @@ export class UserTokenView implements OnInit {
       });
   }
 
+  // Private methods
   private call(
     action: () => Observable<unknown>,
     onSuccess: () => void
@@ -134,13 +145,6 @@ export class UserTokenView implements OnInit {
       });
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
 }
 
 enum Dialog {

@@ -27,20 +27,17 @@ export class UserActivationView {
    * Failures when activating the user.
    */
   public failures = new FailureStore();
-
   public readonly status: Status = {
     validating: false,
     loading: false
   };
-
-  public step = Step.VALID_TOKEN;
-
   public readonly Step = Step;
-
+  public step = Step.VALID_TOKEN;
   public user: { username: string, token: string } = { username: '', token: '' };
+
   private readonly tokenChanged = new Subject<void>();
 
-  constructor() {
+  public constructor() {
     const route = inject(ActivatedRoute);
 
     route.paramMap.pipe(
@@ -49,6 +46,15 @@ export class UserActivationView {
       switchMap(token => this.validateToken(token)),
       takeUntilDestroyed()
     ).subscribe();
+  }
+
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   /**
@@ -81,14 +87,7 @@ export class UserActivationView {
       });
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
-
+  // Private methods
   private validateToken(token: string | null) {
     this.tokenChanged.next();
     this.user = { username: '', token: '' };

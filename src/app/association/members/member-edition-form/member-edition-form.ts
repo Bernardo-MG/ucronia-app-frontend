@@ -22,8 +22,8 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 export class MemberEditionForm {
 
   private readonly fb = inject(FormBuilder);
-  public readonly contactMethods = input<ContactMethod[]>([]);
 
+  public readonly contactMethods = input<ContactMethod[]>([]);
   @Input() public set data(member: Member) {
     this.form.reset({
       feeType: member.feeType.number,
@@ -51,9 +51,7 @@ export class MemberEditionForm {
   }
   public readonly failures = input(new FailureStore());
   public readonly feeTypes = input<FeeType[]>([]);
-
   public readonly formId = input<string | null>(null);
-
   @Input() public set loading(value: boolean) {
     this.formStatus.loading = value;
   }
@@ -63,7 +61,6 @@ export class MemberEditionForm {
   public get contactChannels(): FormArray {
     return this.form.controls.contactChannels;
   }
-
   public readonly form = this.fb.group({
     feeType: this.fb.control<number | null>(null, Validators.required),
     identifier: ['', [Validators.maxLength(15)]],
@@ -79,13 +76,21 @@ export class MemberEditionForm {
     active: [true],
     renew: [true]
   });
-
   public readonly formStatus = new FormStatus(this.form);
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
   public readonly today = new Date();
+
+  // Event handlers
+  protected addContactChannel(): void {
+    this.contactChannels.push(
+      this.fb.group({
+        method: this.fb.control<number | null>(null, Validators.required),
+        detail: ['', [Validators.required, Validators.maxLength(50)]]
+      })
+    );
+  }
 
   public onSave(): void {
     this.form.markAllAsTouched();
@@ -109,21 +114,14 @@ export class MemberEditionForm {
     this.save.emit(data);
   }
 
-  public addContactChannel(): void {
-    this.contactChannels.push(
-      this.fb.group({
-        method: this.fb.control<number | null>(null, Validators.required),
-        detail: ['', [Validators.required, Validators.maxLength(50)]]
-      })
-    );
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
+  // Public methods
   public removeContactChannel(index: number): void {
     this.contactChannels.removeAt(index);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
 }

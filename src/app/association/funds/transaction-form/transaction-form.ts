@@ -24,11 +24,8 @@ export class TransactionForm {
       amount: Math.abs(value.amount)
     });
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -38,16 +35,13 @@ export class TransactionForm {
 
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public readonly today = new Date();
-
   public readonly TransactionDirection = TransactionDirection;
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -62,6 +56,7 @@ export class TransactionForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -85,6 +80,7 @@ export class TransactionForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

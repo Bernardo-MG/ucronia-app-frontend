@@ -12,26 +12,28 @@ import { TagModule } from 'primeng/tag';
   templateUrl: './activity-list.html'
 })
 export class ActivityList {
-  public readonly data = input<Activity[]>([]);
 
+  public readonly data = input<Activity[]>([]);
   public readonly loading = input(false);
   public readonly page = input(0);
   public readonly rows = input(0);
   public readonly totalRecords = input(0);
+
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
-
   public readonly show = output<Activity>();
 
   public get first() {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 
+  // Public methods
   public getDatesLabel(activity: Activity): string {
     return `${activity.dates.length} ${activity.dates.length === 1 ? 'fecha' : 'fechas'}`;
   }

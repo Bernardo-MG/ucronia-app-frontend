@@ -8,8 +8,8 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './summary-card.html'
 })
 export class SummaryCard {
-  public readonly icon = input('');
 
+  public readonly icon = input('');
   public readonly label = input('');
   public readonly loading = input(false);
   public readonly value = input<any>('');

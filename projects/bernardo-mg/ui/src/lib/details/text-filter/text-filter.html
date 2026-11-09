@@ -2,7 +2,7 @@
   <span [class.sr-only]="!showLabel()" class="block font-medium text-gray-950">{{ label() }}</span>
   <p-iconfield class="block w-full" [class.mt-2]="showLabel()">
     <p-inputicon class="pi pi-search" />
-    <input pInputText type="search" [ngModel]="filterValue"
+    <input pInputText type="search" [ngModel]="filterValue()"
       [ngModelOptions]="{ standalone: true }" (ngModelChange)="onInput($event)"
       [placeholder]="placeholder()" [disabled]="disabled()" maxlength="100" class="w-full" />
   </p-iconfield>

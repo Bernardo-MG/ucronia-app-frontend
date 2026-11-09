@@ -18,26 +18,22 @@ export class FeeTypeForm {
     this.form.patchValue(value as any);
     this.isEdit = true;
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
   public readonly save = output<FeeType>();
+
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public isEdit = false;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.group({
@@ -49,6 +45,7 @@ export class FeeTypeForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onSave(): void {
     this.form.markAllAsTouched();
     if (this.saveEnabled) {
@@ -57,6 +54,7 @@ export class FeeTypeForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }

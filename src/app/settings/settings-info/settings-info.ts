@@ -8,6 +8,7 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './settings-info.html'
 })
 export class SettingsInfo {
+
   public readonly amount = input<number | null>(null);
   public readonly category = input.required<string>();
   public readonly description = input<string | null | undefined>();
@@ -19,4 +20,5 @@ export class SettingsInfo {
   public readonly showReference = input(true);
   public readonly status = input('');
   public readonly title = input.required<string>();
+
 }

@@ -1,170 +1,38 @@
-import { Component, DestroyRef, inject, input, OnChanges, signal } from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { FailureResponse, FailureStore, Page } from '@bernardo-mg/request';
+import { Component, input, output } from '@angular/core';
+import { Page } from '@bernardo-mg/request';
 import { TransactionType } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
-import { TransactionService } from '../transaction-service';
-import { TransactionTypeForm } from '../transaction-type-form/transaction-type-form';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
-import { finalize, Subscription } from 'rxjs';
 
 @Component({
   selector: 'assoc-transaction-type-list',
-  imports: [ButtonModule, PaginatorModule, DrawerModule, DrawerActions, DrawerHeader, DrawerFormActions, TransactionTypeForm],
+  imports: [ButtonModule, PaginatorModule],
   templateUrl: './transaction-type-list.html'
 })
-export class TransactionTypeList implements OnChanges {
-  private readonly confirmationService = inject(ConfirmationService);
-  private readonly destroyRef = inject(DestroyRef);
-  private readonly service = inject(TransactionService);
+export class TransactionTypeList {
 
-  public readonly canDelete = input(false);
+  public readonly failed = input(false);
+  public readonly loading = input(false);
 
-  public readonly canEdit = input(false);
+  public readonly pageChange = output<number>();
+  public readonly retry = output<void>();
+  public readonly show = output<number>();
 
-  public readonly version = input(0);
-  public readonly data = signal(new Page<TransactionType>());
-  public deleteFailed = false;
-  public deleting = false;
-  public detailFailed = false;
-  public detailLoading = false;
-  public editing = false;
-  public readonly failed = signal(false);
-  public readonly loading = signal(false);
-  public readonly rows = 10;
-  public selectedNumber?: number;
-  public selectedType?: TransactionType;
-  public readonly typeFailures = signal(new FailureStore());
-  public readonly typeLoading = signal(false);
-  public readonly typeSaveError = signal(false);
+  public readonly data = input.required<Page<TransactionType>>();
 
-  private detailRequest?: Subscription;
-  private request?: Subscription;
+  protected readonly rows = 10;
 
-  public ngOnChanges(): void {
-    this.load(this.data().page || 1);
+  // Event handlers
+  protected onChangePage(event: PaginatorState): void {
+    this.pageChange.emit((event.page ?? 0) + 1);
   }
 
-  public load(page = this.data().page || 1): void {
-    this.request?.unsubscribe();
-    this.loading.set(true);
-    this.failed.set(false);
-
-    const request = new Subscription();
-    this.request = request;
-    request.add(this.service.getTypesPage(page, this.rows)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: data => {
-          if (data.content.length === 0 && page > 1) {
-            this.load(Math.max(1, Math.min(page - 1, data.totalPages)));
-          } else {
-            this.data.set(data);
-            this.loading.set(false);
-          }
-        },
-        error: () => {
-          this.loading.set(false);
-          this.failed.set(true);
-        }
-      }));
+  protected onRetry(): void {
+    this.retry.emit();
   }
 
-  public changePage(event: PaginatorState): void {
-    this.load((event.page ?? 0) + 1);
+  protected onShowDetails(number: number): void {
+    this.show.emit(number);
   }
 
-  public closeDetails(): void {
-    if (this.deleting) {
-      return;
-    }
-    this.detailRequest?.unsubscribe();
-    this.selectedNumber = undefined;
-    this.selectedType = undefined;
-  }
-
-  public closeTypeForm(): void {
-    this.editing = false;
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-  }
-
-  public confirmDelete(event: Event): void {
-    const type = this.selectedType;
-    if (!type || !this.canDelete() || this.deleting) {
-      return;
-    }
-
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: '¿Estás seguro de querer borrar este tipo de transacción?',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
-      acceptButtonProps: { label: 'Borrar', severity: 'danger' },
-      accept: () => {
-        if (this.destroyRef.destroyed || this.selectedType !== type || this.editing || this.deleting) {
-          return;
-        }
-
-        this.deleting = true;
-        this.deleteFailed = false;
-        this.service.deleteType(type.number)
-          .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.deleting = false))
-          .subscribe({
-            next: () => {
-              this.deleting = false;
-              this.closeDetails();
-              this.load();
-            },
-            error: () => this.deleteFailed = true
-          });
-      }
-    });
-  }
-
-  public showDetails(number: number): void {
-    this.detailRequest?.unsubscribe();
-    this.selectedNumber = number;
-    this.selectedType = undefined;
-    this.detailLoading = true;
-    this.detailFailed = false;
-    this.deleteFailed = false;
-
-    this.detailRequest = this.service.getType(number)
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.detailLoading = false))
-      .subscribe({
-        next: type => this.selectedType = type,
-        error: () => this.detailFailed = true
-      });
-  }
-
-  public updateType(values: Pick<TransactionType, 'description' | 'color'>, number: number): void {
-    if (this.typeLoading()) {
-      return;
-    }
-
-    this.typeLoading.set(true);
-    this.typeFailures.set(new FailureStore());
-    this.typeSaveError.set(false);
-    this.service.saveType(values, number)
-      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.typeLoading.set(false)))
-      .subscribe({
-        next: type => {
-          this.selectedType = type;
-          this.closeTypeForm();
-          this.load();
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.typeFailures.set(error.failures);
-          }
-          this.typeSaveError.set(true);
-        }
-      });
-  }
 }

@@ -1,6 +1,6 @@
 import { FormStatus } from '@bernardo-mg/form';
 
-import { Component, inject, output, Input } from '@angular/core';
+import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
@@ -15,21 +15,20 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class PasswordResetRequestForm {
 
-  @Input() public set loading(loading: boolean) {
+  @Input()
+  public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
   public readonly save = output<string>();
 
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.nonNullable.group({
@@ -38,6 +37,7 @@ export class PasswordResetRequestForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -50,7 +50,8 @@ export class PasswordResetRequestForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property);
   }
 

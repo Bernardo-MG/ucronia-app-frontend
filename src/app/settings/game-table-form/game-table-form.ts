@@ -13,11 +13,11 @@ import { TextareaModule } from 'primeng/textarea';
   templateUrl: './game-table-form.html'
 })
 export class GameTableForm {
+
   @Input() public set data(value: GameTable) {
     this.form.patchValue(value);
     this.isEdit = true;
   }
-
   public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
@@ -28,14 +28,12 @@ export class GameTableForm {
 
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public isEdit = false;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
     this.form = fb.group({
       number: [null],
@@ -45,6 +43,7 @@ export class GameTableForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -53,6 +52,7 @@ export class GameTableForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

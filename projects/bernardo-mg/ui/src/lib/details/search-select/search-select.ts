@@ -13,24 +13,25 @@ import { FormSearchReset } from '../form-search-reset';
   templateUrl: './search-select.html'
 })
 export class SearchSelect<T> {
+
   public readonly clearOnSelect = input(false);
   public readonly disabled = input(false);
-
   public readonly inputId = input.required<string>();
   public readonly label = input('Buscar');
   public readonly optionLabel = input('name');
   public readonly placeholder = input('Buscar...');
   public readonly suggestions = input<T[]>([]);
   public readonly value = input<T | null | undefined>(null);
-  public readonly cleared = output<void>();
 
+  public readonly cleared = output<void>();
   public readonly queryChange = output<string>();
   public readonly selected = output<T>();
 
   public viewValue: T | string | null = null;
+
   private readonly queries = new Subject<string>();
 
-  constructor() {
+  public constructor() {
     this.queries.pipe(
       map(query => query.trim()),
       switchMap(query => query ? timer(300).pipe(map(() => query)) : of('')),
@@ -46,12 +47,13 @@ export class SearchSelect<T> {
     });
   }
 
-  public onFormReset(): void {
+  // Event handlers
+  protected onFormReset(): void {
     this.viewValue = this.value() ?? null;
     this.queries.next('');
   }
 
-  public onInput(event: Event): void {
+  protected onInput(event: Event): void {
     this.viewValue = (event.target as HTMLInputElement).value;
     this.queries.next('');
     this.cleared.emit();

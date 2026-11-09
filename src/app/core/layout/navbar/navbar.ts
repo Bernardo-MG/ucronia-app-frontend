@@ -15,7 +15,6 @@ import { LayoutService } from '../layout-service';
 export class Navbar {
 
   private readonly authService = inject(AuthService);
-
   private readonly layoutService = inject(LayoutService);
 
   public readonly toggleMenu = output<boolean>();
@@ -23,22 +22,18 @@ export class Navbar {
   public get loggedIn() {
     return this.authService.logged;
   }
-
   public get loggedOut() {
     return !this.authService.logged;
   }
-
   public get showSecurity() {
     return this.layoutService.showSecurityLink();
   }
-
   public get showSettings() {
     return this.layoutService.showSettingsLink();
   }
-
   public readonly title;
 
-  constructor() {
+  public constructor() {
     // App title
     this.title = this.layoutService.getTitle();
   }

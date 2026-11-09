@@ -14,10 +14,12 @@ import { MessageModule } from 'primeng/message';
 export class MemberKeyAssignmentForm {
 
   private readonly fb = inject(FormBuilder);
+  public readonly form = inject(FormBuilder).group({
+    profile: inject(FormBuilder).control<number | null>(null, Validators.required)
+  });
+
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
-
   @Input() public set loading(value: boolean) {
     this.formStatus.loading = value;
   }
@@ -25,16 +27,13 @@ export class MemberKeyAssignmentForm {
 
   public readonly save = output<number>();
   public readonly searchMember = output<MemberSearchEvent>();
-  public readonly form = this.fb.group({
-    profile: this.fb.control<number | null>(null, Validators.required)
-  });
 
   public readonly formStatus = new FormStatus(this.form);
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && this.members().some(member => member.number === this.form.controls.profile.value);
   }
 
+  // Event handlers
   public onClearMember(): void {
     this.form.controls.profile.setValue(null);
     this.form.controls.profile.markAsDirty();
@@ -56,6 +55,7 @@ export class MemberKeyAssignmentForm {
     this.form.controls.profile.markAsDirty();
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

@@ -23,22 +23,20 @@ import { GameTableService } from '../game-table-service';
 export class GameTableView implements OnInit {
 
   private readonly confirmationService = inject(ConfirmationService);
-
   private readonly destroyRef = inject(DestroyRef);
-
   private readonly service = inject(GameTableService);
 
   public data = new Page<GameTable>();
-
   public readonly Dialog = Dialog;
   public dialog = Dialog.NONE;
   public failures = new FailureStore();
   public loading = false;
   public readonly permissions: Permissions;
   public selectedData = new GameTable();
+
   private listRequest?: Subscription;
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
     this.permissions = {
       create: authService.hasPermission(UcroniaPermissions.gameTable.create),
@@ -47,10 +45,12 @@ export class GameTableView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
+  // Event handlers
   public onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
@@ -94,6 +94,7 @@ export class GameTableView implements OnInit {
     this.call(() => this.service.update(table), () => this.load(this.data.page));
   }
 
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -105,13 +106,18 @@ export class GameTableView implements OnInit {
       .subscribe(data => this.data = data);
   }
 
+  // Private methods
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {
     this.loading = true;
-    action().pipe(finalize(() => this.loading = false)).subscribe({
+    action().pipe(
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => this.loading = false)
+    ).subscribe({
       complete: () => { this.failures.clear(); this.dialog = Dialog.NONE; onSuccess(); },
       error: error => this.failures = error instanceof FailureResponse ? error.failures : new FailureStore()
     });
   }
+
 }
 
 interface Permissions {

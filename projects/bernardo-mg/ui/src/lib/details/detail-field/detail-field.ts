@@ -7,12 +7,13 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './detail-field.html'
 })
 export class DetailField {
-  public readonly icon = input('');
 
+  public readonly icon = input('');
   public readonly loading = input(false);
   public readonly name = input('');
   public readonly value = input<any>('');
 
+  // Public methods
   public formatMultiline(value: string | null | undefined): string {
     if (value === null || value === undefined) return '';
     return String(value).replace(/\n/g, '<br>');

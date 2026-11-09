@@ -17,7 +17,6 @@ import { MessageModule } from 'primeng/message';
 export class UserActivationForm {
 
   public readonly failures = input(new FailureStore());
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
@@ -25,14 +24,13 @@ export class UserActivationForm {
   public readonly save = output<string>();
 
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
 
-  public get saveEnabled() {
+  protected get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && this.isPasswordsMatching();
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
 
     this.form = fb.nonNullable.group(
@@ -48,10 +46,8 @@ export class UserActivationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  /**
-   * Handler for the save event.
-   */
-  public onSave() {
+  // Event handlers
+  protected onSave(): void {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
@@ -60,7 +56,8 @@ export class UserActivationForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
@@ -69,7 +66,7 @@ export class UserActivationForm {
    *
    * @returns true if the password mismatch warning should be shown, false otherwise
    */
-  public showPasswordMismatchWarning(): boolean {
+  protected showPasswordMismatchWarning(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
 
@@ -83,6 +80,7 @@ export class UserActivationForm {
     return show;
   }
 
+  // Private methods
   /**
    * Indicates if the passwords match. If both are empty they are considered to not be matching.
    *

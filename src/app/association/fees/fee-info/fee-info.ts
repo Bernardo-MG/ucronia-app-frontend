@@ -9,8 +9,8 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './fee-info.html'
 })
 export class FeeInfo {
-  public readonly data = input(new Fee());
 
+  public readonly data = input(new Fee());
   public readonly loading = input(false);
 
 }

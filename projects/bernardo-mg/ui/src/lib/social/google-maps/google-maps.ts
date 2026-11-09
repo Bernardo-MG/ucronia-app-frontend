@@ -1,5 +1,5 @@
-import { Component, inject, Input, input } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Component, computed, inject, input } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'ui-google-maps',
@@ -10,17 +10,13 @@ export class GoogleMaps {
 
   private readonly sanitizer = inject(DomSanitizer);
 
-  @Input() public set code(value: string | undefined) {
-    if (value) {
-      const rawUrl = `https://www.google.com/maps/embed?pb=${value}`;
-      this.url = this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
-    } else {
-      this.url = this.sanitizer.bypassSecurityTrustResourceUrl('');
-    }
-  }
-
+  public readonly code = input<string>();
   public readonly height = input('400px');
 
-  public url = this.sanitizer.bypassSecurityTrustResourceUrl('');
+  protected readonly url = computed(() => {
+    const code = this.code();
+    const rawUrl = code ? `https://www.google.com/maps/embed?pb=${code}` : '';
+    return this.sanitizer.bypassSecurityTrustResourceUrl(rawUrl);
+  });
 
 }

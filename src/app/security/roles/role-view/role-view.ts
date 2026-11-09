@@ -24,17 +24,16 @@ import { RoleService } from '../role-service';
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(RoleService);
 
   public data = new Page<Role>();
   public readonly Dialog = Dialog;
-
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -43,20 +42,17 @@ export class RoleView implements OnInit {
   }
   public failures = new FailureStore();
   public loading = false;
-
   public readonly permissions: Permissions;
   public resourcePermissions: ResourcePermission[] = [];
   public selectedData = new Role();
+
   private currentDialog = Dialog.NONE;
-
   private readonly detailRequest = new DetailRequest();
-
   private readonly drawer = viewChild(Drawer);
   private listRequest?: Subscription;
-
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     this.permissions = {
@@ -72,8 +68,18 @@ export class RoleView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   public onCancelEdit(): void {
@@ -185,6 +191,7 @@ export class RoleView implements OnInit {
       });
   }
 
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.loading = true;
@@ -199,6 +206,7 @@ export class RoleView implements OnInit {
       });
   }
 
+  // Private methods
   private call(
     action: () => Observable<unknown>,
     onSuccess: () => void
@@ -226,13 +234,6 @@ export class RoleView implements OnInit {
     this.drawer()?.cd.markForCheck();
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
 }
 
 interface Permissions {

@@ -27,47 +27,42 @@ import { ImageService } from '../../images/image-service';
   templateUrl: './activity-view.html'
 })
 export class ActivityView implements OnInit {
-  private readonly confirmationService = inject(ConfirmationService);
 
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly imageService = inject(ImageService);
-
   private readonly service = inject(ActivityService);
 
   public activities = new Page<Activity>();
   public readonly Dialog = Dialog;
-
   public dialog = Dialog.NONE;
   public readonly displayOptions = [
     { label: 'Próximas', value: ActivityDisplay.UPCOMING },
     { label: 'Todas', value: ActivityDisplay.ALL },
     { label: 'Pasadas', value: ActivityDisplay.PAST }
   ];
-
   public failures = new FailureStore();
   public imageOptions: ActivityImageOption[] = [];
-
   public get locationCount(): number {
     return new Set(this.activities.content.map(activity => activity.location).filter(Boolean)).size;
   }
-
   public readonly permissions: Permissions;
   public selectedData = new Activity();
-  public selectedDisplay = ActivityDisplay.UPCOMING;
+  public selectedDisplay: ActivityDisplay = ActivityDisplay.UPCOMING;
   public readonly status: Status = {
     loading: false
   };
-
   public get upcomingSessions(): number {
     const now = new Date();
     return this.activities.content.flatMap(activity => activity.dates)
       .filter(date => new Date(date.end) >= now).length;
   }
+
   private imageOptionsRequest?: Subscription;
   private listRequest?: Subscription;
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -78,18 +73,24 @@ export class ActivityView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // DIALOGS
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
 
   public onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
   }
-
-  // EVENT HANDLERS
 
   public onChangeDirection(sorting: SortingEvent) {
     const direction = sorting.order === 1
@@ -169,8 +170,7 @@ export class ActivityView implements OnInit {
     );
   }
 
-  // DATA LOADING
-
+  // Data loading
   public load(page: number | undefined = undefined) {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
@@ -197,15 +197,17 @@ export class ActivityView implements OnInit {
       });
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -214,14 +216,6 @@ export class ActivityView implements OnInit {
         },
         error: error => this.handleError(error)
       });
-  }
-
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
   }
 
 }

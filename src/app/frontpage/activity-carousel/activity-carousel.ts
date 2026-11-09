@@ -13,22 +13,23 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './activity-carousel.html'
 })
 export class ActivityCarousel {
+
   public readonly data = input<Activity[]>([]);
   public readonly display = input<ActivityDisplay>('upcoming');
-
   public readonly loading = input(false);
+
   public readonly displayChange = output<ActivityDisplay>();
 
   public readonly displayOptions = [
     { label: 'Próximas', icon: 'pi pi-calendar', value: 'upcoming' },
     { label: 'Pasadas', icon: 'pi pi-history', value: 'past' }
   ];
-
   public readonly responsiveOptions = [
     { breakpoint: '1280px', numVisible: 2, numScroll: 1 },
     { breakpoint: '768px', numVisible: 1, numScroll: 1 }
   ];
 
+  // Public methods
   public dateRange(activity: Activity): ActivityDate | undefined {
     let range: ActivityDate | undefined;
     const dates = this.sortedDates(activity);

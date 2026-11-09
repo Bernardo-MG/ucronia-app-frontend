@@ -21,10 +21,9 @@ import { Navbar } from '../navbar/navbar';
 export class AssociationLayout {
 
   public menuActive = false;
-
   public menus: MenuItem[] = [];
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
     authService.securityDetails
       .pipe(takeUntilDestroyed())
@@ -51,10 +50,16 @@ export class AssociationLayout {
       });
   }
 
-  public onToggleMenu(status: boolean) {
+  // Event handlers
+  public closeMenu(): void {
+    this.menuActive = false;
+  }
+
+  public onToggleMenu(status: boolean): void {
     this.menuActive = status;
   }
 
+  // Private methods
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
     if (authService.hasPermission(UcroniaPermissions.directory.profile.read)) {
@@ -145,10 +150,6 @@ export class AssociationLayout {
         });
     }
     return items;
-  }
-
-  public closeMenu() {
-    this.menuActive = false;
   }
 
 }

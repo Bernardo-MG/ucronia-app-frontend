@@ -15,27 +15,26 @@ import { Dialog } from '../library-dialog';
   templateUrl: './library-book-list.html'
 })
 export class LibraryBookList {
-  public readonly books = input<FictionBook[] | GameBook[]>([]);
 
+  public readonly books = input<FictionBook[] | GameBook[]>([]);
   public readonly editable = input(false);
   public readonly loading = input(false);
   public readonly page = input(0);
   public readonly rows = input(0);
   public readonly totalRecords = input(0);
+
   public readonly pageChange = output<number>();
   public readonly show = output<{ dialog: Dialog, book: FictionBook | GameBook }>();
-
   public readonly showBook = output<FictionBook | GameBook>();
   public readonly sort = output<SortingProperty>();
 
-  @ViewChild('editionMenu') readonly editionMenu!: Menu;
-
+  @ViewChild('editionMenu') public readonly editionMenu!: Menu;
   public editionMenuItems: MenuItem[] = [];
-
   public get first() {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onChangeDirection(sorting: SortingEvent) {
     // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
@@ -50,6 +49,7 @@ export class LibraryBookList {
     this.pageChange.emit(page);
   }
 
+  // Public methods
   public getAuthors(book: FictionBook | GameBook): string {
     return book.authors.map(author => author.name).join(', ') || 'Autor desconocido';
   }

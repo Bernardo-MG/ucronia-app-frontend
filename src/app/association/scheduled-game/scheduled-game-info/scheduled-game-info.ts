@@ -11,11 +11,13 @@ import { TagModule } from 'primeng/tag';
   templateUrl: './scheduled-game-info.html'
 })
 export class ScheduledGameInfo {
+
   public readonly data = input(new ScheduledGame());
   public readonly loading = input(false);
   public readonly master = input(new Profile());
   public readonly table = input<GameTable | undefined>(undefined);
 
+  // Public methods
   public getRecurrenceName(): string {
     const recurrence = this.data().recurrence;
     if (!recurrence?.interval) return 'Sin recurrencia';
@@ -50,4 +52,5 @@ export class ScheduledGameInfo {
       default: return 'secondary';
     }
   }
+
 }

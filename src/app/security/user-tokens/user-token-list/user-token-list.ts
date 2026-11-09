@@ -28,21 +28,20 @@ export class UserTokenList {
 
   private readonly confirmationService =
     inject(ConfirmationService);
-  public readonly editable = input(false);
 
+  public readonly editable = input(false);
   public readonly loading = input(false);
   public readonly page = input(0);
   public readonly rows = input(0);
   public readonly tokens = input<UserToken[]>([]);
   public readonly totalRecords = input(0);
+
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
   public readonly revoke = output<UserToken>();
-
   public readonly show = output<UserToken>();
 
   public actions: MenuItem[] = [];
-
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
@@ -50,11 +49,13 @@ export class UserTokenList {
   @ViewChild('actionsMenu')
   private readonly actionsMenu!: Menu;
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 
+  // Public methods
   public openActionsMenu(
     event: Event,
     token: UserToken
@@ -111,6 +112,7 @@ export class UserTokenList {
     return 'danger';
   }
 
+  // Private methods
   private confirmRevoke(
     event: Event,
     token: UserToken

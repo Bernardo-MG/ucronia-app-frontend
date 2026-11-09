@@ -1,4 +1,3 @@
-
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
@@ -24,19 +23,17 @@ export class PasswordResetView {
   private readonly service = inject(PasswordResetService);
 
   public failures = new FailureStore();
-
   public loading = false;
-
   public status: 'valid_token' | 'invalid_token' | 'finished' = 'valid_token';
-
   /**
    * Token validation flag. If set to true the component is waiting for the token validation to finish.
    */
   public validatingToken = false;
+
   private token = '';
   private readonly tokenChanged = new Subject<void>();
 
-  constructor() {
+  public constructor() {
     const route = inject(ActivatedRoute);
 
     route.paramMap.pipe(
@@ -47,6 +44,7 @@ export class PasswordResetView {
     ).subscribe();
   }
 
+  // Event handlers
   /**
    * Resets the password. The user is identified by the token.
    *
@@ -83,6 +81,7 @@ export class PasswordResetView {
       });
   }
 
+  // Private methods
   private validateToken(token: string | null) {
     this.tokenChanged.next();
     this.token = '';

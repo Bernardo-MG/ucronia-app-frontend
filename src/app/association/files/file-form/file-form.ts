@@ -20,19 +20,20 @@ export interface FileFormData {
   templateUrl: './file-form.html'
 })
 export class FileForm implements OnChanges {
+
   private readonly fb = inject(FormBuilder);
 
   public readonly data = input<Asset | undefined>();
-
   public readonly failures = input(new FailureStore());
   public readonly folders = input<AssetFolder[]>([]);
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-  public readonly save = output<FileFormData>();
-  public file?: File;
 
+  public readonly save = output<FileFormData>();
+
+  public file?: File;
   public get folderOptions(): FolderOption[] {
     return [
       { name: 'Sin carpeta', number: null },
@@ -41,12 +42,11 @@ export class FileForm implements OnChanges {
   }
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
   }
 
-  constructor() {
+  public constructor() {
     this.form = this.fb.group({
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
@@ -57,6 +57,7 @@ export class FileForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       this.form.reset(this.data() || new Asset());
@@ -64,6 +65,7 @@ export class FileForm implements OnChanges {
     }
   }
 
+  // Event handlers
   public onFileSelected(event: Event): void {
     this.file = (event.target as HTMLInputElement).files?.[0];
     this.form.markAsDirty();
@@ -77,10 +79,12 @@ export class FileForm implements OnChanges {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
+  // Private methods
   private folderPath(folder: AssetFolder): string {
     const names = [folder.name];
     let parent = this.folders().find(item => item.number === folder.parentNumber);

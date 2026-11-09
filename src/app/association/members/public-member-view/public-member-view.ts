@@ -39,49 +39,44 @@ import { PublicMemberService } from '../public-member-service';
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
+
   private readonly confirmationService = inject(ConfirmationService);
   private readonly contactMethodService = inject(ContactMethodService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly feeTypeService = inject(FeeTypeService);
   private readonly keyService = inject(MemberKeyService);
   private readonly memberProfileService = inject(MemberProfileService);
-
   private readonly service = inject(PublicMemberService);
 
   public get active(): number {
     return this.memberCount.active;
   }
   public assignmentMembers: PublicMember[] = [];
-
   public get canAssignKey(): boolean {
     return this.permissions.keyAssignmentsRead && this.permissions.read && !!this.selectedKey &&
       (this.selectedKey.profile ? this.permissions.keyAssignmentsEdit : this.permissions.keyAssignmentsCreate);
   }
   public contactMethods: ContactMethod[] = [];
   public data = new Page<PublicMember>();
-  public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
   public error = '';
   public failures = new FailureStore();
   public feeTypes: FeeType[] = [];
   public readonly fieldsAssocKeyForm = viewChild<MemberKeyForm>('fieldsAssocKeyForm');
   public readonly fieldsKeyAssignmentForm = viewChild<MemberKeyAssignmentForm>('fieldsKeyAssignmentForm');
   public readonly fieldsKeyEditForm = viewChild<MemberKeyForm>('fieldsKeyEditForm');
-
   public readonly fieldsMemberCreationForm = viewChild<MemberCreationForm>('fieldsMemberCreationForm');
   public readonly fieldsMemberEditionForm = viewChild<MemberEditionForm>('fieldsMemberEditionForm');
   public filterValue = '';
   public keyAssignments: KeyAssignment[] = [];
-
   public get notRenewing(): number {
     return this.memberCount.active - this.memberCount.renew;
   }
-
   public readonly permissions: Permissions;
   public privateMember: Member | null = null;
   public selectedData = new PublicMember();
   public selectedKey: KeyAssignment | undefined;
-
   public selectedTab = 'members';
   public readonly status: Status = {
     loading: false,
@@ -96,18 +91,17 @@ export class PublicMemberView implements OnInit {
     keysError: false,
     memberPrivateError: false
   };
-  private assignmentMemberQuery = '';
 
+  private assignmentMemberQuery = '';
   private readonly assignmentMemberSearch = new SearchRequest();
   private keysReloadRequested = false;
   private listRequest?: Subscription;
   private memberCount = new MemberCount();
   private memberOptionsRequest?: Subscription;
   private memberRequest?: Subscription;
-
   private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
     this.permissions = {
       read: authService.hasPermission(UcroniaPermissions.directory.member.read),
@@ -124,8 +118,19 @@ export class PublicMemberView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.refresh();
+  }
+
+  // Event handlers
+  private handleError(error: unknown, message: string): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+    this.error = message;
   }
 
   public onAssignKey(profile: number): void {
@@ -180,7 +185,6 @@ export class PublicMemberView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
-  // EVENT HANDLERS
   public onChangeDirection(sorting: SortingEvent): void {
     // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
@@ -458,6 +462,7 @@ export class PublicMemberView implements OnInit {
     );
   }
 
+  // Data loading
   public load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
@@ -607,18 +612,19 @@ export class PublicMemberView implements OnInit {
       .subscribe(summary => (this.memberCount = summary));
   }
 
-  // DATA LOADING
+  private refreshKeysAndMembers(): void {
+    this.loadKeys();
+    this.refresh();
+  }
+
+  // Public methods
   /** Reload the list and counters after a successful member save. */
   public refresh(): void {
     this.load(this.data.page > 0 ? this.data.page : undefined);
     this.loadSummary();
   }
 
-  private refreshKeysAndMembers(): void {
-    this.loadKeys();
-    this.refresh();
-  }
-
+  // Private methods
   private call<T>(action: () => Observable<T>, onSuccess: () => void, message: string): void {
     this.status.saving = true;
     this.error = '';
@@ -638,15 +644,6 @@ export class PublicMemberView implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({ error: error => this.handleError(error, message) });
-  }
-
-  private handleError(error: unknown, message: string): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-    this.error = message;
   }
 
 }

@@ -10,8 +10,8 @@ import { SkeletonModule } from 'primeng/skeleton';
   templateUrl: './transaction-info.html'
 })
 export class TransactionInfo {
-  public readonly loading = input(false);
 
+  public readonly loading = input(false);
   public readonly transaction = input(new Transaction());
   public readonly type = input<TransactionType>();
 

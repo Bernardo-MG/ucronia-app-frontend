@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { Transaction, TransactionSummary } from '@ucronia/domain';
+import { AuthService } from '@bernardo-mg/authentication';
+import { Page } from '@bernardo-mg/request';
+import { Transaction, TransactionSummary, TransactionType } from '@ucronia/domain';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { of, Subject } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
@@ -15,7 +18,7 @@ describe('FundsView', () => {
 
   const transactionServiceMock = jasmine.createSpyObj<TransactionService>(
     'TransactionService',
-    ['create', 'update', 'delete', 'getOne']
+    ['create', 'update', 'delete', 'getOne', 'getTypes', 'getTypesPage', 'getType', 'deleteType', 'saveType']
   );
 
   const transactionReportServiceMock = jasmine.createSpyObj<TransactionReportService>(
@@ -37,6 +40,11 @@ describe('FundsView', () => {
     transactionBalanceServiceMock.monthly.and.returnValue(
       of([])
     );
+    transactionServiceMock.getTypes.and.returnValue(of([]));
+    transactionServiceMock.getTypesPage.and.returnValue(of(new Page<TransactionType>()));
+    transactionServiceMock.getType.and.returnValue(of({} as TransactionType));
+    transactionServiceMock.deleteType.and.returnValue(of({} as TransactionType));
+    transactionServiceMock.saveType.and.returnValue(of({} as TransactionType));
     transactionBalanceServiceMock.summary.and.returnValue(
       of(new TransactionSummary())
     );
@@ -53,6 +61,7 @@ describe('FundsView', () => {
         MessageService,
         ConfirmationService,
         provideAnimationsAsync(),
+        { provide: AuthService, useValue: { hasPermission: () => true } },
         { provide: TransactionService, useValue: transactionServiceMock },
         { provide: TransactionReportService, useValue: transactionReportServiceMock },
         { provide: TransactionBalanceService, useValue: transactionBalanceServiceMock },
@@ -71,6 +80,24 @@ describe('FundsView', () => {
     component.loadCalendar();
     expect(transactionCalendarServiceMock.getCalendarInRange).toHaveBeenCalledWith(2026, 0);
     expect(transactionCalendarServiceMock.getCalendarInRange.calls.mostRecent().args).toEqual([2026, 0]);
+  });
+
+  it('loads the transaction type page from the view when selecting its tab', () => {
+    const data = Object.assign(new Page<TransactionType>(), {
+      page: 1,
+      size: 10,
+      totalElements: 1,
+      totalPages: 1,
+      content: [{ number: 1, description: 'Donación', color: '#123456' }]
+    });
+    transactionServiceMock.getTypesPage.calls.reset();
+    transactionServiceMock.getTypesPage.and.returnValue(of(data));
+
+    fixture.debugElement.query(By.css('p-tabs')).triggerEventHandler('valueChange', 'types');
+    fixture.detectChanges();
+
+    expect(transactionServiceMock.getTypesPage).toHaveBeenCalledOnceWith(1, 10);
+    expect(fixture.nativeElement.textContent).toContain('Donación');
   });
 
   it('ignores an older calendar response after selecting a new month', () => {

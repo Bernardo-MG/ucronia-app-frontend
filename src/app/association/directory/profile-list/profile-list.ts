@@ -18,15 +18,16 @@ export class ProfileList {
   public readonly profiles = input<FullProfile[]>([]);
   public readonly rows = input(0);
   public readonly totalRecords = input(0);
+
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
-
   public readonly show = output<FullProfile>();
 
   public get first() {
     return Math.max(0, (this.page() - 1) * this.rows());
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent) {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);

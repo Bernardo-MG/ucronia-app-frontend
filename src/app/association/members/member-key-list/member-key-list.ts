@@ -17,20 +17,19 @@ export class MemberKeyList implements OnChanges {
   public readonly data = input<KeyAssignment[]>([]);
   public readonly error = input(false);
   public readonly loading = input(false);
-  public readonly retry = output<void>();
 
+  public readonly retry = output<void>();
   public readonly show = output<KeyAssignment>();
 
   public get assigned(): number {
     return this.data().filter(key => key.profile != null).length;
   }
-
   public first = 0;
-
   public get unassigned(): number {
     return this.data().length - this.assigned;
   }
 
+  // Lifecycle hooks
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       this.first = 0;

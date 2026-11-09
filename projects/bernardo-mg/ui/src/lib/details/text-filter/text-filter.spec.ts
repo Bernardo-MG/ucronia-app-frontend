@@ -2,6 +2,13 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { TextFilter } from './text-filter';
 import { By } from '@angular/platform-browser';
 
+function dispatchInput(fixture: ComponentFixture<TextFilter>, value: string): void {
+  const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
+  input.value = value;
+  input.dispatchEvent(new Event('input'));
+  fixture.detectChanges();
+}
+
 describe('TextFilter', () => {
   let component: TextFilter;
   let fixture: ComponentFixture<TextFilter>;
@@ -27,7 +34,7 @@ describe('TextFilter', () => {
     inputEl.dispatchEvent(new Event('input'));
     fixture.detectChanges();
 
-    expect(component.filterValue).toBe('abc');
+    expect(inputEl.value).toBe('abc');
     tick(300);
   }));
 
@@ -150,7 +157,6 @@ describe('TextFilter', () => {
     fixture.componentRef.setInput('value', 'Existing query');
     fixture.detectChanges();
     await fixture.whenStable();
-    expect(component.filterValue).toBe('Existing query');
     expect(fixture.nativeElement.querySelector('input').value).toBe('Existing query');
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -158,9 +164,9 @@ describe('TextFilter', () => {
   it('trims and debounces the latest typed query', fakeAsync(() => {
     const emitted = jasmine.createSpy();
     fixture.componentInstance.filter.subscribe(emitted);
-    fixture.componentInstance.onInput('  old ');
+    dispatchInput(fixture, '  old ');
     tick(150);
-    fixture.componentInstance.onInput('  new ');
+    dispatchInput(fixture, '  new ');
     tick(299);
     expect(emitted).not.toHaveBeenCalled();
     tick(1);
@@ -170,9 +176,9 @@ describe('TextFilter', () => {
   it('clears immediately and cancels the delayed query', fakeAsync(() => {
     const emitted = jasmine.createSpy();
     fixture.componentInstance.filter.subscribe(emitted);
-    fixture.componentInstance.onInput('pending');
+    dispatchInput(fixture, 'pending');
     tick(100);
-    fixture.componentInstance.onInput('');
+    dispatchInput(fixture, '');
     expect(emitted).toHaveBeenCalledOnceWith('');
     tick(300);
     expect(emitted).toHaveBeenCalledTimes(1);
@@ -181,9 +187,9 @@ describe('TextFilter', () => {
   it('deduplicates normalized queries', fakeAsync(() => {
     const emitted = jasmine.createSpy();
     fixture.componentInstance.filter.subscribe(emitted);
-    fixture.componentInstance.onInput('name');
+    dispatchInput(fixture, 'name');
     tick(300);
-    fixture.componentInstance.onInput(' name ');
+    dispatchInput(fixture, ' name ');
     tick(300);
     expect(emitted).toHaveBeenCalledOnceWith('name');
   }));
@@ -191,7 +197,7 @@ describe('TextFilter', () => {
   it('cancels pending emissions on destruction', fakeAsync(() => {
     const emitted = jasmine.createSpy();
     fixture.componentInstance.filter.subscribe(emitted);
-    fixture.componentInstance.onInput('pending');
+    dispatchInput(fixture, 'pending');
     fixture.destroy();
     tick(300);
     expect(emitted).not.toHaveBeenCalled();

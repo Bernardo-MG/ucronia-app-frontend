@@ -17,14 +17,15 @@ export class Frontpage implements OnInit {
 
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(FrontpageService);
-  public activities: Activity[] = [];
 
+  public activities: Activity[] = [];
   public readonly calendarCode: string | undefined;
   public loadingActivities = false;
   public readonly locationCode: string | undefined;
   public selectedActivityDisplay: ActivityDisplay = 'upcoming';
   public settings = new PublicSettings();
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.service.getSettings()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -33,6 +34,7 @@ export class Frontpage implements OnInit {
     this.loadActivities('upcoming');
   }
 
+  // Data loading
   public loadActivities(display: ActivityDisplay): void {
     const now = new Date();
     const from = display === 'upcoming' ? now : undefined;

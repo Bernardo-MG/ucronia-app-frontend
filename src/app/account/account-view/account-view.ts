@@ -27,24 +27,27 @@ export class AccountView {
   private readonly service = inject(AccountService);
 
   public account = new Account();
-
   public accountLoading = false;
-
   public readonly AccountSection = AccountSection;
-
   public activeSection = AccountSection.Profile;
-
   public failures = new FailureStore();
-
   public passwordLoading = false;
-
   public profile: Profile | undefined;
 
-  constructor() {
+  public constructor() {
     this.loadAccount();
   }
 
-  public onChangePassword(data: PasswordChange): void {
+  // Event handlers
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
+  }
+
+  protected onChangePassword(data: PasswordChange): void {
     this.passwordLoading = true;
     this.failures.clear();
 
@@ -58,6 +61,7 @@ export class AccountView {
       });
   }
 
+  // Data loading
   private loadAccount(): void {
     this.accountLoading = true;
     this.profile = new Profile();
@@ -72,6 +76,7 @@ export class AccountView {
       .subscribe(profile => this.profile = profile);
   }
 
+  // Public methods
   public scrollTo(section: AccountSection): void {
     this.activeSection = section;
 
@@ -89,11 +94,4 @@ export class AccountView {
     });
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
 }

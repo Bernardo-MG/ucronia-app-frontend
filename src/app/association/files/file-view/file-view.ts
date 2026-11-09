@@ -27,12 +27,12 @@ import { FileService } from '../file-service';
   templateUrl: './file-view.html'
 })
 export class FileView implements OnInit {
-  private readonly confirmationService = inject(ConfirmationService);
 
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(FileService);
 
-  public get breadcrumbs(): AssetFolder[] {
+  protected get breadcrumbs(): AssetFolder[] {
     const folders: AssetFolder[] = [];
     let current = this.folders.find(folder => folder.number === this.currentFolderNumber);
     while (current) {
@@ -41,41 +41,36 @@ export class FileView implements OnInit {
     }
     return folders;
   }
-
-  public get childFolders(): AssetFolder[] {
+  protected get childFolders(): AssetFolder[] {
     return this.folders.filter(folder => folder.parentNumber === this.currentFolderNumber);
   }
-  public readonly contentUrl = (number: number) => this.service.contentUrl(number);
-  public currentFolderNumber: number | null = null;
-
-  public data = new Page<Asset>();
-
-  public readonly Dialog = Dialog;
-
-  public get dialog(): Dialog {
+  protected readonly contentUrl = (number: number) => this.service.contentUrl(number);
+  protected currentFolderNumber: number | null = null;
+  protected data = new Page<Asset>();
+  protected readonly Dialog = Dialog;
+  protected get dialog(): Dialog {
     return this.currentDialog;
   }
-
-  public set dialog(value: Dialog) {
+  protected set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
     }
   }
-  public failures = new FailureStore();
-  public folderName = '';
-  public folders: AssetFolder[] = [];
-  public readonly permissions: Permissions;
-  public selectedData = new Asset();
-  public readonly status = { loading: false };
-  private currentDialog = Dialog.NONE;
+  protected failures = new FailureStore();
+  protected folderName = '';
+  protected folders: AssetFolder[] = [];
+  protected readonly permissions: Permissions;
+  protected selectedData = new Asset();
+  protected readonly status = { loading: false };
 
+  private currentDialog = Dialog.NONE;
   private readonly detailRequest = new DetailRequest();
   private folderRequest?: Subscription;
   private listRequest?: Subscription;
   private readonly sort = new Sorting([new SortingProperty('name')]);
 
-  constructor() {
+  public constructor() {
     const auth = inject(AuthService);
     this.permissions = {
       create: auth.hasPermission(UcroniaPermissions.file.create),
@@ -84,23 +79,31 @@ export class FileView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.loadFolders();
     this.load();
   }
 
-  public onCancelEdit(): void {
+  // Event handlers
+  protected createFolder(): void {
+    const name = this.folderName.trim();
+    if (!name) return;
+    this.callFolder(() => this.service.createFolder(name, this.currentFolderNumber));
+  }
+
+  protected onCancelEdit(): void {
     this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
-  public onChangeDirection(event: SortingEvent): void {
+  protected onChangeDirection(event: SortingEvent): void {
     const direction = event.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
     this.sort.addField(new SortingProperty(event.field, direction));
     this.load(this.data.page);
   }
 
-  public onCreate(data: FileFormData): void {
+  protected onCreate(data: FileFormData): void {
     const content = data.content;
     if (content) {
       const metadata = { ...data.metadata };
@@ -111,7 +114,7 @@ export class FileView implements OnInit {
     }
   }
 
-  public onDelete(event: Event): void {
+  protected onDelete(event: Event): void {
     const dialog = this.dialog;
     const number = this.selectedData.number;
     this.confirmationService.confirm({
@@ -134,7 +137,7 @@ export class FileView implements OnInit {
     });
   }
 
-  public onDeleteFolder(event: Event): void {
+  protected onDeleteFolder(event: Event): void {
     const folder = this.folders.find(item => item.number === this.currentFolderNumber);
     if (!folder) return;
     const { number, parentNumber } = folder;
@@ -149,7 +152,10 @@ export class FileView implements OnInit {
 
         this.status.loading = true;
         this.service.deleteFolder(number)
-          .pipe(finalize(() => this.status.loading = false))
+          .pipe(
+            takeUntilDestroyed(this.destroyRef),
+            finalize(() => this.status.loading = false)
+          )
           .subscribe({
             next: () => {
               if (this.destroyRef.destroyed) return;
@@ -165,25 +171,28 @@ export class FileView implements OnInit {
     });
   }
 
-  public onDrawerVisibleChange(visible: boolean): void {
+  protected onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
       this.failures.clear();
       this.dialog = Dialog.NONE;
     }
   }
 
-  public onShowInfo(file: Asset): void {
+  protected onShowInfo(file: Asset): void {
     this.detailRequest.cancel();
     this.selectedData = file;
     this.dialog = Dialog.INFO;
     this.status.loading = true;
     this.service.get(file.number)
-      .pipe(finalize(() => this.status.loading = false))
-      .pipe(this.detailRequest.untilCancelled())
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false),
+        this.detailRequest.untilCancelled()
+      )
       .subscribe(data => this.selectedData = data);
   }
 
-  public onUpdate(data: FileFormData): void {
+  protected onUpdate(data: FileFormData): void {
     const metadata = { ...data.metadata };
     const content = data.content;
     const folderNumber = metadata.folderNumber;
@@ -193,7 +202,8 @@ export class FileView implements OnInit {
         ? this.service.move(file.number, folderNumber) : of(file))));
   }
 
-  public load(page: number | undefined = undefined): void {
+  // Data loading
+  protected load(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
     const request = this.currentFolderNumber === null ? this.service.getRootFiles(page, this.sort)
@@ -213,30 +223,28 @@ export class FileView implements OnInit {
       .subscribe(folders => this.folders = folders);
   }
 
-  public createFolder(): void {
-    const name = this.folderName.trim();
-    if (!name) return;
-    this.callFolder(() => this.service.createFolder(name, this.currentFolderNumber));
-  }
-
-  public download(file: Asset): void {
+  // Protected methods
+  protected download(file: Asset): void {
     this.status.loading = true;
     this.service.content(file.number)
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe(content => downloadFile(content, file.name));
   }
 
-  public openFolder(number: number | null = null): void {
+  protected openFolder(number: number | null = null): void {
     this.currentFolderNumber = number;
     this.load();
   }
 
-  public showCreateFolder(): void {
+  protected showCreateFolder(): void {
     this.folderName = '';
     this.dialog = Dialog.CREATE_FOLDER;
   }
 
-  public showEditFolder(): void {
+  protected showEditFolder(): void {
     const folder = this.folders.find(item => item.number === this.currentFolderNumber);
     if (folder) {
       this.folderName = folder.name;
@@ -244,13 +252,14 @@ export class FileView implements OnInit {
     }
   }
 
-  public updateFolder(): void {
+  protected updateFolder(): void {
     const folder = this.folders.find(item => item.number === this.currentFolderNumber);
     const name = this.folderName.trim();
     if (!folder || !name) return;
     this.callFolder(() => this.service.updateFolder({ ...folder, name }));
   }
 
+  // Private methods
   private call(action: () => Observable<Asset>): void {
     const dialog = this.dialog;
     const selectedData = this.selectedData;
@@ -262,7 +271,10 @@ export class FileView implements OnInit {
 
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           if (this.destroyRef.destroyed) return;
@@ -292,7 +304,10 @@ export class FileView implements OnInit {
 
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           if (this.destroyRef.destroyed) return;

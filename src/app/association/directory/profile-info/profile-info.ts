@@ -19,11 +19,9 @@ export class ProfileInfo {
   public get isGuest(): boolean {
     return this.data().types.includes('guest');
   }
-
   public get isMember(): boolean {
     return this.data().types.includes('member');
   }
-
   public get isSponsor(): boolean {
     return this.data().types.includes('sponsor');
   }

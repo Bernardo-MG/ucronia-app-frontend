@@ -28,7 +28,6 @@ export class RoleChangePermission implements OnChanges {
   }
   public readonly form;
   public readonly formStatus: FormStatus;
-
   public get permissionGroups(): PermissionGroup[] {
     const groups = new Map<string, ResourcePermission[]>();
 
@@ -46,20 +45,16 @@ export class RoleChangePermission implements OnChanges {
       }))
       .sort((first, second) => first.resource.localeCompare(second.resource));
   }
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public get selected(): ResourcePermission[] {
     return this.form.controls.permissions.value;
   }
-
   public set selected(value: ResourcePermission[]) {
     this.form.controls.permissions.setValue(value);
     this.form.markAsDirty();
   }
-
   public get visibleSelectionIndeterminate(): boolean {
     const hasSelection = this.permissionGroups.some(group => this.selectedInGroup(group) > 0);
     return hasSelection && !this.allVisibleSelected;
@@ -75,16 +70,22 @@ export class RoleChangePermission implements OnChanges {
     return Array.from(permissions.values());
   }
 
-  constructor() {
+  public constructor() {
     const fb = inject(FormBuilder);
     this.form = fb.nonNullable.group({ permissions: [[] as ResourcePermission[]] });
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ permissions }: SimpleChanges): void {
     if (permissions) {
       this.form.reset({ permissions: [...permissions.currentValue] });
     }
+  }
+
+  // Event handlers
+  public clearSelection(): void {
+    this.selected = [];
   }
 
   public onSave(): void {
@@ -93,10 +94,7 @@ export class RoleChangePermission implements OnChanges {
     }
   }
 
-  public clearSelection(): void {
-    this.selected = [];
-  }
-
+  // Public methods
   public clearVisibleSelection(): void {
     this.permissionGroups.forEach(group => this.toggleGroup(group, false));
   }
@@ -139,6 +137,7 @@ export class RoleChangePermission implements OnChanges {
     }
   }
 
+  // Private methods
   private permissionKey(permission: ResourcePermission): string {
     return permission.name || `${permission.resource}:${permission.action}`;
   }

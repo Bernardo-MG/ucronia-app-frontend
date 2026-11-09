@@ -4,7 +4,7 @@
   } @else if (failed()) {
     <div class="space-y-2 p-4">
       <p role="alert">No se pudieron cargar los tipos de transacción.</p>
-      <p-button type="button" label="Reintentar" (onClick)="load()" />
+      <p-button type="button" label="Reintentar" (onClick)="onRetry()" />
     </div>
   } @else if (data().content.length === 0) {
     <p class="p-4">No hay tipos de transacción registrados.</p>
@@ -30,67 +30,13 @@
             </td>
             <td class="p-3">
               <p-button type="button" label="Ver detalle" severity="secondary"
-                (onClick)="showDetails(type.number)" />
+                (onClick)="onShowDetails(type.number)" />
             </td>
           </tr>
         }
       </tbody>
     </table>
     <p-paginator [first]="(data().page - 1) * rows" [rows]="rows" [totalRecords]="data().totalElements"
-      (onPageChange)="changePage($event)" />
+      (onPageChange)="onChangePage($event)" />
   }
 </section>
-
-@if (selectedNumber !== undefined) {
-  @if (editing && selectedType; as type) {
-    <p-drawer [visible]="true" position="right" [closable]="!typeLoading()"
-      [dismissible]="!typeLoading()" [closeOnEscape]="!typeLoading()"
-      (visibleChange)="!$event && closeTypeForm()">
-      <ng-template #header>
-        <shared-drawer-header title="Editar tipo de transacción" icon="pi pi-tag" />
-      </ng-template>
-      <assoc-transaction-type-form #typeForm formId="transaction-type-edit" [data]="type"
-        [loading]="typeLoading()" [failures]="typeFailures()" (save)="updateType($event, type.number)" />
-      @if (typeSaveError()) {
-        <p role="alert" class="mt-4 text-red-700">No se pudo guardar el tipo de transacción.</p>
-      }
-      <ng-template #footer>
-        <shared-drawer-form-actions formId="transaction-type-edit" submitLabel="Guardar cambios" submitIcon="pi pi-check"
-          [disabled]="!typeForm.saveEnabled" [loading]="typeLoading()" (cancelForm)="closeTypeForm()" />
-      </ng-template>
-    </p-drawer>
-  } @else {
-    <p-drawer [visible]="true" position="right" [style]="{ width: 'min(44rem, 100vw)' }"
-      [closable]="!deleting" [dismissible]="!deleting" [closeOnEscape]="!deleting"
-      (visibleChange)="!$event && closeDetails()">
-      <ng-template #header>
-        <shared-drawer-header title="Detalle del tipo de transacción" icon="pi pi-tag" />
-      </ng-template>
-      @if (detailLoading) {
-        <p role="status">Cargando tipo de transacción…</p>
-      } @else if (detailFailed) {
-        <p role="alert">No se pudo cargar el tipo de transacción.</p>
-        <p-button type="button" label="Reintentar" (onClick)="showDetails(selectedNumber)" />
-      } @else if (selectedType; as type) {
-        <dl class="space-y-2">
-          <dt class="font-semibold">Número</dt>
-          <dd>{{ type.number }}</dd>
-          <dt class="font-semibold">Descripción</dt>
-          <dd>{{ type.description }}</dd>
-          <dt class="font-semibold">Color</dt>
-          <dd>
-            <span class="mr-2 inline-block size-4 rounded border border-gray-300 align-middle"
-              [style.background-color]="type.color" aria-hidden="true"></span>{{ type.color }}
-          </dd>
-        </dl>
-      }
-      @if (deleteFailed) {
-        <p role="alert" class="mt-4 text-red-700">No se pudo borrar el tipo de transacción.</p>
-      }
-      <ng-template #footer>
-        <shared-drawer-actions [showDelete]="canDelete() && !!selectedType" [showEdit]="canEdit() && !!selectedType"
-          [loading]="deleting" (delete)="confirmDelete($event)" (edit)="editing = true" />
-      </ng-template>
-    </p-drawer>
-  }
-}

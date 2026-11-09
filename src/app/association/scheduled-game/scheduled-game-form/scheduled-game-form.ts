@@ -30,9 +30,7 @@ export class ScheduledGameForm implements OnChanges {
     this.recurring = value.recurrence ? value.recurrence?.interval > 0 : false;
     this.showImageField = !!value.image;
   }
-
   public readonly failures = input(new FailureStore());
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -43,29 +41,26 @@ export class ScheduledGameForm implements OnChanges {
 
   public readonly save = output<ScheduledGame>();
   public readonly searchMember = output<MemberSearchEvent>();
+
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public readonly gameTypes = [
     { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
     { name: 'Partida única', value: ScheduledGameType.ONESHOT }
   ];
   public master = new Profile();
-
   public readonly recurrenceUnits = [
     { name: 'Diaria', value: RecurrenceUnit.DAILY },
     { name: 'Semanal', value: RecurrenceUnit.WEEKLY },
     { name: 'Mensual', value: RecurrenceUnit.MONTHLY }
   ];
   public recurring = false;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
   public showImageField = false;
 
-  constructor() {
+  public constructor() {
     this.form = this.fb.group({
       number: [null],
       title: [null, Validators.required],
@@ -86,12 +81,20 @@ export class ScheduledGameForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ selectedMaster }: SimpleChanges): void {
 
     if (selectedMaster && this.selectedMaster().number) {
       this.master = this.selectedMaster();
       this.form.get('master')?.setValue(this.master.number);
     }
+  }
+
+  // Event handlers
+  public clearMaster(): void {
+    this.master = new Profile();
+    this.form.get('master')?.reset();
+    this.form.get('master')?.markAsTouched();
   }
 
   public onRecurrenceChange(recurring: boolean): void {
@@ -123,6 +126,7 @@ export class ScheduledGameForm implements OnChanges {
     this.form.get('master')?.markAsDirty();
   }
 
+  // Public methods
   public getInitials(profile: Profile): string {
     return profile.name.fullName
       .split(/\s+/)
@@ -130,12 +134,6 @@ export class ScheduledGameForm implements OnChanges {
       .slice(0, 2)
       .map(part => part.charAt(0).toUpperCase())
       .join('');
-  }
-
-  public clearMaster(): void {
-    this.master = new Profile();
-    this.form.get('master')?.reset();
-    this.form.get('master')?.markAsTouched();
   }
 
   public isFieldInvalid(property: string): boolean {

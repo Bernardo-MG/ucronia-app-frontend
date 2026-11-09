@@ -32,14 +32,13 @@ export class RoleInfo {
       }))
       .sort((first, second) => first.resource.localeCompare(second.resource));
   }
-
-
   public get resourceCount(): number {
     return new Set(
       this.data().permissions.map(permission => permission.resource)
     ).size;
   }
 
+  // Public methods
   public formatLabel(value: string): string {
     const label = value
       .replace(/([a-z])([A-Z])/g, '$1 $2')

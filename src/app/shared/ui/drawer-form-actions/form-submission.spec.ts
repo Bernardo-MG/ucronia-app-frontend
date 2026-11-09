@@ -59,6 +59,11 @@ for (const formType of forms) {
     let component: DrawerForm;
     let emitted: jasmine.Spy;
 
+    function submit(): void {
+      fixture.nativeElement.querySelector('form')
+        .dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    }
+
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [formType],
@@ -79,12 +84,13 @@ for (const formType of forms) {
         component.file = new File(['content'], 'example.txt');
       }
       component.form.markAsDirty();
+      fixture.detectChanges();
     });
 
     it('blocks native submission while loading and restores eligibility afterwards', () => {
       expect(component.saveEnabled).toBeTrue();
       fixture.componentRef.setInput('loading', true);
-      component.onSave();
+      submit();
       expect(emitted).not.toHaveBeenCalled();
       expect(component.form.disabled).toBeTrue();
       fixture.componentRef.setInput('loading', false);
@@ -93,7 +99,7 @@ for (const formType of forms) {
 
     it('marks an invalid submission touched without emitting', () => {
       component.form.setErrors({ invalid: true });
-      component.onSave();
+      submit();
       expect(component.form.touched).toBeTrue();
       expect(emitted).not.toHaveBeenCalled();
     });

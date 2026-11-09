@@ -24,8 +24,8 @@ import { FullProfile } from '../model/full-profile';
 export class ProfileEditionForm {
 
   private readonly fb = inject(FormBuilder);
-  public readonly contactMethods = input<ContactMethod[]>([]);
 
+  public readonly contactMethods = input<ContactMethod[]>([]);
   @Input() public set data(value: FullProfile) {
     this.form.patchValue(value as any);
 
@@ -53,10 +53,8 @@ export class ProfileEditionForm {
     this.selected = [...value.types];
     this.updateFeeTypeValidator();
   }
-
   public readonly failures = input(new FailureStore());
   public readonly feeTypes = input<FeeType[]>([]);
-
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -68,46 +66,35 @@ export class ProfileEditionForm {
     return this.form.get('contactChannels') as FormArray;
   }
   public readonly form: FormGroup;
-
   public readonly formStatus: FormStatus;
-
   public get games(): FormArray {
     return this.form.get('games') as FormArray;
   }
-
   public get isGuest(): boolean {
     return this.selected.includes('guest');
   }
-
   public get isMember(): boolean {
     return this.selected.includes('member');
   }
-
   public get isSponsor(): boolean {
     return this.selected.includes('sponsor');
   }
-
   public lockedTypes: string[] = [];
-
   public readonly options = [
     { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
     { label: 'Member', value: 'member', icon: 'pi-users', disabled: false },
     { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-
   public selected: string[] = [];
-
   public readonly today = new Date();
-
   public get years(): FormArray {
     return this.form.get('years') as FormArray;
   }
 
-  constructor() {
+  public constructor() {
     this.form = this.fb.group({
       number: [-1],
       identifier: [''],
@@ -130,6 +117,16 @@ export class ProfileEditionForm {
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
+
+  // Event handlers
+  public addContactChannel(): void {
+    this.contactChannels.push(
+      this.fb.group({
+        method: [null],
+        detail: ['']
+      })
+    );
   }
 
   public onSave(): void {
@@ -155,15 +152,7 @@ export class ProfileEditionForm {
     this.updateFeeTypeValidator();
   }
 
-  public addContactChannel(): void {
-    this.contactChannels.push(
-      this.fb.group({
-        method: [null],
-        detail: ['']
-      })
-    );
-  }
-
+  // Public methods
   public addGame(): void {
     this.games.push(this.fb.control(null));
   }
@@ -189,6 +178,7 @@ export class ProfileEditionForm {
     this.years.removeAt(index);
   }
 
+  // Private methods
   private updateFeeTypeValidator() {
     const feeTypeControl = this.form.get('feeType.number');
     if (!feeTypeControl) return;
@@ -202,4 +192,3 @@ export class ProfileEditionForm {
   }
 
 }
-

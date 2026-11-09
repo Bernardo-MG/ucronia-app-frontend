@@ -1,5 +1,5 @@
 import { FormStatus } from '@bernardo-mg/form';
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, Input, inject, input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -19,8 +19,6 @@ import { MessageModule } from 'primeng/message';
 export class LoginForm {
 
   public readonly failedLogin = input(false);
-
-  // Keep the setter so form status updates synchronously with each input assignment.
   @Input()
   public set loading(loading: boolean) {
     this.formStatus.loading = loading;
@@ -76,13 +74,13 @@ export class LoginForm {
     }
   }
 
-  protected togglePasswordVisibility(): void {
-    this.passwordVisible = !this.passwordVisible;
-  }
-
   // Protected methods
   protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property);
+  }
+
+  protected togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
   }
 
 }
