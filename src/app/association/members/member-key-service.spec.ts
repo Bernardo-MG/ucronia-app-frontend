@@ -11,7 +11,7 @@ describe('MemberKeyService', () => {
 
   const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['create', 'update', 'delete']);
 
-  const assignmentEndpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['page', 'create', 'update']);
+  const assignmentEndpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['page', 'create', 'update', 'delete']);
 
   const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
 
@@ -144,6 +144,21 @@ describe('MemberKeyService', () => {
 
     expect(result).toEqual([]);
     expect(assignmentEndpointMock.page).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes the assignment without deleting the key', () => {
+    const key: KeyAssignment = { number: 7, available: true, description: 'Principal' };
+    assignmentEndpointMock.delete.and.returnValue(of(key));
+    let result: KeyAssignment | undefined;
+
+    service.unassign(7).subscribe(value => (result = value));
+
+    expect(assignmentEndpointMock.delete).toHaveBeenCalledOnceWith(7);
+    expect(keyEndpointMock.delete).not.toHaveBeenCalled();
+    expect(result).toBe(key);
+    expect(messageServiceMock.add).toHaveBeenCalledOnceWith(
+      jasmine.objectContaining({ detail: 'Asignación de llave eliminada' })
+    );
   });
 
   describe('assignments', () => {

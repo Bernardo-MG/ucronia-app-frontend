@@ -259,7 +259,18 @@
             editLabel="Editar llave"
             (delete)="onDeleteKey($event)"
             (edit)="onShowKeyEdit()">
-            <div drawerActionsEnd>
+            <div drawerActionsEnd class="flex flex-wrap justify-end gap-3">
+              @if (canUnassignKey) {
+                <p-button
+                  data-action="unassign-key"
+                  type="button"
+                  label="Quitar asignación"
+                  icon="pi pi-user-minus"
+                  severity="danger"
+                  [outlined]="true"
+                  [disabled]="status.saving"
+                  (onClick)="onUnassignKey($event)" />
+              }
               @if (canAssignKey) {
                 <p-button
                   [label]="selectedKey.profile ? 'Cambiar socio' : 'Asignar socio'"

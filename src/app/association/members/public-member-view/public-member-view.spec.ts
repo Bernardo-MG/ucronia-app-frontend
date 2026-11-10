@@ -35,7 +35,8 @@ describe('PublicMemberView', () => {
     'getAll',
     'create',
     'update',
-    'delete'
+    'delete',
+    'unassign'
   ]);
   const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', [
@@ -52,6 +53,7 @@ describe('PublicMemberView', () => {
     memberProfileServiceMock.update.and.returnValue(of(new Member()));
     memberKeyServiceMock.update.calls.reset();
     memberKeyServiceMock.delete.calls.reset();
+    memberKeyServiceMock.unassign.calls.reset();
     memberKeyServiceMock.update.and.returnValue(of(new Key()));
     memberKeyServiceMock.delete.and.returnValue(of(new Key()));
     memberProfileServiceMock.create.calls.reset();
@@ -511,6 +513,61 @@ describe('PublicMemberView', () => {
 
     expect(component.dialog).toBe(Dialog.KEY_INFO);
     expect(component.error).not.toBe('');
+    expect(component.status.saving).toBeFalse();
+  });
+
+  it('confirms removing an assignment and reloads the key as unassigned', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const key: KeyAssignment = { number: 3, available: true, description: 'Principal' };
+    const response = new Subject<KeyAssignment>();
+    memberKeyServiceMock.unassign.and.returnValue(response);
+    memberKeyServiceMock.getAll.and.returnValue(of([key]));
+    component.onShowKey({ ...key, profile: { number: 12, name: 'Ana' } });
+
+    component.onUnassignKey(new Event('click'));
+    expect(memberKeyServiceMock.unassign).not.toHaveBeenCalled();
+
+    const confirmation = confirm.calls.mostRecent().args[0];
+    confirmation.accept?.();
+    confirmation.accept?.();
+    expect(memberKeyServiceMock.unassign).toHaveBeenCalledOnceWith(3);
+    expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
+
+    response.next(key);
+    response.complete();
+    expect(component.keyAssignments).toEqual([key]);
+    expect(component.dialog).toBe(Dialog.NONE);
+  });
+
+  it('does not remove assignments for an unassigned key or without permission', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const key: KeyAssignment = { number: 3, available: true, description: 'Principal' };
+    component.onShowKey(key);
+    expect(component.canUnassignKey).toBeFalse();
+    component.onUnassignKey(new Event('click'));
+
+    component.permissions.keyAssignmentsDelete = false;
+    component.onShowKey({ ...key, profile: { number: 12, name: 'Ana' } });
+    expect(component.canUnassignKey).toBeFalse();
+    component.onUnassignKey(new Event('click'));
+
+    expect(confirm).not.toHaveBeenCalled();
+    expect(memberKeyServiceMock.unassign).not.toHaveBeenCalled();
+  });
+
+  it('keeps the assigned profile visible when removal fails', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const key: KeyAssignment = {
+      number: 3, available: true, description: 'Principal', profile: { number: 12, name: 'Ana' }
+    };
+    memberKeyServiceMock.unassign.and.returnValue(throwError(() => new Error('Failed')));
+    component.onShowKey(key);
+    component.onUnassignKey(new Event('click'));
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(component.selectedKey).toBe(key);
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+    expect(component.error).toBe('No se pudo quitar la asignación de la llave.');
     expect(component.status.saving).toBeFalse();
   });
 

@@ -56,6 +56,9 @@ export class PublicMemberView implements OnInit {
     return this.permissions.keyAssignmentsRead && this.permissions.read && !!this.selectedKey &&
       (this.selectedKey.profile ? this.permissions.keyAssignmentsEdit : this.permissions.keyAssignmentsCreate);
   }
+  public get canUnassignKey(): boolean {
+    return this.permissions.keyAssignmentsRead && this.permissions.keyAssignmentsDelete && !!this.selectedKey?.profile;
+  }
   public contactMethods: ContactMethod[] = [];
   public data = new Page<PublicMember>();
   public readonly Dialog = Dialog;
@@ -111,6 +114,7 @@ export class PublicMemberView implements OnInit {
       delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete),
       keyAssignmentsRead: authService.hasPermission(UcroniaPermissions.keyAssignment.read),
       keyAssignmentsCreate: authService.hasPermission(UcroniaPermissions.keyAssignment.create),
+      keyAssignmentsDelete: authService.hasPermission(UcroniaPermissions.keyAssignment.delete),
       keyAssignmentsEdit: authService.hasPermission(UcroniaPermissions.keyAssignment.update),
       keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
@@ -516,6 +520,41 @@ export class PublicMemberView implements OnInit {
     }
   }
 
+  public onUnassignKey(event: Event): void {
+    const key = this.selectedKey;
+    if (!key?.profile || !this.canUnassignKey || this.dialog !== Dialog.KEY_INFO || this.status.saving) {
+      return;
+    }
+
+    const number = key.number;
+    const profile = key.profile.number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Quieres quitar el socio asignado? La llave quedará sin asignar.',
+      icon: 'pi pi-user-minus',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Quitar asignación', severity: 'danger' },
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.status.saving ||
+          this.dialog !== Dialog.KEY_INFO ||
+          !this.canUnassignKey ||
+          this.selectedKey?.number !== number ||
+          this.selectedKey.profile?.number !== profile
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.keyService.unassign(number),
+          () => this.refreshKeysAndMembers(),
+          'No se pudo quitar la asignación de la llave.'
+        );
+      }
+    });
+  }
+
   public onUpdateKey(data: Key): void {
     if (
       !this.permissions.keyAssignmentsRead ||
@@ -655,6 +694,7 @@ interface Permissions {
   delete: boolean;
   keyAssignmentsRead: boolean;
   keyAssignmentsCreate: boolean;
+  keyAssignmentsDelete: boolean;
   keyAssignmentsEdit: boolean;
   keysCreate: boolean;
   keysEdit: boolean;
