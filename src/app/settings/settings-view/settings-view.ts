@@ -4,6 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
+import { PublicSettings } from '@ucronia/domain';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
 import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
@@ -18,12 +19,9 @@ export class SettingsView implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AssociationSettingsService);
 
-  public calendar = '';
   public readonly editable;
-  public email = '';
-  public instagram = '';
   public loading = false;
-  public map = '';
+  public settings = new PublicSettings();
 
   public constructor() {
     const authService = inject(AuthService);
@@ -39,18 +37,15 @@ export class SettingsView implements OnInit {
     forkJoin({
       email: this.service.getEmail(),
       instagram: this.service.getInstagram(),
-      googleMaps: this.service.getMap(),
-      teamUp: this.service.getCalendar()
+      map: this.service.getMap(),
+      calendar: this.service.getCalendar()
     })
       .pipe(
         finalize(() => this.loading = false),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(r => {
-        this.email = r.email;
-        this.instagram = r.instagram;
-        this.map = r.googleMaps;
-        this.calendar = r.teamUp;
+      .subscribe(settings => {
+        this.settings = settings;
       });
   }
 
