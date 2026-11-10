@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
 import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -22,32 +23,31 @@ export enum AccountSection {
 })
 export class AccountView {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AccountService);
 
-  public readonly AccountSection = AccountSection;
-
   public account = new Account();
-
+  public accountLoading = false;
+  public readonly AccountSection = AccountSection;
+  public activeSection = AccountSection.Profile;
+  public failures = new FailureStore();
+  public passwordLoading = false;
   public profile: Profile | undefined;
 
-  public accountLoading = false;
-
-  public passwordLoading = false;
-
-  public failures = new FailureStore();
-
-  public activeSection = AccountSection.Profile;
-
-  constructor() {
+  public constructor() {
     this.loadAccount();
   }
 
-  public onChangePassword(data: PasswordChange): void {
+  // Event handlers
+  protected onChangePassword(data: PasswordChange): void {
     this.passwordLoading = true;
     this.failures.clear();
 
     this.service.changePassword(data)
-      .pipe(finalize(() => this.passwordLoading = false))
+      .pipe(
+        finalize(() => this.passwordLoading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         error: error => this.handleError(error)
       });
@@ -70,6 +70,7 @@ export class AccountView {
     });
   }
 
+  // Data loading
   private loadAccount(): void {
     this.accountLoading = true;
     this.profile = new Profile();
@@ -77,12 +78,14 @@ export class AccountView {
     this.service.getAccount()
       .pipe(
         tap(account => this.account = account),
-        switchMap(account => this.service.getProfile()),
-        finalize(() => this.accountLoading = false)
+        switchMap(() => this.service.getProfile()),
+        finalize(() => this.accountLoading = false),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(profile => this.profile = profile);
   }
 
+  // Private methods
   private handleError(error: unknown): void {
     if (error instanceof FailureResponse) {
       this.failures = error.failures;
@@ -90,4 +93,5 @@ export class AccountView {
       this.failures.clear();
     }
   }
+
 }

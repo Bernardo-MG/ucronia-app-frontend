@@ -10,7 +10,7 @@ import { BookLending } from '@ucronia/domain';
 })
 export class LibraryLendingInfo {
 
-  public readonly lending = input.required<BookLending>();
   public readonly borrowerName = input('');
+  public readonly lending = input.required<BookLending>();
 
 }

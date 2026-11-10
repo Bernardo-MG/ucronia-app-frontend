@@ -14,23 +14,24 @@ import { FormSearchReset } from '../form-search-reset';
 })
 export class SearchSelect<T> {
 
+  public readonly clearOnSelect = input(false);
+  public readonly disabled = input(false);
   public readonly inputId = input.required<string>();
   public readonly label = input('Buscar');
+  public readonly optionLabel = input('name');
   public readonly placeholder = input('Buscar...');
-  public readonly disabled = input(false);
   public readonly suggestions = input<T[]>([]);
   public readonly value = input<T | null | undefined>(null);
-  public readonly optionLabel = input('name');
-  public readonly clearOnSelect = input(false);
 
+  public readonly cleared = output<void>();
   public readonly queryChange = output<string>();
   public readonly selected = output<T>();
-  public readonly cleared = output<void>();
 
   public viewValue: T | string | null = null;
+
   private readonly queries = new Subject<string>();
 
-  constructor() {
+  public constructor() {
     this.queries.pipe(
       map(query => query.trim()),
       switchMap(query => query ? timer(300).pipe(map(() => query)) : of('')),
@@ -46,10 +47,27 @@ export class SearchSelect<T> {
     });
   }
 
+  // Event handlers
+  protected onFormReset(): void {
+    this.viewValue = this.value() ?? null;
+    this.queries.next('');
+  }
+
+  protected onInput(event: Event): void {
+    this.viewValue = (event.target as HTMLInputElement).value;
+    this.queries.next('');
+    this.cleared.emit();
+  }
+
   public onSearch(query: string): void {
     const current = typeof this.viewValue === 'string' ? this.viewValue.trim() : '';
     // An autocomplete callback must still match the current input text.
     this.queries.next(query.trim() === current ? current : '');
+  }
+
+  public onSelect(value: T): void {
+    this.viewValue = this.clearOnSelect() ? null : value;
+    this.selected.emit(value);
   }
 
   public onValueChange(value: T | string | null): void {
@@ -58,22 +76,6 @@ export class SearchSelect<T> {
       this.queries.next('');
       this.cleared.emit();
     }
-  }
-
-  public onSelect(value: T): void {
-    this.viewValue = this.clearOnSelect() ? null : value;
-    this.selected.emit(value);
-  }
-
-  public onInput(event: Event): void {
-    this.viewValue = (event.target as HTMLInputElement).value;
-    this.queries.next('');
-    this.cleared.emit();
-  }
-
-  public onFormReset(): void {
-    this.viewValue = this.value() ?? null;
-    this.queries.next('');
   }
 
 }

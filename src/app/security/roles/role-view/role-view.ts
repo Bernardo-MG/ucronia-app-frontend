@@ -1,4 +1,5 @@
-import { Component, inject, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -24,38 +25,34 @@ import { RoleService } from '../role-service';
 })
 export class RoleView implements OnInit {
 
-  private readonly detailRequest = new DetailRequest();
-
-  private readonly drawer = viewChild(Drawer);
-
-  private readonly service = inject(RoleService);
-  private listRequest?: Subscription;
   private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(RoleService);
 
   public data = new Page<Role>();
-  public selectedData = new Role();
-  public loading = false;
-  public failures = new FailureStore();
-  public resourcePermissions: ResourcePermission[] = [];
-  private currentDialog = Dialog.NONE;
-
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
     }
   }
+  public failures = new FailureStore();
+  public loading = false;
+  public readonly permissions: Permissions;
+  public resourcePermissions: ResourcePermission[] = [];
+  public selectedData = new Role();
 
-  private sort = new Sorting();
+  private currentDialog = Dialog.NONE;
+  private readonly detailRequest = new DetailRequest();
+  private readonly drawer = viewChild(Drawer);
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     this.permissions = {
@@ -71,13 +68,28 @@ export class RoleView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  public onShowInfo(role: Role): void {
-    this.detailRequest.cancel();
-    this.selectedData = role;
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
@@ -93,24 +105,27 @@ export class RoleView implements OnInit {
     this.load(this.data.page);
   }
 
+  public onChangePermissions(role: Role): void {
+    this.detailRequest.cancel();
+    this.selectedData = role;
+    this.loading = true;
+
+    this.service.getAllPermissions()
+      .pipe(
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(permissions => {
+        this.resourcePermissions = permissions;
+        this.dialog = Dialog.PERMISSIONS;
+      });
+  }
+
   public onCreate(role: Role): void {
     this.call(
       () => this.service.create(role),
       () => this.load()
-    );
-  }
-
-  public onSetRolePermissions(
-    permissions: ResourcePermission[]
-  ): void {
-    const updatedRole = new Role(
-      this.selectedData.name,
-      permissions
-    );
-
-    this.call(
-      () => this.service.update(updatedRole),
-      () => this.load(this.data.page)
     );
   }
 
@@ -139,20 +154,31 @@ export class RoleView implements OnInit {
     });
   }
 
-  public onChangePermissions(role: Role): void {
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onSetRolePermissions(
+    permissions: ResourcePermission[]
+  ): void {
+    const updatedRole = new Role(
+      this.selectedData.name,
+      permissions
+    );
+
+    this.call(
+      () => this.service.update(updatedRole),
+      () => this.load(this.data.page)
+    );
+  }
+
+  public onShowInfo(role: Role): void {
     this.detailRequest.cancel();
     this.selectedData = role;
-    this.loading = true;
-
-    this.service.getAllPermissions()
-      .pipe(
-        finalize(() => this.finishLoading())
-      )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(permissions => {
-        this.resourcePermissions = permissions;
-        this.dialog = Dialog.PERMISSIONS;
-      });
+    this.dialog = Dialog.INFO;
   }
 
   public onStartCreation(): void {
@@ -161,7 +187,8 @@ export class RoleView implements OnInit {
 
     this.service.getAllPermissions()
       .pipe(
-        finalize(() => this.finishLoading())
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .pipe(this.detailRequest.untilCancelled())
       .subscribe(permissions => {
@@ -170,37 +197,7 @@ export class RoleView implements OnInit {
       });
   }
 
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(
-        finalize(() => this.finishLoading())
-      )
-      .subscribe(response => {
-        this.data = response;
-      });
-  }
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  private finishLoading(): void {
-    this.loading = false;
-    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
-    this.drawer()?.cd.markForCheck();
-  }
-
+  // Private methods
   private call(
     action: () => Observable<unknown>,
     onSuccess: () => void
@@ -209,7 +206,8 @@ export class RoleView implements OnInit {
 
     action()
       .pipe(
-        finalize(() => this.finishLoading())
+        finalize(() => this.finishLoading()),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         complete: () => {
@@ -221,6 +219,12 @@ export class RoleView implements OnInit {
       });
   }
 
+  private finishLoading(): void {
+    this.loading = false;
+    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    this.drawer()?.cd.markForCheck();
+  }
+
   private handleError(error: unknown): void {
     if (error instanceof FailureResponse) {
       this.failures = error.failures;
@@ -228,6 +232,7 @@ export class RoleView implements OnInit {
       this.failures.clear();
     }
   }
+
 }
 
 interface Permissions {

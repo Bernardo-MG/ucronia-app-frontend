@@ -1,11 +1,11 @@
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -22,23 +22,22 @@ import { GameSystemService } from '../game-system-service';
 })
 export class LibraryGameSystemListView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
-
-  private readonly service = inject(GameSystemService);
   private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(GameSystemService);
 
   public data = new Page<GameSystem>();
-  public loading = false;
-  public failures = new FailureStore();
-  public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
+  public failures = new FailureStore();
+  public loading = false;
+  public readonly permissions: Permissions;
   public selected = new GameSystem();
-  private sort = new Sorting();
 
-  constructor() {
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
+
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -49,38 +48,49 @@ export class LibraryGameSystemListView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowCreate(): void {
-    this.selected = new GameSystem();
-    this.dialog = Dialog.CREATE;
-    this.failures.clear();
-  }
-
-  public onShowInfo(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.INFO;
-    this.failures.clear();
-  }
-
-  public onShowEdit(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.EDIT;
-    this.failures.clear();
-  }
-
-  public onReject(): void {
-    this.dialog = Dialog.NONE;
-    this.failures.clear();
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.data = response);
   }
 
   public onCancelEdit(): void {
     this.dialog = Dialog.INFO;
     this.failures.clear();
+  }
+
+  public onCreate(data: any): void {
+    this.loading = true;
+    this.service.create(data)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => {
+        this.loading = false;
+        this.dialog = Dialog.NONE;
+      }))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
   }
 
   public onDelete(event: Event): void {
@@ -118,6 +128,19 @@ export class LibraryGameSystemListView implements OnInit {
     });
   }
 
+  // DRAWER
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onReject(): void {
+    this.dialog = Dialog.NONE;
+    this.failures.clear();
+  }
+
   public onSave(data: any): void {
     if (this.dialog === Dialog.CREATE) {
       this.onCreate(data);
@@ -126,47 +149,22 @@ export class LibraryGameSystemListView implements OnInit {
     }
   }
 
-  public onCreate(data: any): void {
-    this.loading = true;
-    this.service.create(data)
-      .pipe(finalize(() => {
-        this.loading = false;
-        this.dialog = Dialog.NONE;
-      }))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  public onShowCreate(): void {
+    this.selected = new GameSystem();
+    this.dialog = Dialog.CREATE;
+    this.failures.clear();
   }
 
-  public onUpdate(data: any): void {
-    this.loading = true;
-    this.service.update(data)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  public onShowEdit(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.EDIT;
+    this.failures.clear();
+  }
+
+  public onShowInfo(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.INFO;
+    this.failures.clear();
   }
 
   public onSort(sorting: { field: string; order: number }): void {
@@ -175,37 +173,34 @@ export class LibraryGameSystemListView implements OnInit {
     this.load(this.data.page);
   }
 
-  // DRAWER
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
+  public onUpdate(data: any): void {
     this.loading = true;
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => this.data = response);
+    this.service.update(data)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.loading = false))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();

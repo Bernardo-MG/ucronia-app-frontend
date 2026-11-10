@@ -9,16 +9,16 @@ import { Profile } from '@ucronia/domain';
 })
 export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> {
 
-  public readonly inputId = input.required<string>();
   public readonly disabled = input(false);
-
-  public readonly members = input<T[]>([]);
+  public readonly inputId = input.required<string>();
   public readonly member = input<T | null>(null);
+  public readonly members = input<T[]>([]);
 
+  public readonly clearMember = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
   public readonly selectMember = output<T>();
-  public readonly clearMember = output<void>();
 
+  // Event handlers
   public onMemberChange(value: T | string | null): void {
     if (!value || typeof value === 'string') {
       this.clearMember.emit();

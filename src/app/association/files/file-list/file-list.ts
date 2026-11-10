@@ -11,26 +11,31 @@ import { TableModule, TablePageEvent } from 'primeng/table';
   templateUrl: './file-list.html'
 })
 export class FileList {
-  public readonly loading = input(false);
+
   public readonly files = input<Asset[]>([]);
-  public readonly rows = input(0);
+  public readonly loading = input(false);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-  public readonly show = output<Asset>();
+
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+  public readonly show = output<Asset>();
 
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     this.changePage.emit((event.first / event.rows) + 1);
   }
 
+  // Public methods
   public formatSize(size: number): string {
     if (size < 1024) return `${size} B`;
     if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
     return `${(size / 1024 / 1024).toFixed(1)} MB`;
   }
+
 }

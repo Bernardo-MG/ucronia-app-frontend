@@ -21,16 +21,9 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class MemberEditionForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
-  public readonly formId = input<string | null>(null);
-  public readonly failures = input(new FailureStore());
-  public readonly feeTypes = input<FeeType[]>([]);
   public readonly contactMethods = input<ContactMethod[]>([]);
-
-  public readonly save = output<MemberUpdate>();
-  public readonly today = new Date();
-
   @Input() public set data(member: Member) {
     this.form.reset({
       feeType: member.feeType.number,
@@ -56,52 +49,47 @@ export class MemberEditionForm {
     this.form.markAsPristine();
     this.form.markAsUntouched();
   }
-
-  public readonly form = this.fb.group({
-    feeType: this.fb.control<number | null>(null, Validators.required),
-    identifier: ['', [Validators.maxLength(15)]],
-    name: this.fb.nonNullable.group({
-      firstName: ['', [Validators.required, Validators.maxLength(50)]],
-      nickname: ['', Validators.maxLength(50)],
-      lastName: ['', Validators.maxLength(50)]
-    }),
-    birthDate: this.fb.control<Date | null>(null),
-    address: ['', Validators.maxLength(250)],
-    comments: ['', Validators.maxLength(250)],
-    contactChannels: this.fb.array([]),
-    active: [true],
-    renew: [true]
-  });
-
-  public readonly formStatus = new FormStatus(this.form);
-
+  public readonly failures = input(new FailureStore());
+  public readonly feeTypes = input<FeeType[]>([]);
+  public readonly formId = input<string | null>(null);
   @Input() public set loading(value: boolean) {
     this.formStatus.loading = value;
   }
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
+  public readonly save = output<MemberUpdate>();
 
   public get contactChannels(): FormArray {
     return this.form.controls.contactChannels;
   }
+  public readonly form = this.formBuilder.group({
+    feeType: this.formBuilder.control<number | null>(null, Validators.required),
+    identifier: ['', [Validators.maxLength(15)]],
+    name: this.formBuilder.nonNullable.group({
+      firstName: ['', [Validators.required, Validators.maxLength(50)]],
+      nickname: ['', Validators.maxLength(50)],
+      lastName: ['', Validators.maxLength(50)]
+    }),
+    birthDate: this.formBuilder.control<Date | null>(null),
+    address: ['', Validators.maxLength(250)],
+    comments: ['', Validators.maxLength(250)],
+    contactChannels: this.formBuilder.array([]),
+    active: [true],
+    renew: [true]
+  });
+  public readonly formStatus = new FormStatus(this.form);
+  public get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
+  public readonly today = new Date();
 
-  public addContactChannel(): void {
+  // Event handlers
+  protected addContactChannel(): void {
     this.contactChannels.push(
-      this.fb.group({
-        method: this.fb.control<number | null>(null, Validators.required),
+      this.formBuilder.group({
+        method: this.formBuilder.control<number | null>(null, Validators.required),
         detail: ['', [Validators.required, Validators.maxLength(50)]]
       })
     );
-  }
-
-  public removeContactChannel(index: number): void {
-    this.contactChannels.removeAt(index);
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
   public onSave(): void {
@@ -124,6 +112,15 @@ export class MemberEditionForm {
       renew: value.renew ?? false
     };
     this.save.emit(data);
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
 }

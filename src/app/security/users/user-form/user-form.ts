@@ -16,44 +16,48 @@ import { MessageModule } from 'primeng/message';
 })
 export class UserForm implements OnChanges {
 
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
   public readonly create = input(true);
-  public readonly selection = input<Role[]>([]);
-  public readonly members = input<Profile[]>([]);
-
   @Input() public set data(value: User) {
     this.form.reset(value as any);
     this.username = value.username;
     this.roles = [...value.roles];
   }
-
+  public readonly failures = input(new FailureStore());
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
   @Input() public set member(value: Profile) {
     this.selectedMember = value ?? new Profile();
   }
+  public readonly members = input<Profile[]>([]);
+  public readonly selection = input<Role[]>([]);
 
   public readonly save = output<UserFormData>();
-  public readonly update = output<UserEditionFormData>();
   public readonly searchMember = output<MemberSearchEvent>();
+  public readonly update = output<UserEditionFormData>();
 
-  public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
-  public username = '';
-  public roles: Role[] = [];
-  public selectedMember = new Profile();
+  public readonly formStatus: FormStatus;
+  public get roleOptions(): Role[] {
+    const roles = new Map<string, Role>();
 
+    [...this.roles, ...this.selection()].forEach(role => roles.set(role.name, role));
+
+    return Array.from(roles.values())
+      .sort((first, second) => first.name.localeCompare(second.name));
+  }
+  public roles: Role[] = [];
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+  public selectedMember = new Profile();
+  public username = '';
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       username: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -63,19 +67,17 @@ export class UserForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ selection }: SimpleChanges): void {
     if (selection && this.create()) {
       this.roles = [];
     }
   }
 
-  public get roleOptions(): Role[] {
-    const roles = new Map<string, Role>();
-
-    [...this.roles, ...this.selection()].forEach(role => roles.set(role.name, role));
-
-    return Array.from(roles.values())
-      .sort((first, second) => first.name.localeCompare(second.name));
+  // Event handlers
+  public onRemoveMember(): void {
+    this.selectedMember = new Profile();
+    this.form.markAsDirty();
   }
 
   /**
@@ -99,12 +101,9 @@ export class UserForm implements OnChanges {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  public isRoleSelected(role: Role): boolean {
-    return this.roles.some(selected => selected.name === role.name);
+  public onSelectMember(member: Profile): void {
+    this.selectedMember = member;
+    this.form.markAsDirty();
   }
 
   public toggleRole(role: Role, checked: boolean): void {
@@ -117,14 +116,13 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
-  public onSelectMember(member: Profile): void {
-    this.selectedMember = member;
-    this.form.markAsDirty();
+  // Public methods
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public onRemoveMember(): void {
-    this.selectedMember = new Profile();
-    this.form.markAsDirty();
+  public isRoleSelected(role: Role): boolean {
+    return this.roles.some(selected => selected.name === role.name);
   }
 
 }

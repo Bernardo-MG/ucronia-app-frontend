@@ -31,27 +31,27 @@ export interface UserDeleteEvent {
 })
 export class UserList {
 
-  public readonly loading = input(false);
   public readonly editable = input(false);
-  public readonly users = input<User[]>([]);
-  public readonly rows = input(0);
+  public readonly loading = input(false);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
+  public readonly users = input<User[]>([]);
 
-  public readonly show = output<User>();
   public readonly active = output<UserStatusChange>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
-
-  @ViewChild('editionMenu')
-  private editionMenu!: Menu;
+  public readonly show = output<User>();
 
   public editionMenuItems: MenuItem[] = [];
-
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
+  @ViewChild('editionMenu')
+  private readonly editionMenu!: Menu;
+
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
@@ -76,4 +76,5 @@ export class UserList {
 
     this.editionMenu.toggle(event);
   }
+
 }

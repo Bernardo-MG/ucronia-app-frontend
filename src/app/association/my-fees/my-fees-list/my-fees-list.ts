@@ -12,10 +12,10 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 export class MyFeesList {
 
   public readonly fees = input<Fee[]>([]);
-  public readonly rows = input(0);
-  public readonly page = input(0);
-  public readonly totalRecords = input(0);
   public readonly loading = input(false);
+  public readonly page = input(0);
+  public readonly rows = input(0);
+  public readonly totalRecords = input(0);
 
   public readonly changePage = output<number>();
 
@@ -23,6 +23,7 @@ export class MyFeesList {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);

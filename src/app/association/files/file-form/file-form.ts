@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -20,27 +20,35 @@ export interface FileFormData {
   templateUrl: './file-form.html'
 })
 export class FileForm implements OnChanges {
-  private readonly fb = inject(FormBuilder);
+
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly data = input<Asset | undefined>();
+  public readonly failures = input(new FailureStore());
   public readonly folders = input<AssetFolder[]>([]);
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
   public readonly save = output<FileFormData>();
+
+  public file?: File;
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-  public file?: File;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
   }
 
-  constructor() {
-    this.form = this.fb.group({
+  protected get folderOptions(): FolderOption[] {
+    return [
+      { name: 'Sin carpeta', number: null },
+      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
+    ];
+  }
+
+  public constructor() {
+    this.form = this.formBuilder.group({
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', Validators.maxLength(500)],
@@ -50,6 +58,7 @@ export class FileForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       this.form.reset(this.data() || new Asset());
@@ -57,12 +66,13 @@ export class FileForm implements OnChanges {
     }
   }
 
-  public onFileSelected(event: Event): void {
+  // Event handlers
+  protected onFileSelected(event: Event): void {
     this.file = (event.target as HTMLInputElement).files?.[0];
     this.form.markAsDirty();
   }
 
-  public onSave(): void {
+  protected onSave(): void {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
@@ -70,17 +80,12 @@ export class FileForm implements OnChanges {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get folderOptions(): FolderOption[] {
-    return [
-      { name: 'Sin carpeta', number: null },
-      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
-    ];
-  }
-
+  // Private methods
   private folderPath(folder: AssetFolder): string {
     const names = [folder.name];
     let parent = this.folders().find(item => item.number === folder.parentNumber);

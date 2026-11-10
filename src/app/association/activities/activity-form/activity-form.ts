@@ -1,8 +1,8 @@
-import { Component, inject, Input, input, OnInit, output } from '@angular/core';
+import { Component, inject, Input, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Activity, Asset } from '@ucronia/domain';
+import { Activity } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputTextModule } from 'primeng/inputtext';
@@ -10,7 +10,6 @@ import { MessageModule } from 'primeng/message';
 import { SelectModule } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { ImageContent } from '../../images/image-content/image-content';
-import { ImageService } from '../../images/image-service';
 
 @Component({
   selector: 'assoc-activity-form',
@@ -18,16 +17,9 @@ import { ImageService } from '../../images/image-service';
     MessageModule, SelectModule, TextareaModule],
   templateUrl: './activity-form.html'
 })
-export class ActivityForm implements OnInit {
+export class ActivityForm {
 
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
-  private readonly fb = inject(FormBuilder);
-  private readonly imageService = inject(ImageService);
+  private readonly formBuilder = inject(FormBuilder);
 
   @Input() public set data(value: Activity) {
     this.form.patchValue({
@@ -49,54 +41,43 @@ export class ActivityForm implements OnInit {
       this.addDate();
     }
   }
-  
+  public readonly failures = input(new FailureStore());
+  public readonly formId = input<string | null>(null);
+  public readonly imageOptions = input<ActivityImageOption[]>([]);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+
+  public readonly save = output<Activity>();
+
+  public get dates(): FormArray {
+    return this.form.get('dates') as FormArray;
+  }
+  public readonly form: FormGroup;
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  public readonly save = output<Activity>();
-  public readonly formStatus: FormStatus;
-  public readonly form: FormGroup;
-  public imageOptions: ActivityImageOption[] = [];
-  public showImageField = false;
+  protected showImageField = false;
 
-  constructor() {
-    this.form = this.fb.group({
+  public constructor() {
+    this.form = this.formBuilder.group({
       number: [null],
       title: [null, Validators.required],
       description: [''],
       location: [''],
       image: [''],
-      dates: this.fb.array([])
+      dates: this.formBuilder.array([])
     });
 
     this.formStatus = new FormStatus(this.form);
     this.addDate();
   }
 
-  public ngOnInit(): void {
-    this.imageService.getAllForSelection()
-      .subscribe(images => this.imageOptions = images.map(image => this.toImageOption(image)));
-  }
-
-  public get dates(): FormArray {
-    return this.form.get('dates') as FormArray;
-  }
-
-  private createDateGroup(start?: Date, end?: Date): FormGroup {
-    return this.fb.group({
-      day: [start ?? null, Validators.required],
-      startHour: [start ?? null, Validators.required],
-      endHour: [end ?? null, Validators.required]
-    });
-  }
-
-  public addDate(): void {
+  // Event handlers
+  protected addDate(): void {
     this.dates.push(this.createDateGroup());
-  }
-
-  public removeDate(index: number): void {
-    this.dates.removeAt(index);
   }
 
   public onSave(): void {
@@ -118,28 +99,33 @@ export class ActivityForm implements OnInit {
     }
   }
 
+  protected removeDate(index: number): void {
+    this.dates.removeAt(index);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
+  }
+
+  // Private methods
+  private createDateGroup(start?: Date, end?: Date): FormGroup {
+    return this.formBuilder.group({
+      day: [start ?? null, Validators.required],
+      startHour: [start ?? null, Validators.required],
+      endHour: [end ?? null, Validators.required]
+    });
+  }
+
   private mergeDayAndTime(day: Date, time: Date): Date {
     const result = new Date(day);
     result.setHours(time.getHours(), time.getMinutes(), 0, 0);
     return result;
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  private toImageOption(image: Asset): ActivityImageOption {
-    return {
-      name: image.name,
-      description: image.description,
-      number: image.number,
-      url: this.imageService.contentUrl(image.number)
-    };
-  }
-
 }
 
-interface ActivityImageOption {
+export interface ActivityImageOption {
   name: string;
   description: string;
   number: number;

@@ -13,11 +13,11 @@ import { MessageModule } from 'primeng/message';
 })
 export class MemberInfo {
 
-  public readonly publicData = input<PublicMember | null>(null);
   public readonly data = input<Member | null>(null);
-  public readonly showPrivate = input(false);
-  public readonly loading = input(false);
   public readonly error = input(false);
+  public readonly loading = input(false);
+  public readonly publicData = input<PublicMember | null>(null);
+  public readonly showPrivate = input(false);
 
   public readonly retry = output<void>();
 

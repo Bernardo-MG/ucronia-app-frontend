@@ -1,8 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Asset } from '@ucronia/domain';
-import { of } from 'rxjs';
-import { ImageService } from '../../images/image-service';
-import { ActivityForm } from './activity-form';
+import { ActivityForm, ActivityImageOption } from './activity-form';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -10,24 +7,22 @@ import { provideNoopAnimations } from '@angular/platform-browser/animations';
 describe('ActivityForm', () => {
   let component: ActivityForm;
   let fixture: ComponentFixture<ActivityForm>;
-  const image = Object.assign(new Asset(), { number: 4, name: 'Image' });
+  const image: ActivityImageOption = {
+    number: 4,
+    name: 'Image',
+    description: '',
+    url: '/images/4/content'
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ActivityForm],
-      providers: [{
-        provide: ImageService,
-        useValue: {
-          getAllForSelection: jasmine.createSpy().and.returnValue(of([image])),
-          content: jasmine.createSpy().and.returnValue(of(new Blob())),
-          contentUrl: jasmine.createSpy().and.returnValue('/images/4/content')
-        }
-      }]
     })
       .compileComponents();
 
     fixture = TestBed.createComponent(ActivityForm);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('imageOptions', [image]);
     fixture.detectChanges();
   });
 
@@ -36,11 +31,11 @@ describe('ActivityForm', () => {
   });
 
   it('should expose the image number for authenticated selector thumbnails', () => {
-    expect(component.imageOptions[0].number).toBe(image.number);
+    expect(component.imageOptions()[0].number).toBe(image.number);
   });
 
   it('should preserve the image URL used by the activity payload', () => {
-    expect(component.imageOptions[0].url).toBe('/images/4/content');
+    expect(component.imageOptions()[0].url).toBe('/images/4/content');
   });
 
   it('should emit the selected image URL when saving', () => {
@@ -49,7 +44,7 @@ describe('ActivityForm', () => {
     component.save.subscribe(activity => savedImage = activity.image);
     component.form.patchValue({
       title: 'Activity',
-      image: component.imageOptions[0].url,
+      image: component.imageOptions()[0].url,
       dates: [{ day: date, startHour: date, endHour: date }]
     });
     component.form.markAsDirty();
@@ -74,8 +69,7 @@ describe('ActivityForm form submission', () => {
       imports: [ActivityForm],
       providers: [
         provideZonelessChangeDetection(),
-        provideNoopAnimations(),
-        { provide: ImageService, useValue: { getAllForSelection: () => of([]) } }
+        provideNoopAnimations()
       ]
     });
     fixture = TestBed.createComponent(ActivityForm);

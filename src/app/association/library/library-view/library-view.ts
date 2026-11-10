@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { DetailRequest } from '@app/shared/request/detail-request';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
@@ -10,7 +11,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Author, BookLending, BookType, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -39,69 +40,14 @@ import { librarySettingsPermissions } from '../settings/library-settings-permiss
 })
 export class LibraryView implements OnInit {
 
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
-
-  private readonly detailRequest = new DetailRequest();
-
+  private readonly lendingsService = inject(LibraryLendingService);
   private readonly reportService = inject(BookReportService);
   private readonly service = inject(LibraryService);
-  private listRequest?: Subscription;
-  private readonly memberSearch = new SearchRequest();
-  private readonly lendingsService = inject(LibraryLendingService);
-  private readonly confirmationService = inject(ConfirmationService);
 
-  public failures = new FailureStore();
-
-  public filterValue = '';
-
-  public selectedData: FictionBook | GameBook = new GameBook();
-  public selectedBorrower = new Profile();
-  public selectedLending = new BookLending();
-  public members: Profile[] = [];
-
-  public data = new Page<FictionBook | GameBook>();
-  public lendings = new Page<BookLending>();
-  public lendingBorrowerNames: Record<number, string> = {};
-  public selectedBookBorrowerNames: Record<number, string> = {};
-  public summary = new LibrarySummary();
-
-  public source: BookSelection = BookSelection.GAME;
-  public display = Display.BOOKS;
-
-  public stateOptions: any[] = [{ label: 'Libros', value: Display.BOOKS }, { label: 'Préstamos', value: Display.LENDINGS }];
-  public selectedTab = Display.BOOKS;
-
-  public bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.GAME }, { label: 'Ficción', value: BookSelection.FICTION }];
-  public selectedBookView = BookSelection.GAME;
-
-  public readonly permissions: Permissions;
-  public readonly status: Status = {
-    loading: false,
-    loadingSummary: false,
-    loadingExcel: false
-  };
-
-  private currentDialog = Dialog.NONE;
-
-  public get dialog(): Dialog {
-    return this.currentDialog;
-  }
-
-  public set dialog(value: Dialog) {
-    if (value !== this.currentDialog) {
-      this.detailRequest.cancel();
-      this.memberSearch.cancel();
-      this.members = [];
-      this.currentDialog = value;
-    }
-  }
-
-  public readonly Dialog = Dialog;
-
-  private sort = new Sorting();
-
-  public Display = Display;
-
+  public readonly bookOptions: any[] = [{ label: 'Juegos', value: BookSelection.GAME }, { label: 'Ficción', value: BookSelection.FICTION }];
+  public bookTypes: BookType[] = [];
   public get borrower(): number {
     if (!this.selectedData.lendings.length) {
       return -1;
@@ -109,13 +55,60 @@ export class LibraryView implements OnInit {
 
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].borrower;
   }
-
+  public data = new Page<FictionBook | GameBook>();
+  public readonly Dialog = Dialog;
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.memberSearch.cancel();
+      this.donorSearch.cancel();
+      this.members = [];
+      this.gameSystems = [];
+      this.bookTypes = [];
+      this.donorSearchResults = [];
+      this.currentDialog = value;
+    }
+  }
+  public readonly Display = Display;
+  public display = Display.BOOKS;
+  public donorSearchResults: Donor[] = [];
+  public failures = new FailureStore();
+  public filterValue = '';
+  public gameSystems: GameSystem[] = [];
+  public lendingBorrowerNames: Record<number, string> = {};
+  public lendings = new Page<BookLending>();
   public get lentDate(): Date {
     // TODO: handle empty lendings
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
+  public members: Profile[] = [];
+  public readonly permissions: Permissions;
+  public selectedBookBorrowerNames: Record<number, string> = {};
+  public readonly selectedBookView = BookSelection.GAME;
+  public selectedBorrower = new Profile();
+  public selectedData: FictionBook | GameBook = new GameBook();
+  public selectedLending = new BookLending();
+  public readonly selectedTab = Display.BOOKS;
+  public source: BookSelection = BookSelection.GAME;
+  public readonly stateOptions: any[] = [{ label: 'Libros', value: Display.BOOKS }, { label: 'Préstamos', value: Display.LENDINGS }];
+  public readonly status: Status = {
+    loading: false,
+    loadingSummary: false,
+    loadingExcel: false
+  };
+  public summary = new LibrarySummary();
 
-  constructor() {
+  private currentDialog = Dialog.NONE;
+  private readonly detailRequest = new DetailRequest();
+  private readonly donorSearch = new SearchRequest();
+  private listRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
+  private readonly sort = new Sorting();
+
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -129,12 +122,70 @@ export class LibraryView implements OnInit {
 
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
     this.loadSummary();
   }
 
-  // EVENT HANDLERS
+  // Event handlers
+  public downloadExcel(): void {
+    this.status.loadingExcel = true;
+    this.reportService.downloadExcelReport()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingExcel = false)
+      )
+      .subscribe();
+  }
+
+  public load(page: number | undefined = undefined): void {
+    if (this.display === Display.LENDINGS) {
+      this.loadLendings(page);
+      return;
+    }
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.filterValue)
+    ).pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => this.data = response);
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onCancelLendingReturn(): void {
+    this.failures.clear();
+    this.dialog = Dialog.LENDING_INFO;
+  }
+
+  public onChangeDirection(sorting: SortingProperty) {
+    this.sort.addField(sorting);
+
+    this.load(this.data.page);
+  }
+
+  public onChangeList(event: SelectButtonChangeEvent) {
+    this.display = event.value as Display;
+    if (this.display === Display.BOOKS) {
+      this.load();
+    } else {
+      this.loadLendings();
+    }
+  }
+
+  public onChangeSource(event: SelectButtonChangeEvent) {
+    this.source = event.value as BookSelection;
+
+    this.load();
+  }
+
+  public onClearDonorSearch(): void {
+    this.donorSearch.cancel();
+    this.donorSearchResults = [];
+  }
 
   public onCreate(toCreate: LibraryBookCreationFormData): void {
     this.call(
@@ -147,30 +198,6 @@ export class LibraryView implements OnInit {
       },
       () => {
         this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onLend(toSave: BookLendingEvent) {
-    this.call(
-      () => this.service.lend(toSave.lendingDate, toSave.borrower, toSave.book),
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onReturn(toSave: BookReturnedEvent) {
-    this.call(
-      () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
-      () => {
-        if (this.display === Display.LENDINGS) {
-          this.loadLendings(this.lendings.page);
-        } else {
-          this.load(this.data.page);
-        }
         this.loadSummary();
       }
     );
@@ -214,147 +241,76 @@ export class LibraryView implements OnInit {
     });
   }
 
-  public onChangeDirection(sorting: SortingProperty) {
-    this.sort.addField(sorting);
-
-    this.load(this.data.page);
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
   }
 
-  public onShowEdit() {
-    this.detailRequest.cancel();
-    this.selectedBookBorrowerNames = {};
-    this.dialog = Dialog.EDIT;
-    this.withLoading(
-      this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
-        .pipe(
-          switchMap((book) => this.resolveBorrowerNames(book.lendings)
-            .pipe(
-              map((borrowerNames) => ({ book, borrowerNames }))
-            )
-          )
-        )
-    )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(({ book, borrowerNames }) => {
-        this.selectedData = book;
-        this.selectedBookBorrowerNames = borrowerNames;
-      });
-  }
-
-  public onChangeSource(event: SelectButtonChangeEvent) {
-    this.source = event.value as BookSelection;
-
+  public onFilter(filter: string) {
+    if (this.display !== Display.BOOKS) return;
+    this.filterValue = filter;
     this.load();
   }
 
-  public onChangeList(event: SelectButtonChangeEvent) {
-    this.display = event.value as Display;
-    if (this.display === Display.BOOKS) {
-      this.load();
-    } else {
-      this.loadLendings();
-    }
+  public onFilterChange(filter: string): void {
+    this.onFilter(filter);
   }
 
-  public onShowLendingReturn(): void {
-    if (!this.permissions.edit || this.selectedLending.returnDate || this.status.loading) {
-      return;
-    }
-
-    this.failures.clear();
-    this.dialog = Dialog.LENDING_RETURN;
-  }
-
-  public onCancelLendingReturn(): void {
-    this.failures.clear();
-    this.dialog = Dialog.LENDING_INFO;
-  }
-
-  public onShowBookLending(lending: BookLending): void {
-    this.lendingBorrowerNames = { ...this.lendingBorrowerNames, ...this.selectedBookBorrowerNames };
-    this.onShowLending({
-      ...lending,
-      book: { number: this.selectedData.number, title: this.selectedData.title }
-    });
-  }
-
-  public onShowLending(lending: BookLending): void {
-    this.selectedLending = lending;
-    this.dialog = Dialog.LENDING_INFO;
-  }
-
-  public onShowBook(book: FictionBook | GameBook) {
-    this.detailRequest.cancel();
-    this.selectedBookBorrowerNames = {};
-    this.dialog = Dialog.INFO;
-    this.selectedData = book;
-    this.resolveBorrowerNames(book.lendings)
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe((borrowerNames) => {
-        this.selectedBookBorrowerNames = borrowerNames;
-      });
-  }
-
-  public downloadExcel() {
-    this.status.loadingExcel = true;
-    this.reportService.downloadExcelReport()
-      .pipe(
-        finalize(() => this.status.loadingExcel = false))
-      .subscribe();
-  }
-
-  public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
-    this.detailRequest.cancel();
-    this.selectedData = event.book;
-    if (event.dialog === Dialog.EDIT) {
-      this.onShowEdit();
-      return;
-    }
-
-    if (event.dialog === Dialog.LENDINGS && event.book.lent) {
-      if (this.borrower > 0) {
-        this.withLoading(
-          this.service.getBorrower(this.borrower)
-        )
-          .pipe(this.detailRequest.untilCancelled())
-          .subscribe((profile) => {
-            this.selectedBorrower = profile;
-            this.dialog = event.dialog;
-          });
-      } else {
-        this.selectedBorrower = new Profile();
-        this.dialog = event.dialog;
+  public onLend(toSave: BookLendingEvent) {
+    this.call(
+      () => this.service.lend(toSave.lendingDate, toSave.borrower, toSave.book),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
       }
+    );
+  }
 
-      return;
-    }
+  public onReturn(toSave: BookReturnedEvent) {
+    this.call(
+      () => this.service.return(toSave.returnDate, toSave.borrower, toSave.book),
+      () => {
+        if (this.display === Display.LENDINGS) {
+          this.loadLendings(this.lendings.page);
+        } else {
+          this.load(this.data.page);
+        }
+        this.loadSummary();
+      }
+    );
+  }
 
-    this.dialog = event.dialog;
+  public onSaveBook(book: FictionBook | GameBook) {
+    this.call(
+      () => this.service.saveBook(book),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
+  }
+
+  public onSearchDonors(query: string): void {
+    this.donorSearch.search(
+      query,
+      search => this.service.searchDonors(search),
+      error => this.handleError(error)
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(results => this.donorSearchResults = results);
+  }
+
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(members => this.members = members);
   }
 
   public onSetAuthors(authors: Author[]) {
     this.call(
       () => this.service.setAuthors(this.selectedData, authors),
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onSetPublishers(publishers: Publisher[]) {
-    this.call(
-      () => this.service.setPublishers(this.selectedData, publishers),
-      () => {
-        this.load(this.data.page);
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onSetGameSystem(gameSystem: GameSystem) {
-    this.call(
-      () => this.service.setGameSystem(this.selectedData, gameSystem),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -372,9 +328,9 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onSaveBook(book: FictionBook | GameBook) {
+  public onSetGameSystem(gameSystem: GameSystem) {
     this.call(
-      () => this.service.saveBook(book),
+      () => this.service.setGameSystem(this.selectedData, gameSystem),
       () => {
         this.load(this.data.page);
         this.loadSummary();
@@ -382,58 +338,124 @@ export class LibraryView implements OnInit {
     );
   }
 
-  public onFilter(filter: string) {
-    if (this.display !== Display.BOOKS) return;
-    this.filterValue = filter;
-    this.load();
+  public onSetPublishers(publishers: Publisher[]) {
+    this.call(
+      () => this.service.setPublishers(this.selectedData, publishers),
+      () => {
+        this.load(this.data.page);
+        this.loadSummary();
+      }
+    );
   }
 
-  public onFilterChange(filter: string): void {
-    this.onFilter(filter);
-  }
-
-  public onSearchMembers(event: { query: string }): void {
-    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
-      .subscribe(members => this.members = members);
-  }
-
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
+  public onShowBook(book: FictionBook | GameBook) {
+    this.detailRequest.cancel();
+    this.selectedBookBorrowerNames = {};
     this.dialog = Dialog.INFO;
+    this.selectedData = book;
+    this.resolveBorrowerNames(book.lendings)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        this.detailRequest.untilCancelled()
+      )
+      .subscribe((borrowerNames) => {
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
   }
 
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
+  public onShowBookLending(lending: BookLending): void {
+    this.lendingBorrowerNames = { ...this.lendingBorrowerNames, ...this.selectedBookBorrowerNames };
+    this.onShowLending({
+      ...lending,
+      book: { number: this.selectedData.number, title: this.selectedData.title }
+    });
   }
 
-  // DATA LOADING
-
-  public getGameSystem(book: FictionBook | GameBook): GameSystem {
-    return (book as GameBook).gameSystem as GameSystem;
+  public onShowEdit() {
+    this.detailRequest.cancel();
+    this.selectedBookBorrowerNames = {};
+    this.dialog = Dialog.EDIT;
+    this.loadEditOptions();
+    this.withLoading(
+      this.service.getOneBook(this.getSelectedSource(), this.selectedData.number)
+        .pipe(
+          switchMap((book) => this.resolveBorrowerNames(book.lendings)
+            .pipe(
+              map((borrowerNames) => ({ book, borrowerNames }))
+            )
+          )
+        )
+    )
+      .pipe(this.detailRequest.untilCancelled())
+    .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(({ book, borrowerNames }) => {
+        this.selectedData = book;
+        this.selectedBookBorrowerNames = borrowerNames;
+      });
   }
 
-  public getBookType(book: FictionBook | GameBook): BookType {
-    return (book as GameBook).bookType as BookType;
+  public onShowLending(lending: BookLending): void {
+    this.selectedLending = lending;
+    this.dialog = Dialog.LENDING_INFO;
   }
 
-  public load(page: number | undefined = undefined) {
-    if (this.display === Display.LENDINGS) {
-      this.loadLendings(page);
+  public onShowLendingReturn(): void {
+    if (!this.permissions.edit || this.selectedLending.returnDate || this.status.loading) {
       return;
     }
-    this.listRequest?.unsubscribe();
-    this.listRequest = this.withLoading(
-      this.service.getAllBooks(this.getSelectedSource(), page, this.sort, this.filterValue)
-    ).pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(response => this.data = response);
+
+    this.failures.clear();
+    this.dialog = Dialog.LENDING_RETURN;
   }
 
-  public loadLendings(page: number | undefined = undefined) {
+  public onStartEditingView(event: { dialog: Dialog, book: FictionBook | GameBook }): void {
+    this.detailRequest.cancel();
+    this.selectedData = event.book;
+    if (event.dialog === Dialog.EDIT) {
+      this.onShowEdit();
+      return;
+    }
+
+    if (event.dialog === Dialog.LENDINGS && event.book.lent) {
+      if (this.borrower > 0) {
+        this.withLoading(
+          this.service.getBorrower(this.borrower)
+        )
+          .pipe(this.detailRequest.untilCancelled())
+          .pipe(takeUntilDestroyed(this.destroyRef))
+          .subscribe((profile) => {
+            this.selectedBorrower = profile;
+            this.dialog = event.dialog;
+          });
+      } else {
+        this.selectedBorrower = new Profile();
+        this.dialog = event.dialog;
+      }
+
+      return;
+    }
+
+    this.dialog = event.dialog;
+  }
+
+  // Data loading
+  private loadEditOptions(): void {
+    getAllPages((page, size) => this.service.getGameSystems(page, size))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        this.detailRequest.untilCancelled()
+      )
+      .subscribe(gameSystems => this.gameSystems = gameSystems);
+
+    getAllPages((page, size) => this.service.getBookTypes(page, size))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        this.detailRequest.untilCancelled()
+      )
+      .subscribe(bookTypes => this.bookTypes = bookTypes);
+  }
+
+  public loadLendings(page: number | undefined = undefined): void {
     this.listRequest?.unsubscribe();
     this.listRequest = this.withLoading(
       this.lendingsService.getAll(page, new Sorting([]))
@@ -451,12 +473,30 @@ export class LibraryView implements OnInit {
       });
   }
 
-  // PRIVATE METHODS
+  private loadSummary(): void {
+    this.status.loadingSummary = true;
+    this.service.getSummary()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
+      .subscribe(summary => this.summary = summary);
+  }
 
+  // Public methods
+  public getBookType(book: FictionBook | GameBook): BookType {
+    return (book as GameBook).bookType as BookType;
+  }
+
+  public getGameSystem(book: FictionBook | GameBook): GameSystem {
+    return (book as GameBook).gameSystem as GameSystem;
+  }
+
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
-  ) {
+  ): void {
     const dialog = this.dialog;
     const selectedData = this.selectedData;
     const selectedLending = this.selectedLending;
@@ -467,7 +507,10 @@ export class LibraryView implements OnInit {
 
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           if (this.destroyRef.destroyed) return;
@@ -484,37 +527,20 @@ export class LibraryView implements OnInit {
       });
   }
 
-  private handleError(error: unknown): void {
-    if (error instanceof FailureResponse) {
-      this.failures = error.failures;
-    } else {
-      this.failures.clear();
-    }
-  }
-
-  private loadSummary() {
-    this.status.loadingSummary = true;
-    this.service.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(r => this.summary = r);
-  }
-
-  private withLoading<T>(
-    observable: Observable<T>
-  ): Observable<T> {
-    this.status.loading = true;
-
-    return observable.pipe(
-      finalize(() => this.status.loading = false)
-    );
-  }
-
   private getSelectedSource(): 'game' | 'fiction' {
     if (this.source === BookSelection.FICTION) {
       return 'fiction';
     }
 
     return 'game';
+  }
+
+  private handleError(error: unknown): void {
+    if (error instanceof FailureResponse) {
+      this.failures = error.failures;
+    } else {
+      this.failures.clear();
+    }
   }
 
   private resolveBorrowerNames(lendings: BookLending[]): Observable<Record<number, string>> {
@@ -535,13 +561,21 @@ export class LibraryView implements OnInit {
       )
     )
       .pipe(
-        map((borrowers) =>
+        map(borrowers =>
           borrowers.reduce((names, borrower) => {
             names[borrower.number] = borrower.name;
             return names;
           }, {} as Record<number, string>)
         )
       );
+  }
+
+  private withLoading<T>(observable: Observable<T>): Observable<T> {
+    this.status.loading = true;
+
+    return observable.pipe(
+      finalize(() => this.status.loading = false)
+    );
   }
 
 }

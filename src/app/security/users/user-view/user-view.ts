@@ -25,33 +25,15 @@ import { UserService } from '../user-service';
 })
 export class UserView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-
-  private readonly detailRequest = new DetailRequest();
-
-  private readonly drawer = viewChild(Drawer);
-
-  private readonly service = inject(UserService);
-  private listRequest?: Subscription;
-  private readonly memberSearch = new SearchRequest();
   private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(UserService);
 
   public data = new Page<User>();
-  public selectedData = new User();
-  public member = new Profile();
-  public loading = false;
-  public failures = new FailureStore();
-  public roleSelection: Role[] = [];
-  public members: Profile[] = [];
-  private currentDialog = Dialog.NONE;
-
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -60,10 +42,22 @@ export class UserView implements OnInit {
       this.currentDialog = value;
     }
   }
+  public failures = new FailureStore();
+  public loading = false;
+  public member = new Profile();
+  public members: Profile[] = [];
+  public readonly permissions: Permissions;
+  public roleSelection: Role[] = [];
+  public selectedData = new User();
 
-  private sort = new Sorting();
+  private currentDialog = Dialog.NONE;
+  private readonly detailRequest = new DetailRequest();
+  private readonly drawer = viewChild(Drawer);
+  private listRequest?: Subscription;
+  private readonly memberSearch = new SearchRequest();
+  private readonly sort = new Sorting();
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     this.permissions = {
@@ -73,8 +67,29 @@ export class UserView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        finalize(() => this.finishLoading())
+      )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => {
+        this.data = response;
+      });
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
   }
 
   public onChangeDirection(sorting: SortingEvent): void {
@@ -85,65 +100,6 @@ export class UserView implements OnInit {
     );
 
     this.load(this.data.page);
-  }
-
-  public onInvite(toCreate: UserFormData): void {
-    this.call(
-      () => this.service.invite(toCreate),
-      () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: UserEditionFormData): void {
-    const username = this.selectedData.username;
-    const user: UserUpdate = {
-      name: toUpdate.name,
-      email: toUpdate.email,
-      enabled: this.selectedData.enabled,
-      passwordNotExpired: this.selectedData.passwordNotExpired,
-      roles: toUpdate.roles.map(role => role.name)
-    };
-    const memberNumber = toUpdate.member?.number ?? -1;
-    const currentMemberNumber = this.member?.number ?? -1;
-
-    this.call(
-      () => this.service.update(username, user).pipe(
-        switchMap(updated => memberNumber !== currentMemberNumber ? this.service.assignProfile(username, memberNumber) : of(updated))
-      ),
-      () => this.load()
-    );
-  }
-
-  public onShowUser(user: User): void {
-    this.detailRequest.cancel();
-    this.selectedData = user;
-    this.member = new Profile();
-    this.loading = true;
-
-    this.service.getProfile(user.username)
-      .pipe(
-        finalize(() => this.finishLoading())
-      )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(member => {
-        this.member = member ?? new Profile();
-        this.dialog = Dialog.INFO;
-      });
-  }
-
-  public onSetEnabled(change: UserStatusChange): void {
-    this.selectedData = change.user;
-
-    const userUpdate: UserUpdate = {
-      ...change.user,
-      roles: change.user.roles.map(role => role.name),
-      enabled: change.enabled
-    };
-
-    this.call(
-      () => this.service.update(change.user.username, userUpdate),
-      () => this.load(this.data.page)
-    );
   }
 
   public onDelete(data: UserDeleteEvent): void {
@@ -171,18 +127,55 @@ export class UserView implements OnInit {
     });
   }
 
-  public onStartInvitation(): void {
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onInvite(toCreate: UserFormData): void {
+    this.call(
+      () => this.service.invite(toCreate),
+      () => this.load()
+    );
+  }
+
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(members => this.members = members);
+  }
+
+  public onSetEnabled(change: UserStatusChange): void {
+    this.selectedData = change.user;
+
+    const userUpdate: UserUpdate = {
+      ...change.user,
+      roles: change.user.roles.map(role => role.name),
+      enabled: change.enabled
+    };
+
+    this.call(
+      () => this.service.update(change.user.username, userUpdate),
+      () => this.load(this.data.page)
+    );
+  }
+
+  public onShowUser(user: User): void {
     this.detailRequest.cancel();
+    this.selectedData = user;
+    this.member = new Profile();
     this.loading = true;
 
-    this.service.getAllRoles()
+    this.service.getProfile(user.username)
       .pipe(
         finalize(() => this.finishLoading())
       )
       .pipe(this.detailRequest.untilCancelled())
-      .subscribe(roles => {
-        this.roleSelection = roles;
-        this.dialog = Dialog.INVITE;
+      .subscribe(member => {
+        this.member = member ?? new Profile();
+        this.dialog = Dialog.INFO;
       });
   }
 
@@ -205,48 +198,48 @@ export class UserView implements OnInit {
       });
   }
 
-  public onSearchMembers(event: { query: string }): void {
-    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
-      .subscribe(members => this.members = members);
-  }
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
+  public onStartInvitation(): void {
+    this.detailRequest.cancel();
     this.loading = true;
 
-    this.listRequest = this.service.getAll(page, this.sort)
+    this.service.getAllRoles()
       .pipe(
         finalize(() => this.finishLoading())
       )
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(response => {
-        this.data = response;
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(roles => {
+        this.roleSelection = roles;
+        this.dialog = Dialog.INVITE;
       });
   }
 
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
+  public onUpdate(toUpdate: UserEditionFormData): void {
+    const username = this.selectedData.username;
+    const user: UserUpdate = {
+      name: toUpdate.name,
+      email: toUpdate.email,
+      enabled: this.selectedData.enabled,
+      passwordNotExpired: this.selectedData.passwordNotExpired,
+      roles: toUpdate.roles.map(role => role.name)
+    };
+    const memberNumber = toUpdate.member?.number ?? -1;
+    const currentMemberNumber = this.member?.number ?? -1;
+
+    this.call(
+      () => this.service.update(username, user).pipe(
+        switchMap(updated => memberNumber !== currentMemberNumber ? this.service.assignProfile(username, memberNumber) : of(updated))
+      ),
+      () => this.load()
+    );
   }
 
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  private finishLoading(): void {
-    this.loading = false;
-    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
-    this.drawer()?.cd.markForCheck();
-  }
-
+  // Private methods
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {
     this.loading = true;
 
     action()
       .pipe(
+        takeUntilDestroyed(this.destroyRef),
         finalize(() => this.finishLoading())
       )
       .subscribe({
@@ -257,6 +250,12 @@ export class UserView implements OnInit {
         },
         error: error => this.handleError(error)
       });
+  }
+
+  private finishLoading(): void {
+    this.loading = false;
+    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    this.drawer()?.cd.markForCheck();
   }
 
   private handleError(error: unknown): void {

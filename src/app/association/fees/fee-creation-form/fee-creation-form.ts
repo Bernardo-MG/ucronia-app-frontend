@@ -16,35 +16,39 @@ import { MessageModule } from 'primeng/message';
 })
 export class FeeCreationForm {
 
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public selectedMember?: Profile;
-
-  public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
-
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+  public selectedMember?: Profile;
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       member: [null, Validators.required],
       month: [null, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
+
+  // Event handlers
+  public onClearMember(): void {
+    this.selectedMember = undefined;
+    this.form.get('member')?.reset();
+    this.form.get('member')?.markAsDirty();
   }
 
   public onSave(): void {
@@ -53,17 +57,6 @@ export class FeeCreationForm {
     if (this.saveEnabled) {
       this.save.emit(this.form.value);
     }
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property)
-      || this.failures().hasFailures(property);
-  }
-
-  public onClearMember(): void {
-    this.selectedMember = undefined;
-    this.form.get('member')?.reset();
-    this.form.get('member')?.markAsDirty();
   }
 
   public onSelectMember(member: Profile): void {
@@ -76,6 +69,12 @@ export class FeeCreationForm {
     const memberControl = this.form.get('member');
     memberControl?.setValue(member.number);
     memberControl?.markAsTouched();
+  }
+
+  // Public methods
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
 
 }

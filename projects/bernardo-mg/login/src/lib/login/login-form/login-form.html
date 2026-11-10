@@ -46,7 +46,7 @@
     }
   </div>
 
-  @if (failedLogin) {
+  @if (failedLogin()) {
     <p-message id="loginFailedWarning" severity="error" icon="pi pi-exclamation-circle" class="w-full">
       Usuario o contraseña incorrectos
     </p-message>

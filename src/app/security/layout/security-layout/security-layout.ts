@@ -16,7 +16,7 @@ export class SecurityLayout {
 
   public readonly menus: MenuItem[];
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
     const items = [];
 

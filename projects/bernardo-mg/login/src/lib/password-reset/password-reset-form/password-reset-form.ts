@@ -1,7 +1,6 @@
-
-import { Component, inject, input, output, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
+import { Component, Input, inject, input, output } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -19,26 +18,24 @@ import { MessageModule } from 'primeng/message';
 })
 export class PasswordResetForm {
 
-  @Input() public set loading(loading: boolean) {
+  public readonly failures = input(new FailureStore());
+  @Input()
+  public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<string>();
 
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.nonNullable.group(
+    this.form = formBuilder.nonNullable.group(
       {
         password: ['', Validators.required],
         confirmPassword: ['', [Validators.required]]
@@ -51,6 +48,7 @@ export class PasswordResetForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -63,16 +61,30 @@ export class PasswordResetForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
+  // Public methods
+  /**
+   * Indicates if the passwords match. If both are empty they are considered to not be matching.
+   *
+   * @returns true if the passwords match, false otherwise
+   */
+  public isPasswordsMatching(): boolean {
+    const password = this.form.get('password')?.getRawValue();
+    const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
+
+    return (password.length > 0) && (password === confirmPassword);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
   /**
    * Indicates if the password mismatch warning should be shown.
-   * 
+   *
    * @returns true if the password mismatch warning should be shown, false otherwise
    */
-  public showPasswordMismatchWarning(): boolean {
+  protected showPasswordMismatchWarning(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
 
@@ -86,17 +98,4 @@ export class PasswordResetForm {
     return show;
   }
 
-  /**
-   * Indicates if the passwords match. If both are empty they are considered to not be matching.
-   * 
-   * @returns true if the passwords match, false otherwise
-   */
-  isPasswordsMatching(): boolean {
-    const password = this.form.get('password')?.getRawValue();
-    const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
-
-    return (password.length > 0) && (password === confirmPassword);
-  }
-
 }
-

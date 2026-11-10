@@ -14,36 +14,30 @@ import { MessageModule } from 'primeng/message';
 })
 export class LibraryBookLendingForm implements OnChanges {
 
+  public readonly book = input(-1);
+  public readonly borrower = input<Profile>();
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public readonly today = new Date();
-
-  @Input() public borrower: Profile | undefined;
-  @Input() public book = -1;
-
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
-  public memberName = '';
-
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  protected readonly today = new Date();
 
-    this.form = fb.group({
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
+
+    this.form = formBuilder.group({
       lendingDate: [null, Validators.required],
       borrower: [-1, Validators.required],
       book: [-1, Validators.required]
@@ -52,16 +46,21 @@ export class LibraryBookLendingForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges(changes: SimpleChanges): void {
-    const borrower = this.borrower && this.borrower.number > 0 ? this.borrower.number : null;
+    const borrower = this.borrower();
+    const borrowerNumber = borrower && borrower.number > 0 ? borrower.number : null;
     if (changes['book']) {
-      this.form.reset({ book: this.book, borrower, lendingDate: null });
+      this.form.reset({ book: this.book(), borrower: borrowerNumber, lendingDate: null });
     } else if (changes['borrower']) {
-      this.form.get('borrower')?.setValue(borrower);
+      this.form.get('borrower')?.setValue(borrowerNumber);
     }
-    if (changes['book'] || changes['borrower']) {
-      this.memberName = this.borrower?.name.fullName ?? '';
-    }
+  }
+
+  // Event handlers
+  protected onClearMember(): void {
+    this.form.get('borrower')?.reset();
+    this.form.get('borrower')?.markAsDirty();
   }
 
   /**
@@ -76,22 +75,17 @@ export class LibraryBookLendingForm implements OnChanges {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
-  }
-
-  public onClearMember(): void {
-    this.memberName = '';
-    this.form.get('borrower')?.reset();
-    this.form.get('borrower')?.markAsDirty();
-  }
-
   public onSelectMember(member: Profile) {
     if (!member) {
       return;
     }
 
     this.form.get('borrower')?.setValue(member.number);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

@@ -131,6 +131,8 @@
       </ng-template>
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
           <assoc-library-book-edition-form #fieldsAssocLibraryBookEditionForm formId="library-view-edit" [data]="selectedData" [loading]="status.loading" [failures]="failures"
+            [gameSystems]="gameSystems" [bookTypes]="bookTypes" [donorSearchResults]="donorSearchResults"
+            (searchDonors)="onSearchDonors($event)" (clearDonorSearch)="onClearDonorSearch()"
             (save)="onSaveBook($event)" />
         </div>
         <ng-template #footer>

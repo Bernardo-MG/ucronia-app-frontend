@@ -18,49 +18,72 @@ import { MessageModule } from 'primeng/message';
 })
 export class FeePaymentsForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
   public readonly members = input<Profile[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public selectedMember?: Profile;
-
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
-  public readonly today = new Date();
-
+  public readonly formStatus: FormStatus;
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
   }
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    this.form = this.fb.group({
+  protected selectedMember?: Profile;
+  protected readonly today = new Date();
+
+  public constructor() {
+    this.form = this.formBuilder.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
-      months: this.fb.array([], Validators.required)
+      months: this.formBuilder.array([], Validators.required)
     });
 
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onClearMember(): void {
+  // Event handlers
+  public addDate() {
+    this.months.push(this.formBuilder.control(undefined, Validators.required));
+  }
+
+  protected onClearMember(): void {
     this.selectedMember = undefined;
     this.form.get('member')?.reset();
     this.form.get('member')?.markAsDirty();
+  }
+
+  protected onMonthSelect(date: Date, index: number) {
+    const controlValue = this.months.at(index).value;
+
+    const currentDate = controlValue instanceof Date
+      ? controlValue
+      : new Date(controlValue);
+
+    if (!isSameMonth(currentDate, date)) {
+      this.months.at(index).setValue(date, { emitEvent: false });
+    }
+  }
+
+  /**
+   * Handler for the save event.
+   */
+  protected onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      this.save.emit(this.form.value);
+    }
   }
 
   public onSelectMember(member: Profile) {
@@ -77,38 +100,12 @@ export class FeePaymentsForm {
     }
   }
 
-  public addDate() {
-    this.months.push(this.fb.control(undefined, Validators.required));
-  }
-
   public removeDate(index: number): void {
     this.months.removeAt(index);
   }
 
-  public onMonthSelect(date: Date, index: number) {
-    const controlValue = this.months.at(index).value;
-
-    const currentDate = controlValue instanceof Date
-      ? controlValue
-      : new Date(controlValue);
-
-    if (!isSameMonth(currentDate, date)) {
-      this.months.at(index).setValue(date, { emitEvent: false });
-    }
-  }
-
-  /**
-   * Handler for the save event.
-   */
-  public onSave(): void {
-    this.form.markAllAsTouched();
-
-    if (this.saveEnabled) {
-      this.save.emit(this.form.value);
-    }
-  }
-
-  public isFieldInvalid(property: string): boolean {
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 

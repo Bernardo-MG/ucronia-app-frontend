@@ -20,40 +20,36 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 })
 export class CalendarMonth implements OnChanges {
 
-  public readonly loading = input(false);
   public readonly events = input<CalendarEvent<unknown>[]>([]);
+  public readonly loading = input(false);
   public readonly months = input<Date[]>([]);
   public readonly selectedMonth = input<Date | undefined>(undefined);
 
   public readonly changeMonth = output<Date>();
   public readonly pickDate = output<CalendarEvent<unknown>>();
 
+  public activeDayIsOpen = false;
   public get month(): Date {
     return this.selectionMonths.find(({ value }) => isSameMonth(value, this.viewDate))?.value ?? this.viewDate;
   }
+  public selectionMonths: { value: Date, label: string }[] = [];
+  public viewDate = new Date();
 
-  public get selectionDisabled(): boolean {
-    return this.loading() || this.selectionMonths.length === 0;
+  protected get canGoNext(): boolean {
+    return !this.loading() && this.monthIndex >= 0 && this.monthIndex < this.selectionMonths.length - 1;
   }
-
-  public get canGoPrevious(): boolean {
+  protected get canGoPrevious(): boolean {
     return !this.loading() && this.monthIndex > 0;
   }
-
-  public get canGoNext(): boolean {
-    return !this.loading() && this.monthIndex >= 0 && this.monthIndex < this.selectionMonths.length - 1;
+  protected get selectionDisabled(): boolean {
+    return this.loading() || this.selectionMonths.length === 0;
   }
 
   private get monthIndex(): number {
     return this.selectionMonths.findIndex(({ value }) => isSameMonth(value, this.viewDate));
   }
 
-  public selectionMonths: { value: Date, label: string }[] = [];
-
-  public viewDate = new Date();
-
-  public activeDayIsOpen = false;
-
+  // Lifecycle hooks
   public ngOnChanges({ months, selectedMonth }: SimpleChanges): void {
     if (months) {
       this.selectionMonths = this.months().map(month => ({
@@ -66,21 +62,26 @@ export class CalendarMonth implements OnChanges {
     }
   }
 
-  public onGoTo(event: SelectChangeEvent) {
-    this.activeDayIsOpen = false;
-    this.changeMonth.emit(event.value);
+  // Event handlers
+  public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    body.forEach((day) => day.badgeTotal = day.events.length);
   }
 
-  public onGoPrevious(): void {
+  protected onGoNext(): void {
+    if (this.canGoNext) {
+      this.changeMonth.emit(this.selectionMonths[this.monthIndex + 1].value);
+    }
+  }
+
+  protected onGoPrevious(): void {
     if (this.canGoPrevious) {
       this.changeMonth.emit(this.selectionMonths[this.monthIndex - 1].value);
     }
   }
 
-  public onGoNext(): void {
-    if (this.canGoNext) {
-      this.changeMonth.emit(this.selectionMonths[this.monthIndex + 1].value);
-    }
+  public onGoTo(event: SelectChangeEvent) {
+    this.activeDayIsOpen = false;
+    this.changeMonth.emit(event.value);
   }
 
   public onSelectDay({ date, events }: { date: Date; events: CalendarEvent<unknown>[] }): void {
@@ -95,10 +96,7 @@ export class CalendarMonth implements OnChanges {
     this.viewDate = date;
   }
 
-  public beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
-    body.forEach((day) => day.badgeTotal = day.events.length);
-  }
-
+  // Private methods
   private updateCurrentMonth(): void {
     const month = this.selectedMonth() ?? this.months().at(-1) ?? new Date();
 

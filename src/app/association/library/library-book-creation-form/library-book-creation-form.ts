@@ -15,35 +15,31 @@ import { LibraryConfig } from '../library-config';
 })
 export class LibraryBookCreationForm {
 
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<LibraryBookCreationFormData>();
-  public readonly formStatus: FormStatus;
 
   public readonly form: FormGroup;
-
-  public readonly languages: Language[] = [];
-
+  public readonly formStatus: FormStatus;
   public kind: 'fiction' | 'game' = 'game';
-
+  public readonly languages: Language[] = [];
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
     const config = inject(LibraryConfig);
 
     this.languages = config.getLanguages();
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       isbn: ['', isbnValidator],
-      title: fb.group({
+      title: formBuilder.group({
         supertitle: [''],
         title: ['', Validators.required],
         subtitle: ['']
@@ -54,6 +50,7 @@ export class LibraryBookCreationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -65,6 +62,7 @@ export class LibraryBookCreationForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }

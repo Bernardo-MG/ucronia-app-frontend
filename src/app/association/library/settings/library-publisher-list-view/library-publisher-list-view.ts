@@ -22,23 +22,22 @@ import { PublisherService } from '../publisher-service';
 })
 export class LibraryPublisherListView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
-
-  private readonly service = inject(PublisherService);
   private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(PublisherService);
 
   public data = new Page<Publisher>();
-  public loading = false;
-  public failures = new FailureStore();
-  public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
+  public failures = new FailureStore();
+  public loading = false;
+  public readonly permissions: Permissions;
   public selected = new Publisher();
-  private sort = new Sorting();
 
-  constructor() {
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
+
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -49,38 +48,49 @@ export class LibraryPublisherListView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowCreate(): void {
-    this.selected = new Publisher();
-    this.dialog = Dialog.CREATE;
-    this.failures.clear();
-  }
-
-  public onShowInfo(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.INFO;
-    this.failures.clear();
-  }
-
-  public onShowEdit(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.EDIT;
-    this.failures.clear();
-  }
-
-  public onReject(): void {
-    this.dialog = Dialog.NONE;
-    this.failures.clear();
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.data = response);
   }
 
   public onCancelEdit(): void {
     this.dialog = Dialog.INFO;
     this.failures.clear();
+  }
+
+  public onCreate(data: any): void {
+    this.loading = true;
+    this.service.create(data)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => {
+        this.loading = false;
+        this.dialog = Dialog.NONE;
+      }))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
   }
 
   public onDelete(event: Event): void {
@@ -118,6 +128,19 @@ export class LibraryPublisherListView implements OnInit {
     });
   }
 
+  // DRAWER
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onReject(): void {
+    this.dialog = Dialog.NONE;
+    this.failures.clear();
+  }
+
   public onSave(data: any): void {
     if (this.dialog === Dialog.CREATE) {
       this.onCreate(data);
@@ -126,47 +149,22 @@ export class LibraryPublisherListView implements OnInit {
     }
   }
 
-  public onCreate(data: any): void {
-    this.loading = true;
-    this.service.create(data)
-      .pipe(finalize(() => {
-        this.loading = false;
-        this.dialog = Dialog.NONE;
-      }))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  public onShowCreate(): void {
+    this.selected = new Publisher();
+    this.dialog = Dialog.CREATE;
+    this.failures.clear();
   }
 
-  public onUpdate(data: any): void {
-    this.loading = true;
-    this.service.update(data)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  public onShowEdit(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.EDIT;
+    this.failures.clear();
+  }
+
+  public onShowInfo(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.INFO;
+    this.failures.clear();
   }
 
   public onSort(sorting: { field: string; order: number }): void {
@@ -175,37 +173,34 @@ export class LibraryPublisherListView implements OnInit {
     this.load(this.data.page);
   }
 
-  // DRAWER
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
+  public onUpdate(data: any): void {
     this.loading = true;
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => this.data = response);
+    this.service.update(data)
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.loading = false))
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(takeUntilDestroyed(this.destroyRef), finalize(() => this.loading = false))
       .subscribe({
         complete: () => {
           this.failures.clear();

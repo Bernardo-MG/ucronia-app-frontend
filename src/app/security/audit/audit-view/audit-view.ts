@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { LoginRegister } from '@bernardo-mg/security';
@@ -13,16 +14,36 @@ import { AuditLoginList } from '../audit-login-list/audit-login-list';
 })
 export class AuditView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AccessAuditLoginService);
-  private listRequest?: Subscription;
 
   public data = new Page<LoginRegister>();
   public loading = false;
 
-  private sort = new Sorting();
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
+  }
+
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.service.getAll(
+      page,
+      this.sort
+    )
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
   }
 
   public onChangeDirection(sorting: SortingEvent): void {
@@ -35,22 +56,6 @@ export class AuditView implements OnInit {
     );
 
     this.load(this.data.page);
-  }
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.service.getAll(
-      page,
-      this.sort
-    )
-      .pipe(
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => {
-        this.data = response;
-      });
   }
 
 }

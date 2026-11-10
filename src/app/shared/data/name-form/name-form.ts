@@ -12,31 +12,27 @@ import { MessageModule } from 'primeng/message';
 })
 export class NameForm {
 
+  @Input() public set data(value: NameFormData) {
+    this.form.patchValue(value);
+  }
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
-  @Input() public set data(value: NameFormData) {
-    this.form.patchValue(value);
-  }
-
   public readonly save = output<NameFormData>();
 
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       number: [],
       name: ['', [Validators.required, notEmptyStringValidator]]
     });
@@ -44,6 +40,7 @@ export class NameForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -56,6 +53,7 @@ export class NameForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }

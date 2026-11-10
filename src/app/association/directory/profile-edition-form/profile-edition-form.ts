@@ -23,24 +23,16 @@ import { FullProfile } from '../model/full-profile';
 })
 export class ProfileEditionForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
   public readonly contactMethods = input<ContactMethod[]>([]);
-  public readonly feeTypes = input<FeeType[]>([]);
-
   @Input() public set data(value: FullProfile) {
     this.form.patchValue(value as any);
 
     this.contactChannels.clear();
     value.contactChannels?.forEach(channel => {
       this.contactChannels.push(
-        this.fb.group({
+        this.formBuilder.group({
           method: [channel.method],
           detail: [channel.detail]
         })
@@ -49,80 +41,75 @@ export class ProfileEditionForm {
 
     this.games.clear();
     value.games?.forEach(game => {
-      this.games.push(this.fb.control(game));
+      this.games.push(this.formBuilder.control(game));
     });
 
     this.years.clear();
     value.years?.forEach(year => {
-      this.years.push(this.fb.control(year));
+      this.years.push(this.formBuilder.control(year));
     });
 
     this.lockedTypes = [...value.types];
     this.selected = [...value.types];
     this.updateFeeTypeValidator();
   }
+  public readonly failures = input(new FailureStore());
+  public readonly feeTypes = input<FeeType[]>([]);
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
 
   public readonly save = output<FullProfile>();
-
-  public readonly today = new Date();
-
-  public lockedTypes: string[] = [];
-
-  public get isGuest(): boolean {
-    return this.selected.includes('guest');
-  }
-
-  public get isSponsor(): boolean {
-    return this.selected.includes('sponsor');
-  }
-
-  public get isMember(): boolean {
-    return this.selected.includes('member');
-  }
 
   public get contactChannels(): FormArray {
     return this.form.get('contactChannels') as FormArray;
   }
-
+  public readonly form: FormGroup;
+  public readonly formStatus: FormStatus;
   public get games(): FormArray {
     return this.form.get('games') as FormArray;
   }
-
-  public get years(): FormArray {
-    return this.form.get('years') as FormArray;
+  public get isGuest(): boolean {
+    return this.selected.includes('guest');
   }
-
-  public selected: string[] = [];
-
+  public get isMember(): boolean {
+    return this.selected.includes('member');
+  }
+  public get isSponsor(): boolean {
+    return this.selected.includes('sponsor');
+  }
+  public lockedTypes: string[] = [];
   public readonly options = [
     { label: 'Guest', value: 'guest', icon: 'pi-user', disabled: false },
     { label: 'Member', value: 'member', icon: 'pi-users', disabled: false },
     { label: 'Sponsor', value: 'sponsor', icon: 'pi-heart', disabled: false }
   ];
-
-  public readonly formStatus: FormStatus;
-  public readonly form: FormGroup;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+  public selected: string[] = [];
+  public readonly today = new Date();
+  public get years(): FormArray {
+    return this.form.get('years') as FormArray;
+  }
 
-  constructor() {
-    this.form = this.fb.group({
+  public constructor() {
+    this.form = this.formBuilder.group({
       number: [-1],
       identifier: [''],
       birthDate: [new Date()],
-      name: this.fb.group({
+      name: this.formBuilder.group({
         firstName: [null, Validators.required],
         nickname: [''],
         lastName: ['']
       }),
-      contactChannels: this.fb.array([]),
-      games: this.fb.array([]),
-      years: this.fb.array([]),
+      contactChannels: this.formBuilder.array([]),
+      games: this.formBuilder.array([]),
+      years: this.formBuilder.array([]),
       address: [''],
       comments: [''],
-      feeType: this.fb.group({
+      feeType: this.formBuilder.group({
         number: [null]
       }),
       active: [false],
@@ -132,44 +119,22 @@ export class ProfileEditionForm {
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onTypeChange(event: SelectButtonChangeEvent) {
-    const attempted: string[] = event.value ?? [];
-
-    this.selected = [
-      ...this.lockedTypes,
-      ...attempted.filter(v => !this.lockedTypes.includes(v))
-    ];
-
-    this.updateFeeTypeValidator();
-  }
-
+  // Event handlers
   public addContactChannel(): void {
     this.contactChannels.push(
-      this.fb.group({
+      this.formBuilder.group({
         method: [null],
         detail: ['']
       })
     );
   }
 
-  public removeContactChannel(index: number): void {
-    this.contactChannels.removeAt(index);
-  }
-
   public addGame(): void {
-    this.games.push(this.fb.control(null));
-  }
-
-  public removeGame(index: number): void {
-    this.games.removeAt(index);
+    this.games.push(this.formBuilder.control(null));
   }
 
   public addYear(): void {
-    this.years.push(this.fb.control<number | null>(null, Validators.required));
-  }
-
-  public removeYear(index: number): void {
-    this.years.removeAt(index);
+    this.years.push(this.formBuilder.control<number | null>(null, Validators.required));
   }
 
   public onSave(): void {
@@ -184,11 +149,36 @@ export class ProfileEditionForm {
     }
   }
 
+  public onTypeChange(event: SelectButtonChangeEvent) {
+    const attempted: string[] = event.value ?? [];
+
+    this.selected = [
+      ...this.lockedTypes,
+      ...attempted.filter(v => !this.lockedTypes.includes(v))
+    ];
+
+    this.updateFeeTypeValidator();
+  }
+
+  public removeContactChannel(index: number): void {
+    this.contactChannels.removeAt(index);
+  }
+
+  public removeGame(index: number): void {
+    this.games.removeAt(index);
+  }
+
+  public removeYear(index: number): void {
+    this.years.removeAt(index);
+  }
+
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property)
       || this.failures().hasFailures(property);
   }
 
+  // Private methods
   private updateFeeTypeValidator() {
     const feeTypeControl = this.form.get('feeType.number');
     if (!feeTypeControl) return;
@@ -202,4 +192,3 @@ export class ProfileEditionForm {
   }
 
 }
-

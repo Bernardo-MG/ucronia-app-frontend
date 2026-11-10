@@ -1,5 +1,6 @@
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
@@ -21,19 +22,19 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 })
 export class UserTokenView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(UserTokenService);
-  private listRequest?: Subscription;
-
-  public readonly editable: boolean;
-  public readonly Dialog = Dialog;
 
   public data = new Page<UserToken>();
-  public selectedData = new UserToken();
-  public loading = false;
+  public readonly Dialog = Dialog;
   public dialog = Dialog.NONE;
+  public readonly editable: boolean;
   public failures = new FailureStore();
+  public loading = false;
+  public selectedData = new UserToken();
 
-  private sort = new Sorting();
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
 
   public constructor() {
     const authService = inject(AuthService);
@@ -43,18 +44,48 @@ export class UserTokenView implements OnInit {
     );
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  public onShowInfo(token: UserToken): void {
-    this.selectedData = token;
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => {
+        this.data = response;
+      });
+  }
+
+  public onCancelEdit(): void {
+    this.failures.clear();
     this.dialog = Dialog.INFO;
   }
 
-  public onStartExtend(token: UserToken): void {
-    this.selectedData = token;
-    this.dialog = Dialog.EXTEND;
+  public onChangeDirection(sorting: SortingEvent): void {
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+
+    this.sort.addField(
+      new SortingProperty(sorting.field, direction)
+    );
+
+    this.load(this.data.page);
+  }
+
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
   }
 
   public onExtendExpiration(date: Date): void {
@@ -73,41 +104,17 @@ export class UserTokenView implements OnInit {
     );
   }
 
-  public onChangeDirection(sorting: SortingEvent): void {
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-
-    this.sort.addField(
-      new SortingProperty(sorting.field, direction)
-    );
-
-    this.load(this.data.page);
-  }
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => {
-        this.data = response;
-      });
-  }
-
-  public onCancelEdit(): void {
-    this.failures.clear();
+  public onShowInfo(token: UserToken): void {
+    this.selectedData = token;
     this.dialog = Dialog.INFO;
   }
 
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
+  public onStartExtend(token: UserToken): void {
+    this.selectedData = token;
+    this.dialog = Dialog.EXTEND;
   }
 
+  // Private methods
   private call(
     action: () => Observable<unknown>,
     onSuccess: () => void
@@ -115,7 +122,10 @@ export class UserTokenView implements OnInit {
     this.loading = true;
 
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
@@ -133,6 +143,7 @@ export class UserTokenView implements OnInit {
       this.failures.clear();
     }
   }
+
 }
 
 enum Dialog {

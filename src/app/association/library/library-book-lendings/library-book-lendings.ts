@@ -15,8 +15,9 @@ registerLocaleData(localeEs);
 })
 export class LibraryBookLendings {
 
-  public readonly lendings = input<BookLending[]>([]);
   public readonly borrowerNames = input<Record<number, string>>({});
+  public readonly lendings = input<BookLending[]>([]);
+
   public readonly showLending = output<BookLending>();
 
   public readonly history = computed(() => this.lendings()

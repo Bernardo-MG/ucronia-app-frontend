@@ -20,17 +20,7 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 })
 export class ScheduledGameForm implements OnChanges {
 
-  private readonly fb = inject(FormBuilder);
-
-  public readonly formId = input<string | null>(null);
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
-  public readonly members = input<Profile[]>([]);
-  public readonly tables = input<GameTable[]>([]);
-  public readonly selectedMaster = input(new Profile());
+  private readonly formBuilder = inject(FormBuilder);
 
   @Input() public set data(value: ScheduledGame) {
     this.form.reset({
@@ -40,33 +30,38 @@ export class ScheduledGameForm implements OnChanges {
     this.recurring = value.recurrence ? value.recurrence?.interval > 0 : false;
     this.showImageField = !!value.image;
   }
+  public readonly failures = input(new FailureStore());
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+  public readonly members = input<Profile[]>([]);
+  public readonly selectedMaster = input(new Profile());
+  public readonly tables = input<GameTable[]>([]);
 
   public readonly save = output<ScheduledGame>();
   public readonly searchMember = output<MemberSearchEvent>();
 
+  public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-  public form: FormGroup;
+  public readonly gameTypes = [
+    { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
+    { name: 'Partida única', value: ScheduledGameType.ONESHOT }
+  ];
   public master = new Profile();
-  public recurring = false;
-  public showImageField = false;
-
   public readonly recurrenceUnits = [
     { name: 'Diaria', value: RecurrenceUnit.DAILY },
     { name: 'Semanal', value: RecurrenceUnit.WEEKLY },
     { name: 'Mensual', value: RecurrenceUnit.MONTHLY }
   ];
-
-  public readonly gameTypes = [
-    { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
-    { name: 'Partida única', value: ScheduledGameType.ONESHOT }
-  ];
-
+  public recurring = false;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+  public showImageField = false;
 
-  constructor() {
-    this.form = this.fb.group({
+  public constructor() {
+    this.form = this.formBuilder.group({
       number: [null],
       title: [null, Validators.required],
       gameType: [ScheduledGameType.ONESHOT, Validators.required],
@@ -76,7 +71,7 @@ export class ScheduledGameForm implements OnChanges {
       maxPlayers: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
       image: [''],
       start: [null, Validators.required],
-      recurrence: this.fb.group({
+      recurrence: this.formBuilder.group({
         interval: [0, [Validators.required, Validators.min(0), Validators.max(365)]],
         unit: [RecurrenceUnit.WEEKLY, Validators.required]
       }),
@@ -86,11 +81,31 @@ export class ScheduledGameForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ selectedMaster }: SimpleChanges): void {
 
     if (selectedMaster && this.selectedMaster().number) {
       this.master = this.selectedMaster();
       this.form.get('master')?.setValue(this.master.number);
+    }
+  }
+
+  // Event handlers
+  public clearMaster(): void {
+    this.master = new Profile();
+    this.form.get('master')?.reset();
+    this.form.get('master')?.markAsTouched();
+  }
+
+  public onRecurrenceChange(recurring: boolean): void {
+    const interval = this.form.get('recurrence.interval');
+
+    if (recurring && Number(interval?.value) < 1) {
+      interval?.setValue(1);
+    }
+
+    if (!recurring) {
+      interval?.setValue(0);
     }
   }
 
@@ -111,24 +126,7 @@ export class ScheduledGameForm implements OnChanges {
     this.form.get('master')?.markAsDirty();
   }
 
-  public clearMaster(): void {
-    this.master = new Profile();
-    this.form.get('master')?.reset();
-    this.form.get('master')?.markAsTouched();
-  }
-
-  public onRecurrenceChange(recurring: boolean): void {
-    const interval = this.form.get('recurrence.interval');
-
-    if (recurring && Number(interval?.value) < 1) {
-      interval?.setValue(1);
-    }
-
-    if (!recurring) {
-      interval?.setValue(0);
-    }
-  }
-
+  // Public methods
   public getInitials(profile: Profile): string {
     return profile.name.fullName
       .split(/\s+/)

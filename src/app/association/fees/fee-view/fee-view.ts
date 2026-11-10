@@ -33,41 +33,17 @@ import { FeeSummaryService } from '../fee-summary-service';
 })
 export class FeeView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-
-  private readonly detailRequest = new DetailRequest();
-
-  private readonly feeCalendarService = inject(FeeCalendarService);
-  private calendarRequest?: Subscription;
-  private readonly memberSearch = new SearchRequest();
-  private readonly reportService = inject(FeeSummaryService);
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly feeCalendarService = inject(FeeCalendarService);
+  private readonly reportService = inject(FeeSummaryService);
   private readonly service = inject(FeeService);
 
-  public readonly permissions: Permissions;
-  public readonly status: Status = {
-    loadingCalendar: false,
-    loadingSummary: false,
-    loading: false
-  };
-  public readonly filter: Filter = {
-    range: new YearsRange(),
-    year: new Date().getFullYear()
-  };
-
-  public selectedData = new Fee();
-  public summary = new FeeSummary();
-  public members: Profile[] = [];
-  public feeCalendar: MemberFees[] = [];
-
-  public failures = new FailureStore();
-
-  private currentDialog = Dialog.NONE;
-
+  public readonly creationItems: MenuItem[] = [];
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
@@ -76,12 +52,28 @@ export class FeeView implements OnInit {
       this.currentDialog = value;
     }
   }
+  public failures = new FailureStore();
+  public feeCalendar: MemberFees[] = [];
+  public readonly filter: Filter = {
+    range: new YearsRange(),
+    year: new Date().getFullYear()
+  };
+  public members: Profile[] = [];
+  public readonly permissions: Permissions;
+  public selectedData = new Fee();
+  public readonly status: Status = {
+    loadingCalendar: false,
+    loadingSummary: false,
+    loading: false
+  };
+  public summary = new FeeSummary();
 
-  public Dialog = Dialog;
+  private calendarRequest?: Subscription;
+  private currentDialog = Dialog.NONE;
+  private readonly detailRequest = new DetailRequest();
+  private readonly memberSearch = new SearchRequest();
 
-  public readonly creationItems: MenuItem[] = [];
-
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -92,6 +84,7 @@ export class FeeView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.loadRange();
 
@@ -112,29 +105,23 @@ export class FeeView implements OnInit {
     this.loadSummary();
   }
 
-  // EVENT HANDLERS
+  // Event handlers
+  public loadCalendar(year: number) {
+    this.calendarRequest?.unsubscribe();
+    this.status.loadingCalendar = true;
 
-  public onUpdate(toUpdate: FeeEditionEvent): void {
-    const update = {
-      transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
-    }
-    this.call(
-      () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
-      () => {
-        this.loadRange();
-        this.loadSummary();
-      }
-    );
+    this.filter.year = year;
+    this.calendarRequest = this.feeCalendarService.getCalendar(year)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingCalendar = false)
+      )
+      .subscribe(data => this.feeCalendar = data);
   }
 
-  public onPay(data: FeesPaymentEvent): void {
-    this.call(
-      () => this.service.pay(data),
-      () => {
-        this.loadRange();
-        this.loadSummary();
-      }
-    );
+  public onCancelEdit(): void {
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
   }
 
   public onCreateUnpaid(data: FeeCreationEvent): void {
@@ -185,6 +172,29 @@ export class FeeView implements OnInit {
     });
   }
 
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onPay(data: FeesPaymentEvent): void {
+    this.call(
+      () => this.service.pay(data),
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
+    );
+  }
+
+  public onSearchMembers(event: { query: string }): void {
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(members => this.members = members);
+  }
+
   public onSelectFee(fee: { member: number, date: Date }) {
     this.detailRequest.cancel();
     this.dialog = Dialog.INFO;
@@ -197,48 +207,20 @@ export class FeeView implements OnInit {
       .subscribe(fee => this.selectedData = fee);
   }
 
-  public onSearchMembers(event: { query: string }): void {
-    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
-      .subscribe(members => this.members = members);
-  }
-
-  public loadCalendar(year: number) {
-    this.calendarRequest?.unsubscribe();
-    this.status.loadingCalendar = true;
-
-    this.filter.year = year;
-    this.calendarRequest = this.feeCalendarService.getCalendar(year)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loadingCalendar = false)
-      )
-      .subscribe(data => this.feeCalendar = data);
-  }
-
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
+  public onUpdate(toUpdate: FeeEditionEvent): void {
+    const update = {
+      transaction: toUpdate.transaction ? toUpdate.transaction.date : undefined
     }
+    this.call(
+      () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
+      () => {
+        this.loadRange();
+        this.loadSummary();
+      }
+    );
   }
 
-  // DATA LOADING
-
-  private loadSummary() {
-    this.status.loadingSummary = true;
-
-    this.reportService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(response => this.summary = response);
-  }
-
+  // Data loading
   private loadRange() {
     this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
@@ -260,6 +242,16 @@ export class FeeView implements OnInit {
       });
   }
 
+  private loadSummary() {
+    this.status.loadingSummary = true;
+    this.reportService.getSummary()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
+      .subscribe(response => this.summary = response);
+  }
+
   private loadYear(range: YearsRange) {
     if (range.years.length) {
       const firstYear = Number(range.years[0]);
@@ -273,15 +265,17 @@ export class FeeView implements OnInit {
     }
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();

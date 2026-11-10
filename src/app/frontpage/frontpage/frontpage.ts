@@ -1,5 +1,6 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { GoogleMaps, TeamupCalendar } from '@bernardo-mg/ui';
 import { Activity, PublicSettings } from '@ucronia/domain';
 import { finalize } from 'rxjs';
@@ -14,22 +15,26 @@ import { FrontpageService } from '../frontpage-service';
 })
 export class Frontpage implements OnInit {
 
-  private service = inject(FrontpageService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(FrontpageService);
 
-  public calendarCode: string | undefined;
-  public locationCode: string | undefined;
-  public settings = new PublicSettings();
   public activities: Activity[] = [];
+  public readonly calendarCode: string | undefined;
   public loadingActivities = false;
+  public readonly locationCode: string | undefined;
   public selectedActivityDisplay: ActivityDisplay = 'upcoming';
+  public settings = new PublicSettings();
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.service.getSettings()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(settings => this.settings = settings);
 
     this.loadActivities('upcoming');
   }
 
+  // Event handlers
   public loadActivities(display: ActivityDisplay): void {
     const now = new Date();
     const from = display === 'upcoming' ? now : undefined;
@@ -38,7 +43,10 @@ export class Frontpage implements OnInit {
     this.selectedActivityDisplay = display;
     this.loadingActivities = true;
     this.service.getActivities(from, to)
-      .pipe(finalize(() => this.loadingActivities = false))
+      .pipe(
+        finalize(() => this.loadingActivities = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(activities => this.activities = activities);
   }
 

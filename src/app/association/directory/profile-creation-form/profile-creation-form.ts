@@ -14,27 +14,25 @@ import { MessageModule } from 'primeng/message';
 })
 export class ProfileCreationForm {
 
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<ProfileCreationFormData>();
 
-  public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
-  
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
-      name: fb.group({
+    this.form = formBuilder.group({
+      name: formBuilder.group({
         firstName: [null, Validators.required],
         nickname: [''],
         lastName: ['']
@@ -44,6 +42,7 @@ export class ProfileCreationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -55,6 +54,7 @@ export class ProfileCreationForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }

@@ -23,29 +23,24 @@ import { ContactMethodService } from '../contact-method-service';
 })
 export class ContactMethodView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
-
-  private readonly contactMethodService = inject(ContactMethodService);
-
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly contactMethodService = inject(ContactMethodService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
-
-  public dialog = Dialog.NONE;
-
-  public selectedData = new ContactMethod();
   public contactMethodData = new Page<ContactMethod>();
-
+  public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
+  public failures = new FailureStore();
   /**
    * Loading flag.
    */
   public loading = false;
+  public readonly permissions: Permissions;
+  public selectedData = new ContactMethod();
 
-  public failures = new FailureStore();
+  private listRequest?: Subscription;
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -56,16 +51,22 @@ export class ContactMethodView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
 
-  public onShowInfo(data: ContactMethod): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
+    this.listRequest = this.contactMethodService.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.contactMethodData = response);
   }
 
   public onCancelEdit(): void {
@@ -73,23 +74,10 @@ export class ContactMethodView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
-  public onShowEdit(contactMethod: ContactMethod) {
-    this.failures.clear();
-    this.selectedData = contactMethod;
-    this.dialog = Dialog.EDIT;
-  }
-
   public onCreate(toCreate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.create(toCreate),
       () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: ContactMethod): void {
-    this.call(
-      () => this.contactMethodService.update(toUpdate),
-      () => this.load(this.contactMethodData.page)
     );
   }
 
@@ -105,22 +93,6 @@ export class ContactMethodView implements OnInit {
     });
   }
 
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.contactMethodService.getAll(page)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => this.contactMethodData = response);
-  }
-
-  // DIALOGS
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
@@ -128,15 +100,36 @@ export class ContactMethodView implements OnInit {
     }
   }
 
-  // PRIVATE METHODS
+  public onShowEdit(contactMethod: ContactMethod) {
+    this.failures.clear();
+    this.selectedData = contactMethod;
+    this.dialog = Dialog.EDIT;
+  }
 
+  public onShowInfo(data: ContactMethod): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(toUpdate: ContactMethod): void {
+    this.call(
+      () => this.contactMethodService.update(toUpdate),
+      () => this.load(this.contactMethodData.page)
+    );
+  }
+
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void = () => { }
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();

@@ -10,7 +10,7 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class FeeInfo {
 
-  public readonly loading = input(false);
   public readonly data = input(new Fee());
+  public readonly loading = input(false);
 
 }

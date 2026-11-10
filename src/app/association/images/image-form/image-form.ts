@@ -20,27 +20,34 @@ export interface ImageFormData {
   templateUrl: './image-form.html'
 })
 export class ImageForm implements OnChanges {
-  private readonly fb = inject(FormBuilder);
+
+  private readonly formBuilder = inject(FormBuilder);
 
   public readonly data = input<Asset | undefined>();
+  public readonly failures = input(new FailureStore());
   public readonly folders = input<AssetFolder[]>([]);
   public readonly formId = input<string | null>(null);
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
   public readonly save = output<ImageFormData>();
+
+  public file?: File;
+  public get folderOptions(): FolderOption[] {
+    return [
+      { name: 'Sin carpeta', number: null },
+      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
+    ];
+  }
   public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-  public file?: File;
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && (!!this.data() || !!this.file);
   }
 
-  constructor() {
-    this.form = this.fb.group({
+  public constructor() {
+    this.form = this.formBuilder.group({
       number: [0],
       name: ['', [Validators.required, Validators.maxLength(100)]],
       description: ['', Validators.maxLength(500)],
@@ -50,6 +57,7 @@ export class ImageForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['data']) {
       this.form.reset(this.data() || new Asset());
@@ -57,6 +65,7 @@ export class ImageForm implements OnChanges {
     }
   }
 
+  // Event handlers
   public onFileSelected(event: Event): void {
     this.file = (event.target as HTMLInputElement).files?.[0];
     this.form.markAsDirty();
@@ -70,17 +79,12 @@ export class ImageForm implements OnChanges {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public get folderOptions(): FolderOption[] {
-    return [
-      { name: 'Sin carpeta', number: null },
-      ...this.folders().map(folder => ({ name: this.folderPath(folder), number: folder.number }))
-    ];
-  }
-
+  // Private methods
   private folderPath(folder: AssetFolder): string {
     const names = [folder.name];
     let parent = this.folders().find(item => item.number === folder.parentNumber);

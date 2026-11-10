@@ -41,55 +41,48 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 })
 export class DirectoryView implements OnInit {
 
-  private readonly destroyRef = inject(DestroyRef);
-
-  private readonly detailRequest = new DetailRequest();
-
-  private readonly directoryService = inject(DirectoryService);
-  private listRequest?: Subscription;
-  private readonly directorySummaryService = inject(DirectorySummaryService);
-  private readonly contactMethodService = inject(ContactMethodService);
-  private readonly feeTypeService = inject(FeeTypeService);
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly contactMethodService = inject(ContactMethodService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly directoryService = inject(DirectoryService);
+  private readonly directorySummaryService = inject(DirectorySummaryService);
+  private readonly feeTypeService = inject(FeeTypeService);
 
-  public readonly permissions: Permissions;
-  public readonly filter: Filter = {
-    status: MemberStatus.Active,
-    type: Profiletype.ALL
-  };
-  public readonly status: Status = {
-    loading: false,
-    loadingSummary: false
-  };
-  protected readonly Profiletype = Profiletype;
-  public readonly Dialog = Dialog;
-
-  public selectedData = new FullProfile();
   public contactMethodSelection: ContactMethod[] = [];
-  public feeTypes: FeeType[] = [];
-  public profiles = new Page<FullProfile>();
-  public summary = new DirectorySummary();
-
-  public failures = new FailureStore();
-
-  public modalTitle = '';
-
-  private sort = new Sorting();
-
-  private currentDialog = Dialog.NONE;
-
+  public readonly Dialog = Dialog;
   public get dialog(): Dialog {
     return this.currentDialog;
   }
-
   public set dialog(value: Dialog) {
     if (value !== this.currentDialog) {
       this.detailRequest.cancel();
       this.currentDialog = value;
     }
   }
+  public failures = new FailureStore();
+  public feeTypes: FeeType[] = [];
+  public readonly filter: Filter = {
+    status: MemberStatus.Active,
+    type: Profiletype.ALL
+  };
+  public readonly modalTitle = '';
+  public readonly permissions: Permissions;
+  public profiles = new Page<FullProfile>();
+  public selectedData = new FullProfile();
+  public readonly status: Status = {
+    loading: false,
+    loadingSummary: false
+  };
+  public summary = new DirectorySummary();
 
-  constructor() {
+  protected readonly Profiletype = Profiletype;
+
+  private currentDialog = Dialog.NONE;
+  private readonly detailRequest = new DetailRequest();
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
+
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -100,40 +93,27 @@ export class DirectoryView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
     this.loadSummary();
   }
 
-  // EVENT HANDLERS
-
-  public onShowEdit() {
-    this.detailRequest.cancel();
-    this.dialog = Dialog.EDIT;
-    this.withLoading(
-      forkJoin({
-        profile: this.directoryService.getOne(this.selectedData.number),
-        contactMethodSelection: this.contactMethodService.getAllAvailable(),
-        feeTypes: this.feeTypeService.getAllAvailable()
-      })
+  // Event handlers
+  public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
     )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
-        this.selectedData = profile;
-        this.contactMethodSelection = contactMethodSelection;
-        this.feeTypes = feeTypes;
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => {
+        this.profiles = response;
       });
   }
 
-  public onShowInfo(profile: FullProfile) {
-    this.detailRequest.cancel();
-    this.selectedData = profile;
+  public onCancelEdit(): void {
+    this.failures.clear();
     this.dialog = Dialog.INFO;
-    this.withLoading(
-      this.directoryService.getOne(profile.number)
-    )
-      .pipe(this.detailRequest.untilCancelled())
-      .subscribe(profile => this.selectedData = profile);
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -146,30 +126,21 @@ export class DirectoryView implements OnInit {
     this.load(this.profiles.page);
   }
 
+  public onChangeMemberStatus(status: MemberStatus) {
+    this.filter.status = status;
+    this.load();
+  }
+
+  public onChangeType(status: Profiletype) {
+    this.filter.type = status;
+    this.load();
+  }
+
   public onCreate(toCreate: ProfileCreationFormData): void {
     this.call(
       () => this.directoryService.create(toCreate as any),
       () => {
         this.load();
-        this.loadSummary();
-      }
-    );
-  }
-
-  public onUpdate(toUpdate: FullProfile): void {
-    const updated: FullProfile = {
-      ...this.selectedData,
-      ...toUpdate,
-      number: this.selectedData?.number ?? -1
-    };
-
-    const previousTypes = this.selectedData?.types ?? [];
-    const newTypes = updated.types ?? [];
-
-    this.call(
-      () => this.directoryService.update(updated, previousTypes, newTypes),
-      () => {
-        this.load(this.profiles.page);
         this.loadSummary();
       }
     );
@@ -211,48 +182,6 @@ export class DirectoryView implements OnInit {
     });
   }
 
-  public onChangeType(status: Profiletype) {
-    this.filter.type = status;
-    this.load();
-  }
-
-  public onChangeMemberStatus(status: MemberStatus) {
-    this.filter.status = status;
-    this.load();
-  }
-
-  public onFilter(filter: string) {
-    this.filter.name = filter;
-    this.load();
-  }
-
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined) {
-    this.listRequest?.unsubscribe();
-    this.listRequest = this.withLoading(
-      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
-    )
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(response => {
-        this.profiles = response;
-      });
-  }
-
-  private loadSummary() {
-    this.status.loadingSummary = true;
-    this.directorySummaryService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
-      .subscribe(r => this.summary = r);
-  }
-
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
@@ -260,15 +189,81 @@ export class DirectoryView implements OnInit {
     }
   }
 
-  // PRIVATE METHODS
+  public onFilter(filter: string) {
+    this.filter.name = filter;
+    this.load();
+  }
 
+  public onShowEdit() {
+    this.detailRequest.cancel();
+    this.dialog = Dialog.EDIT;
+    this.withLoading(
+      forkJoin({
+        profile: this.directoryService.getOne(this.selectedData.number),
+        contactMethodSelection: this.contactMethodService.getAllAvailable(),
+        feeTypes: this.feeTypeService.getAllAvailable()
+      })
+    )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
+        this.selectedData = profile;
+        this.contactMethodSelection = contactMethodSelection;
+        this.feeTypes = feeTypes;
+      });
+  }
+
+  public onShowInfo(profile: FullProfile) {
+    this.detailRequest.cancel();
+    this.selectedData = profile;
+    this.dialog = Dialog.INFO;
+    this.withLoading(
+      this.directoryService.getOne(profile.number)
+    )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(profile => this.selectedData = profile);
+  }
+
+  public onUpdate(toUpdate: FullProfile): void {
+    const updated: FullProfile = {
+      ...this.selectedData,
+      ...toUpdate,
+      number: this.selectedData?.number ?? -1
+    };
+
+    const previousTypes = this.selectedData?.types ?? [];
+    const newTypes = updated.types ?? [];
+
+    this.call(
+      () => this.directoryService.update(updated, previousTypes, newTypes),
+      () => {
+        this.load(this.profiles.page);
+        this.loadSummary();
+      }
+    );
+  }
+
+  // Data loading
+  private loadSummary() {
+    this.status.loadingSummary = true;
+    this.directorySummaryService.getSummary()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
+      .subscribe(r => this.summary = r);
+  }
+
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();

@@ -1,4 +1,4 @@
-import { Component, Input, input, output } from '@angular/core';
+import { Component, input, linkedSignal, output } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
@@ -14,21 +14,19 @@ import { FormSearchReset } from '../form-search-reset';
 })
 export class TextFilter {
 
-  public readonly label = input('Buscar');
-  public readonly showLabel = input(false);
-  public readonly placeholder = input('Buscar...');
   public readonly disabled = input(false);
+  public readonly label = input('Buscar');
+  public readonly placeholder = input('Buscar...');
+  public readonly showLabel = input(false);
+  public readonly value = input('');
 
   public readonly filter = output<string>();
 
-  public filterValue = '';
+  protected readonly filterValue = linkedSignal(() => this.value());
+
   private readonly changes = new Subject<string>();
 
-  @Input() public set value(value: string) {
-    this.filterValue = value;
-  }
-
-  constructor() {
+  public constructor() {
     this.changes.pipe(
       map(value => value.trim()),
       switchMap(value => value ? timer(300).pipe(map(() => value)) : of('')),
@@ -37,8 +35,9 @@ export class TextFilter {
     ).subscribe(value => this.filter.emit(value));
   }
 
-  public onInput(value: string): void {
-    this.filterValue = value;
+  // Event handlers
+  protected onInput(value: string): void {
+    this.filterValue.set(value);
     this.changes.next(value);
   }
 

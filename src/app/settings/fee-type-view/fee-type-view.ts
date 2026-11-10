@@ -23,29 +23,24 @@ import { FeeTypeService } from '../fee-type-service';
 })
 export class FeeTypeView implements OnInit {
 
+  private readonly confirmationService = inject(ConfirmationService);
   private readonly destroyRef = inject(DestroyRef);
-  private listRequest?: Subscription;
-
   private readonly feeTypeService = inject(FeeTypeService);
 
-  private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
   public readonly Dialog = Dialog;
-
-  public selectedData = new FeeType();
+  public dialog = Dialog.NONE;
+  public failures = new FailureStore();
   public feeTypeData = new Page<FeeType>();
-
   /**
    * Loading flag.
    */
   public loading = false;
+  public readonly permissions: Permissions;
+  public selectedData = new FeeType();
 
-  public failures = new FailureStore();
+  private listRequest?: Subscription;
 
-  public dialog = Dialog.NONE;
-
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -56,16 +51,22 @@ export class FeeTypeView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
 
-  public onShowInfo(data: FeeType): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
+    this.listRequest = this.feeTypeService.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.feeTypeData = response);
   }
 
   public onCancelEdit(): void {
@@ -73,23 +74,10 @@ export class FeeTypeView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
-  public onShowEdit(feeType: FeeType) {
-    this.failures.clear();
-    this.selectedData = feeType;
-    this.dialog = Dialog.EDIT;
-  }
-
   public onCreate(toCreate: FeeType): void {
     this.call(
       () => this.feeTypeService.create(toCreate),
       () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: FeeType): void {
-    this.call(
-      () => this.feeTypeService.update(toUpdate),
-      () => this.load(this.feeTypeData.page)
     );
   }
 
@@ -105,22 +93,6 @@ export class FeeTypeView implements OnInit {
     });
   }
 
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined): void {
-    this.listRequest?.unsubscribe();
-    this.loading = true;
-
-    this.listRequest = this.feeTypeService.getAll(page)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(response => this.feeTypeData = response);
-  }
-
-  // DIALOGS
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
@@ -128,15 +100,36 @@ export class FeeTypeView implements OnInit {
     }
   }
 
-  // PRIVATE METHODS
+  public onShowEdit(feeType: FeeType) {
+    this.failures.clear();
+    this.selectedData = feeType;
+    this.dialog = Dialog.EDIT;
+  }
 
+  public onShowInfo(data: FeeType): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(toUpdate: FeeType): void {
+    this.call(
+      () => this.feeTypeService.update(toUpdate),
+      () => this.load(this.feeTypeData.page)
+    );
+  }
+
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();

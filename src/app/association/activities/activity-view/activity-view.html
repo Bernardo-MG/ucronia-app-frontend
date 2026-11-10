@@ -5,7 +5,7 @@
       <p class="mt-1 text-sm text-gray-500">Organiza y publica las actividades de la asociación</p>
     </div>
     @if (permissions.create) {
-      <p-button type="button" label="Nueva actividad" icon="pi pi-plus" (onClick)="dialog = Dialog.CREATE"
+      <p-button type="button" label="Nueva actividad" icon="pi pi-plus" (onClick)="onStartCreation()"
         [disabled]="!permissions.create" [attr.aria-disabled]="!permissions.create" />
     }
   </header>
@@ -69,7 +69,8 @@
         <shared-drawer-header title="Nueva actividad" icon="pi pi-calendar" subtitle="Programa una actividad para la asociación" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-create" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-create" [loading]="status.loading" [failures]="failures"
+          [imageOptions]="imageOptions" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -87,6 +88,7 @@
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
         <assoc-activity-form #fieldsAssocActivityForm formId="activity-view-edit" [loading]="status.loading" [data]="selectedData" [failures]="failures"
+          [imageOptions]="imageOptions"
           (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

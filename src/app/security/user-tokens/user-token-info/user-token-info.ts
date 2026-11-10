@@ -13,7 +13,6 @@ import { CardModule } from 'primeng/card';
 export class UserTokenInfo {
 
   public readonly data = input(new UserToken());
-
   public readonly loading = input(false);
 
 }

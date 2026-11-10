@@ -11,8 +11,8 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class TransactionInfo {
 
+  public readonly loading = input(false);
   public readonly transaction = input(new Transaction());
   public readonly type = input<TransactionType>();
-  public readonly loading = input(false);
 
 }

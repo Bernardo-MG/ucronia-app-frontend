@@ -17,19 +17,20 @@ export interface RoleDeleteEvent {
 export class RoleList {
 
   public readonly loading = input(false);
+  public readonly page = input(0);
   public readonly roles = input<Role[]>([]);
   public readonly rows = input(0);
-  public readonly page = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly show = output<Role>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+  public readonly show = output<Role>();
 
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);

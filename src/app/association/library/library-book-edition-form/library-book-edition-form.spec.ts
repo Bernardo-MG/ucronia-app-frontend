@@ -1,22 +1,16 @@
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideZonelessChangeDetection } from '@angular/core';
-import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed } from '@angular/core/testing';
-import { Page } from '@bernardo-mg/request';
-import { Author, Donor, GameBook } from '@ucronia/domain';
-import { of, Subject } from 'rxjs';
-import { LibraryService } from '../library-service';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Author, Donor } from '@ucronia/domain';
 import { LibraryBookEditionForm } from './library-book-edition-form';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { LibraryConfig } from '../library-config';
 
 describe('LibraryBookEditionForm', () => {
   function createForm(): LibraryBookEditionForm {
     TestBed.configureTestingModule({
       imports: [LibraryBookEditionForm],
-      providers: [provideZonelessChangeDetection(), provideNoopAnimations(), { provide: LibraryService, useValue: {
-      getGameSystems: () => of({ content: [], last: true }),
-      getBookTypes: () => of({ content: [], last: true })
-    } }]
+      providers: [provideZonelessChangeDetection(), provideNoopAnimations()]
     });
     const fixture = TestBed.createComponent(LibraryBookEditionForm);
     fixture.detectChanges();
@@ -59,8 +53,7 @@ describe('LibraryBookEditionForm form submission', () => {
       providers: [
         provideZonelessChangeDetection(),
         provideNoopAnimations(),
-        { provide: LibraryConfig, useValue: { getLanguages: () => [] } },
-        { provide: LibraryService, useValue: { getGameSystems: () => of({ content: [], last: true }), getBookTypes: () => of({ content: [], last: true }) } }
+        { provide: LibraryConfig, useValue: { getLanguages: () => [] } }
       ]
     });
     fixture = TestBed.createComponent(LibraryBookEditionForm);
@@ -125,23 +118,14 @@ describe('LibraryBookEditionForm form submission', () => {
   });
 });
 
-describe('LibraryBookEditionForm search cancellation', () => {
+describe('LibraryBookEditionForm search intents', () => {
   let fixture: ComponentFixture<LibraryBookEditionForm>;
   let component: LibraryBookEditionForm;
-  let service: jasmine.SpyObj<LibraryService>;
 
   beforeEach(async () => {
-    service = jasmine.createSpyObj<LibraryService>('LibraryService', [
-      'searchDonors', 'getGameSystems', 'getBookTypes'
-    ]);
-    const page = Object.assign(new Page<never>(), { last: true, totalPages: 1 });
-    service.getGameSystems.and.returnValue(of(page));
-    service.getBookTypes.and.returnValue(of(page));
     await TestBed.configureTestingModule({
       imports: [LibraryBookEditionForm],
       providers: [
-        FormBuilder,
-        { provide: LibraryService, useValue: service },
         { provide: LibraryConfig, useValue: { getLanguages: () => [] } }
       ]
     }).compileComponents();
@@ -150,55 +134,22 @@ describe('LibraryBookEditionForm search cancellation', () => {
     fixture.detectChanges();
   });
 
-  it('unsubscribes the old query before accepting the latest response', () => {
-    const older = new Subject<Donor[]>();
-    const latest = new Subject<Donor[]>();
-    service.searchDonors.and.returnValues(older, latest);
+  it('emits donor search queries for the containing view', () => {
+    const search = spyOn(component.searchDonors, 'emit');
     component.onSearchDonors({ query: 'old' });
-    component.onSearchDonors({ query: 'new' });
-    const latestResults: Donor[] = [];
-    latest.next(latestResults);
-    older.next([]);
-    expect(older.observed).toBeFalse();
-    expect(component.donorSearchResults).toBe(latestResults);
+    expect(search).toHaveBeenCalledOnceWith('old');
   });
 
-  it('does not repopulate suggestions after selecting an item', () => {
-    const pending = new Subject<Donor[]>();
-    service.searchDonors.and.returnValue(pending);
-    component.onSearchDonors({ query: 'query' });
-    component.onSelectDonor(new Donor());
-    const cleared = component.donorSearchResults;
-    pending.next([]);
-    expect(pending.observed).toBeFalse();
-    expect(component.donorSearchResults).toBe(cleared);
-  });
-
-  it('cancels when the input is cleared', () => {
-    const pending = new Subject<Donor[]>();
-    service.searchDonors.and.returnValue(pending);
-    component.onSearchDonors({ query: 'query' });
+  it('emits a clear intent when the input is cleared', () => {
+    const clear = spyOn(component.clearDonorSearch, 'emit');
     component.onClearDonorSearch();
-    expect(pending.observed).toBeFalse();
-    expect(component.donorSearchResults).toEqual([]);
+    expect(clear).toHaveBeenCalledOnceWith();
   });
 
-  it('cancels when another book is loaded into the form', fakeAsync(() => {
-    const pending = new Subject<Donor[]>();
-    service.searchDonors.and.returnValue(pending);
-    component.onSearchDonors({ query: 'query' });
-    component.data = new GameBook();
-    flushMicrotasks();
-    expect(pending.observed).toBeFalse();
-    expect(component.donorSearchResults).toEqual([]);
-  }));
-
-  it('cancels on destruction', () => {
-    const pending = new Subject<Donor[]>();
-    service.searchDonors.and.returnValue(pending);
-    component.onSearchDonors({ query: 'query' });
-    fixture.destroy();
-    expect(pending.observed).toBeFalse();
+  it('clears donor search results when a donor is selected', () => {
+    const clear = spyOn(component.clearDonorSearch, 'emit');
+    component.onSelectDonor(new Donor());
+    expect(clear).toHaveBeenCalledOnceWith();
   });
 
   it('disables author and publisher searches until supported by the backend', () => {
