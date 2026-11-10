@@ -1,17 +1,18 @@
 import { TestBed } from '@angular/core/testing';
 import { Page } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { Key, KeyAssignment } from '@ucronia/domain';
+import { Key, KeyAssignment, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { of, throwError } from 'rxjs';
 import { MemberKeyService } from './member-key-service';
+import { PublicMemberService } from './public-member-service';
 
 describe('MemberKeyService', () => {
   let service: MemberKeyService;
 
   const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['create', 'update', 'delete']);
 
-  const assignmentEndpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['page']);
+  const assignmentEndpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['page', 'create', 'update']);
 
   const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
 
@@ -144,5 +145,96 @@ describe('MemberKeyService', () => {
 
     expect(result).toEqual([]);
     expect(assignmentEndpointMock.page).toHaveBeenCalledTimes(1);
+  });
+
+  describe('assignments', () => {
+    const assignment: KeyAssignment = {
+      number: 7,
+      available: true,
+      description: 'Principal',
+      profile: { number: 12, name: 'Ana López' }
+    };
+
+    beforeEach(() => {
+      assignmentEndpointMock.create.calls.reset();
+      assignmentEndpointMock.update.calls.reset();
+      assignmentEndpointMock.create.and.returnValue(of(assignment));
+      assignmentEndpointMock.update.and.returnValue(of(assignment));
+    });
+
+    it('uses the assignment endpoint with key and profile numbers', () => {
+      let result: KeyAssignment | undefined;
+
+      service.assign(7, 12).subscribe(value => (result = value));
+
+      expect(assignmentEndpointMock.create).toHaveBeenCalledOnceWith({ number: 7, profile: 12 });
+      expect(result).toBe(assignment);
+      expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+        severity: 'info', summary: 'Asignado', detail: 'Llave asignada', life: 3000
+      });
+    });
+
+    it('propagates failure without showing a success message', () => {
+      const failure = new Error('Conflict');
+      assignmentEndpointMock.create.and.returnValue(throwError(() => failure));
+      let result: unknown;
+
+      service.assign(7, 12).subscribe({ error: error => (result = error) });
+
+      expect(result).toBe(failure);
+      expect(messageServiceMock.add).not.toHaveBeenCalled();
+    });
+
+    it('updates an existing assignment with the new profile number', () => {
+      let result: KeyAssignment | undefined;
+
+      service.reassign(7, 12).subscribe(value => (result = value));
+
+      expect(assignmentEndpointMock.update).toHaveBeenCalledOnceWith(7, { profile: 12 });
+      expect(assignmentEndpointMock.create).not.toHaveBeenCalled();
+      expect(result).toBe(assignment);
+      expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+        severity: 'info', summary: 'Actualizado', detail: 'Asignación de llave actualizada', life: 3000
+      });
+    });
+
+    it('propagates reassignment failure without showing a success message', () => {
+      const failure = new Error('Unavailable');
+      assignmentEndpointMock.update.and.returnValue(throwError(() => failure));
+      let result: unknown;
+
+      service.reassign(7, 12).subscribe({ error: error => (result = error) });
+
+      expect(result).toBe(failure);
+      expect(messageServiceMock.add).not.toHaveBeenCalled();
+    });
+  });
+});
+
+describe('PublicMemberService - assignment options', () => {
+  let service: PublicMemberService;
+
+  const endpointMock = jasmine.createSpyObj<UcroniaClient['member']>('PublicMemberEndpoint', ['page']);
+
+  beforeEach(() => {
+    endpointMock.page.calls.reset();
+    TestBed.configureTestingModule({ providers: [{ provide: UcroniaClient, useValue: { member: endpointMock } }] });
+    service = TestBed.inject(PublicMemberService);
+  });
+
+  it('searches the first ten public members by name and retains their profile numbers', () => {
+    const member = Object.assign(new PublicMember(), { number: 12, memberNumber: 37 });
+    endpointMock.page.and.returnValue(of(Object.assign(new Page<PublicMember>(), { content: [member] })));
+    let result: PublicMember[] = [];
+
+    service.searchMembers(' Ana ').subscribe(members => (result = members));
+
+    expect(result).toEqual([member]);
+    expect(endpointMock.page).toHaveBeenCalledTimes(1);
+    const [page, size, sorting, name] = endpointMock.page.calls.mostRecent().args;
+    expect(page).toBeUndefined();
+    expect(size).toBe(10);
+    expect(name).toBe('Ana');
+    expect(sorting?.properties.map(property => property.property)).toEqual(['name.firstName', 'name.lastName', 'memberNumber']);
   });
 });
