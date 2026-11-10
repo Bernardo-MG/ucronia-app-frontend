@@ -53,15 +53,21 @@ describe('UserForm', () => {
     [member]="profile" [members]="members" [data]="user" (searchMember)="onQuery($event.query)" />`
 })
 class ReusedUserHost {
-  public user = Object.assign(new User(), { username: 'alice', name: 'Alice', email: 'alice@example.com' });
-  public profile = new Profile();
+
   public members: Profile[] = [];
-  public queries: string[] = [];
+  public profile = new Profile();
+  public readonly queries: string[] = [];
+  public user = Object.assign(new User(), {
+    username: 'alice',
+    name: 'Alice',
+    email: 'alice@example.com'
+  });
 
   public onQuery(value: string): void {
     this.queries.push(value);
     this.members = [];
   }
+
 }
 
 describe('UserForm search reset', () => {

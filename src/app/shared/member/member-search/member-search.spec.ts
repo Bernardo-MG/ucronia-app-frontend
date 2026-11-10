@@ -96,11 +96,14 @@ describe('MemberSearch', () => {
   template: '<label for="member-picker">Socio</label><assoc-member-search inputId="member-picker" [member]="member" [members]="[]" (clearMember)="member = emptyMember" />'
 })
 class MemberSearchHost {
+
+  public readonly emptyMember = new Profile();
   public member = Object.assign(new Profile(), { number: 1, name: { fullName: 'Alice' } });
-  public emptyMember = new Profile();
+
 }
 
 describe('MemberSearch selected value', () => {
+
   it('keeps typed text while clearing a previously selected member ID', fakeAsync(() => {
     const fixture = TestBed.createComponent(MemberSearchHost);
     fixture.detectChanges();
@@ -116,6 +119,7 @@ describe('MemberSearch selected value', () => {
     expect(input.value).toBe('B');
     tick(300);
   }));
+
 });
 
 @Component({
@@ -126,8 +130,10 @@ describe('MemberSearch selected value', () => {
   </form>`
 })
 class MemberSearchResetHost {
+
   public readonly form = new FormGroup({});
   public readonly queries: string[] = [];
+
 }
 
 describe('MemberSearch form reset', () => {

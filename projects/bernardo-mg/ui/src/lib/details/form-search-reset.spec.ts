@@ -21,22 +21,25 @@ interface Suggestion { number: number; name: string; }
   </form>`
 })
 class SearchFormHost {
-  public readonly form = new FormGroup({ record: new FormControl('first') });
-  public readonly responses = new Subject<Suggestion[]>();
-  private readonly request = new SearchRequest();
-  public results: Suggestion[] = [];
-  public selected: Suggestion | null = null;
-  public queries: string[] = [];
-  public text = '';
 
   @Input() public set record(value: string) {
     this.form.reset({ record: value });
   }
 
+  public readonly form = new FormGroup({ record: new FormControl('first') });
+  public readonly queries: string[] = [];
+  public readonly responses = new Subject<Suggestion[]>();
+  public results: Suggestion[] = [];
+  public selected: Suggestion | null = null;
+  public text = '';
+
+  private readonly request = new SearchRequest();
+
   public onQuery(query: string): void {
     this.queries.push(query);
     this.request.search(query, () => this.responses).subscribe(results => this.results = results);
   }
+
 }
 
 @Component({
@@ -44,7 +47,9 @@ class SearchFormHost {
   template: '<ui-form-search-test [record]="record" />'
 })
 class ReusedFormHost {
+
   public record = 'first';
+
 }
 
 @Component({
@@ -52,7 +57,9 @@ class ReusedFormHost {
   template: '<form><ui-search-select inputId="template-search" (queryChange)="queries.push($event)" /></form>'
 })
 class TemplateFormHost {
-  public queries: string[] = [];
+
+  public readonly queries: string[] = [];
+
 }
 
 describe('FormSearchReset', () => {

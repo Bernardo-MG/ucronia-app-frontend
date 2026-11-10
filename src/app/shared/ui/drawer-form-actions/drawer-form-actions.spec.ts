@@ -18,11 +18,13 @@ import { DrawerFormActions } from './drawer-form-actions';
   </p-drawer>`
 })
 class ExternalFormHost {
-  public form = new FormGroup({ name: new FormControl('', Validators.required) });
-  public loading = false;
-  public visible = false;
-  public submissions = 0;
+
   public cancellations = 0;
+  public readonly form = new FormGroup({ name: new FormControl('', Validators.required) });
+  public loading = false;
+  public submissions = 0;
+  public visible = false;
+
 }
 
 @Component({
@@ -32,8 +34,10 @@ class ExternalFormHost {
   </form>`
 })
 class InlineFormHost {
-  public form = new FormGroup({});
+
+  public readonly form = new FormGroup({});
   public submissions = 0;
+
 }
 
 describe('DrawerFormActions', () => {
