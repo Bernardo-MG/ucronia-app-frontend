@@ -47,7 +47,9 @@ describe('LibraryBookEditionForm', () => {
 
     expect(saved).toHaveBeenCalledOnceWith({
       ...fiction,
-      title: { ...fiction.title, title: 'Updated' }
+      title: { ...fiction.title, title: 'Updated' },
+      publishDate: undefined,
+      donation: undefined
     });
   });
 
