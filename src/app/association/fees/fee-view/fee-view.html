@@ -51,7 +51,10 @@
     </div>
 
     <div class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-      <assoc-fee-calendar [year]="filter.year" [range]="filter.range" [loading]="status.loadingCalendar" [feeCalendar]="feeCalendar"
+      <div class="border-b border-gray-200 p-4">
+        <assoc-member-status-selector [status]="memberStatus()" (filter)="memberStatus.set($event)" />
+      </div>
+      <assoc-fee-calendar [year]="filter.year" [range]="filter.range" [loading]="status.loadingCalendar" [feeCalendar]="feeCalendar()"
         (goToYear)="loadCalendar($event)" (selectFee)="onSelectFee($event)" />
     </div>
   </section>

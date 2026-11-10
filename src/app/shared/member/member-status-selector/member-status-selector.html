@@ -1,5 +1,5 @@
 <div class="border border-gray-300 rounded-lg p-1 inline-block">
   <p-selectbutton [options]="memberStatusOptions" [ngModel]="selectedMemberStatus()"
     (ngModelChange)="selectedMemberStatus.set($event)" optionLabel="label"
-    optionValue="value" aria-labelledby="basic" (onChange)="filter.emit($event.value)" />
+    optionValue="value" [allowEmpty]="false" aria-labelledby="basic" (onChange)="filter.emit($event.value)" />
 </div>

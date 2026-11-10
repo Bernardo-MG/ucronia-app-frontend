@@ -1,6 +1,7 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -28,7 +29,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 
 @Component({
   selector: 'assoc-fee-view',
-  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, FeePaymentsForm, FeeCreationForm, DatePipe],
+  imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, DatePipe],
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {
@@ -53,12 +54,22 @@ export class FeeView implements OnInit {
     }
   }
   public failures = new FailureStore();
-  public feeCalendar: MemberFees[] = [];
+  public readonly feeCalendar = computed(() => {
+    const status = this.memberStatus();
+    const calendar = this.fullCalendar();
+    if (status === MemberStatus.All) {
+      return calendar;
+    }
+
+    const active = status === MemberStatus.Active;
+    return calendar.filter(entry => entry.member.active === active);
+  });
   public readonly filter: Filter = {
     range: new YearsRange(),
     year: new Date().getFullYear()
   };
   public members: Profile[] = [];
+  public readonly memberStatus = signal(MemberStatus.Active);
   public readonly permissions: Permissions;
   public selectedData = new Fee();
   public readonly status: Status = {
@@ -71,6 +82,7 @@ export class FeeView implements OnInit {
   private calendarRequest?: Subscription;
   private currentDialog = Dialog.NONE;
   private readonly detailRequest = new DetailRequest();
+  private readonly fullCalendar = signal<MemberFees[]>([]);
   private readonly memberSearch = new SearchRequest();
 
   public constructor() {
@@ -116,7 +128,7 @@ export class FeeView implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.status.loadingCalendar = false)
       )
-      .subscribe(data => this.feeCalendar = data);
+      .subscribe(data => this.fullCalendar.set(data));
   }
 
   public onCancelEdit(): void {
@@ -237,9 +249,7 @@ export class FeeView implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.status.loadingCalendar = false)
       )
-      .subscribe(data => {
-        this.feeCalendar = data;
-      });
+      .subscribe(data => this.fullCalendar.set(data));
   }
 
   private loadSummary() {

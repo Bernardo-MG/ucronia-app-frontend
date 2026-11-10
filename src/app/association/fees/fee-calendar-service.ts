@@ -14,7 +14,6 @@ export class FeeCalendarService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  // TODO: Add backend fee filtering by member status before restoring the status selector.
   public getCalendar(year: number): Observable<MemberFees[]> {
     const sorting = new Sorting(
       [
