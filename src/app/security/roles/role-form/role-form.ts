@@ -1,5 +1,5 @@
 import { Component, inject, input, Input, output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -17,7 +17,7 @@ export class RoleForm {
   private readonly formBuilder = inject(FormBuilder);
 
   @Input() public set data(value: Role) {
-    this.form.reset(value as any);
+    this.form.reset({ name: value.name });
     this.isEdit = true;
     this.permissions = [...value.permissions];
   }
@@ -36,7 +36,7 @@ export class RoleForm {
     return groups.length > 0
       && groups.every(group => this.isGroupSelected(group));
   }
-  public readonly form: FormGroup;
+  public readonly form;
   public readonly formStatus: FormStatus;
   public isEdit = false;
   public get permissionGroups(): PermissionGroup[] {
@@ -74,9 +74,8 @@ export class RoleForm {
   }
 
   public constructor() {
-    this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      permissions: [[]]
+    this.form = this.formBuilder.nonNullable.group({
+      name: ['', Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
@@ -98,8 +97,8 @@ export class RoleForm {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
-      this.form.get('permissions')?.setValue(this.permissions);
-      this.save.emit(this.form.value);
+      const { name } = this.form.getRawValue();
+      this.save.emit({ name, permissions: this.permissions });
     }
   }
 

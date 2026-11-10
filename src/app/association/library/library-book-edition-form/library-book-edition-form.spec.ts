@@ -1,7 +1,7 @@
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Author, Donor } from '@ucronia/domain';
+import { Author, BookType, Donor, FictionBook, GameBook } from '@ucronia/domain';
 import { LibraryBookEditionForm } from './library-book-edition-form';
 import { FormGroup } from '@angular/forms';
 import { LibraryConfig } from '../library-config';
@@ -26,6 +26,29 @@ describe('LibraryBookEditionForm', () => {
     expect(component.form.dirty).toBeTrue();
     component.onRemoveAuthor(author);
     expect(component.selectedAuthors).toEqual([]);
+  });
+
+  it('emits fiction without game fields after editing a game book', () => {
+    const component = createForm();
+    const game = new GameBook();
+    game.bookType = new BookType();
+    component.data = game;
+
+    const fiction = new FictionBook();
+    fiction.number = 42;
+    fiction.title.title = 'Original';
+    fiction.language = 'en';
+    component.data = fiction;
+    component.form.controls.title.controls.title.setValue('Updated');
+    component.form.markAsDirty();
+
+    const saved = spyOn(component.save, 'emit');
+    component.onSave();
+
+    expect(saved).toHaveBeenCalledOnceWith({
+      ...fiction,
+      title: { ...fiction.title, title: 'Updated' }
+    });
   });
 
   it('omits an empty donation from the update payload', () => {
