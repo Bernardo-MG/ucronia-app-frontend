@@ -6,4 +6,6 @@ export class PublicMember {
   public memberNumber?: number | null;
   public name = new MemberName();
   public renew = true;
+  public joined?: Date;
+  public totalMonths?: number;
 }

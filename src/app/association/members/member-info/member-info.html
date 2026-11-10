@@ -21,6 +21,14 @@
           [value]="member.renew"
           trueText="Renueva"
           falseText="No renueva" />
+        <ui-detail-field
+          icon="pi pi-calendar"
+          name="Primer mes pagado"
+          [value]="(member.joined | date: 'MM/yyyy') ?? '—'" />
+        <ui-detail-field
+          icon="pi pi-calendar"
+          name="Meses pagados"
+          [value]="member.totalMonths ?? '—'" />
       </div>
     </section>
   }

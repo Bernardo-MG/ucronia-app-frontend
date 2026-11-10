@@ -34,9 +34,16 @@ export class PublicMemberEndpoint {
       params = params.append('name', name);
     }
 
-    return this.http.get<PaginatedResponse<PublicMember>>(`${this.apiUrl}/member`, { params })
+    return this.http.get<PaginatedResponse<PublicMemberData>>(`${this.apiUrl}/member`, { params })
       .pipe(
-        catchError(this.errorInterceptor.handle)
+        catchError(this.errorInterceptor.handle),
+        map(response => ({
+          ...response,
+          content: response.content.map(member => ({
+            ...member,
+            joined: typeof member.joined === 'string' ? new Date(member.joined) : undefined
+          }))
+        }))
       );
   }
 
@@ -73,3 +80,6 @@ export class PublicMemberEndpoint {
   }
 
 }
+type PublicMemberData = Omit<PublicMember, 'joined'> & {
+  joined?: string | null;
+};
