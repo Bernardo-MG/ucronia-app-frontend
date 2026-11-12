@@ -100,6 +100,19 @@ describe('PublicMemberView', () => {
     expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.All);
   });
 
+  it('keeps active members as the only option without inactive read permission', () => {
+    component.permissions.readInactiveMembers = false;
+    fixture.detectChanges();
+    memberServiceMock.getAll.calls.reset();
+
+    component.onFilterStatus(MemberStatus.Inactive);
+    component.onFilterStatus(MemberStatus.All);
+
+    expect(fixture.nativeElement.querySelector('assoc-member-status-selector')).toBeNull();
+    expect(component.filterStatus).toBe(MemberStatus.Active);
+    expect(memberServiceMock.getAll).not.toHaveBeenCalled();
+  });
+
   it('refreshes the current filtered page and counters', () => {
     component.onFilter('Alice');
     component.data.page = 2;

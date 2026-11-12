@@ -80,11 +80,11 @@ export const UcroniaPermissions = {
       update: { resource: 'CONTACT_METHOD', action: 'UPDATE' },
       delete: { resource: 'CONTACT_METHOD', action: 'DELETE' }
     },
+    inactiveMember: {
+      read: { resource: 'INACTIVE_MEMBER', action: 'READ' }
+    },
     member: {
-      read: { resource: 'MEMBER', action: 'READ' },
-      create: { resource: 'MEMBER', action: 'CREATE' },
-      update: { resource: 'MEMBER', action: 'UPDATE' },
-      delete: { resource: 'MEMBER', action: 'DELETE' }
+      read: { resource: 'MEMBER', action: 'READ' }
     },
     memberProfile: {
       read: { resource: 'MEMBER_PROFILE', action: 'READ' },

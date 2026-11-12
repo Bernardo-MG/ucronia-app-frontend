@@ -110,6 +110,7 @@ export class PublicMemberView implements OnInit {
     const authService = inject(AuthService);
     this.permissions = {
       read: authService.hasPermission(UcroniaPermissions.directory.member.read),
+      readInactiveMembers: authService.hasPermission(UcroniaPermissions.directory.inactiveMember.read),
       readPrivate: authService.hasPermission(UcroniaPermissions.directory.memberProfile.read),
       create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
       edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
@@ -436,6 +437,10 @@ export class PublicMemberView implements OnInit {
   }
 
   public onFilterStatus(status: MemberStatus): void {
+    if (!this.permissions.readInactiveMembers) {
+      return;
+    }
+
     this.filterStatus = status;
     this.load();
   }
@@ -695,6 +700,7 @@ export class PublicMemberView implements OnInit {
 
 interface Permissions {
   read: boolean;
+  readInactiveMembers: boolean;
   readPrivate: boolean;
   create: boolean;
   edit: boolean;
