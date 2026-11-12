@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ErrorRequestInterceptor, Page, PaginatedResponse, SimpleResponse, Sorting } from '@bernardo-mg/request';
-import { MembershipEvolutionMonth, PublicMember } from '@ucronia/domain';
+import { MembershipEvolutionMonth, MemberStatus, PublicMember } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { MemberCount } from '../../members/member-summary';
 
@@ -17,7 +17,8 @@ export class PublicMemberEndpoint {
     page: number | undefined = undefined,
     size: number | undefined = undefined,
     sort: Sorting | undefined = undefined,
-    name: string | undefined = undefined
+    name: string | undefined = undefined,
+    status?: MemberStatus
   ): Observable<Page<PublicMember>> {
     let params = new HttpParams();
     if (page) {
@@ -30,6 +31,9 @@ export class PublicMemberEndpoint {
     sort?.properties
       .forEach((property) => params = params.append('sort', `${String(property.property)}|${property.direction}`));
 
+    if (status) {
+      params = params.append('status', status.toUpperCase());
+    }
     if (name) {
       params = params.append('name', name);
     }

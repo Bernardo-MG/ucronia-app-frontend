@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -12,7 +13,7 @@ import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDir
 import { TextFilter } from '@bernardo-mg/ui';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { ContactMethod, FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
+import { ContactMethod, FeeType, Key, KeyAssignment, Member, MemberStatus, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -35,7 +36,7 @@ import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [TextFilter, MemberCreationForm, MemberEditionForm, MemberInfo, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule],
+  imports: [TextFilter, MemberCreationForm, MemberEditionForm, MemberInfo, MemberStatusSelector, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
@@ -71,6 +72,7 @@ export class PublicMemberView implements OnInit {
   public readonly fieldsKeyEditForm = viewChild<MemberKeyForm>('fieldsKeyEditForm');
   public readonly fieldsMemberCreationForm = viewChild<MemberCreationForm>('fieldsMemberCreationForm');
   public readonly fieldsMemberEditionForm = viewChild<MemberEditionForm>('fieldsMemberEditionForm');
+  public filterStatus = MemberStatus.Active;
   public filterValue = '';
   public keyAssignments: KeyAssignment[] = [];
   public get notRenewing(): number {
@@ -132,12 +134,12 @@ export class PublicMemberView implements OnInit {
     this.listRequest?.unsubscribe();
     this.status.loading = true;
     this.listRequest = this.service
-      .getAll(page, this.sort, this.filterValue)
+      .getAll(page, this.sort, this.filterValue, this.filterStatus)
       .pipe(
         switchMap(response => {
           if (response.content.length === 0 && response.page > 1) {
             const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
-            return this.service.getAll(previousPage, this.sort, this.filterValue);
+            return this.service.getAll(previousPage, this.sort, this.filterValue, this.filterStatus);
           }
           return of(response);
         }),
@@ -430,6 +432,11 @@ export class PublicMemberView implements OnInit {
 
   public onFilter(filter: string): void {
     this.filterValue = filter;
+    this.load();
+  }
+
+  public onFilterStatus(status: MemberStatus): void {
+    this.filterStatus = status;
     this.load();
   }
 

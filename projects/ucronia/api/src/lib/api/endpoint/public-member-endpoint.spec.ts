@@ -1,7 +1,7 @@
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { PublicMember } from '@ucronia/domain';
+import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { PublicMemberEndpoint } from './public-member-endpoint';
 
 describe('PublicMemberEndpoint', () => {
@@ -35,5 +35,15 @@ describe('PublicMemberEndpoint', () => {
       page: 1,
       totalElements: 3
     });
+  });
+
+  it('sends the member status along with pagination and name', () => {
+    endpoint.page(2, 10, undefined, 'Ana', MemberStatus.Inactive).subscribe();
+
+    const request = http.expectOne(req => req.url === '/api/member');
+    expect(request.request.params.get('status')).toBe('INACTIVE');
+    expect(request.request.params.get('page')).toBe('2');
+    expect(request.request.params.get('name')).toBe('Ana');
+    request.flush({ content: [] });
   });
 });
