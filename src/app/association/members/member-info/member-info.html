@@ -21,6 +21,14 @@
           [value]="member.renew"
           trueText="Renueva"
           falseText="No renueva" />
+        <ui-detail-field
+          icon="pi pi-calendar"
+          name="Fecha de inicio"
+          [value]="(member.joined | date: 'MM/yyyy') ?? '—'" />
+        <ui-detail-field
+          icon="pi pi-calendar"
+          name="Tiempo total como socio"
+          [value]="member.totalMonths | membershipDuration" />
       </div>
     </section>
   }

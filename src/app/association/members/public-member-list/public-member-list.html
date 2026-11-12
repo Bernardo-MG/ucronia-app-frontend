@@ -34,8 +34,8 @@
       <td>
         <span class="font-semibold text-gray-950">{{ member.name.fullName }}</span>
         <assoc-public-member-renew-tag [renew]="member.renew" />
-        @if (member.name.nickname) {
-          <span class="mt-1 block text-xs text-gray-500">{{ member.name.nickname }}</span>
+        @if (member.totalMonths !== undefined && member.totalMonths !== null) {
+          <span class="mt-1 block text-xs text-gray-500">{{ member.totalMonths | membershipDuration }}</span>
         }
       </td>
       <td class="font-mono text-sm text-gray-600">#{{ member.memberNumber }}</td>

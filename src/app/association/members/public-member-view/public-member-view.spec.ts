@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
@@ -7,17 +8,16 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, Page } from '@bernardo-mg/request';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
+import { FeeType, Key, KeyAssignment, Member, MemberStatus, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
+import { Drawer } from 'primeng/drawer';
 import { Subject, of, throwError } from 'rxjs';
-import { Dialog } from '../members-dialog';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
-import { MemberProfileService } from '../member-profile-service';
 import { MemberKeyService } from '../member-key-service';
+import { MemberProfileService } from '../member-profile-service';
+import { Dialog } from '../members-dialog';
 import { PublicMemberService } from '../public-member-service';
 import { PublicMemberView } from './public-member-view';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { Drawer } from 'primeng/drawer';
 
 describe('PublicMemberView', () => {
   let component: PublicMemberView;
@@ -88,6 +88,31 @@ describe('PublicMemberView', () => {
     fixture.detectChanges();
   });
 
+  it('reloads the first page with the selected status and keeps the name filter', () => {
+    component.onFilter('Alice');
+    component.load(2);
+    memberServiceMock.getAll.calls.reset();
+
+    component.onFilterStatus(MemberStatus.Inactive);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.Inactive);
+
+    component.onFilterStatus(MemberStatus.All);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.All);
+  });
+
+  it('keeps active members as the only option without inactive read permission', () => {
+    component.permissions.readInactiveMembers = false;
+    fixture.detectChanges();
+    memberServiceMock.getAll.calls.reset();
+
+    component.onFilterStatus(MemberStatus.Inactive);
+    component.onFilterStatus(MemberStatus.All);
+
+    expect(fixture.nativeElement.querySelector('assoc-member-status-selector')).toBeNull();
+    expect(component.filterStatus).toBe(MemberStatus.Active);
+    expect(memberServiceMock.getAll).not.toHaveBeenCalled();
+  });
+
   it('refreshes the current filtered page and counters', () => {
     component.onFilter('Alice');
     component.data.page = 2;
@@ -103,7 +128,7 @@ describe('PublicMemberView', () => {
     memberServiceMock.getSummary.and.returnValue(of({ active: 8, renew: 6 }));
     component.refresh();
 
-    expect(memberServiceMock.getAll).toHaveBeenCalledWith(2, jasmine.anything(), 'Alice');
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(2, jasmine.anything(), 'Alice', MemberStatus.Active);
     expect(memberServiceMock.getSummary).toHaveBeenCalledTimes(1);
     expect(component.data).toBe(response);
     expect(component.active).toBe(8);

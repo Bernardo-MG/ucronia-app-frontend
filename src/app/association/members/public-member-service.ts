@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { MemberCount, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { PublicMember } from '@ucronia/domain';
+import { MemberStatus, PublicMember } from '@ucronia/domain';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -17,9 +17,9 @@ export class PublicMemberService {
     new SortingProperty('memberNumber')
   ];
 
-  public getAll(page: number | undefined = undefined, sort: Sorting, name: string): Observable<Page<PublicMember>> {
+  public getAll(page: number | undefined = undefined, sort: Sorting, name: string, status?: MemberStatus): Observable<Page<PublicMember>> {
     const sorting = new Sorting(mergeProperties(sort.properties, this.defaultSorting));
-    return this.ucroniaClient.member.page(page, undefined, sorting, name);
+    return this.ucroniaClient.member.page(page, undefined, sorting, name, status);
   }
 
   // TODO: Support assigned-profile exclusion in the backend if required by the key picker.

@@ -4,10 +4,11 @@ import { PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { PublicMemberRenewTag } from '../public-member-renew-tag/public-member-renew-tag';
+import { MembershipDurationPipe } from '../membership-duration.pipe';
 
 @Component({
   selector: 'assoc-public-member-list',
-  imports: [ButtonModule, TableModule, PublicMemberRenewTag],
+  imports: [ButtonModule, TableModule, PublicMemberRenewTag, MembershipDurationPipe],
   templateUrl: './public-member-list.html'
 })
 export class PublicMemberList {

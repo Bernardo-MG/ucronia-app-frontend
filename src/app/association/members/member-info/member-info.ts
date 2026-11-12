@@ -5,10 +5,11 @@ import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Member, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
+import { MembershipDurationPipe } from '../membership-duration.pipe';
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [AuditInfo, DatePipe, DetailField, StatusDetail, ButtonModule, MessageModule],
+  imports: [AuditInfo, DatePipe, DetailField, MembershipDurationPipe, StatusDetail, ButtonModule, MessageModule],
   templateUrl: './member-info.html'
 })
 export class MemberInfo {
