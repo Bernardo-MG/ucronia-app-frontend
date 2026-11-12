@@ -27,8 +27,8 @@
           [value]="(member.joined | date: 'MM/yyyy') ?? '—'" />
         <ui-detail-field
           icon="pi pi-calendar"
-          name="Meses totales"
-          [value]="member.totalMonths ?? '—'" />
+          name="Tiempo total como socio"
+          [value]="membershipDuration()" />
       </div>
     </section>
   }
