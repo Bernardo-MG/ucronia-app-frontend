@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { PublicSettings } from '@ucronia/domain';
+import { ContactInfo } from '@ucronia/domain';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
 import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
@@ -21,7 +21,7 @@ export class SettingsView implements OnInit {
 
   public readonly editable;
   public loading = false;
-  public settings = new PublicSettings();
+  public contactInfo = new ContactInfo();
 
   public constructor() {
     const authService = inject(AuthService);
@@ -44,8 +44,8 @@ export class SettingsView implements OnInit {
         finalize(() => this.loading = false),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(settings => {
-        this.settings = settings;
+      .subscribe(contactInfo => {
+        this.contactInfo = contactInfo;
       });
   }
 

@@ -2,7 +2,7 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { GoogleMaps, TeamupCalendar } from '@bernardo-mg/ui';
-import { Activity, PublicSettings } from '@ucronia/domain';
+import { Activity, ContactInfo } from '@ucronia/domain';
 import { finalize } from 'rxjs';
 import { ActivityCarousel, ActivityDisplay } from '../activity-carousel/activity-carousel';
 import { FrontpageService } from '../frontpage-service';
@@ -23,13 +23,13 @@ export class Frontpage implements OnInit {
   public loadingActivities = false;
   public readonly locationCode: string | undefined;
   public selectedActivityDisplay: ActivityDisplay = 'upcoming';
-  public settings = new PublicSettings();
+  public contactInfo = new ContactInfo();
 
   // Lifecycle hooks
   public ngOnInit(): void {
-    this.service.getSettings()
+    this.service.getContactInfo()
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(settings => this.settings = settings);
+      .subscribe(contactInfo => this.contactInfo = contactInfo);
 
     this.loadActivities('upcoming');
   }

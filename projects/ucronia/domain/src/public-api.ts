@@ -37,7 +37,7 @@ export * from './lib/members/membership-evolution-month';
 export * from './lib/members/public-member';
 export * from './lib/profile/contact-method';
 export * from './lib/profile/profile';
-export * from './lib/setting/public-settings';
+export * from './lib/setting/contact-info';
 export * from './lib/setting/setting';
 export * from './lib/sponsors/sponsor';
 export * from './lib/transactions/transaction';
