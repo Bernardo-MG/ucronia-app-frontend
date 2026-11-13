@@ -38,7 +38,8 @@ export class SettingsView implements OnInit {
       email: this.service.getEmail(),
       instagram: this.service.getInstagram(),
       map: this.service.getMap(),
-      calendar: this.service.getCalendar()
+      calendar: this.service.getCalendar(),
+      telegram: this.service.getTelegram()
     })
       .pipe(
         finalize(() => this.loading = false),
@@ -59,6 +60,10 @@ export class SettingsView implements OnInit {
 
     if (values.instagram !== undefined) {
       updates.push(this.service.updateInstagram(values.instagram));
+    }
+
+    if (values.telegram !== undefined) {
+      updates.push(this.service.updateTelegram(values.telegram));
     }
 
     if (values.googleMaps !== undefined) {

@@ -11,7 +11,8 @@ describe('SettingsView', () => {
     getEmail: jasmine.createSpy().and.returnValue(of('')),
     getInstagram: jasmine.createSpy().and.returnValue(of('')),
     getMap: jasmine.createSpy().and.returnValue(of('')),
-    getCalendar: jasmine.createSpy().and.returnValue(of(''))
+    getCalendar: jasmine.createSpy().and.returnValue(of('')),
+    getTelegram: jasmine.createSpy().and.returnValue(of(''))
   };
 
   beforeEach(async () => {

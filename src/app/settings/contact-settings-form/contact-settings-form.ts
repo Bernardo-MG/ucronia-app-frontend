@@ -20,6 +20,7 @@ export class ContactSettingsForm implements OnChanges {
     this.formStatus.loading = loading;
   }
   public readonly teamUp = input('');
+  public readonly telegram = input('');
 
   public readonly save = output<SocialSettingsFormEvent>();
 
@@ -39,14 +40,15 @@ export class ContactSettingsForm implements OnChanges {
       email: [''],
       instagram: [''],
       googleMaps: [''],
-      teamUp: ['']
+      teamUp: [''],
+      telegram: ['']
     });
 
     this.formStatus = new FormStatus(this.form);
   }
 
   // Lifecycle hooks
-  public ngOnChanges({ email, instagram, googleMaps, teamUp }: SimpleChanges): void {
+  public ngOnChanges({ email, instagram, googleMaps, teamUp, telegram }: SimpleChanges): void {
     if (instagram) {
       this.form.get('instagram')?.setValue(instagram.currentValue);
     }
@@ -58,6 +60,9 @@ export class ContactSettingsForm implements OnChanges {
     }
     if (teamUp) {
       this.form.get('teamUp')?.setValue(teamUp.currentValue);
+    }
+    if (telegram) {
+      this.form.get('telegram')?.setValue(telegram.currentValue);
     }
   }
 
@@ -89,6 +94,7 @@ export class SocialSettingsFormEvent {
     public instagram?: string,
     public email?: string,
     public googleMaps?: string,
-    public teamUp?: string
+    public teamUp?: string,
+    public telegram?: string
   ) { }
 }
