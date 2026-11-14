@@ -4,7 +4,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { PublicSettings } from '@ucronia/domain';
+import { ContactInfo } from '@ucronia/domain';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
 import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
@@ -19,9 +19,9 @@ export class SettingsView implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AssociationSettingsService);
 
+  public contactInfo = new ContactInfo();
   public readonly editable;
   public loading = false;
-  public settings = new PublicSettings();
 
   public constructor() {
     const authService = inject(AuthService);
@@ -38,14 +38,15 @@ export class SettingsView implements OnInit {
       email: this.service.getEmail(),
       instagram: this.service.getInstagram(),
       map: this.service.getMap(),
-      calendar: this.service.getCalendar()
+      calendar: this.service.getCalendar(),
+      telegram: this.service.getTelegram()
     })
       .pipe(
         finalize(() => this.loading = false),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(settings => {
-        this.settings = settings;
+      .subscribe(contactInfo => {
+        this.contactInfo = contactInfo;
       });
   }
 
@@ -59,6 +60,10 @@ export class SettingsView implements OnInit {
 
     if (values.instagram !== undefined) {
       updates.push(this.service.updateInstagram(values.instagram));
+    }
+
+    if (values.telegram !== undefined) {
+      updates.push(this.service.updateTelegram(values.telegram));
     }
 
     if (values.googleMaps !== undefined) {

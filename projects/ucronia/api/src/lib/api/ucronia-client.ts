@@ -3,6 +3,7 @@ import { inject, InjectionToken } from '@angular/core';
 import { AccountEndpoint } from './endpoint/account-endpoint';
 import { ActivityEndpoint } from './endpoint/activity-endpoint';
 import { AssetEndpoint } from './endpoint/asset-endpoint';
+import { ContactInfoEndpoint } from './endpoint/contact-info-endpoint';
 import { ContactMethodEndpoint } from './endpoint/contact-method-endpoint';
 import { FeeEndpoint } from './endpoint/fee-endpoint';
 import { FeeTypeEndpoint } from './endpoint/fee-type-endpoint';
@@ -99,6 +100,10 @@ export class UcroniaClient {
 
   public get gameTable() {
     return new GameTableEndpoint(this.http, this.base_url);
+  }
+
+  public get contactInfo() {
+    return new ContactInfoEndpoint(this.http, this.base_url);
   }
 
   public get setting() {

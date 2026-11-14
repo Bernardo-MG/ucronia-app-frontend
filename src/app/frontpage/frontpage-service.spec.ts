@@ -10,10 +10,8 @@ describe('FrontpageService', () => {
     activity: {
       page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 }))
     },
-    setting: {
-      public: {
-        get: jasmine.createSpy().and.returnValue(of({}))
-      }
+    contactInfo: {
+      get: jasmine.createSpy().and.returnValue(of({}))
     }
   };
 
