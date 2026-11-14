@@ -5,6 +5,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
+import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
@@ -45,7 +46,7 @@ export class UserView implements OnInit {
   public failures = new FailureStore();
   public loading = false;
   public member = new Profile();
-  public members: Profile[] = [];
+  public members: MemberSearchOption[] = [];
   public readonly permissions: Permissions;
   public roleSelection: Role[] = [];
   public selectedData = new User();

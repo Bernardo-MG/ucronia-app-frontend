@@ -1,9 +1,8 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Profile } from '@ucronia/domain';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
@@ -21,7 +20,7 @@ export class FeeCreationForm {
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
 
   public readonly save = output<FeeCreationEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
@@ -31,7 +30,7 @@ export class FeeCreationForm {
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-  public selectedMember?: Profile;
+  public selectedMember?: MemberSearchOption;
 
   public constructor() {
     const formBuilder = inject(FormBuilder);
@@ -59,7 +58,7 @@ export class FeeCreationForm {
     }
   }
 
-  public onSelectMember(member: Profile): void {
+  public onSelectMember(member: MemberSearchOption): void {
     if (!member) {
       return;
     }

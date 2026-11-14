@@ -3,7 +3,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
-import { BookLending, BookType, Donor, GameBook, GameSystem, Profile } from '@ucronia/domain';
+import { BookLending, BookType, Donor, GameBook, GameSystem, MemberStatus, Profile } from '@ucronia/domain';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService } from 'primeng/api';
 import { of, Subject } from 'rxjs';
 import { BookReportService } from '../book-report-service';
@@ -29,6 +30,7 @@ describe('LibraryView', () => {
       'getGameSystems',
       'getBookTypes',
       'searchDonors',
+      'searchMembers',
       'setAuthors',
       'setPublishers',
       'setGameSystem',
@@ -63,6 +65,8 @@ describe('LibraryView', () => {
   beforeEach(async () => {
     authServiceMock.hasPermission.and.returnValue(false);
     authServiceMock.hasAnyPermission.and.returnValue(false);
+    libraryServiceMock.searchMembers.calls.reset();
+    libraryServiceMock.searchMembers.and.returnValue(of([]));
     libraryServiceMock.getAllBooks.and.returnValue(
       of(new Page<GameBook>())
     );
@@ -104,6 +108,22 @@ describe('LibraryView', () => {
     fixture = TestBed.createComponent(LibraryView);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  it('searches active and inactive borrowers when inactive members are readable', () => {
+    authServiceMock.hasPermission.and.callFake(permission =>
+      permission === UcroniaPermissions.directory.inactiveMember.read);
+    const permittedFixture = TestBed.createComponent(LibraryView);
+
+    permittedFixture.componentInstance.onSearchMembers({ query: 'Ana' });
+
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana', MemberStatus.All);
+  });
+
+  it('searches active borrowers when inactive members are restricted', () => {
+    component.onSearchMembers({ query: 'Ana' });
+
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana', MemberStatus.Active);
   });
 
   it('hides the settings button without catalog permissions', () => {

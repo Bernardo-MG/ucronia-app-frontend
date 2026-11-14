@@ -1,6 +1,6 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
@@ -21,7 +21,7 @@ export class LibraryBookLendingForm implements OnChanges {
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
 
   public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
@@ -75,7 +75,7 @@ export class LibraryBookLendingForm implements OnChanges {
     }
   }
 
-  public onSelectMember(member: Profile) {
+  public onSelectMember(member: MemberSearchOption) {
     if (!member) {
       return;
     }

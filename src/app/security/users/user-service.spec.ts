@@ -25,7 +25,7 @@ describe('UserService', () => {
   };
 
   const ucroniaClientMock = {
-    memberProfile: {
+    member: {
       page: jasmine.createSpy().and.returnValue(of({
         content: [],
         page: 0,

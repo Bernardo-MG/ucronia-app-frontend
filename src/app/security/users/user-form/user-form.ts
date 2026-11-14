@@ -1,6 +1,6 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -30,7 +30,7 @@ export class UserForm implements OnChanges {
   @Input() public set member(value: Profile) {
     this.selectedMember = value ?? new Profile();
   }
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
   public readonly selection = input<Role[]>([]);
 
   public readonly save = output<UserFormData>();
@@ -51,7 +51,7 @@ export class UserForm implements OnChanges {
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
-  public selectedMember = new Profile();
+  public selectedMember: MemberSearchOption = new Profile();
   public username = '';
 
   public constructor() {
@@ -101,7 +101,7 @@ export class UserForm implements OnChanges {
     }
   }
 
-  public onSelectMember(member: Profile): void {
+  public onSelectMember(member: MemberSearchOption): void {
     this.selectedMember = member;
     this.form.markAsDirty();
   }
@@ -138,5 +138,5 @@ export interface UserEditionFormData {
   name: string;
   email: string;
   roles: Role[];
-  member: Profile;
+  member: MemberSearchOption;
 }

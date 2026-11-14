@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { GameTable, MemberStatus, Profile, ScheduledGame } from '@ucronia/domain';
+import { GameTable, MemberStatus, Profile, PublicMember, ScheduledGame } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -116,7 +116,7 @@ export class ScheduledGameService {
     return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
-  public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<Profile[]> {
+  public searchMembers(query: string, status: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -125,7 +125,7 @@ export class ScheduledGameService {
       ]
     );
 
-    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, status, query)
+    return this.ucroniaClient.member.page(undefined, 10, sorting, query, status)
       .pipe(map(page => page.content));
   }
 

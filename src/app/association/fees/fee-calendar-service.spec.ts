@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { Page } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { Fee, Member, MemberStatus } from '@ucronia/domain';
+import { Fee, MemberStatus, PublicMember } from '@ucronia/domain';
 import { of } from 'rxjs';
 import { FeeCalendarService } from './fee-calendar-service';
 
@@ -13,14 +13,14 @@ describe('FeeCalendarService', () => {
       page: jasmine.createSpy(),
       range: jasmine.createSpy().and.returnValue(of({}))
     },
-    memberProfile: {
+    member: {
       page: jasmine.createSpy()
     }
   };
 
   beforeEach(() => {
     mockUcroniaClient.fee.page.calls.reset();
-    mockUcroniaClient.memberProfile.page.calls.reset();
+    mockUcroniaClient.member.page.calls.reset();
     TestBed.configureTestingModule({
       providers: [
         { provide: UcroniaClient, useValue: mockUcroniaClient }
@@ -45,7 +45,7 @@ describe('FeeCalendarService', () => {
       response.content = page === 1 ? [firstFee, inactiveFee] : [secondFee];
       return of(response);
     });
-    mockUcroniaClient.memberProfile.page.and.returnValue(of(createPage([
+    mockUcroniaClient.member.page.and.returnValue(of(createPage([
       createMember(1, true),
       createMember(2, false)
     ])));
@@ -59,14 +59,15 @@ describe('FeeCalendarService', () => {
         { month: secondFee.month, paid: true }
       ]);
       expect(calendar[1].member.number).toBe(2);
+      expect(calendar[1].member.active).toBeFalse();
     });
 
     expect(mockUcroniaClient.fee.page).toHaveBeenCalledTimes(2);
     expect(mockUcroniaClient.fee.page.calls.argsFor(0)[0]).toBeUndefined();
     expect(mockUcroniaClient.fee.page.calls.argsFor(0)[1]).toBe(100);
     expect(mockUcroniaClient.fee.page.calls.argsFor(1)[0]).toBe(2);
-    expect(mockUcroniaClient.memberProfile.page).toHaveBeenCalledOnceWith(
-      undefined, 100, undefined, MemberStatus.All
+    expect(mockUcroniaClient.member.page).toHaveBeenCalledOnceWith(
+      undefined, 100, undefined, undefined, MemberStatus.All
     );
   });
 
@@ -79,7 +80,7 @@ describe('FeeCalendarService', () => {
       createFee(2, new Date(2025, 0, 1), false)
     ];
     mockUcroniaClient.fee.page.and.returnValue(of(response));
-    mockUcroniaClient.memberProfile.page.and.returnValue(of(createPage([
+    mockUcroniaClient.member.page.and.returnValue(of(createPage([
       createMember(1, true)
     ])));
 
@@ -89,8 +90,8 @@ describe('FeeCalendarService', () => {
       expect(calendar[1].member.active).toBeUndefined();
     });
 
-    expect(mockUcroniaClient.memberProfile.page).toHaveBeenCalledOnceWith(
-      undefined, 100, undefined, MemberStatus.All
+    expect(mockUcroniaClient.member.page).toHaveBeenCalledOnceWith(
+      undefined, 100, undefined, undefined, MemberStatus.All
     );
   });
 });
@@ -104,8 +105,8 @@ function createFee(member: number, month: Date, paid: boolean): Fee {
   return fee;
 }
 
-function createMember(number: number, active: boolean): Member {
-  const member = new Member();
+function createMember(number: number, active: boolean): PublicMember {
+  const member = new PublicMember();
   member.number = number;
   member.active = active;
   member.name.fullName = `Member ${number}`;

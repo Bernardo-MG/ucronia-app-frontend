@@ -6,6 +6,7 @@ import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
+import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -48,7 +49,7 @@ export class ScheduledGameView implements OnInit {
     return this.scheduledGames.content.filter(game => game.status === CalendarStatus.DRAFT).length;
   }
   public failures = new FailureStore();
-  public members: Profile[] = [];
+  public members: MemberSearchOption[] = [];
   public readonly permissions: Permissions;
   public get publishedCount(): number {
     return this.scheduledGames.content.filter(game => game.status === CalendarStatus.PUBLISHED).length;

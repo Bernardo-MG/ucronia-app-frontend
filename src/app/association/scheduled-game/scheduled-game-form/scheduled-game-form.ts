@@ -1,6 +1,6 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { GameTable, Profile, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
@@ -35,7 +35,7 @@ export class ScheduledGameForm implements OnChanges {
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
   public readonly selectedMaster = input(new Profile());
   public readonly tables = input<GameTable[]>([]);
 
@@ -48,7 +48,7 @@ export class ScheduledGameForm implements OnChanges {
     { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
     { name: 'Partida única', value: ScheduledGameType.ONESHOT }
   ];
-  public master = new Profile();
+  public master: MemberSearchOption = new Profile();
   public readonly recurrenceUnits = [
     { name: 'Diaria', value: RecurrenceUnit.DAILY },
     { name: 'Semanal', value: RecurrenceUnit.WEEKLY },
@@ -120,14 +120,14 @@ export class ScheduledGameForm implements OnChanges {
     }
   }
 
-  public onSelectMaster(member: Profile): void {
+  public onSelectMaster(member: MemberSearchOption): void {
     this.master = member;
     this.form.get('master')?.setValue(member.number);
     this.form.get('master')?.markAsDirty();
   }
 
   // Public methods
-  public getInitials(profile: Profile): string {
+  public getInitials(profile: MemberSearchOption): string {
     return profile.name.fullName
       .split(/\s+/)
       .filter(Boolean)

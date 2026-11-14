@@ -7,7 +7,7 @@ import { Profile } from '@ucronia/domain';
   imports: [SearchSelect],
   templateUrl: './member-search.html'
 })
-export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> {
+export class MemberSearch<T extends MemberSearchOption = Profile> {
 
   public readonly disabled = input(false);
   public readonly inputId = input.required<string>();
@@ -26,6 +26,8 @@ export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> 
   }
 
 }
+
+export type MemberSearchOption = Pick<Profile, 'number' | 'name'>;
 
 export class MemberSearchEvent {
   public query: string = '';

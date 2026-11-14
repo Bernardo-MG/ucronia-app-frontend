@@ -7,6 +7,7 @@ import { getAllPages } from '@app/shared/request/get-all-pages';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
+import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -84,7 +85,7 @@ export class LibraryView implements OnInit {
     // TODO: handle empty lendings
     return this.selectedData.lendings[this.selectedData.lendings.length - 1].lendingDate;
   }
-  public members: Profile[] = [];
+  public members: MemberSearchOption[] = [];
   public readonly permissions: Permissions;
   public selectedBookBorrowerNames: Record<number, string> = {};
   public readonly selectedBookView = BookSelection.GAME;
@@ -101,6 +102,7 @@ export class LibraryView implements OnInit {
   };
   public summary = new LibrarySummary();
 
+  private readonly borrowerStatus: MemberStatus;
   private currentDialog = Dialog.NONE;
   private readonly detailRequest = new DetailRequest();
   private readonly donorSearch = new SearchRequest();
@@ -110,6 +112,10 @@ export class LibraryView implements OnInit {
 
   public constructor() {
     const authService = inject(AuthService);
+
+    this.borrowerStatus = authService.hasPermission(UcroniaPermissions.directory.inactiveMember.read)
+      ? MemberStatus.All
+      : MemberStatus.Active;
 
     // Check permissions
     this.permissions = {
@@ -303,7 +309,7 @@ export class LibraryView implements OnInit {
   }
 
   public onSearchMembers(event: { query: string }): void {
-    this.memberSearch.search(event.query, query => this.service.searchMembers(query, MemberStatus.Active))
+    this.memberSearch.search(event.query, query => this.service.searchMembers(query, this.borrowerStatus))
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(members => this.members = members);
   }

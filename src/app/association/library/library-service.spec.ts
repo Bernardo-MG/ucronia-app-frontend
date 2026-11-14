@@ -75,7 +75,7 @@ describe('LibraryService', () => {
         totalPages: 0
       }))
     },
-    memberProfile: {
+    member: {
       page: jasmine.createSpy().and.returnValue(of({
         content: [],
         page: 0,

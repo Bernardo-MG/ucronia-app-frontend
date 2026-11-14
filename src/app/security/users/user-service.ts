@@ -4,7 +4,7 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Member, MemberStatus, Profile } from '@ucronia/domain';
+import { MemberStatus, Profile, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
@@ -125,7 +125,7 @@ export class UserService {
       );
   }
 
-  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<Member[]> {
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -134,8 +134,8 @@ export class UserService {
       ]
     );
 
-    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
-      .pipe(map(page => page.content as Member[]));
+    return this.ucroniaClient.member.page(undefined, 10, sorting, query, active)
+      .pipe(map(page => page.content));
   }
 
 }

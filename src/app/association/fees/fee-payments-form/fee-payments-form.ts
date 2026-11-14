@@ -1,9 +1,8 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Profile } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -25,7 +24,7 @@ export class FeePaymentsForm {
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
@@ -39,7 +38,7 @@ export class FeePaymentsForm {
     return this.formStatus.saveEnabled;
   }
 
-  protected selectedMember?: Profile;
+  protected selectedMember?: MemberSearchOption;
   protected readonly today = new Date();
 
   public constructor() {
@@ -86,7 +85,7 @@ export class FeePaymentsForm {
     }
   }
 
-  public onSelectMember(member: Profile) {
+  public onSelectMember(member: MemberSearchOption) {
     if (!member) {
       return;
     }

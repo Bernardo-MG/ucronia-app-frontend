@@ -6,10 +6,11 @@ import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
+import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, SearchRequest } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Fee, FeeSummary, MemberStatus, Profile, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, MemberStatus, YearsRange } from '@ucronia/domain';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -68,7 +69,7 @@ export class FeeView implements OnInit {
     range: new YearsRange(),
     year: new Date().getFullYear()
   };
-  public members: Profile[] = [];
+  public members: MemberSearchOption[] = [];
   public readonly memberStatus = signal(MemberStatus.Active);
   public readonly permissions: Permissions;
   public selectedData = new Fee();
