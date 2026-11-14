@@ -19,11 +19,9 @@ export class Frontpage implements OnInit {
   private readonly service = inject(FrontpageService);
 
   public activities: Activity[] = [];
-  public readonly calendarCode: string | undefined;
-  public loadingActivities = false;
-  public readonly locationCode: string | undefined;
-  public selectedActivityDisplay: ActivityDisplay = 'upcoming';
   public contactInfo = new ContactInfo();
+  public loadingActivities = false;
+  public selectedActivityDisplay: ActivityDisplay = 'upcoming';
 
   // Lifecycle hooks
   public ngOnInit(): void {

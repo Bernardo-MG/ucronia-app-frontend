@@ -19,9 +19,9 @@ export class SettingsView implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AssociationSettingsService);
 
+  public contactInfo = new ContactInfo();
   public readonly editable;
   public loading = false;
-  public contactInfo = new ContactInfo();
 
   public constructor() {
     const authService = inject(AuthService);
