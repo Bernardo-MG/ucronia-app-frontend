@@ -39,7 +39,7 @@
         }
         @if (member.active === false) {
           <span class="mt-1 block text-xs text-gray-500">
-            Mes de baja: {{ (member.lastPaidMonth | date: 'MM/yyyy' : 'UTC') ?? '—' }}
+            Mes de baja: {{ (member.lastPaidMonth | date: 'MM/yyyy') ?? '—' }}
           </span>
         }
       </td>
