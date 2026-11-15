@@ -16,6 +16,7 @@ export class SearchSelect<T> {
 
   public readonly clearOnSelect = input(false);
   public readonly disabled = input(false);
+  public readonly forceSelection = input(true);
   public readonly inputId = input.required<string>();
   public readonly label = input('Buscar');
   public readonly optionLabel = input('name');
@@ -54,9 +55,9 @@ export class SearchSelect<T> {
   }
 
   protected onInput(event: Event): void {
-    this.viewValue = (event.target as HTMLInputElement).value;
-    this.queries.next('');
-    this.cleared.emit();
+    if (this.forceSelection()) {
+      this.onValueChange((event.target as HTMLInputElement).value);
+    }
   }
 
   public onSearch(query: string): void {

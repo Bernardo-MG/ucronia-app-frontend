@@ -1,5 +1,5 @@
 <ui-search-select [inputId]="inputId()" label="Buscar socio" placeholder="Buscar socio..."
-  [disabled]="disabled()" [value]="(member()?.number || 0) > 0 ? member() : null"
+  [disabled]="disabled()" [forceSelection]="false" [value]="(member()?.number || 0) > 0 ? member() : null"
   [suggestions]="members()" optionLabel="name.fullName"
   (queryChange)="searchMember.emit({ query: $event })" (selected)="selectMember.emit($event)"
   (cleared)="clearMember.emit()" />

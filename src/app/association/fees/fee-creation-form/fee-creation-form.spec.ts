@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeeCreationForm } from './fee-creation-form';
-import { Profile } from '@ucronia/domain';
+import { By } from '@angular/platform-browser';
+import { Profile, PublicMember } from '@ucronia/domain';
+import { AutoComplete } from 'primeng/autocomplete';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -17,6 +19,33 @@ describe('FeeCreationForm', () => {
     fixture = TestBed.createComponent(FeeCreationForm);
     fixture.detectChanges();
     component = fixture.componentInstance;
+  });
+
+  it('keeps a member suggestion selectable when the search input loses focus', async () => {
+    const member = Object.assign(new PublicMember(), { number: 7 });
+    member.name.fullName = 'Ana García';
+    fixture.componentRef.setInput('members', [member]);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    const input = fixture.nativeElement.querySelector('#profile-member-search') as HTMLInputElement;
+    const autocomplete = fixture.debugElement.query(By.directive(AutoComplete)).componentInstance as AutoComplete;
+    input.value = 'Ana';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('change', { bubbles: true }));
+
+    expect(input.value).toBe('Ana');
+
+    autocomplete.onOptionSelect(new MouseEvent('click'), member);
+    fixture.detectChanges();
+    await fixture.whenStable();
+
+    expect(input.value).toBe('Ana García');
+    expect(component.form.get('member')?.value).toBe(7);
+
+    input.value = 'Other';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    expect(component.form.get('member')?.value).toBeNull();
   });
 
   it('stores the selected member number in the fee payload', () => {
