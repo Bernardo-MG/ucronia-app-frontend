@@ -37,6 +37,11 @@
         @if (member.totalMonths !== undefined && member.totalMonths !== null) {
           <span class="mt-1 block text-xs text-gray-500">{{ member.totalMonths | membershipDuration }}</span>
         }
+        @if (member.active === false) {
+          <span class="mt-1 block text-xs text-gray-500">
+            Mes de baja: {{ (member.lastPaidMonth | date: 'MM/yyyy' : 'UTC') ?? '—' }}
+          </span>
+        }
       </td>
       <td class="font-mono text-sm text-gray-600">#{{ member.memberNumber }}</td>
       @if (canRead()) {

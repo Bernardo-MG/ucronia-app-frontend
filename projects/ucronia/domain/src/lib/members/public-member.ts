@@ -8,5 +8,6 @@ export class PublicMember {
   public active = true;
   public renew = true;
   public joined?: Date;
+  public lastPaidMonth?: Date;
   public totalMonths?: number;
 }

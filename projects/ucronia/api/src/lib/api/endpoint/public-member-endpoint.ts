@@ -45,7 +45,8 @@ export class PublicMemberEndpoint {
           ...response,
           content: response.content.map(member => ({
             ...member,
-            joined: typeof member.joined === 'string' ? new Date(member.joined) : undefined
+            joined: typeof member.joined === 'string' ? new Date(member.joined) : undefined,
+            lastPaidMonth: typeof member.lastPaidMonth === 'string' ? new Date(member.lastPaidMonth) : undefined
           }))
         }))
       );
@@ -84,6 +85,7 @@ export class PublicMemberEndpoint {
   }
 
 }
-type PublicMemberData = Omit<PublicMember, 'joined'> & {
+type PublicMemberData = Omit<PublicMember, 'joined' | 'lastPaidMonth'> & {
   joined?: string | null;
+  lastPaidMonth?: string | null;
 };

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PublicMember } from '@ucronia/domain';
@@ -8,7 +9,7 @@ import { MembershipDurationPipe } from '../membership-duration.pipe';
 
 @Component({
   selector: 'assoc-public-member-list',
-  imports: [ButtonModule, TableModule, PublicMemberRenewTag, MembershipDurationPipe],
+  imports: [ButtonModule, TableModule, PublicMemberRenewTag, MembershipDurationPipe, DatePipe],
   templateUrl: './public-member-list.html'
 })
 export class PublicMemberList {
