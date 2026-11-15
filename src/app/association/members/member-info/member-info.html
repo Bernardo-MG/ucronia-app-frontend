@@ -25,6 +25,12 @@
           icon="pi pi-calendar"
           name="Fecha de inicio"
           [value]="(member.joined | date: 'MM/yyyy') ?? '—'" />
+        @if (member.active === false) {
+          <ui-detail-field
+            icon="pi pi-calendar"
+            name="Mes de baja"
+            [value]="(member.lastPaidMonth | date: 'MM/yyyy' : 'UTC') ?? '—'" />
+        }
         <ui-detail-field
           icon="pi pi-calendar"
           name="Tiempo total como socio"

@@ -30,6 +30,35 @@ describe('MemberInfo', () => {
     expect(fixture.nativeElement.querySelector('p-drawer')).toBeNull();
   });
 
+  it('shows the last paid month in the public details of an inactive member', () => {
+    fixture.componentRef.setInput('publicData', Object.assign(new PublicMember(), {
+      active: false,
+      lastPaidMonth: new Date('2024-04-01T00:00:00Z')
+    }));
+    fixture.detectChanges();
+
+    const field = fixture.nativeElement.querySelector('ui-detail-field[name="Mes de baja"]');
+    expect(field?.textContent).toContain('04/2024');
+  });
+
+  it('shows a placeholder for an inactive member without a paid month', () => {
+    fixture.componentRef.setInput('publicData', Object.assign(new PublicMember(), { active: false }));
+    fixture.detectChanges();
+
+    const field = fixture.nativeElement.querySelector('ui-detail-field[name="Mes de baja"]');
+    expect(field?.textContent).toContain('—');
+  });
+
+  it('hides the last paid month for an active member', () => {
+    fixture.componentRef.setInput('publicData', Object.assign(new PublicMember(), {
+      active: true,
+      lastPaidMonth: new Date('2024-04-01T00:00:00Z')
+    }));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('ui-detail-field[name="Mes de baja"]')).toBeNull();
+  });
+
   it('should separate private information when the view permits it', () => {
     fixture.componentRef.setInput('showPrivate', true);
     fixture.detectChanges();
