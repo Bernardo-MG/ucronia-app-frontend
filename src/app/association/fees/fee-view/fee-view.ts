@@ -1,26 +1,27 @@
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DatePipe } from '@angular/common';
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, SearchRequest } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { Fee, FeeSummary, MemberStatus, YearsRange } from '@ucronia/domain';
+import { Fee, FeeSummary, MemberStatus } from '@ucronia/domain';
+import { NormalizedInterval, startOfMonth, subMonths } from 'date-fns';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { MenuModule } from 'primeng/menu';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, Observable, Subscription, switchMap, tap } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
-import { FeeCalendar } from '../fee-calendar/fee-calendar';
+import { DEFAULT_FEE_CALENDAR_MONTHS, FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeCreationEvent, FeeCreationForm } from '../fee-creation-form/fee-creation-form';
 import { FeeEditionEvent, FeeEditionForm } from '../fee-edition-form/fee-edition-form';
 import { FeeInfo } from '../fee-info/fee-info';
@@ -41,6 +42,8 @@ export class FeeView implements OnInit {
   private readonly reportService = inject(FeeSummaryService);
   private readonly service = inject(FeeService);
 
+  public calendarError = false;
+  public calendarPeriod: NormalizedInterval;
   public readonly creationItems: MenuItem[] = [];
   public readonly Dialog = Dialog;
   public get dialog(): Dialog {
@@ -65,10 +68,6 @@ export class FeeView implements OnInit {
     const active = status === MemberStatus.Active;
     return calendar.filter(entry => entry.member.active === active);
   });
-  public readonly filter: Filter = {
-    range: new YearsRange(),
-    year: new Date().getFullYear()
-  };
   public members: MemberSearchOption[] = [];
   public readonly memberStatus = signal(MemberStatus.Active);
   public readonly permissions: Permissions;
@@ -88,6 +87,8 @@ export class FeeView implements OnInit {
 
   public constructor() {
     const authService = inject(AuthService);
+    const month = startOfMonth(new Date());
+    this.calendarPeriod = { start: subMonths(month, DEFAULT_FEE_CALENDAR_MONTHS - 1), end: month };
 
     // Check permissions
     this.permissions = {
@@ -99,7 +100,7 @@ export class FeeView implements OnInit {
 
   // Lifecycle hooks
   public ngOnInit(): void {
-    this.loadRange();
+    this.loadCalendar(this.calendarPeriod);
 
     this.creationItems.push(
       {
@@ -119,17 +120,22 @@ export class FeeView implements OnInit {
   }
 
   // Event handlers
-  public loadCalendar(year: number) {
+  public loadCalendar(period: NormalizedInterval): void {
     this.calendarRequest?.unsubscribe();
     this.status.loadingCalendar = true;
 
-    this.filter.year = year;
-    this.calendarRequest = this.feeCalendarService.getCalendar(year)
+    this.calendarPeriod = period;
+    this.calendarError = false;
+    this.fullCalendar.set([]);
+    this.calendarRequest = this.feeCalendarService.getCalendar(period)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
         finalize(() => this.status.loadingCalendar = false)
       )
-      .subscribe(data => this.fullCalendar.set(data));
+      .subscribe({
+        next: data => this.fullCalendar.set(data),
+        error: () => this.calendarError = true
+      });
   }
 
   public onCancelEdit(): void {
@@ -141,7 +147,7 @@ export class FeeView implements OnInit {
     this.call(
       () => this.service.create(data),
       () => {
-        this.loadRange();
+        this.loadCalendar(this.calendarPeriod);
         this.loadSummary();
       }
     );
@@ -177,7 +183,7 @@ export class FeeView implements OnInit {
         this.call(
           () => this.service.delete(memberNumber, month),
           () => {
-            this.loadRange();
+            this.loadCalendar(this.calendarPeriod);
             this.loadSummary();
           }
         );
@@ -196,7 +202,7 @@ export class FeeView implements OnInit {
     this.call(
       () => this.service.pay(data),
       () => {
-        this.loadRange();
+        this.loadCalendar(this.calendarPeriod);
         this.loadSummary();
       }
     );
@@ -227,32 +233,13 @@ export class FeeView implements OnInit {
     this.call(
       () => this.service.update(this.selectedData.member.number, this.selectedData.month, update),
       () => {
-        this.loadRange();
+        this.loadCalendar(this.calendarPeriod);
         this.loadSummary();
       }
     );
   }
 
   // Data loading
-  private loadRange() {
-    this.calendarRequest?.unsubscribe();
-    this.status.loadingCalendar = true;
-
-    this.calendarRequest = this.feeCalendarService.getRange()
-      .pipe(
-        tap(range => {
-          this.filter.range = range;
-          this.loadYear(range);
-        }),
-        switchMap(() =>
-          this.feeCalendarService.getCalendar(this.filter.year)
-        ),
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => this.status.loadingCalendar = false)
-      )
-      .subscribe(data => this.fullCalendar.set(data));
-  }
-
   private loadSummary() {
     this.status.loadingSummary = true;
     this.reportService.getSummary()
@@ -261,19 +248,6 @@ export class FeeView implements OnInit {
         finalize(() => this.status.loadingSummary = false)
       )
       .subscribe(response => this.summary = response);
-  }
-
-  private loadYear(range: YearsRange) {
-    if (range.years.length) {
-      const firstYear = Number(range.years[0]);
-      const lastYear = Number(range.years[range.years.length - 1]);
-      // If the current year is outside the range, set it back
-      if (this.filter.year < firstYear) {
-        this.filter.year = firstYear;
-      } else if (this.filter.year > lastYear) {
-        this.filter.year = lastYear;
-      }
-    }
   }
 
   // Private methods
@@ -317,11 +291,6 @@ interface Status {
   loading: boolean;
   loadingCalendar: boolean;
   loadingSummary: boolean;
-}
-
-interface Filter {
-  range: YearsRange;
-  year: number;
 }
 
 enum Dialog {
