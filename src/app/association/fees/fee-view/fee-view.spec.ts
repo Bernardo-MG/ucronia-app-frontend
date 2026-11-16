@@ -18,7 +18,7 @@ describe('FeeView', () => {
 
   const feeCalendarMock = jasmine.createSpyObj<FeeCalendarService>(
     'FeeCalendarService',
-    ['getCalendar', 'getRange']
+    ['getCalendar']
   );
 
   const feeServiceMock = jasmine.createSpyObj<FeeService>(
@@ -32,10 +32,6 @@ describe('FeeView', () => {
   );
 
   beforeEach(async () => {
-    feeCalendarMock.getRange.and.returnValue(
-      of({ years: [2020, 2021, 2022, 2023, 2024] })
-    );
-
     feeCalendarMock.getCalendar.and.returnValue(
       of([])
     );
@@ -67,7 +63,7 @@ describe('FeeView', () => {
     expect(component).toBeTruthy();
   });
 
-  it('filters calendar rows by member status and keeps the selection when changing years', () => {
+  it('filters calendar rows by member status and keeps the selection when changing the period', () => {
     const row = (number: number, active?: boolean): MemberFees => {
       const entry = new MemberFees();
       entry.member.number = number;
@@ -78,7 +74,7 @@ describe('FeeView', () => {
     const inactive = row(2, false);
     const unknown = row(3);
     feeCalendarMock.getCalendar.and.returnValue(of([active, inactive, unknown]));
-    component.loadCalendar(2023);
+    component.loadCalendar({ start: new Date(2023, 0, 1), end: new Date(2023, 5, 1) });
     fixture.detectChanges();
 
     const selector: MemberStatusSelector = fixture.debugElement.query(By.directive(MemberStatusSelector)).componentInstance;
@@ -98,12 +94,13 @@ describe('FeeView', () => {
     expect(feeCalendarMock.getCalendar).not.toHaveBeenCalled();
 
     selector.filter.emit(MemberStatus.Inactive);
-    const nextYearInactive = row(4, false);
-    feeCalendarMock.getCalendar.and.returnValue(of([active, nextYearInactive]));
-    calendar.goToYear.emit(2024);
+    const nextPeriodInactive = row(4, false);
+    feeCalendarMock.getCalendar.and.returnValue(of([active, nextPeriodInactive]));
+    const nextPeriod = { start: new Date(2024, 10, 1), end: new Date(2025, 1, 1) };
+    calendar.periodChange.emit(nextPeriod);
     fixture.detectChanges();
-    expect(feeCalendarMock.getCalendar).toHaveBeenCalledOnceWith(2024);
+    expect(feeCalendarMock.getCalendar).toHaveBeenCalledOnceWith(nextPeriod);
     expect(selector.status()).toBe(MemberStatus.Inactive);
-    expect(calendar.feeCalendar()).toEqual([nextYearInactive]);
+    expect(calendar.feeCalendar()).toEqual([nextPeriodInactive]);
   });
 });

@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { Fee, MemberStatus, PublicMember, YearsRange } from '@ucronia/domain';
-import { endOfYear, startOfYear } from 'date-fns';
+import { Fee, MemberStatus, PublicMember } from '@ucronia/domain';
+import { endOfMonth, NormalizedInterval, startOfMonth } from 'date-fns';
 import { forkJoin, map, Observable } from 'rxjs';
 import { MemberFees } from './domain/member-fees';
 
@@ -14,7 +14,7 @@ export class FeeCalendarService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getCalendar(year: number): Observable<MemberFees[]> {
+  public getCalendar(period: NormalizedInterval): Observable<MemberFees[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('member.name.firstName'),
@@ -23,10 +23,11 @@ export class FeeCalendarService {
       ]
     );
 
-    const date = new Date(year, 0, 1);
+    const from = startOfMonth(period.start);
+    const to = endOfMonth(period.end);
 
     const feeEndpoint = this.ucroniaClient.fee;
-    const fees = getAllPages((page, size) => feeEndpoint.page(page, size, sorting, startOfYear(date), endOfYear(date)));
+    const fees = getAllPages((page, size) => feeEndpoint.page(page, size, sorting, from, to));
     const memberEndpoint = this.ucroniaClient.member;
     const members = getAllPages((page, size) => memberEndpoint.page(page, size, undefined, undefined, MemberStatus.All));
 
@@ -63,11 +64,6 @@ export class FeeCalendarService {
       });
 
     return Array.from(memberFees.values());
-  }
-
-
-  public getRange(): Observable<YearsRange> {
-    return this.ucroniaClient.fee.range();
   }
 
 }

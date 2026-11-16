@@ -10,8 +10,7 @@ describe('FeeCalendarService', () => {
 
   const mockUcroniaClient = {
     fee: {
-      page: jasmine.createSpy(),
-      range: jasmine.createSpy().and.returnValue(of({}))
+      page: jasmine.createSpy()
     },
     member: {
       page: jasmine.createSpy()
@@ -33,7 +32,7 @@ describe('FeeCalendarService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should read all fee pages for the year and group them by member', () => {
+  it('should read all fee pages for the selected period and group them by member', () => {
     const firstFee = createFee(1, new Date(2025, 0, 1), false);
     const secondFee = createFee(1, new Date(2025, 1, 1), true);
     const inactiveFee = createFee(2, new Date(2025, 0, 1), true);
@@ -50,7 +49,7 @@ describe('FeeCalendarService', () => {
       createMember(2, false)
     ])));
 
-    service.getCalendar(2025).subscribe(calendar => {
+    service.getCalendar({ start: new Date(2024, 11, 1), end: new Date(2025, 1, 1) }).subscribe(calendar => {
       expect(calendar.length).toBe(2);
       expect(calendar[0].member.number).toBe(1);
       expect(calendar[0].member.active).toBeTrue();
@@ -65,6 +64,10 @@ describe('FeeCalendarService', () => {
     expect(mockUcroniaClient.fee.page).toHaveBeenCalledTimes(2);
     expect(mockUcroniaClient.fee.page.calls.argsFor(0)[0]).toBeUndefined();
     expect(mockUcroniaClient.fee.page.calls.argsFor(0)[1]).toBe(100);
+    expect(mockUcroniaClient.fee.page.calls.argsFor(0).slice(3)).toEqual([
+      new Date(2024, 11, 1),
+      new Date(2025, 1, 28, 23, 59, 59, 999)
+    ]);
     expect(mockUcroniaClient.fee.page.calls.argsFor(1)[0]).toBe(2);
     expect(mockUcroniaClient.member.page).toHaveBeenCalledOnceWith(
       undefined, 100, undefined, undefined, MemberStatus.All
@@ -84,7 +87,7 @@ describe('FeeCalendarService', () => {
       createMember(1, true)
     ])));
 
-    service.getCalendar(2025).subscribe(calendar => {
+    service.getCalendar({ start: new Date(2024, 11, 1), end: new Date(2025, 1, 1) }).subscribe(calendar => {
       expect(calendar.map(entry => entry.member.number)).toEqual([1, 2]);
       expect(calendar[1].member.name.fullName).toBe('Member 2');
       expect(calendar[1].member.active).toBeUndefined();
