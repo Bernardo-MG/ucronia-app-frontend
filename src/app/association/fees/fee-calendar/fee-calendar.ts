@@ -27,24 +27,6 @@ export class FeeCalendar {
   public readonly selectFee = output<{ member: number, date: Date }>();
 
   protected readonly currentMonth = startOfMonth(new Date()).getTime();
-  protected readonly from = linkedSignal<Date | null>(() => this.period().start);
-  protected mode: 'recent' | 'range' = 'recent';
-  protected readonly modes = [
-    { label: 'Últimos meses', value: 'recent' },
-    { label: 'Rango de fechas', value: 'range' }
-  ];
-  protected recentMonths: number | null = DEFAULT_FEE_CALENDAR_MONTHS;
-  protected readonly to = linkedSignal<Date | null>(() => this.period().end);
-
-  private readonly monthLabel = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' });
-
-  protected applyPeriod(): void {
-    const period = this.draftPeriod;
-    if (period) {
-      this.periodChange.emit(period);
-    }
-  }
-
   protected get draftPeriod(): NormalizedInterval | null {
     if (this.mode === 'recent') {
       const count = this.recentMonths;
@@ -61,15 +43,31 @@ export class FeeCalendar {
     const end = this.to();
     return start && end && start <= end ? { start, end } : null;
   }
-
+  protected readonly from = linkedSignal<Date | null>(() => this.period().start);
+  protected mode: 'recent' | 'range' = 'recent';
+  protected readonly modes = [
+    { label: 'Últimos meses', value: 'recent' },
+    { label: 'Rango de fechas', value: 'range' }
+  ];
   protected readonly months = computed(() => eachMonthOfInterval(this.period()).map(month => ({
     key: month.getTime(),
     label: this.formatMonth(month)
   })));
+  protected recentMonths: number | null = DEFAULT_FEE_CALENDAR_MONTHS;
   protected readonly rows = computed(() => this.feeCalendar().map(entry => ({
     member: entry.member,
     feesByMonth: new Map(entry.fees.map(fee => [startOfMonth(fee.month).getTime(), fee]))
   })));
+  protected readonly to = linkedSignal<Date | null>(() => this.period().end);
+
+  private readonly monthLabel = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' });
+
+  protected applyPeriod(): void {
+    const period = this.draftPeriod;
+    if (period) {
+      this.periodChange.emit(period);
+    }
+  }
 
   protected formatMonth(date: Date): string {
     return this.monthLabel.format(date);
