@@ -42,6 +42,8 @@ export class FeeView implements OnInit {
   private readonly reportService = inject(FeeSummaryService);
   private readonly service = inject(FeeService);
 
+  public calendarError = false;
+  public calendarPeriod: NormalizedInterval;
   public readonly creationItems: MenuItem[] = [];
   public readonly Dialog = Dialog;
   public get dialog(): Dialog {
@@ -66,8 +68,6 @@ export class FeeView implements OnInit {
     const active = status === MemberStatus.Active;
     return calendar.filter(entry => entry.member.active === active);
   });
-  public calendarPeriod: NormalizedInterval;
-  public calendarError = false;
   public members: MemberSearchOption[] = [];
   public readonly memberStatus = signal(MemberStatus.Active);
   public readonly permissions: Permissions;

@@ -18,35 +18,32 @@ export const DEFAULT_FEE_CALENDAR_MONTHS = 6;
 })
 export class FeeCalendar {
 
+  public readonly error = input(false);
   public readonly feeCalendar = input<MemberFees[]>([]);
   public readonly loading = input(false);
-  public readonly error = input(false);
   public readonly period = input.required<NormalizedInterval>();
 
   public readonly periodChange = output<NormalizedInterval>();
   public readonly selectFee = output<{ member: number, date: Date }>();
 
+  protected readonly currentMonth = startOfMonth(new Date()).getTime();
+  protected readonly from = linkedSignal<Date | null>(() => this.period().start);
+  protected mode: 'recent' | 'range' = 'recent';
   protected readonly modes = [
     { label: 'Últimos meses', value: 'recent' },
     { label: 'Rango de fechas', value: 'range' }
   ];
-  protected readonly currentMonth = startOfMonth(new Date()).getTime();
-  protected mode: 'recent' | 'range' = 'recent';
   protected recentMonths: number | null = DEFAULT_FEE_CALENDAR_MONTHS;
-  protected readonly from = linkedSignal<Date | null>(() => this.period().start);
   protected readonly to = linkedSignal<Date | null>(() => this.period().end);
 
   private readonly monthLabel = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' });
 
-  protected readonly months = computed(() => eachMonthOfInterval(this.period()).map(month => ({
-    key: month.getTime(),
-    label: this.formatMonth(month)
-  })));
-
-  protected readonly rows = computed(() => this.feeCalendar().map(entry => ({
-    member: entry.member,
-    feesByMonth: new Map(entry.fees.map(fee => [startOfMonth(fee.month).getTime(), fee]))
-  })));
+  protected applyPeriod(): void {
+    const period = this.draftPeriod;
+    if (period) {
+      this.periodChange.emit(period);
+    }
+  }
 
   protected get draftPeriod(): NormalizedInterval | null {
     if (this.mode === 'recent') {
@@ -65,12 +62,14 @@ export class FeeCalendar {
     return start && end && start <= end ? { start, end } : null;
   }
 
-  protected applyPeriod(): void {
-    const period = this.draftPeriod;
-    if (period) {
-      this.periodChange.emit(period);
-    }
-  }
+  protected readonly months = computed(() => eachMonthOfInterval(this.period()).map(month => ({
+    key: month.getTime(),
+    label: this.formatMonth(month)
+  })));
+  protected readonly rows = computed(() => this.feeCalendar().map(entry => ({
+    member: entry.member,
+    feesByMonth: new Map(entry.fees.map(fee => [startOfMonth(fee.month).getTime(), fee]))
+  })));
 
   protected formatMonth(date: Date): string {
     return this.monthLabel.format(date);
