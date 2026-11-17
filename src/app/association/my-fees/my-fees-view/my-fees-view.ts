@@ -1,7 +1,7 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
-import { Fee } from '@ucronia/domain';
+import { MyFee } from '@ucronia/domain';
 import { finalize, of, Subscription, switchMap, tap } from 'rxjs';
 import { MyFeesList } from '../my-fees-list/my-fees-list';
 import { MyFeesService } from '../my-fees-service';
@@ -16,7 +16,7 @@ export class MyFeesView implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(MyFeesService);
 
-  public data = new Page<Fee>();
+  public data = new Page<MyFee>();
   public get first() {
     return (this.data.page - 1) * this.data.size;
   }

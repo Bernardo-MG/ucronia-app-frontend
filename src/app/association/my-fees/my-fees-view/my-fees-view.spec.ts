@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Page } from '@bernardo-mg/request';
-import { Fee } from '@ucronia/domain';
+import { MyFee } from '@ucronia/domain';
 import { of } from 'rxjs';
 import { MyFeesService } from '../my-fees-service';
 import { MyFeesView } from './my-fees-view';
@@ -16,7 +16,7 @@ describe('MyFeesView', () => {
 
   beforeEach(async () => {
     myFeesMock.getAll.and.returnValue(
-      of(new Page<Fee>())
+      of(new Page<MyFee>())
     );
 
     myFeesMock.hasFees.and.returnValue(of(false));
