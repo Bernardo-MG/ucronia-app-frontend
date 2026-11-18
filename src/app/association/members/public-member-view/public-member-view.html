@@ -47,18 +47,13 @@
 
           <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
             <div class="border-b border-gray-200 p-4">
-              <p-iconfield class="block w-full">
-                <p-inputicon class="pi pi-search" />
-                <input
-                  pInputText
-                  type="search"
-                  [(ngModel)]="filterValue"
-                  (ngModelChange)="onFilterChange($event)"
-                  placeholder="Buscar por nombre…"
-                  aria-label="Buscar socios por nombre"
-                  class="w-full"
-                  maxlength="50" />
-              </p-iconfield>
+              <div class="flex flex-wrap items-center gap-3">
+                <ui-text-filter class="block w-full lg:max-w-xl" label="Buscar socios" placeholder="Buscar por nombre..."
+                  [value]="filterValue" (filter)="onFilter($event)" />
+                @if (permissions.readInactiveMembers) {
+                  <assoc-member-status-selector [status]="filterStatus" (filter)="onFilterStatus($event)" />
+                }
+              </div>
               <p class="mt-3 text-sm text-gray-500">{{ data.totalElements }} socios</p>
             </div>
 
@@ -112,7 +107,6 @@
         <assoc-member-creation-form
           #fieldsMemberCreationForm
           formId="public-member-view-create"
-          [showActions]="false"
           [loading]="status.saving || status.loadingOptions || !status.optionsReady"
           [failures]="failures"
           [feeTypes]="feeTypes"
@@ -131,7 +125,6 @@
         <assoc-member-key-form
           #fieldsAssocKeyForm
           formId="public-member-view-create-key"
-          [showActions]="false"
           [loading]="status.saving"
           [failures]="failures"
           (save)="onCreateKey($event)" />
@@ -172,7 +165,6 @@
           <assoc-member-key-assignment-form
             #fieldsKeyAssignmentForm
             formId="public-member-view-assign-key"
-            [showActions]="false"
             [members]="assignmentMembers"
             [failures]="failures"
             [loading]="status.saving"
@@ -193,7 +185,6 @@
           <assoc-member-key-form
             #fieldsKeyEditForm
             formId="public-member-view-edit-key"
-            [showActions]="false"
             [loading]="status.saving"
             [data]="selectedKey"
             [failures]="failures"
@@ -233,7 +224,6 @@
           <assoc-member-edition-form
             #fieldsMemberEditionForm
             formId="public-member-view-edit-member"
-            [showActions]="false"
             [data]="privateMember"
             [feeTypes]="feeTypes"
             [contactMethods]="contactMethods"
@@ -274,7 +264,18 @@
             editLabel="Editar llave"
             (delete)="onDeleteKey($event)"
             (edit)="onShowKeyEdit()">
-            <div drawerActionsEnd>
+            <div drawerActionsEnd class="flex flex-wrap justify-end gap-3">
+              @if (canUnassignKey) {
+                <p-button
+                  data-action="unassign-key"
+                  type="button"
+                  label="Quitar asignación"
+                  icon="pi pi-user-minus"
+                  severity="danger"
+                  [outlined]="true"
+                  [disabled]="status.saving"
+                  (onClick)="onUnassignKey($event)" />
+              }
               @if (canAssignKey) {
                 <p-button
                   [label]="selectedKey.profile ? 'Cambiar socio' : 'Asignar socio'"

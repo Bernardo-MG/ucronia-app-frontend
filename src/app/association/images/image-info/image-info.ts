@@ -20,6 +20,7 @@ export class ImageInfo {
   public readonly loading = input(false);
   public readonly source = input('');
 
+  // Event handlers
   public async copyUrl(): Promise<void> {
     await navigator.clipboard.writeText(this.source());
     this.messages.add({
@@ -30,9 +31,11 @@ export class ImageInfo {
     });
   }
 
+  // Public methods
   public formatSize(size: number): string {
     if (size < 1024) return `${size} B`;
     if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
     return `${(size / 1024 / 1024).toFixed(1)} MB`;
   }
+
 }

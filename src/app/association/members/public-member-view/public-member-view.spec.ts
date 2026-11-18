@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
@@ -7,13 +8,14 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, Page } from '@bernardo-mg/request';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
+import { FeeType, Key, KeyAssignment, Member, MemberStatus, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
-import { of, Subject, throwError } from 'rxjs';
-import { Dialog } from '../members-dialog';
+import { Drawer } from 'primeng/drawer';
+import { Subject, of, throwError } from 'rxjs';
 import { MemberKeyForm } from '../member-key-form/member-key-form';
-import { MemberProfileService } from '../member-profile-service';
 import { MemberKeyService } from '../member-key-service';
+import { MemberProfileService } from '../member-profile-service';
+import { Dialog } from '../members-dialog';
 import { PublicMemberService } from '../public-member-service';
 import { PublicMemberView } from './public-member-view';
 
@@ -33,7 +35,8 @@ describe('PublicMemberView', () => {
     'getAll',
     'create',
     'update',
-    'delete'
+    'delete',
+    'unassign'
   ]);
   const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
   const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', [
@@ -50,6 +53,7 @@ describe('PublicMemberView', () => {
     memberProfileServiceMock.update.and.returnValue(of(new Member()));
     memberKeyServiceMock.update.calls.reset();
     memberKeyServiceMock.delete.calls.reset();
+    memberKeyServiceMock.unassign.calls.reset();
     memberKeyServiceMock.update.and.returnValue(of(new Key()));
     memberKeyServiceMock.delete.and.returnValue(of(new Key()));
     memberProfileServiceMock.create.calls.reset();
@@ -84,6 +88,31 @@ describe('PublicMemberView', () => {
     fixture.detectChanges();
   });
 
+  it('reloads the first page with the selected status and keeps the name filter', () => {
+    component.onFilter('Alice');
+    component.load(2);
+    memberServiceMock.getAll.calls.reset();
+
+    component.onFilterStatus(MemberStatus.Inactive);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.Inactive);
+
+    component.onFilterStatus(MemberStatus.All);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.All);
+  });
+
+  it('keeps active members as the only option without inactive read permission', () => {
+    component.permissions.readInactiveMembers = false;
+    fixture.detectChanges();
+    memberServiceMock.getAll.calls.reset();
+
+    component.onFilterStatus(MemberStatus.Inactive);
+    component.onFilterStatus(MemberStatus.All);
+
+    expect(fixture.nativeElement.querySelector('assoc-member-status-selector')).toBeNull();
+    expect(component.filterStatus).toBe(MemberStatus.Active);
+    expect(memberServiceMock.getAll).not.toHaveBeenCalled();
+  });
+
   it('refreshes the current filtered page and counters', () => {
     component.onFilter('Alice');
     component.data.page = 2;
@@ -99,7 +128,7 @@ describe('PublicMemberView', () => {
     memberServiceMock.getSummary.and.returnValue(of({ active: 8, renew: 6 }));
     component.refresh();
 
-    expect(memberServiceMock.getAll).toHaveBeenCalledWith(2, jasmine.anything(), 'Alice');
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(2, jasmine.anything(), 'Alice', MemberStatus.Active);
     expect(memberServiceMock.getSummary).toHaveBeenCalledTimes(1);
     expect(component.data).toBe(response);
     expect(component.active).toBe(8);
@@ -512,6 +541,61 @@ describe('PublicMemberView', () => {
     expect(component.status.saving).toBeFalse();
   });
 
+  it('confirms removing an assignment and reloads the key as unassigned', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const key: KeyAssignment = { number: 3, available: true, description: 'Principal' };
+    const response = new Subject<KeyAssignment>();
+    memberKeyServiceMock.unassign.and.returnValue(response);
+    memberKeyServiceMock.getAll.and.returnValue(of([key]));
+    component.onShowKey({ ...key, profile: { number: 12, name: 'Ana' } });
+
+    component.onUnassignKey(new Event('click'));
+    expect(memberKeyServiceMock.unassign).not.toHaveBeenCalled();
+
+    const confirmation = confirm.calls.mostRecent().args[0];
+    confirmation.accept?.();
+    confirmation.accept?.();
+    expect(memberKeyServiceMock.unassign).toHaveBeenCalledOnceWith(3);
+    expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
+
+    response.next(key);
+    response.complete();
+    expect(component.keyAssignments).toEqual([key]);
+    expect(component.dialog).toBe(Dialog.NONE);
+  });
+
+  it('does not remove assignments for an unassigned key or without permission', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const key: KeyAssignment = { number: 3, available: true, description: 'Principal' };
+    component.onShowKey(key);
+    expect(component.canUnassignKey).toBeFalse();
+    component.onUnassignKey(new Event('click'));
+
+    component.permissions.keyAssignmentsDelete = false;
+    component.onShowKey({ ...key, profile: { number: 12, name: 'Ana' } });
+    expect(component.canUnassignKey).toBeFalse();
+    component.onUnassignKey(new Event('click'));
+
+    expect(confirm).not.toHaveBeenCalled();
+    expect(memberKeyServiceMock.unassign).not.toHaveBeenCalled();
+  });
+
+  it('keeps the assigned profile visible when removal fails', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const key: KeyAssignment = {
+      number: 3, available: true, description: 'Principal', profile: { number: 12, name: 'Ana' }
+    };
+    memberKeyServiceMock.unassign.and.returnValue(throwError(() => new Error('Failed')));
+    component.onShowKey(key);
+    component.onUnassignKey(new Event('click'));
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(component.selectedKey).toBe(key);
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+    expect(component.error).toBe('No se pudo quitar la asignación de la llave.');
+    expect(component.status.saving).toBeFalse();
+  });
+
   it('should queue a refresh when keys change during loading', () => {
     const response = new Subject<KeyAssignment[]>();
     const updated: KeyAssignment[] = [{ number: 3, available: true, description: 'New' }];
@@ -791,5 +875,372 @@ describe('PublicMemberView', () => {
     expect(component.status.loading).toBeFalse();
     expect(component.status.loadingSummary).toBeFalse();
   });
+
+});
+
+describe('PublicMemberView - assign key', () => {
+  let fixture: ComponentFixture<PublicMemberView>;
+  let component: PublicMemberView;
+
+  const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
+  const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('PublicMemberService', ['getAll', 'getSummary', 'searchMembers']);
+  const keyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['getAll', 'assign', 'reassign']);
+  const profileServiceMock = jasmine.createSpyObj<MemberProfileService>('MemberProfileService', ['getOne']);
+  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
+  const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', ['getAllAvailable']);
+  const member = Object.assign(new PublicMember(), { number: 12, memberNumber: 37, name: { fullName: 'Ana López' } });
+  const other = Object.assign(new PublicMember(), { number: 15, memberNumber: 42, name: { fullName: 'Luis García' } });
+  const key: KeyAssignment = { number: 7, available: true, description: 'Principal' };
+  const assigned: KeyAssignment = { ...key, profile: { number: 12, name: 'Ana López' } };
+
+  beforeEach(async () => {
+    authServiceMock.hasPermission.and.returnValue(true);
+    memberServiceMock.searchMembers.calls.reset();
+    memberServiceMock.searchMembers.and.returnValue(of([member]));
+    memberServiceMock.getAll.and.returnValue(of(new Page<PublicMember>()));
+    memberServiceMock.getSummary.and.returnValue(of(new MemberCount()));
+    keyServiceMock.getAll.calls.reset();
+    keyServiceMock.getAll.and.returnValue(of([assigned]));
+    keyServiceMock.assign.calls.reset();
+    keyServiceMock.reassign.calls.reset();
+    keyServiceMock.reassign.and.returnValue(of({ ...key, profile: { number: 15, name: 'Luis García' } }));
+    keyServiceMock.assign.and.returnValue(of(assigned));
+    profileServiceMock.getOne.calls.reset();
+
+    await TestBed.configureTestingModule({
+      imports: [PublicMemberView],
+      providers: [
+        provideNoopAnimations(),
+        ConfirmationService,
+        { provide: AuthService, useValue: authServiceMock },
+        { provide: PublicMemberService, useValue: memberServiceMock },
+        { provide: MemberKeyService, useValue: keyServiceMock },
+        { provide: MemberProfileService, useValue: profileServiceMock },
+        { provide: FeeTypeService, useValue: feeTypeServiceMock },
+        { provide: ContactMethodService, useValue: contactMethodServiceMock }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(PublicMemberView);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+    component.onShowKey(key);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+  });
+
+  it('opens the member selector from an unassigned key without loading private profiles', () => {
+    const button = assignmentButton(fixture);
+
+    expect(button).withContext('the visible drawer must offer assignment for an unassigned key').toBeDefined();
+    button?.click();
+    fixture.detectChanges();
+
+    expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
+    expect(component.assignmentMembers).toEqual([]);
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
+    component.loadAssignmentMembers('Ana');
+    expect(component.assignmentMembers).toEqual([member]);
+    expect(memberServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana');
+    expect(profileServiceMock.getOne).not.toHaveBeenCalled();
+  });
+
+  it('saves the assignment through the drawer footer using native form submission', async () => {
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
+    const submit = footer?.querySelector<HTMLButtonElement>('button[data-action="submit"]');
+    const form = component.fieldsKeyAssignmentForm();
+
+    expect(submit).withContext('the assignment drawer must render a submit action in its footer').toBeTruthy();
+    expect(submit?.form?.id).toBe('public-member-view-assign-key');
+    expect(submit?.disabled).toBeTrue();
+    expect(form).toBeDefined();
+    if (!form || !submit) {
+      return;
+    }
+    form.form.patchValue({ profile: 12 });
+    form.form.get('profile')?.markAsDirty();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(submit.disabled).toBeFalse();
+    submit.click();
+    fixture.detectChanges();
+
+    expect(keyServiceMock.assign).toHaveBeenCalledOnceWith(7, 12);
+    expect(component.dialog).toBe(Dialog.NONE);
+  });
+
+  it('cancels assignment through the drawer footer without saving', async () => {
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
+    const cancel = footer?.querySelector<HTMLButtonElement>('button[data-action="cancel"]');
+
+    expect(cancel).withContext('the assignment drawer must render a cancel action in its footer').toBeTruthy();
+    cancel?.click();
+    fixture.detectChanges();
+
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+  });
+
+  it('keeps the footer connected to the key editing form when switching drawer modes', async () => {
+    component.onShowKeyEdit();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
+    const submit = footer?.querySelector<HTMLButtonElement>('button[data-action="submit"]');
+
+    expect(submit?.form?.id).toBe('public-member-view-edit-key');
+    expect(submit?.disabled).toBeTrue();
+    expect(component.fieldsKeyEditForm()).toBeDefined();
+  });
+
+  it('hides and rejects assignment without assignment creation permission', async () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.keyAssignment.create);
+    const restrictedFixture = TestBed.createComponent(PublicMemberView);
+    const restricted = restrictedFixture.componentInstance;
+    restricted.onShowKey(key);
+    restrictedFixture.detectChanges();
+    await restrictedFixture.whenStable();
+    restrictedFixture.detectChanges();
+
+    restricted.onShowKeyAssignment();
+    restricted.onAssignKey(12);
+
+    expect(assignmentButton(restrictedFixture)).toBeUndefined();
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    restrictedFixture.destroy();
+  });
+
+  it('does not load member choices without public member read permission', () => {
+    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.directory.member.read);
+    const restrictedFixture = TestBed.createComponent(PublicMemberView);
+    const restricted = restrictedFixture.componentInstance;
+    restricted.onShowKey(key);
+    restrictedFixture.detectChanges();
+
+    restricted.onShowKeyAssignment();
+
+    expect(restricted.dialog).toBe(Dialog.KEY_INFO);
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
+    restrictedFixture.destroy();
+  });
+
+  it('reassigns an assigned key through the drawer footer and refreshes the list', async () => {
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    component.selectedTab = 'keys';
+    component.onShowKey(assigned);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const button = Array.from(drawer.container?.querySelectorAll<HTMLButtonElement>('button') ?? [])
+      .find(action => action.textContent?.trim() === 'Cambiar socio');
+
+    expect(button).toBeDefined();
+    button?.click();
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const form = component.fieldsKeyAssignmentForm();
+    const submit = drawer.container?.querySelector<HTMLButtonElement>('[data-pc-section="footer"] button[data-action="submit"]');
+
+    form?.searchMember.emit({ query: 'Luis' });
+    fixture.detectChanges();
+    expect(component.assignmentMembers).toEqual([member, other]);
+    expect(submit?.form?.id).toBe('public-member-view-assign-key');
+    expect(submit?.textContent).toContain('Reasignar llave');
+    expect(form).toBeDefined();
+    expect(submit).toBeTruthy();
+    if (!form || !submit) {
+      return;
+    }
+    form.onSelectMember(other);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(submit.disabled).toBeFalse();
+    submit.click();
+    fixture.detectChanges();
+
+    expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    expect(keyServiceMock.getAll).toHaveBeenCalledTimes(1);
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(component.selectedTab).toBe('keys');
+  });
+
+  it('allows reassignment with update permission and without creation permission', () => {
+    component.permissions.keyAssignmentsCreate = false;
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    component.onShowKey(assigned);
+
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    component.onAssignKey(15);
+
+    expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+  });
+
+  it('hides and rejects reassignment without assignment update permission', async () => {
+    component.permissions.keyAssignmentsEdit = false;
+    component.onShowKey(assigned);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const drawer = fixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+
+    expect(drawer.container?.textContent).not.toContain('Cambiar socio');
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    component.dialog = Dialog.KEY_ASSIGN;
+    component.assignmentMembers = [other];
+    component.onAssignKey(15);
+
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
+    expect(keyServiceMock.reassign).not.toHaveBeenCalled();
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+  });
+
+  it('rejects reassigning the key to its current profile', () => {
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    component.onShowKey(assigned);
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+
+    component.onAssignKey(12);
+
+    expect(keyServiceMock.reassign).not.toHaveBeenCalled();
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+  });
+
+  it('preserves the drawer and choices when reassignment fails', () => {
+    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    keyServiceMock.reassign.and.returnValue(throwError(() => new Error('Unavailable')));
+    component.onShowKey(assigned);
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+
+    component.onAssignKey(15);
+
+    expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
+    expect(component.assignmentMembers).toEqual([member, other]);
+    expect(component.selectedKey).toEqual(assigned);
+    expect(component.status.saving).toBeFalse();
+    expect(component.error).not.toBe('');
+    expect(keyServiceMock.getAll).not.toHaveBeenCalled();
+  });
+
+  it('assigns by profile number and refreshes the key list on the same tab', () => {
+    component.selectedTab = 'keys';
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+
+    component.onAssignKey(37);
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    component.onAssignKey(12);
+
+    expect(keyServiceMock.assign).toHaveBeenCalledOnceWith(7, 12);
+    expect(keyServiceMock.getAll).toHaveBeenCalledTimes(1);
+    expect(component.keyAssignments).toEqual([assigned]);
+    expect(component.dialog).toBe(Dialog.NONE);
+    expect(component.selectedTab).toBe('keys');
+  });
+
+  it('retains the form and member choices when assignment fails', () => {
+    keyServiceMock.assign.and.returnValue(throwError(() => new Error('Conflict')));
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+
+    component.onAssignKey(12);
+
+    expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
+    expect(component.assignmentMembers).toEqual([member]);
+    expect(component.error).not.toBe('');
+    expect(component.status.saving).toBeFalse();
+    expect(keyServiceMock.getAll).not.toHaveBeenCalled();
+  });
+
+  it('cancels member loading and ignores late responses when returning to key details', () => {
+    const pending = new Subject<PublicMember[]>();
+    memberServiceMock.searchMembers.and.returnValue(pending);
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    component.onAssignKey(12);
+
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+    component.onCancelKeyAssignment();
+    pending.next([member]);
+
+    expect(component.dialog).toBe(Dialog.KEY_INFO);
+    expect(component.assignmentMembers).toEqual([]);
+    expect(component.status.loadingAssignmentMembers).toBeFalse();
+    expect(pending.observed).toBeFalse();
+  });
+
+  it('allows retrying failed member loading before assigning', () => {
+    memberServiceMock.searchMembers.and.returnValue(throwError(() => new Error('Unavailable')));
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    component.onAssignKey(12);
+
+    expect(component.status.assignmentMembersError).toBeTrue();
+    expect(keyServiceMock.assign).not.toHaveBeenCalled();
+
+    memberServiceMock.searchMembers.and.returnValue(of([member]));
+    component.loadAssignmentMembers();
+
+    expect(component.status.assignmentMembersError).toBeFalse();
+    expect(component.assignmentMembers).toEqual([member]);
+  });
+
+  it('cancels an older search and ignores its late results', () => {
+    const pending = new Subject<PublicMember[]>();
+    memberServiceMock.searchMembers.and.returnValue(pending);
+    component.onShowKeyAssignment();
+    component.loadAssignmentMembers('Ana');
+    memberServiceMock.searchMembers.and.returnValue(of([other]));
+
+    component.loadAssignmentMembers('Luis');
+    pending.next([member]);
+
+    expect(pending.observed).toBeFalse();
+    expect(component.assignmentMembers).toEqual([other]);
+    expect(memberServiceMock.searchMembers).toHaveBeenCalledWith('Luis');
+  });
+
+  it('clears suggestions without requesting members for a blank search', () => {
+    component.onShowKeyAssignment();
+    component.assignmentMembers = [member];
+
+    component.loadAssignmentMembers('   ');
+
+    expect(component.assignmentMembers).toEqual([]);
+    expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
+  });
+
+  function assignmentButton(viewFixture: ComponentFixture<PublicMemberView>): HTMLButtonElement | undefined {
+    const drawer = viewFixture.debugElement.query(By.directive(Drawer)).componentInstance as Drawer;
+    const buttons = drawer.container?.querySelectorAll<HTMLButtonElement>('button') ?? [];
+
+    return Array.from(buttons).find(button => button.textContent?.trim() === 'Asignar socio');
+  }
 
 });

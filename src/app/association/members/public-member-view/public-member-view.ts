@@ -3,25 +3,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
-import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { MemberCount, MemberCreation, MemberUpdate } from '@ucronia/api';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { ContactMethod, FeeType, Key, KeyAssignment, Member, PublicMember } from '@ucronia/domain';
+import { ContactMethod, FeeType, Key, KeyAssignment, Member, MemberStatus, PublicMember } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
-import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 import { TabsModule } from 'primeng/tabs';
-import { debounceTime, distinctUntilChanged, finalize, forkJoin, Observable, of, Subject, Subscription, switchMap, tap } from 'rxjs';
+import { finalize, forkJoin, Observable, of, Subscription, switchMap, tap } from 'rxjs';
 import { MemberCreationForm } from '../member-creation-form/member-creation-form';
 import { MemberEditionForm } from '../member-edition-form/member-edition-form';
 import { MemberInfo } from '../member-info/member-info';
@@ -37,55 +36,53 @@ import { PublicMemberService } from '../public-member-service';
 
 @Component({
   selector: 'assoc-public-member-view',
-  imports: [MemberCreationForm, MemberEditionForm, MemberInfo, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule, IconFieldModule, InputIconModule, InputTextModule],
+  imports: [TextFilter, MemberCreationForm, MemberEditionForm, MemberInfo, MemberStatusSelector, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule],
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {
 
-  private readonly service = inject(PublicMemberService);
-  private readonly memberProfileService = inject(MemberProfileService);
-  private readonly feeTypeService = inject(FeeTypeService);
-  private readonly contactMethodService = inject(ContactMethodService);
-  private readonly keyService = inject(MemberKeyService);
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly contactMethodService = inject(ContactMethodService);
   private readonly destroyRef = inject(DestroyRef);
-
-  private assignmentMembersRequest?: Subscription;
-  private assignmentMemberQuery = '';
-  private keysReloadRequested = false;
-  private memberRequest?: Subscription;
-  private memberOptionsRequest?: Subscription;
-
-  public readonly fieldsMemberCreationForm = viewChild<MemberCreationForm>('fieldsMemberCreationForm');
-  public readonly fieldsAssocKeyForm = viewChild<MemberKeyForm>('fieldsAssocKeyForm');
-  public readonly fieldsKeyAssignmentForm = viewChild<MemberKeyAssignmentForm>('fieldsKeyAssignmentForm');
-  public readonly fieldsKeyEditForm = viewChild<MemberKeyForm>('fieldsKeyEditForm');
-  public readonly fieldsMemberEditionForm = viewChild<MemberEditionForm>('fieldsMemberEditionForm');
-
-  public readonly permissions: Permissions;
-
-  public selectedTab = 'members';
-  public dialog = Dialog.NONE;
-  public readonly Dialog = Dialog;
-  public selectedKey: KeyAssignment | undefined;
-  public keyAssignments: KeyAssignment[] = [];
-  public assignmentMembers: PublicMember[] = [];
-  public privateMember: Member | null = null;
-  public feeTypes: FeeType[] = [];
-  public contactMethods: ContactMethod[] = [];
-  public data = new Page<PublicMember>();
-  public selectedData = new PublicMember();
-  private memberCount = new MemberCount();
+  private readonly feeTypeService = inject(FeeTypeService);
+  private readonly keyService = inject(MemberKeyService);
+  private readonly memberProfileService = inject(MemberProfileService);
+  private readonly service = inject(PublicMemberService);
 
   public get active(): number {
     return this.memberCount.active;
   }
-
+  public assignmentMembers: PublicMember[] = [];
+  public get canAssignKey(): boolean {
+    return this.permissions.keyAssignmentsRead && this.permissions.read && !!this.selectedKey &&
+      (this.selectedKey.profile ? this.permissions.keyAssignmentsEdit : this.permissions.keyAssignmentsCreate);
+  }
+  public get canUnassignKey(): boolean {
+    return this.permissions.keyAssignmentsRead && this.permissions.keyAssignmentsDelete && !!this.selectedKey?.profile;
+  }
+  public contactMethods: ContactMethod[] = [];
+  public data = new Page<PublicMember>();
+  public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
+  public error = '';
+  public failures = new FailureStore();
+  public feeTypes: FeeType[] = [];
+  public readonly fieldsAssocKeyForm = viewChild<MemberKeyForm>('fieldsAssocKeyForm');
+  public readonly fieldsKeyAssignmentForm = viewChild<MemberKeyAssignmentForm>('fieldsKeyAssignmentForm');
+  public readonly fieldsKeyEditForm = viewChild<MemberKeyForm>('fieldsKeyEditForm');
+  public readonly fieldsMemberCreationForm = viewChild<MemberCreationForm>('fieldsMemberCreationForm');
+  public readonly fieldsMemberEditionForm = viewChild<MemberEditionForm>('fieldsMemberEditionForm');
+  public filterStatus = MemberStatus.Active;
+  public filterValue = '';
+  public keyAssignments: KeyAssignment[] = [];
   public get notRenewing(): number {
     return this.memberCount.active - this.memberCount.renew;
   }
-
-  private sort = new Sorting();
+  public readonly permissions: Permissions;
+  public privateMember: Member | null = null;
+  public selectedData = new PublicMember();
+  public selectedKey: KeyAssignment | undefined;
+  public selectedTab = 'members';
   public readonly status: Status = {
     loading: false,
     loadingSummary: false,
@@ -99,74 +96,89 @@ export class PublicMemberView implements OnInit {
     keysError: false,
     memberPrivateError: false
   };
-  public failures = new FailureStore();
-  public error = '';
-  private nameFilter = '';
-  public filterValue = '';
-  private readonly filterSubject = new Subject<string>();
 
-  constructor() {
+  private assignmentMemberQuery = '';
+  private readonly assignmentMemberSearch = new SearchRequest();
+  private keysReloadRequested = false;
+  private listRequest?: Subscription;
+  private memberCount = new MemberCount();
+  private memberOptionsRequest?: Subscription;
+  private memberRequest?: Subscription;
+  private readonly sort = new Sorting();
+
+  public constructor() {
     const authService = inject(AuthService);
     this.permissions = {
       read: authService.hasPermission(UcroniaPermissions.directory.member.read),
+      readInactiveMembers: authService.hasPermission(UcroniaPermissions.directory.inactiveMember.read),
       readPrivate: authService.hasPermission(UcroniaPermissions.directory.memberProfile.read),
       create: authService.hasPermission(UcroniaPermissions.directory.memberProfile.create),
       edit: authService.hasPermission(UcroniaPermissions.directory.memberProfile.update),
       delete: authService.hasPermission(UcroniaPermissions.directory.memberProfile.delete),
       keyAssignmentsRead: authService.hasPermission(UcroniaPermissions.keyAssignment.read),
       keyAssignmentsCreate: authService.hasPermission(UcroniaPermissions.keyAssignment.create),
+      keyAssignmentsDelete: authService.hasPermission(UcroniaPermissions.keyAssignment.delete),
       keyAssignmentsEdit: authService.hasPermission(UcroniaPermissions.keyAssignment.update),
       keysCreate: authService.hasPermission(UcroniaPermissions.key.create),
       keysEdit: authService.hasPermission(UcroniaPermissions.key.update),
       keysDelete: authService.hasPermission(UcroniaPermissions.key.delete)
     };
-    this.filterSubject
-      .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
-      .subscribe(filter => this.onFilter(filter));
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.refresh();
   }
 
-  public onTabChange(value: string | number | undefined): void {
-    if (value === 'keys' && !this.permissions.keyAssignmentsRead) {
-      return;
-    }
-    this.selectedTab = value === 'keys' ? 'keys' : 'members';
-    if (this.selectedTab === 'keys') {
-      this.loadKeys();
-    }
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.status.loading = true;
+    this.listRequest = this.service
+      .getAll(page, this.sort, this.filterValue, this.filterStatus)
+      .pipe(
+        switchMap(response => {
+          if (response.content.length === 0 && response.page > 1) {
+            const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
+            return this.service.getAll(previousPage, this.sort, this.filterValue, this.filterStatus);
+          }
+          return of(response);
+        }),
+        finalize(() => (this.status.loading = false)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(response => (this.data = response));
   }
 
-  public onCreateKeyOpen(): void {
+  public loadAssignmentMembers(query: string = this.assignmentMemberQuery): void {
     if (
-      !this.permissions.keyAssignmentsRead ||
-      !this.permissions.keysCreate ||
-      this.selectedTab !== 'keys' ||
-      this.dialog !== Dialog.NONE
-    ) {
-      return;
-    }
-    this.failures.clear();
-    this.error = '';
-    this.dialog = Dialog.KEY_CREATE;
-  }
-
-  public onCreateKey(data: Key): void {
-    if (
-      !this.permissions.keyAssignmentsRead ||
-      !this.permissions.keysCreate ||
-      this.dialog !== Dialog.KEY_CREATE ||
+      !this.canAssignKey ||
+      this.dialog !== Dialog.KEY_ASSIGN ||
       this.status.saving
     ) {
       return;
     }
-    this.call(
-      () => this.keyService.create(data),
-      () => this.loadKeys(),
-      'No se pudo crear la llave. Revisa los datos e inténtalo de nuevo.'
-    );
+    this.assignmentMemberSearch.cancel();
+    this.assignmentMemberQuery = query.trim();
+    this.assignmentMembers = [];
+    this.status.assignmentMembersError = false;
+    if (!this.assignmentMemberQuery) {
+      return;
+    }
+    this.status.loadingAssignmentMembers = true;
+    this.assignmentMemberSearch.search(this.assignmentMemberQuery,
+      value => this.service.searchMembers(value),
+      () => this.status.assignmentMembersError = true)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => (this.status.loadingAssignmentMembers = false))
+      )
+      .subscribe({
+        next: members => {
+          this.assignmentMembers = members;
+        },
+        error: () => (this.status.assignmentMembersError = true)
+      });
   }
 
   public loadKeys(): void {
@@ -202,74 +214,27 @@ export class PublicMemberView implements OnInit {
       });
   }
 
-  public onShowKey(data: KeyAssignment): void {
-    if (!this.permissions.keyAssignmentsRead || this.status.saving) {
-      return;
-    }
-    this.selectedKey = data;
-    this.failures.clear();
-    this.error = '';
-    this.dialog = Dialog.KEY_INFO;
-  }
-
-  public get canAssignKey(): boolean {
-    return this.permissions.keyAssignmentsRead && this.permissions.read && !!this.selectedKey &&
-      (this.selectedKey.profile ? this.permissions.keyAssignmentsEdit : this.permissions.keyAssignmentsCreate);
-  }
-
-  public onShowKeyAssignment(): void {
+  public loadPrivateMember(): void {
     if (
-      !this.canAssignKey ||
-      this.dialog !== Dialog.KEY_INFO ||
-      this.status.saving
+      !this.permissions.read ||
+      !this.permissions.readPrivate ||
+      (this.dialog !== Dialog.INFO && this.dialog !== Dialog.EDIT)
     ) {
       return;
     }
-    this.failures.clear();
-    this.error = '';
-    this.assignmentMembers = [];
-    this.dialog = Dialog.KEY_ASSIGN;
-    this.assignmentMemberQuery = '';
-    this.status.assignmentMembersError = false;
-  }
-
-  public loadAssignmentMembers(query: string = this.assignmentMemberQuery): void {
-    if (
-      !this.canAssignKey ||
-      this.dialog !== Dialog.KEY_ASSIGN ||
-      this.status.saving
-    ) {
-      return;
-    }
-    this.assignmentMembersRequest?.unsubscribe();
-    this.assignmentMemberQuery = query.trim();
-    this.assignmentMembers = [];
-    this.status.assignmentMembersError = false;
-    if (!this.assignmentMemberQuery) {
-      return;
-    }
-    this.status.loadingAssignmentMembers = true;
-    this.assignmentMembersRequest = this.service.searchMembers(this.assignmentMemberQuery)
+    this.memberRequest?.unsubscribe();
+    this.status.loadingMember = true;
+    this.status.memberPrivateError = false;
+    this.memberRequest = this.memberProfileService
+      .getOne(this.selectedData.number)
       .pipe(
         takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.status.loadingAssignmentMembers = false))
+        finalize(() => (this.status.loadingMember = false))
       )
       .subscribe({
-        next: members => {
-          this.assignmentMembers = members.filter(member => member.number !== this.selectedKey?.profile?.number);
-        },
-        error: () => (this.status.assignmentMembersError = true)
+        next: member => (this.privateMember = member),
+        error: () => (this.status.memberPrivateError = true)
       });
-  }
-
-  public onCancelKeyAssignment(): void {
-    if (!this.status.saving) {
-      this.assignmentMembersRequest?.unsubscribe();
-      this.assignmentMembers = [];
-      this.failures.clear();
-      this.error = '';
-      this.dialog = Dialog.KEY_INFO;
-    }
   }
 
   public onAssignKey(profile: number): void {
@@ -281,6 +246,7 @@ export class PublicMemberView implements OnInit {
       this.status.saving ||
       this.status.loadingAssignmentMembers ||
       this.status.assignmentMembersError ||
+      key.profile?.number === profile ||
       !this.assignmentMembers.some(member => member.number === profile)
     ) {
       return;
@@ -294,13 +260,14 @@ export class PublicMemberView implements OnInit {
     );
   }
 
-  public onShowKeyEdit(): void {
-    if (!this.permissions.keyAssignmentsRead || !this.permissions.keysEdit || !this.selectedKey || this.status.saving) {
-      return;
+  public onCancelKeyAssignment(): void {
+    if (!this.status.saving) {
+      this.assignmentMemberSearch.cancel();
+      this.assignmentMembers = [];
+      this.failures.clear();
+      this.error = '';
+      this.dialog = Dialog.KEY_INFO;
     }
-    this.failures.clear();
-    this.error = '';
-    this.dialog = Dialog.KEY_EDIT;
   }
 
   public onCancelKeyEdit(): void {
@@ -311,22 +278,78 @@ export class PublicMemberView implements OnInit {
     }
   }
 
-  public onUpdateKey(data: Key): void {
+  public onCancelMemberEdit(): void {
+    if (this.status.saving) {
+      return;
+    }
+    this.memberOptionsRequest?.unsubscribe();
+    this.status.optionsReady = false;
+    this.failures.clear();
+    this.error = '';
+    this.dialog = Dialog.INFO;
+  }
+
+  public onChangeDirection(sorting: SortingEvent): void {
+    // TODO: should receive the actual direction, not a number
+    const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
+    if (sorting.field === 'fullName') {
+      this.sort.addField(new SortingProperty('name.firstName', direction));
+      this.sort.addField(new SortingProperty('name.lastName', direction));
+    } else {
+      this.sort.addField(new SortingProperty(sorting.field, direction));
+    }
+    this.load(this.data.page);
+  }
+
+  public onCreate(data: MemberCreation): void {
+    if (!this.permissions.create || this.dialog !== Dialog.CREATE || !this.status.optionsReady || this.status.saving) {
+      return;
+    }
+    this.call(
+      () => this.memberProfileService.create(data),
+      () => this.refresh(),
+      'No se pudo crear el socio. Revisa los datos e inténtalo de nuevo.'
+    );
+  }
+
+  public onCreateKey(data: Key): void {
     if (
       !this.permissions.keyAssignmentsRead ||
-      !this.permissions.keysEdit ||
-      !this.selectedKey ||
-      this.dialog !== Dialog.KEY_EDIT ||
+      !this.permissions.keysCreate ||
+      this.dialog !== Dialog.KEY_CREATE ||
       this.status.saving
     ) {
       return;
     }
-    const number = this.selectedKey.number;
     this.call(
-      () => this.keyService.update({ ...data, number }),
-      () => this.refreshKeysAndMembers(),
-      'No se pudo actualizar la llave.'
+      () => this.keyService.create(data),
+      () => this.loadKeys(),
+      'No se pudo crear la llave. Revisa los datos e inténtalo de nuevo.'
     );
+  }
+
+  public onCreateKeyOpen(): void {
+    if (
+      !this.permissions.keyAssignmentsRead ||
+      !this.permissions.keysCreate ||
+      this.selectedTab !== 'keys' ||
+      this.dialog !== Dialog.NONE
+    ) {
+      return;
+    }
+    this.failures.clear();
+    this.error = '';
+    this.dialog = Dialog.KEY_CREATE;
+  }
+
+  public onCreateOpen(): void {
+    if (!this.permissions.create || this.dialog !== Dialog.NONE) {
+      return;
+    }
+    this.dialog = Dialog.CREATE;
+    this.failures.clear();
+    this.error = '';
+    this.loadMemberOptions('No se pudieron cargar las opciones del formulario. Cierra y vuelve a intentarlo.');
   }
 
   public onDeleteKey(event: Event): void {
@@ -394,6 +417,73 @@ export class PublicMemberView implements OnInit {
     });
   }
 
+  public onDrawerVisibleChange(visible: boolean): void {
+    if (!visible && !this.status.saving) {
+      this.assignmentMemberSearch.cancel();
+      this.assignmentMembers = [];
+      this.memberOptionsRequest?.unsubscribe();
+      this.memberRequest?.unsubscribe();
+      this.status.optionsReady = false;
+      this.privateMember = null;
+      this.failures.clear();
+      this.error = '';
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onFilter(filter: string): void {
+    this.filterValue = filter;
+    this.load();
+  }
+
+  public onFilterStatus(status: MemberStatus): void {
+    if (!this.permissions.readInactiveMembers) {
+      return;
+    }
+
+    this.filterStatus = status;
+    this.load();
+  }
+
+  public onFilterChange(filter: string): void {
+    this.onFilter(filter);
+  }
+
+  public onShowKey(data: KeyAssignment): void {
+    if (!this.permissions.keyAssignmentsRead || this.status.saving) {
+      return;
+    }
+    this.selectedKey = data;
+    this.failures.clear();
+    this.error = '';
+    this.dialog = Dialog.KEY_INFO;
+  }
+
+  public onShowKeyAssignment(): void {
+    if (
+      !this.canAssignKey ||
+      this.dialog !== Dialog.KEY_INFO ||
+      this.status.saving
+    ) {
+      return;
+    }
+    this.failures.clear();
+    this.error = '';
+    this.assignmentMembers = [];
+    this.dialog = Dialog.KEY_ASSIGN;
+    this.assignmentMemberQuery = '';
+    this.status.assignmentMembersError = false;
+  }
+
+  public onShowKeyEdit(): void {
+    if (!this.permissions.keyAssignmentsRead || !this.permissions.keysEdit || !this.selectedKey || this.status.saving) {
+      return;
+    }
+    this.failures.clear();
+    this.error = '';
+    this.dialog = Dialog.KEY_EDIT;
+  }
+
   public onShowMember(member: PublicMember): void {
     if (!this.permissions.read || this.status.saving) {
       return;
@@ -409,29 +499,6 @@ export class PublicMemberView implements OnInit {
     if (this.permissions.readPrivate) {
       this.loadPrivateMember();
     }
-  }
-
-  public loadPrivateMember(): void {
-    if (
-      !this.permissions.read ||
-      !this.permissions.readPrivate ||
-      (this.dialog !== Dialog.INFO && this.dialog !== Dialog.EDIT)
-    ) {
-      return;
-    }
-    this.memberRequest?.unsubscribe();
-    this.status.loadingMember = true;
-    this.status.memberPrivateError = false;
-    this.memberRequest = this.memberProfileService
-      .getOne(this.selectedData.number)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        finalize(() => (this.status.loadingMember = false))
-      )
-      .subscribe({
-        next: member => (this.privateMember = member),
-        error: () => (this.status.memberPrivateError = true)
-      });
   }
 
   public onShowMemberEdit(): void {
@@ -455,15 +522,67 @@ export class PublicMemberView implements OnInit {
     );
   }
 
-  public onCancelMemberEdit(): void {
-    if (this.status.saving) {
+  public onTabChange(value: string | number | undefined): void {
+    if (value === 'keys' && !this.permissions.keyAssignmentsRead) {
       return;
     }
-    this.memberOptionsRequest?.unsubscribe();
-    this.status.optionsReady = false;
-    this.failures.clear();
-    this.error = '';
-    this.dialog = Dialog.INFO;
+    this.selectedTab = value === 'keys' ? 'keys' : 'members';
+    if (this.selectedTab === 'keys') {
+      this.loadKeys();
+    }
+  }
+
+  public onUnassignKey(event: Event): void {
+    const key = this.selectedKey;
+    if (!key?.profile || !this.canUnassignKey || this.dialog !== Dialog.KEY_INFO || this.status.saving) {
+      return;
+    }
+
+    const number = key.number;
+    const profile = key.profile.number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: '¿Quieres quitar el socio asignado? La llave quedará sin asignar.',
+      icon: 'pi pi-user-minus',
+      rejectButtonProps: { label: 'Cancelar', severity: 'secondary', outlined: true },
+      acceptButtonProps: { label: 'Quitar asignación', severity: 'danger' },
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.status.saving ||
+          this.dialog !== Dialog.KEY_INFO ||
+          !this.canUnassignKey ||
+          this.selectedKey?.number !== number ||
+          this.selectedKey.profile?.number !== profile
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.keyService.unassign(number),
+          () => this.refreshKeysAndMembers(),
+          'No se pudo quitar la asignación de la llave.'
+        );
+      }
+    });
+  }
+
+  public onUpdateKey(data: Key): void {
+    if (
+      !this.permissions.keyAssignmentsRead ||
+      !this.permissions.keysEdit ||
+      !this.selectedKey ||
+      this.dialog !== Dialog.KEY_EDIT ||
+      this.status.saving
+    ) {
+      return;
+    }
+    const number = this.selectedKey.number;
+    this.call(
+      () => this.keyService.update({ ...data, number }),
+      () => this.refreshKeysAndMembers(),
+      'No se pudo actualizar la llave.'
+    );
   }
 
   public onUpdateMember(data: MemberUpdate): void {
@@ -491,99 +610,7 @@ export class PublicMemberView implements OnInit {
     );
   }
 
-  public onCreateOpen(): void {
-    if (!this.permissions.create || this.dialog !== Dialog.NONE) {
-      return;
-    }
-    this.dialog = Dialog.CREATE;
-    this.failures.clear();
-    this.error = '';
-    this.loadMemberOptions('No se pudieron cargar las opciones del formulario. Cierra y vuelve a intentarlo.');
-  }
-
-  public onDrawerVisibleChange(visible: boolean): void {
-    if (!visible && !this.status.saving) {
-      this.assignmentMembersRequest?.unsubscribe();
-      this.assignmentMembers = [];
-      this.memberOptionsRequest?.unsubscribe();
-      this.memberRequest?.unsubscribe();
-      this.status.optionsReady = false;
-      this.privateMember = null;
-      this.failures.clear();
-      this.error = '';
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  public onCreate(data: MemberCreation): void {
-    if (!this.permissions.create || this.dialog !== Dialog.CREATE || !this.status.optionsReady || this.status.saving) {
-      return;
-    }
-    this.call(
-      () => this.memberProfileService.create(data),
-      () => this.refresh(),
-      'No se pudo crear el socio. Revisa los datos e inténtalo de nuevo.'
-    );
-  }
-
-  // EVENT HANDLERS
-  public onChangeDirection(sorting: SortingEvent): void {
-    // TODO: should receive the actual direction, not a number
-    const direction = sorting.order === 1 ? SortingDirection.Ascending : SortingDirection.Descending;
-    if (sorting.field === 'fullName') {
-      this.sort.addField(new SortingProperty('name.firstName', direction));
-      this.sort.addField(new SortingProperty('name.lastName', direction));
-    } else {
-      this.sort.addField(new SortingProperty(sorting.field, direction));
-    }
-    this.load(this.data.page);
-  }
-
-  public onFilter(filter: string): void {
-    this.nameFilter = filter;
-    this.load();
-  }
-
-  public onFilterChange(filter: string): void {
-    this.filterSubject.next(filter);
-  }
-
-  // DATA LOADING
-  /** Reload the list and counters after a successful member save. */
-  public refresh(): void {
-    this.load(this.data.page > 0 ? this.data.page : undefined);
-    this.loadSummary();
-  }
-
-  public load(page: number | undefined = undefined): void {
-    this.status.loading = true;
-    this.service
-      .getAll(page, this.sort, this.nameFilter)
-      .pipe(
-        switchMap(response => {
-          if (response.content.length === 0 && response.page > 1) {
-            const previousPage = Math.max(1, Math.min(response.page - 1, response.totalPages));
-            return this.service.getAll(previousPage, this.sort, this.nameFilter);
-          }
-          return of(response);
-        }),
-        finalize(() => (this.status.loading = false)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(response => (this.data = response));
-  }
-
-  private loadSummary(): void {
-    this.status.loadingSummary = true;
-    this.service
-      .getSummary()
-      .pipe(
-        finalize(() => (this.status.loadingSummary = false)),
-        takeUntilDestroyed(this.destroyRef)
-      )
-      .subscribe(summary => (this.memberCount = summary));
-  }
-
+  // Data loading
   private loadMemberOptions(message: string, member?: Member): void {
     this.memberOptionsRequest?.unsubscribe();
     this.status.optionsReady = false;
@@ -616,11 +643,29 @@ export class PublicMemberView implements OnInit {
       });
   }
 
+  private loadSummary(): void {
+    this.status.loadingSummary = true;
+    this.service
+      .getSummary()
+      .pipe(
+        finalize(() => (this.status.loadingSummary = false)),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(summary => (this.memberCount = summary));
+  }
+
+  /** Reload the list and counters after a successful member save. */
+  public refresh(): void {
+    this.load(this.data.page > 0 ? this.data.page : undefined);
+    this.loadSummary();
+  }
+
   private refreshKeysAndMembers(): void {
     this.loadKeys();
     this.refresh();
   }
 
+  // Private methods
   private call<T>(action: () => Observable<T>, onSuccess: () => void, message: string): void {
     this.status.saving = true;
     this.error = '';
@@ -655,12 +700,14 @@ export class PublicMemberView implements OnInit {
 
 interface Permissions {
   read: boolean;
+  readInactiveMembers: boolean;
   readPrivate: boolean;
   create: boolean;
   edit: boolean;
   delete: boolean;
   keyAssignmentsRead: boolean;
   keyAssignmentsCreate: boolean;
+  keyAssignmentsDelete: boolean;
   keyAssignmentsEdit: boolean;
   keysCreate: boolean;
   keysEdit: boolean;

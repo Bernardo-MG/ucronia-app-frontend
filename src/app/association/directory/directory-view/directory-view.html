@@ -116,7 +116,7 @@
         <shared-drawer-header title="Nuevo perfil" icon="pi pi-users" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-profile-creation-form #fieldsAssocProfileCreationForm formId="directory-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-profile-creation-form #fieldsAssocProfileCreationForm formId="directory-view-create" [loading]="status.loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -133,7 +133,7 @@
         <shared-drawer-header title="Editar perfil" icon="pi pi-pencil" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-profile-edition-form #fieldsAssocProfileEditionForm formId="directory-view-edit" [showActions]="false" [loading]="status.loading" [data]="selectedData" [failures]="failures"
+        <assoc-profile-edition-form #fieldsAssocProfileEditionForm formId="directory-view-edit" [loading]="status.loading" [data]="selectedData" [failures]="failures"
           [contactMethods]="contactMethodSelection" [feeTypes]="feeTypes" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

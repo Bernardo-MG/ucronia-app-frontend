@@ -1,10 +1,8 @@
-import { Component, inject, input, output, Input } from '@angular/core';
+import { Component, inject, input, Input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { Profile } from '@ucronia/domain';
 import { isSameMonth } from 'date-fns';
 import { ButtonModule } from 'primeng/button';
 import { DatePickerModule } from 'primeng/datepicker';
@@ -14,76 +12,57 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-fee-payments-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  imports: [ReactiveFormsModule, ButtonModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
   templateUrl: './fee-payments-form.html'
 })
 export class FeePaymentsForm {
 
-  private readonly fb = inject(FormBuilder);
+  private readonly formBuilder = inject(FormBuilder);
 
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
 
   public readonly save = output<FeesPaymentEvent>();
-  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public selectedMember?: Profile;
-
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
-  public readonly today = new Date();
-
+  public readonly formStatus: FormStatus;
   public get months(): FormArray {
     return this.form.get('months') as FormArray;
   }
-
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    this.form = this.fb.group({
+  protected selectedMember?: MemberSearchOption;
+  protected readonly today = new Date();
+
+  public constructor() {
+    this.form = this.formBuilder.group({
       paymentDate: [null, Validators.required],
       member: [null, Validators.required],
-      months: this.fb.array([], Validators.required)
+      months: this.formBuilder.array([], Validators.required)
     });
 
     this.formStatus = new FormStatus(this.form);
   }
 
-  public onSelectMember(member: Profile) {
-    if (!member) {
-      return;
-    }
-
-    this.selectedMember = member;
-    this.form.get('member')?.setValue(member.number);
-    this.form.get('member')?.markAsTouched();
-
-    if (this.months.length === 0) {
-      this.addDate();
-    }
-  }
-
+  // Event handlers
   public addDate() {
-    this.months.push(this.fb.control(undefined, Validators.required));
+    this.months.push(this.formBuilder.control(undefined, Validators.required));
   }
 
-  public removeDate(index: number): void {
-    this.months.removeAt(index);
+  protected onClearMember(): void {
+    this.selectedMember = undefined;
+    this.form.get('member')?.reset();
+    this.form.get('member')?.markAsDirty();
   }
 
-  public onMonthSelect(date: Date, index: number) {
+  protected onMonthSelect(date: Date, index: number) {
     const controlValue = this.months.at(index).value;
 
     const currentDate = controlValue instanceof Date
@@ -98,7 +77,7 @@ export class FeePaymentsForm {
   /**
    * Handler for the save event.
    */
-  public onSave(): void {
+  protected onSave(): void {
     this.form.markAllAsTouched();
 
     if (this.saveEnabled) {
@@ -106,7 +85,26 @@ export class FeePaymentsForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
+  public onSelectMember(member: MemberSearchOption) {
+    if (!member) {
+      return;
+    }
+
+    this.selectedMember = member;
+    this.form.get('member')?.setValue(member.number);
+    this.form.get('member')?.markAsTouched();
+
+    if (this.months.length === 0) {
+      this.addDate();
+    }
+  }
+
+  public removeDate(index: number): void {
+    this.months.removeAt(index);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 

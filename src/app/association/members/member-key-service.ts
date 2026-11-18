@@ -104,9 +104,25 @@ export class MemberKeyService {
       );
   }
 
+  public unassign(number: number): Observable<KeyAssignment> {
+    return this.ucroniaClient.keyAssignment.delete(number)
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Actualizado',
+            detail: 'Asignación de llave eliminada',
+            life: 3000
+          });
+        })
+      );
+  }
+
+  // TODO: Add backend key/profile text search and assignment status filtering.
   public getAll(): Observable<KeyAssignment[]> {
     const sorting = new Sorting([new SortingProperty('number')]);
-    return getAllPages((page, size) => this.ucroniaClient.keyAssignment.page(page, size, sorting));
+    const endpoint = this.ucroniaClient.keyAssignment;
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
 }

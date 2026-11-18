@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
-import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
+import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher, PublicMember } from '@ucronia/domain';
 import { MessageService } from 'primeng/api';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from './model/library-summary';
@@ -229,22 +229,23 @@ export class LibraryService {
     return this.ucroniaClient.library.fictionBook.page(page, undefined, sorting, title);
   }
 
-  public getBookTypes(page: number | undefined = undefined): Observable<Page<BookType>> {
+  public getBookTypes(page: number | undefined = undefined, size?: number): Observable<Page<BookType>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.ucroniaClient.library.bookType.page(page, undefined, sorting);
+    return this.ucroniaClient.library.bookType.page(page, size, sorting);
   }
 
-  public getGameSystems(page: number | undefined = undefined): Observable<Page<GameSystem>> {
+  public getGameSystems(page: number | undefined = undefined, size?: number): Observable<Page<GameSystem>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
-    return this.ucroniaClient.library.gameSystem.page(page, undefined, sorting);
+    return this.ucroniaClient.library.gameSystem.page(page, size, sorting);
   }
 
+  // TODO: Add backend name search before enabling the authors search picker.
   public getAuthors(page: number | undefined = undefined): Observable<Page<Author>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
@@ -253,42 +254,13 @@ export class LibraryService {
     return this.ucroniaClient.library.author.page(page, undefined, sorting);
   }
 
-  public searchAuthors(query: string): Observable<Author[]> {
-    const sorting = new Sorting(
-      [new SortingProperty('name')]
-    );
-
-    const search = query?.trim().toLowerCase();
-
-    return this.ucroniaClient.library.author.page(undefined, 1000, sorting)
-      .pipe(
-        map(page => page.content as Author[]),
-        map(authors => authors.filter(author => author.name.toLowerCase().includes(search))),
-        map(authors => authors.slice(0, 10))
-      );
-  }
-
+  // TODO: Add backend name search before enabling the publishers search picker.
   public getPublishers(page: number | undefined = undefined): Observable<Page<Publisher>> {
     const sorting = new Sorting(
       [new SortingProperty('name')]
     );
 
     return this.ucroniaClient.library.publisher.page(page, undefined, sorting);
-  }
-
-  public searchPublishers(query: string): Observable<Publisher[]> {
-    const sorting = new Sorting(
-      [new SortingProperty('name')]
-    );
-
-    const search = query?.trim().toLowerCase();
-
-    return this.ucroniaClient.library.publisher.page(undefined, 1000, sorting)
-      .pipe(
-        map(page => page.content as Publisher[]),
-        map(publishers => publishers.filter(publisher => publisher.name.toLowerCase().includes(search))),
-        map(publishers => publishers.slice(0, 10))
-      );
   }
 
   public getDonors(page: number | undefined = undefined): Observable<Page<Profile>> {
@@ -333,7 +305,7 @@ export class LibraryService {
       );
   }
 
-  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<Profile[]> {
+  public searchMembers(query: string, active: MemberStatus = MemberStatus.Active): Observable<PublicMember[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('name.firstName'),
@@ -342,7 +314,7 @@ export class LibraryService {
       ]
     );
 
-    return this.ucroniaClient.memberProfile.page(undefined, 10, sorting, active, query)
+    return this.ucroniaClient.member.page(undefined, 10, sorting, query, active)
       .pipe(map(page => page.content));
   }
 

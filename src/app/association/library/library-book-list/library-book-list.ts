@@ -16,24 +16,37 @@ import { Dialog } from '../library-dialog';
 })
 export class LibraryBookList {
 
+  public readonly books = input<FictionBook[] | GameBook[]>([]);
   public readonly editable = input(false);
   public readonly loading = input(false);
-  public readonly books = input<FictionBook[] | GameBook[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly showBook = output<FictionBook | GameBook>();
-  public readonly sort = output<SortingProperty>();
   public readonly pageChange = output<number>();
   public readonly show = output<{ dialog: Dialog, book: FictionBook | GameBook }>();
+  public readonly showBook = output<FictionBook | GameBook>();
+  public readonly sort = output<SortingProperty>();
 
-  @ViewChild('editionMenu') editionMenu!: Menu;
-
+  @ViewChild('editionMenu') public readonly editionMenu!: Menu;
   public editionMenuItems: MenuItem[] = [];
-
   public get first() {
     return (this.page() - 1) * this.rows();
+  }
+
+  // Event handlers
+  public onChangeDirection(sorting: SortingEvent) {
+    // TODO: should receive the actual direction, not a number
+    const direction = sorting.order === 1
+      ? SortingDirection.Ascending
+      : SortingDirection.Descending;
+
+    this.sort.emit(new SortingProperty(sorting.field, direction));
+  }
+
+  public onPageChange(event: TablePageEvent) {
+    const page = (event.first / event.rows) + 1;
+    this.pageChange.emit(page);
   }
 
   public openEditionMenu(event: Event, book: FictionBook | GameBook) {
@@ -51,30 +64,17 @@ export class LibraryBookList {
     this.editionMenu.toggle(event);
   }
 
+  // Public methods
   public getAuthors(book: FictionBook | GameBook): string {
     return book.authors.map(author => author.name).join(', ') || 'Autor desconocido';
-  }
-
-  public getType(book: FictionBook | GameBook): string {
-    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'Ficción';
   }
 
   public getSystem(book: FictionBook | GameBook): string {
     return 'gameSystem' in book ? book.gameSystem?.name || '' : '';
   }
 
-  public onChangeDirection(sorting: SortingEvent) {
-    // TODO: should receive the actual direction, not a number
-    const direction = sorting.order === 1
-      ? SortingDirection.Ascending
-      : SortingDirection.Descending;
-
-    this.sort.emit(new SortingProperty(sorting.field, direction));
-  }
-
-  public onPageChange(event: TablePageEvent) {
-    const page = (event.first / event.rows) + 1;
-    this.pageChange.emit(page);
+  public getType(book: FictionBook | GameBook): string {
+    return 'bookType' in book ? book.bookType?.name || 'Juego' : 'Ficción';
   }
 
 }

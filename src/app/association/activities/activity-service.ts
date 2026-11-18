@@ -64,9 +64,12 @@ export class ActivityService {
       );
   }
 
+  // TODO: Add backend text search before enabling these search controls.
   public getAll(
     page: number | undefined = undefined,
-    sort: Sorting
+    sort: Sorting,
+    from?: Date,
+    to?: Date
   ): Observable<Page<Activity>> {
     const sorting = new Sorting(
       mergeProperties(
@@ -78,7 +81,7 @@ export class ActivityService {
     );
 
     return this.ucroniaClient.activity
-      .page(page, undefined, sorting);
+      .page(page, undefined, sorting, from, to);
   }
 
   public getOne(index: number): Observable<Activity> {

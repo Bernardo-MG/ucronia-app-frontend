@@ -1,5 +1,6 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
@@ -12,7 +13,7 @@ import { Author } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { AuthorService } from '../author-service';
 
 @Component({
@@ -21,20 +22,22 @@ import { AuthorService } from '../author-service';
 })
 export class LibraryAuthorListView implements OnInit {
 
-  private readonly service = inject(AuthorService);
   private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly permissions: Permissions;
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(AuthorService);
 
   public data = new Page<Author>();
-  public loading = false;
-  public failures = new FailureStore();
-  public dialog = Dialog.NONE;
   public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
+  public failures = new FailureStore();
+  public loading = false;
+  public readonly permissions: Permissions;
   public selected = new Author();
-  private sort = new Sorting();
 
-  constructor() {
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
+
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -45,33 +48,21 @@ export class LibraryAuthorListView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
-
-  public onShowCreate(): void {
-    this.selected = new Author();
-    this.dialog = Dialog.CREATE;
-    this.failures.clear();
-  }
-
-  public onShowInfo(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.INFO;
-    this.failures.clear();
-  }
-
-  public onShowEdit(item: any): void {
-    this.selected = item;
-    this.dialog = Dialog.EDIT;
-    this.failures.clear();
-  }
-
-  public onReject(): void {
-    this.dialog = Dialog.NONE;
-    this.failures.clear();
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+    this.listRequest = this.service.getAll(page, this.sort)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.data = response);
   }
 
   public onCancelEdit(): void {
@@ -79,7 +70,32 @@ export class LibraryAuthorListView implements OnInit {
     this.failures.clear();
   }
 
+  public onCreate(data: any): void {
+    this.loading = true;
+    this.service.create(data)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
+  }
+
   public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selected.number;
     this.confirmationService.confirm({
       target: event.currentTarget as EventTarget,
       message: '¿Estás seguro de querer borrar? Esta acción no es revertible',
@@ -93,13 +109,36 @@ export class LibraryAuthorListView implements OnInit {
         label: 'Borrar',
         severity: 'danger'
       },
-      accept: () => this.call(
-        () => this.service.delete(this.selected.number),
-        () => {
-          this.load(this.data.page);
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selected.number !== number
+        ) {
+          return;
         }
-      )
+
+        this.call(
+          () => this.service.delete(number),
+          () => {
+            this.load(this.data.page);
+          }
+        );
+      }
     });
+  }
+
+  // DRAWER
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onReject(): void {
+    this.dialog = Dialog.NONE;
+    this.failures.clear();
   }
 
   public onSave(data: any): void {
@@ -110,44 +149,22 @@ export class LibraryAuthorListView implements OnInit {
     }
   }
 
-  public onCreate(data: any): void {
-    this.loading = true;
-    this.service.create(data)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  public onShowCreate(): void {
+    this.selected = new Author();
+    this.dialog = Dialog.CREATE;
+    this.failures.clear();
   }
 
-  public onUpdate(data: any): void {
-    this.loading = true;
-    this.service.update(data)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe({
-        complete: () => {
-          this.failures.clear();
-          this.dialog = Dialog.NONE;
-          this.load(this.data.page);
-        },
-        error: error => {
-          if (error instanceof FailureResponse) {
-            this.failures = error.failures;
-          } else {
-            this.failures.clear();
-          }
-        }
-      });
+  public onShowEdit(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.EDIT;
+    this.failures.clear();
+  }
+
+  public onShowInfo(item: any): void {
+    this.selected = item;
+    this.dialog = Dialog.INFO;
+    this.failures.clear();
   }
 
   public onSort(sorting: { field: string; order: number }): void {
@@ -156,33 +173,40 @@ export class LibraryAuthorListView implements OnInit {
     this.load(this.data.page);
   }
 
-  // DRAWER
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined): void {
+  public onUpdate(data: any): void {
     this.loading = true;
-    this.service.getAll(page, this.sort)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.data = response);
+    this.service.update(data)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe({
+        complete: () => {
+          this.failures.clear();
+          this.dialog = Dialog.NONE;
+          this.load(this.data.page);
+        },
+        error: error => {
+          if (error instanceof FailureResponse) {
+            this.failures = error.failures;
+          } else {
+            this.failures.clear();
+          }
+        }
+      });
   }
 
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();

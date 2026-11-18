@@ -202,12 +202,4 @@
     }
   </div>
 
-  @if (showActions()) {
-    <shared-drawer-form-actions
-      submitLabel="Crear socio"
-      submitIcon="pi pi-plus"
-      [disabled]="!saveEnabled"
-      [loading]="formStatus.loading"
-      (cancelForm)="cancelEdition.emit()" />
-  }
 </form>

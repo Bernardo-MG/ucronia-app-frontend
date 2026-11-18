@@ -21,7 +21,7 @@
         <p class="mt-1 text-sm text-gray-500">Todas las actividades de la asociación</p>
       </header>
       <div class="p-4">
-        <ui-teamup-calendar [code]="settings.calendar" height="34rem" [showSearch]="false" [showViewSelector]="true"
+        <ui-teamup-calendar [code]="contactInfo.calendar" height="34rem" [showSearch]="false" [showViewSelector]="true"
           [showSidePanel]="false" [showAgendaHeader]="true" [showYearViewHeader]="true" [disableSidePanel]="true" />
       </div>
     </section>
@@ -33,7 +33,7 @@
         </header>
         <div class="px-4 pb-4">
           <div class="overflow-hidden rounded-lg border border-gray-200">
-            <ui-google-maps [code]="settings.map" height="18rem" />
+            <ui-google-maps [code]="contactInfo.map" height="18rem" />
           </div>
         </div>
       </section>
@@ -45,8 +45,8 @@
         </p>
 
         <div class="mt-5 space-y-3">
-          @if (settings.instagram) {
-            <a [href]="settings.instagram" target="_blank" rel="noopener noreferrer"
+          @if (contactInfo.instagram) {
+            <a [href]="contactInfo.instagram" target="_blank" rel="noopener noreferrer"
               class="flex items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 text-gray-800 transition-colors hover:border-primary-300 hover:bg-primary-50">
               <i class="pi pi-instagram text-xl text-pink-600" aria-hidden="true"></i>
               <span class="font-medium">Instagram</span>
@@ -54,8 +54,17 @@
             </a>
           }
 
-          @if (settings.email) {
-            <a [href]="'mailto:' + settings.email"
+          @if (contactInfo.telegram) {
+            <a [href]="contactInfo.telegram" target="_blank" rel="noopener noreferrer"
+              class="flex items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 text-gray-800 transition-colors hover:border-primary-300 hover:bg-primary-50">
+              <i class="pi pi-telegram text-xl text-sky-600" aria-hidden="true"></i>
+              <span class="font-medium">Telegram</span>
+              <i class="pi pi-chevron-right ml-auto text-sm text-gray-400" aria-hidden="true"></i>
+            </a>
+          }
+
+          @if (contactInfo.email) {
+            <a [href]="'mailto:' + contactInfo.email"
               class="flex items-center gap-3 rounded-lg border border-gray-200 px-4 py-3 text-gray-800 transition-colors hover:border-primary-300 hover:bg-primary-50">
               <i class="pi pi-envelope text-xl text-primary-600" aria-hidden="true"></i>
               <span class="font-medium">Correo electrónico</span>

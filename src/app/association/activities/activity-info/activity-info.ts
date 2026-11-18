@@ -14,7 +14,8 @@ export class ActivityInfo {
   public readonly data = input(new Activity());
   public readonly loading = input(false);
 
-  public isUpcoming(date: ActivityDate): boolean {
+  // Protected methods
+  protected isUpcoming(date: ActivityDate): boolean {
     return new Date(date.end) >= new Date();
   }
 

@@ -1,11 +1,13 @@
-import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { TextFilter } from '@bernardo-mg/ui';
@@ -16,7 +18,7 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DrawerModule } from 'primeng/drawer';
 import { SkeletonModule } from 'primeng/skeleton';
-import { finalize, forkJoin, Observable } from 'rxjs';
+import { finalize, forkJoin, Observable, Subscription } from 'rxjs';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';
 import { GuestList } from '../guest-list/guest-list';
@@ -39,39 +41,48 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 })
 export class DirectoryView implements OnInit {
 
+  private readonly confirmationService = inject(ConfirmationService);
+  private readonly contactMethodService = inject(ContactMethodService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly directoryService = inject(DirectoryService);
   private readonly directorySummaryService = inject(DirectorySummaryService);
-  private readonly contactMethodService = inject(ContactMethodService);
   private readonly feeTypeService = inject(FeeTypeService);
-  private readonly confirmationService = inject(ConfirmationService);
 
-  public readonly permissions: Permissions;
+  public contactMethodSelection: ContactMethod[] = [];
+  public readonly Dialog = Dialog;
+  public get dialog(): Dialog {
+    return this.currentDialog;
+  }
+  public set dialog(value: Dialog) {
+    if (value !== this.currentDialog) {
+      this.detailRequest.cancel();
+      this.currentDialog = value;
+    }
+  }
+  public failures = new FailureStore();
+  public feeTypes: FeeType[] = [];
   public readonly filter: Filter = {
     status: MemberStatus.Active,
     type: Profiletype.ALL
   };
+  public readonly modalTitle = '';
+  public readonly permissions: Permissions;
+  public profiles = new Page<FullProfile>();
+  public selectedData = new FullProfile();
   public readonly status: Status = {
     loading: false,
     loadingSummary: false
   };
-  protected readonly Profiletype = Profiletype;
-  public readonly Dialog = Dialog;
-
-  public selectedData = new FullProfile();
-  public contactMethodSelection: ContactMethod[] = [];
-  public feeTypes: FeeType[] = [];
-  public profiles = new Page<FullProfile>();
   public summary = new DirectorySummary();
 
-  public failures = new FailureStore();
+  protected readonly Profiletype = Profiletype;
 
-  public modalTitle = '';
+  private currentDialog = Dialog.NONE;
+  private readonly detailRequest = new DetailRequest();
+  private listRequest?: Subscription;
+  private readonly sort = new Sorting();
 
-  private sort = new Sorting();
-
-  public dialog = Dialog.NONE;
-
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -82,35 +93,27 @@ export class DirectoryView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
     this.loadSummary();
   }
 
-  // EVENT HANDLERS
-
-  public onShowEdit() {
-    this.dialog = Dialog.EDIT;
-    this.withLoading(
-      forkJoin({
-        profile: this.directoryService.getOne(this.selectedData.number),
-        contactMethodSelection: this.contactMethodService.getAllAvailable(),
-        feeTypes: this.feeTypeService.getAllAvailable()
-      })
+  // Event handlers
+  public load(page: number | undefined = undefined) {
+    this.listRequest?.unsubscribe();
+    this.listRequest = this.withLoading(
+      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
     )
-      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
-        this.selectedData = profile;
-        this.contactMethodSelection = contactMethodSelection;
-        this.feeTypes = feeTypes;
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(response => {
+        this.profiles = response;
       });
   }
 
-  public onShowInfo(profile: FullProfile) {
+  public onCancelEdit(): void {
+    this.failures.clear();
     this.dialog = Dialog.INFO;
-    this.withLoading(
-      this.directoryService.getOne(profile.number)
-    )
-      .subscribe(profile => this.selectedData = profile);
   }
 
   public onChangeDirection(sorting: SortingEvent) {
@@ -123,6 +126,16 @@ export class DirectoryView implements OnInit {
     this.load(this.profiles.page);
   }
 
+  public onChangeMemberStatus(status: MemberStatus) {
+    this.filter.status = status;
+    this.load();
+  }
+
+  public onChangeType(status: Profiletype) {
+    this.filter.type = status;
+    this.load();
+  }
+
   public onCreate(toCreate: ProfileCreationFormData): void {
     this.call(
       () => this.directoryService.create(toCreate as any),
@@ -131,6 +144,83 @@ export class DirectoryView implements OnInit {
         this.loadSummary();
       }
     );
+  }
+
+  public onDelete(event: Event): void {
+    const dialog = this.dialog;
+    const number = this.selectedData.number;
+    this.confirmationService.confirm({
+      target: event.currentTarget as EventTarget,
+      message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Borrar',
+        severity: 'danger'
+      },
+      accept: () => {
+        if (
+          this.destroyRef.destroyed ||
+          this.dialog !== dialog ||
+          this.selectedData.number !== number
+        ) {
+          return;
+        }
+
+        this.call(
+          () => this.directoryService.delete(number),
+          () => {
+            this.load();
+            this.loadSummary();
+          }
+        );
+      }
+    });
+  }
+
+  public onDrawerVisibleChange(visible: boolean) {
+    if (!visible) {
+      this.failures.clear();
+      this.dialog = Dialog.NONE;
+    }
+  }
+
+  public onFilter(filter: string) {
+    this.filter.name = filter;
+    this.load();
+  }
+
+  public onShowEdit() {
+    this.detailRequest.cancel();
+    this.dialog = Dialog.EDIT;
+    this.withLoading(
+      forkJoin({
+        profile: this.directoryService.getOne(this.selectedData.number),
+        contactMethodSelection: this.contactMethodService.getAllAvailable(),
+        feeTypes: this.feeTypeService.getAllAvailable()
+      })
+    )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(({ profile, contactMethodSelection, feeTypes }) => {
+        this.selectedData = profile;
+        this.contactMethodSelection = contactMethodSelection;
+        this.feeTypes = feeTypes;
+      });
+  }
+
+  public onShowInfo(profile: FullProfile) {
+    this.detailRequest.cancel();
+    this.selectedData = profile;
+    this.dialog = Dialog.INFO;
+    this.withLoading(
+      this.directoryService.getOne(profile.number)
+    )
+      .pipe(this.detailRequest.untilCancelled())
+      .subscribe(profile => this.selectedData = profile);
   }
 
   public onUpdate(toUpdate: FullProfile): void {
@@ -152,87 +242,28 @@ export class DirectoryView implements OnInit {
     );
   }
 
-  public onDelete(event: Event): void {
-    this.confirmationService.confirm({
-      target: event.currentTarget as EventTarget,
-      message: 'Â¿EstÃ¡s seguro de querer borrar? Esta acciÃ³n no es revertible',
-      icon: 'pi pi-info-circle',
-      rejectButtonProps: {
-        label: 'Cancelar',
-        severity: 'secondary',
-        outlined: true
-      },
-      acceptButtonProps: {
-        label: 'Borrar',
-        severity: 'danger'
-      },
-      accept: () =>
-        this.call(
-          () => this.directoryService.delete(this.selectedData.number),
-          () => {
-            this.load();
-            this.loadSummary();
-          }
-        )
-    });
-  }
-
-  public onChangeType(status: Profiletype) {
-    this.filter.type = status;
-    this.load();
-  }
-
-  public onChangeMemberStatus(status: MemberStatus) {
-    this.filter.status = status;
-    this.load();
-  }
-
-  public onFilter(filter: string) {
-    this.filter.name = filter;
-    this.load();
-  }
-
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined) {
-    this.withLoading(
-      this.directoryService.getAll(page, this.sort, this.filter.status, this.filter.name, this.filter.type)
-    )
-      .subscribe(response => {
-        this.profiles = response;
-      });
-  }
-
+  // Data loading
   private loadSummary() {
     this.status.loadingSummary = true;
     this.directorySummaryService.getSummary()
-      .pipe(finalize(() => this.status.loadingSummary = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loadingSummary = false)
+      )
       .subscribe(r => this.summary = r);
   }
 
-  // DIALOGS
-
-  public onCancelEdit(): void {
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
-  }
-
-  public onDrawerVisibleChange(visible: boolean) {
-    if (!visible) {
-      this.failures.clear();
-      this.dialog = Dialog.NONE;
-    }
-  }
-
-  // PRIVATE METHODS
-
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void
   ) {
     this.status.loading = true;
     action()
-      .pipe(finalize(() => this.status.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.status.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();

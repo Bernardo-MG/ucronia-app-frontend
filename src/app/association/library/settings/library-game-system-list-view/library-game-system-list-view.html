@@ -30,7 +30,7 @@
         <shared-drawer-header title="Crear sistema de juego" icon="pi pi-cog" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <shared-name-form #fieldsSharedNameForm formId="library-game-system-list-view-creation" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
+        <shared-name-form #fieldsSharedNameForm formId="library-game-system-list-view-creation" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -48,7 +48,7 @@
         <shared-drawer-header title="Editar sistema de juego" icon="pi pi-pencil" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <shared-name-form #fieldsSharedNameForm formId="library-game-system-list-view-edition" [showActions]="false" [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
+        <shared-name-form #fieldsSharedNameForm formId="library-game-system-list-view-edition" [data]="selected" [loading]="loading" [failures]="failures" (save)="onSave($event)"></shared-name-form>
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions

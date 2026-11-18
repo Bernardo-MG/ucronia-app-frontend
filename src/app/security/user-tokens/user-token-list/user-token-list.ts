@@ -29,32 +29,59 @@ export class UserTokenList {
   private readonly confirmationService =
     inject(ConfirmationService);
 
-  public readonly loading = input(false);
   public readonly editable = input(false);
-  public readonly tokens = input<UserToken[]>([]);
-  public readonly rows = input(0);
+  public readonly loading = input(false);
   public readonly page = input(0);
+  public readonly rows = input(0);
+  public readonly tokens = input<UserToken[]>([]);
   public readonly totalRecords = input(0);
 
-  public readonly show = output<UserToken>();
-  public readonly revoke = output<UserToken>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
-
-  @ViewChild('actionsMenu')
-  private actionsMenu!: Menu;
+  public readonly revoke = output<UserToken>();
+  public readonly show = output<UserToken>();
 
   public actions: MenuItem[] = [];
-
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
+  @ViewChild('actionsMenu')
+  private readonly actionsMenu!: Menu;
+
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = (event.first / event.rows) + 1;
     this.changePage.emit(page);
   }
 
+  public openActionsMenu(
+    event: Event,
+    token: UserToken
+  ): void {
+    const modifiable =
+      this.editable() &&
+      !token.revoked &&
+      !token.consumed;
+
+    this.actions = [
+      {
+        label: 'Revocar',
+        icon: 'pi pi-ban',
+        disabled: !modifiable,
+        command: menuEvent => {
+          this.confirmRevoke(
+            menuEvent.originalEvent as Event,
+            token
+          );
+        }
+      }
+    ];
+
+    this.actionsMenu.toggle(event);
+  }
+
+  // Public methods
   public statusLabel(token: UserToken): TokenStatus {
     if (token.revoked) {
       return 'Revocado';
@@ -85,36 +112,7 @@ export class UserTokenList {
     return 'danger';
   }
 
-  public openActionsMenu(
-    event: Event,
-    token: UserToken
-  ): void {
-    const modifiable =
-      this.editable() &&
-      !token.revoked &&
-      !token.consumed;
-
-    this.actions = [
-      {
-        label: 'Revocar',
-        icon: 'pi pi-ban',
-        disabled: !modifiable,
-        command: menuEvent => {
-          this.confirmRevoke(
-            menuEvent.originalEvent as Event,
-            token
-          );
-        }
-      }
-    ];
-
-    this.actionsMenu.toggle(event);
-  }
-
-  private isExpired(token: UserToken): boolean {
-    return new Date(token.expirationDate).getTime() <= Date.now();
-  }
-
+  // Private methods
   private confirmRevoke(
     event: Event,
     token: UserToken
@@ -134,6 +132,10 @@ export class UserTokenList {
       },
       accept: () => this.revoke.emit(token)
     });
+  }
+
+  private isExpired(token: UserToken): boolean {
+    return new Date(token.expirationDate).getTime() <= Date.now();
   }
 
 }

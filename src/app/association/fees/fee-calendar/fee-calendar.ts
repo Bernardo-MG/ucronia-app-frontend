@@ -1,109 +1,80 @@
-import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { Component, computed, input, linkedSignal, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { YearsRange } from '@ucronia/domain';
-import { getMonth } from 'date-fns';
+import { eachMonthOfInterval, isValid, NormalizedInterval, startOfMonth, subMonths } from 'date-fns';
 import { BadgeModule } from 'primeng/badge';
 import { ButtonModule } from 'primeng/button';
-import { SelectChangeEvent, SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { MemberFees, MemberFeesFee } from '../domain/member-fees';
 
+export const DEFAULT_FEE_CALENDAR_MONTHS = 6;
+
 @Component({
   selector: 'assoc-fee-calendar',
-  imports: [FormsModule, SelectModule, TableModule, ButtonModule, BadgeModule, TooltipModule],
+  imports: [FormsModule, SelectButtonModule, DatePickerModule, TableModule, ButtonModule, BadgeModule, TooltipModule],
   templateUrl: './fee-calendar.html'
 })
-export class FeeCalendar implements OnChanges {
+export class FeeCalendar {
 
-  public range = input(new YearsRange());
-  /**
-   * Loading flag. Shows the loading visual cue.
-   */
-  public readonly loading = input(false);
-  public readonly year = input(new Date().getFullYear());
+  public readonly error = input(false);
   public readonly feeCalendar = input<MemberFees[]>([]);
+  public readonly loading = input(false);
+  public readonly period = input.required<NormalizedInterval>();
 
-  // TODO: maybe use bidirectional property
-  public readonly goToYear = output<number>();
+  public readonly periodChange = output<NormalizedInterval>();
   public readonly selectFee = output<{ member: number, date: Date }>();
 
-  public readonly monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
-
-  public readonly monthNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-  public readonly currentMonth = new Date().getMonth() + 1;
-
-  public currentYear = new Date().getFullYear();
-
-  private index = 0;
-
-  public get selectionDisabled() {
-    return this.loading() || (this.range().years.length === 0);
-  }
-
-  public get canGoNext() {
-    return (this.index >= 0) && ((this.index + 1) < this.range().years.length);
-  }
-
-  public get canGoPrevious() {
-    return (this.index > 0);
-  }
-
-  public get years(): number[] {
-    return [...this.range().years].reverse();
-  }
-
-  public ngOnChanges({ range, year }: SimpleChanges): void {
-    if (range) {
-
-      if (range.currentValue.years.length) {
-        this.index = range.currentValue.years.indexOf(this.currentYear);
+  protected readonly currentMonth = startOfMonth(new Date()).getTime();
+  protected get draftPeriod(): NormalizedInterval | null {
+    if (this.mode === 'recent') {
+      const count = this.recentMonths;
+      if (count === null || !Number.isInteger(count) || count < 1) {
+        return null;
       }
+
+      const end = startOfMonth(new Date());
+      const start = subMonths(end, count - 1);
+      return isValid(start) ? { start, end } : null;
     }
 
-    if (year) {
-      this.currentYear = year.currentValue;
+    const start = this.from();
+    const end = this.to();
+    return start && end && start <= end ? { start, end } : null;
+  }
+  protected readonly from = linkedSignal<Date | null>(() => this.period().start);
+  protected mode: 'recent' | 'range' = 'recent';
+  protected readonly modes = [
+    { label: 'Últimos meses', value: 'recent' },
+    { label: 'Rango de fechas', value: 'range' }
+  ];
+  protected readonly months = computed(() => eachMonthOfInterval(this.period()).map(month => ({
+    key: month.getTime(),
+    label: this.formatMonth(month)
+  })));
+  protected recentMonths: number | null = DEFAULT_FEE_CALENDAR_MONTHS;
+  protected readonly rows = computed(() => this.feeCalendar().map(entry => ({
+    member: entry.member,
+    feesByMonth: new Map(entry.fees.map(fee => [startOfMonth(fee.month).getTime(), fee]))
+  })));
+  protected readonly to = linkedSignal<Date | null>(() => this.period().end);
+
+  private readonly monthLabel = new Intl.DateTimeFormat('es-ES', { month: 'short', year: 'numeric' });
+
+  protected applyPeriod(): void {
+    const period = this.draftPeriod;
+    if (period) {
+      this.periodChange.emit(period);
     }
   }
 
-  public onGoTo(event: SelectChangeEvent) {
-    this.currentYear = Number(event.value);
-    this.index = this.range().years.indexOf(this.currentYear);
-    this.goToYear.emit(this.currentYear);
+  protected formatMonth(date: Date): string {
+    return this.monthLabel.format(date);
   }
 
-  public onGoPrevious() {
-    this.index = this.index - 1;
-    this.currentYear = Number(this.range().years[this.index]);
-    this.goToYear.emit(this.currentYear);
-  }
-
-  public onGoNext() {
-    this.index = this.index + 1;
-    this.currentYear = Number(this.range().years[this.index]);
-    this.goToYear.emit(this.currentYear);
-  }
-
-  public hasMonth(months: MemberFeesFee[], month: number): boolean {
-    return months.some(m => getMonth(m.month) + 1 === month);
-  }
-
-  public onSelectFee(member: number, months: MemberFeesFee[], month: number) {
-    const calendarMonth = this.getCalendarMonth(months, month);
-    this.selectFee.emit({ member: member, date: calendarMonth.month })
-  }
-
-  public isPaid(months: MemberFeesFee[], month: number): boolean {
-    return this.getCalendarMonth(months, month).paid;
-  }
-
-  public getMonth(months: MemberFeesFee[], month: number): Date {
-    return this.getCalendarMonth(months, month).month;
-  }
-
-  private getCalendarMonth(months: MemberFeesFee[], month: number): MemberFeesFee {
-    return months.find(m => getMonth(m.month) + 1 === month) as MemberFeesFee;
+  protected onSelectFee(member: number, fee: MemberFeesFee): void {
+    this.selectFee.emit({ member, date: fee.month });
   }
 
 }

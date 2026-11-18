@@ -1,9 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FeeSummary } from '@ucronia/domain';
+import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
+import { FeeSummary, MemberStatus } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { of } from 'rxjs';
+import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';
+import { FeeCalendar } from '../fee-calendar/fee-calendar';
 import { FeeService } from '../fee-service';
 import { FeeSummaryService } from '../fee-summary-service';
 import { FeeView } from './fee-view';
@@ -14,7 +18,7 @@ describe('FeeView', () => {
 
   const feeCalendarMock = jasmine.createSpyObj<FeeCalendarService>(
     'FeeCalendarService',
-    ['getCalendar', 'getRange']
+    ['getCalendar']
   );
 
   const feeServiceMock = jasmine.createSpyObj<FeeService>(
@@ -28,10 +32,6 @@ describe('FeeView', () => {
   );
 
   beforeEach(async () => {
-    feeCalendarMock.getRange.and.returnValue(
-      of({ years: [2020, 2021, 2022, 2023, 2024] })
-    );
-
     feeCalendarMock.getCalendar.and.returnValue(
       of([])
     );
@@ -61,5 +61,46 @@ describe('FeeView', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('filters calendar rows by member status and keeps the selection when changing the period', () => {
+    const row = (number: number, active?: boolean): MemberFees => {
+      const entry = new MemberFees();
+      entry.member.number = number;
+      entry.member.active = active;
+      return entry;
+    };
+    const active = row(1, true);
+    const inactive = row(2, false);
+    const unknown = row(3);
+    feeCalendarMock.getCalendar.and.returnValue(of([active, inactive, unknown]));
+    component.loadCalendar({ start: new Date(2023, 0, 1), end: new Date(2023, 5, 1) });
+    fixture.detectChanges();
+
+    const selector: MemberStatusSelector = fixture.debugElement.query(By.directive(MemberStatusSelector)).componentInstance;
+    const calendar: FeeCalendar = fixture.debugElement.query(By.directive(FeeCalendar)).componentInstance;
+    feeCalendarMock.getCalendar.calls.reset();
+
+    expect(selector.status()).toBe(MemberStatus.Active);
+    expect(calendar.feeCalendar()).toEqual([active]);
+
+    selector.filter.emit(MemberStatus.Inactive);
+    fixture.detectChanges();
+    expect(calendar.feeCalendar()).toEqual([inactive]);
+
+    selector.filter.emit(MemberStatus.All);
+    fixture.detectChanges();
+    expect(calendar.feeCalendar()).toEqual([active, inactive, unknown]);
+    expect(feeCalendarMock.getCalendar).not.toHaveBeenCalled();
+
+    selector.filter.emit(MemberStatus.Inactive);
+    const nextPeriodInactive = row(4, false);
+    feeCalendarMock.getCalendar.and.returnValue(of([active, nextPeriodInactive]));
+    const nextPeriod = { start: new Date(2024, 10, 1), end: new Date(2025, 1, 1) };
+    calendar.periodChange.emit(nextPeriod);
+    fixture.detectChanges();
+    expect(feeCalendarMock.getCalendar).toHaveBeenCalledOnceWith(nextPeriod);
+    expect(selector.status()).toBe(MemberStatus.Inactive);
+    expect(calendar.feeCalendar()).toEqual([nextPeriodInactive]);
   });
 });

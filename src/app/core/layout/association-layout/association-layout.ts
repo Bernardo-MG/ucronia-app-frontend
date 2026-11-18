@@ -1,7 +1,8 @@
 import { Component, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
-import { AuthService } from '@bernardo-mg/authentication';
 import { librarySettingsPermissions } from '@app/association/library/settings/library-settings-permissions';
+import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService, MenuItem } from 'primeng/api';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -19,13 +20,13 @@ import { Navbar } from '../navbar/navbar';
 })
 export class AssociationLayout {
 
+  public menuActive = false;
   public menus: MenuItem[] = [];
 
-  public menuActive = false;
-
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
     authService.securityDetails
+      .pipe(takeUntilDestroyed())
       .subscribe(details => {
         const items = this.getAssociationItems(authService);
         const adminItems = this.getAdminItems(authService);
@@ -49,44 +50,16 @@ export class AssociationLayout {
       });
   }
 
-  public onToggleMenu(status: boolean) {
-    this.menuActive = status;
-  }
-
-  public closeMenu() {
+  // Event handlers
+  public closeMenu(): void {
     this.menuActive = false;
   }
 
-  private getAssociationItems(authService: AuthService): MenuItem[] {
-    const items = [];
-    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
-      items.push(
-        {
-          label: 'Socios',
-          routerLink: '/association/members',
-          icon: 'pi pi-users'
-        });
-    }
-    if (authService.hasPermission(UcroniaPermissions.myFees.read)) {
-      items.push(
-        {
-          label: 'Mis cuotas',
-          routerLink: '/association/myFees',
-          icon: 'pi pi-money-bill'
-        });
-    }
-    const canReadBooks = authService.hasPermission(UcroniaPermissions.library.book.read);
-    if (canReadBooks || authService.hasAnyPermission(librarySettingsPermissions)) {
-      items.push(
-        {
-          label: 'Biblioteca',
-          routerLink: canReadBooks ? '/association/library' : '/association/library/settings',
-          icon: 'pi pi-book'
-        });
-    }
-    return items;
+  public onToggleMenu(status: boolean): void {
+    this.menuActive = status;
   }
 
+  // Private methods
   private getAdminItems(authService: AuthService): MenuItem[] {
     const items = [];
     if (authService.hasPermission(UcroniaPermissions.directory.profile.read)) {
@@ -146,6 +119,36 @@ export class AssociationLayout {
         });
     }
 
+    return items;
+  }
+
+  private getAssociationItems(authService: AuthService): MenuItem[] {
+    const items = [];
+    if (authService.hasPermission(UcroniaPermissions.directory.member.read)) {
+      items.push(
+        {
+          label: 'Socios',
+          routerLink: '/association/members',
+          icon: 'pi pi-users'
+        });
+    }
+    if (authService.hasPermission(UcroniaPermissions.myFees.read)) {
+      items.push(
+        {
+          label: 'Mis cuotas',
+          routerLink: '/association/myFees',
+          icon: 'pi pi-money-bill'
+        });
+    }
+    const canReadBooks = authService.hasPermission(UcroniaPermissions.library.book.read);
+    if (canReadBooks || authService.hasAnyPermission(librarySettingsPermissions)) {
+      items.push(
+        {
+          label: 'Biblioteca',
+          routerLink: canReadBooks ? '/association/library' : '/association/library/settings',
+          icon: 'pi pi-book'
+        });
+    }
     return items;
   }
 

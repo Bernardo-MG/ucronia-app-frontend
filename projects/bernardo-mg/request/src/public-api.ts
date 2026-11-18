@@ -2,8 +2,8 @@
  * Public API Surface of request
  */
 
-export * from './lib/interceptors/error-request-interceptor';
 export * from './lib/interceptors/error-message-interceptor';
+export * from './lib/interceptors/error-request-interceptor';
 export * from './lib/models/array-page';
 export * from './lib/models/failure-store';
 export * from './lib/models/field-failure';
@@ -15,4 +15,4 @@ export * from './lib/models/sorting-property';
 export * from './lib/responses/failure-response';
 export * from './lib/responses/paginated-response';
 export * from './lib/responses/simple-response';
-
+export * from './lib/search/search-request';

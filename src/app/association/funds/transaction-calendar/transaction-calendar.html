@@ -1,2 +1,2 @@
-<ui-calendar-month [events]="events" [months]="months()" [loading]="loading()" (changeMonth)="changeMonth.emit($event)"
+<ui-calendar-month [events]="events" [months]="months()" [selectedMonth]="selectedMonth()" [loading]="loading()" (changeMonth)="changeMonth.emit($event)"
     (pickDate)="onPickDate($event)" />

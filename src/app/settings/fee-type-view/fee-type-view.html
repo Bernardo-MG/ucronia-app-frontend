@@ -35,7 +35,7 @@
         <shared-drawer-header title="Crear tipo de cuota" icon="pi pi-tag" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-create" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -53,7 +53,7 @@
         <shared-drawer-header title="Editar tipo de cuota" icon="pi pi-pencil" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
+        <assoc-fee-type-form #fieldsAssocFeeTypeForm formId="fee-type-view-edit" [loading]="loading" [data]="selectedData" [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions

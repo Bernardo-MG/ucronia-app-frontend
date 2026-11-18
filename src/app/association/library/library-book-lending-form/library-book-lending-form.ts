@@ -1,7 +1,6 @@
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
@@ -10,57 +9,58 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'assoc-library-book-lending-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, DatePickerModule, MessageModule, MemberSearch],
+  imports: [ReactiveFormsModule, DatePickerModule, MessageModule, MemberSearch],
   templateUrl: './library-book-lending-form.html'
 })
-export class LibraryBookLendingForm {
+export class LibraryBookLendingForm implements OnChanges {
 
-  public readonly cancelEdition = output<void>();
-
+  public readonly book = input(-1);
+  public readonly borrower = input<Profile>();
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
-
-  public readonly failures = input(new FailureStore());
-  public readonly members = input<Profile[]>([]);
+  public readonly members = input<MemberSearchOption[]>([]);
 
   public readonly save = output<BookLendingEvent>();
   public readonly searchMember = output<MemberSearchEvent>();
 
-  public readonly today = new Date();
-
-  @Input() public set borrower(value: Profile) {
-    this.form.get('borrower')?.setValue(value.number);
-    this.memberName = value.name.fullName;
-  }
-
-  @Input() public set book(value: number) {
-    this.form.get('book')?.setValue(value);
-  }
-
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
-  public memberName = '';
-
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  protected readonly today = new Date();
 
-    this.form = fb.group({
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
+
+    this.form = formBuilder.group({
       lendingDate: [null, Validators.required],
       borrower: [-1, Validators.required],
       book: [-1, Validators.required]
     });
 
     this.formStatus = new FormStatus(this.form);
+  }
+
+  // Lifecycle hooks
+  public ngOnChanges(changes: SimpleChanges): void {
+    const borrower = this.borrower();
+    const borrowerNumber = borrower && borrower.number > 0 ? borrower.number : null;
+    if (changes['book']) {
+      this.form.reset({ book: this.book(), borrower: borrowerNumber, lendingDate: null });
+    } else if (changes['borrower']) {
+      this.form.get('borrower')?.setValue(borrowerNumber);
+    }
+  }
+
+  // Event handlers
+  protected onClearMember(): void {
+    this.form.get('borrower')?.reset();
+    this.form.get('borrower')?.markAsDirty();
   }
 
   /**
@@ -75,16 +75,17 @@ export class LibraryBookLendingForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
-  }
-
-  public onSelectMember(member: Profile) {
+  public onSelectMember(member: MemberSearchOption) {
     if (!member) {
       return;
     }
 
     this.form.get('borrower')?.setValue(member.number);
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

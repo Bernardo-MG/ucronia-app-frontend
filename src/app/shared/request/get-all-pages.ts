@@ -1,21 +1,13 @@
-import { Page } from "@bernardo-mg/request";
-import { Observable, expand, of, reduce } from "rxjs";
+import { Page } from '@bernardo-mg/request';
+import { EMPTY, expand, Observable, reduce } from 'rxjs';
 
-export function getAllPages<T>(page : (number: number | undefined, size: number | undefined) => Observable<Page<T>>): Observable<T[]> {
-    const pageSize = 100;
+export function getAllPages<T>(
+  loadPage: (page: number | undefined, size: number) => Observable<Page<T>>
+): Observable<T[]> {
+  const pageSize = 100;
 
-    return page(1, pageSize)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return page(nextPage, pageSize);
-          }
-          return of();
-        }),
-        // accumulate from all pages into one array
-        reduce((data: T[], res?: Page<T>) => {
-          return res ? [...data, ...res.content] : data;
-        }, [])
-      );
+  return loadPage(undefined, pageSize).pipe(
+    expand(page => page.last ? EMPTY : loadPage(page.page + 1, pageSize)),
+    reduce((items, page) => items.concat(page.content), [] as T[])
+  );
 }

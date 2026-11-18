@@ -43,7 +43,7 @@ describe('FileService', () => {
   it('should load all files ordered by name for selectors', () => {
     service.getAllForSelection().subscribe();
 
-    expect(client.asset.file.page).toHaveBeenCalledWith(1, 100, jasmine.anything());
+    expect(client.asset.file.page).toHaveBeenCalledWith(undefined, 100, jasmine.anything());
   });
 
   it('should load file content through the API client', () => {

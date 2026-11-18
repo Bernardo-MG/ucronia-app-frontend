@@ -1,7 +1,6 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { GameTable, Profile, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
@@ -16,59 +15,53 @@ import { ToggleSwitchModule } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'assoc-scheduled-game-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule,
-    MessageModule, SelectModule, TextareaModule, ToggleSwitchModule, MemberSearch],
+  imports: [FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule, MessageModule, SelectModule, TextareaModule, ToggleSwitchModule, MemberSearch],
   templateUrl: './scheduled-game-form.html'
 })
 export class ScheduledGameForm implements OnChanges {
 
-  private readonly fb = inject(FormBuilder);
-
-  public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
-  public readonly members = input<Profile[]>([]);
-  public readonly tables = input<GameTable[]>([]);
-  public readonly selectedMaster = input(new Profile());
+  private readonly formBuilder = inject(FormBuilder);
 
   @Input() public set data(value: ScheduledGame) {
-    this.form.patchValue(value as any);
+    this.form.reset({
+      ...value,
+      recurrence: value.recurrence ?? { interval: 0, unit: RecurrenceUnit.WEEKLY }
+    });
     this.recurring = value.recurrence ? value.recurrence?.interval > 0 : false;
     this.showImageField = !!value.image;
   }
+  public readonly failures = input(new FailureStore());
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
+  public readonly members = input<MemberSearchOption[]>([]);
+  public readonly selectedMaster = input(new Profile());
+  public readonly tables = input<GameTable[]>([]);
 
   public readonly save = output<ScheduledGame>();
-  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
 
+  public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
-  public form: FormGroup;
-  public master = new Profile();
-  public recurring = false;
-  public showImageField = false;
-
+  public readonly gameTypes = [
+    { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
+    { name: 'Partida única', value: ScheduledGameType.ONESHOT }
+  ];
+  public master: MemberSearchOption = new Profile();
   public readonly recurrenceUnits = [
     { name: 'Diaria', value: RecurrenceUnit.DAILY },
     { name: 'Semanal', value: RecurrenceUnit.WEEKLY },
     { name: 'Mensual', value: RecurrenceUnit.MONTHLY }
   ];
-
-  public readonly gameTypes = [
-    { name: 'Campaña', value: ScheduledGameType.CAMPAIGN },
-    { name: 'Partida única', value: ScheduledGameType.ONESHOT }
-  ];
-
+  public recurring = false;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+  public showImageField = false;
 
-  constructor() {
-    this.form = this.fb.group({
+  public constructor() {
+    this.form = this.formBuilder.group({
       number: [null],
       title: [null, Validators.required],
       gameType: [ScheduledGameType.ONESHOT, Validators.required],
@@ -78,7 +71,7 @@ export class ScheduledGameForm implements OnChanges {
       maxPlayers: [null, [Validators.required, Validators.min(1), Validators.max(100)]],
       image: [''],
       start: [null, Validators.required],
-      recurrence: this.fb.group({
+      recurrence: this.formBuilder.group({
         interval: [0, [Validators.required, Validators.min(0), Validators.max(365)]],
         unit: [RecurrenceUnit.WEEKLY, Validators.required]
       }),
@@ -88,6 +81,7 @@ export class ScheduledGameForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ selectedMaster }: SimpleChanges): void {
 
     if (selectedMaster && this.selectedMaster().number) {
@@ -96,23 +90,7 @@ export class ScheduledGameForm implements OnChanges {
     }
   }
 
-  public onSave(): void {
-    this.form.markAllAsTouched();
-
-    if (this.saveEnabled) {
-      if (!this.recurring) {
-        this.form.get('recurrence.interval')?.setValue(0);
-      }
-      this.save.emit(this.form.value);
-    }
-  }
-
-  public onSelectMaster(member: Profile): void {
-    this.master = member;
-    this.form.get('master')?.setValue(member.number);
-    this.form.get('master')?.markAsDirty();
-  }
-
+  // Event handlers
   public clearMaster(): void {
     this.master = new Profile();
     this.form.get('master')?.reset();
@@ -131,7 +109,25 @@ export class ScheduledGameForm implements OnChanges {
     }
   }
 
-  public getInitials(profile: Profile): string {
+  public onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      if (!this.recurring) {
+        this.form.get('recurrence.interval')?.setValue(0);
+      }
+      this.save.emit(this.form.value);
+    }
+  }
+
+  public onSelectMaster(member: MemberSearchOption): void {
+    this.master = member;
+    this.form.get('master')?.setValue(member.number);
+    this.form.get('master')?.markAsDirty();
+  }
+
+  // Public methods
+  public getInitials(profile: MemberSearchOption): string {
     return profile.name.fullName
       .split(/\s+/)
       .filter(Boolean)

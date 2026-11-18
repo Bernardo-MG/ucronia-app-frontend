@@ -16,8 +16,6 @@
   <ng-template #header>
     <tr>
       <th>Periodo</th>
-      <th class="hidden sm:table-cell">Tipo de cuota</th>
-      <th class="text-right">Importe</th>
       <th>Estado</th>
       <th>Fecha de pago</th>
     </tr>
@@ -27,14 +25,6 @@
     <tr>
       <td class="font-medium text-gray-950 capitalize">
         {{ fee.month | date:'MMMM y' }}
-      </td>
-
-      <td class="hidden text-gray-600 sm:table-cell">
-        {{ fee.feeType.name }}
-      </td>
-
-      <td class="text-right font-medium tabular-nums">
-        {{ fee.feeType.amount | currency:'EUR':'symbol':'1.2-2' }}
       </td>
 
       <td>

@@ -93,7 +93,7 @@
       <ng-template #header>
         <shared-drawer-header title="Nueva imagen" icon="pi pi-image" />
       </ng-template>
-      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-form #fieldsAssocImageForm formId="image-view-create" [showActions]="false" [loading]="status.loading" [failures]="failures"
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-form #fieldsAssocImageForm formId="image-view-create" [loading]="status.loading" [failures]="failures"
         (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
@@ -110,7 +110,7 @@
       <ng-template #header>
         <shared-drawer-header title="Editar imagen" icon="pi pi-pencil" subtitle="Imagen #{{ selectedData.number }} · {{ selectedData.name }}" />
       </ng-template>
-      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-form #fieldsAssocImageForm formId="image-view-edit" [showActions]="false" [data]="selectedData" [folders]="folders" [loading]="status.loading"
+      <div class="w-full min-w-0 px-2 py-4 sm:px-4"><assoc-image-form #fieldsAssocImageForm formId="image-view-edit" [data]="selectedData" [folders]="folders" [loading]="status.loading"
         [failures]="failures" (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

@@ -1,6 +1,8 @@
+import { AuditDetails } from "../audit/audit-details";
 import { MemberName } from "../members/member";
 
 export class Fee {
+  public audit?: AuditDetails | null;
   public month = new Date();
   public member = new FeeMember();
   public feeType = new FeeFeeType();

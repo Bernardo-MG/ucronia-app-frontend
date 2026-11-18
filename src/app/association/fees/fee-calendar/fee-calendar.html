@@ -1,53 +1,79 @@
-<div class="flex flex-col gap-4 border-b border-gray-200 p-4 md:flex-row md:items-center md:justify-between">
+<div class="flex flex-wrap items-end gap-4 border-b border-gray-200 p-4">
+  <p-selectbutton [options]="modes" [(ngModel)]="mode" [allowEmpty]="false" aria-label="Periodo" />
+  @if (mode === 'recent') {
+    <label class="grid gap-1 text-sm font-medium text-gray-700">
+      Número de meses
+      <input type="number" min="1" step="1" [(ngModel)]="recentMonths"
+        class="w-28 rounded-md border border-gray-300 px-3 py-2" />
+    </label>
+  } @else {
+    <div class="grid gap-1 text-sm font-medium text-gray-700">
+      <label for="fee-calendar-from">Desde</label>
+      <p-datepicker inputId="fee-calendar-from" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+        [ngModel]="from()" (ngModelChange)="from.set($event)" appendTo="body" />
+    </div>
+    <div class="grid gap-1 text-sm font-medium text-gray-700">
+      <label for="fee-calendar-to">Hasta</label>
+      <p-datepicker inputId="fee-calendar-to" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+        [ngModel]="to()" (ngModelChange)="to.set($event)" appendTo="body" />
+    </div>
+  }
+  <p-button label="Aplicar" (onClick)="applyPeriod()" [disabled]="!draftPeriod" />
+  <div class="md:ml-auto"><ng-content /></div>
+</div>
+
+<div class="flex flex-wrap items-center justify-between gap-3 border-b border-gray-200 p-4">
+  <p class="font-semibold text-gray-950">
+    {{ formatMonth(period().start) }}@if (months().length > 1) { – {{ formatMonth(period().end) }} }
+  </p>
   <div class="flex flex-wrap items-center gap-4 text-sm text-gray-600" aria-label="Leyenda">
     <span class="inline-flex items-center gap-2"><i class="pi pi-check-circle text-green-600"></i> Pagada</span>
     <span class="inline-flex items-center gap-2"><i class="pi pi-exclamation-circle text-amber-600"></i> Sin pagar</span>
     <span class="inline-flex items-center gap-2"><i class="pi pi-minus-circle text-gray-400"></i> Sin cuota</span>
   </div>
-
-  <div class="flex items-center gap-2">
-    <p-button id="previousYearButton" icon="pi pi-chevron-left" (click)="onGoPrevious()" [disabled]="!canGoPrevious"
-      [attr.aria-disabled]="!canGoPrevious" aria-label="Año anterior" severity="secondary" outlined />
-    <p-select [(ngModel)]="currentYear" [disabled]="selectionDisabled" [options]="years" (onChange)="onGoTo($event)"
-      aria-label="Año" />
-    <p-button id="nextYearButton" icon="pi pi-chevron-right" (click)="onGoNext()" [disabled]="!canGoNext"
-      [attr.aria-disabled]="!canGoNext" aria-label="Año siguiente" severity="secondary" outlined />
-  </div>
 </div>
 
-<p-table [loading]="loading()" [value]="feeCalendar()" responsiveLayout="scroll">
-  <ng-template #header>
-    <tr>
-      <th class="min-w-56">Socio</th>
-      @for (monthName of monthNames; track monthName; let monthIndex = $index) {
-        <th class="min-w-16 text-center" [class.bg-primary-50]="monthIndex + 1 === currentMonth">{{ monthName }}</th>
-      }
-    </tr>
-  </ng-template>
-  <ng-template #body let-memberFees>
-    <tr>
-      <td>
-        <span class="block font-medium text-gray-950">{{ memberFees.member.name.fullName }}</span>
-        <span class="mt-1 text-xs text-gray-500">#{{ memberFees.member.number }}</span>
-        @if (!memberFees.member.active) {
-          <p-badge class="ml-2" value="Inactivo" severity="warn" badgeSize="small" />
-        }
-      </td>
-      @for (monthNumber of monthNumbers; track monthNumber) {
-        <td class="text-center" [class.bg-primary-50]="monthNumber === currentMonth">
-          @if (hasMonth(memberFees.fees, monthNumber)) {
-            @if(isPaid(memberFees.fees, monthNumber)) {
-              <p-button icon="pi pi-check" severity="success" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)"
-                [attr.aria-label]="'Cuota pagada de ' + monthNames[monthNumber - 1]" [pTooltip]="'Pagada · ' + monthNames[monthNumber - 1]" rounded text />
-            } @else {
-              <p-button icon="pi pi-exclamation-circle" severity="warn" (click)="onSelectFee(memberFees.member.number, memberFees.fees, monthNumber)"
-                [attr.aria-label]="'Cuota sin pagar de ' + monthNames[monthNumber - 1]" [pTooltip]="'Sin pagar · ' + monthNames[monthNumber - 1]" rounded text />
-            }
-          } @else {
-            <i class="pi pi-minus text-gray-300" aria-label="Sin cuota"></i>
+@if (error()) {
+  <p class="p-4 text-sm text-red-700" role="alert">No se pudo cargar el calendario. Pulsa Aplicar para reintentar.</p>
+} @else {
+  <div class="overflow-x-auto">
+    <p-table [loading]="loading()" [value]="rows()">
+      <ng-template #header>
+        <tr>
+          <th class="sticky left-0 z-10 min-w-44 sm:min-w-72 bg-gray-50">Socio</th>
+          @for (month of months(); track month.key) {
+            <th class="min-w-24 whitespace-nowrap text-center capitalize" [class.bg-primary-50]="month.key === currentMonth">
+              {{ month.label }}
+            </th>
           }
-        </td>
-      }
-    </tr>
-  </ng-template>
-</p-table>
+        </tr>
+      </ng-template>
+      <ng-template #body let-row>
+        <tr>
+          <td class="sticky left-0 z-10 min-w-44 sm:min-w-72 bg-white">
+            <span class="block font-medium text-gray-950">{{ row.member.name.fullName }}</span>
+            <span class="mt-1 text-xs text-gray-500">#{{ row.member.number }}</span>
+            @if (row.member.active === false) {
+              <p-badge class="ml-2" value="Inactivo" severity="warn" badgeSize="small" />
+            }
+          </td>
+          @for (month of months(); track month.key) {
+            <td class="text-center" [class.bg-primary-50]="month.key === currentMonth">
+              @if (row.feesByMonth.get(month.key); as fee) {
+                <p-button [icon]="fee.paid ? 'pi pi-check-circle' : 'pi pi-exclamation-circle'"
+                  [severity]="fee.paid ? 'success' : 'warn'" (click)="onSelectFee(row.member.number, fee)"
+                  [ariaLabel]="(fee.paid ? 'Cuota pagada de ' : 'Cuota sin pagar de ') + month.label"
+                  [pTooltip]="(fee.paid ? 'Pagada · ' : 'Sin pagar · ') + month.label" rounded text />
+              } @else {
+                <i class="pi pi-minus text-gray-400" aria-label="Sin cuota"></i>
+              }
+            </td>
+          }
+        </tr>
+      </ng-template>
+      <ng-template #emptymessage>
+        <tr><td [attr.colspan]="months().length + 1">No hay cuotas en el periodo seleccionado.</td></tr>
+      </ng-template>
+    </p-table>
+  </div>
+}

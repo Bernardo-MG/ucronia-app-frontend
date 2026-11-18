@@ -54,7 +54,7 @@
       </ng-template>
 
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <access-user-form #fieldsAccessUserForm formId="user-view-invite" [showActions]="false" [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
+          <access-user-form #fieldsAccessUserForm formId="user-view-invite" [create]="true" [selection]="roleSelection" [loading]="loading" [failures]="failures" (save)="onInvite($event)" />
         </div>
         <ng-template #footer>
           <shared-drawer-form-actions
@@ -73,7 +73,7 @@
       </ng-template>
 
         <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-          <access-user-form #fieldsAccessUserForm formId="user-view-edit" [showActions]="false" [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" />
+          <access-user-form #fieldsAccessUserForm formId="user-view-edit" [create]="false" [selection]="roleSelection" [member]="member" [members]="members" [loading]="loading" [data]="selectedData" [failures]="failures" (update)="onUpdate($event)" (searchMember)="onSearchMembers($event)" />
         </div>
         <ng-template #footer>
           <shared-drawer-form-actions

@@ -13,21 +13,22 @@ import { TableModule, TablePageEvent } from 'primeng/table';
 })
 export class LibraryLendingList {
 
-  public readonly loading = input(false);
-  public readonly lendings = input<BookLending[]>([]);
   public readonly borrowerNames = input<Record<number, string>>({});
-  public readonly rows = input(0);
+  public readonly lendings = input<BookLending[]>([]);
+  public readonly loading = input(false);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
-  
-  public readonly sort = output<SortingProperty>();
+
   public readonly pageChange = output<number>();
   public readonly showLending = output<BookLending>();
+  public readonly sort = output<SortingProperty>();
 
   public get first() {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onChangeDirection(sorting: SortingEvent) {
     // TODO: should receive the actual direction, not a number
     const direction = sorting.order === 1
@@ -42,6 +43,7 @@ export class LibraryLendingList {
     this.pageChange.emit(page);
   }
 
+  // Public methods
   public getBorrowerName(number: number): string {
     return this.borrowerNames()[number] ?? `${number}`;
   }

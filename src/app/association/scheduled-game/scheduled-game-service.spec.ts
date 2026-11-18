@@ -3,6 +3,8 @@ import { UcroniaClient } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
 import { of } from 'rxjs';
 import { ScheduledGameService } from './scheduled-game-service';
+import { Page, Sorting } from '@bernardo-mg/request';
+import { ScheduledGame } from '@ucronia/domain';
 
 describe('ScheduledGameService', () => {
   let service: ScheduledGameService;
@@ -61,5 +63,19 @@ describe('ScheduledGameService', () => {
     service.getTables().subscribe();
 
     expect(mockUcroniaClient.gameTable.page).toHaveBeenCalled();
+  });
+});
+
+describe('ScheduledGame server pagination', () => {
+  it('preserves the server page and totals', () => {
+    const result = Object.assign(new Page<ScheduledGame>(), { content: [new ScheduledGame()], totalElements: 35 });
+    const page = jasmine.createSpy().and.returnValue(of(result));
+    TestBed.configureTestingModule({ providers: [
+      MessageService,
+      { provide: UcroniaClient, useValue: { scheduledGame: { page } } }
+    ] });
+    const sort = new Sorting();
+    TestBed.inject(ScheduledGameService).getAll(2, sort).subscribe(response => expect(response).toBe(result));
+    expect(page).toHaveBeenCalledOnceWith(2, undefined, jasmine.any(Sorting));
   });
 });

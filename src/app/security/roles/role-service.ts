@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
+import { getAllPages } from '@app/shared/request/get-all-pages';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
 import { MessageService } from 'primeng/api';
-import { catchError, combineLatest, expand, map, Observable, of, reduce, tap, throwError } from 'rxjs';
+import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: "root"
@@ -27,38 +28,15 @@ export class RoleService {
     return this.securityClient.role.page(page, undefined, sorting);
   }
 
-  public getAvailablePermissions(role: string): Observable<ResourcePermission[]> {
-    return combineLatest([
-      this.getOne(role),
-      this.getAllPermissions()
-    ]).pipe(
-      map(([role, permissions]) => {
-        const rolePermissions = role.permissions?.map(p => `${p.resource}:${p.action}`) ?? [];
-        return permissions.filter(permission => !rolePermissions.includes(`${permission.resource}:${permission.action}`));
-      })
-    );
-  }
-
+  // TODO: Add backend permission search/eligibility support before enabling search.
   public getAllPermissions(): Observable<ResourcePermission[]> {
     const sorting = new Sorting(
       [new SortingProperty('resource'), new SortingProperty('action')]
     );
-    const pageSize = 100;
 
-    return this.securityClient.permission.page(undefined, pageSize, sorting)
-      .pipe(
-        expand(response => {
-          if (!response.last) {
-            const nextPage = response.page + 1;
-            return this.securityClient.permission.page(nextPage, pageSize, sorting);
-          }
-          return of();
-        }),
-        // accumulate roles from all pages into one array
-        reduce((permissions: ResourcePermission[], res?: Page<ResourcePermission>) => {
-          return res ? [...permissions, ...res.content] : permissions;
-        }, [])
-      );
+    const endpoint = this.securityClient.permission;
+
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public create(role: Role): Observable<Role> {

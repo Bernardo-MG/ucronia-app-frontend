@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { LoginEvent, LoginForm } from '../login-form/login-form';
@@ -11,8 +12,9 @@ import { LoginService } from '../login-service';
 })
 export class LoginView {
 
-  private readonly service = inject(LoginService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly router = inject(Router);
+  private readonly service = inject(LoginService);
 
   public failedLogin = false;
   public loading = false;
@@ -27,13 +29,15 @@ export class LoginView {
       route.snapshot.queryParams['returnUrl'] || '/';
   }
 
+  // Event handlers
   public onLogin(login: LoginEvent): void {
     this.loading = true;
     this.failedLogin = false;
 
     this.service.login(login, this.rememberMe)
       .pipe(
-        finalize(() => this.loading = false)
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
         next: user => {
@@ -50,11 +54,12 @@ export class LoginView {
       });
   }
 
+  public onLostPassword(): void {
+    this.router.navigate(['/password/reset']);
+  }
+
   public onRememberMe(remember: boolean): void {
     this.rememberMe = remember;
   }
 
-  public onLostPassword(): void {
-    this.router.navigate(['/password/reset']);
-  }
 }

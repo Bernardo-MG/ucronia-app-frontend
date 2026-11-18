@@ -13,8 +13,10 @@ import { DrawerActions } from './drawer-actions';
   </shared-drawer-actions>`
 })
 class ProjectionHost {
+
   public downloads = 0;
   public publications = 0;
+
 }
 
 describe('DrawerActions', () => {

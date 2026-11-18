@@ -36,7 +36,7 @@
         <shared-drawer-header title="Crear método de contacto" icon="pi pi-phone" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-create" [showActions]="false" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
+        <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-create" [loading]="loading" [failures]="failures" (save)="onCreate($event)" />
       </div>
       <ng-template #footer>
         <shared-drawer-form-actions
@@ -54,7 +54,7 @@
         <shared-drawer-header title="Editar método de contacto" icon="pi pi-pencil" />
       </ng-template>
       <div class="w-full min-w-0 px-2 py-4 sm:px-4">
-        <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-edit" [showActions]="false" [loading]="loading" [data]="selectedData" [failures]="failures"
+        <assoc-contact-method-form #fieldsAssocContactMethodForm formId="contact-method-view-edit" [loading]="loading" [data]="selectedData" [failures]="failures"
           (save)="onUpdate($event)" />
       </div>
       <ng-template #footer>

@@ -23,6 +23,11 @@ export class AssociationSettingsService {
       .pipe(map(setting => setting.value));
   }
 
+  public getTelegram(): Observable<string> {
+    return this.ucroniaClient.setting.get("contact.telegram")
+      .pipe(map(setting => setting.value));
+  }
+
   public getMap(): Observable<string> {
     return this.ucroniaClient.setting.get("contact.googleMap")
       .pipe(map(setting => setting.value));
@@ -40,6 +45,19 @@ export class AssociationSettingsService {
           severity: 'info',
           summary: 'Actualizado',
           detail: 'Instagram actualizado',
+          life: 3000
+        });
+      })
+    );
+  }
+
+  public updateTelegram(telegram: string): Observable<Setting> {
+    return this.ucroniaClient.setting.update("contact.telegram", { value: telegram }).pipe(
+      tap(() => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Actualizado',
+          detail: 'Telegram actualizado',
           life: 3000
         });
       })

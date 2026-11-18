@@ -1,7 +1,7 @@
-import { mapAudit } from './audit-endpoint-utils';
 import { HttpParams } from '@angular/common/http';
 import { PaginatedResponse, Sorting } from '@bernardo-mg/request';
 import { Asset, AssetType } from '@ucronia/domain';
+import { mapAudit } from './audit-endpoint-utils';
 
 export function assetPageParams(page: number | undefined, size: number | undefined,
   sort: Sorting | undefined): HttpParams {
@@ -21,7 +21,6 @@ export function mapAsset(asset: Asset, type: AssetType): Asset {
 
 export function mapAssetPage(page: PaginatedResponse<Asset>, type: AssetType): PaginatedResponse<Asset> {
   page.content = page.content
-    .filter(asset => !asset.type || asset.type === type)
     .map(asset => mapAsset(asset, type));
   return page;
 }

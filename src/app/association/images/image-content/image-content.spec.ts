@@ -10,7 +10,9 @@ import { ImageContent } from './image-content';
   template: '<img [assocImageContent]="imageNumber" alt="">'
 })
 class TestHost {
-  public imageNumber = 4;
+
+  public readonly imageNumber = 4;
+
 }
 
 describe('ImageContent', () => {

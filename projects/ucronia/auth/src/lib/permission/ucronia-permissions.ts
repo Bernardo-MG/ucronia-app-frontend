@@ -80,11 +80,11 @@ export const UcroniaPermissions = {
       update: { resource: 'CONTACT_METHOD', action: 'UPDATE' },
       delete: { resource: 'CONTACT_METHOD', action: 'DELETE' }
     },
+    inactiveMember: {
+      read: { resource: 'INACTIVE_MEMBER', action: 'READ' }
+    },
     member: {
-      read: { resource: 'MEMBER', action: 'READ' },
-      create: { resource: 'MEMBER', action: 'CREATE' },
-      update: { resource: 'MEMBER', action: 'UPDATE' },
-      delete: { resource: 'MEMBER', action: 'DELETE' }
+      read: { resource: 'MEMBER', action: 'READ' }
     },
     memberProfile: {
       read: { resource: 'MEMBER_PROFILE', action: 'READ' },
@@ -122,6 +122,12 @@ export const UcroniaPermissions = {
     create: { resource: 'SCHEDULED_GAME', action: 'CREATE' },
     update: { resource: 'SCHEDULED_GAME', action: 'UPDATE' },
     delete: { resource: 'SCHEDULED_GAME', action: 'DELETE' }
+  },
+  transactionType: {
+    delete: { resource: 'TRANSACTION_TYPE', action: 'DELETE' },
+    update: { resource: 'TRANSACTION_TYPE', action: 'UPDATE' },
+    read: { resource: 'TRANSACTION_TYPE', action: 'READ' },
+    create: { resource: 'TRANSACTION_TYPE', action: 'CREATE' }
   },
   transaction: {
     read: { resource: 'TRANSACTION', action: 'READ' },

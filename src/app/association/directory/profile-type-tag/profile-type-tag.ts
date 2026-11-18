@@ -10,6 +10,7 @@ export class ProfileTypeTag {
 
   public readonly types = input<string[]>([]);
 
+  // Public methods
   public getName(type: string): string {
     switch (type) {
       case 'member':

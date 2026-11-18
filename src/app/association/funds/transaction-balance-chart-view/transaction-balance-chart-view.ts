@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
 import { Select } from 'primeng/select';
-import { BehaviorSubject, finalize, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, defer, finalize, Observable, startWith, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 
 @Component({
@@ -15,37 +16,39 @@ import { TransactionBalanceService } from '../transaction-balance-service';
 })
 export class TransactionBalanceChartView implements OnInit, OnDestroy {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(TransactionBalanceService);
-  private readonly selectedRange$ = new BehaviorSubject<number>(6);
 
+  public readonly refresh = input<Observable<void>>();
+
+  public balance: TransactionMonthlyBalance[] = [];
+  public loading = false;
   public readonly ranges = [
     { label: '3 meses', value: 3 },
     { label: '6 meses', value: 6 },
     { label: '1 año', value: 12 },
     { label: '2 años', value: 24 }
   ];
-
-  public balance: TransactionMonthlyBalance[] = [];
-  public loading = false;
-
-  private chart?: Chart;
-
   public get selectedRange(): number {
     return this.selectedRange$.value;
   }
-
   public set selectedRange(value: number) {
     this.selectedRange$.next(value);
+  }
+
+  private chart?: Chart;
+  private readonly selectedRange$ = new BehaviorSubject<number>(6);
+
+  // Lifecycle hooks
+  public ngOnDestroy(): void {
+    this.chart?.destroy();
   }
 
   public ngOnInit(): void {
     this.setupBalanceReload();
   }
 
-  public ngOnDestroy(): void {
-    this.chart?.destroy();
-  }
-
+  // Data loading
   private loadChart(): void {
     this.chart?.destroy();
 
@@ -116,36 +119,46 @@ export class TransactionBalanceChartView implements OnInit, OnDestroy {
     });
   }
 
+  // Private methods
   private setupBalanceReload(): void {
-    this.selectedRange$
+    combineLatest([
+      this.selectedRange$,
+      this.refresh()?.pipe(startWith(undefined)) ?? [undefined]
+    ])
       .pipe(
-        switchMap(range => {
+        switchMap(([range]) => {
           const now = new Date();
+
           const end = new Month(
             now.getFullYear(),
             now.getMonth() + 1
           );
 
-          const startDate = new Date(now);
-          startDate.setMonth(startDate.getMonth() - range);
+          const startDate = new Date(
+            now.getFullYear(),
+            now.getMonth() - (range - 1),
+            1
+          );
 
           const start = new Month(
             startDate.getFullYear(),
             startDate.getMonth() + 1
           );
 
-          this.loading = true;
-
-          return this.service
-            .monthly(start, end)
-            .pipe(
+          // Defer setting loading until the previous request has been canceled.
+          return defer(() => {
+            this.loading = true;
+            return this.service.monthly(start, end).pipe(
               finalize(() => this.loading = false)
             );
-        })
+          });
+        }),
+        takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(balance => {
         this.balance = balance;
         this.loadChart();
       });
   }
+
 }

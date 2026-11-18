@@ -1,11 +1,12 @@
-import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Component, input } from '@angular/core';
+import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
+import { TextFilter } from '@bernardo-mg/ui';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'access-role-info',
-  imports: [AuditInfo, SkeletonModule],
+  imports: [TextFilter, AuditInfo, SkeletonModule],
   templateUrl: './role-info.html'
 })
 export class RoleInfo {
@@ -13,24 +14,10 @@ export class RoleInfo {
   public readonly data = input(new Role());
   public readonly loading = input(false);
 
-  public filterValue = '';
-
-  public get resourceCount(): number {
-    return new Set(
-      this.data().permissions.map(permission => permission.resource)
-    ).size;
-  }
-
   public get permissionGroups(): PermissionGroup[] {
-    const filter = this.filterValue.trim().toLocaleLowerCase();
     const groups = new Map<string, ResourcePermission[]>();
 
     this.data().permissions
-      .filter(permission => !filter || [
-        permission.resource,
-        permission.action,
-        permission.name
-      ].some(value => value.toLocaleLowerCase().includes(filter)))
       .forEach(permission => {
         const permissions = groups.get(permission.resource) ?? [];
 
@@ -45,7 +32,13 @@ export class RoleInfo {
       }))
       .sort((first, second) => first.resource.localeCompare(second.resource));
   }
+  public get resourceCount(): number {
+    return new Set(
+      this.data().permissions.map(permission => permission.resource)
+    ).size;
+  }
 
+  // Public methods
   public formatLabel(value: string): string {
     const label = value
       .replace(/([a-z])([A-Z])/g, '$1 $2')

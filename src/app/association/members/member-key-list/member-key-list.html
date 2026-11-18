@@ -21,25 +21,8 @@
   </div>
   <section class="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
     <div class="flex flex-col gap-3 border-b border-gray-200 p-4 sm:flex-row sm:items-center">
-      <p-iconfield class="block flex-1">
-        <p-inputicon class="pi pi-search" />
-        <input
-          pInputText
-          type="search"
-          class="w-full"
-          placeholder="Buscar por llave o perfil…"
-          aria-label="Buscar por llave o perfil"
-          [(ngModel)]="query"
-          (ngModelChange)="onFilter()" />
-      </p-iconfield>
-      <p-select
-        [options]="filters"
-        optionLabel="label"
-        optionValue="value"
-        [(ngModel)]="assignment"
-        (ngModelChange)="onFilter()"
-        ariaLabel="Filtrar por asignación" />
-      <span class="text-sm text-gray-500">{{ filtered.length }} llaves</span>
+      <ui-text-filter class="block min-w-0 flex-1" label="Buscar llaves" placeholder="Búsqueda no disponible" [disabled]="true" />
+      <span class="text-sm text-gray-500">{{ data().length }} llaves</span>
     </div>
     @if (error()) {
       <div class="space-y-3 p-4">
@@ -49,7 +32,7 @@
     } @else {
       <p-table
         dataKey="number"
-        [value]="filtered"
+        [value]="data()"
         [loading]="loading()"
         [paginator]="true"
         [rows]="10"
@@ -107,7 +90,7 @@
         </ng-template>
         <ng-template #emptymessage>
           <tr>
-            <td colspan="5" class="text-center text-gray-500">No hay llaves para los filtros seleccionados.</td>
+            <td colspan="5" class="text-center text-gray-500">No hay llaves.</td>
           </tr>
         </ng-template>
       </p-table>

@@ -38,6 +38,21 @@
     </section>
   }
 
+  @if (!loading() && transaction().transactionType; as number) {
+    <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+      <h3 class="font-semibold text-gray-950">Tipo de transacción</h3>
+      <p class="mt-2 flex items-center gap-2 text-sm text-gray-700">
+        @if (type(); as assignedType) {
+          <span class="inline-block size-4 rounded border border-gray-300"
+            [style.background-color]="assignedType.color" aria-hidden="true"></span>
+          {{ assignedType.description }}
+        } @else {
+          #{{ number }}
+        }
+      </p>
+    </section>
+  }
+
   <section class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
     <h3 class="font-semibold text-gray-950">Concepto</h3>
     @if (loading()) {

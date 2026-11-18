@@ -1,6 +1,5 @@
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { InputTextModule } from 'primeng/inputtext';
@@ -8,40 +7,32 @@ import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'shared-name-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
+  imports: [ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './name-form.html'
 })
 export class NameForm {
 
-  public readonly cancelEdition = output<void>();
-
+  @Input() public set data(value: NameFormData) {
+    this.form.patchValue(value);
+  }
+  public readonly failures = input(new FailureStore());
   public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
-  @Input() public set data(value: NameFormData) {
-    this.form.patchValue(value);
-  }
-
   public readonly save = output<NameFormData>();
 
-  public readonly formStatus: FormStatus;
-
   public readonly form: FormGroup;
-
+  public readonly formStatus: FormStatus;
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       number: [],
       name: ['', [Validators.required, notEmptyStringValidator]]
     });
@@ -49,6 +40,7 @@ export class NameForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   /**
    * Handler for the save event.
    */
@@ -61,6 +53,7 @@ export class NameForm {
     }
   }
 
+  // Public methods
   public isFieldInvalid(property: string): boolean {
     return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }

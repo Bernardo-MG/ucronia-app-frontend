@@ -1,30 +1,32 @@
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
 import { Component, inject, input, output, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PasswordChange } from '@bernardo-mg/security';
+import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'account-change-password-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule],
+  imports: [ButtonModule, ReactiveFormsModule, InputTextModule, MessageModule],
   templateUrl: './account-change-password-form.html'
 })
 export class AccountChangePasswordForm {
 
+  public readonly failures = input(new FailureStore());
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<PasswordChange>();
 
   public readonly form;
-
   public readonly formStatus: FormStatus;
+
+  protected get saveEnabled(): boolean {
+    return this.formStatus.saveEnabled;
+  }
 
   private readonly passwordsMatch: ValidatorFn = (
     control: AbstractControl
@@ -37,11 +39,7 @@ export class AccountChangePasswordForm {
       : { passwordsMismatch: true };
   };
 
-  public get saveEnabled(): boolean {
-    return this.formStatus.saveEnabled;
-  }
-
-  constructor() {
+  public constructor() {
     const formBuilder = inject(FormBuilder);
 
     this.form = formBuilder.nonNullable.group(
@@ -58,6 +56,7 @@ export class AccountChangePasswordForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
   public onSave(): void {
     this.form.markAllAsTouched();
 
@@ -72,16 +71,18 @@ export class AccountChangePasswordForm {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property)
-      || this.failures().hasFailures(property);
-  }
-
+  // Public methods
   public hasPasswordMismatch(): boolean {
     const passwordRepeat = this.form.controls.passwordRepeat;
 
     return passwordRepeat.touched
       && this.form.hasError('passwordsMismatch');
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property)
+      || this.failures().hasFailures(property);
   }
 
 }

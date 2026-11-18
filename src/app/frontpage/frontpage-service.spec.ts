@@ -10,10 +10,8 @@ describe('FrontpageService', () => {
     activity: {
       page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 }))
     },
-    setting: {
-      public: {
-        get: jasmine.createSpy().and.returnValue(of({}))
-      }
+    contactInfo: {
+      get: jasmine.createSpy().and.returnValue(of({}))
     }
   };
 
@@ -35,6 +33,6 @@ describe('FrontpageService', () => {
 
     service.getActivities(from, undefined).subscribe();
 
-    expect(ucroniaClientMock.activity.page).toHaveBeenCalledWith(1, 100, undefined, from, undefined);
+    expect(ucroniaClientMock.activity.page).toHaveBeenCalledWith(undefined, 100, undefined, from, undefined);
   });
 });

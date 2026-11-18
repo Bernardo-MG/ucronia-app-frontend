@@ -12,7 +12,7 @@ export class ProfileStatusSelector {
 
   public readonly filter = output<Profiletype>();
 
-  public statusOptions: any[] = [{ label: 'Todos', value: Profiletype.ALL }, { label: 'Socios', value: Profiletype.MEMBER }, { label: 'Invitados', value: Profiletype.GUEST }, { label: 'Esponsors', value: Profiletype.SPONSOR }];
-  public selectedStatus: Profiletype = Profiletype.ALL;
+  public readonly selectedStatus: Profiletype = Profiletype.ALL;
+  public readonly statusOptions: any[] = [{ label: 'Todos', value: Profiletype.ALL }, { label: 'Socios', value: Profiletype.MEMBER }, { label: 'Invitados', value: Profiletype.GUEST }, { label: 'Esponsors', value: Profiletype.SPONSOR }];
 
 }

@@ -1,5 +1,6 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -10,7 +11,7 @@ import { GameTable } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { GameTableForm } from '../game-table-form/game-table-form';
 import { GameTableList } from '../game-table-list/game-table-list';
 import { GameTableService } from '../game-table-service';
@@ -21,20 +22,21 @@ import { GameTableService } from '../game-table-service';
 })
 export class GameTableView implements OnInit {
 
+  private readonly confirmationService = inject(ConfirmationService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(GameTableService);
 
-  private readonly confirmationService = inject(ConfirmationService);
-
-  public readonly Dialog = Dialog;
-  public readonly permissions: Permissions;
-
   public data = new Page<GameTable>();
-  public selectedData = new GameTable();
+  public readonly Dialog = Dialog;
   public dialog = Dialog.NONE;
   public failures = new FailureStore();
   public loading = false;
+  public readonly permissions: Permissions;
+  public selectedData = new GameTable();
 
-  constructor() {
+  private listRequest?: Subscription;
+
+  public constructor() {
     const authService = inject(AuthService);
     this.permissions = {
       create: authService.hasPermission(UcroniaPermissions.gameTable.create),
@@ -43,14 +45,21 @@ export class GameTableView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  public onShowInfo(data: GameTable): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
+    this.listRequest = this.service.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(data => this.data = data);
   }
 
   public onCancelEdit(): void {
@@ -58,17 +67,8 @@ export class GameTableView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
-  public onShowEdit(table: GameTable): void {
-    this.failures.clear();
-    this.selectedData = table; this.dialog = Dialog.EDIT;
-  }
-
   public onCreate(table: GameTable): void {
     this.call(() => this.service.create(table), () => this.load());
-  }
-
-  public onUpdate(table: GameTable): void {
-    this.call(() => this.service.update(table), () => this.load(this.data.page));
   }
 
   public onDelete(event: Event): void {
@@ -83,11 +83,6 @@ export class GameTableView implements OnInit {
     });
   }
 
-  public load(page: number | undefined = undefined): void {
-    this.loading = true;
-    this.service.getAll(page).pipe(finalize(() => this.loading = false)).subscribe(data => this.data = data);
-  }
-
   public onDrawerVisibleChange(visible: boolean): void {
     if (!visible) {
       this.failures.clear();
@@ -95,13 +90,33 @@ export class GameTableView implements OnInit {
     }
   }
 
+  public onShowEdit(table: GameTable): void {
+    this.failures.clear();
+    this.selectedData = table; this.dialog = Dialog.EDIT;
+  }
+
+  public onShowInfo(data: GameTable): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(table: GameTable): void {
+    this.call(() => this.service.update(table), () => this.load(this.data.page));
+  }
+
+  // Private methods
   private call(action: () => Observable<unknown>, onSuccess: () => void): void {
     this.loading = true;
-    action().pipe(finalize(() => this.loading = false)).subscribe({
+    action().pipe(
+      takeUntilDestroyed(this.destroyRef),
+      finalize(() => this.loading = false)
+    ).subscribe({
       complete: () => { this.failures.clear(); this.dialog = Dialog.NONE; onSuccess(); },
       error: error => this.failures = error instanceof FailureResponse ? error.failures : new FailureStore()
     });
   }
+
 }
 
 interface Permissions {

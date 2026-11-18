@@ -11,7 +11,7 @@ describe('MemberKeyService', () => {
 
   const keyEndpointMock = jasmine.createSpyObj<UcroniaClient['key']>('KeyEndpoint', ['create', 'update', 'delete']);
 
-  const assignmentEndpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['page']);
+  const assignmentEndpointMock = jasmine.createSpyObj<UcroniaClient['keyAssignment']>('KeyAssignmentEndpoint', ['page', 'create', 'update', 'delete']);
 
   const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
 
@@ -109,7 +109,7 @@ describe('MemberKeyService', () => {
     service.getAll().subscribe(data => (result = data));
 
     expect(result).toEqual([assigned, unassigned]);
-    expect(assignmentEndpointMock.page.calls.allArgs().map(args => args[0])).toEqual([1, 2]);
+    expect(assignmentEndpointMock.page.calls.allArgs().map(args => args[0])).toEqual([undefined, 2]);
   });
 
   it('should create a key and show the success message', () => {
@@ -144,5 +144,83 @@ describe('MemberKeyService', () => {
 
     expect(result).toEqual([]);
     expect(assignmentEndpointMock.page).toHaveBeenCalledTimes(1);
+  });
+
+  it('removes the assignment without deleting the key', () => {
+    const key: KeyAssignment = { number: 7, available: true, description: 'Principal' };
+    assignmentEndpointMock.delete.and.returnValue(of(key));
+    let result: KeyAssignment | undefined;
+
+    service.unassign(7).subscribe(value => (result = value));
+
+    expect(assignmentEndpointMock.delete).toHaveBeenCalledOnceWith(7);
+    expect(keyEndpointMock.delete).not.toHaveBeenCalled();
+    expect(result).toBe(key);
+    expect(messageServiceMock.add).toHaveBeenCalledOnceWith(
+      jasmine.objectContaining({ detail: 'Asignación de llave eliminada' })
+    );
+  });
+
+  describe('assignments', () => {
+    const assignment: KeyAssignment = {
+      number: 7,
+      available: true,
+      description: 'Principal',
+      profile: { number: 12, name: 'Ana López' }
+    };
+
+    beforeEach(() => {
+      assignmentEndpointMock.create.calls.reset();
+      assignmentEndpointMock.update.calls.reset();
+      assignmentEndpointMock.create.and.returnValue(of(assignment));
+      assignmentEndpointMock.update.and.returnValue(of(assignment));
+    });
+
+    it('uses the assignment endpoint with key and profile numbers', () => {
+      let result: KeyAssignment | undefined;
+
+      service.assign(7, 12).subscribe(value => (result = value));
+
+      expect(assignmentEndpointMock.create).toHaveBeenCalledOnceWith({ number: 7, profile: 12 });
+      expect(result).toBe(assignment);
+      expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+        severity: 'info', summary: 'Asignado', detail: 'Llave asignada', life: 3000
+      });
+    });
+
+    it('propagates failure without showing a success message', () => {
+      const failure = new Error('Conflict');
+      assignmentEndpointMock.create.and.returnValue(throwError(() => failure));
+      let result: unknown;
+
+      service.assign(7, 12).subscribe({ error: error => (result = error) });
+
+      expect(result).toBe(failure);
+      expect(messageServiceMock.add).not.toHaveBeenCalled();
+    });
+
+    it('updates an existing assignment with the new profile number', () => {
+      let result: KeyAssignment | undefined;
+
+      service.reassign(7, 12).subscribe(value => (result = value));
+
+      expect(assignmentEndpointMock.update).toHaveBeenCalledOnceWith(7, { profile: 12 });
+      expect(assignmentEndpointMock.create).not.toHaveBeenCalled();
+      expect(result).toBe(assignment);
+      expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+        severity: 'info', summary: 'Actualizado', detail: 'Asignación de llave actualizada', life: 3000
+      });
+    });
+
+    it('propagates reassignment failure without showing a success message', () => {
+      const failure = new Error('Unavailable');
+      assignmentEndpointMock.update.and.returnValue(throwError(() => failure));
+      let result: unknown;
+
+      service.reassign(7, 12).subscribe({ error: error => (result = error) });
+
+      expect(result).toBe(failure);
+      expect(messageServiceMock.add).not.toHaveBeenCalled();
+    });
   });
 });

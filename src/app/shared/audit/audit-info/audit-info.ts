@@ -8,10 +8,13 @@ import { AuditDetails, AuditUser } from '@ucronia/domain';
   templateUrl: './audit-info.html'
 })
 export class AuditInfo {
+
   public readonly audit = input<AuditDetails | null | undefined>();
   public readonly loading = input(false);
 
+  // Public methods
   public userLabel(user: AuditUser | null | undefined): string {
     return user?.name?.trim() || user?.username?.trim() || user?.email?.trim() || '';
   }
+
 }

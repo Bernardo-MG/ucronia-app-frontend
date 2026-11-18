@@ -5,19 +5,20 @@ import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Member, PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
+import { MembershipDurationPipe } from '../membership-duration.pipe';
 
 @Component({
   selector: 'assoc-member-info',
-  imports: [AuditInfo, DatePipe, DetailField, StatusDetail, ButtonModule, MessageModule],
+  imports: [AuditInfo, DatePipe, DetailField, MembershipDurationPipe, StatusDetail, ButtonModule, MessageModule],
   templateUrl: './member-info.html'
 })
 export class MemberInfo {
 
-  public readonly publicData = input<PublicMember | null>(null);
   public readonly data = input<Member | null>(null);
-  public readonly showPrivate = input(false);
-  public readonly loading = input(false);
   public readonly error = input(false);
+  public readonly loading = input(false);
+  public readonly publicData = input<PublicMember | null>(null);
+  public readonly showPrivate = input(false);
 
   public readonly retry = output<void>();
 

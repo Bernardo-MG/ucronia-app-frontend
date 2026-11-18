@@ -28,7 +28,8 @@ export class FeeTypeService {
       [new SortingProperty('name')]
     );
 
-    return getAllPages((page, size) => this.ucroniaClient.feeType.page(page, size, sorting));
+    const endpoint = this.ucroniaClient.feeType;
+    return getAllPages((page, size) => endpoint.page(page, size, sorting));
   }
 
   public create(data: FeeType): Observable<FeeType> {

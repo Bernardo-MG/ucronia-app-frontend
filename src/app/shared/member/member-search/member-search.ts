@@ -1,27 +1,24 @@
 import { Component, input, output } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SearchSelect } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
-import { AutoCompleteModule } from 'primeng/autocomplete';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 
 @Component({
   selector: 'assoc-member-search',
-  imports: [FormsModule, ReactiveFormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule],
+  imports: [SearchSelect],
   templateUrl: './member-search.html'
 })
-export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> {
+export class MemberSearch<T extends MemberSearchOption = Profile> {
 
-  public readonly inputId = input('memberSearchInput');
   public readonly disabled = input(false);
-
-  public readonly members = input<T[]>([]);
+  public readonly inputId = input.required<string>();
   public readonly member = input<T | null>(null);
+  public readonly members = input<T[]>([]);
 
+  public readonly clearMember = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
   public readonly selectMember = output<T>();
-  public readonly clearMember = output<void>();
 
+  // Event handlers
   public onMemberChange(value: T | string | null): void {
     if (!value || typeof value === 'string') {
       this.clearMember.emit();
@@ -29,6 +26,8 @@ export class MemberSearch<T extends Pick<Profile, 'number' | 'name'> = Profile> 
   }
 
 }
+
+export type MemberSearchOption = Pick<Profile, 'number' | 'name'>;
 
 export class MemberSearchEvent {
   public query: string = '';

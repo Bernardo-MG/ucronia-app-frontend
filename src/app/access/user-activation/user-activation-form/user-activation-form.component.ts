@@ -1,5 +1,3 @@
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
-
 import { Component, inject, input, output, Input } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
@@ -13,31 +11,29 @@ import { MessageModule } from 'primeng/message';
  */
 @Component({
   selector: 'access-user-activation-form',
-  imports: [DrawerFormActions, FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  imports: [FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationForm {
 
+  public readonly failures = input(new FailureStore());
   @Input() public set loading(loading: boolean) {
     this.formStatus.loading = loading;
   }
 
-  public readonly failures = input(new FailureStore());
-
   public readonly save = output<string>();
 
+  public readonly form: FormGroup;
   public readonly formStatus: FormStatus;
 
-  public readonly form: FormGroup;
-
-  public get saveEnabled() {
+  protected get saveEnabled(): boolean {
     return this.formStatus.saveEnabled && this.isPasswordsMatching();
   }
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.nonNullable.group(
+    this.form = formBuilder.nonNullable.group(
       {
         password: ['', Validators.required],
         confirmPassword: ['', [Validators.required]]
@@ -50,12 +46,27 @@ export class UserActivationForm {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Event handlers
+  protected onSave(): void {
+    this.form.markAllAsTouched();
+
+    if (this.saveEnabled) {
+      // Valid form, can emit data
+      this.save.emit(this.form.value.password);
+    }
+  }
+
+  // Protected methods
+  protected isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
+  }
+
   /**
    * Indicates if the password mismatch warning should be shown.
-   * 
+   *
    * @returns true if the password mismatch warning should be shown, false otherwise
    */
-  public showPasswordMismatchWarning(): boolean {
+  protected showPasswordMismatchWarning(): boolean {
     const password = this.form.get('password');
     const confirmPassword = this.form.get('confirmPassword');
 
@@ -69,9 +80,10 @@ export class UserActivationForm {
     return show;
   }
 
+  // Private methods
   /**
    * Indicates if the passwords match. If both are empty they are considered to not be matching.
-   * 
+   *
    * @returns true if the passwords match, false otherwise
    */
   private isPasswordsMatching(): boolean {
@@ -79,22 +91,6 @@ export class UserActivationForm {
     const confirmPassword = this.form.get('confirmPassword')?.getRawValue();
 
     return (password.length > 0) && (password === confirmPassword);
-  }
-
-  /**
-   * Handler for the save event.
-   */
-  public onSave() {
-    this.form.markAllAsTouched();
-
-    if (this.saveEnabled) {
-      // Valid form, can emit data
-      this.save.emit(this.form.value.password);
-    }
-  }
-
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || (this.failures().hasFailures(property));
   }
 
 }

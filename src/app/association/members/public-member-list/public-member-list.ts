@@ -1,33 +1,35 @@
+import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PublicMember } from '@ucronia/domain';
 import { ButtonModule } from 'primeng/button';
 import { TableModule, TablePageEvent } from 'primeng/table';
 import { PublicMemberRenewTag } from '../public-member-renew-tag/public-member-renew-tag';
+import { MembershipDurationPipe } from '../membership-duration.pipe';
 
 @Component({
   selector: 'assoc-public-member-list',
-  imports: [ButtonModule, TableModule, PublicMemberRenewTag],
+  imports: [ButtonModule, TableModule, PublicMemberRenewTag, MembershipDurationPipe, DatePipe],
   templateUrl: './public-member-list.html'
 })
 export class PublicMemberList {
 
+  public readonly canRead = input(false);
   public readonly loading = input(false);
   public readonly members = input<PublicMember[]>([]);
-  public readonly rows = input(0);
   public readonly page = input(0);
+  public readonly rows = input(0);
   public readonly totalRecords = input(0);
 
-  public readonly canRead = input(false);
-
-  public readonly show = output<PublicMember>();
   public readonly changeDirection = output<SortingEvent>();
   public readonly changePage = output<number>();
+  public readonly show = output<PublicMember>();
 
   public get first(): number {
     return (this.page() - 1) * this.rows();
   }
 
+  // Event handlers
   public onPageChange(event: TablePageEvent): void {
     const page = event.first / event.rows + 1;
     this.changePage.emit(page);

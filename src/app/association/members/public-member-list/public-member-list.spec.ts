@@ -41,6 +41,22 @@ describe('PublicMemberList', () => {
     expect(fixture.nativeElement.querySelector('assoc-member-info')).toBeNull();
   });
 
+  it('shows the last paid month only for inactive members', () => {
+    const lastPaidMonth = new Date('2024-04-01T00:00:00Z');
+    fixture.componentRef.setInput('members', [
+      { ...new PublicMember(), number: 1, active: false, lastPaidMonth },
+      { ...new PublicMember(), number: 2, active: true, lastPaidMonth },
+      { ...new PublicMember(), number: 3, active: false }
+    ]);
+    fixture.componentRef.setInput('totalRecords', 3);
+    fixture.detectChanges();
+
+    const rows = fixture.nativeElement.querySelectorAll('tbody tr');
+    expect(rows[0].textContent).toContain('Mes de baja: 04/2024');
+    expect(rows[1].textContent).not.toContain('Mes de baja');
+    expect(rows[2].textContent).toContain('Mes de baja: —');
+  });
+
   it('should hide the information action when the view denies reading', () => {
     expect(fixture.nativeElement.querySelector('button[aria-label="Ver información del socio"]')).toBeNull();
   });

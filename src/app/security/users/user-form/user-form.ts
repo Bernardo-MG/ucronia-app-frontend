@@ -1,63 +1,63 @@
 import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
-import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
+import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { Role, User } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
+import { TextFilter } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
 import { InputTextModule } from 'primeng/inputtext';
 import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'access-user-form',
-  imports: [DrawerFormActions, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
+  imports: [TextFilter, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {
 
-  public readonly formId = input<string | null>(null);
-  public readonly showActions = input(true);
-
-  @Input() public set loading(loading: boolean) {
-    this.formStatus.loading = loading;
-  }
-
-  public readonly failures = input(new FailureStore());
   public readonly create = input(true);
-  public readonly selection = input<Role[]>([]);
-  public readonly members = input<Profile[]>([]);
-
   @Input() public set data(value: User) {
-    this.form.patchValue(value as any);
+    this.form.reset(value as any);
     this.username = value.username;
     this.roles = [...value.roles];
   }
-
+  public readonly failures = input(new FailureStore());
+  public readonly formId = input<string | null>(null);
+  @Input() public set loading(loading: boolean) {
+    this.formStatus.loading = loading;
+  }
   @Input() public set member(value: Profile) {
     this.selectedMember = value ?? new Profile();
   }
+  public readonly members = input<MemberSearchOption[]>([]);
+  public readonly selection = input<Role[]>([]);
 
   public readonly save = output<UserFormData>();
-  public readonly update = output<UserEditionFormData>();
-  public readonly cancelEdition = output<void>();
   public readonly searchMember = output<MemberSearchEvent>();
+  public readonly update = output<UserEditionFormData>();
 
-  public readonly formStatus: FormStatus;
   public readonly form: FormGroup;
-  public username = '';
-  public roles: Role[] = [];
-  public roleFilter = '';
-  public selectedMember = new Profile();
+  public readonly formStatus: FormStatus;
+  public get roleOptions(): Role[] {
+    const roles = new Map<string, Role>();
 
+    [...this.roles, ...this.selection()].forEach(role => roles.set(role.name, role));
+
+    return Array.from(roles.values())
+      .sort((first, second) => first.name.localeCompare(second.name));
+  }
+  public roles: Role[] = [];
   public get saveEnabled(): boolean {
     return this.formStatus.saveEnabled;
   }
+  public selectedMember: MemberSearchOption = new Profile();
+  public username = '';
 
-  constructor() {
-    const fb = inject(FormBuilder);
+  public constructor() {
+    const formBuilder = inject(FormBuilder);
 
-    this.form = fb.group({
+    this.form = formBuilder.group({
       username: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -67,21 +67,17 @@ export class UserForm implements OnChanges {
     this.formStatus = new FormStatus(this.form);
   }
 
+  // Lifecycle hooks
   public ngOnChanges({ selection }: SimpleChanges): void {
     if (selection && this.create()) {
       this.roles = [];
     }
   }
 
-  public get filteredRoles(): Role[] {
-    const filter = this.roleFilter.trim().toLocaleLowerCase();
-    const roles = new Map<string, Role>();
-
-    [...this.roles, ...this.selection()].forEach(role => roles.set(role.name, role));
-
-    return Array.from(roles.values())
-      .filter(role => !filter || role.name.toLocaleLowerCase().includes(filter))
-      .sort((first, second) => first.name.localeCompare(second.name));
+  // Event handlers
+  public onRemoveMember(): void {
+    this.selectedMember = new Profile();
+    this.form.markAsDirty();
   }
 
   /**
@@ -105,12 +101,9 @@ export class UserForm implements OnChanges {
     }
   }
 
-  public isFieldInvalid(property: string): boolean {
-    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
-  }
-
-  public isRoleSelected(role: Role): boolean {
-    return this.roles.some(selected => selected.name === role.name);
+  public onSelectMember(member: MemberSearchOption): void {
+    this.selectedMember = member;
+    this.form.markAsDirty();
   }
 
   public toggleRole(role: Role, checked: boolean): void {
@@ -123,14 +116,13 @@ export class UserForm implements OnChanges {
     this.form.markAsDirty();
   }
 
-  public onSelectMember(member: Profile): void {
-    this.selectedMember = member;
-    this.form.markAsDirty();
+  // Public methods
+  public isFieldInvalid(property: string): boolean {
+    return this.formStatus.isFormFieldInvalid(property) || this.failures().hasFailures(property);
   }
 
-  public onRemoveMember(): void {
-    this.selectedMember = new Profile();
-    this.form.markAsDirty();
+  public isRoleSelected(role: Role): boolean {
+    return this.roles.some(selected => selected.name === role.name);
   }
 
 }
@@ -146,5 +138,5 @@ export interface UserEditionFormData {
   name: string;
   email: string;
   roles: Role[];
-  member: Profile;
+  member: MemberSearchOption;
 }

@@ -1,7 +1,8 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { GoogleMaps, TeamupCalendar } from '@bernardo-mg/ui';
-import { Activity, PublicSettings } from '@ucronia/domain';
+import { Activity, ContactInfo } from '@ucronia/domain';
 import { finalize } from 'rxjs';
 import { ActivityCarousel, ActivityDisplay } from '../activity-carousel/activity-carousel';
 import { FrontpageService } from '../frontpage-service';
@@ -14,22 +15,24 @@ import { FrontpageService } from '../frontpage-service';
 })
 export class Frontpage implements OnInit {
 
-  private service = inject(FrontpageService);
+  private readonly destroyRef = inject(DestroyRef);
+  private readonly service = inject(FrontpageService);
 
-  public calendarCode: string | undefined;
-  public locationCode: string | undefined;
-  public settings = new PublicSettings();
   public activities: Activity[] = [];
+  public contactInfo = new ContactInfo();
   public loadingActivities = false;
   public selectedActivityDisplay: ActivityDisplay = 'upcoming';
 
+  // Lifecycle hooks
   public ngOnInit(): void {
-    this.service.getSettings()
-      .subscribe(settings => this.settings = settings);
+    this.service.getContactInfo()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(contactInfo => this.contactInfo = contactInfo);
 
     this.loadActivities('upcoming');
   }
 
+  // Event handlers
   public loadActivities(display: ActivityDisplay): void {
     const now = new Date();
     const from = display === 'upcoming' ? now : undefined;
@@ -38,7 +41,10 @@ export class Frontpage implements OnInit {
     this.selectedActivityDisplay = display;
     this.loadingActivities = true;
     this.service.getActivities(from, to)
-      .pipe(finalize(() => this.loadingActivities = false))
+      .pipe(
+        finalize(() => this.loadingActivities = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe(activities => this.activities = activities);
   }
 

@@ -40,12 +40,12 @@ describe('FolderEndpoint', () => {
     deleteRequest.flush({ number: 1, name: 'Photos', parentNumber: null });
   });
 
-  it('should filter folder assets by type and supply defaults', () => {
+  it('should preserve folder assets and supply defaults for missing fields', () => {
     let names: string[] = [];
     endpoint.page(3, 'IMAGE').subscribe(page => {
       names = page.content.map(asset => asset.name);
-      expect(page.content[0].type).toBe('IMAGE');
-      expect(page.content[0].publicAccess).toBe(true);
+      expect(page.content.map(asset => asset.type)).toEqual(['FILE', 'IMAGE']);
+      expect(page.content[1].publicAccess).toBeTrue();
     });
 
     const request = http.expectOne('http://localhost/api/assets/folders/3/assets');
@@ -57,7 +57,7 @@ describe('FolderEndpoint', () => {
       ]
     });
 
-    expect(names).toEqual(['Image']);
+    expect(names).toEqual(['Document', 'Image']);
   });
 
   it('should use the root asset folder when no folder is selected', () => {

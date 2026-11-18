@@ -3,16 +3,17 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
-import { BookLending, GameBook, Profile } from '@ucronia/domain';
+import { BookLending, BookType, Donor, GameBook, GameSystem, MemberStatus, Profile } from '@ucronia/domain';
+import { UcroniaPermissions } from '@ucronia/auth';
 import { ConfirmationService } from 'primeng/api';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { BookReportService } from '../book-report-service';
+import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
 import { Dialog } from '../library-dialog';
 import { LibraryLendingService } from '../library-lending-service';
 import { LibraryService } from '../library-service';
 import { LibrarySummary } from '../model/library-summary';
-import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';
-import { LibraryView, Display } from './library-view';
+import { Display, LibraryView } from './library-view';
 
 describe('LibraryView', () => {
   let component: LibraryView;
@@ -28,8 +29,8 @@ describe('LibraryView', () => {
       'getAllFictionBooks',
       'getGameSystems',
       'getBookTypes',
-      'searchAuthors',
-      'searchPublishers',
+      'searchDonors',
+      'searchMembers',
       'setAuthors',
       'setPublishers',
       'setGameSystem',
@@ -64,11 +65,19 @@ describe('LibraryView', () => {
   beforeEach(async () => {
     authServiceMock.hasPermission.and.returnValue(false);
     authServiceMock.hasAnyPermission.and.returnValue(false);
+    libraryServiceMock.searchMembers.calls.reset();
+    libraryServiceMock.searchMembers.and.returnValue(of([]));
     libraryServiceMock.getAllBooks.and.returnValue(
       of(new Page<GameBook>())
     );
     libraryServiceMock.getAllGameBooks.and.returnValue(
       of(new Page<GameBook>())
+    );
+    libraryServiceMock.getGameSystems.and.returnValue(
+      of(Object.assign(new Page<GameSystem>(), { last: true }))
+    );
+    libraryServiceMock.getBookTypes.and.returnValue(
+      of(Object.assign(new Page<BookType>(), { last: true }))
     );
     libraryServiceMock.getSummary.and.returnValue(
       of(new LibrarySummary())
@@ -101,6 +110,22 @@ describe('LibraryView', () => {
     fixture.detectChanges();
   });
 
+  it('searches active and inactive borrowers when inactive members are readable', () => {
+    authServiceMock.hasPermission.and.callFake(permission =>
+      permission === UcroniaPermissions.directory.inactiveMember.read);
+    const permittedFixture = TestBed.createComponent(LibraryView);
+
+    permittedFixture.componentInstance.onSearchMembers({ query: 'Ana' });
+
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana', MemberStatus.All);
+  });
+
+  it('searches active borrowers when inactive members are restricted', () => {
+    component.onSearchMembers({ query: 'Ana' });
+
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana', MemberStatus.Active);
+  });
+
   it('hides the settings button without catalog permissions', () => {
     expect(fixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).toBeNull();
   });
@@ -110,6 +135,41 @@ describe('LibraryView', () => {
     const permittedFixture = TestBed.createComponent(LibraryView);
     permittedFixture.detectChanges();
     expect(permittedFixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).not.toBeNull();
+  });
+
+  it('loads game systems and book types for the edition form in the view', () => {
+    const gameSystem = new GameSystem();
+    const bookType = new BookType();
+    libraryServiceMock.getGameSystems.and.returnValue(
+      of(Object.assign(new Page<GameSystem>(), { last: true, content: [gameSystem] }))
+    );
+    libraryServiceMock.getBookTypes.and.returnValue(
+      of(Object.assign(new Page<BookType>(), { last: true, content: [bookType] }))
+    );
+    libraryServiceMock.getOneBook.and.returnValue(of(new GameBook()));
+
+    component.onShowEdit();
+
+    expect(component.gameSystems).toEqual([gameSystem]);
+    expect(component.bookTypes).toEqual([bookType]);
+  });
+
+  it('cancels the previous donor query and clears results in the view', () => {
+    const previous = new Subject<Donor[]>();
+    const latest = new Subject<Donor[]>();
+    const donor = new Donor();
+    libraryServiceMock.searchDonors.and.returnValues(previous, latest);
+
+    component.onSearchDonors('old');
+    component.onSearchDonors('new');
+    latest.next([donor]);
+    previous.next([]);
+
+    expect(previous.observed).toBeFalse();
+    expect(component.donorSearchResults).toEqual([donor]);
+
+    component.onClearDonorSearch();
+    expect(component.donorSearchResults).toEqual([]);
   });
 
   it('opens the selected lending in the info drawer and closes it', () => {
@@ -189,5 +249,78 @@ describe('LibraryView', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('ignores a delete confirmation after another book is selected', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    libraryServiceMock.deleteBook.calls.reset();
+    component.selectedData = Object.assign(new GameBook(), { number: 12 });
+    component.onDelete(new Event('click'));
+
+    component.selectedData = Object.assign(new GameBook(), { number: 20 });
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
+
+  it('ignores a delete confirmation after the view is destroyed', () => {
+    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    libraryServiceMock.deleteBook.calls.reset();
+    component.selectedData = Object.assign(new GameBook(), { number: 12 });
+    component.onDelete(new Event('click'));
+
+    fixture.destroy();
+    confirm.calls.mostRecent().args[0].accept?.();
+
+    expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
+  });
+
+  it('refreshes the list without closing a drawer opened during a return', () => {
+    const response = new Subject<BookLending>();
+    libraryServiceMock.return.and.returnValue(response);
+    const load = spyOn(component, 'load');
+    component.dialog = Dialog.LENDING_RETURN;
+    component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
+
+    component.onShowLending(new BookLending());
+    response.next(new BookLending());
+    response.complete();
+
+    expect(load).toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+  });
+
+  it('ignores an error from a return after the drawer has been replaced', () => {
+    const response = new Subject<BookLending>();
+    libraryServiceMock.return.and.returnValue(response);
+    component.dialog = Dialog.LENDING_RETURN;
+    component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
+
+    component.onShowLending(new BookLending());
+    const clear = spyOn(component.failures, 'clear');
+    response.error(new Error('Return failed'));
+
+    expect(clear).not.toHaveBeenCalled();
+    expect(component.dialog).toBe(Dialog.LENDING_INFO);
+  });
+});
+
+describe('Library request routing', () => {
+  it('disables loan searches while routing pagination to the active tab', () => {
+    TestBed.configureTestingModule({ providers: [
+      { provide: LibraryService, useValue: {} },
+      { provide: LibraryLendingService, useValue: {} },
+      { provide: BookReportService, useValue: {} },
+      { provide: ConfirmationService, useValue: {} },
+      { provide: AuthService, useValue: { hasPermission: () => false, hasAnyPermission: () => false } }
+    ] });
+    const component = TestBed.runInInjectionContext(() => new LibraryView());
+    const load = spyOn(component, 'loadLendings');
+    component.display = component.Display.LENDINGS;
+    component.onFilter('title');
+    expect(load).not.toHaveBeenCalled();
+    load.calls.reset();
+    component.load(2);
+    expect(load).toHaveBeenCalledOnceWith(2);
   });
 });

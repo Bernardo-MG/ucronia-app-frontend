@@ -1,8 +1,10 @@
 
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
+import { ContactInfo } from '@ucronia/domain';
 import { finalize, forkJoin } from 'rxjs';
 import { AssociationSettingsService } from '../association-settings-service';
 import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-settings-form/contact-settings-form';
@@ -14,17 +16,14 @@ import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-setting
 })
 export class SettingsView implements OnInit {
 
+  private readonly destroyRef = inject(DestroyRef);
   private readonly service = inject(AssociationSettingsService);
 
-  public email = '';
-  public instagram = '';
-  public map = '';
-  public calendar = '';
-
+  public contactInfo = new ContactInfo();
   public readonly editable;
   public loading = false;
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -32,23 +31,26 @@ export class SettingsView implements OnInit {
     this.editable = authService.hasPermission(UcroniaPermissions.associationSettings.update);
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.loading = true;
     forkJoin({
       email: this.service.getEmail(),
       instagram: this.service.getInstagram(),
-      googleMaps: this.service.getMap(),
-      teamUp: this.service.getCalendar()
+      map: this.service.getMap(),
+      calendar: this.service.getCalendar(),
+      telegram: this.service.getTelegram()
     })
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(r => {
-        this.email = r.email;
-        this.instagram = r.instagram;
-        this.map = r.googleMaps;
-        this.calendar = r.teamUp;
+      .pipe(
+        finalize(() => this.loading = false),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe(contactInfo => {
+        this.contactInfo = contactInfo;
       });
   }
 
+  // Event handlers
   public onSaveThirdPartySettings(values: SocialSettingsFormEvent) {
     const updates = [];
 
@@ -58,6 +60,10 @@ export class SettingsView implements OnInit {
 
     if (values.instagram !== undefined) {
       updates.push(this.service.updateInstagram(values.instagram));
+    }
+
+    if (values.telegram !== undefined) {
+      updates.push(this.service.updateTelegram(values.telegram));
     }
 
     if (values.googleMaps !== undefined) {
@@ -72,7 +78,10 @@ export class SettingsView implements OnInit {
       this.loading = true;
 
       forkJoin(updates)
-        .pipe(finalize(() => this.loading = false))
+        .pipe(
+          finalize(() => this.loading = false),
+          takeUntilDestroyed(this.destroyRef)
+        )
         .subscribe();
     }
   }

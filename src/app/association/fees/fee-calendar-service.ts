@@ -2,8 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
-import { Fee, Member, MemberStatus, YearsRange } from '@ucronia/domain';
-import { endOfYear, startOfYear } from 'date-fns';
+import { Fee, MemberStatus, PublicMember } from '@ucronia/domain';
+import { endOfMonth, NormalizedInterval, startOfMonth } from 'date-fns';
 import { forkJoin, map, Observable } from 'rxjs';
 import { MemberFees } from './domain/member-fees';
 
@@ -14,7 +14,7 @@ export class FeeCalendarService {
 
   private readonly ucroniaClient = inject(UcroniaClient);
 
-  public getCalendar(year: number, status: MemberStatus): Observable<MemberFees[]> {
+  public getCalendar(period: NormalizedInterval): Observable<MemberFees[]> {
     const sorting = new Sorting(
       [
         new SortingProperty('member.name.firstName'),
@@ -23,12 +23,13 @@ export class FeeCalendarService {
       ]
     );
 
-    const date = new Date(year, 0, 1);
+    const from = startOfMonth(period.start);
+    const to = endOfMonth(period.end);
 
-    const fees = getAllPages((page, size) => this.ucroniaClient.fee
-      .page(page, size, sorting, startOfYear(date), endOfYear(date)));
-    const members = getAllPages((page, size) => this.ucroniaClient.memberProfile
-      .page(page, size, undefined, status));
+    const feeEndpoint = this.ucroniaClient.fee;
+    const fees = getAllPages((page, size) => feeEndpoint.page(page, size, sorting, from, to));
+    const memberEndpoint = this.ucroniaClient.member;
+    const members = getAllPages((page, size) => memberEndpoint.page(page, size, undefined, undefined, MemberStatus.All));
 
     return forkJoin({ fees, members })
       .pipe(
@@ -36,21 +37,20 @@ export class FeeCalendarService {
       );
   }
 
-  private toMemberFees(fees: Fee[], members: Member[]): MemberFees[] {
+  private toMemberFees(fees: Fee[], members: PublicMember[]): MemberFees[] {
     const memberFees = new Map<number, MemberFees>();
     const membersByNumber = new Map(members.map(member => [member.number, member]));
 
     fees
-      .filter(fee => membersByNumber.has(fee.member.number))
       .forEach(fee => {
         let calendarEntry = memberFees.get(fee.member.number);
         if (!calendarEntry) {
-          const member = membersByNumber.get(fee.member.number) as Member;
+          const member = membersByNumber.get(fee.member.number);
           calendarEntry = {
             member: {
-              number: member.number,
-              name: member.name,
-              active: member.active
+              number: fee.member.number,
+              name: member?.name ?? fee.member.name,
+              active: member?.active
             },
             fees: []
           };
@@ -64,11 +64,6 @@ export class FeeCalendarService {
       });
 
     return Array.from(memberFees.values());
-  }
-
-
-  public getRange(): Observable<YearsRange> {
-    return this.ucroniaClient.fee.range();
   }
 
 }

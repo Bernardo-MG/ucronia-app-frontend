@@ -9,9 +9,9 @@ import { SkeletonModule } from 'primeng/skeleton';
 })
 export class SummaryCard {
 
-  public readonly label = input('');
-  public readonly value = input<any>('');
   public readonly icon = input('');
+  public readonly label = input('');
   public readonly loading = input(false);
+  public readonly value = input<any>('');
 
 }

@@ -1,5 +1,6 @@
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -10,7 +11,7 @@ import { ContactMethod } from '@ucronia/domain';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { DrawerModule } from 'primeng/drawer';
-import { finalize, Observable } from 'rxjs';
+import { finalize, Observable, Subscription } from 'rxjs';
 import { ContactMethodForm } from '../contact-method-form/contact-method-form';
 import { ContactMethodList } from '../contact-method-list/contact-method-list';
 import { ContactMethodService } from '../contact-method-service';
@@ -22,26 +23,24 @@ import { ContactMethodService } from '../contact-method-service';
 })
 export class ContactMethodView implements OnInit {
 
-  private readonly contactMethodService = inject(ContactMethodService);
-
   private readonly confirmationService = inject(ConfirmationService);
+  private readonly contactMethodService = inject(ContactMethodService);
+  private readonly destroyRef = inject(DestroyRef);
 
-  public readonly permissions: Permissions;
-  public readonly Dialog = Dialog;
-
-  public dialog = Dialog.NONE;
-
-  public selectedData = new ContactMethod();
   public contactMethodData = new Page<ContactMethod>();
-
+  public readonly Dialog = Dialog;
+  public dialog = Dialog.NONE;
+  public failures = new FailureStore();
   /**
    * Loading flag.
    */
   public loading = false;
+  public readonly permissions: Permissions;
+  public selectedData = new ContactMethod();
 
-  public failures = new FailureStore();
+  private listRequest?: Subscription;
 
-  constructor() {
+  public constructor() {
     const authService = inject(AuthService);
 
     // Check permissions
@@ -52,16 +51,22 @@ export class ContactMethodView implements OnInit {
     };
   }
 
+  // Lifecycle hooks
   public ngOnInit(): void {
     this.load();
   }
 
-  // EVENT HANDLERS
+  // Event handlers
+  public load(page: number | undefined = undefined): void {
+    this.listRequest?.unsubscribe();
+    this.loading = true;
 
-  public onShowInfo(data: ContactMethod): void {
-    this.selectedData = data;
-    this.failures.clear();
-    this.dialog = Dialog.INFO;
+    this.listRequest = this.contactMethodService.getAll(page)
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
+      .subscribe(response => this.contactMethodData = response);
   }
 
   public onCancelEdit(): void {
@@ -69,23 +74,10 @@ export class ContactMethodView implements OnInit {
     this.dialog = Dialog.INFO;
   }
 
-  public onShowEdit(contactMethod: ContactMethod) {
-    this.failures.clear();
-    this.selectedData = contactMethod;
-    this.dialog = Dialog.EDIT;
-  }
-
   public onCreate(toCreate: ContactMethod): void {
     this.call(
       () => this.contactMethodService.create(toCreate),
       () => this.load()
-    );
-  }
-
-  public onUpdate(toUpdate: ContactMethod): void {
-    this.call(
-      () => this.contactMethodService.update(toUpdate),
-      () => this.load(this.contactMethodData.page)
     );
   }
 
@@ -101,18 +93,6 @@ export class ContactMethodView implements OnInit {
     });
   }
 
-  // DATA LOADING
-
-  public load(page: number | undefined = undefined): void {
-    this.loading = true;
-
-    this.contactMethodService.getAll(page)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(response => this.contactMethodData = response);
-  }
-
-  // DIALOGS
-
   public onDrawerVisibleChange(visible: boolean) {
     if (!visible) {
       this.failures.clear();
@@ -120,15 +100,36 @@ export class ContactMethodView implements OnInit {
     }
   }
 
-  // PRIVATE METHODS
+  public onShowEdit(contactMethod: ContactMethod) {
+    this.failures.clear();
+    this.selectedData = contactMethod;
+    this.dialog = Dialog.EDIT;
+  }
 
+  public onShowInfo(data: ContactMethod): void {
+    this.selectedData = data;
+    this.failures.clear();
+    this.dialog = Dialog.INFO;
+  }
+
+  public onUpdate(toUpdate: ContactMethod): void {
+    this.call(
+      () => this.contactMethodService.update(toUpdate),
+      () => this.load(this.contactMethodData.page)
+    );
+  }
+
+  // Private methods
   private call(
     action: () => Observable<any>,
     onSuccess: () => void = () => { }
   ) {
     this.loading = true;
     action()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.loading = false)
+      )
       .subscribe({
         complete: () => {
           this.failures.clear();
