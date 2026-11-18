@@ -4,6 +4,7 @@ import { Fee, FeePayments, FeeSummary, YearsRange } from '@ucronia/domain';
 import { catchError, map, Observable } from 'rxjs';
 import { FeeCreation } from '../../fees/fee-creation';
 import { FeeUpdate } from '../../fees/fee-update';
+import { mapAudit } from './audit-endpoint-utils';
 
 export class FeeEndpoint {
 
@@ -136,7 +137,7 @@ export class FeeEndpoint {
     if (fee.transaction?.date) {
       fee.transaction.date = new Date(fee.transaction.date);
     }
-    return fee;
+    return mapAudit(fee);
   }
 
 }
