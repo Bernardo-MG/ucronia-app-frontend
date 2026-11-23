@@ -39,7 +39,7 @@ describe('TextFilter', () => {
   }));
 
   it('should not emit before debounceTime', fakeAsync(() => {
-    const spy = jasmine.createSpy('filterSpy');
+    const spy = vi.fn().mockName('filterSpy');
     component.filter.subscribe(spy);
 
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -55,7 +55,7 @@ describe('TextFilter', () => {
   }));
 
   it('should emit filter value after debounceTime', fakeAsync(() => {
-    const spy = jasmine.createSpy('filterSpy');
+    const spy = vi.fn().mockName('filterSpy');
     component.filter.subscribe(spy);
 
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -70,7 +70,7 @@ describe('TextFilter', () => {
   }));
 
   it('should emit filter value once', fakeAsync(() => {
-    const spy = jasmine.createSpy('filterSpy');
+    const spy = vi.fn().mockName('filterSpy');
     component.filter.subscribe(spy);
 
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -85,7 +85,7 @@ describe('TextFilter', () => {
   }));
 
   it('should emit latest value if multiple inputs happen quickly', fakeAsync(() => {
-    const spy = jasmine.createSpy('filterSpy');
+    const spy = vi.fn().mockName('filterSpy');
     component.filter.subscribe(spy);
 
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -112,7 +112,7 @@ describe('TextFilter', () => {
   }));
 
   it('should emit value once if multiple inputs happen quickly', fakeAsync(() => {
-    const spy = jasmine.createSpy('filterSpy');
+    const spy = vi.fn().mockName('filterSpy');
     component.filter.subscribe(spy);
 
     const inputEl = fixture.debugElement.query(By.css('input')).nativeElement;
@@ -152,7 +152,7 @@ describe('TextFilter', () => {
 
   it('accepts a parent value without emitting a search', async () => {
     await fixture.whenStable();
-    const emitted = jasmine.createSpy();
+    const emitted = vi.fn();
     component.filter.subscribe(emitted);
     fixture.componentRef.setInput('value', 'Existing query');
     fixture.detectChanges();
@@ -162,7 +162,7 @@ describe('TextFilter', () => {
   });
 
   it('trims and debounces the latest typed query', fakeAsync(() => {
-    const emitted = jasmine.createSpy();
+    const emitted = vi.fn();
     fixture.componentInstance.filter.subscribe(emitted);
     dispatchInput(fixture, '  old ');
     tick(150);
@@ -170,32 +170,35 @@ describe('TextFilter', () => {
     tick(299);
     expect(emitted).not.toHaveBeenCalled();
     tick(1);
-    expect(emitted).toHaveBeenCalledOnceWith('new');
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith('new');
   }));
 
   it('clears immediately and cancels the delayed query', fakeAsync(() => {
-    const emitted = jasmine.createSpy();
+    const emitted = vi.fn();
     fixture.componentInstance.filter.subscribe(emitted);
     dispatchInput(fixture, 'pending');
     tick(100);
     dispatchInput(fixture, '');
-    expect(emitted).toHaveBeenCalledOnceWith('');
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith('');
     tick(300);
     expect(emitted).toHaveBeenCalledTimes(1);
   }));
 
   it('deduplicates normalized queries', fakeAsync(() => {
-    const emitted = jasmine.createSpy();
+    const emitted = vi.fn();
     fixture.componentInstance.filter.subscribe(emitted);
     dispatchInput(fixture, 'name');
     tick(300);
     dispatchInput(fixture, ' name ');
     tick(300);
-    expect(emitted).toHaveBeenCalledOnceWith('name');
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith('name');
   }));
 
   it('cancels pending emissions on destruction', fakeAsync(() => {
-    const emitted = jasmine.createSpy();
+    const emitted = vi.fn();
     fixture.componentInstance.filter.subscribe(emitted);
     dispatchInput(fixture, 'pending');
     fixture.destroy();

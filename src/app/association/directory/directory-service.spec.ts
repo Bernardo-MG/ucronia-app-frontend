@@ -11,19 +11,19 @@ describe('DirectoryService', () => {
 
   const mockUcroniaClient = {
     guest: {
-      patch: jasmine.createSpy()
+      patch: vi.fn()
     },
     profile: {
-      patch: jasmine.createSpy(),
+      patch: vi.fn(),
       transform: {
-        toGuest: jasmine.createSpy()
+        toGuest: vi.fn()
       },
       guest: {
-        create: jasmine.createSpy().and.returnValue(of({})),
-        update: jasmine.createSpy().and.returnValue(of({})),
-        get: jasmine.createSpy().and.returnValue(of({})),
-        delete: jasmine.createSpy().and.returnValue(of({})),
-        page: jasmine.createSpy().and.returnValue(of({
+        create: vi.fn().mockReturnValue(of({})),
+        update: vi.fn().mockReturnValue(of({})),
+        get: vi.fn().mockReturnValue(of({})),
+        delete: vi.fn().mockReturnValue(of({})),
+        page: vi.fn().mockReturnValue(of({
           content: [],
           page: 0,
           size: 10,
@@ -36,7 +36,7 @@ describe('DirectoryService', () => {
 
   const securityClientMock = {
     profile: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -63,9 +63,9 @@ describe('DirectoryService', () => {
 
   it('uses the submitted profile values after a pending conversion finishes', () => {
     const conversion = new Subject<unknown>();
-    mockUcroniaClient.profile.transform.toGuest.and.returnValue(conversion);
-    mockUcroniaClient.profile.patch.and.returnValue(of({}));
-    mockUcroniaClient.guest.patch.and.returnValue(of({}));
+    mockUcroniaClient.profile.transform.toGuest.mockReturnValue(conversion);
+    mockUcroniaClient.profile.patch.mockReturnValue(of({}));
+    mockUcroniaClient.guest.patch.mockReturnValue(of({}));
 
     const profile = new FullProfile();
     profile.number = 12;
@@ -74,7 +74,9 @@ describe('DirectoryService', () => {
     profile.contactChannels = [{ method: { number: 3, name: 'Email' }, detail: 'ana@example.com' }];
     service.update(profile, [], profile.types).subscribe();
 
-    expect(mockUcroniaClient.profile.transform.toGuest).toHaveBeenCalledOnceWith(12);
+    expect(mockUcroniaClient.profile.transform.toGuest).toHaveBeenCalledTimes(1);
+
+    expect(mockUcroniaClient.profile.transform.toGuest).toHaveBeenCalledWith(12);
     expect(mockUcroniaClient.profile.patch).not.toHaveBeenCalled();
 
     profile.number = 99;
@@ -85,11 +87,13 @@ describe('DirectoryService', () => {
     conversion.next({});
     conversion.complete();
 
-    const expectedPatch = jasmine.objectContaining({
-      name: jasmine.objectContaining({ firstName: 'Ana' }),
+    const expectedPatch = expect.objectContaining({
+      name: expect.objectContaining({ firstName: 'Ana' }),
       contactChannels: [{ method: 3, detail: 'ana@example.com' }]
     });
-    expect(mockUcroniaClient.profile.patch).toHaveBeenCalledOnceWith(12, expectedPatch);
-    expect(mockUcroniaClient.guest.patch).toHaveBeenCalledOnceWith(12, expectedPatch);
+    expect(mockUcroniaClient.profile.patch).toHaveBeenCalledTimes(1);
+    expect(mockUcroniaClient.profile.patch).toHaveBeenCalledWith(12, expectedPatch);
+    expect(mockUcroniaClient.guest.patch).toHaveBeenCalledTimes(1);
+    expect(mockUcroniaClient.guest.patch).toHaveBeenCalledWith(12, expectedPatch);
   });
 });

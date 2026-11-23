@@ -27,15 +27,16 @@ describe('SearchRequest', () => {
     expect(results).toEqual([]);
     latest.next(['new']);
     older.next(['late']);
-    expect(older.observed).toBeFalse();
+    expect(older.observed).toBe(false);
     expect(results).toEqual(['new']);
   });
 
   it('trims queries and emits one empty result without loading a blank query', () => {
-    const load = jasmine.createSpy().and.returnValue(of(['result']));
+    const load = vi.fn().mockReturnValue(of(['result']));
     request.search(' name ', load).subscribe();
-    expect(load).toHaveBeenCalledOnceWith('name');
-    load.calls.reset();
+    expect(load).toHaveBeenCalledTimes(1);
+    expect(load).toHaveBeenCalledWith('name');
+    load.mockClear();
     const results: unknown[] = [];
     request.search('   ', load).subscribe(value => results.push(value));
     expect(load).not.toHaveBeenCalled();
@@ -43,7 +44,7 @@ describe('SearchRequest', () => {
   });
 
   it('clears failed results and accepts a subsequent query', () => {
-    const failure = jasmine.createSpy();
+    const failure = vi.fn();
     let results: string[] = [];
     request.search<string>('bad', () => throwError(() => new Error('failure')), failure)
       .subscribe(value => results = value);
@@ -60,10 +61,10 @@ describe('SearchRequest', () => {
     request.search('first', () => first).subscribe();
     other.search('second', () => second).subscribe();
     request.cancel();
-    expect(first.observed).toBeFalse();
-    expect(second.observed).toBeTrue();
+    expect(first.observed).toBe(false);
+    expect(second.observed).toBe(true);
     injector.destroy();
     destroyed = true;
-    expect(second.observed).toBeFalse();
+    expect(second.observed).toBe(false);
   });
 });

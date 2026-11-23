@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeeCreationForm } from './fee-creation-form';
 import { By } from '@angular/platform-browser';
@@ -49,13 +50,14 @@ describe('FeeCreationForm', () => {
   });
 
   it('stores the selected member number in the fee payload', () => {
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     const month = new Date(2026, 0, 1);
     component.onSelectMember(Object.assign(new Profile(), { number: 7 }));
     component.form.patchValue({ month });
     component.form.get('month')?.markAsDirty();
     component.onSave();
-    expect(saved).toHaveBeenCalledOnceWith({ member: 7, month });
+    expect(saved).toHaveBeenCalledTimes(1);
+    expect(saved).toHaveBeenCalledWith({ member: 7, month });
   });
 });
 
@@ -65,7 +67,7 @@ describe('FeeCreationForm form submission', () => {
 
   let fixture: ComponentFixture<FeeCreationForm>;
   let component: FeeCreationForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -84,9 +86,9 @@ describe('FeeCreationForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -98,7 +100,7 @@ describe('FeeCreationForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -106,29 +108,31 @@ describe('FeeCreationForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 

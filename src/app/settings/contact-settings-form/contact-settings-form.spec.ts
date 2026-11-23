@@ -67,7 +67,7 @@ describe('ContactSettingsForm', () => {
   describe('save event', () => {
 
     it('should emit changed values on save', () => {
-      spyOn(component.save, 'emit');
+      vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
       component.form.get('email')?.setValue('new@example.com');
       component.form.get('email')?.markAsDirty();
@@ -80,7 +80,7 @@ describe('ContactSettingsForm', () => {
     });
 
     it('should emit multiple changed values', () => {
-      spyOn(component.save, 'emit');
+      vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
       component.form.get('instagram')?.setValue('insta');
       component.form.get('instagram')?.markAsDirty();
@@ -97,7 +97,7 @@ describe('ContactSettingsForm', () => {
     });
 
     it('should not emit if no values were changed', () => {
-      spyOn(component.save, 'emit');
+      vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
       component.onSave();
 

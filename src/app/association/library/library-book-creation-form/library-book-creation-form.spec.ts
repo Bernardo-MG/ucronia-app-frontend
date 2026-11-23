@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
@@ -24,9 +25,9 @@ describe('LibraryBookCreationForm', () => {
     component.form.get('title')?.markAsDirty();
     component.form.get('language')?.markAsDirty();
     component.form.get('isbn')?.markAsDirty();
-    expect(component.form.get('isbn')?.invalid).toBeTrue();
+    expect(component.form.get('isbn')?.invalid).toBe(true);
     component.form.get('isbn')?.setValue('');
-    expect(component.saveEnabled).toBeTrue();
+    expect(component.saveEnabled).toBe(true);
   });
 
   it('includes the selected book kind in the creation payload', () => {
@@ -34,18 +35,19 @@ describe('LibraryBookCreationForm', () => {
     component.form.patchValue({ title: { title: 'A book' }, language: 'en' });
     component.form.get('title')?.markAsDirty();
     component.form.get('language')?.markAsDirty();
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     component.onSave();
-    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ kind: 'fiction' }));
+    expect(saved).toHaveBeenCalledTimes(1);
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({ kind: 'fiction' }));
   });
 });
 
 describe('LibraryBookCreationForm form submission', () => {
-  const scenario = { values: { title: { title: 'A Wizard of Earthsea' }, language: 'es' }, invalid: 'title.title', expected: jasmine.objectContaining({ book: jasmine.objectContaining({ title: jasmine.objectContaining({ title: 'A Wizard of Earthsea' }), language: 'es' }), kind: 'game' }) };
+  const scenario = { values: { title: { title: 'A Wizard of Earthsea' }, language: 'es' }, invalid: 'title.title', expected: expect.objectContaining({ book: expect.objectContaining({ title: expect.objectContaining({ title: 'A Wizard of Earthsea' }), language: 'es' }), kind: 'game' }) };
 
   let fixture: ComponentFixture<LibraryBookCreationForm>;
   let component: LibraryBookCreationForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -65,9 +67,9 @@ describe('LibraryBookCreationForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -79,7 +81,7 @@ describe('LibraryBookCreationForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -87,29 +89,31 @@ describe('LibraryBookCreationForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 

@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
@@ -26,20 +27,24 @@ for (const { view, service, form } of cases) {
   describe(`${view.name} drawer flow`, () => {
     let fixture: ComponentFixture<SettingsView>;
     let allowed: boolean;
-    let confirmation: jasmine.SpyObj<ConfirmationService>;
+    let confirmation: MockedObject<Pick<ConfirmationService, 'confirm'>>;
     const item = { number: 7, name: 'Prueba', description: 'Detalle completo', available: false, amount: 12 };
     const page = Object.assign(new Page<typeof item>(), { content: [item], page: 1, size: 10, totalElements: 1 });
-    const crud = jasmine.createSpyObj('SettingsService', ['getAll', 'create', 'update', 'delete']);
+    const crud = {
+      getAll: vi.fn().mockName("SettingsService.getAll"), create: vi.fn().mockName("SettingsService.create"), update: vi.fn().mockName("SettingsService.update"), delete: vi.fn().mockName("SettingsService.delete")
+  };
 
     beforeEach(async () => {
       allowed = true;
-      confirmation = jasmine.createSpyObj<ConfirmationService>('ConfirmationService', ['confirm']);
-      crud.create.calls.reset();
-      crud.create.and.returnValue(of(item));
-      crud.delete.calls.reset();
-      crud.delete.and.returnValue(of(item));
-      crud.getAll.and.returnValue(of(page));
-      crud.update.and.returnValue(of(item));
+      confirmation = {
+        confirm: vi.fn().mockName("ConfirmationService.confirm")
+    };
+      crud.create.mockClear();
+      crud.create.mockReturnValue(of(item));
+      crud.delete.mockClear();
+      crud.delete.mockReturnValue(of(item));
+      crud.getAll.mockReturnValue(of(page));
+      crud.update.mockReturnValue(of(item));
       await TestBed.configureTestingModule({
         imports: [view],
         providers: [
@@ -60,7 +65,7 @@ for (const { view, service, form } of cases) {
 
     function click(selector: string): void {
       const element = fixture.debugElement.query(By.css(selector));
-      expect(element).withContext(selector).not.toBeNull();
+      expect(element,selector).not.toBeNull();
       element.nativeElement.click();
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
@@ -71,7 +76,7 @@ for (const { view, service, form } of cases) {
       expect(fixture.debugElement.query(By.css(form))).toBeNull();
       click('button[aria-label="Ver detalles"]');
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
-      expect(fixture.debugElement.query(By.directive(Drawer)).componentInstance.visible).toBeTrue();
+      expect(fixture.debugElement.query(By.directive(Drawer)).componentInstance.visible).toBe(true);
       expect(fixture.nativeElement.textContent).toContain('7');
       expect(fixture.debugElement.query(By.css(form))).toBeNull();
       click('p-button[data-action="edit"] button');
@@ -90,8 +95,8 @@ for (const { view, service, form } of cases) {
       expect(fixture.debugElement.query(By.css('button[aria-label="Más acciones"]'))).toBeNull();
       click('button[aria-label="Ver detalles"]');
       const edit = fixture.debugElement.query(By.css('p-button[data-action="edit"] button'));
-      expect(edit.nativeElement.disabled).toBeTrue();
-      expect(fixture.debugElement.query(By.css('button[aria-label="Eliminar"]')).nativeElement.disabled).toBeTrue();
+      expect(edit.nativeElement.disabled).toBe(true);
+      expect(fixture.debugElement.query(By.css('button[aria-label="Eliminar"]')).nativeElement.disabled).toBe(true);
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
     });
 
@@ -107,7 +112,7 @@ for (const { view, service, form } of cases) {
       const submit: HTMLButtonElement = fixture.nativeElement.querySelector('button[data-action="submit"]');
       expect(submit.closest('.p-drawer-footer')).not.toBeNull();
       expect(submit.form).toBe(editor.nativeElement.querySelector('form'));
-      expect(submit.disabled).toBeFalse();
+      expect(submit.disabled).toBe(false);
       submit.click();
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
@@ -137,10 +142,11 @@ for (const { view, service, form } of cases) {
       expect(confirmation.confirm).toHaveBeenCalledTimes(1);
       expect(crud.delete).not.toHaveBeenCalled();
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.INFO);
-      confirmation.confirm.calls.mostRecent().args[0].accept?.();
+      vi.mocked(confirmation.confirm).mock.lastCall![0].accept?.();
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
-      expect(crud.delete).toHaveBeenCalledOnceWith(item.number);
+      expect(crud.delete).toHaveBeenCalledTimes(1);
+      expect(crud.delete).toHaveBeenCalledWith(item.number);
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.NONE);
     });
 
@@ -148,18 +154,18 @@ for (const { view, service, form } of cases) {
       render();
       click('button[aria-label="Ver detalles"]');
       click('p-button[data-action="edit"] button');
-      crud.update.and.returnValue(throwError(() => new Error('Save failed')));
+      crud.update.mockReturnValue(throwError(() => new Error('Save failed')));
       fixture.componentInstance.onUpdate(item);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(fixture.debugElement.query(By.css(form))).not.toBeNull();
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.EDIT);
-      crud.update.and.returnValue(of(item));
+      crud.update.mockReturnValue(of(item));
       fixture.componentInstance.onUpdate(item);
       fixture.changeDetectorRef.markForCheck();
       fixture.detectChanges();
       expect(fixture.componentInstance.dialog).toBe(fixture.componentInstance.Dialog.NONE);
-      expect(fixture.debugElement.query(By.directive(Drawer)).componentInstance.visible).toBeFalse();
+      expect(fixture.debugElement.query(By.directive(Drawer)).componentInstance.visible).toBe(false);
     });
   });
 }

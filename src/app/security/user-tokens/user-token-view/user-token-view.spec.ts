@@ -10,8 +10,8 @@ describe('UserTokenView', () => {
 
   const securityClientMock = {
     userToken: {
-      patch: jasmine.createSpy().and.returnValue(of({})),
-      page: jasmine.createSpy().and.returnValue(of({
+      patch: vi.fn().mockReturnValue(of({})),
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,

@@ -27,7 +27,7 @@ describe('PublicMemberList', () => {
   });
 
   it('should display the member number while emitting the selected profile', () => {
-    const show = spyOn(component.show, 'emit');
+    const show = vi.spyOn(component.show, 'emit').mockReturnValue(undefined);
     fixture.componentRef.setInput('canRead', true);
     fixture.detectChanges();
     const cells = fixture.nativeElement.querySelectorAll('tbody td');
@@ -37,7 +37,9 @@ describe('PublicMemberList', () => {
 
     button.click();
 
-    expect(show).toHaveBeenCalledOnceWith(jasmine.objectContaining({ number: 12, memberNumber: 37 }));
+    expect(show).toHaveBeenCalledTimes(1);
+
+    expect(show).toHaveBeenCalledWith(expect.objectContaining({ number: 12, memberNumber: 37 }));
     expect(fixture.nativeElement.querySelector('assoc-member-info')).toBeNull();
   });
 

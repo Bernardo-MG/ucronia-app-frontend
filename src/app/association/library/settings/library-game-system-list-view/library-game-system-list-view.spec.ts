@@ -11,14 +11,16 @@ describe('LibraryGameSystemListView', () => {
   let component: LibraryGameSystemListView;
   let fixture: ComponentFixture<LibraryGameSystemListView>;
 
-  const gameSystemCrudServiceMock = jasmine.createSpyObj<GameSystemService>(
-    'GameSystemCrudService',
-    ['getAll', 'create', 'update', 'delete']
-  );
+  const gameSystemCrudServiceMock = {
+    getAll: vi.fn(
+    ).mockName("GameSystemCrudService.getAll"),
+    create: vi.fn().mockName("GameSystemCrudService.create"), update: vi.fn().mockName("GameSystemCrudService.update"), delete: vi.fn(
+  ).mockName("GameSystemCrudService.delete")
+};
 
   beforeEach(async () => {
 
-    gameSystemCrudServiceMock.getAll.and.returnValue(
+    gameSystemCrudServiceMock.getAll.mockReturnValue(
       of(new Page<GameSystem>())
     );
 

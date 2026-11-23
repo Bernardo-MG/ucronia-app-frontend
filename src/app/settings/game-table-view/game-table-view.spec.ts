@@ -9,12 +9,16 @@ import { GameTableView } from './game-table-view';
 
 describe('GameTableView', () => {
   let fixture: ComponentFixture<GameTableView>;
-  const service = jasmine.createSpyObj<GameTableService>('GameTableService', ['getAll', 'create', 'update', 'delete']);
-  const auth = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
+  const service = {
+    getAll: vi.fn().mockName("GameTableService.getAll"), create: vi.fn().mockName("GameTableService.create"), update: vi.fn().mockName("GameTableService.update"), delete: vi.fn().mockName("GameTableService.delete")
+};
+  const auth = {
+    hasPermission: vi.fn().mockName("AuthService.hasPermission")
+};
 
   beforeEach(async () => {
-    service.getAll.and.returnValue(of(new Page<GameTable>()));
-    auth.hasPermission.and.returnValue(true);
+    service.getAll.mockReturnValue(of(new Page<GameTable>()));
+    auth.hasPermission.mockReturnValue(true);
     await TestBed.configureTestingModule({
       imports: [GameTableView], providers: [
         ConfirmationService,

@@ -11,7 +11,7 @@ describe('LibraryLendingService', () => {
   const mockUcroniaClient = {
     library: {
       lending: {
-        page: jasmine.createSpy().and.returnValue(of({
+        page: vi.fn().mockReturnValue(of({
           content: [],
           page: 0,
           size: 10,
@@ -39,12 +39,13 @@ describe('LibraryLendingService', () => {
 describe('BookLending server pagination', () => {
   it('preserves the server page and totals', () => {
     const result = Object.assign(new Page<BookLending>(), { content: [new BookLending()], totalElements: 35 });
-    const page = jasmine.createSpy().and.returnValue(of(result));
+    const page = vi.fn().mockReturnValue(of(result));
     TestBed.configureTestingModule({ providers: [
       { provide: UcroniaClient, useValue: { library: { lending: { page } } } }
     ] });
     const sort = new Sorting();
     TestBed.inject(LibraryLendingService).getAll(2, sort).subscribe(response => expect(response).toBe(result));
-    expect(page).toHaveBeenCalledOnceWith(2, undefined, sort);
+    expect(page).toHaveBeenCalledTimes(1);
+    expect(page).toHaveBeenCalledWith(2, undefined, sort);
   });
 });

@@ -27,25 +27,27 @@ describe('MemberKeyAssignmentForm', () => {
   });
 
   it('requires a member before submitting', () => {
-    const save = spyOn(component.save, 'emit');
+    const save = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     component.onSave();
 
-    expect(component.form.invalid).toBeTrue();
+    expect(component.form.invalid).toBe(true);
     expect(save).not.toHaveBeenCalled();
   });
 
   it('selects a search result and emits its profile number', () => {
-    const save = spyOn(component.save, 'emit');
+    const save = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     component.onSelectMember(component.members()[0]);
     component.onSave();
 
-    expect(save).toHaveBeenCalledOnceWith(12);
+    expect(save).toHaveBeenCalledTimes(1);
+
+    expect(save).toHaveBeenCalledWith(12);
   });
 
   it('does not submit a number outside the supplied member options', () => {
-    const save = spyOn(component.save, 'emit');
+    const save = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     component.form.patchValue({ profile: 99 });
     component.form.get('profile')?.markAsDirty();
@@ -55,7 +57,7 @@ describe('MemberKeyAssignmentForm', () => {
   });
 
   it('does not submit while loading', () => {
-    const save = spyOn(component.save, 'emit');
+    const save = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     component.form.patchValue({ profile: 12 });
     component.form.get('profile')?.markAsDirty();
     fixture.componentRef.setInput('loading', true);
@@ -67,16 +69,18 @@ describe('MemberKeyAssignmentForm', () => {
   });
 
   it('forwards typed searches through the shared member search and clears the previous selection', () => {
-    const search = spyOn(component.searchMember, 'emit');
+    const search = vi.spyOn(component.searchMember, 'emit').mockReturnValue(undefined);
     const memberSearch = fixture.debugElement.query(By.directive(MemberSearch)).componentInstance as MemberSearch;
     component.onSelectMember(component.members()[0]);
 
     memberSearch.onMemberChange('Luis');
     memberSearch.searchMember.emit({ query: 'Luis' });
 
-    expect(search).toHaveBeenCalledOnceWith({ query: 'Luis' });
+    expect(search).toHaveBeenCalledTimes(1);
+
+    expect(search).toHaveBeenCalledWith({ query: 'Luis' });
     expect(component.form.controls.profile.value).toBeNull();
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
   });
 
   it('clears the selected profile when the search input is cleared', () => {
@@ -86,6 +90,6 @@ describe('MemberKeyAssignmentForm', () => {
     memberSearch.clearMember.emit();
 
     expect(component.form.controls.profile.value).toBeNull();
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
   });
 });

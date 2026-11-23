@@ -12,14 +12,16 @@ describe('ActivityView', () => {
   let component: ActivityView;
   let fixture: ComponentFixture<ActivityView>;
 
-  const activityServiceMock = jasmine.createSpyObj<ActivityService>(
-    'ActivityService',
-    ['create', 'update', 'delete', 'getAll', 'getOne']
-  );
+  const activityServiceMock = {
+    create: vi.fn(
+    ).mockName("ActivityService.create"),
+    update: vi.fn().mockName("ActivityService.update"), delete: vi.fn().mockName("ActivityService.delete"), getAll: vi.fn().mockName("ActivityService.getAll"), getOne: vi.fn(
+  ).mockName("ActivityService.getOne")
+};
 
   beforeEach(async () => {
 
-    activityServiceMock.getAll.and.returnValue(
+    activityServiceMock.getAll.mockReturnValue(
       of(new Page<Activity>())
     );
 

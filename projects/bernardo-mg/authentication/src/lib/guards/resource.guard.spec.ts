@@ -54,7 +54,7 @@ describe('ResourceGuard', () => {
     const guardFn = ResourceGuard({ resource: 'MEMBER', action: 'READ' });
     const result = TestBed.runInInjectionContext(() => guardFn());
 
-    expect(result instanceof UrlTree).toBeTrue();
+    expect(result instanceof UrlTree).toBe(true);
     expect(router.serializeUrl(result as UrlTree)).toBe('/');
   });
 
@@ -62,7 +62,7 @@ describe('ResourceGuard', () => {
     const guardFn = ResourceGuard({ resource: 'MEMBER', action: 'READ' });
     const result = TestBed.runInInjectionContext(() => guardFn());
 
-    expect(result instanceof UrlTree).toBeTrue();
+    expect(result instanceof UrlTree).toBe(true);
     expect(router.serializeUrl(result as UrlTree)).toBe('/');
   });
 });

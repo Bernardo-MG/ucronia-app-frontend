@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Member } from '@ucronia/domain';
 import { MemberEditionForm } from './member-edition-form';
@@ -37,14 +38,14 @@ describe('MemberEditionForm', () => {
   });
 
   it('loads member values and preserves false toggles and lookup numbers', () => {
-    expect(component.form.controls.active.value).toBeFalse();
-    expect(component.form.controls.renew.value).toBeFalse();
+    expect(component.form.controls.active.value).toBe(false);
+    expect(component.form.controls.renew.value).toBe(false);
     expect(component.form.controls.birthDate.value).toEqual(member.birthDate);
     expect(component.form.controls.feeType.value).toBe(3);
-    expect(component.form.contains('key')).toBeFalse();
+    expect(component.form.contains('key')).toBe(false);
     expect(fixture.nativeElement.querySelector('#keyInput')).toBeNull();
     expect(component.contactChannels.getRawValue()).toEqual([{ method: 4, detail: 'ana@example.org' }]);
-    expect(component.form.pristine).toBeTrue();
+    expect(component.form.pristine).toBe(true);
   });
 
   it('uses an empty date control when the member has no birth date', () => {
@@ -58,22 +59,22 @@ describe('MemberEditionForm', () => {
     component.form.patchValue({ name: { firstName: '' } });
     component.form.get('name')?.markAsDirty();
 
-    expect(component.form.invalid).toBeTrue();
+    expect(component.form.invalid).toBe(true);
 
     component.form.patchValue({ name: { firstName: 'Ana' }, feeType: null });
     component.form.get('name')?.markAsDirty();
     component.form.get('feeType')?.markAsDirty();
 
-    expect(component.form.invalid).toBeTrue();
+    expect(component.form.invalid).toBe(true);
 
     component.form.patchValue({ feeType: 3 });
     component.form.get('feeType')?.markAsDirty();
 
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBe(true);
   });
 
   it('clears optional profile values in the full update', () => {
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     component.form.patchValue({
       identifier: '',
@@ -88,7 +89,9 @@ describe('MemberEditionForm', () => {
     component.removeContactChannel(0);
     component.onSave();
 
-    expect(saved).toHaveBeenCalledOnceWith({
+    expect(saved).toHaveBeenCalledTimes(1);
+
+    expect(saved).toHaveBeenCalledWith({
       name: { firstName: 'Ana', lastName: 'López', nickname: '' },
       feeType: 3,
       identifier: '',
@@ -102,20 +105,21 @@ describe('MemberEditionForm', () => {
   });
 
   it('does not assign a key through form values', () => {
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     const values = { key: 99, address: 'Nueva dirección' };
     component.form.patchValue(values);
     component.form.get('address')?.markAsDirty();
     component.onSave();
 
-    expect(component.form.contains('key')).toBeFalse();
-    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ address: 'Nueva dirección' }));
-    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
+    expect(component.form.contains('key')).toBe(false);
+    expect(saved).toHaveBeenCalledTimes(1);
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({ address: 'Nueva dirección' }));
+    expect(Object.hasOwn(vi.mocked(saved).mock.lastCall![0], 'key')).toBe(false);
   });
 
   it('does not include legacy key data in the member update', () => {
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.componentRef.setInput('data', { ...member, key: 7 });
     fixture.detectChanges();
 
@@ -123,7 +127,7 @@ describe('MemberEditionForm', () => {
     component.form.get('address')?.markAsDirty();
     component.onSave();
 
-    expect(Object.hasOwn(saved.calls.mostRecent().args[0], 'key')).toBeFalse();
+    expect(Object.hasOwn(vi.mocked(saved).mock.lastCall![0], 'key')).toBe(false);
   });
 });
 
@@ -132,7 +136,7 @@ describe('MemberEditionForm form submission', () => {
 
   let fixture: ComponentFixture<MemberEditionForm>;
   let component: MemberEditionForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -151,9 +155,9 @@ describe('MemberEditionForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -165,7 +169,7 @@ describe('MemberEditionForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -173,29 +177,31 @@ describe('MemberEditionForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 

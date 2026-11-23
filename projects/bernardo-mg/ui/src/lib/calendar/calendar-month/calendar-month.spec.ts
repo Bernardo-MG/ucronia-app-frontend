@@ -27,7 +27,7 @@ describe('CalendarMonth', () => {
   describe('Events', () => {
 
     it('should emit changeMonth event when onGoTo is called', fakeAsync(() => {
-      spyOn(component.changeMonth, 'emit');
+      vi.spyOn(component.changeMonth, 'emit').mockReturnValue(undefined);
       const month = new Date("2024-2");
       component.onGoTo({ value: month });
 
@@ -73,7 +73,7 @@ describe('CalendarMonth', () => {
     });
 
     it('should call updateCurrentMonth when months change', () => {
-      spyOn<any>(component, 'updateCurrentMonth');
+      vi.spyOn(component as unknown as { updateCurrentMonth(): void }, 'updateCurrentMonth').mockReturnValue(undefined);
 
       component.ngOnChanges({
         months: {
@@ -130,14 +130,14 @@ describe('CalendarMonth', () => {
       const events: CalendarEvent[] = [{ start: date, title: 'Event' }];
       component.onSelectDay({ date, events });
 
-      expect(component.activeDayIsOpen).toBeTrue();
+      expect(component.activeDayIsOpen).toBe(true);
     });
 
     it('should not open day if no events', () => {
       const date = new Date(component.viewDate);
       component.onSelectDay({ date, events: [] });
 
-      expect(component.activeDayIsOpen).toBeFalse();
+      expect(component.activeDayIsOpen).toBe(false);
     });
 
     it('should not update viewDate if day is from another month', () => {
@@ -156,9 +156,9 @@ describe('CalendarMonth', () => {
       const date = new Date(component.viewDate);
       const events: CalendarEvent[] = [{ start: date, title: 'Payment' }];
       component.onSelectDay({ date, events });
-      expect(component.activeDayIsOpen).toBeTrue();
+      expect(component.activeDayIsOpen).toBe(true);
       component.onSelectDay({ date, events });
-      expect(component.activeDayIsOpen).toBeFalse();
+      expect(component.activeDayIsOpen).toBe(false);
     });
 
     it('does not open an empty day after another day was expanded', () => {
@@ -167,7 +167,7 @@ describe('CalendarMonth', () => {
       const first = new Date(2024, 5, 10);
       component.onSelectDay({ date: first, events: [{ start: first, title: 'Payment' }] });
       component.onSelectDay({ date: new Date(2024, 5, 11), events: [] });
-      expect(component.activeDayIsOpen).toBeFalse();
+      expect(component.activeDayIsOpen).toBe(false);
     });
 
     it('does not change the displayed month or open state for an adjacent-month day', () => {
@@ -176,14 +176,14 @@ describe('CalendarMonth', () => {
       const oldViewDate = component.viewDate;
       component.onSelectDay({ date: new Date(2024, 6, 1), events: [{ start: new Date(2024, 6, 1), title: 'Payment' }] });
       expect(component.viewDate).toBe(oldViewDate);
-      expect(component.activeDayIsOpen).toBeFalse();
+      expect(component.activeDayIsOpen).toBe(false);
     });
 
     it('closes the expanded day when navigating to another month', () => {
       const date = new Date(component.viewDate);
       component.onSelectDay({ date, events: [{ start: date, title: 'Payment' }] });
       component.onGoTo({ value: new Date(2024, 3, 1) });
-      expect(component.activeDayIsOpen).toBeFalse();
+      expect(component.activeDayIsOpen).toBe(false);
     });
   });
 

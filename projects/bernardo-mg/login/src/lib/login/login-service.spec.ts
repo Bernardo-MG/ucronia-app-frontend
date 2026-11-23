@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { TestBed } from '@angular/core/testing';
 import { AuthService, PermissionList, SecurityDetails } from '@bernardo-mg/authentication';
 import { LoginRequest, SecurityClient } from '@bernardo-mg/security';
@@ -6,16 +7,18 @@ import { LoginService } from './login-service';
 
 describe('LoginService', () => {
   let service: LoginService;
-  let authServiceSpy: jasmine.SpyObj<AuthService>;
+  let authServiceSpy: MockedObject<Pick<AuthService, 'setDetails'>>;
 
   const securityClientMock = {
     login: {
-      login: jasmine.createSpy()
+      login: vi.fn()
     }
   };
 
   beforeEach(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['setDetails']);
+    authServiceSpy = {
+      setDetails: vi.fn().mockName("AuthService.setDetails")
+  };
 
     TestBed.configureTestingModule({
       providers: [
@@ -31,7 +34,7 @@ describe('LoginService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should store details on login', (done) => {
+  it('should store details on login', async () => {
     const loginRequest = new LoginRequest('test', '1234');
     const rememberMe = true;
 
@@ -47,8 +50,8 @@ describe('LoginService', () => {
       permissions: new PermissionList()
     };
 
-    securityClientMock.login.login.and.returnValue(of(apiResponse));
-    authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
+    securityClientMock.login.login.mockReturnValue(of(apiResponse));
+    authServiceSpy.setDetails.mockReturnValue(expectedSecurityDetails);
 
     service.login(loginRequest, rememberMe).subscribe(() => {
       expect(authServiceSpy.setDetails).toHaveBeenCalledWith(
@@ -57,11 +60,11 @@ describe('LoginService', () => {
         rememberMe
       );
 
-      done();
+      ;
     });
   });
 
-  it('should return updated details', (done) => {
+  it('should return updated details', async () => {
     const loginRequest = new LoginRequest('test', '1234');
     const rememberMe = true;
 
@@ -77,12 +80,12 @@ describe('LoginService', () => {
       permissions: new PermissionList()
     };
 
-    securityClientMock.login.login.and.returnValue(of(apiResponse));
-    authServiceSpy.setDetails.and.returnValue(expectedSecurityDetails);
+    securityClientMock.login.login.mockReturnValue(of(apiResponse));
+    authServiceSpy.setDetails.mockReturnValue(expectedSecurityDetails);
 
     service.login(loginRequest, rememberMe).subscribe(result => {
       expect(result).toEqual(expectedSecurityDetails);
-      done();
+      ;
     });
   });
 

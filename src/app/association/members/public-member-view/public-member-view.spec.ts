@@ -23,51 +23,55 @@ describe('PublicMemberView', () => {
   let component: PublicMemberView;
   let fixture: ComponentFixture<PublicMemberView>;
 
-  const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('MemberService', ['getAll', 'getSummary']);
-  const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
-  const memberProfileServiceMock = jasmine.createSpyObj<MemberProfileService>('MemberProfileService', [
-    'create',
-    'getOne',
-    'update',
-    'delete'
-  ]);
-  const memberKeyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', [
-    'getAll',
-    'create',
-    'update',
-    'delete',
-    'unassign'
-  ]);
-  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
-  const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', [
-    'getAllAvailable'
-  ]);
+  const memberServiceMock = {
+    getAll: vi.fn().mockName("MemberService.getAll"), getSummary: vi.fn().mockName("MemberService.getSummary")
+};
+  const authServiceMock = {
+    hasPermission: vi.fn().mockName("AuthService.hasPermission")
+};
+  const memberProfileServiceMock = {
+    create: vi.fn().mockName("MemberProfileService.create"), getOne: vi.fn().mockName("MemberProfileService.getOne"),
+    update: vi.fn().mockName("MemberProfileService.update"),
+    delete: vi.fn().mockName("MemberProfileService.delete")
+};
+  const memberKeyServiceMock = {
+    getAll: vi.fn().mockName("MemberKeyService.getAll"), create: vi.fn().mockName("MemberKeyService.create"),
+    update: vi.fn().mockName("MemberKeyService.update"),
+    delete: vi.fn().mockName("MemberKeyService.delete"),
+    unassign: vi.fn().mockName("MemberKeyService.unassign")
+};
+  const feeTypeServiceMock = {
+    getAllAvailable: vi.fn().mockName("FeeTypeService.getAllAvailable")
+};
+  const contactMethodServiceMock = {
+    getAllAvailable: vi.fn().mockName("ContactMethodService.getAllAvailable")
+};
 
   beforeEach(async () => {
-    authServiceMock.hasPermission.and.returnValue(true);
-    memberProfileServiceMock.delete.calls.reset();
-    memberProfileServiceMock.delete.and.returnValue(of(new Member()));
-    memberProfileServiceMock.getOne.calls.reset();
-    memberProfileServiceMock.update.calls.reset();
-    memberProfileServiceMock.getOne.and.returnValue(of(new Member()));
-    memberProfileServiceMock.update.and.returnValue(of(new Member()));
-    memberKeyServiceMock.update.calls.reset();
-    memberKeyServiceMock.delete.calls.reset();
-    memberKeyServiceMock.unassign.calls.reset();
-    memberKeyServiceMock.update.and.returnValue(of(new Key()));
-    memberKeyServiceMock.delete.and.returnValue(of(new Key()));
-    memberProfileServiceMock.create.calls.reset();
-    memberProfileServiceMock.create.and.returnValue(of(new Member()));
-    feeTypeServiceMock.getAllAvailable.calls.reset();
-    contactMethodServiceMock.getAllAvailable.calls.reset();
-    memberKeyServiceMock.create.calls.reset();
-    memberKeyServiceMock.create.and.returnValue(of(new Key()));
-    feeTypeServiceMock.getAllAvailable.and.returnValue(of([]));
-    contactMethodServiceMock.getAllAvailable.and.returnValue(of([]));
-    memberKeyServiceMock.getAll.calls.reset();
-    memberKeyServiceMock.getAll.and.returnValue(of([]));
-    memberServiceMock.getAll.and.returnValue(of(new Page<PublicMember>()));
-    memberServiceMock.getSummary.and.returnValue(of(new MemberCount()));
+    authServiceMock.hasPermission.mockReturnValue(true);
+    memberProfileServiceMock.delete.mockClear();
+    memberProfileServiceMock.delete.mockReturnValue(of(new Member()));
+    memberProfileServiceMock.getOne.mockClear();
+    memberProfileServiceMock.update.mockClear();
+    memberProfileServiceMock.getOne.mockReturnValue(of(new Member()));
+    memberProfileServiceMock.update.mockReturnValue(of(new Member()));
+    memberKeyServiceMock.update.mockClear();
+    memberKeyServiceMock.delete.mockClear();
+    memberKeyServiceMock.unassign.mockClear();
+    memberKeyServiceMock.update.mockReturnValue(of(new Key()));
+    memberKeyServiceMock.delete.mockReturnValue(of(new Key()));
+    memberProfileServiceMock.create.mockClear();
+    memberProfileServiceMock.create.mockReturnValue(of(new Member()));
+    feeTypeServiceMock.getAllAvailable.mockClear();
+    contactMethodServiceMock.getAllAvailable.mockClear();
+    memberKeyServiceMock.create.mockClear();
+    memberKeyServiceMock.create.mockReturnValue(of(new Key()));
+    feeTypeServiceMock.getAllAvailable.mockReturnValue(of([]));
+    contactMethodServiceMock.getAllAvailable.mockReturnValue(of([]));
+    memberKeyServiceMock.getAll.mockClear();
+    memberKeyServiceMock.getAll.mockReturnValue(of([]));
+    memberServiceMock.getAll.mockReturnValue(of(new Page<PublicMember>()));
+    memberServiceMock.getSummary.mockReturnValue(of(new MemberCount()));
 
     await TestBed.configureTestingModule({
       imports: [PublicMemberView],
@@ -91,19 +95,19 @@ describe('PublicMemberView', () => {
   it('reloads the first page with the selected status and keeps the name filter', () => {
     component.onFilter('Alice');
     component.load(2);
-    memberServiceMock.getAll.calls.reset();
+    memberServiceMock.getAll.mockClear();
 
     component.onFilterStatus(MemberStatus.Inactive);
-    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.Inactive);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, expect.anything(), 'Alice', MemberStatus.Inactive);
 
     component.onFilterStatus(MemberStatus.All);
-    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, jasmine.anything(), 'Alice', MemberStatus.All);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(undefined, expect.anything(), 'Alice', MemberStatus.All);
   });
 
   it('keeps active members as the only option without inactive read permission', () => {
     component.permissions.readInactiveMembers = false;
     fixture.detectChanges();
-    memberServiceMock.getAll.calls.reset();
+    memberServiceMock.getAll.mockClear();
 
     component.onFilterStatus(MemberStatus.Inactive);
     component.onFilterStatus(MemberStatus.All);
@@ -122,13 +126,13 @@ describe('PublicMemberView', () => {
       content: [new PublicMember()]
     });
 
-    memberServiceMock.getAll.calls.reset();
-    memberServiceMock.getSummary.calls.reset();
-    memberServiceMock.getAll.and.returnValue(of(response));
-    memberServiceMock.getSummary.and.returnValue(of({ active: 8, renew: 6 }));
+    memberServiceMock.getAll.mockClear();
+    memberServiceMock.getSummary.mockClear();
+    memberServiceMock.getAll.mockReturnValue(of(response));
+    memberServiceMock.getSummary.mockReturnValue(of({ active: 8, renew: 6 }));
     component.refresh();
 
-    expect(memberServiceMock.getAll).toHaveBeenCalledWith(2, jasmine.anything(), 'Alice', MemberStatus.Active);
+    expect(memberServiceMock.getAll).toHaveBeenCalledWith(2, expect.anything(), 'Alice', MemberStatus.Active);
     expect(memberServiceMock.getSummary).toHaveBeenCalledTimes(1);
     expect(component.data).toBe(response);
     expect(component.active).toBe(8);
@@ -148,17 +152,17 @@ describe('PublicMemberView', () => {
       content: [new PublicMember()]
     });
 
-    memberServiceMock.getAll.calls.reset();
-    memberServiceMock.getAll.and.returnValues(of(empty), of(previous));
+    memberServiceMock.getAll.mockClear();
+    memberServiceMock.getAll.mockReturnValueOnce(of(empty)).mockReturnValueOnce( of(previous));
     component.refresh();
 
-    expect(memberServiceMock.getAll.calls.allArgs().map(args => args[0])).toEqual([3, 2]);
+    expect(vi.mocked(memberServiceMock.getAll).mock.calls.map(args => args[0])).toEqual([3, 2]);
     expect(component.data).toBe(previous);
-    expect(component.status.loading).toBeFalse();
+    expect(component.status.loading).toBe(false);
   });
 
   it('hides creation and does not load private options without permission', () => {
-    authServiceMock.hasPermission.and.returnValue(false);
+    authServiceMock.hasPermission.mockReturnValue(false);
     const publicFixture = TestBed.createComponent(PublicMemberView);
 
     publicFixture.detectChanges();
@@ -182,12 +186,12 @@ describe('PublicMemberView', () => {
     data.active = true;
     data.renew = true;
     data.contactChannels = [{ method: 4, detail: 'alice@example.org' }];
-    memberServiceMock.getAll.calls.reset();
-    memberServiceMock.getSummary.calls.reset();
+    memberServiceMock.getAll.mockClear();
+    memberServiceMock.getSummary.mockClear();
     component.onCreate(data);
 
     expect(memberProfileServiceMock.create).toHaveBeenCalledWith(
-      jasmine.objectContaining({
+      expect.objectContaining({
         feeType: 3,
         address: 'Address',
         active: true,
@@ -202,13 +206,13 @@ describe('PublicMemberView', () => {
 
   it('keeps the drawer open after a failed save', () => {
     component.onCreateOpen();
-    memberProfileServiceMock.create.and.returnValue(throwError(() => new Error('Save failed')));
+    memberProfileServiceMock.create.mockReturnValue(throwError(() => new Error('Save failed')));
     const data = new MemberCreation(3, '', { firstName: 'Alice', lastName: '' });
 
     component.onCreate(data);
 
     expect(component.dialog).toBe(Dialog.CREATE);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(component.error).not.toBe('');
   });
 
@@ -222,7 +226,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should hide the keys tab and reject forced selection without key assignment read permission', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.keyAssignment.read);
+    authServiceMock.hasPermission.mockImplementation(permission => permission !== UcroniaPermissions.keyAssignment.read);
     const restrictedFixture = TestBed.createComponent(PublicMemberView);
 
     restrictedFixture.detectChanges();
@@ -254,7 +258,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should require key creation permission to open or submit the key form', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.create);
+    authServiceMock.hasPermission.mockImplementation(permission => permission !== UcroniaPermissions.key.create);
     fixture.destroy();
     fixture = TestBed.createComponent(PublicMemberView);
     component = fixture.componentInstance;
@@ -269,7 +273,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should allow key creation without member creation permission', () => {
-    authServiceMock.hasPermission.and.callFake(
+    authServiceMock.hasPermission.mockImplementation(
       permission => permission !== UcroniaPermissions.directory.memberProfile.create
     );
     fixture.destroy();
@@ -288,7 +292,7 @@ describe('PublicMemberView', () => {
     fixture.detectChanges();
     component.onCreateKeyOpen();
     const key = Object.assign(new Key(), { description: 'Nueva', available: true });
-    memberKeyServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.mockClear();
 
     fixture.detectChanges();
     const form = fixture.debugElement.query(By.directive(MemberKeyForm)).componentInstance as MemberKeyForm;
@@ -297,8 +301,10 @@ describe('PublicMemberView', () => {
     form.form.markAsDirty();
     form.onSave();
 
-    expect(memberKeyServiceMock.create).toHaveBeenCalledOnceWith(
-      jasmine.objectContaining({
+    expect(memberKeyServiceMock.create).toHaveBeenCalledTimes(
+      1);
+
+      expect(memberKeyServiceMock.create).toHaveBeenCalledWith(expect.objectContaining({
         description: 'Nueva',
         available: true
       })
@@ -306,27 +312,27 @@ describe('PublicMemberView', () => {
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
     expect(component.selectedTab).toBe('keys');
     expect(component.dialog).not.toBe(Dialog.KEY_CREATE);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should keep the key drawer open after a failed save', () => {
     component.onTabChange('keys');
     fixture.detectChanges();
     component.onCreateKeyOpen();
-    memberKeyServiceMock.getAll.calls.reset();
-    memberKeyServiceMock.create.and.returnValue(throwError(() => new Error('Save failed')));
+    memberKeyServiceMock.getAll.mockClear();
+    memberKeyServiceMock.create.mockReturnValue(throwError(() => new Error('Save failed')));
 
     component.onCreateKey(new Key());
 
     expect(component.dialog).toBe(Dialog.KEY_CREATE);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(component.error).not.toBe('');
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
   });
 
   it('should prevent duplicate key submissions and closing during save', () => {
     const response = new Subject<Key>();
-    memberKeyServiceMock.create.and.returnValue(response);
+    memberKeyServiceMock.create.mockReturnValue(response);
     component.onTabChange('keys');
     fixture.detectChanges();
     component.onCreateKeyOpen();
@@ -338,13 +344,13 @@ describe('PublicMemberView', () => {
 
     expect(memberKeyServiceMock.create).toHaveBeenCalledTimes(1);
     expect(component.dialog).toBe(Dialog.KEY_CREATE);
-    expect(component.status.saving).toBeTrue();
+    expect(component.status.saving).toBe(true);
 
     response.next(key);
     response.complete();
 
     expect(component.dialog).not.toBe(Dialog.KEY_CREATE);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should own the member drawer and load private data by profile number', () => {
@@ -352,12 +358,13 @@ describe('PublicMemberView', () => {
     fixture.detectChanges();
 
     expect(component.dialog).toBe(Dialog.INFO);
-    expect(memberProfileServiceMock.getOne).toHaveBeenCalledOnceWith(12);
+    expect(memberProfileServiceMock.getOne).toHaveBeenCalledTimes(1);
+    expect(memberProfileServiceMock.getOne).toHaveBeenCalledWith(12);
     expect(fixture.nativeElement.querySelector('assoc-member-info')).not.toBeNull();
   });
 
   it('should not request or edit private data with public member read permission alone', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission === UcroniaPermissions.directory.member.read);
+    authServiceMock.hasPermission.mockImplementation(permission => permission === UcroniaPermissions.directory.member.read);
     fixture.destroy();
     fixture = TestBed.createComponent(PublicMemberView);
     component = fixture.componentInstance;
@@ -375,7 +382,7 @@ describe('PublicMemberView', () => {
   it('should cancel stale private requests when another member is selected or the drawer closes', () => {
     const stale = new Subject<Member>();
     const current = Object.assign(new Member(), { number: 20 });
-    memberProfileServiceMock.getOne.and.returnValues(stale, of(current));
+    memberProfileServiceMock.getOne.mockReturnValueOnce(stale).mockReturnValueOnce( of(current));
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onShowMember(Object.assign(new PublicMember(), { number: 20 }));
     stale.next(Object.assign(new Member(), { number: 12 }));
@@ -389,16 +396,16 @@ describe('PublicMemberView', () => {
   });
 
   it('should retry private loading from the view after an error', () => {
-    memberProfileServiceMock.getOne.and.returnValue(throwError(() => new Error('Failed')));
+    memberProfileServiceMock.getOne.mockReturnValue(throwError(() => new Error('Failed')));
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
 
-    expect(component.status.memberPrivateError).toBeTrue();
-    expect(component.status.loadingMember).toBeFalse();
+    expect(component.status.memberPrivateError).toBe(true);
+    expect(component.status.loadingMember).toBe(false);
 
-    memberProfileServiceMock.getOne.and.returnValue(of(new Member()));
+    memberProfileServiceMock.getOne.mockReturnValue(of(new Member()));
     component.loadPrivateMember();
 
-    expect(component.status.memberPrivateError).toBeFalse();
+    expect(component.status.memberPrivateError).toBe(false);
     expect(memberProfileServiceMock.getOne).toHaveBeenCalledTimes(2);
   });
 
@@ -409,8 +416,8 @@ describe('PublicMemberView', () => {
       feeType: { number: 3, name: 'Assigned fee', amount: 5 },
       contactChannels: [{ method: { number: 8, name: 'Email' }, detail: 'ana@example.org' }]
     });
-    memberProfileServiceMock.getOne.and.returnValue(of(member));
-    memberProfileServiceMock.update.and.returnValue(of(member));
+    memberProfileServiceMock.getOne.mockReturnValue(of(member));
+    memberProfileServiceMock.update.mockReturnValue(of(member));
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onShowMemberEdit();
     const change: MemberUpdate = {
@@ -423,13 +430,15 @@ describe('PublicMemberView', () => {
       renew: false
     };
 
-    expect(component.status.optionsReady).toBeTrue();
+    expect(component.status.optionsReady).toBe(true);
     expect(component.feeTypes.map(fee => fee.number)).toContain(3);
     expect(component.contactMethods.map(method => method.number)).toContain(8);
 
     component.onUpdateMember(change);
 
-    expect(memberProfileServiceMock.update).toHaveBeenCalledOnceWith(12, change);
+    expect(memberProfileServiceMock.update).toHaveBeenCalledTimes(1);
+
+    expect(memberProfileServiceMock.update).toHaveBeenCalledWith(12, change);
     expect(component.dialog).toBe(Dialog.NONE);
     expect(component.privateMember).toBeNull();
   });
@@ -437,7 +446,7 @@ describe('PublicMemberView', () => {
   it('should retain member edit errors and allow cancelling back to details', () => {
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onShowMemberEdit();
-    memberProfileServiceMock.update.and.returnValue(throwError(() => new Error('Failed')));
+    memberProfileServiceMock.update.mockReturnValue(throwError(() => new Error('Failed')));
     component.onUpdateMember({
       name: { firstName: 'Ana', lastName: '' },
       feeType: 3,
@@ -447,7 +456,7 @@ describe('PublicMemberView', () => {
     });
 
     expect(component.dialog).toBe(Dialog.EDIT);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(component.error).not.toBe('');
 
     component.onCancelMemberEdit();
@@ -458,7 +467,7 @@ describe('PublicMemberView', () => {
 
   it('should cancel option loading when member editing is cancelled', () => {
     const options = new Subject<FeeType[]>();
-    feeTypeServiceMock.getAllAvailable.and.returnValue(options);
+    feeTypeServiceMock.getAllAvailable.mockReturnValue(options);
     component.onShowMember(new PublicMember());
     component.onShowMemberEdit();
     component.onCancelMemberEdit();
@@ -466,8 +475,8 @@ describe('PublicMemberView', () => {
     options.complete();
 
     expect(component.dialog).toBe(Dialog.INFO);
-    expect(component.status.optionsReady).toBeFalse();
-    expect(component.status.loadingOptions).toBeFalse();
+    expect(component.status.optionsReady).toBe(false);
+    expect(component.status.loadingOptions).toBe(false);
   });
 
   it('should own key editing and reload assignments on success', () => {
@@ -477,16 +486,18 @@ describe('PublicMemberView', () => {
     const form = fixture.debugElement.query(By.directive(MemberKeyForm)).componentInstance as MemberKeyForm;
     form.form.patchValue({ available: true, description: '' });
     form.form.markAsDirty();
-    memberKeyServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.mockClear();
     form.onSave();
 
-    expect(memberKeyServiceMock.update).toHaveBeenCalledOnceWith({ number: 3, available: true, description: '' });
+    expect(memberKeyServiceMock.update).toHaveBeenCalledTimes(1);
+
+    expect(memberKeyServiceMock.update).toHaveBeenCalledWith({ number: 3, available: true, description: '' });
     expect(component.dialog).toBe(Dialog.NONE);
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
   });
 
   it('should guard key mutations independently of creation permission', () => {
-    authServiceMock.hasPermission.and.callFake(
+    authServiceMock.hasPermission.mockImplementation(
       permission => permission !== UcroniaPermissions.key.update && permission !== UcroniaPermissions.key.delete
     );
     fixture.destroy();
@@ -496,7 +507,7 @@ describe('PublicMemberView', () => {
     component.onShowKey({ number: 3, available: true, description: '' });
     component.onShowKeyEdit();
     component.onUpdateKey(new Key());
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     component.onDeleteKey(new Event('click'));
 
     expect(component.dialog).toBe(Dialog.KEY_INFO);
@@ -506,56 +517,59 @@ describe('PublicMemberView', () => {
 
   it('should confirm key deletion in the view and block duplicate requests while saving', () => {
     const response = new Subject<Key>();
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
-    memberKeyServiceMock.delete.and.returnValue(response);
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
+    memberKeyServiceMock.delete.mockReturnValue(response);
     component.onShowKey({ number: 3, available: true, description: '' });
     component.onDeleteKey(new Event('click'));
 
     expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
 
-    const confirmation = confirm.calls.mostRecent().args[0];
+    const confirmation = vi.mocked(confirm).mock.lastCall![0];
     confirmation.accept?.();
     confirmation.accept?.();
     component.onDrawerVisibleChange(false);
 
-    expect(memberKeyServiceMock.delete).toHaveBeenCalledOnceWith(3);
+    expect(memberKeyServiceMock.delete).toHaveBeenCalledTimes(1);
+
+    expect(memberKeyServiceMock.delete).toHaveBeenCalledWith(3);
     expect(component.dialog).toBe(Dialog.KEY_INFO);
-    expect(component.status.saving).toBeTrue();
+    expect(component.status.saving).toBe(true);
 
     response.next(new Key());
     response.complete();
 
     expect(component.dialog).toBe(Dialog.NONE);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should keep key details open after a failed deletion', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
-    memberKeyServiceMock.delete.and.returnValue(throwError(() => new Error('Failed')));
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
+    memberKeyServiceMock.delete.mockReturnValue(throwError(() => new Error('Failed')));
     component.onShowKey({ number: 3, available: true, description: '' });
     component.onDeleteKey(new Event('click'));
-    confirm.calls.mostRecent().args[0].accept?.();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
 
     expect(component.dialog).toBe(Dialog.KEY_INFO);
     expect(component.error).not.toBe('');
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('confirms removing an assignment and reloads the key as unassigned', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     const key: KeyAssignment = { number: 3, available: true, description: 'Principal' };
     const response = new Subject<KeyAssignment>();
-    memberKeyServiceMock.unassign.and.returnValue(response);
-    memberKeyServiceMock.getAll.and.returnValue(of([key]));
+    memberKeyServiceMock.unassign.mockReturnValue(response);
+    memberKeyServiceMock.getAll.mockReturnValue(of([key]));
     component.onShowKey({ ...key, profile: { number: 12, name: 'Ana' } });
 
     component.onUnassignKey(new Event('click'));
     expect(memberKeyServiceMock.unassign).not.toHaveBeenCalled();
 
-    const confirmation = confirm.calls.mostRecent().args[0];
+    const confirmation = vi.mocked(confirm).mock.lastCall![0];
     confirmation.accept?.();
     confirmation.accept?.();
-    expect(memberKeyServiceMock.unassign).toHaveBeenCalledOnceWith(3);
+    expect(memberKeyServiceMock.unassign).toHaveBeenCalledTimes(1);
+    expect(memberKeyServiceMock.unassign).toHaveBeenCalledWith(3);
     expect(memberKeyServiceMock.delete).not.toHaveBeenCalled();
 
     response.next(key);
@@ -565,15 +579,15 @@ describe('PublicMemberView', () => {
   });
 
   it('does not remove assignments for an unassigned key or without permission', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     const key: KeyAssignment = { number: 3, available: true, description: 'Principal' };
     component.onShowKey(key);
-    expect(component.canUnassignKey).toBeFalse();
+    expect(component.canUnassignKey).toBe(false);
     component.onUnassignKey(new Event('click'));
 
     component.permissions.keyAssignmentsDelete = false;
     component.onShowKey({ ...key, profile: { number: 12, name: 'Ana' } });
-    expect(component.canUnassignKey).toBeFalse();
+    expect(component.canUnassignKey).toBe(false);
     component.onUnassignKey(new Event('click'));
 
     expect(confirm).not.toHaveBeenCalled();
@@ -581,26 +595,26 @@ describe('PublicMemberView', () => {
   });
 
   it('keeps the assigned profile visible when removal fails', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     const key: KeyAssignment = {
       number: 3, available: true, description: 'Principal', profile: { number: 12, name: 'Ana' }
     };
-    memberKeyServiceMock.unassign.and.returnValue(throwError(() => new Error('Failed')));
+    memberKeyServiceMock.unassign.mockReturnValue(throwError(() => new Error('Failed')));
     component.onShowKey(key);
     component.onUnassignKey(new Event('click'));
-    confirm.calls.mostRecent().args[0].accept?.();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
 
     expect(component.selectedKey).toBe(key);
     expect(component.dialog).toBe(Dialog.KEY_INFO);
     expect(component.error).toBe('No se pudo quitar la asignación de la llave.');
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should queue a refresh when keys change during loading', () => {
     const response = new Subject<KeyAssignment[]>();
     const updated: KeyAssignment[] = [{ number: 3, available: true, description: 'New' }];
-    memberKeyServiceMock.getAll.calls.reset();
-    memberKeyServiceMock.getAll.and.returnValues(response, of(updated));
+    memberKeyServiceMock.getAll.mockClear();
+    memberKeyServiceMock.getAll.mockReturnValueOnce(response).mockReturnValueOnce( of(updated));
     component.loadKeys();
     component.loadKeys();
     response.next([]);
@@ -608,7 +622,7 @@ describe('PublicMemberView', () => {
 
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(2);
     expect(component.keyAssignments).toEqual(updated);
-    expect(component.status.loadingKeys).toBeFalse();
+    expect(component.status.loadingKeys).toBe(false);
   });
 
   it('should keep the member form open until the update completes and then close it', () => {
@@ -620,37 +634,39 @@ describe('PublicMemberView', () => {
       active: true,
       renew: true
     };
-    memberProfileServiceMock.update.and.returnValue(response);
+    memberProfileServiceMock.update.mockReturnValue(response);
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onShowMemberEdit();
-    memberServiceMock.getAll.calls.reset();
+    memberServiceMock.getAll.mockClear();
 
     component.onUpdateMember(data);
     component.onUpdateMember(data);
     component.onDrawerVisibleChange(false);
     response.next(new Member());
 
-    expect(memberProfileServiceMock.update).toHaveBeenCalledOnceWith(12, data);
-    expect(component.status.saving).toBeTrue();
+    expect(memberProfileServiceMock.update).toHaveBeenCalledTimes(1);
+
+    expect(memberProfileServiceMock.update).toHaveBeenCalledWith(12, data);
+    expect(component.status.saving).toBe(true);
     expect(component.dialog).toBe(Dialog.EDIT);
     expect(memberServiceMock.getAll).not.toHaveBeenCalled();
 
     response.complete();
 
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(component.dialog).toBe(Dialog.NONE);
     expect(memberServiceMock.getAll).toHaveBeenCalledTimes(1);
   });
 
   it('should preserve the key edit drawer on failure and use the shared failure handler', () => {
-    memberKeyServiceMock.update.and.returnValue(throwError(() => new Error('Failed')));
+    memberKeyServiceMock.update.mockReturnValue(throwError(() => new Error('Failed')));
     component.onShowKey({ number: 3, available: true, description: 'Main' });
     component.onShowKeyEdit();
-    memberKeyServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.mockClear();
 
     component.onUpdateKey({ number: 3, available: false, description: '' });
 
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(component.dialog).toBe(Dialog.KEY_EDIT);
     expect(component.error).toBe('No se pudo actualizar la llave.');
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
@@ -658,7 +674,7 @@ describe('PublicMemberView', () => {
 
   it('should keep server field failures available to the active form', () => {
     const failure = new FailureResponse({ description: [{ message: 'Too long' }] });
-    memberKeyServiceMock.update.and.returnValue(throwError(() => failure));
+    memberKeyServiceMock.update.mockReturnValue(throwError(() => failure));
     component.onShowKey({ number: 3, available: true, description: 'Main' });
     component.onShowKeyEdit();
 
@@ -667,16 +683,16 @@ describe('PublicMemberView', () => {
     expect(component.failures).toBe(failure.failures);
     expect(component.failures.getFailures('description')[0].message).toBe('Too long');
     expect(component.dialog).toBe(Dialog.KEY_EDIT);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should not run mutation success handling when the view is destroyed during saving', () => {
     const response = new Subject<Key>();
-    memberKeyServiceMock.create.and.returnValue(response);
+    memberKeyServiceMock.create.mockReturnValue(response);
     component.onTabChange('keys');
     component.onCreateKeyOpen();
     component.onCreateKey(new Key());
-    memberKeyServiceMock.getAll.calls.reset();
+    memberKeyServiceMock.getAll.mockClear();
 
     fixture.destroy();
     response.next(new Key());
@@ -687,7 +703,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should confirm member deletion using the standard footer action', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     component.onShowMember(Object.assign(new PublicMember(), { number: 12, memberNumber: 37 }));
     fixture.detectChanges();
     const action = fixture.nativeElement.querySelector('[data-action="delete"] button') as HTMLButtonElement;
@@ -697,34 +713,36 @@ describe('PublicMemberView', () => {
     action.click();
 
     expect(memberProfileServiceMock.delete).not.toHaveBeenCalled();
-    const confirmation = confirm.calls.mostRecent().args[0];
+    const confirmation = vi.mocked(confirm).mock.lastCall![0];
 
     expect(confirmation.target).toBe(action);
     expect(confirmation.rejectButtonProps?.label).toBe('Cancelar');
     expect(confirmation.acceptButtonProps?.label).toBe('Borrar');
 
-    memberServiceMock.getAll.calls.reset();
-    memberServiceMock.getSummary.calls.reset();
-    memberKeyServiceMock.getAll.calls.reset();
+    memberServiceMock.getAll.mockClear();
+    memberServiceMock.getSummary.mockClear();
+    memberKeyServiceMock.getAll.mockClear();
     confirmation.accept?.();
 
-    expect(memberProfileServiceMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledTimes(1);
+
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledWith(12);
     expect(component.dialog).toBe(Dialog.NONE);
     expect(memberServiceMock.getAll).toHaveBeenCalledTimes(1);
     expect(memberServiceMock.getSummary).toHaveBeenCalledTimes(1);
     expect(memberKeyServiceMock.getAll).toHaveBeenCalledTimes(1);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should hide member deletion and reject forced deletion without its permission', () => {
-    authServiceMock.hasPermission.and.callFake(
+    authServiceMock.hasPermission.mockImplementation(
       permission => permission !== UcroniaPermissions.directory.memberProfile.delete
     );
     fixture.destroy();
     fixture = TestBed.createComponent(PublicMemberView);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     fixture.detectChanges();
     component.onDeleteMember(new Event('click'));
@@ -735,7 +753,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should allow deletion without private profile read, edit or key read permission', () => {
-    authServiceMock.hasPermission.and.callFake(
+    authServiceMock.hasPermission.mockImplementation(
       permission =>
         permission === UcroniaPermissions.directory.member.read ||
         permission === UcroniaPermissions.directory.memberProfile.delete
@@ -744,37 +762,38 @@ describe('PublicMemberView', () => {
     fixture = TestBed.createComponent(PublicMemberView);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     component.onShowMember(Object.assign(new PublicMember(), { number: 12, memberNumber: 37 }));
     component.onDeleteMember(new Event('click'));
-    memberKeyServiceMock.getAll.calls.reset();
-    confirm.calls.mostRecent().args[0].accept?.();
+    memberKeyServiceMock.getAll.mockClear();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
 
     expect(memberProfileServiceMock.getOne).not.toHaveBeenCalled();
-    expect(memberProfileServiceMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledTimes(1);
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledWith(12);
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
     expect(component.dialog).toBe(Dialog.NONE);
   });
 
   it('should keep the member drawer open after deletion fails and allow retry', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
-    memberProfileServiceMock.delete.and.returnValue(throwError(() => new Error('Failed')));
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
+    memberProfileServiceMock.delete.mockReturnValue(throwError(() => new Error('Failed')));
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
-    memberServiceMock.getAll.calls.reset();
-    memberKeyServiceMock.getAll.calls.reset();
+    memberServiceMock.getAll.mockClear();
+    memberKeyServiceMock.getAll.mockClear();
     component.onDeleteMember(new Event('click'));
-    confirm.calls.mostRecent().args[0].accept?.();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
     fixture.detectChanges();
 
     expect(component.dialog).toBe(Dialog.INFO);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(fixture.nativeElement.textContent).toContain('No se pudo borrar el socio');
     expect(memberServiceMock.getAll).not.toHaveBeenCalled();
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
 
-    memberProfileServiceMock.delete.and.returnValue(of(new Member()));
+    memberProfileServiceMock.delete.mockReturnValue(of(new Member()));
     component.onDeleteMember(new Event('click'));
-    confirm.calls.mostRecent().args[0].accept?.();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
 
     expect(component.dialog).toBe(Dialog.NONE);
     expect(memberProfileServiceMock.delete).toHaveBeenCalledTimes(2);
@@ -782,33 +801,35 @@ describe('PublicMemberView', () => {
 
   it('should prevent duplicate member deletions and closing before completion', () => {
     const response = new Subject<Member>();
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
-    memberProfileServiceMock.delete.and.returnValue(response);
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
+    memberProfileServiceMock.delete.mockReturnValue(response);
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onDeleteMember(new Event('click'));
-    const confirmation = confirm.calls.mostRecent().args[0];
+    const confirmation = vi.mocked(confirm).mock.lastCall![0];
     confirmation.accept?.();
     confirmation.accept?.();
     component.onDeleteMember(new Event('click'));
     component.onDrawerVisibleChange(false);
 
-    expect(memberProfileServiceMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledTimes(1);
+
+    expect(memberProfileServiceMock.delete).toHaveBeenCalledWith(12);
     expect(confirm).toHaveBeenCalledTimes(1);
     expect(component.dialog).toBe(Dialog.INFO);
-    expect(component.status.saving).toBeTrue();
+    expect(component.status.saving).toBe(true);
 
     response.next(new Member());
     response.complete();
 
     expect(component.dialog).toBe(Dialog.NONE);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
   });
 
   it('should ignore a delete confirmation for a member that is no longer selected', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onDeleteMember(new Event('click'));
-    const confirmation = confirm.calls.mostRecent().args[0];
+    const confirmation = vi.mocked(confirm).mock.lastCall![0];
     component.onShowMember(Object.assign(new PublicMember(), { number: 20 }));
     confirmation.accept?.();
 
@@ -816,10 +837,10 @@ describe('PublicMemberView', () => {
   });
 
   it('should ignore a delete confirmation accepted after leaving the view', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
     component.onShowMember(Object.assign(new PublicMember(), { number: 12 }));
     component.onDeleteMember(new Event('click'));
-    const confirmation = confirm.calls.mostRecent().args[0];
+    const confirmation = vi.mocked(confirm).mock.lastCall![0];
     fixture.destroy();
     confirmation.accept?.();
 
@@ -827,7 +848,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should allow member editing without key permissions', () => {
-    authServiceMock.hasPermission.and.callFake(
+    authServiceMock.hasPermission.mockImplementation(
       permission => permission !== UcroniaPermissions.key.read && permission !== UcroniaPermissions.keyAssignment.read
     );
     const restrictedFixture = TestBed.createComponent(PublicMemberView);
@@ -838,7 +859,7 @@ describe('PublicMemberView', () => {
     restricted.onShowMemberEdit();
 
     expect(restricted.dialog).toBe(Dialog.EDIT);
-    expect(restricted.status.optionsReady).toBeTrue();
+    expect(restricted.status.optionsReady).toBe(true);
     expect(memberKeyServiceMock.getAll).not.toHaveBeenCalled();
 
     restrictedFixture.destroy();
@@ -849,7 +870,7 @@ describe('PublicMemberView', () => {
   });
 
   it('should load assignments with assignment read permission even without key read permission', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.key.read);
+    authServiceMock.hasPermission.mockImplementation(permission => permission !== UcroniaPermissions.key.read);
     const authorizedFixture = TestBed.createComponent(PublicMemberView);
 
     authorizedFixture.detectChanges();
@@ -864,16 +885,16 @@ describe('PublicMemberView', () => {
   it('should cancel member and summary loading when the view is destroyed', () => {
     const members = new Subject<Page<PublicMember>>();
     const summary = new Subject<MemberCount>();
-    memberServiceMock.getAll.and.returnValue(members);
-    memberServiceMock.getSummary.and.returnValue(summary);
+    memberServiceMock.getAll.mockReturnValue(members);
+    memberServiceMock.getSummary.mockReturnValue(summary);
     component.refresh();
 
     fixture.destroy();
 
-    expect(members.observed).toBeFalse();
-    expect(summary.observed).toBeFalse();
-    expect(component.status.loading).toBeFalse();
-    expect(component.status.loadingSummary).toBeFalse();
+    expect(members.observed).toBe(false);
+    expect(summary.observed).toBe(false);
+    expect(component.status.loading).toBe(false);
+    expect(component.status.loadingSummary).toBe(false);
   });
 
 });
@@ -882,30 +903,42 @@ describe('PublicMemberView - assign key', () => {
   let fixture: ComponentFixture<PublicMemberView>;
   let component: PublicMemberView;
 
-  const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
-  const memberServiceMock = jasmine.createSpyObj<PublicMemberService>('PublicMemberService', ['getAll', 'getSummary', 'searchMembers']);
-  const keyServiceMock = jasmine.createSpyObj<MemberKeyService>('MemberKeyService', ['getAll', 'assign', 'reassign']);
-  const profileServiceMock = jasmine.createSpyObj<MemberProfileService>('MemberProfileService', ['getOne']);
-  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>('FeeTypeService', ['getAllAvailable']);
-  const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>('ContactMethodService', ['getAllAvailable']);
+  const authServiceMock = {
+    hasPermission: vi.fn().mockName("AuthService.hasPermission")
+};
+  const memberServiceMock = {
+    getAll: vi.fn().mockName("PublicMemberService.getAll"), getSummary: vi.fn().mockName("PublicMemberService.getSummary"), searchMembers: vi.fn().mockName("PublicMemberService.searchMembers")
+};
+  const keyServiceMock = {
+    getAll: vi.fn().mockName("MemberKeyService.getAll"), assign: vi.fn().mockName("MemberKeyService.assign"), reassign: vi.fn().mockName("MemberKeyService.reassign")
+};
+  const profileServiceMock = {
+    getOne: vi.fn().mockName("MemberProfileService.getOne")
+};
+  const feeTypeServiceMock = {
+    getAllAvailable: vi.fn().mockName("FeeTypeService.getAllAvailable")
+};
+  const contactMethodServiceMock = {
+    getAllAvailable: vi.fn().mockName("ContactMethodService.getAllAvailable")
+};
   const member = Object.assign(new PublicMember(), { number: 12, memberNumber: 37, name: { fullName: 'Ana López' } });
   const other = Object.assign(new PublicMember(), { number: 15, memberNumber: 42, name: { fullName: 'Luis García' } });
   const key: KeyAssignment = { number: 7, available: true, description: 'Principal' };
   const assigned: KeyAssignment = { ...key, profile: { number: 12, name: 'Ana López' } };
 
   beforeEach(async () => {
-    authServiceMock.hasPermission.and.returnValue(true);
-    memberServiceMock.searchMembers.calls.reset();
-    memberServiceMock.searchMembers.and.returnValue(of([member]));
-    memberServiceMock.getAll.and.returnValue(of(new Page<PublicMember>()));
-    memberServiceMock.getSummary.and.returnValue(of(new MemberCount()));
-    keyServiceMock.getAll.calls.reset();
-    keyServiceMock.getAll.and.returnValue(of([assigned]));
-    keyServiceMock.assign.calls.reset();
-    keyServiceMock.reassign.calls.reset();
-    keyServiceMock.reassign.and.returnValue(of({ ...key, profile: { number: 15, name: 'Luis García' } }));
-    keyServiceMock.assign.and.returnValue(of(assigned));
-    profileServiceMock.getOne.calls.reset();
+    authServiceMock.hasPermission.mockReturnValue(true);
+    memberServiceMock.searchMembers.mockClear();
+    memberServiceMock.searchMembers.mockReturnValue(of([member]));
+    memberServiceMock.getAll.mockReturnValue(of(new Page<PublicMember>()));
+    memberServiceMock.getSummary.mockReturnValue(of(new MemberCount()));
+    keyServiceMock.getAll.mockClear();
+    keyServiceMock.getAll.mockReturnValue(of([assigned]));
+    keyServiceMock.assign.mockClear();
+    keyServiceMock.reassign.mockClear();
+    keyServiceMock.reassign.mockReturnValue(of({ ...key, profile: { number: 15, name: 'Luis García' } }));
+    keyServiceMock.assign.mockReturnValue(of(assigned));
+    profileServiceMock.getOne.mockClear();
 
     await TestBed.configureTestingModule({
       imports: [PublicMemberView],
@@ -933,7 +966,7 @@ describe('PublicMemberView - assign key', () => {
   it('opens the member selector from an unassigned key without loading private profiles', () => {
     const button = assignmentButton(fixture);
 
-    expect(button).withContext('the visible drawer must offer assignment for an unassigned key').toBeDefined();
+    expect(button,'the visible drawer must offer assignment for an unassigned key').toBeDefined();
     button?.click();
     fixture.detectChanges();
 
@@ -942,7 +975,8 @@ describe('PublicMemberView - assign key', () => {
     expect(memberServiceMock.searchMembers).not.toHaveBeenCalled();
     component.loadAssignmentMembers('Ana');
     expect(component.assignmentMembers).toEqual([member]);
-    expect(memberServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana');
+    expect(memberServiceMock.searchMembers).toHaveBeenCalledTimes(1);
+    expect(memberServiceMock.searchMembers).toHaveBeenCalledWith('Ana');
     expect(profileServiceMock.getOne).not.toHaveBeenCalled();
   });
 
@@ -957,9 +991,9 @@ describe('PublicMemberView - assign key', () => {
     const submit = footer?.querySelector<HTMLButtonElement>('button[data-action="submit"]');
     const form = component.fieldsKeyAssignmentForm();
 
-    expect(submit).withContext('the assignment drawer must render a submit action in its footer').toBeTruthy();
+    expect(submit,'the assignment drawer must render a submit action in its footer').toBeTruthy();
     expect(submit?.form?.id).toBe('public-member-view-assign-key');
-    expect(submit?.disabled).toBeTrue();
+    expect(submit?.disabled).toBe(true);
     expect(form).toBeDefined();
     if (!form || !submit) {
       return;
@@ -970,11 +1004,13 @@ describe('PublicMemberView - assign key', () => {
     await fixture.whenStable();
     fixture.detectChanges();
 
-    expect(submit.disabled).toBeFalse();
+    expect(submit.disabled).toBe(false);
     submit.click();
     fixture.detectChanges();
 
-    expect(keyServiceMock.assign).toHaveBeenCalledOnceWith(7, 12);
+    expect(keyServiceMock.assign).toHaveBeenCalledTimes(1);
+
+    expect(keyServiceMock.assign).toHaveBeenCalledWith(7, 12);
     expect(component.dialog).toBe(Dialog.NONE);
   });
 
@@ -988,7 +1024,7 @@ describe('PublicMemberView - assign key', () => {
     const footer = drawer.container?.querySelector('[data-pc-section="footer"]');
     const cancel = footer?.querySelector<HTMLButtonElement>('button[data-action="cancel"]');
 
-    expect(cancel).withContext('the assignment drawer must render a cancel action in its footer').toBeTruthy();
+    expect(cancel,'the assignment drawer must render a cancel action in its footer').toBeTruthy();
     cancel?.click();
     fixture.detectChanges();
 
@@ -1006,12 +1042,12 @@ describe('PublicMemberView - assign key', () => {
     const submit = footer?.querySelector<HTMLButtonElement>('button[data-action="submit"]');
 
     expect(submit?.form?.id).toBe('public-member-view-edit-key');
-    expect(submit?.disabled).toBeTrue();
+    expect(submit?.disabled).toBe(true);
     expect(component.fieldsKeyEditForm()).toBeDefined();
   });
 
   it('hides and rejects assignment without assignment creation permission', async () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.keyAssignment.create);
+    authServiceMock.hasPermission.mockImplementation(permission => permission !== UcroniaPermissions.keyAssignment.create);
     const restrictedFixture = TestBed.createComponent(PublicMemberView);
     const restricted = restrictedFixture.componentInstance;
     restricted.onShowKey(key);
@@ -1029,7 +1065,7 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('does not load member choices without public member read permission', () => {
-    authServiceMock.hasPermission.and.callFake(permission => permission !== UcroniaPermissions.directory.member.read);
+    authServiceMock.hasPermission.mockImplementation(permission => permission !== UcroniaPermissions.directory.member.read);
     const restrictedFixture = TestBed.createComponent(PublicMemberView);
     const restricted = restrictedFixture.componentInstance;
     restricted.onShowKey(key);
@@ -1043,7 +1079,7 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('reassigns an assigned key through the drawer footer and refreshes the list', async () => {
-    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.mockReturnValue(of([member, other]));
     component.selectedTab = 'keys';
     component.onShowKey(assigned);
     fixture.detectChanges();
@@ -1075,11 +1111,13 @@ describe('PublicMemberView - assign key', () => {
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
-    expect(submit.disabled).toBeFalse();
+    expect(submit.disabled).toBe(false);
     submit.click();
     fixture.detectChanges();
 
-    expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
+    expect(keyServiceMock.reassign).toHaveBeenCalledTimes(1);
+
+    expect(keyServiceMock.reassign).toHaveBeenCalledWith(7, 15);
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
     expect(keyServiceMock.getAll).toHaveBeenCalledTimes(1);
     expect(component.dialog).toBe(Dialog.NONE);
@@ -1088,14 +1126,16 @@ describe('PublicMemberView - assign key', () => {
 
   it('allows reassignment with update permission and without creation permission', () => {
     component.permissions.keyAssignmentsCreate = false;
-    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.mockReturnValue(of([member, other]));
     component.onShowKey(assigned);
 
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
     component.onAssignKey(15);
 
-    expect(keyServiceMock.reassign).toHaveBeenCalledOnceWith(7, 15);
+    expect(keyServiceMock.reassign).toHaveBeenCalledTimes(1);
+
+    expect(keyServiceMock.reassign).toHaveBeenCalledWith(7, 15);
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
   });
 
@@ -1120,7 +1160,7 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('rejects reassigning the key to its current profile', () => {
-    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
+    memberServiceMock.searchMembers.mockReturnValue(of([member, other]));
     component.onShowKey(assigned);
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
@@ -1132,8 +1172,8 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('preserves the drawer and choices when reassignment fails', () => {
-    memberServiceMock.searchMembers.and.returnValue(of([member, other]));
-    keyServiceMock.reassign.and.returnValue(throwError(() => new Error('Unavailable')));
+    memberServiceMock.searchMembers.mockReturnValue(of([member, other]));
+    keyServiceMock.reassign.mockReturnValue(throwError(() => new Error('Unavailable')));
     component.onShowKey(assigned);
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
@@ -1143,7 +1183,7 @@ describe('PublicMemberView - assign key', () => {
     expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
     expect(component.assignmentMembers).toEqual([member, other]);
     expect(component.selectedKey).toEqual(assigned);
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(component.error).not.toBe('');
     expect(keyServiceMock.getAll).not.toHaveBeenCalled();
   });
@@ -1157,7 +1197,9 @@ describe('PublicMemberView - assign key', () => {
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
     component.onAssignKey(12);
 
-    expect(keyServiceMock.assign).toHaveBeenCalledOnceWith(7, 12);
+    expect(keyServiceMock.assign).toHaveBeenCalledTimes(1);
+
+    expect(keyServiceMock.assign).toHaveBeenCalledWith(7, 12);
     expect(keyServiceMock.getAll).toHaveBeenCalledTimes(1);
     expect(component.keyAssignments).toEqual([assigned]);
     expect(component.dialog).toBe(Dialog.NONE);
@@ -1165,7 +1207,7 @@ describe('PublicMemberView - assign key', () => {
   });
 
   it('retains the form and member choices when assignment fails', () => {
-    keyServiceMock.assign.and.returnValue(throwError(() => new Error('Conflict')));
+    keyServiceMock.assign.mockReturnValue(throwError(() => new Error('Conflict')));
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
 
@@ -1174,13 +1216,13 @@ describe('PublicMemberView - assign key', () => {
     expect(component.dialog).toBe(Dialog.KEY_ASSIGN);
     expect(component.assignmentMembers).toEqual([member]);
     expect(component.error).not.toBe('');
-    expect(component.status.saving).toBeFalse();
+    expect(component.status.saving).toBe(false);
     expect(keyServiceMock.getAll).not.toHaveBeenCalled();
   });
 
   it('cancels member loading and ignores late responses when returning to key details', () => {
     const pending = new Subject<PublicMember[]>();
-    memberServiceMock.searchMembers.and.returnValue(pending);
+    memberServiceMock.searchMembers.mockReturnValue(pending);
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
     component.onAssignKey(12);
@@ -1191,37 +1233,37 @@ describe('PublicMemberView - assign key', () => {
 
     expect(component.dialog).toBe(Dialog.KEY_INFO);
     expect(component.assignmentMembers).toEqual([]);
-    expect(component.status.loadingAssignmentMembers).toBeFalse();
-    expect(pending.observed).toBeFalse();
+    expect(component.status.loadingAssignmentMembers).toBe(false);
+    expect(pending.observed).toBe(false);
   });
 
   it('allows retrying failed member loading before assigning', () => {
-    memberServiceMock.searchMembers.and.returnValue(throwError(() => new Error('Unavailable')));
+    memberServiceMock.searchMembers.mockReturnValue(throwError(() => new Error('Unavailable')));
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
     component.onAssignKey(12);
 
-    expect(component.status.assignmentMembersError).toBeTrue();
+    expect(component.status.assignmentMembersError).toBe(true);
     expect(keyServiceMock.assign).not.toHaveBeenCalled();
 
-    memberServiceMock.searchMembers.and.returnValue(of([member]));
+    memberServiceMock.searchMembers.mockReturnValue(of([member]));
     component.loadAssignmentMembers();
 
-    expect(component.status.assignmentMembersError).toBeFalse();
+    expect(component.status.assignmentMembersError).toBe(false);
     expect(component.assignmentMembers).toEqual([member]);
   });
 
   it('cancels an older search and ignores its late results', () => {
     const pending = new Subject<PublicMember[]>();
-    memberServiceMock.searchMembers.and.returnValue(pending);
+    memberServiceMock.searchMembers.mockReturnValue(pending);
     component.onShowKeyAssignment();
     component.loadAssignmentMembers('Ana');
-    memberServiceMock.searchMembers.and.returnValue(of([other]));
+    memberServiceMock.searchMembers.mockReturnValue(of([other]));
 
     component.loadAssignmentMembers('Luis');
     pending.next([member]);
 
-    expect(pending.observed).toBeFalse();
+    expect(pending.observed).toBe(false);
     expect(component.assignmentMembers).toEqual([other]);
     expect(memberServiceMock.searchMembers).toHaveBeenCalledWith('Luis');
   });

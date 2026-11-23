@@ -32,9 +32,9 @@ describe('AssociationLayout', () => {
 
   it('should open and close the menu', () => {
     component.onToggleMenu(true);
-    expect(component.menuActive).toBeTrue();
+    expect(component.menuActive).toBe(true);
 
     component.closeMenu();
-    expect(component.menuActive).toBeFalse();
+    expect(component.menuActive).toBe(false);
   });
 });

@@ -9,17 +9,17 @@ describe('AccountService', () => {
 
   const securityClientMock = {
     account: {
-      get: jasmine.createSpy().and.returnValue(of({}))
+      get: vi.fn().mockReturnValue(of({}))
     },
     password: {
-      change: jasmine.createSpy().and.returnValue(of({}))
+      change: vi.fn().mockReturnValue(of({}))
     }
   };
 
   const ucroniaClientMock = {
     account: {
       profile: {
-        get: jasmine.createSpy().and.returnValue(of({}))
+        get: vi.fn().mockReturnValue(of({}))
       },
     }
   };

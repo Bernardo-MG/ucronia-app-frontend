@@ -27,10 +27,11 @@ describe('LibraryBookInfo', () => {
     fixture.componentRef.setInput('book', book);
     fixture.componentRef.setInput('borrowerNames', { 7: 'Ana Martín' });
     fixture.detectChanges();
-    const show = jasmine.createSpy('showLending');
+    const show = vi.fn().mockName('showLending');
     component.showLending.subscribe(show);
     fixture.nativeElement.querySelector('button[aria-label="Ver préstamo de Ana Martín"]').click();
-    expect(show).toHaveBeenCalledOnceWith(lending);
+    expect(show).toHaveBeenCalledTimes(1);
+    expect(show).toHaveBeenCalledWith(lending);
   });
 
   it('should create', () => {

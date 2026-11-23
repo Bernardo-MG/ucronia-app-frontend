@@ -32,7 +32,7 @@ describe('LoginForm', () => {
   describe('form valid status', () => {
 
     it('should have an invalid form by default', () => {
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have a valid form when the username and password are not empty', () => {
@@ -42,7 +42,7 @@ describe('LoginForm', () => {
       component.form.markAsDirty();
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeTrue();
+      expect(component.form.valid).toBe(true);
     });
 
   });
@@ -50,14 +50,14 @@ describe('LoginForm', () => {
   describe('form enabled status', () => {
 
     it('should have an enabled form by default', () => {
-      expect(component.form.enabled).toBeTrue();
+      expect(component.form.enabled).toBe(true);
     });
 
     it('should have a not enabled form when waiting', () => {
       component.loading = true;
       fixture.detectChanges();
 
-      expect(component.form.enabled).toBeFalse();
+      expect(component.form.enabled).toBe(false);
     });
 
   });
@@ -66,7 +66,7 @@ describe('LoginForm', () => {
 
     it('should disable the login button by default', () => {
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
     it('should enable the login button when both username and password are set', () => {
@@ -77,7 +77,7 @@ describe('LoginForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
-      expect(button.hasAttribute('disabled')).toBeFalse();
+      expect(button.hasAttribute('disabled')).toBe(false);
     });
 
     it('should disable the login button when missing the username', () => {
@@ -86,7 +86,7 @@ describe('LoginForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
     it('should disable the login button when missing the password', () => {
@@ -95,7 +95,7 @@ describe('LoginForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
   });
@@ -111,7 +111,7 @@ describe('LoginForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
     it('should disable the login button when the form is waiting', () => {
@@ -119,7 +119,7 @@ describe('LoginForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('#login button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
   });
@@ -169,7 +169,7 @@ describe('LoginForm', () => {
   describe('output', () => {
 
     it('should emit login when submitting a valid form', () => {
-      spyOn(component.login, 'emit');
+      vi.spyOn(component.login, 'emit').mockReturnValue(undefined);
 
       component.form.get('username')?.setValue('username');
       component.form.markAsDirty();
@@ -184,7 +184,7 @@ describe('LoginForm', () => {
     });
 
     it('should not emit login when submitting an invalid form', () => {
-      spyOn(component.login, 'emit');
+      vi.spyOn(component.login, 'emit').mockReturnValue(undefined);
 
       component.form.get('username')?.setValue('');
       component.form.markAsDirty();
@@ -199,7 +199,7 @@ describe('LoginForm', () => {
     });
 
     it('should emit login when clicking the login button', () => {
-      spyOn(component.login, 'emit');
+      vi.spyOn(component.login, 'emit').mockReturnValue(undefined);
 
       component.form.get('username')?.setValue('username');
       component.form.markAsDirty();
@@ -214,7 +214,7 @@ describe('LoginForm', () => {
     });
 
     it('should not emit login when clicking the login button and the form is invalid', () => {
-      spyOn(component.login, 'emit');
+      vi.spyOn(component.login, 'emit').mockReturnValue(undefined);
 
       component.form.get('username')?.setValue('');
       component.form.markAsDirty();
@@ -229,7 +229,7 @@ describe('LoginForm', () => {
     });
 
     it('should emit lost password when clicking the lost password button', () => {
-      spyOn(component.lostPassword, 'emit');
+      vi.spyOn(component.lostPassword, 'emit').mockReturnValue(undefined);
 
       component.form.get('username')?.setValue('username');
       component.form.markAsDirty();
@@ -244,7 +244,7 @@ describe('LoginForm', () => {
     });
 
     it('should not emit lost password when clicking the lost password button and it is disabled', () => {
-      spyOn(component.lostPassword, 'emit');
+      vi.spyOn(component.lostPassword, 'emit').mockReturnValue(undefined);
 
       component.loading = true;
       fixture.detectChanges();
@@ -256,7 +256,7 @@ describe('LoginForm', () => {
     });
 
     it('should emit remember me when changing the remember me checkbox', () => {
-      spyOn(component.rememberMe, 'emit');
+      vi.spyOn(component.rememberMe, 'emit').mockReturnValue(undefined);
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
       checkbox.click();
@@ -265,7 +265,7 @@ describe('LoginForm', () => {
     });
 
     it('should emit remember me with active flag when changing the remember me checkbox', () => {
-      spyOn(component.rememberMe, 'emit');
+      vi.spyOn(component.rememberMe, 'emit').mockReturnValue(undefined);
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
       checkbox.click();
@@ -274,7 +274,7 @@ describe('LoginForm', () => {
     });
 
     it('should emit remember me when changing back the remember me checkbox', () => {
-      spyOn(component.rememberMe, 'emit');
+      vi.spyOn(component.rememberMe, 'emit').mockReturnValue(undefined);
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
       checkbox.click();
@@ -284,7 +284,7 @@ describe('LoginForm', () => {
     });
 
     it('should emit remember me with inactive flag when changing back the remember me checkbox', () => {
-      spyOn(component.rememberMe, 'emit');
+      vi.spyOn(component.rememberMe, 'emit').mockReturnValue(undefined);
 
       const checkbox = fixture.debugElement.nativeElement.querySelector('#rememberMe');
       checkbox.click();
@@ -295,7 +295,7 @@ describe('LoginForm', () => {
     });
 
     it('should not emit remember me when when changing the remember me checkbox and it is disabled', () => {
-      spyOn(component.rememberMe, 'emit');
+      vi.spyOn(component.rememberMe, 'emit').mockReturnValue(undefined);
 
       component.loading = true;
       fixture.detectChanges();
@@ -340,11 +340,11 @@ describe('LoginForm', () => {
   it('does not emit another login while waiting', () => {
     component.form.setValue({ username: 'username', password: 'password' });
     component.form.markAsDirty();
-    const emitted = spyOn(component.login, 'emit');
+    const emitted = vi.spyOn(component.login, 'emit').mockReturnValue(undefined);
     component.loading = true;
     component.onLogin();
     expect(emitted).not.toHaveBeenCalled();
-    expect(component.loginEnabled).toBeFalse();
+    expect(component.loginEnabled).toBe(false);
     component.loading = false;
     component.onLogin();
     expect(emitted).toHaveBeenCalledTimes(1);
@@ -352,9 +352,9 @@ describe('LoginForm', () => {
 
   it('does not submit a valid pristine form', () => {
     component.form.setValue({ username: 'username', password: 'password' });
-    const emitted = spyOn(component.login, 'emit');
-    expect(component.form.pristine).toBeTrue();
-    expect(component.loginEnabled).toBeFalse();
+    const emitted = vi.spyOn(component.login, 'emit').mockReturnValue(undefined);
+    expect(component.form.pristine).toBe(true);
+    expect(component.loginEnabled).toBe(false);
     component.onLogin();
     expect(emitted).not.toHaveBeenCalled();
   });

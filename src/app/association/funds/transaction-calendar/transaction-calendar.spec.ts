@@ -1,3 +1,5 @@
+import { registerLocaleData } from '@angular/common';
+import localeEs from '@angular/common/locales/es';
 import { LOCALE_ID } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionCalendar } from './transaction-calendar';
@@ -5,6 +7,8 @@ import { TransactionCalendar } from './transaction-calendar';
 describe('TransactionCalendar', () => {
   let component: TransactionCalendar;
   let fixture: ComponentFixture<TransactionCalendar>;
+
+  beforeAll(() => registerLocaleData(localeEs));
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -81,13 +85,14 @@ describe('TransactionCalendar', () => {
   });
 
   it('emits the transaction ID when an event is picked', () => {
-    spyOn(component.pickDate, 'emit');
+    vi.spyOn(component.pickDate, 'emit').mockReturnValue(undefined);
     component.onPickDate({ start: new Date(), title: 'Fee', meta: { transactionId: 42 } });
-    expect(component.pickDate.emit).toHaveBeenCalledOnceWith(42);
+    expect(component.pickDate.emit).toHaveBeenCalledTimes(1);
+    expect(component.pickDate.emit).toHaveBeenCalledWith(42);
   });
 
   it('does not emit an ID when an event has no metadata', () => {
-    spyOn(component.pickDate, 'emit');
+    vi.spyOn(component.pickDate, 'emit').mockReturnValue(undefined);
     component.onPickDate({ start: new Date(), title: 'Fee' });
     expect(component.pickDate.emit).not.toHaveBeenCalled();
   });

@@ -17,48 +17,56 @@ describe('DirectoryView', () => {
   let component: DirectoryView;
   let fixture: ComponentFixture<DirectoryView>;
 
-  const directoryServiceMock = jasmine.createSpyObj<DirectoryService>(
-    'DirectoryService',
-    ['getOne', 'getAll', 'create', 'update', 'delete']
-  );
+  const directoryServiceMock = {
+    getOne: vi.fn(
+    ).mockName("DirectoryService.getOne"),
+    getAll: vi.fn().mockName("DirectoryService.getAll"), create: vi.fn().mockName("DirectoryService.create"), update: vi.fn().mockName("DirectoryService.update"), delete: vi.fn(
+  ).mockName("DirectoryService.delete")
+};
 
-  const directorySummaryServiceMock = jasmine.createSpyObj<DirectorySummaryService>(
-    'DirectorySummaryService',
-    ['getSummary']
-  );
+  const directorySummaryServiceMock = {
+    getSummary: vi.fn(
 
-  const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>(
-    'ContactMethodService',
-    ['getAll', 'getAllAvailable']
-  );
+  ).mockName("DirectorySummaryService.getSummary")
+};
 
-  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>(
-    'FeeTypeService',
-    ['getAll', 'getAllAvailable']
-  );
+  const contactMethodServiceMock = {
+    getAll: vi.fn(
+    ).mockName("ContactMethodService.getAll"),
+    getAllAvailable: vi.fn(
+  ).mockName("ContactMethodService.getAllAvailable")
+};
 
-  const membershipEvolutionServiceMock = jasmine.createSpyObj<MembershipEvolutionService>(
-    'MembershipEvolutionService',
-    ['monthly']
-  );
+  const feeTypeServiceMock = {
+    getAll: vi.fn(
+    ).mockName("FeeTypeService.getAll"),
+    getAllAvailable: vi.fn(
+  ).mockName("FeeTypeService.getAllAvailable")
+};
+
+  const membershipEvolutionServiceMock = {
+    monthly: vi.fn(
+
+  ).mockName("MembershipEvolutionService.monthly")
+};
 
   beforeEach(async () => {
-    directoryServiceMock.getAll.and.returnValue(
+    directoryServiceMock.getAll.mockReturnValue(
       of(new Page<FullProfile>())
     );
-    directorySummaryServiceMock.getSummary.and.returnValue(
+    directorySummaryServiceMock.getSummary.mockReturnValue(
       of(new DirectorySummary())
     );
-    contactMethodServiceMock.getAll.and.returnValue(
+    contactMethodServiceMock.getAll.mockReturnValue(
       of(new Page<ContactMethod>())
     );
-    feeTypeServiceMock.getAll.and.returnValue(
+    feeTypeServiceMock.getAll.mockReturnValue(
       of(new Page<FeeType>())
     );
-    contactMethodServiceMock.getAll.and.returnValue(
+    contactMethodServiceMock.getAll.mockReturnValue(
       of(new Page<ContactMethod>())
     );
-    membershipEvolutionServiceMock.monthly.and.returnValue(
+    membershipEvolutionServiceMock.monthly.mockReturnValue(
       of([])
     );
 
@@ -86,9 +94,9 @@ describe('DirectoryView', () => {
 
   it('should load profile editing options without key assignment controls', () => {
     const profile = new FullProfile();
-    directoryServiceMock.getOne.and.returnValue(of(profile));
-    contactMethodServiceMock.getAllAvailable.and.returnValue(of([]));
-    feeTypeServiceMock.getAllAvailable.and.returnValue(of([]));
+    directoryServiceMock.getOne.mockReturnValue(of(profile));
+    contactMethodServiceMock.getAllAvailable.mockReturnValue(of([]));
+    feeTypeServiceMock.getAllAvailable.mockReturnValue(of([]));
 
     component.onShowEdit();
 

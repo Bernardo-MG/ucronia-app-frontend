@@ -65,7 +65,7 @@ describe('LoggedOutGuard', () => {
       LoggedOutGuard(route, state)
     );
 
-    expect(result instanceof UrlTree).toBeTrue();
+    expect(result instanceof UrlTree).toBe(true);
     expect(router.serializeUrl(result as UrlTree)).toBe('/');
   });
 

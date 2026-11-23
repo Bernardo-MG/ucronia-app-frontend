@@ -11,14 +11,16 @@ describe('LibraryBookTypeListView', () => {
   let component: LibraryBookTypeListView;
   let fixture: ComponentFixture<LibraryBookTypeListView>;
 
-  const bookTypeCrudServiceMock = jasmine.createSpyObj<BookTypeService>(
-    'BookTypeCrudService',
-    ['getAll', 'create', 'update', 'delete']
-  );
+  const bookTypeCrudServiceMock = {
+    getAll: vi.fn(
+    ).mockName("BookTypeCrudService.getAll"),
+    create: vi.fn().mockName("BookTypeCrudService.create"), update: vi.fn().mockName("BookTypeCrudService.update"), delete: vi.fn(
+  ).mockName("BookTypeCrudService.delete")
+};
 
   beforeEach(async () => {
 
-    bookTypeCrudServiceMock.getAll.and.returnValue(
+    bookTypeCrudServiceMock.getAll.mockReturnValue(
       of(new Page<BookType>())
     );
 

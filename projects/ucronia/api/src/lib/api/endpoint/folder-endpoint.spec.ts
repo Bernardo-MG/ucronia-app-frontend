@@ -45,7 +45,7 @@ describe('FolderEndpoint', () => {
     endpoint.page(3, 'IMAGE').subscribe(page => {
       names = page.content.map(asset => asset.name);
       expect(page.content.map(asset => asset.type)).toEqual(['FILE', 'IMAGE']);
-      expect(page.content[1].publicAccess).toBeTrue();
+      expect(page.content[1].publicAccess).toBe(true);
     });
 
     const request = http.expectOne('http://localhost/api/assets/folders/3/assets');

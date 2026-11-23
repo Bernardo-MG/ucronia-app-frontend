@@ -20,10 +20,12 @@ describe('FeeCalendar', () => {
     fixture.componentRef.setInput('period', { start: currentMonth, end: currentMonth });
     fixture.detectChanges();
 
-    const changed = spyOn(fixture.componentInstance.periodChange, 'emit');
+    const changed = vi.spyOn(fixture.componentInstance.periodChange, 'emit').mockReturnValue(undefined);
     fixture.nativeElement.querySelector('p-button button').click();
 
-    expect(changed).toHaveBeenCalledOnceWith({ start: subMonths(currentMonth, 5), end: currentMonth });
+    expect(changed).toHaveBeenCalledTimes(1);
+
+    expect(changed).toHaveBeenCalledWith({ start: subMonths(currentMonth, 5), end: currentMonth });
   });
 
   it('renders full names and keeps the original fee date when selecting a month across years', () => {
@@ -34,13 +36,14 @@ describe('FeeCalendar', () => {
     row.fees = [{ month: date, paid: true }];
     fixture.componentRef.setInput('period', { start: new Date(2024, 11, 1), end: new Date(2025, 0, 1) });
     fixture.componentRef.setInput('feeCalendar', [row]);
-    const selected = spyOn(fixture.componentInstance.selectFee, 'emit');
+    const selected = vi.spyOn(fixture.componentInstance.selectFee, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
 
     const cells = fixture.nativeElement.querySelectorAll('tbody td');
     expect(cells[0].textContent).toContain('Alejandro Pérez de la Fuente');
     expect(cells[1].querySelector('button')).toBeNull();
     cells[2].querySelector('button').click();
-    expect(selected).toHaveBeenCalledOnceWith({ member: 123, date });
+    expect(selected).toHaveBeenCalledTimes(1);
+    expect(selected).toHaveBeenCalledWith({ member: 123, date });
   });
 });

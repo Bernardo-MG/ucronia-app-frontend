@@ -1,16 +1,17 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TransactionTypeForm } from './transaction-type-form';
 
 describe('TransactionTypeForm', () => {
   let fixture: ComponentFixture<TransactionTypeForm>;
   let component: TransactionTypeForm;
-  let save: jasmine.Spy;
+  let save: Mock;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [TransactionTypeForm] });
     fixture = TestBed.createComponent(TransactionTypeForm);
     component = fixture.componentInstance;
-    save = spyOn(component.save, 'emit');
+    save = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
   });
 
   for (const [label, description, color] of [
@@ -24,7 +25,7 @@ describe('TransactionTypeForm', () => {
       component.form.markAsDirty();
       component.onSave();
 
-      expect(component.form.invalid).toBeTrue();
+      expect(component.form.invalid).toBe(true);
       expect(save).not.toHaveBeenCalled();
     });
   }
@@ -38,7 +39,9 @@ describe('TransactionTypeForm', () => {
     component.form.markAsDirty();
     component.onSave();
 
-    expect(save).toHaveBeenCalledOnceWith({ description: 'Cuota', color: '#123456' });
+    expect(save).toHaveBeenCalledTimes(1);
+
+    expect(save).toHaveBeenCalledWith({ description: 'Cuota', color: '#123456' });
   });
 
   it('blocks submission while loading', () => {

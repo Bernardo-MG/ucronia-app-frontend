@@ -47,6 +47,6 @@ describe('RoleInfo permission options', () => {
     tick();
     fixture.detectChanges();
     expect(fixture.componentInstance.permissionGroups.flatMap(group => group.permissions)).toEqual(permissions);
-    expect(fixture.nativeElement.querySelector('input[type="search"]').disabled).toBeTrue();
+    expect(fixture.nativeElement.querySelector('input[type="search"]').disabled).toBe(true);
   }));
 });

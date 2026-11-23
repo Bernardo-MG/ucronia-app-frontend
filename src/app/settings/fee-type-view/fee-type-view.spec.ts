@@ -11,13 +11,15 @@ describe('FeeTypeView', () => {
   let component: FeeTypeView;
   let fixture: ComponentFixture<FeeTypeView>;
 
-  const feeTypeServiceMock = jasmine.createSpyObj<FeeTypeService>(
-    'FeeTypeService',
-    ['getAll', 'create', 'update', 'delete']
-  );
+  const feeTypeServiceMock = {
+    getAll: vi.fn(
+    ).mockName("FeeTypeService.getAll"),
+    create: vi.fn().mockName("FeeTypeService.create"), update: vi.fn().mockName("FeeTypeService.update"), delete: vi.fn(
+  ).mockName("FeeTypeService.delete")
+};
 
   beforeEach(async () => {
-    feeTypeServiceMock.getAll.and.returnValue(
+    feeTypeServiceMock.getAll.mockReturnValue(
       of(new Page<FeeType>())
     );
 

@@ -13,21 +13,21 @@ describe('ImageService', () => {
   const client = {
     asset: {
       image: {
-      page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 })),
-      get: jasmine.createSpy().and.returnValue(of(image)),
-      content: jasmine.createSpy().and.returnValue(of(new Blob(['data'], { type: 'image/png' }))),
-      contentUrl: jasmine.createSpy().and.returnValue('/assets/1/content'),
-      create: jasmine.createSpy().and.returnValue(of(image)),
-      update: jasmine.createSpy().and.returnValue(of(image)),
-      patch: jasmine.createSpy().and.returnValue(of(image)),
-      delete: jasmine.createSpy().and.returnValue(of(image))
+      page: vi.fn().mockReturnValue(of({ content: [], last: true, page: 1 })),
+      get: vi.fn().mockReturnValue(of(image)),
+      content: vi.fn().mockReturnValue(of(new Blob(['data'], { type: 'image/png' }))),
+      contentUrl: vi.fn().mockReturnValue('/assets/1/content'),
+      create: vi.fn().mockReturnValue(of(image)),
+      update: vi.fn().mockReturnValue(of(image)),
+      patch: vi.fn().mockReturnValue(of(image)),
+      delete: vi.fn().mockReturnValue(of(image))
       },
       folder: {}
     }
   };
 
   beforeEach(() => {
-    for (const spy of Object.values(client.asset.image)) spy.calls.reset();
+    for (const spy of Object.values(client.asset.image)) spy.mockClear();
     TestBed.configureTestingModule({ providers: [MessageService, { provide: UcroniaClient, useValue: client }] });
     service = TestBed.inject(ImageService);
   });
@@ -43,7 +43,7 @@ describe('ImageService', () => {
   it('should load all images ordered by name for selectors', () => {
     service.getAllForSelection().subscribe();
 
-    expect(client.asset.image.page).toHaveBeenCalledWith(undefined, 100, jasmine.anything());
+    expect(client.asset.image.page).toHaveBeenCalledWith(undefined, 100, expect.anything());
   });
 
   it('should load image content through the API client', () => {

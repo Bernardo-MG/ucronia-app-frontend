@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { provideZonelessChangeDetection, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -57,7 +58,7 @@ for (const formType of forms) {
   describe(`${formType.name} submission safeguards`, () => {
     let fixture: ComponentFixture<DrawerForm>;
     let component: DrawerForm;
-    let emitted: jasmine.Spy;
+    let emitted: Mock;
 
     function submit(): void {
       fixture.nativeElement.querySelector('form')
@@ -78,7 +79,7 @@ for (const formType of forms) {
       });
       fixture = TestBed.createComponent(formType as Type<DrawerForm>);
       component = fixture.componentInstance;
-      emitted = spyOn(component.save, 'emit');
+      emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
       fill(component.form);
       if (component instanceof FileForm || component instanceof ImageForm) {
         component.file = new File(['content'], 'example.txt');
@@ -88,19 +89,19 @@ for (const formType of forms) {
     });
 
     it('blocks native submission while loading and restores eligibility afterwards', () => {
-      expect(component.saveEnabled).toBeTrue();
+      expect(component.saveEnabled).toBe(true);
       fixture.componentRef.setInput('loading', true);
       submit();
       expect(emitted).not.toHaveBeenCalled();
-      expect(component.form.disabled).toBeTrue();
+      expect(component.form.disabled).toBe(true);
       fixture.componentRef.setInput('loading', false);
-      expect(component.saveEnabled).toBeTrue();
+      expect(component.saveEnabled).toBe(true);
     });
 
     it('marks an invalid submission touched without emitting', () => {
       component.form.setErrors({ invalid: true });
       submit();
-      expect(component.form.touched).toBeTrue();
+      expect(component.form.touched).toBe(true);
       expect(emitted).not.toHaveBeenCalled();
     });
   });

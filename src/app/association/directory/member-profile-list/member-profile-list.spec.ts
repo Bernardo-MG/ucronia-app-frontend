@@ -35,7 +35,7 @@ describe('MemberProfileList', () => {
 
     const cells = fixture.nativeElement.querySelectorAll('tbody td');
     expect(cells[0].textContent.trim()).toBe('#37');
-    const show = spyOn(component.show, 'emit');
+    const show = vi.spyOn(component.show, 'emit').mockReturnValue(undefined);
     fixture.nativeElement.querySelector('tbody button').click();
     expect(show).toHaveBeenCalledWith(profile);
   });

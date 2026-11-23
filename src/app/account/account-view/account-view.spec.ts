@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AccountService } from '@app/account/account-service';
 import { Account } from '@bernardo-mg/security';
@@ -9,7 +10,7 @@ import { AccountSection, AccountView } from './account-view';
 describe('AccountView', () => {
   let component: AccountView;
   let fixture: ComponentFixture<AccountView>;
-  let accountServiceMock: jasmine.SpyObj<AccountService>;
+  let accountServiceMock: MockedObject<Pick<AccountService, 'getAccount' | 'getProfile' | 'changePassword'>>;
 
   beforeEach(async () => {
     const account = Object.assign(new Account(), {
@@ -20,18 +21,17 @@ describe('AccountView', () => {
 
     const profile = new Profile();
 
-    accountServiceMock = jasmine.createSpyObj<AccountService>(
-      'AccountService',
-      [
-        'getAccount',
-        'getProfile',
-        'changePassword'
-      ]
-    );
+    accountServiceMock = {
+      getAccount: vi.fn(
+      ).mockName("AccountService.getAccount"),
+      getProfile: vi.fn().mockName("AccountService.getProfile"),
+        changePassword: vi.fn(
+    ).mockName("AccountService.changePassword")
+  };
 
-    accountServiceMock.getAccount.and.returnValue(of(account));
-    accountServiceMock.getProfile.and.returnValue(of(profile));
-    accountServiceMock.changePassword.and.returnValue(of(undefined));
+    accountServiceMock.getAccount.mockReturnValue(of(account));
+    accountServiceMock.getProfile.mockReturnValue(of(profile));
+    accountServiceMock.changePassword.mockReturnValue(of(undefined));
 
     await TestBed.configureTestingModule({
       imports: [AccountView],
@@ -86,7 +86,7 @@ describe('AccountView', () => {
   });
 
   it('should change the active section when the target is not found', () => {
-    spyOn(document, 'getElementById').and.returnValue(null);
+    vi.spyOn(document, 'getElementById').mockReturnValue(null);
 
     component.scrollTo(AccountSection.Member);
     fixture.detectChanges();
@@ -95,8 +95,8 @@ describe('AccountView', () => {
   });
 
   it('should not scroll when the target is not found', () => {
-    spyOn(document, 'getElementById').and.returnValue(null);
-    const scrollSpy = spyOn(window, 'scrollTo');
+    vi.spyOn(document, 'getElementById').mockReturnValue(null);
+    const scrollSpy = vi.spyOn(window, 'scrollTo').mockReturnValue(undefined);
 
     component.scrollTo(AccountSection.Member);
 
@@ -111,14 +111,14 @@ describe('AccountView', () => {
     const expectedTop =
       window.scrollY + target.getBoundingClientRect().top - 96;
 
-    const scrollSpy = spyOn(window, 'scrollTo');
+    const scrollSpy = vi.spyOn(window, 'scrollTo').mockReturnValue(undefined);
 
     component.scrollTo(AccountSection.Password);
 
     expect(component.activeSection).toBe(AccountSection.Password);
     expect(scrollSpy).toHaveBeenCalledTimes(1);
 
-    const [options] = scrollSpy.calls.mostRecent().args as unknown as [
+    const [options] = vi.mocked(scrollSpy).mock.lastCall as unknown as [
       ScrollToOptions
     ];
 

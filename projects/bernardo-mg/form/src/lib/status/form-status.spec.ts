@@ -17,18 +17,18 @@ describe('FormStatus', () => {
   describe('loading flag', () => {
 
     it('should default to not loading', () => {
-      expect(status.loading).toBeFalse();
+      expect(status.loading).toBe(false);
     });
 
     it('should disable form when loading is true', () => {
       status.loading = true;
-      expect(form.disabled).toBeTrue();
+      expect(form.disabled).toBe(true);
     });
 
     it('should enable form when loading is set back to false', () => {
       status.loading = true;
       status.loading = false;
-      expect(form.enabled).toBeTrue();
+      expect(form.enabled).toBe(true);
     });
 
   });
@@ -39,14 +39,14 @@ describe('FormStatus', () => {
       form.controls['name'].setValue('');
       form.markAsDirty();
 
-      expect(status.saveEnabled).toBeFalse();
+      expect(status.saveEnabled).toBe(false);
     });
 
     it('should be false when form is pristine', () => {
       form.controls['name'].setValue('John');
       form.markAsPristine();
 
-      expect(status.saveEnabled).toBeFalse();
+      expect(status.saveEnabled).toBe(false);
     });
 
     it('should be false when loading', () => {
@@ -54,14 +54,14 @@ describe('FormStatus', () => {
       form.markAsDirty();
       status.loading = true;
 
-      expect(status.saveEnabled).toBeFalse();
+      expect(status.saveEnabled).toBe(false);
     });
 
     it('should be true when form is valid, dirty and not loading', () => {
       form.controls['name'].setValue('John');
       form.markAsDirty();
 
-      expect(status.saveEnabled).toBeTrue();
+      expect(status.saveEnabled).toBe(true);
     });
 
   });
@@ -70,12 +70,12 @@ describe('FormStatus', () => {
 
     it('should be true when not loading', () => {
       status.loading = false;
-      expect(status.cancelEnabled).toBeTrue();
+      expect(status.cancelEnabled).toBe(true);
     });
 
     it('should be false when loading', () => {
       status.loading = true;
-      expect(status.cancelEnabled).toBeFalse();
+      expect(status.cancelEnabled).toBe(false);
     });
 
   });
@@ -83,12 +83,12 @@ describe('FormStatus', () => {
   describe('form enabled', () => {
 
     it('should return true when form is enabled', () => {
-      expect(status.formEnabled).toBeTrue();
+      expect(status.formEnabled).toBe(true);
     });
 
     it('should return false when form is disabled', () => {
       form.disable();
-      expect(status.formEnabled).toBeFalse();
+      expect(status.formEnabled).toBe(false);
     });
 
   });
@@ -96,40 +96,40 @@ describe('FormStatus', () => {
   describe('isFormFieldInvalid', () => {
 
     it('should return false for unknown property', () => {
-      expect(status.isFormFieldInvalid('unknown')).toBeFalse();
+      expect(status.isFormFieldInvalid('unknown')).toBe(false);
     });
 
     it('should return false when form is valid', () => {
       form.controls['name'].setValue('John');
       form.markAsDirty();
 
-      expect(status.isFormFieldInvalid('name')).toBeFalse();
+      expect(status.isFormFieldInvalid('name')).toBe(false);
     });
 
     it('should return true when field is dirty and invalid', () => {
       form.controls['name'].markAsDirty();
-      expect(status.isFormFieldInvalid('name')).toBeTrue();
+      expect(status.isFormFieldInvalid('name')).toBe(true);
     });
 
     it('should return false when field is dirty and valid', () => {
       form.controls['name'].setValue('John');
       form.markAsDirty();
-      expect(status.isFormFieldInvalid('name')).toBeFalse();
+      expect(status.isFormFieldInvalid('name')).toBe(false);
     });
 
     it('should return true when field is touched and invalid', () => {
       form.controls['name'].markAsTouched();
-      expect(status.isFormFieldInvalid('name')).toBeTrue();
+      expect(status.isFormFieldInvalid('name')).toBe(true);
     });
 
     it('should return false when field is touched and valid', () => {
       form.controls['name'].setValue('John');
       form.markAsTouched();
-      expect(status.isFormFieldInvalid('name')).toBeFalse();
+      expect(status.isFormFieldInvalid('name')).toBe(false);
     });
 
     it('should return false when field invalid but neither dirty nor touched', () => {
-      expect(status.isFormFieldInvalid('name')).toBeFalse();
+      expect(status.isFormFieldInvalid('name')).toBe(false);
     });
 
   });

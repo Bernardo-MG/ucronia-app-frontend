@@ -6,8 +6,10 @@ import { LibrarySettingsLayout } from './library-settings-layout';
 
 describe('LibrarySettingsLayout', () => {
   it('only shows readable catalogs and hides the book link without book access', async () => {
-    const authService = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission']);
-    authService.hasPermission.and.callFake(permission => permission === UcroniaPermissions.library.publisher.read);
+    const authService = {
+      hasPermission: vi.fn().mockName("AuthService.hasPermission")
+  };
+    authService.hasPermission.mockImplementation(permission => permission === UcroniaPermissions.library.publisher.read);
     await TestBed.configureTestingModule({
       imports: [LibrarySettingsLayout],
       providers: [provideRouter([]), { provide: AuthService, useValue: authService }]

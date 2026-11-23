@@ -36,10 +36,11 @@ describe('LibraryBookLendings', () => {
     const lending = loan(1, '2026-10-01');
     fixture.componentRef.setInput('lendings', [lending]);
     fixture.detectChanges();
-    const show = jasmine.createSpy('showLending');
+    const show = vi.fn().mockName('showLending');
     fixture.componentInstance.showLending.subscribe(show);
     fixture.nativeElement.querySelector('button').click();
-    expect(show).toHaveBeenCalledOnceWith(lending);
+    expect(show).toHaveBeenCalledTimes(1);
+    expect(show).toHaveBeenCalledWith(lending);
   });
 
   it('updates borrower labels and initials when names arrive', () => {

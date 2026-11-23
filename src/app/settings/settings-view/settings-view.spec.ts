@@ -8,11 +8,11 @@ describe('SettingsView', () => {
   let fixture: ComponentFixture<SettingsView>;
 
   const serviceMock = {
-    getEmail: jasmine.createSpy().and.returnValue(of('')),
-    getInstagram: jasmine.createSpy().and.returnValue(of('')),
-    getMap: jasmine.createSpy().and.returnValue(of('')),
-    getCalendar: jasmine.createSpy().and.returnValue(of('')),
-    getTelegram: jasmine.createSpy().and.returnValue(of(''))
+    getEmail: vi.fn().mockReturnValue(of('')),
+    getInstagram: vi.fn().mockReturnValue(of('')),
+    getMap: vi.fn().mockReturnValue(of('')),
+    getCalendar: vi.fn().mockReturnValue(of('')),
+    getTelegram: vi.fn().mockReturnValue(of(''))
   };
 
   beforeEach(async () => {

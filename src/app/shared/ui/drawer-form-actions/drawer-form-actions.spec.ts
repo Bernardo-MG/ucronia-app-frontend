@@ -74,8 +74,8 @@ describe('DrawerFormActions', () => {
     expect(button('submit').closest('.p-drawer-content')).toBeNull();
     expect(button('submit').form).toBe(document.querySelector<HTMLFormElement>('#external-drawer-form'));
     expect(button('submit').textContent).toContain('Crear llave');
-    expect(button('submit').classList.contains('h-11')).toBeTrue();
-    expect(button('cancel').classList.contains('h-11')).toBeTrue();
+    expect(button('submit').classList.contains('h-11')).toBe(true);
+    expect(button('cancel').classList.contains('h-11')).toBe(true);
   });
 
   it('blocks invalid submissions and submits the associated valid form exactly once', () => {
@@ -100,8 +100,8 @@ describe('DrawerFormActions', () => {
     fixture.componentInstance.loading = true;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(button('submit').disabled).toBeTrue();
-    expect(button('cancel').disabled).toBeTrue();
+    expect(button('submit').disabled).toBe(true);
+    expect(button('cancel').disabled).toBe(true);
     button('submit').click();
     button('cancel').click();
     expect(fixture.componentInstance.submissions).toBe(0);

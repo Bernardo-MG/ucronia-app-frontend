@@ -92,7 +92,7 @@ describe('FormSearchReset', () => {
     expect(fixture.componentInstance.text).toBe('');
     expect(fixture.nativeElement.querySelector('#form-author').value).toBe('');
     expect(fixture.nativeElement.querySelector('input[type=search]').value).toBe('');
-    expect(fixture.componentInstance.form.pristine).toBeTrue();
+    expect(fixture.componentInstance.form.pristine).toBe(true);
   }));
 
   it('cancels an in-flight request and ignores its late response after reset', fakeAsync(() => {
@@ -102,10 +102,10 @@ describe('FormSearchReset', () => {
     type(fixture.nativeElement.querySelector('#form-author'), 'pending');
     fixture.detectChanges();
     tick(300);
-    expect(fixture.componentInstance.responses.observed).toBeTrue();
+    expect(fixture.componentInstance.responses.observed).toBe(true);
     fixture.componentInstance.form.reset({ record: 'second' });
     flushMicrotasks();
-    expect(fixture.componentInstance.responses.observed).toBeFalse();
+    expect(fixture.componentInstance.responses.observed).toBe(false);
     fixture.componentInstance.responses.next([{ number: 1, name: 'late' }]);
     expect(fixture.componentInstance.results).toEqual([]);
   }));
@@ -171,7 +171,7 @@ describe('FormSearchReset', () => {
     fixture.detectChanges();
     tick();
     expect(fixture.nativeElement.querySelector('#form-author').value).toBe('New selection');
-    expect(fixture.componentInstance.form.pristine).toBeTrue();
+    expect(fixture.componentInstance.form.pristine).toBe(true);
     tick(300);
     expect(fixture.componentInstance.queries).not.toContain('previous');
   }));

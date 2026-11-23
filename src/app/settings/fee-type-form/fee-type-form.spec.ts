@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeeTypeForm } from './fee-type-form';
 import { provideZonelessChangeDetection } from '@angular/core';
@@ -21,19 +22,20 @@ describe('FeeTypeForm', () => {
   it('requires both the name and amount', () => {
     component.form.patchValue({ name: 'Monthly' });
     component.form.get('name')?.markAsDirty();
-    expect(component.form.invalid).toBeTrue();
+    expect(component.form.invalid).toBe(true);
     component.form.patchValue({ amount: 15 });
     component.form.get('amount')?.markAsDirty();
-    expect(component.form.valid).toBeTrue();
+    expect(component.form.valid).toBe(true);
   });
 
   it('preserves a numeric amount when saving', () => {
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     component.form.patchValue({ name: 'Monthly', amount: 15.5 });
     component.form.get('name')?.markAsDirty();
     component.form.get('amount')?.markAsDirty();
     component.onSave();
-    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ name: 'Monthly', amount: 15.5 }));
+    expect(saved).toHaveBeenCalledTimes(1);
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({ name: 'Monthly', amount: 15.5 }));
   });
 });
 
@@ -42,7 +44,7 @@ describe('FeeTypeForm form submission', () => {
 
   let fixture: ComponentFixture<FeeTypeForm>;
   let component: FeeTypeForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -61,9 +63,9 @@ describe('FeeTypeForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -75,7 +77,7 @@ describe('FeeTypeForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -83,29 +85,31 @@ describe('FeeTypeForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 

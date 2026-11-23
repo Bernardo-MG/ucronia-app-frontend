@@ -16,8 +16,8 @@ describe('UserActivationView', () => {
   const mockSecurityClient = {
     user: {
       onboarding: {
-        activate: jasmine.createSpy().and.returnValue(of({})),
-        validateToken: jasmine.createSpy().and.returnValue(of({}))
+        activate: vi.fn().mockReturnValue(of({})),
+        validateToken: vi.fn().mockReturnValue(of({}))
       }
     }
   };
@@ -50,7 +50,7 @@ describe('UserActivationView', () => {
 
     it('should load username on successful token validation', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'validateToken').and.returnValue(
+      vi.spyOn(service, 'validateToken').mockReturnValue(
         of({ content: { valid: true, username: 'testuser' } })
       );
 
@@ -61,7 +61,7 @@ describe('UserActivationView', () => {
 
     it('should set status to valid_token on successful token validation', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'validateToken').and.returnValue(
+      vi.spyOn(service, 'validateToken').mockReturnValue(
         of({ content: { valid: true, username: 'testuser' } })
       );
 
@@ -72,7 +72,7 @@ describe('UserActivationView', () => {
 
     it('should set status to invalid_token on failed token validation', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'validateToken').and.returnValue(
+      vi.spyOn(service, 'validateToken').mockReturnValue(
         of({ content: { valid: false, username: '' } })
       );
 
@@ -83,7 +83,7 @@ describe('UserActivationView', () => {
 
     it('should set status to invalid_token on token validation error', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'validateToken').and.returnValue(throwError(() => new Error('Error')));
+      vi.spyOn(service, 'validateToken').mockReturnValue(throwError(() => new Error('Error')));
 
       routeParams.next(convertToParamMap({ token: 'token' }));
 
@@ -96,20 +96,20 @@ describe('UserActivationView', () => {
 
     it('should set status to finished on successful activation', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'activateUser').and.returnValue(of({ content: new User() }));
+      vi.spyOn(service, 'activateUser').mockReturnValue(of({ content: new User() }));
 
       component.user.token = 'token';
       component.onActivateUser('password');
 
       expect(component.step).toBe(Step.FINISHED);
-      expect(component.status.loading).toBeFalse();
+      expect(component.status.loading).toBe(false);
     });
 
     it('should store failures on activation error with FailureResponse', () => {
       const service = TestBed.inject(AccessUserActivateService);
       const failureResponse = new FailureResponse({ 'field': [{ field: 'password', message: 'Invalid password' }] });
 
-      spyOn(service, 'activateUser').and.returnValue(throwError(() => failureResponse));
+      vi.spyOn(service, 'activateUser').mockReturnValue(throwError(() => failureResponse));
 
       component.user.token = 'token';
       component.onActivateUser('password');
@@ -119,7 +119,7 @@ describe('UserActivationView', () => {
 
     it('should clear failures on activation error that is not FailureResponse', () => {
       const service = TestBed.inject(AccessUserActivateService);
-      spyOn(service, 'activateUser').and.returnValue(throwError(() => new Error('Generic error')));
+      vi.spyOn(service, 'activateUser').mockReturnValue(throwError(() => new Error('Generic error')));
 
       component.user.token = 'test-token';
       component.onActivateUser('badPassword');

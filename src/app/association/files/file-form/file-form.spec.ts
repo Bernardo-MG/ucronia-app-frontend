@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Asset } from '@ucronia/domain';
 import { FileForm } from './file-form';
@@ -26,20 +27,20 @@ describe('FileForm', () => {
     fixture.detectChanges();
     expect(component.form.get('name')?.value).toBe('Rules');
     expect(component.form.get('description')?.value).toBe('Association rules');
-    expect(component.form.get('publicAccess')?.value).toBeFalse();
+    expect(component.form.get('publicAccess')?.value).toBe(false);
   });
 
   it('should default new files to public access', () => {
-    expect(component.form.get('publicAccess')?.value).toBeTrue();
+    expect(component.form.get('publicAccess')?.value).toBe(true);
   });
 });
 
 describe('FileForm form submission', () => {
-  const scenario = { values: { name: 'Rules', description: 'Club rules' }, invalid: 'name', expected: jasmine.objectContaining({ metadata: jasmine.objectContaining({ name: 'Rules', description: 'Club rules' }), content: jasmine.any(File) }) };
+  const scenario = { values: { name: 'Rules', description: 'Club rules' }, invalid: 'name', expected: expect.objectContaining({ metadata: expect.objectContaining({ name: 'Rules', description: 'Club rules' }), content: expect.any(File) }) };
 
   let fixture: ComponentFixture<FileForm>;
   let component: FileForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -58,9 +59,9 @@ describe('FileForm form submission', () => {
     form.patchValue(scenario.values);
     component.file = new File(['contents'], 'example.txt');
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -72,7 +73,7 @@ describe('FileForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -80,29 +81,31 @@ describe('FileForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 

@@ -8,10 +8,10 @@ describe('FrontpageService', () => {
 
   const ucroniaClientMock = {
     activity: {
-      page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 }))
+      page: vi.fn().mockReturnValue(of({ content: [], last: true, page: 1 }))
     },
     contactInfo: {
-      get: jasmine.createSpy().and.returnValue(of({}))
+      get: vi.fn().mockReturnValue(of({}))
     }
   };
 

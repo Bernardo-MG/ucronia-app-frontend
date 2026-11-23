@@ -19,73 +19,76 @@ describe('LibraryView', () => {
   let component: LibraryView;
   let fixture: ComponentFixture<LibraryView>;
 
-  const libraryServiceMock = jasmine.createSpyObj<LibraryService>(
-    'LibraryService',
-    [
-      'getAllBooks',
-      'getOneBook',
-      'deleteBook',
-      'getAllGameBooks',
-      'getAllFictionBooks',
-      'getGameSystems',
-      'getBookTypes',
-      'searchDonors',
-      'searchMembers',
-      'setAuthors',
-      'setPublishers',
-      'setGameSystem',
-      'setBookType',
-      'setDonation',
-      'saveBook',
-      'createGameBook',
-      'createFictionBook',
-      'updateGameBook',
-      'updateFictionBook',
-      'deleteGameBook',
-      'deleteFictionBook',
-      'lend',
-      'return',
-      'getSummary',
-      'getBorrower'
-    ]
-  );
+  const libraryServiceMock = {
+    getAllBooks: vi.fn(
+    ).mockName("LibraryService.getAllBooks"),
+    getOneBook: vi.fn().mockName("LibraryService.getOneBook"),
+      deleteBook: vi.fn().mockName("LibraryService.deleteBook"),
+      getAllGameBooks: vi.fn().mockName("LibraryService.getAllGameBooks"),
+      getAllFictionBooks: vi.fn().mockName("LibraryService.getAllFictionBooks"),
+      getGameSystems: vi.fn().mockName("LibraryService.getGameSystems"),
+      getBookTypes: vi.fn().mockName("LibraryService.getBookTypes"),
+      searchDonors: vi.fn().mockName("LibraryService.searchDonors"),
+      searchMembers: vi.fn().mockName("LibraryService.searchMembers"),
+      setAuthors: vi.fn().mockName("LibraryService.setAuthors"),
+      setPublishers: vi.fn().mockName("LibraryService.setPublishers"),
+      setGameSystem: vi.fn().mockName("LibraryService.setGameSystem"),
+      setBookType: vi.fn().mockName("LibraryService.setBookType"),
+      setDonation: vi.fn().mockName("LibraryService.setDonation"),
+      saveBook: vi.fn().mockName("LibraryService.saveBook"),
+      createGameBook: vi.fn().mockName("LibraryService.createGameBook"),
+      createFictionBook: vi.fn().mockName("LibraryService.createFictionBook"),
+      updateGameBook: vi.fn().mockName("LibraryService.updateGameBook"),
+      updateFictionBook: vi.fn().mockName("LibraryService.updateFictionBook"),
+      deleteGameBook: vi.fn().mockName("LibraryService.deleteGameBook"),
+      deleteFictionBook: vi.fn().mockName("LibraryService.deleteFictionBook"),
+      lend: vi.fn().mockName("LibraryService.lend"),
+      return: vi.fn().mockName("LibraryService.return"),
+      getSummary: vi.fn().mockName("LibraryService.getSummary"),
+      getBorrower: vi.fn(
+  ).mockName("LibraryService.getBorrower")
+};
 
-  const lendingServiceMock = jasmine.createSpyObj<LibraryLendingService>(
-    'LibraryLendingService',
-    ['getAll']
-  );
+  const lendingServiceMock = {
+    getAll: vi.fn(
 
-  const reportServiceMock = jasmine.createSpyObj<BookReportService>(
-    'BookReportService',
-    ['downloadExcelReport']
-  );
+  ).mockName("LibraryLendingService.getAll")
+};
 
-  const authServiceMock = jasmine.createSpyObj<AuthService>('AuthService', ['hasPermission', 'hasAnyPermission']);
+  const reportServiceMock = {
+    downloadExcelReport: vi.fn(
+
+  ).mockName("BookReportService.downloadExcelReport")
+};
+
+  const authServiceMock = {
+    hasPermission: vi.fn().mockName("AuthService.hasPermission"), hasAnyPermission: vi.fn().mockName("AuthService.hasAnyPermission")
+};
 
   beforeEach(async () => {
-    authServiceMock.hasPermission.and.returnValue(false);
-    authServiceMock.hasAnyPermission.and.returnValue(false);
-    libraryServiceMock.searchMembers.calls.reset();
-    libraryServiceMock.searchMembers.and.returnValue(of([]));
-    libraryServiceMock.getAllBooks.and.returnValue(
+    authServiceMock.hasPermission.mockReturnValue(false);
+    authServiceMock.hasAnyPermission.mockReturnValue(false);
+    libraryServiceMock.searchMembers.mockClear();
+    libraryServiceMock.searchMembers.mockReturnValue(of([]));
+    libraryServiceMock.getAllBooks.mockReturnValue(
       of(new Page<GameBook>())
     );
-    libraryServiceMock.getAllGameBooks.and.returnValue(
+    libraryServiceMock.getAllGameBooks.mockReturnValue(
       of(new Page<GameBook>())
     );
-    libraryServiceMock.getGameSystems.and.returnValue(
+    libraryServiceMock.getGameSystems.mockReturnValue(
       of(Object.assign(new Page<GameSystem>(), { last: true }))
     );
-    libraryServiceMock.getBookTypes.and.returnValue(
+    libraryServiceMock.getBookTypes.mockReturnValue(
       of(Object.assign(new Page<BookType>(), { last: true }))
     );
-    libraryServiceMock.getSummary.and.returnValue(
+    libraryServiceMock.getSummary.mockReturnValue(
       of(new LibrarySummary())
     );
-    libraryServiceMock.getBorrower.and.returnValue(
+    libraryServiceMock.getBorrower.mockReturnValue(
       of(new Profile())
     );
-    lendingServiceMock.getAll.and.returnValue(
+    lendingServiceMock.getAll.mockReturnValue(
       of(new Page<BookLending>())
     );
 
@@ -111,19 +114,23 @@ describe('LibraryView', () => {
   });
 
   it('searches active and inactive borrowers when inactive members are readable', () => {
-    authServiceMock.hasPermission.and.callFake(permission =>
+    authServiceMock.hasPermission.mockImplementation(permission =>
       permission === UcroniaPermissions.directory.inactiveMember.read);
     const permittedFixture = TestBed.createComponent(LibraryView);
 
     permittedFixture.componentInstance.onSearchMembers({ query: 'Ana' });
 
-    expect(libraryServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana', MemberStatus.All);
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledTimes(1);
+
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledWith('Ana', MemberStatus.All);
   });
 
   it('searches active borrowers when inactive members are restricted', () => {
     component.onSearchMembers({ query: 'Ana' });
 
-    expect(libraryServiceMock.searchMembers).toHaveBeenCalledOnceWith('Ana', MemberStatus.Active);
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledTimes(1);
+
+    expect(libraryServiceMock.searchMembers).toHaveBeenCalledWith('Ana', MemberStatus.Active);
   });
 
   it('hides the settings button without catalog permissions', () => {
@@ -131,7 +138,7 @@ describe('LibraryView', () => {
   });
 
   it('shows the settings button when a catalog is readable', () => {
-    authServiceMock.hasAnyPermission.and.returnValue(true);
+    authServiceMock.hasAnyPermission.mockReturnValue(true);
     const permittedFixture = TestBed.createComponent(LibraryView);
     permittedFixture.detectChanges();
     expect(permittedFixture.nativeElement.querySelector('[routerLink="/association/library/settings"]')).not.toBeNull();
@@ -140,13 +147,13 @@ describe('LibraryView', () => {
   it('loads game systems and book types for the edition form in the view', () => {
     const gameSystem = new GameSystem();
     const bookType = new BookType();
-    libraryServiceMock.getGameSystems.and.returnValue(
+    libraryServiceMock.getGameSystems.mockReturnValue(
       of(Object.assign(new Page<GameSystem>(), { last: true, content: [gameSystem] }))
     );
-    libraryServiceMock.getBookTypes.and.returnValue(
+    libraryServiceMock.getBookTypes.mockReturnValue(
       of(Object.assign(new Page<BookType>(), { last: true, content: [bookType] }))
     );
-    libraryServiceMock.getOneBook.and.returnValue(of(new GameBook()));
+    libraryServiceMock.getOneBook.mockReturnValue(of(new GameBook()));
 
     component.onShowEdit();
 
@@ -158,14 +165,14 @@ describe('LibraryView', () => {
     const previous = new Subject<Donor[]>();
     const latest = new Subject<Donor[]>();
     const donor = new Donor();
-    libraryServiceMock.searchDonors.and.returnValues(previous, latest);
+    libraryServiceMock.searchDonors.mockReturnValueOnce(previous).mockReturnValueOnce( latest);
 
     component.onSearchDonors('old');
     component.onSearchDonors('new');
     latest.next([donor]);
     previous.next([]);
 
-    expect(previous.observed).toBeFalse();
+    expect(previous.observed).toBe(false);
     expect(component.donorSearchResults).toEqual([donor]);
 
     component.onClearDonorSearch();
@@ -189,7 +196,7 @@ describe('LibraryView', () => {
   });
 
   it('opens the return form for the selected lending and cancels back to its details', () => {
-    authServiceMock.hasPermission.and.returnValue(true);
+    authServiceMock.hasPermission.mockReturnValue(true);
     const returnFixture = TestBed.createComponent(LibraryView);
     const view = returnFixture.componentInstance;
     const lending = new BookLending();
@@ -209,7 +216,7 @@ describe('LibraryView', () => {
     component.onShowLending(new BookLending());
     component.onShowLendingReturn();
     expect(component.dialog).toBe(Dialog.LENDING_INFO);
-    authServiceMock.hasPermission.and.returnValue(true);
+    authServiceMock.hasPermission.mockReturnValue(true);
     const view = TestBed.createComponent(LibraryView).componentInstance;
     const lending = new BookLending();
     lending.returnDate = new Date();
@@ -219,16 +226,17 @@ describe('LibraryView', () => {
   });
 
   it('returns the lending and refreshes the lending table and summary', () => {
-    libraryServiceMock.return.and.returnValue(of(new BookLending()));
-    const loadLendings = spyOn(component, 'loadLendings');
-    const loadBooks = spyOn(component, 'load');
+    libraryServiceMock.return.mockReturnValue(of(new BookLending()));
+    const loadLendings = vi.spyOn(component, 'loadLendings').mockReturnValue(undefined);
+    const loadBooks = vi.spyOn(component, 'load').mockReturnValue(undefined);
     component.display = Display.LENDINGS;
     component.lendings.page = 2;
     component.dialog = Dialog.LENDING_RETURN;
     const event = new BookReturnedEvent(new Date(), 7, 42);
     component.onReturn(event);
     expect(libraryServiceMock.return).toHaveBeenCalledWith(event.returnDate, 7, 42);
-    expect(loadLendings).toHaveBeenCalledOnceWith(2);
+    expect(loadLendings).toHaveBeenCalledTimes(1);
+    expect(loadLendings).toHaveBeenCalledWith(2);
     expect(loadBooks).not.toHaveBeenCalled();
     expect(component.dialog).toBe(Dialog.NONE);
   });
@@ -252,33 +260,33 @@ describe('LibraryView', () => {
   });
 
   it('ignores a delete confirmation after another book is selected', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
-    libraryServiceMock.deleteBook.calls.reset();
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
+    libraryServiceMock.deleteBook.mockClear();
     component.selectedData = Object.assign(new GameBook(), { number: 12 });
     component.onDelete(new Event('click'));
 
     component.selectedData = Object.assign(new GameBook(), { number: 20 });
-    confirm.calls.mostRecent().args[0].accept?.();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
 
     expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
   });
 
   it('ignores a delete confirmation after the view is destroyed', () => {
-    const confirm = spyOn(TestBed.inject(ConfirmationService), 'confirm');
-    libraryServiceMock.deleteBook.calls.reset();
+    const confirm = vi.spyOn(TestBed.inject(ConfirmationService), 'confirm').mockReturnThis();
+    libraryServiceMock.deleteBook.mockClear();
     component.selectedData = Object.assign(new GameBook(), { number: 12 });
     component.onDelete(new Event('click'));
 
     fixture.destroy();
-    confirm.calls.mostRecent().args[0].accept?.();
+    vi.mocked(confirm).mock.lastCall![0].accept?.();
 
     expect(libraryServiceMock.deleteBook).not.toHaveBeenCalled();
   });
 
   it('refreshes the list without closing a drawer opened during a return', () => {
     const response = new Subject<BookLending>();
-    libraryServiceMock.return.and.returnValue(response);
-    const load = spyOn(component, 'load');
+    libraryServiceMock.return.mockReturnValue(response);
+    const load = vi.spyOn(component, 'load').mockReturnValue(undefined);
     component.dialog = Dialog.LENDING_RETURN;
     component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
 
@@ -292,12 +300,12 @@ describe('LibraryView', () => {
 
   it('ignores an error from a return after the drawer has been replaced', () => {
     const response = new Subject<BookLending>();
-    libraryServiceMock.return.and.returnValue(response);
+    libraryServiceMock.return.mockReturnValue(response);
     component.dialog = Dialog.LENDING_RETURN;
     component.onReturn(new BookReturnedEvent(new Date(), 7, 42));
 
     component.onShowLending(new BookLending());
-    const clear = spyOn(component.failures, 'clear');
+    const clear = vi.spyOn(component.failures, 'clear').mockReturnValue(undefined);
     response.error(new Error('Return failed'));
 
     expect(clear).not.toHaveBeenCalled();
@@ -315,12 +323,13 @@ describe('Library request routing', () => {
       { provide: AuthService, useValue: { hasPermission: () => false, hasAnyPermission: () => false } }
     ] });
     const component = TestBed.runInInjectionContext(() => new LibraryView());
-    const load = spyOn(component, 'loadLendings');
+    const load = vi.spyOn(component, 'loadLendings').mockReturnValue(undefined);
     component.display = component.Display.LENDINGS;
     component.onFilter('title');
     expect(load).not.toHaveBeenCalled();
-    load.calls.reset();
+    load.mockClear();
     component.load(2);
-    expect(load).toHaveBeenCalledOnceWith(2);
+    expect(load).toHaveBeenCalledTimes(1);
+    expect(load).toHaveBeenCalledWith(2);
   });
 });

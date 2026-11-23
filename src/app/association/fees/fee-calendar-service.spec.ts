@@ -10,16 +10,16 @@ describe('FeeCalendarService', () => {
 
   const mockUcroniaClient = {
     fee: {
-      page: jasmine.createSpy()
+      page: vi.fn()
     },
     member: {
-      page: jasmine.createSpy()
+      page: vi.fn()
     }
   };
 
   beforeEach(() => {
-    mockUcroniaClient.fee.page.calls.reset();
-    mockUcroniaClient.member.page.calls.reset();
+    mockUcroniaClient.fee.page.mockClear();
+    mockUcroniaClient.member.page.mockClear();
     TestBed.configureTestingModule({
       providers: [
         { provide: UcroniaClient, useValue: mockUcroniaClient }
@@ -37,14 +37,14 @@ describe('FeeCalendarService', () => {
     const secondFee = createFee(1, new Date(2025, 1, 1), true);
     const inactiveFee = createFee(2, new Date(2025, 0, 1), true);
 
-    mockUcroniaClient.fee.page.and.callFake((page = 1) => {
+    mockUcroniaClient.fee.page.mockImplementation((page = 1) => {
       const response = new Page<Fee>();
       response.page = page;
       response.last = page === 2;
       response.content = page === 1 ? [firstFee, inactiveFee] : [secondFee];
       return of(response);
     });
-    mockUcroniaClient.member.page.and.returnValue(of(createPage([
+    mockUcroniaClient.member.page.mockReturnValue(of(createPage([
       createMember(1, true),
       createMember(2, false)
     ])));
@@ -52,24 +52,25 @@ describe('FeeCalendarService', () => {
     service.getCalendar({ start: new Date(2024, 11, 1), end: new Date(2025, 1, 1) }).subscribe(calendar => {
       expect(calendar.length).toBe(2);
       expect(calendar[0].member.number).toBe(1);
-      expect(calendar[0].member.active).toBeTrue();
+      expect(calendar[0].member.active).toBe(true);
       expect(calendar[0].fees).toEqual([
         { month: firstFee.month, paid: false },
         { month: secondFee.month, paid: true }
       ]);
       expect(calendar[1].member.number).toBe(2);
-      expect(calendar[1].member.active).toBeFalse();
+      expect(calendar[1].member.active).toBe(false);
     });
 
     expect(mockUcroniaClient.fee.page).toHaveBeenCalledTimes(2);
-    expect(mockUcroniaClient.fee.page.calls.argsFor(0)[0]).toBeUndefined();
-    expect(mockUcroniaClient.fee.page.calls.argsFor(0)[1]).toBe(100);
-    expect(mockUcroniaClient.fee.page.calls.argsFor(0).slice(3)).toEqual([
+    expect(vi.mocked(mockUcroniaClient.fee.page).mock.calls[0][0]).toBeUndefined();
+    expect(vi.mocked(mockUcroniaClient.fee.page).mock.calls[0][1]).toBe(100);
+    expect(vi.mocked(mockUcroniaClient.fee.page).mock.calls[0].slice(3)).toEqual([
       new Date(2024, 11, 1),
       new Date(2025, 1, 28, 23, 59, 59, 999)
     ]);
-    expect(mockUcroniaClient.fee.page.calls.argsFor(1)[0]).toBe(2);
-    expect(mockUcroniaClient.member.page).toHaveBeenCalledOnceWith(
+    expect(vi.mocked(mockUcroniaClient.fee.page).mock.calls[1][0]).toBe(2);
+    expect(mockUcroniaClient.member.page).toHaveBeenCalledTimes(1);
+    expect(mockUcroniaClient.member.page).toHaveBeenCalledWith(
       undefined, 100, undefined, undefined, MemberStatus.All
     );
   });
@@ -82,8 +83,8 @@ describe('FeeCalendarService', () => {
       createFee(1, new Date(2025, 0, 1), true),
       createFee(2, new Date(2025, 0, 1), false)
     ];
-    mockUcroniaClient.fee.page.and.returnValue(of(response));
-    mockUcroniaClient.member.page.and.returnValue(of(createPage([
+    mockUcroniaClient.fee.page.mockReturnValue(of(response));
+    mockUcroniaClient.member.page.mockReturnValue(of(createPage([
       createMember(1, true)
     ])));
 
@@ -93,7 +94,9 @@ describe('FeeCalendarService', () => {
       expect(calendar[1].member.active).toBeUndefined();
     });
 
-    expect(mockUcroniaClient.member.page).toHaveBeenCalledOnceWith(
+    expect(mockUcroniaClient.member.page).toHaveBeenCalledTimes(1);
+
+    expect(mockUcroniaClient.member.page).toHaveBeenCalledWith(
       undefined, 100, undefined, undefined, MemberStatus.All
     );
   });
