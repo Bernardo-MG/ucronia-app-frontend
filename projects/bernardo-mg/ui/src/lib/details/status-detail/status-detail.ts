@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'ui-status-detail',
   imports: [SkeletonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './status-detail.html'
 })
 export class StatusDetail {

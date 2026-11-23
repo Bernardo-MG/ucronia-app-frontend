@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -37,6 +37,7 @@ import { librarySettingsPermissions } from '../settings/library-settings-permiss
 @Component({
   selector: 'assoc-library-view',
   imports: [TextFilter, LibraryLendingInfo, RouterLink, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, LibraryBookEditionForm, LibraryBookReturnForm, LibraryBookInfo, LibraryBookCreationForm, LibraryBookList, LibraryLendingList, LibraryBookLendingForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-view.html'
 })
 export class LibraryView implements OnInit {

@@ -1,6 +1,6 @@
 
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, OnDestroy, OnInit, inject, output } from '@angular/core';
+import { Component, DestroyRef, OnDestroy, OnInit, inject, output, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
@@ -13,6 +13,7 @@ import { MembershipEvolutionService } from '../membership-evolution-service';
 @Component({
   selector: 'assoc-membership-evolution-chart-view',
   imports: [CommonModule, FormsModule, Select],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './membership-evolution-chart-view.component.html'
 })
 export class MembershipEvolutionChartView implements OnInit, OnDestroy {

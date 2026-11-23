@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
@@ -11,6 +11,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'assoc-fee-creation-form',
   imports: [ReactiveFormsModule, DatePickerModule, MessageModule, InputGroupModule, InputGroupAddonModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './fee-creation-form.html'
 })
 export class FeeCreationForm {

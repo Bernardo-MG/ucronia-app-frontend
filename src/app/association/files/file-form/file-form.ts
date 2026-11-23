@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -17,6 +17,7 @@ export interface FileFormData {
 @Component({
   selector: 'assoc-file-form',
   imports: [InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './file-form.html'
 })
 export class FileForm implements OnChanges {

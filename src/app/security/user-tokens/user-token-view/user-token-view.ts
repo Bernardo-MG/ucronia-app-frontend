@@ -1,5 +1,5 @@
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { UserTokenService } from '@app/security/user-tokens/user-token-service';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -18,6 +18,7 @@ import { UserTokenList } from '../user-token-list/user-token-list';
 @Component({
   selector: 'access-user-token-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, UserTokenInfo, UserTokenExtendForm, UserTokenList],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-token-view.html'
 })
 export class UserTokenView implements OnInit {

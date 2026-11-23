@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs';
@@ -8,6 +8,7 @@ import { LoginService } from '../login-service';
 @Component({
   imports: [LoginForm],
   templateUrl: './login-view.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './login-view.sass'
 })
 export class LoginView {

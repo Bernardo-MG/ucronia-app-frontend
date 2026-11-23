@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { ToggleSwitchModule } from '@openng/optimus-ui/toggleswitch';
 @Component({
   selector: 'assoc-member-key-form',
   imports: [ReactiveFormsModule, InputTextModule, ToggleSwitchModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-key-form.html'
 })
 export class MemberKeyForm {

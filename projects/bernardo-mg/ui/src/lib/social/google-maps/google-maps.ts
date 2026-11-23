@@ -1,9 +1,10 @@
-import { Component, computed, inject, input } from '@angular/core';
+import { Component, computed, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'ui-google-maps',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './google-maps.html'
 })
 export class GoogleMaps {

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Asset } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -9,6 +9,7 @@ import { ImageContent } from '../image-content/image-content';
 @Component({
   selector: 'assoc-image-list',
   imports: [ButtonModule, DatePipe, ImageContent, TableModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './image-list.html'
 })
 export class ImageList {

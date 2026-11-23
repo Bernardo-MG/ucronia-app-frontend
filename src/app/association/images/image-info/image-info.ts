@@ -1,5 +1,5 @@
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { Asset } from '@ucronia/domain';
 import { MessageService } from '@openng/optimus-ui/api';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -10,6 +10,7 @@ import { ImageContent } from '../image-content/image-content';
 @Component({
   selector: 'assoc-image-info',
   imports: [AuditInfo, ButtonModule, ImageContent, InputTextModule, SkeletonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './image-info.html'
 })
 export class ImageInfo {

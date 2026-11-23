@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -21,6 +21,7 @@ import { RoleService } from '../role-service';
 @Component({
   selector: 'access-role-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, RoleForm, RoleInfo, RoleChangePermission, RoleList],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './role-view.html'
 })
 export class RoleView implements OnInit {

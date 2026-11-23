@@ -1,4 +1,4 @@
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -7,6 +7,7 @@ import { DrawerFormActions } from './drawer-form-actions';
 
 @Component({
   imports: [DrawerModule, DrawerFormActions, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<p-drawer [visible]="visible" position="right">
     <form id="external-drawer-form" [formGroup]="form" (ngSubmit)="submissions = submissions + 1">
       <input formControlName="name" />
@@ -29,6 +30,7 @@ class ExternalFormHost {
 
 @Component({
   imports: [DrawerFormActions, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<form [formGroup]="form" (ngSubmit)="submissions = submissions + 1">
     <shared-drawer-form-actions [showCancel]="false" submitLabel="Guardar cambios" />
   </form>`

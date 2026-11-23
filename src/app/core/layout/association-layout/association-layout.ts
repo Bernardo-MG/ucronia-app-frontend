@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { librarySettingsPermissions } from '@app/association/library/settings/library-settings-permissions';
@@ -16,6 +16,7 @@ import { Navbar } from '../navbar/navbar';
   imports: [RouterModule, ToastModule, DrawerModule, RippleModule, ConfirmPopupModule, Navbar],
   templateUrl: './association-layout.html',
   styleUrl: './association-layout.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [ConfirmationService]
 })
 export class AssociationLayout {

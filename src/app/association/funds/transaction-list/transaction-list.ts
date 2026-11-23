@@ -1,5 +1,5 @@
 import { CurrencyPipe, DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Transaction } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -9,6 +9,7 @@ import { TagModule } from '@openng/optimus-ui/tag';
 @Component({
   selector: 'assoc-transaction-list',
   imports: [ButtonModule, TableModule, TagModule, CurrencyPipe, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './transaction-list.html'
 })
 export class TransactionList {

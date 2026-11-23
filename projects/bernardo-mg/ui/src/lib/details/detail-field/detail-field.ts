@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'ui-detail-field',
   imports: [SkeletonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './detail-field.html'
 })
 export class DetailField {

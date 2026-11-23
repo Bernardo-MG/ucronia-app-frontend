@@ -1,5 +1,5 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { MyFee } from '@ucronia/domain';
 import { finalize, of, Subscription, switchMap, tap } from 'rxjs';
@@ -9,6 +9,7 @@ import { MyFeesService } from '../my-fees-service';
 @Component({
   selector: 'app-my-fees-view',
   imports: [MyFeesList],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './my-fees-view.html'
 })
 export class MyFeesView implements OnInit {

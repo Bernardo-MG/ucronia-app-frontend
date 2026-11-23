@@ -1,5 +1,5 @@
 import { CurrencyPipe } from '@angular/common';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -35,6 +35,7 @@ import { TransactionTypeList } from '../transaction-type-list/transaction-type-l
 @Component({
   selector: 'app-funds-view',
   imports: [TabsModule, TransactionTypeList, TransactionTypeForm, DrawerHeader, DrawerFormActions, DrawerActions, CurrencyPipe, CardModule, ButtonModule, DrawerModule, SkeletonModule, TransactionCalendar, TransactionInfo, TransactionForm, TextFilter, TransactionDisplaySelector, TransactionList, TransactionBalanceChartView],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './funds-view.html'
 })
 export class FundsView implements OnInit {

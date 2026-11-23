@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
@@ -8,6 +8,7 @@ import { FullProfile } from '../model/full-profile';
 @Component({
   selector: 'assoc-member-profile-list',
   imports: [ButtonModule, TableModule, MemberStatusTag],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-profile-list.html'
 })
 export class MemberProfileList {

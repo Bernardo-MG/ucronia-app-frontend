@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CardModule } from '@openng/optimus-ui/card';
 import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
@@ -9,6 +9,7 @@ import { PasswordResetRequestService } from '../password-reset-request-service';
  */
 @Component({
   imports: [CardModule, PasswordResetRequestForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './password-reset-request-view.html'
 })
 export class PasswordResetRequestView {

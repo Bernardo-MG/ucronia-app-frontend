@@ -1,4 +1,4 @@
-import { Component, inject, input, output, Input } from '@angular/core';
+import { Component, inject, input, output, Input, ChangeDetectionStrategy } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'account-change-password-form',
   imports: [ButtonModule, ReactiveFormsModule, InputTextModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './account-change-password-form.html'
 })
 export class AccountChangePasswordForm {

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { SecurityPermissions } from '@bernardo-mg/security';
@@ -10,6 +10,7 @@ import { RippleModule } from '@openng/optimus-ui/ripple';
   selector: 'layout-security-layout',
   imports: [RouterModule, CardModule, RippleModule],
   templateUrl: './security-layout.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './security-layout.sass'
 })
 export class SecurityLayout {

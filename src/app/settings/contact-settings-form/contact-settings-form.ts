@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { IconFieldModule } from '@openng/optimus-ui/iconfield';
@@ -9,6 +9,7 @@ import { InputTextModule } from '@openng/optimus-ui/inputtext';
 @Component({
   selector: 'assoc-contact-settings-form',
   imports: [ButtonModule, ReactiveFormsModule, InputTextModule, IconFieldModule, InputIconModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './contact-settings-form.html'
 })
 export class ContactSettingsForm implements OnChanges {

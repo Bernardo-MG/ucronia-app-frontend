@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -7,6 +7,7 @@ import { ImageContent } from './image-content';
 
 @Component({
   imports: [ImageContent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '<img [assocImageContent]="imageNumber" alt="">'
 })
 class TestHost {

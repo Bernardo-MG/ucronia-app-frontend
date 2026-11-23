@@ -1,4 +1,4 @@
-import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClient, HttpInterceptorFn, provideHttpClient, withInterceptors, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { AuthService } from '../services/auth-service';
@@ -20,7 +20,7 @@ describe('jwtAuthenticationInterceptor', () => {
       imports: [],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
-        provideHttpClient(withInterceptors([interceptor])),
+        provideHttpClient(withXhr(), withInterceptors([interceptor])),
         provideHttpClientTesting()
       ]
     });

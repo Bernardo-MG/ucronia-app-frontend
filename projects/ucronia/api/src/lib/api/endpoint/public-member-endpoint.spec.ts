@@ -1,4 +1,4 @@
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { MemberStatus, PublicMember } from '@ucronia/domain';
@@ -9,7 +9,7 @@ describe('PublicMemberEndpoint', () => {
   let http: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({ providers: [provideHttpClient(withXhr()), provideHttpClientTesting()] });
     endpoint = new PublicMemberEndpoint(TestBed.inject(HttpClient), '/api');
     http = TestBed.inject(HttpTestingController);
   });

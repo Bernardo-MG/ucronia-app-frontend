@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { MyFee } from '@ucronia/domain';
 import { TagModule } from '@openng/optimus-ui/tag';
 import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
@@ -7,6 +7,7 @@ import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 @Component({
   selector: 'app-my-fees-list',
   imports: [DatePipe, TableModule, TagModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './my-fees-list.html'
 })
 export class MyFeesList {

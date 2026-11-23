@@ -1,5 +1,5 @@
 import { DatePipe, NgTemplateOutlet } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Activity, ActivityDate } from '@ucronia/domain';
 import { CarouselModule } from '@openng/optimus-ui/carousel';
@@ -10,6 +10,7 @@ import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 @Component({
   selector: 'assoc-activity-carousel',
   imports: [FormsModule, CarouselModule, PopoverModule, SelectButtonModule, SkeletonModule, DatePipe, NgTemplateOutlet],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './activity-carousel.html'
 })
 export class ActivityCarousel {

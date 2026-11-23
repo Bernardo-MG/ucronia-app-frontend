@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -9,6 +9,7 @@ import { MenuModule } from '@openng/optimus-ui/menu';
 @Component({
   selector: 'layout-account-dropdown',
   imports: [RouterModule, ButtonModule, MenuModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './account-dropdown.html'
 })
 export class AccountDropdown {

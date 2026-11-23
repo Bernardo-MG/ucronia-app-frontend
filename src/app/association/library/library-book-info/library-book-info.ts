@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { BookLending, BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
 import { SkeletonModule } from '@openng/optimus-ui/skeleton';
@@ -10,6 +10,7 @@ import { LibraryConfig } from '../library-config';
   selector: 'assoc-library-book-info',
   imports: [AuditInfo, SkeletonModule, LibraryBookLendings, DatePipe],
   templateUrl: './library-book-info.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './library-book-info.scss'
 })
 export class LibraryBookInfo {

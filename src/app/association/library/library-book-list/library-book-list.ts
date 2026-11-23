@@ -1,4 +1,4 @@
-import { Component, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FictionBook, GameBook } from '@ucronia/domain';
@@ -12,6 +12,7 @@ import { Dialog } from '../library-dialog';
 @Component({
   selector: 'assoc-library-book-list',
   imports: [TableModule, ButtonModule, BadgeModule, MenuModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-book-list.html'
 })
 export class LibraryBookList {

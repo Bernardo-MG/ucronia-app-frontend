@@ -1,4 +1,4 @@
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
@@ -17,7 +17,7 @@ describe('KeyAssignmentEndpoint', () => {
   };
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    TestBed.configureTestingModule({ providers: [provideHttpClient(withXhr()), provideHttpClientTesting()] });
     endpoint = new KeyAssignmentEndpoint(TestBed.inject(HttpClient), '/api');
     http = TestBed.inject(HttpTestingController);
   });

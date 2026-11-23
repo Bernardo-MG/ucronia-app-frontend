@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
@@ -32,6 +32,7 @@ import { FeeSummaryService } from '../fee-summary-service';
 @Component({
   selector: 'assoc-fee-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, ButtonModule, CardModule, MenuModule, SkeletonModule, FeeCalendar, FeeEditionForm, FeeInfo, MemberStatusSelector, FeePaymentsForm, FeeCreationForm, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './fee-view.html'
 })
 export class FeeView implements OnInit {

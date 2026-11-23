@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { AuditDetails, AuditUser } from '@ucronia/domain';
 
 @Component({
   selector: 'assoc-audit-info',
   imports: [DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './audit-info.html'
 })
 export class AuditInfo {

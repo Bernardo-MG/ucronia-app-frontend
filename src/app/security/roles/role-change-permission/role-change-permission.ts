@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, Input, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
@@ -8,6 +8,7 @@ import { ButtonModule } from '@openng/optimus-ui/button';
 @Component({
   selector: 'access-role-change-permission',
   imports: [TextFilter, ReactiveFormsModule, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './role-change-permission.html'
 })
 export class RoleChangePermission implements OnChanges {

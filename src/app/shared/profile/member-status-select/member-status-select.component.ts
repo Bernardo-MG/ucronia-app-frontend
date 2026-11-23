@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberStatus } from '@ucronia/domain';
 import { SelectModule } from '@openng/optimus-ui/select';
@@ -6,6 +6,7 @@ import { SelectModule } from '@openng/optimus-ui/select';
 @Component({
   selector: 'assoc-member-status-select',
   imports: [FormsModule, SelectModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-status-select.component.html'
 })
 export class MemberStatusSelectComponent {

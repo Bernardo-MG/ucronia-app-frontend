@@ -1,5 +1,5 @@
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FailureStore } from '@bernardo-mg/request';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -14,6 +14,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'login-password-reset-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, ButtonModule, MessageModule, IconFieldModule, InputIconModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './password-reset-form.html'
 })
 export class PasswordResetForm {

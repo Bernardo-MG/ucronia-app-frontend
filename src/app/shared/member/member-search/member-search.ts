@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SearchSelect } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
 
 @Component({
   selector: 'assoc-member-search',
   imports: [SearchSelect],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-search.html'
 })
 export class MemberSearch<T extends MemberSearchOption = Profile> {

@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
@@ -8,6 +8,7 @@ import { FullProfile } from '../model/full-profile';
 @Component({
   selector: 'assoc-guest-list',
   imports: [ButtonModule, TableModule, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './guest-list.html'
 })
 export class GuestList {

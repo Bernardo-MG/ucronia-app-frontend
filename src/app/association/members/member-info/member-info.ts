@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Member, PublicMember } from '@ucronia/domain';
@@ -10,6 +10,7 @@ import { MembershipDurationPipe } from '../membership-duration.pipe';
 @Component({
   selector: 'assoc-member-info',
   imports: [AuditInfo, DatePipe, DetailField, MembershipDurationPipe, StatusDetail, ButtonModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-info.html'
 })
 export class MemberInfo {

@@ -1,4 +1,4 @@
-import { Component, input, output, ViewChild } from '@angular/core';
+import { Component, input, output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { User } from '@bernardo-mg/authentication';
 import { MenuItem } from '@openng/optimus-ui/api';
@@ -27,6 +27,7 @@ export interface UserDeleteEvent {
     TagModule,
     UserStatusTag
   ],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-list.html'
 })
 export class UserList {

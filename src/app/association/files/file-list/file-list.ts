@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Asset } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -8,6 +8,7 @@ import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 @Component({
   selector: 'assoc-file-list',
   imports: [ButtonModule, DatePipe, TableModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './file-list.html'
 })
 export class FileList {

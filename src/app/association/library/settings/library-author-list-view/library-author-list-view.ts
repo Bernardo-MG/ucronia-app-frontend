@@ -1,6 +1,6 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
 import { NameList } from '@app/shared/data/name-list/name-list';
@@ -18,6 +18,7 @@ import { AuthorService } from '../author-service';
 
 @Component({
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, SettingsInfo],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-author-list-view.html'
 })
 export class LibraryAuthorListView implements OnInit {

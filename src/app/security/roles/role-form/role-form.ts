@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FormStatus } from '@bernardo-mg/form';
@@ -10,6 +10,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'access-role-form',
   imports: [TextFilter, ReactiveFormsModule, InputTextModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './role-form.html'
 })
 export class RoleForm {

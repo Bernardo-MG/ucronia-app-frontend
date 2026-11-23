@@ -1,4 +1,4 @@
-import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
+import { Component, OnChanges, SimpleChanges, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
@@ -10,6 +10,7 @@ import { SelectChangeEvent, SelectModule } from '@openng/optimus-ui/select';
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
   imports: [FormsModule, ButtonModule, SelectModule, CalendarMonthViewComponent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   providers: [
     provideCalendar({
       provide: DateAdapter,

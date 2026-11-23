@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { Profile } from '@ucronia/domain';
 import { AutoComplete } from '@openng/optimus-ui/autocomplete';
 import { MemberSearch } from './member-search';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -93,6 +93,7 @@ describe('MemberSearch', () => {
 
 @Component({
   imports: [MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '<label for="member-picker">Socio</label><assoc-member-search inputId="member-picker" [member]="member" [members]="[]" (clearMember)="member = emptyMember" />'
 })
 class MemberSearchHost {
@@ -124,6 +125,7 @@ describe('MemberSearch selected value', () => {
 
 @Component({
   imports: [ReactiveFormsModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<form [formGroup]="form">
     <assoc-member-search inputId="form-member" [members]="[]"
       (searchMember)="queries.push($event.query)" />

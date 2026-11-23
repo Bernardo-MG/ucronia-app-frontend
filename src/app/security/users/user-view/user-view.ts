@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -22,6 +22,7 @@ import { UserService } from '../user-service';
 @Component({
   selector: 'access-user-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, UserForm, UserInfo, UserList],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-view.html'
 })
 export class UserView implements OnInit {

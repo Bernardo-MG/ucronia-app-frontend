@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -15,6 +15,7 @@ import { PasswordResetService } from '../password-reset-service';
  */
 @Component({
   imports: [CardModule, BlockUIModule, PasswordResetForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './password-reset-view.html'
 })
 export class PasswordResetView {

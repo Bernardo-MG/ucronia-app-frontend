@@ -1,9 +1,10 @@
-import { Component, Input, inject, input } from '@angular/core';
+import { Component, Input, inject, input, ChangeDetectionStrategy } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'ui-teamup-calendar',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './teamup-calendar.html'
 })
 export class TeamupCalendar {

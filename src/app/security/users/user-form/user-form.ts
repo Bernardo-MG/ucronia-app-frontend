@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { Role, User } from '@bernardo-mg/authentication';
@@ -12,6 +12,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'access-user-form',
   imports: [TextFilter, ReactiveFormsModule, InputTextModule, MessageModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-form.html'
 })
 export class UserForm implements OnChanges {

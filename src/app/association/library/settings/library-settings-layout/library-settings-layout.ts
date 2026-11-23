@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -10,6 +10,7 @@ import { librarySettingsOptions } from '../library-settings-permissions';
   selector: 'assoc-library-settings-layout',
   imports: [RouterModule, CardModule, RippleModule],
   templateUrl: './library-settings-layout.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './library-settings-layout.scss'
 })
 export class LibrarySettingsLayout {

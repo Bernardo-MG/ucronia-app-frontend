@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { SECURITY_API_BASE_URL, SecurityClient } from './security-client';
@@ -10,7 +10,7 @@ describe('SecurityClient', () => {
     TestBed.configureTestingModule({
       providers: [
         SecurityClient,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         { provide: SECURITY_API_BASE_URL, useValue: 'http://localhost/api' }
       ]

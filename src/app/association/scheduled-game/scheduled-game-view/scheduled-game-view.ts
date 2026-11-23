@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { DetailRequest } from '@app/shared/request/detail-request';
@@ -25,6 +25,7 @@ import { ScheduledGameService } from '../scheduled-game-service';
 
 @Component({
   imports: [TextFilter, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, ScheduledGameList, ScheduledGameInfo, ScheduledGameForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './scheduled-game-view.html'
 })
 export class ScheduledGameView implements OnInit {

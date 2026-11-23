@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { ContactMethod } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
@@ -6,6 +6,7 @@ import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 @Component({
   selector: 'assoc-contact-method-list',
   imports: [ButtonModule, TableModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './contact-method-list.html'
 })
 export class ContactMethodList {

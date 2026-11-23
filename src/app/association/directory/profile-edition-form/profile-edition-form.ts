@@ -1,7 +1,7 @@
 import { InputGroupModule } from '@openng/optimus-ui/inputgroup';
 import { InputGroupAddonModule } from '@openng/optimus-ui/inputgroupaddon';
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, inject, Input, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -19,6 +19,7 @@ import { FullProfile } from '../model/full-profile';
 @Component({
   selector: 'assoc-profile-edition-form',
   imports: [InputGroupModule, InputGroupAddonModule, CommonModule, FormsModule, ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, MessageModule, ToggleSwitchModule, TextareaModule, SelectModule, SelectButtonModule, SelectModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './profile-edition-form.html'
 })
 export class ProfileEditionForm {

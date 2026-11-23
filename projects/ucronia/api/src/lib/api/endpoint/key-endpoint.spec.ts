@@ -1,4 +1,4 @@
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { KeyEndpoint } from './key-endpoint';
@@ -9,7 +9,7 @@ describe('KeyEndpoint', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()]
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting()]
     });
     endpoint = new KeyEndpoint(TestBed.inject(HttpClient), '/api');
     http = TestBed.inject(HttpTestingController);

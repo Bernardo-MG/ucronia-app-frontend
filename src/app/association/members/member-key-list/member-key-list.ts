@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { TextFilter } from '@bernardo-mg/ui';
 import { KeyAssignment } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -10,6 +10,7 @@ import { TagModule } from '@openng/optimus-ui/tag';
 @Component({
   selector: 'assoc-member-key-list',
   imports: [TextFilter, ButtonModule, CardModule, MessageModule, TableModule, TagModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-key-list.html'
 })
 export class MemberKeyList implements OnChanges {

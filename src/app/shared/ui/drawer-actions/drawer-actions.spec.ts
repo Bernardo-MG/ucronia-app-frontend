@@ -1,4 +1,4 @@
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -7,6 +7,7 @@ import { DrawerActions } from './drawer-actions';
 
 @Component({
   imports: [DrawerActions, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<shared-drawer-actions [showDelete]="false" [showEdit]="false">
     <p-button drawerActionsStart label="Descargar" (onClick)="downloads = downloads + 1" />
     <p-button drawerActionsEnd label="Publicar" (onClick)="publications = publications + 1" />

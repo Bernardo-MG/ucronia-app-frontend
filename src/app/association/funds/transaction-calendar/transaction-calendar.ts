@@ -1,4 +1,4 @@
-import { Component, inject, input, LOCALE_ID, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, input, LOCALE_ID, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { Colors } from '@app/shared/utils/colors';
 import { CalendarMonth } from '@bernardo-mg/ui';
 import { Transaction, TransactionType } from '@ucronia/domain';
@@ -7,6 +7,7 @@ import { CalendarEvent } from 'angular-calendar';
 @Component({
   selector: 'assoc-transaction-calendar',
   imports: [CalendarMonth],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './transaction-calendar.html'
 })
 export class TransactionCalendar implements OnChanges {

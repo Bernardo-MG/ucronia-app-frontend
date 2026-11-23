@@ -1,4 +1,4 @@
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'assoc-library-book-return-form',
   imports: [ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-book-return-form.html'
 })
 export class LibraryBookReturnForm {

@@ -1,6 +1,6 @@
 import { InputGroupModule } from '@openng/optimus-ui/inputgroup';
 import { InputGroupAddonModule } from '@openng/optimus-ui/inputgroupaddon';
-import { Component, inject, input, output, Input } from '@angular/core';
+import { Component, inject, input, output, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'assoc-profile-creation-form',
   imports: [InputGroupModule, InputGroupAddonModule, ReactiveFormsModule, InputTextModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './profile-creation-form.html'
 })
 export class ProfileCreationForm {

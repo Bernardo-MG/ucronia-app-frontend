@@ -1,5 +1,5 @@
 
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { GoogleMaps, TeamupCalendar } from '@bernardo-mg/ui';
 import { Activity, ContactInfo } from '@ucronia/domain';
@@ -11,6 +11,7 @@ import { FrontpageService } from '../frontpage-service';
   selector: 'app-frontpage-frontpage',
   imports: [TeamupCalendar, GoogleMaps, ActivityCarousel],
   templateUrl: './frontpage.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./frontpage.sass']
 })
 export class Frontpage implements OnInit {

@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@an
 import { UserForm } from './user-form';
 import { Role, User } from '@bernardo-mg/authentication';
 import { Profile } from '@ucronia/domain';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FormGroup } from '@angular/forms';
 
@@ -49,6 +49,7 @@ describe('UserForm', () => {
 
 @Component({
   imports: [UserForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<access-user-form formId="user-search" [create]="false" [selection]="[]"
     [member]="profile" [members]="members" [data]="user" (searchMember)="onQuery($event.query)" />`
 })

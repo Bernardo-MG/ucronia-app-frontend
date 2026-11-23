@@ -1,5 +1,5 @@
 import { InputNumberModule } from '@openng/optimus-ui/inputnumber';
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'assoc-fee-type-form',
   imports: [InputNumberModule, ReactiveFormsModule, InputTextModule, MessageModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './fee-type-form.html'
 })
 export class FeeTypeForm {

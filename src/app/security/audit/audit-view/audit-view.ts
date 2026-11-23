@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { AuditLoginList } from '../audit-login-list/audit-login-list';
 @Component({
   selector: 'access-audit-view',
   imports: [AuditLoginList],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './audit-view.html'
 })
 export class AuditView implements OnInit {

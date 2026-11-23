@@ -1,6 +1,6 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-form-actions';
@@ -19,6 +19,7 @@ import { ContactMethodService } from '../contact-method-service';
 @Component({
   selector: 'assoc-contact-method-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, SettingsInfo, DrawerModule, ButtonModule, ContactMethodList, ContactMethodForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './contact-method-view.html'
 })
 export class ContactMethodView implements OnInit {

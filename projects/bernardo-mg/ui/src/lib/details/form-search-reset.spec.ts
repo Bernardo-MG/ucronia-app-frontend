@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
@@ -13,6 +13,7 @@ interface Suggestion { number: number; name: string; }
 @Component({
   imports: [ReactiveFormsModule, SearchSelect, TextFilter],
   selector: 'ui-form-search-test',
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<form [formGroup]="form">
     <input formControlName="record" />
     <ui-search-select inputId="form-author" [value]="selected" [suggestions]="results"
@@ -44,6 +45,7 @@ class SearchFormHost {
 
 @Component({
   imports: [SearchFormHost],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '<ui-form-search-test [record]="record" />'
 })
 class ReusedFormHost {
@@ -54,6 +56,7 @@ class ReusedFormHost {
 
 @Component({
   imports: [FormsModule, SearchSelect],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '<form><ui-search-select inputId="template-search" (queryChange)="queries.push($event)" /></form>'
 })
 class TemplateFormHost {

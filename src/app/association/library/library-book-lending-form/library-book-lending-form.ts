@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
@@ -10,6 +10,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'assoc-library-book-lending-form',
   imports: [ReactiveFormsModule, DatePickerModule, MessageModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-book-lending-form.html'
 })
 export class LibraryBookLendingForm implements OnChanges {
