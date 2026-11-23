@@ -3,8 +3,8 @@ import { Component, input, output } from '@angular/core';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Member, PublicMember } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { MessageModule } from 'primeng/message';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { MessageModule } from '@openng/optimus-ui/message';
 import { MembershipDurationPipe } from '../membership-duration.pipe';
 
 @Component({

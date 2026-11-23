@@ -1,11 +1,11 @@
 import { Component, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { User } from '@bernardo-mg/authentication';
-import { MenuItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { Menu, MenuModule } from 'primeng/menu';
-import { TableModule, TablePageEvent } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
+import { MenuItem } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { Menu, MenuModule } from '@openng/optimus-ui/menu';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
+import { TagModule } from '@openng/optimus-ui/tag';
 import { UserStatusTag } from '../user-status-tag/user-status-tag';
 
 export interface UserStatusChange {

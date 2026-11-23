@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { PublisherService } from './publisher-service';
 

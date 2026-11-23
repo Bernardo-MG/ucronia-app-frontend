@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { MemberCreation, MemberUpdate, UcroniaClient } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({

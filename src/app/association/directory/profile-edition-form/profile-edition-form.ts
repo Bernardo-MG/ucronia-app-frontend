@@ -1,19 +1,19 @@
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputGroupModule } from '@openng/optimus-ui/inputgroup';
+import { InputGroupAddonModule } from '@openng/optimus-ui/inputgroupaddon';
 import { CommonModule } from '@angular/common';
 import { Component, inject, Input, input, output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { ContactMethod, FeeType } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { SelectModule } from 'primeng/select';
-import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
-import { TextareaModule } from 'primeng/textarea';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
+import { MessageModule } from '@openng/optimus-ui/message';
+import { SelectModule } from '@openng/optimus-ui/select';
+import { SelectButtonChangeEvent, SelectButtonModule } from '@openng/optimus-ui/selectbutton';
+import { TextareaModule } from '@openng/optimus-ui/textarea';
+import { ToggleSwitchModule } from '@openng/optimus-ui/toggleswitch';
 import { FullProfile } from '../model/full-profile';
 
 @Component({

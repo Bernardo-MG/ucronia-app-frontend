@@ -2,8 +2,8 @@ import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
-import { CardModule } from 'primeng/card';
-import { SkeletonModule } from 'primeng/skeleton';
+import { CardModule } from '@openng/optimus-ui/card';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 import { FullProfile } from '../model/full-profile';
 
 @Component({

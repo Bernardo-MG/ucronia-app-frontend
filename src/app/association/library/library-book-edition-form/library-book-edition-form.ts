@@ -4,10 +4,10 @@ import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { SearchSelect } from '@bernardo-mg/ui';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, Language, Publisher, Title } from '@ucronia/domain';
-import { DatePickerModule } from 'primeng/datepicker';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
+import { MessageModule } from '@openng/optimus-ui/message';
+import { SelectModule } from '@openng/optimus-ui/select';
 import { LibraryConfig } from '../library-config';
 
 @Component({

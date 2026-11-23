@@ -5,7 +5,7 @@ import { AccountService } from '@app/account/account-service';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
 import { Account, PasswordChange } from '@bernardo-mg/security';
 import { Profile } from '@ucronia/domain';
-import { RippleModule } from 'primeng/ripple';
+import { RippleModule } from '@openng/optimus-ui/ripple';
 import { finalize, switchMap, tap } from 'rxjs';
 import { AccountInfo } from '../account-info/account-info';
 import { AccountProfileInfo } from '../account-profile-info/account-profile-info';

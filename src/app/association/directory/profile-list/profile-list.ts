@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
-import { ButtonModule } from 'primeng/button';
-import { TableModule, TablePageEvent } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
+import { TagModule } from '@openng/optimus-ui/tag';
 import { FullProfile } from '../model/full-profile';
 import { ProfileTypeTag } from '../profile-type-tag/profile-type-tag';
 

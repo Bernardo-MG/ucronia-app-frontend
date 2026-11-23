@@ -1,6 +1,6 @@
 import { Component, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 import { Profiletype } from '../model/profyle-type';
 
 @Component({

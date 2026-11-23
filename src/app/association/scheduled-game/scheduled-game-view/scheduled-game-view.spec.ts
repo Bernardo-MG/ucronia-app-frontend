@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { Page } from '@bernardo-mg/request';
 import { GameTable, Profile, ScheduledGame } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { ScheduledGameService } from '../scheduled-game-service';
 import { ScheduledGameView } from './scheduled-game-view';

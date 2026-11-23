@@ -3,7 +3,7 @@ import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { UserToken } from '@bernardo-mg/authentication';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
-import { CardModule } from 'primeng/card';
+import { CardModule } from '@openng/optimus-ui/card';
 
 @Component({
   selector: 'access-user-token-info',

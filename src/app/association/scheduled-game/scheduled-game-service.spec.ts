@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { ScheduledGameService } from './scheduled-game-service';
 import { Page, Sorting } from '@bernardo-mg/request';

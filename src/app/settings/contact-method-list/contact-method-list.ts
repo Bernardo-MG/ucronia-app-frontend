@@ -1,7 +1,7 @@
 import { Component, input, output } from '@angular/core';
 import { ContactMethod } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 @Component({
   selector: 'assoc-contact-method-list',

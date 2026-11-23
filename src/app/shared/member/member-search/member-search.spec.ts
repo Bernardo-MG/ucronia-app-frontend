@@ -1,7 +1,7 @@
 import { ComponentFixture, fakeAsync, TestBed, tick, flushMicrotasks } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Profile } from '@ucronia/domain';
-import { AutoComplete } from 'primeng/autocomplete';
+import { AutoComplete } from '@openng/optimus-ui/autocomplete';
 import { MemberSearch } from './member-search';
 import { Component } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';

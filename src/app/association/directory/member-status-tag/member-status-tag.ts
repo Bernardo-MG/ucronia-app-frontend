@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { Member } from '@ucronia/domain';
-import { TagModule } from 'primeng/tag';
+import { TagModule } from '@openng/optimus-ui/tag';
 
 @Component({
   selector: 'assoc-member-status-tag',

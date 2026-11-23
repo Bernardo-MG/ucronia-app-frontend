@@ -2,7 +2,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Fee } from '@ucronia/domain';
-import { SkeletonModule } from 'primeng/skeleton';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'assoc-fee-info',

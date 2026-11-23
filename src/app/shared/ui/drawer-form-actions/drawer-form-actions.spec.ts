@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { DrawerModule } from 'primeng/drawer';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
 import { DrawerFormActions } from './drawer-form-actions';
 
 @Component({

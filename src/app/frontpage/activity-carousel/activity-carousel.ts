@@ -2,10 +2,10 @@ import { DatePipe, NgTemplateOutlet } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Activity, ActivityDate } from '@ucronia/domain';
-import { CarouselModule } from 'primeng/carousel';
-import { PopoverModule } from 'primeng/popover';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { SkeletonModule } from 'primeng/skeleton';
+import { CarouselModule } from '@openng/optimus-ui/carousel';
+import { PopoverModule } from '@openng/optimus-ui/popover';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'assoc-activity-carousel',

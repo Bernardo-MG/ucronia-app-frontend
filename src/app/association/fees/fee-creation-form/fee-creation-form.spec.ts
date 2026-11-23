@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FeeCreationForm } from './fee-creation-form';
 import { By } from '@angular/platform-browser';
 import { Profile, PublicMember } from '@ucronia/domain';
-import { AutoComplete } from 'primeng/autocomplete';
+import { AutoComplete } from '@openng/optimus-ui/autocomplete';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';

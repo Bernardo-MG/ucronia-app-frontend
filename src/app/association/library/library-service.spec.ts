@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SecurityClient } from '@bernardo-mg/security';
 import { UcroniaClient } from '@ucronia/api';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { LibraryService } from './library-service';
 import { Page, Sorting } from '@bernardo-mg/request';

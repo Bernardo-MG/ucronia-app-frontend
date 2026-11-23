@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { BookLending, BookType, FictionBook, GameBook, GameSystem, Language } from '@ucronia/domain';
-import { SkeletonModule } from 'primeng/skeleton';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 import { LibraryBookLendings } from '../library-book-lendings/library-book-lendings';
 import { LibraryConfig } from '../library-config';
 

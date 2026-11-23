@@ -5,9 +5,9 @@ import { Role, User } from '@bernardo-mg/authentication';
 import { arrayPage } from '@bernardo-mg/request';
 import { DetailField, StatusDetail } from '@bernardo-mg/ui';
 import { Profile } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 @Component({
   selector: 'access-user-info',

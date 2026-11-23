@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { UcroniaClient } from '@ucronia/api';
 import { Asset } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { ImageService } from './image-service';
 

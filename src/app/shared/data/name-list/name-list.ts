@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
-import { ButtonModule } from 'primeng/button';
-import { PanelModule } from 'primeng/panel';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { PanelModule } from '@openng/optimus-ui/panel';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 @Component({
   selector: 'shared-name-list',

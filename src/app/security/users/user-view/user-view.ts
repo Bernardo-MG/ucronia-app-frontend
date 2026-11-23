@@ -10,9 +10,9 @@ import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions, UserUpdate } from '@bernardo-mg/security';
 import { MemberStatus, Profile } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { Drawer, DrawerModule } from 'primeng/drawer';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { Drawer, DrawerModule } from '@openng/optimus-ui/drawer';
 import { finalize, forkJoin, Observable, of, Subscription, switchMap } from 'rxjs';
 import { UserEditionFormData, UserForm, UserFormData } from '../user-form/user-form';
 import { UserInfo } from '../user-info/user-info';
@@ -255,7 +255,7 @@ export class UserView implements OnInit {
 
   private finishLoading(): void {
     this.loading = false;
-    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    // Async mode changes must refresh Optimus UI's OnPush header/footer outlets.
     this.drawer()?.cd.markForCheck();
   }
 

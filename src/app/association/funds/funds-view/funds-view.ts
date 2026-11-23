@@ -11,12 +11,12 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Transaction, TransactionSummary, TransactionType } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TabsModule } from 'primeng/tabs';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
+import { TabsModule } from '@openng/optimus-ui/tabs';
 import { finalize, Observable, Subject, Subscription } from 'rxjs';
 import { FundsDisplay } from '../funds-display';
 import { TransactionBalanceChartView } from '../transaction-balance-chart-view/transaction-balance-chart-view';

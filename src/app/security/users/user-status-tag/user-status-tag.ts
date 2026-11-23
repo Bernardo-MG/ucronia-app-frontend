@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { User } from '@bernardo-mg/authentication';
-import { TagModule } from 'primeng/tag';
+import { TagModule } from '@openng/optimus-ui/tag';
 
 @Component({
   selector: 'assoc-user-status-tag',

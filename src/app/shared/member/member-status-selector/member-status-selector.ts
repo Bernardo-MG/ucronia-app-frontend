@@ -1,7 +1,7 @@
 import { Component, input, linkedSignal, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberStatus } from '@ucronia/domain';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 
 @Component({
   selector: 'assoc-member-status-selector',

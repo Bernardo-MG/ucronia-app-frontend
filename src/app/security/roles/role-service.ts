@@ -4,7 +4,7 @@ import { ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({

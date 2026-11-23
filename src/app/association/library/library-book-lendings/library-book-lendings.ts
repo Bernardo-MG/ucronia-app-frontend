@@ -2,8 +2,8 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { Component, computed, input, output } from '@angular/core';
 import { BookLending } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { TooltipModule } from 'primeng/tooltip';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { TooltipModule } from '@openng/optimus-ui/tooltip';
 
 registerLocaleData(localeEs);
 

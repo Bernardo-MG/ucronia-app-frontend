@@ -1,10 +1,10 @@
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Component, inject, input } from '@angular/core';
 import { Asset } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
-import { SkeletonModule } from 'primeng/skeleton';
+import { MessageService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 import { ImageContent } from '../image-content/image-content';
 
 @Component({

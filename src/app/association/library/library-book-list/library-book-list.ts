@@ -2,11 +2,11 @@ import { Component, input, output, ViewChild } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { FictionBook, GameBook } from '@ucronia/domain';
-import { MenuItem } from 'primeng/api';
-import { BadgeModule } from 'primeng/badge';
-import { ButtonModule } from 'primeng/button';
-import { Menu, MenuModule } from 'primeng/menu';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { MenuItem } from '@openng/optimus-ui/api';
+import { BadgeModule } from '@openng/optimus-ui/badge';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { Menu, MenuModule } from '@openng/optimus-ui/menu';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 import { Dialog } from '../library-dialog';
 
 @Component({

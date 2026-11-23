@@ -3,7 +3,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FeeTypeService } from '../fee-type-service';
 import { Page } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { FeeTypeView } from './fee-type-view';
 

@@ -2,7 +2,7 @@ import { Component, provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
-import { Button, ButtonModule } from 'primeng/button';
+import { Button, ButtonModule } from '@openng/optimus-ui/button';
 import { DrawerActions } from './drawer-actions';
 
 @Component({

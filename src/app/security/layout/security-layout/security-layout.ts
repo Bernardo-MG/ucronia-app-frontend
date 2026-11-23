@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { SecurityPermissions } from '@bernardo-mg/security';
-import { MenuItem } from 'primeng/api';
-import { CardModule } from 'primeng/card';
-import { RippleModule } from 'primeng/ripple';
+import { MenuItem } from '@openng/optimus-ui/api';
+import { CardModule } from '@openng/optimus-ui/card';
+import { RippleModule } from '@openng/optimus-ui/ripple';
 
 @Component({
   selector: 'layout-security-layout',

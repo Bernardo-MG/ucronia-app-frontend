@@ -2,8 +2,8 @@ import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { DatePickerModule } from 'primeng/datepicker';
-import { MessageModule } from 'primeng/message';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { MessageModule } from '@openng/optimus-ui/message';
 
 @Component({
   selector: 'access-user-token-extend-form',

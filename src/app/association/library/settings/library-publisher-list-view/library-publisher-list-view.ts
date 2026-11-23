@@ -10,9 +10,9 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Publisher } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
 import { finalize, Observable, Subscription } from 'rxjs';
 import { PublisherService } from '../publisher-service';
 

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SecurityClient } from '@bernardo-mg/security';
 import { UcroniaClient } from '@ucronia/api';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { UserService } from '../user-service';
 import { UserView } from './user-view';

@@ -2,8 +2,8 @@ import { FormStatus } from '@bernardo-mg/form';
 
 import { Component, Input, inject, output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
 
 /**
  * Password reset request form component. Dumb component for just handling the form.

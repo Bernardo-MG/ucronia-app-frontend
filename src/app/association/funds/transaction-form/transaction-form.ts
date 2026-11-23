@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Transaction, TransactionType } from '@ucronia/domain';
-import { DatePickerModule } from 'primeng/datepicker';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { MessageModule } from 'primeng/message';
-import { SelectModule } from 'primeng/select';
-import { TextareaModule } from 'primeng/textarea';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { InputNumberModule } from '@openng/optimus-ui/inputnumber';
+import { MessageModule } from '@openng/optimus-ui/message';
+import { SelectModule } from '@openng/optimus-ui/select';
+import { TextareaModule } from '@openng/optimus-ui/textarea';
 
 @Component({
   selector: 'assoc-transaction-form',

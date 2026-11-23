@@ -3,8 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { format, isSameDay, isSameMonth } from 'date-fns';
-import { ButtonModule } from 'primeng/button';
-import { SelectChangeEvent, SelectModule } from 'primeng/select';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { SelectChangeEvent, SelectModule } from '@openng/optimus-ui/select';
 
 @Component({
   selector: 'ui-calendar-month',

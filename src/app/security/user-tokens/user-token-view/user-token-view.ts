@@ -8,8 +8,8 @@ import { DrawerFormActions } from '@app/shared/ui/drawer-form-actions/drawer-for
 import { AuthService, UserToken } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
-import { ButtonModule } from 'primeng/button';
-import { DrawerModule } from 'primeng/drawer';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
 import { finalize, Observable, Subscription } from 'rxjs';
 import { UserTokenExtendForm } from '../user-token-extend-form/user-token-extend-form';
 import { UserTokenInfo } from '../user-token-info/user-token-info';

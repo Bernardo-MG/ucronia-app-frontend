@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { TransactionMonthlyBalance } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
-import { Select } from 'primeng/select';
+import { Select } from '@openng/optimus-ui/select';
 import { BehaviorSubject, combineLatest, defer, finalize, Observable, startWith, switchMap } from 'rxjs';
 import { TransactionBalanceService } from '../transaction-balance-service';
 

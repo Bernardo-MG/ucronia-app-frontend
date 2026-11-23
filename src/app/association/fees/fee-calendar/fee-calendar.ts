@@ -1,12 +1,12 @@
 import { Component, computed, input, linkedSignal, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { eachMonthOfInterval, isValid, NormalizedInterval, startOfMonth, subMonths } from 'date-fns';
-import { BadgeModule } from 'primeng/badge';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { SelectButtonModule } from 'primeng/selectbutton';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
+import { BadgeModule } from '@openng/optimus-ui/badge';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
+import { TableModule } from '@openng/optimus-ui/table';
+import { TooltipModule } from '@openng/optimus-ui/tooltip';
 import { MemberFees, MemberFeesFee } from '../domain/member-fees';
 
 export const DEFAULT_FEE_CALENDAR_MONTHS = 6;

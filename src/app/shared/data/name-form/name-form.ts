@@ -2,8 +2,8 @@ import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus, notEmptyStringValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
+import { MessageModule } from '@openng/optimus-ui/message';
 
 @Component({
   selector: 'shared-name-form',

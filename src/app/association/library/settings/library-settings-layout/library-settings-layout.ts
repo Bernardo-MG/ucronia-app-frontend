@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { CardModule } from 'primeng/card';
-import { RippleModule } from 'primeng/ripple';
+import { CardModule } from '@openng/optimus-ui/card';
+import { RippleModule } from '@openng/optimus-ui/ripple';
 import { librarySettingsOptions } from '../library-settings-permissions';
 
 @Component({

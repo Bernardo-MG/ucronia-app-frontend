@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
-import { MenuItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
+import { MenuItem } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { MenuModule } from '@openng/optimus-ui/menu';
 
 @Component({
   selector: 'layout-account-dropdown',

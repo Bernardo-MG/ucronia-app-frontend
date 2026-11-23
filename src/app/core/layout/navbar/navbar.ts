@@ -1,9 +1,9 @@
 import { Component, inject, output } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
-import { ButtonModule } from 'primeng/button';
-import { MenuModule } from 'primeng/menu';
-import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { MenuModule } from '@openng/optimus-ui/menu';
+import { MenubarModule } from '@openng/optimus-ui/menubar';
 import { AccountDropdown } from '../account-dropdown/account-dropdown';
 import { LayoutService } from '../layout-service';
 

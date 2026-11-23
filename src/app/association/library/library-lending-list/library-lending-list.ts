@@ -3,8 +3,8 @@ import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { BookLending } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 @Component({
   selector: 'assoc-library-lending-list',
