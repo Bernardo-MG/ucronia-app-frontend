@@ -48,6 +48,7 @@ describe('DetailRequest', () => {
     let loading = true;
     response.pipe(finalize(() => loading = false), request.untilCancelled()).subscribe();
     request.cancel();
+    expect(loading).toBe(false);
     loading = true;
     response.next('late');
     expect(loading).toBe(true);
