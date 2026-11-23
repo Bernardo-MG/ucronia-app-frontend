@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnChanges, SimpleChanges, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CalendarEvent, CalendarMonthViewComponent, CalendarMonthViewDay, DateAdapter, provideCalendar } from 'angular-calendar';
@@ -10,7 +9,7 @@ import { SelectChangeEvent, SelectModule } from 'primeng/select';
 @Component({
   selector: 'ui-calendar-month',
   templateUrl: './calendar-month.html',
-  imports: [CommonModule, FormsModule, ButtonModule, SelectModule, CalendarMonthViewComponent],
+  imports: [FormsModule, ButtonModule, SelectModule, CalendarMonthViewComponent],
   providers: [
     provideCalendar({
       provide: DateAdapter,
