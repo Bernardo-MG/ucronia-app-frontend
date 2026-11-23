@@ -7,8 +7,7 @@
   "peerDependencies": {
     "@angular/common": "^22.0.0",
     "@angular/core": "^22.0.0",
-    "@openng/optimus-ui": "^2.0.2",
-    "@openng/optimus-ui-themes": "^2.0.2"
+    "@openng/optimus-ui": "^2.0.2"
   },
   "sideEffects": false
 }
