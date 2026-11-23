@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -12,6 +12,7 @@ import { TextareaModule } from '@openng/optimus-ui/textarea';
 @Component({
   selector: 'assoc-transaction-form',
   imports: [ReactiveFormsModule, TextareaModule, DatePickerModule, InputNumberModule, MessageModule, SelectModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './transaction-form.html'
 })
 export class TransactionForm {

@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -17,6 +17,7 @@ import { ToggleSwitchModule } from '@openng/optimus-ui/toggleswitch';
 @Component({
   selector: 'assoc-member-creation-form',
   imports: [ReactiveFormsModule, ButtonModule, DatePickerModule, InputGroupModule, InputGroupAddonModule, InputTextModule, MessageModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-creation-form.html'
 })
 export class MemberCreationForm {

@@ -30,7 +30,7 @@ describe('UserActivationForm', () => {
   describe('form status', () => {
 
     it('should have an invalid form by default', () => {
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have a valid form when the passwords match and are not empty', () => {
@@ -39,7 +39,7 @@ describe('UserActivationForm', () => {
       component.form.markAsDirty();
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeTrue();
+      expect(component.form.valid).toBe(true);
     });
 
     it('should have an invalid form when the passwords don\'t match', () => {
@@ -48,7 +48,7 @@ describe('UserActivationForm', () => {
       component.form.markAsDirty();
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have an invalid form when both passwords are empty', () => {
@@ -57,7 +57,7 @@ describe('UserActivationForm', () => {
       component.form.markAsDirty();
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have an invalid form when the first password is empty', () => {
@@ -66,7 +66,7 @@ describe('UserActivationForm', () => {
       component.form.markAsDirty();
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have an invalid form when the second password is empty', () => {
@@ -75,7 +75,7 @@ describe('UserActivationForm', () => {
       component.form.markAsDirty();
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
   });
@@ -99,7 +99,7 @@ describe('UserActivationForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('form button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
     it('should disable the form button when the form is invalid and waiting', () => {
@@ -110,7 +110,7 @@ describe('UserActivationForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('form button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
   });

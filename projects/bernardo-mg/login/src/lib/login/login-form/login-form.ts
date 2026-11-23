@@ -1,5 +1,5 @@
 import { FormStatus } from '@bernardo-mg/form';
-import { Component, Input, inject, input, output } from '@angular/core';
+import { Component, Input, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { CheckboxModule } from '@openng/optimus-ui/checkbox';
@@ -14,6 +14,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'login-form',
   imports: [ReactiveFormsModule, CheckboxModule, InputTextModule, ButtonModule, MessageModule, IconFieldModule, InputIconModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './login-form.html'
 })
 export class LoginForm {

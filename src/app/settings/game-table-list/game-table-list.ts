@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { GameTable } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 @Component({
   selector: 'assoc-game-table-list', imports: [ButtonModule, TableModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './game-table-list.html'
 })
 export class GameTableList {

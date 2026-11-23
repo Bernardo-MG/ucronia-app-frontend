@@ -31,7 +31,7 @@ describe('PasswordResetForm', () => {
   describe('form status', () => {
 
     it('should have an invalid form by default', () => {
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have a valid form when the passwords match and are not empty', () => {
@@ -39,7 +39,7 @@ describe('PasswordResetForm', () => {
       component.form.get('confirmPassword')?.setValue('password');
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeTrue();
+      expect(component.form.valid).toBe(true);
     });
 
     it('should have an invalid form when the passwords don\'t match', () => {
@@ -47,7 +47,7 @@ describe('PasswordResetForm', () => {
       component.form.get('confirmPassword')?.setValue('password');
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have an invalid form when both passwords are empty', () => {
@@ -55,7 +55,7 @@ describe('PasswordResetForm', () => {
       component.form.get('confirmPassword')?.setValue('');
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have an invalid form when the first password is empty', () => {
@@ -63,7 +63,7 @@ describe('PasswordResetForm', () => {
       component.form.get('confirmPassword')?.setValue('password');
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
     it('should have an invalid form when the second password is empty', () => {
@@ -71,7 +71,7 @@ describe('PasswordResetForm', () => {
       component.form.get('confirmPassword')?.setValue('');
       fixture.detectChanges();
 
-      expect(component.form.valid).toBeFalse();
+      expect(component.form.valid).toBe(false);
     });
 
   });
@@ -94,7 +94,7 @@ describe('PasswordResetForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('form button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
     it('should disable the form button when the form is invalid and waiting', () => {
@@ -104,7 +104,7 @@ describe('PasswordResetForm', () => {
       fixture.detectChanges();
 
       const button = fixture.debugElement.nativeElement.querySelector('form button');
-      expect(button.hasAttribute('disabled')).toBeTrue();
+      expect(button.hasAttribute('disabled')).toBe(true);
     });
 
   });
@@ -115,7 +115,7 @@ describe('PasswordResetForm', () => {
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('password');
       component.form.markAsDirty()
-      fixture.detectChanges();
+      ; fixture.detectChanges();
 
       expect(component.isPasswordsMatching()).toEqual(true);
     });
@@ -124,7 +124,7 @@ describe('PasswordResetForm', () => {
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('password');
       component.form.markAsDirty()
-      fixture.detectChanges();
+      ; fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
       expect(button.disabled).toEqual(false);
@@ -134,7 +134,7 @@ describe('PasswordResetForm', () => {
       component.form.get('password')?.setValue('abc');
       component.form.get('confirmPassword')?.setValue('password');
       component.form.markAsDirty()
-      fixture.detectChanges();
+      ; fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
       expect(button.disabled).toEqual(true);
@@ -144,7 +144,7 @@ describe('PasswordResetForm', () => {
       component.form.get('password')?.setValue('');
       component.form.get('confirmPassword')?.setValue('');
       component.form.markAsDirty()
-      fixture.detectChanges();
+      ; fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
       expect(button.disabled).toEqual(true);
@@ -154,7 +154,7 @@ describe('PasswordResetForm', () => {
       component.form.get('password')?.setValue('');
       component.form.get('confirmPassword')?.setValue('password');
       component.form.markAsDirty()
-      fixture.detectChanges();
+      ; fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
       expect(button.disabled).toEqual(true);
@@ -164,7 +164,7 @@ describe('PasswordResetForm', () => {
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('');
       component.form.markAsDirty()
-      fixture.detectChanges();
+      ; fixture.detectChanges();
 
       const button = fixture.nativeElement.querySelector('form button');
       expect(button.disabled).toEqual(true);
@@ -231,7 +231,7 @@ describe('PasswordResetForm', () => {
   describe('output', () => {
 
     it('should emit save when submitting a valid form', () => {
-      spyOn(component.save, 'emit');
+      vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
       component.form.get('password')?.setValue('password');
       component.form.get('confirmPassword')?.setValue('password');
@@ -245,7 +245,7 @@ describe('PasswordResetForm', () => {
     });
 
     it('should not emit save when submitting an invalid form', () => {
-      spyOn(component.save, 'emit');
+      vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
       component.form.get('password')?.setValue('abc');
       component.form.get('confirmPassword')?.setValue('password');

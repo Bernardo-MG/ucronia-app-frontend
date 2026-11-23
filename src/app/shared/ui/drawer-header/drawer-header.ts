@@ -1,8 +1,9 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'shared-drawer-header',
   templateUrl: './drawer-header.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'block min-w-0' }
 })
 export class DrawerHeader {

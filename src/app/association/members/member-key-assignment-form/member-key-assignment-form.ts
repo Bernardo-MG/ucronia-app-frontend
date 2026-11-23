@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
@@ -9,6 +9,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'assoc-member-key-assignment-form',
   imports: [ReactiveFormsModule, MessageModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-key-assignment-form.html'
 })
 export class MemberKeyAssignmentForm {

@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, viewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ContactMethodService } from '@app/settings/contact-method-service';
@@ -37,6 +37,7 @@ import { PublicMemberService } from '../public-member-service';
 @Component({
   selector: 'assoc-public-member-view',
   imports: [TextFilter, MemberCreationForm, MemberEditionForm, MemberInfo, MemberStatusSelector, PublicMemberList, MemberKeyAssignmentForm, MemberKeyForm, MemberKeyInfo, MemberKeyList, DrawerActions, DrawerFormActions, DrawerHeader, FormsModule, TabsModule, DrawerModule, ButtonModule, MessageModule, CardModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './public-member-view.html'
 })
 export class PublicMemberView implements OnInit {

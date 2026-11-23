@@ -1,4 +1,4 @@
-import { Component, inject, input, OnChanges, output, SimpleChanges, Input } from '@angular/core';
+import { Component, inject, input, OnChanges, output, SimpleChanges, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -17,6 +17,7 @@ export interface ImageFormData {
 @Component({
   selector: 'assoc-image-form',
   imports: [InputTextModule, MessageModule, ReactiveFormsModule, SelectModule, TextareaModule, ToggleSwitchModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './image-form.html'
 })
 export class ImageForm implements OnChanges {

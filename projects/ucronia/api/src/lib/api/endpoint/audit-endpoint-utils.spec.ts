@@ -31,19 +31,24 @@ function record() {
   };
 }
 
-function expectAudit(value: { audit?: AuditDetails | null }) {
-  expect(value.audit?.createdAt instanceof Date).toBeTrue();
-  expect(value.audit?.updatedAt instanceof Date).toBeTrue();
+function expectAudit(value: { audit?: AuditDetails | null ; }) {
+  expect(value.audit?.createdAt instanceof Date).toBe(true);
+  expect(value.audit?.updatedAt instanceof Date).toBe(true);
   expect(value.audit?.createdAt?.toISOString()).toBe(new Date(instant).toISOString());
   expect(value.audit?.createdBy?.username).toBe('creator');
   expect(value.audit?.updatedBy?.email).toBe('editor@example.com');
 }
 
 describe('Audit response mapping', () => {
-  let http: jasmine.SpyObj<HttpClient>;
+  let http: HttpClient;
 
   beforeEach(() => {
-    http = jasmine.createSpyObj<HttpClient>('HttpClient', ['get', 'post', 'put', 'patch', 'delete']);
+    http = new HttpClient({
+      handle: () => { throw new Error('Unexpected HTTP request in audit response test'); }
+    });
+    vi.spyOn(http, 'get');
+    vi.spyOn(http, 'put');
+    vi.spyOn(http, 'delete');
   });
 
   const factories = {
@@ -62,31 +67,31 @@ describe('Audit response mapping', () => {
 
   Object.entries(factories).forEach(([name, factory]) => {
     it(`normalizes ${name} detail responses and preserves audit users`, () => {
-      http.get.and.returnValue(of({ content: record() }));
-      (factory(http).get(1) as Observable<{ audit?: AuditDetails }>).subscribe(expectAudit);
+      vi.mocked(http.get).mockReturnValue(of({ content: record() }));
+      (factory(http).get(1) as Observable<{ audit?: AuditDetails ; }>).subscribe(expectAudit);
     });
 
     it(`normalizes ${name} delete responses`, () => {
-      http.delete.and.returnValue(of({ content: record() }));
-      (factory(http).delete(1) as Observable<{ audit?: AuditDetails }>).subscribe(expectAudit);
+      vi.mocked(http.delete).mockReturnValue(of({ content: record() }));
+      (factory(http).delete(1) as Observable<{ audit?: AuditDetails ; }>).subscribe(expectAudit);
     });
 
     it(`normalizes ${name} page responses and preserves pagination`, () => {
-      http.get.and.returnValue(of({ content: [record()], totalElements: 1 }));
+      vi.mocked(http.get).mockReturnValue(of({ content: [record()], totalElements: 1 }));
       const endpoint = factory(http);
       // Transaction filters are positional and required by its existing signature.
       const result = endpoint instanceof TransactionEndpoint
         ? endpoint.page(1, undefined, undefined, undefined, undefined, undefined)
         : endpoint.page(1);
-      (result as Observable<{ content: { audit?: AuditDetails }[] }>).subscribe(page => {
+      (result as Observable<{ content: { audit?: AuditDetails ; }[] ; }>).subscribe(page => {
         expectAudit(page.content[0]);
-        expect((page as unknown as { totalElements: number }).totalElements).toBe(1);
+        expect((page as unknown as { totalElements: number ; }).totalElements).toBe(1);
       });
     });
   });
 
   it('normalizes profile conversion responses', () => {
-    http.put.and.returnValue(of({ content: record() }));
+    vi.mocked(http.put).mockReturnValue(of({ content: record() }));
     const endpoint = new ProfileEndpoint(http, '/api').transform;
     endpoint.toMember(1, 2).subscribe(expectAudit);
     endpoint.toGuest(1).subscribe(expectAudit);
@@ -95,33 +100,33 @@ describe('Audit response mapping', () => {
 
   it('normalizes settings lists and updates', () => {
     const endpoint = new SettingEndpoint(http, '/api');
-    http.get.and.returnValue(of({ content: [record()] }));
+    vi.mocked(http.get).mockReturnValue(of({ content: [record()] }));
     endpoint.getAll().subscribe(values => expectAudit(values[0]));
-    http.put.and.returnValue(of({ content: record() }));
+    vi.mocked(http.put).mockReturnValue(of({ content: record() }));
     endpoint.update('code', { value: 'value' }).subscribe(expectAudit);
   });
 
   it('normalizes linked user profiles', () => {
-    http.get.and.returnValue(of({ content: record() }));
+    vi.mocked(http.get).mockReturnValue(of({ content: record() }));
     new UserProfileEndpoint(http, '/api').get('creator').subscribe(expectAudit);
   });
 
   it('normalizes lending pages and nested book lending audits', () => {
     const endpoint = new LibraryEndpoint(http, '/api');
-    http.get.and.returnValue(of({ content: [record()] }));
+    vi.mocked(http.get).mockReturnValue(of({ content: [record()] }));
     endpoint.lending.page(1).subscribe(page => {
       expectAudit(page.content[0]);
-      expect(page.content[0].lendingDate instanceof Date).toBeTrue();
+      expect(page.content[0].lendingDate instanceof Date).toBe(true);
     });
-    http.get.and.returnValue(of({ content: record() }));
+    vi.mocked(http.get).mockReturnValue(of({ content: record() }));
     endpoint.gameBook.get(1).subscribe(book => {
-      expect(book.lendings[0].audit?.createdAt instanceof Date).toBeTrue();
-      expect(book.lendings[0].audit?.updatedAt instanceof Date).toBeTrue();
+      expect(book.lendings[0].audit?.createdAt instanceof Date).toBe(true);
+      expect(book.lendings[0].audit?.updatedAt instanceof Date).toBe(true);
     });
   });
 
   it('preserves missing and null audit metadata', () => {
-    const absent: { audit?: AuditDetails } = {};
+    const absent: { audit?: AuditDetails ; } = {};
     const nullAudit = { audit: null };
     const nullDates = { audit: { createdAt: null, updatedAt: null } };
     expect(mapAudit(absent)).toBe(absent);

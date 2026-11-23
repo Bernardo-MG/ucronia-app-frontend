@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { BookLending } from '@ucronia/domain';
@@ -9,6 +9,7 @@ import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 @Component({
   selector: 'assoc-library-lending-list',
   imports: [TableModule, DatePipe, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-lending-list.html'
 })
 export class LibraryLendingList {

@@ -1,4 +1,4 @@
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
@@ -7,6 +7,7 @@ import { DrawerFormActions } from './drawer-form-actions';
 
 @Component({
   imports: [DrawerModule, DrawerFormActions, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<p-drawer [visible]="visible" position="right">
     <form id="external-drawer-form" [formGroup]="form" (ngSubmit)="submissions = submissions + 1">
       <input formControlName="name" />
@@ -29,6 +30,7 @@ class ExternalFormHost {
 
 @Component({
   imports: [DrawerFormActions, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<form [formGroup]="form" (ngSubmit)="submissions = submissions + 1">
     <shared-drawer-form-actions [showCancel]="false" submitLabel="Guardar cambios" />
   </form>`
@@ -72,8 +74,8 @@ describe('DrawerFormActions', () => {
     expect(button('submit').closest('.p-drawer-content')).toBeNull();
     expect(button('submit').form).toBe(document.querySelector<HTMLFormElement>('#external-drawer-form'));
     expect(button('submit').textContent).toContain('Crear llave');
-    expect(button('submit').classList.contains('h-11')).toBeTrue();
-    expect(button('cancel').classList.contains('h-11')).toBeTrue();
+    expect(button('submit').classList.contains('h-11')).toBe(true);
+    expect(button('cancel').classList.contains('h-11')).toBe(true);
   });
 
   it('blocks invalid submissions and submits the associated valid form exactly once', () => {
@@ -98,8 +100,8 @@ describe('DrawerFormActions', () => {
     fixture.componentInstance.loading = true;
     fixture.changeDetectorRef.markForCheck();
     fixture.detectChanges();
-    expect(button('submit').disabled).toBeTrue();
-    expect(button('cancel').disabled).toBeTrue();
+    expect(button('submit').disabled).toBe(true);
+    expect(button('cancel').disabled).toBe(true);
     button('submit').click();
     button('cancel').click();
     expect(fixture.componentInstance.submissions).toBe(0);

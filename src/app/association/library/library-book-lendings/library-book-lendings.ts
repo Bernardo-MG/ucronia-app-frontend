@@ -1,6 +1,6 @@
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
-import { Component, computed, input, output } from '@angular/core';
+import { Component, computed, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { BookLending } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { TooltipModule } from '@openng/optimus-ui/tooltip';
@@ -11,6 +11,7 @@ registerLocaleData(localeEs);
   selector: 'assoc-library-book-lendings',
   imports: [DatePipe, ButtonModule, TooltipModule],
   templateUrl: './library-book-lendings.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './library-book-lendings.scss'
 })
 export class LibraryBookLendings {

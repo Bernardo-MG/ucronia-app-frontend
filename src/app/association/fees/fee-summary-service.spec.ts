@@ -8,7 +8,7 @@ describe('FeeSummaryService', () => {
 
   const mockUcroniaClient = {
     fee: {
-      summary: jasmine.createSpy().and.returnValue(of({}))
+      summary: vi.fn().mockReturnValue(of({}))
     }
   };
 

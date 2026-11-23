@@ -12,11 +12,11 @@ describe('RoleView', () => {
 
   const securityClientMock = {
     role: {
-      create: jasmine.createSpy().and.returnValue(of({})),
-      update: jasmine.createSpy().and.returnValue(of({})),
-      get: jasmine.createSpy().and.returnValue(of({})),
-      delete: jasmine.createSpy().and.returnValue(of({})),
-      page: jasmine.createSpy().and.returnValue(of({
+      create: vi.fn().mockReturnValue(of({})),
+      update: vi.fn().mockReturnValue(of({})),
+      get: vi.fn().mockReturnValue(of({})),
+      delete: vi.fn().mockReturnValue(of({})),
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,

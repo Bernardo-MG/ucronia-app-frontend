@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
 import { ButtonModule } from '@openng/optimus-ui/button';
 
@@ -6,6 +6,7 @@ import { ButtonModule } from '@openng/optimus-ui/button';
   selector: 'shared-drawer-form-actions',
   imports: [ButtonModule, DrawerActions],
   templateUrl: './drawer-form-actions.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   host: { class: 'block w-full' }
 })
 export class DrawerFormActions {

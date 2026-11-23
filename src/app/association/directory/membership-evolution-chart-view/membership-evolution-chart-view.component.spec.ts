@@ -7,13 +7,14 @@ describe('MembershipEvolutionChartView', () => {
   let component: MembershipEvolutionChartView;
   let fixture: ComponentFixture<MembershipEvolutionChartView>;
 
-  const membershipEvolutionServiceMock = jasmine.createSpyObj<MembershipEvolutionService>(
-    'MembershipEvolutionService',
-    ['monthly']
-  );
+  const membershipEvolutionServiceMock = {
+    monthly: vi.fn(
+
+  ).mockName("MembershipEvolutionService.monthly")
+};
 
   beforeEach(() => {
-    membershipEvolutionServiceMock.monthly.and.returnValue(
+    membershipEvolutionServiceMock.monthly.mockReturnValue(
       of([])
     );
 

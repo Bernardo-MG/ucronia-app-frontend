@@ -8,8 +8,8 @@ describe('TransactionBalanceService', () => {
 
   const mockUcroniaClient = {
     transaction: {
-      summary: jasmine.createSpy().and.returnValue(of({})),
-      monthlyBalance: jasmine.createSpy().and.returnValue(of({}))
+      summary: vi.fn().mockReturnValue(of({})),
+      monthlyBalance: vi.fn().mockReturnValue(of({}))
     }
   };
 

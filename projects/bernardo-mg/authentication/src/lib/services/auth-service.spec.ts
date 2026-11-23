@@ -1,4 +1,4 @@
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
@@ -15,7 +15,7 @@ describe('AuthService', () => {
       imports: [],
       providers: [
         AuthService,
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         provideRouter([])
       ]
@@ -35,16 +35,16 @@ describe('AuthService', () => {
   });
 
   it('should log out and clear local storage', () => {
-    spyOn(localStorage, 'removeItem');
+    const removeItem = vi.spyOn(Storage.prototype, 'removeItem');
     service.logout();
-    expect(localStorage.removeItem).toHaveBeenCalledWith('securityDetails');
+    expect(removeItem).toHaveBeenCalledWith('securityDetails');
     service.securityDetails
-      .subscribe(details => expect(details.logged).toBeFalse());
+      .subscribe(details => expect(details.logged).toBe(false));
   });
 
   it('should store security details and token when set to store', () => {
     const storedDetails = service.setDetails(true, token, true);
-    expect(storedDetails.logged).toBeTrue();
+    expect(storedDetails.logged).toBe(true);
     expect(storedDetails.token).toBe(token);
     expect(storedDetails.username).toBe('testUser');
     expect(storedDetails.permissions).toBeInstanceOf(PermissionList);
@@ -53,54 +53,54 @@ describe('AuthService', () => {
   });
 
   it('should remove security details and token when set to not store', () => {
-    spyOn(localStorage, 'removeItem');
+    const removeItem = vi.spyOn(Storage.prototype, 'removeItem');
 
     service.setDetails(true, token, false);
-    expect(localStorage.removeItem).toHaveBeenCalledWith('securityDetails');
+    expect(removeItem).toHaveBeenCalledWith('securityDetails');
   });
 
   it('should return correct login status when logged in', () => {
     service.setDetails(true, token, false);
-    expect(service.logged).toBeTrue();
+    expect(service.logged).toBe(true);
   });
 
   it('should validate the user has an existing resource and action', () => {
     service.setDetails(true, token, false);
-    expect(service.hasPermission({ resource: 'resource', action: 'action' })).toBeTrue();
+    expect(service.hasPermission({ resource: 'resource', action: 'action' })).toBe(true);
   });
 
   it('should validate the user does not have an existing resource with a not existing action', () => {
     service.setDetails(true, token, false);
-    expect(service.hasPermission({ resource: 'resource', action: 'invalidAction' })).toBeFalse();
+    expect(service.hasPermission({ resource: 'resource', action: 'invalidAction' })).toBe(false);
   });
 
   it('should validate the user does not have an existing resource and action', () => {
     service.setDetails(true, token, false);
-    expect(service.hasPermission({ resource: 'invalidResource', action: 'action' })).toBeFalse();
+    expect(service.hasPermission({ resource: 'invalidResource', action: 'action' })).toBe(false);
   });
 
   it('should load details from local storage', () => {
     const storedUser = new SecurityDetails(true);
     storedUser.token = token
-    localStorage.setItem('securityDetails', JSON.stringify(storedUser));
+    ; localStorage.setItem('securityDetails', JSON.stringify(storedUser));
 
     service['loadDetails']();
     service.securityDetails.subscribe(details => {
-      expect(details.logged).toBeTrue();
+      expect(details.logged).toBe(true);
       expect(details.token).toBe(token);
     });
   });
 
   it('should clear security details if the token is expired', () => {
-    spyOn(service['jwtHelper'], 'isTokenExpired').and.returnValue(Promise.resolve(true));
-    spyOn(service.securityDetails, 'subscribe').and.callThrough();
+    vi.spyOn(service['jwtHelper'], 'isTokenExpired').mockResolvedValue(true);
+    vi.spyOn(service.securityDetails, 'subscribe');
 
     service.setDetails(true, token, true);
 
     (service as any).checkTokenExpiration();
 
     service.securityDetails.subscribe(details => {
-      expect(details.logged).toBeFalse();
+      expect(details.logged).toBe(false);
       expect(details.token).toBe('');
     });
   });

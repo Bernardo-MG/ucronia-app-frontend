@@ -44,25 +44,27 @@ describe('MemberKeyList', () => {
   });
 
   it('should emit the key selected from the row action', () => {
-    const show = spyOn(component.show, 'emit');
+    const show = vi.spyOn(component.show, 'emit').mockReturnValue(undefined);
     const button = fixture.nativeElement.querySelector('tbody tr p-button button') as HTMLButtonElement;
 
     button.click();
 
-    expect(show).toHaveBeenCalledOnceWith(component.data()[0]);
+    expect(show).toHaveBeenCalledTimes(1);
+
+    expect(show).toHaveBeenCalledWith(component.data()[0]);
     expect(fixture.nativeElement.querySelector('assoc-member-key-info')).toBeNull();
   });
 
   it('disables unsupported local search and shows all backend results', () => {
     const input = fixture.nativeElement.querySelector('input[type="search"]');
-    expect(input.disabled).toBeTrue();
+    expect(input.disabled).toBe(true);
     expect(input.placeholder).toBe('Búsqueda no disponible');
     expect(fixture.nativeElement.querySelector('p-select')).toBeNull();
     expect(fixture.nativeElement.querySelectorAll('tbody tr').length).toBe(2);
   });
 
   it('should emit retry requests without loading data itself', () => {
-    const retry = spyOn(component.retry, 'emit');
+    const retry = vi.spyOn(component.retry, 'emit').mockReturnValue(undefined);
     fixture.componentRef.setInput('error', true);
     fixture.detectChanges();
     const button = fixture.nativeElement.querySelector('button') as HTMLButtonElement;

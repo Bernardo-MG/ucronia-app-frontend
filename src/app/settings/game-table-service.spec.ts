@@ -6,10 +6,10 @@ import { GameTableService } from './game-table-service';
 
 describe('GameTableService', () => {
   const client = { gameTable: {
-    page: jasmine.createSpy().and.returnValue(of({ content: [] })),
-    create: jasmine.createSpy().and.returnValue(of({})),
-    update: jasmine.createSpy().and.returnValue(of({})),
-    delete: jasmine.createSpy().and.returnValue(of({}))
+    page: vi.fn().mockReturnValue(of({ content: [] })),
+    create: vi.fn().mockReturnValue(of({})),
+    update: vi.fn().mockReturnValue(of({})),
+    delete: vi.fn().mockReturnValue(of({}))
   } };
 
   beforeEach(() => TestBed.configureTestingModule({ providers: [

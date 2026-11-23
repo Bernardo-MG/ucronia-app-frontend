@@ -11,8 +11,8 @@ describe('AccessUserActivateService', () => {
   const mockSecurityClient = {
     user: {
       onboarding: {
-        activate: jasmine.createSpy().and.returnValue(of({ content: {} as User })),
-        validateToken: jasmine.createSpy().and.returnValue(of({ content: {} as UserTokenStatus }))
+        activate: vi.fn().mockReturnValue(of({ content: {} as User })),
+        validateToken: vi.fn().mockReturnValue(of({ content: {} as UserTokenStatus }))
       }
     }
   };
@@ -43,17 +43,17 @@ describe('AccessUserActivateService', () => {
         .toHaveBeenCalledWith(token, { password });
     });
 
-    it('should call create with Password', (done) => {
+    it('should call create with Password', async () => {
       const token = 'token';
       const password = 'password';
 
       const mockResponse = new SimpleResponse<User>(new User());
 
-      mockSecurityClient.user.onboarding.activate.and.returnValue(of(mockResponse));
+      mockSecurityClient.user.onboarding.activate.mockReturnValue(of(mockResponse));
 
       service.activateUser(token, password).subscribe(res => {
         expect(res).toEqual(mockResponse);
-        done();
+        ;
       });
     });
 
@@ -70,16 +70,16 @@ describe('AccessUserActivateService', () => {
         .toHaveBeenCalledWith(token);
     });
 
-    it('should call read and return UserTokenStatus', (done) => {
+    it('should call read and return UserTokenStatus', async () => {
       const token = 'token';
 
       const mockResponse = new SimpleResponse<UserTokenStatus>(new UserTokenStatus(true, 'username'));
 
-      mockSecurityClient.user.onboarding.validateToken.and.returnValue(of(mockResponse));
+      mockSecurityClient.user.onboarding.validateToken.mockReturnValue(of(mockResponse));
 
       service.validateToken(token).subscribe(res => {
         expect(res).toEqual(mockResponse);
-        done();
+        ;
       });
     });
 

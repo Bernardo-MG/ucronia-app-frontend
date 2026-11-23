@@ -1,9 +1,10 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { TagModule } from '@openng/optimus-ui/tag';
 
 @Component({
   selector: 'assoc-profile-type-tag',
   imports: [TagModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './profile-type-tag.html'
 })
 export class ProfileTypeTag {

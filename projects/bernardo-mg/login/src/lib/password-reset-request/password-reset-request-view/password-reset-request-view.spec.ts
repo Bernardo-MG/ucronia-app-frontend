@@ -14,7 +14,7 @@ describe('PasswordResetRequest', () => {
   const mockSecurityClient = {
     password: {
       reset: {
-        requestReset: jasmine.createSpy().and.returnValue(of({}))
+        requestReset: vi.fn().mockReturnValue(of({}))
       }
     }
   };
@@ -83,7 +83,7 @@ describe('PasswordResetRequest', () => {
   describe('password reset', () => {
 
     it('should call service', () => {
-      const spy = spyOn(service, 'requestPasswordReset').and.returnValue(of(undefined));
+      const spy = vi.spyOn(service, 'requestPasswordReset').mockReturnValue(of(undefined));
       const email = 'test@example.com';
 
       component.onPasswordResetRequest(email);
@@ -94,7 +94,7 @@ describe('PasswordResetRequest', () => {
     it('should set as finished', () => {
       component.onPasswordResetRequest('test@example.com');
 
-      expect(component.finished).toBeTrue();
+      expect(component.finished).toBe(true);
     });
 
   });

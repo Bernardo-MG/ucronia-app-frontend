@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, inject, Input, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -15,6 +15,7 @@ import { ImageContent } from '../../images/image-content/image-content';
   selector: 'assoc-activity-form',
   imports: [ReactiveFormsModule, ButtonModule, InputTextModule, DatePickerModule, ImageContent,
     MessageModule, SelectModule, TextareaModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './activity-form.html'
 })
 export class ActivityForm {

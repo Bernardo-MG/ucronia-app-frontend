@@ -9,7 +9,7 @@ describe('BookReportService', () => {
   const mockUcroniaClient = {
     library: {
       report: {
-        excel: jasmine.createSpy().and.returnValue(of({}))
+        excel: vi.fn().mockReturnValue(of({}))
       }
     }
   };

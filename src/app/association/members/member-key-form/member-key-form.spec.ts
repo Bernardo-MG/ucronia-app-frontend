@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -35,12 +36,12 @@ describe('MemberKeyForm', () => {
     fixture.detectChanges();
 
     expect(component.form.get('number')?.value).toBe(10);
-    expect(component.form.get('available')?.value).toBeFalse();
+    expect(component.form.get('available')?.value).toBe(false);
     expect(component.form.get('description')?.value).toBe('Puerta principal');
   });
 
   it('should emit the submitted data', () => {
-    const emitted = spyOn(component.save, 'emit');
+    const emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     component.form.patchValue({
       number: 12,
@@ -51,7 +52,9 @@ describe('MemberKeyForm', () => {
 
     component.onSave();
 
-    expect(emitted).toHaveBeenCalledOnceWith({
+    expect(emitted).toHaveBeenCalledTimes(1);
+
+    expect(emitted).toHaveBeenCalledWith({
       number: 12,
       available: true,
       description: 'Patio'
@@ -59,9 +62,9 @@ describe('MemberKeyForm', () => {
   });
 
   it('requires a dirty form when creating a key', () => {
-    const emitted = spyOn(component.save, 'emit');
-    expect(component.form.pristine).toBeTrue();
-    expect(component.saveEnabled).toBeFalse();
+    const emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
+    expect(component.form.pristine).toBe(true);
+    expect(component.saveEnabled).toBe(false);
     component.onSave();
     expect(emitted).not.toHaveBeenCalled();
     component.form.get('description')?.setValue('Main entrance');
@@ -72,8 +75,8 @@ describe('MemberKeyForm', () => {
 
   it('does not submit an unchanged existing key', () => {
     component.data = Object.assign(new Key(), { number: 10, available: true });
-    const emitted = spyOn(component.save, 'emit');
-    expect(component.saveEnabled).toBeFalse();
+    const emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
+    expect(component.saveEnabled).toBe(false);
     component.onSave();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -89,9 +92,9 @@ describe('MemberKeyForm', () => {
     fixture.detectChanges();
 
     expect(component.form.getRawValue()).toEqual({ number: 20, available: true, description: 'Lateral' });
-    expect(component.form.pristine).toBeTrue();
-    expect(component.form.untouched).toBeTrue();
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.form.pristine).toBe(true);
+    expect(component.form.untouched).toBe(true);
+    expect(component.saveEnabled).toBe(false);
   });
 });
 
@@ -100,7 +103,7 @@ describe('MemberKeyForm form submission', () => {
 
   let fixture: ComponentFixture<MemberKeyForm>;
   let component: MemberKeyForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -119,9 +122,9 @@ describe('MemberKeyForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -133,7 +136,7 @@ describe('MemberKeyForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -141,21 +144,23 @@ describe('MemberKeyForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('leaves submit and cancel controls to the drawer', () => {

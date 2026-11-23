@@ -8,7 +8,7 @@ describe('TransactionReportService', () => {
 
   const mockUcroniaClient = {
     transaction: {
-      excel: jasmine.createSpy().and.returnValue(of({}))
+      excel: vi.fn().mockReturnValue(of({}))
     }
   };
 

@@ -5,11 +5,11 @@ describe('downloadFile', () => {
   it('should click a temporary link and defer revoking the blob URL', fakeAsync(() => {
     const content = new Blob(['document'], { type: 'application/pdf' });
     const link = document.createElement('a');
-    spyOn(document, 'createElement').and.returnValue(link);
-    spyOn(link, 'click');
-    spyOn(link, 'remove');
-    spyOn(URL, 'createObjectURL').and.returnValue('blob:file');
-    spyOn(URL, 'revokeObjectURL');
+    vi.spyOn(document, 'createElement').mockReturnValue(link);
+    vi.spyOn(link, 'click').mockReturnValue(undefined);
+    vi.spyOn(link, 'remove').mockReturnValue(undefined);
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:file');
+    vi.spyOn(URL, 'revokeObjectURL').mockReturnValue(undefined);
 
     downloadFile(content, 'document.pdf');
 

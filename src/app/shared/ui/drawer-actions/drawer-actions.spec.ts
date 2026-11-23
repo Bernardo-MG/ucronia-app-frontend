@@ -1,4 +1,4 @@
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { By } from '@angular/platform-browser';
@@ -7,6 +7,7 @@ import { DrawerActions } from './drawer-actions';
 
 @Component({
   imports: [DrawerActions, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<shared-drawer-actions [showDelete]="false" [showEdit]="false">
     <p-button drawerActionsStart label="Descargar" (onClick)="downloads = downloads + 1" />
     <p-button drawerActionsEnd label="Publicar" (onClick)="publications = publications + 1" />
@@ -38,8 +39,8 @@ describe('DrawerActions', () => {
   it('gives delete a danger outline and edit primary styling with visible labels', () => {
     const controls = fixture.debugElement.queryAll(By.directive(Button));
     expect(controls[0].componentInstance.severity).toBe('danger');
-    expect(controls[0].componentInstance.outlined).toBeTrue();
-    expect(controls[1].componentInstance.outlined).toBeFalse();
+    expect(controls[0].componentInstance.outlined).toBe(true);
+    expect(controls[1].componentInstance.outlined).toBe(false);
     expect(button('delete').textContent).toContain('Eliminar');
     expect(button('edit').textContent).toContain('Editar');
     expect(button('delete').getAttribute('type')).toBe('button');
@@ -47,7 +48,7 @@ describe('DrawerActions', () => {
   });
 
   it('forwards the original delete event while its confirmation anchor is available', () => {
-    const received: { event?: Event; target: EventTarget | null } = { target: null };
+    const received: { event?: Event; target: EventTarget | null ; } = { target: null };
     fixture.componentInstance.delete.subscribe(event => {
       received.event = event;
       received.target = event.currentTarget;
@@ -59,14 +60,14 @@ describe('DrawerActions', () => {
   });
 
   it('emits edit once and prevents both actions while loading', () => {
-    const edit = spyOn(fixture.componentInstance.edit, 'emit');
-    const remove = spyOn(fixture.componentInstance.delete, 'emit');
+    const edit = vi.spyOn(fixture.componentInstance.edit, 'emit').mockReturnValue(undefined);
+    const remove = vi.spyOn(fixture.componentInstance.delete, 'emit').mockReturnValue(undefined);
     button('edit').click();
     expect(edit).toHaveBeenCalledTimes(1);
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
-    expect(button('edit').disabled).toBeTrue();
-    expect(button('delete').disabled).toBeTrue();
+    expect(button('edit').disabled).toBe(true);
+    expect(button('delete').disabled).toBe(true);
     button('edit').click();
     button('delete').click();
     expect(edit).toHaveBeenCalledTimes(1);
@@ -77,14 +78,14 @@ describe('DrawerActions', () => {
     fixture.componentRef.setInput('deleteDisabled', true);
     fixture.componentRef.setInput('editLabel', 'Editar llave');
     fixture.detectChanges();
-    expect(button('delete').disabled).toBeTrue();
-    expect(button('edit').disabled).toBeFalse();
+    expect(button('delete').disabled).toBe(true);
+    expect(button('edit').disabled).toBe(false);
     expect(button('edit').getAttribute('aria-label')).toBe('Editar llave');
     fixture.componentRef.setInput('showDelete', false);
     fixture.componentRef.setInput('editDisabled', true);
     fixture.detectChanges();
     expect(button('delete')).toBeNull();
-    expect(button('edit').disabled).toBeTrue();
+    expect(button('edit').disabled).toBe(true);
   });
 
   it('keeps projected actions interactive without showing default edit or delete controls', () => {

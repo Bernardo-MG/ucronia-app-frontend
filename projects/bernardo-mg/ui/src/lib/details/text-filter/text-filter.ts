@@ -1,4 +1,4 @@
-import { Component, input, linkedSignal, output } from '@angular/core';
+import { Component, input, linkedSignal, output, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { IconFieldModule } from '@openng/optimus-ui/iconfield';
@@ -10,6 +10,7 @@ import { FormSearchReset } from '../form-search-reset';
 @Component({
   selector: 'ui-text-filter',
   imports: [FormsModule, InputTextModule, IconFieldModule, InputIconModule, FormSearchReset],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './text-filter.html'
 })
 export class TextFilter {

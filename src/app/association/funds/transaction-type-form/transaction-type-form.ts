@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, OnInit, output } from '@angular/core';
+import { Component, inject, input, Input, OnInit, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -8,6 +8,7 @@ import { InputTextModule } from '@openng/optimus-ui/inputtext';
 @Component({
   selector: 'assoc-transaction-type-form',
   imports: [ReactiveFormsModule, InputTextModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './transaction-type-form.html'
 })
 export class TransactionTypeForm implements OnInit {

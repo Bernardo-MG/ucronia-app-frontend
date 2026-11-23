@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -24,6 +24,7 @@ import { ImageService } from '../../images/image-service';
 
 @Component({
   imports: [TextFilter, DrawerHeader, DrawerFormActions, DrawerActions, FormsModule, ButtonModule, CardModule, DrawerModule, SelectButtonModule, ActivityList, ActivityInfo, ActivityForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './activity-view.html'
 })
 export class ActivityView implements OnInit {

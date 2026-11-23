@@ -9,7 +9,7 @@ describe('MyFeesService', () => {
 
   const mockUcroniaClient = {
     myFees: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -20,7 +20,7 @@ describe('MyFeesService', () => {
   };
 
   const securityClientMock = {
-    account: jasmine.createSpy()
+    account: vi.fn()
   };
 
   beforeEach(() => {

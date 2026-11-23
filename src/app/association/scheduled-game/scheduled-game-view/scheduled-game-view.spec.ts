@@ -11,17 +11,19 @@ describe('ScheduledGameView', () => {
   let component: ScheduledGameView;
   let fixture: ComponentFixture<ScheduledGameView>;
 
-  const scheduledGameServiceMock = jasmine.createSpyObj<ScheduledGameService>(
-    'ScheduledGameService',
-    ['create', 'update', 'delete', 'getAll', 'getOne', 'getMaster', 'getTable', 'getTables']
-  );
+  const scheduledGameServiceMock = {
+    create: vi.fn(
+    ).mockName("ScheduledGameService.create"),
+    update: vi.fn().mockName("ScheduledGameService.update"), delete: vi.fn().mockName("ScheduledGameService.delete"), getAll: vi.fn().mockName("ScheduledGameService.getAll"), getOne: vi.fn().mockName("ScheduledGameService.getOne"), getMaster: vi.fn().mockName("ScheduledGameService.getMaster"), getTable: vi.fn().mockName("ScheduledGameService.getTable"), getTables: vi.fn(
+  ).mockName("ScheduledGameService.getTables")
+};
 
   beforeEach(async () => {
 
-    scheduledGameServiceMock.getAll.and.returnValue(
+    scheduledGameServiceMock.getAll.mockReturnValue(
       of(new Page<ScheduledGame>())
     );
-    scheduledGameServiceMock.getTables.and.returnValue(of([]));
+    scheduledGameServiceMock.getTables.mockReturnValue(of([]));
 
     await TestBed.configureTestingModule({
       imports: [ScheduledGameView],
@@ -53,9 +55,9 @@ describe('ScheduledGameView', () => {
     master.number = 2;
     table.number = 3;
 
-    scheduledGameServiceMock.getOne.and.returnValue(of(game));
-    scheduledGameServiceMock.getMaster.and.returnValue(of(master));
-    scheduledGameServiceMock.getTable.and.returnValue(of(table));
+    scheduledGameServiceMock.getOne.mockReturnValue(of(game));
+    scheduledGameServiceMock.getMaster.mockReturnValue(of(master));
+    scheduledGameServiceMock.getTable.mockReturnValue(of(table));
 
     component.onShowInfo(game);
 
@@ -75,9 +77,9 @@ describe('ScheduledGameView', () => {
     game.master = 2;
     game.table = undefined;
 
-    scheduledGameServiceMock.getOne.and.returnValue(of(game));
-    scheduledGameServiceMock.getMaster.and.returnValue(of(master));
-    scheduledGameServiceMock.getTable.calls.reset();
+    scheduledGameServiceMock.getOne.mockReturnValue(of(game));
+    scheduledGameServiceMock.getMaster.mockReturnValue(of(master));
+    scheduledGameServiceMock.getTable.mockClear();
 
     component.onShowInfo(game);
 

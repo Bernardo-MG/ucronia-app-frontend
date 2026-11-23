@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { TransactionType } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -7,6 +7,7 @@ import { PaginatorModule, PaginatorState } from '@openng/optimus-ui/paginator';
 @Component({
   selector: 'assoc-transaction-type-list',
   imports: [ButtonModule, PaginatorModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './transaction-type-list.html'
 })
 export class TransactionTypeList {

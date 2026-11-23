@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { AccountChangePasswordForm } from '@app/account/account-change-password-form/account-change-password-form';
 import { AccountService } from '@app/account/account-service';
@@ -19,6 +19,7 @@ export enum AccountSection {
 @Component({
   imports: [AccountChangePasswordForm, AccountInfo, AccountProfileInfo, RippleModule],
   templateUrl: './account-view.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './account-view.scss'
 })
 export class AccountView {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
@@ -7,6 +7,7 @@ import { ImageContent } from './image-content';
 
 @Component({
   imports: [ImageContent],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '<img [assocImageContent]="imageNumber" alt="">'
 })
 class TestHost {
@@ -18,12 +19,12 @@ class TestHost {
 describe('ImageContent', () => {
   let fixture: ComponentFixture<TestHost>;
   const content = new Blob(['image'], { type: 'image/png' });
-  const service = { content: jasmine.createSpy().and.returnValue(of(content)) };
+  const service = { content: vi.fn().mockReturnValue(of(content)) };
 
   beforeEach(async () => {
-    service.content.calls.reset();
-    spyOn(URL, 'createObjectURL').and.returnValue('blob:image');
-    spyOn(URL, 'revokeObjectURL');
+    service.content.mockClear();
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:image');
+    vi.spyOn(URL, 'revokeObjectURL').mockReturnValue(undefined);
     await TestBed.configureTestingModule({
       imports: [TestHost],
       providers: [{ provide: ImageService, useValue: service }]

@@ -10,9 +10,9 @@ describe('PasswordResetService', () => {
   const mockSecurityClient = {
     password: {
       reset: {
-        requestReset: jasmine.createSpy().and.returnValue(of({})),
-        reset: jasmine.createSpy().and.returnValue(of({})),
-        validateToken: jasmine.createSpy().and.returnValue(of({}))
+        requestReset: vi.fn().mockReturnValue(of({})),
+        reset: vi.fn().mockReturnValue(of({})),
+        validateToken: vi.fn().mockReturnValue(of({}))
       }
     }
   };
@@ -41,31 +41,31 @@ describe('PasswordResetService', () => {
       .toHaveBeenCalledWith(token, { password });
   });
 
-  it('should call validateToken with token', (done) => {
+  it('should call validateToken with token', async () => {
     const token = 'token';
     const status = new UserTokenStatus(true, 'username');
 
     mockSecurityClient.password.reset.validateToken
-      .and.returnValue(of(status));
+      .mockReturnValue(of(status));
 
     service.validateToken(token).subscribe(() => {
       expect(mockSecurityClient.password.reset.validateToken)
         .toHaveBeenCalledWith(token);
-      done();
+      ;
     });
   });
 
-  it('should return token status', (done) => {
+  it('should return token status', async () => {
     const token = 'token';
     const status = new UserTokenStatus(true, 'username');
 
     mockSecurityClient.password.reset.validateToken
-      .and.returnValue(of(status));
+      .mockReturnValue(of(status));
 
     service.validateToken(token)
       .subscribe((res) => {
         expect(res).toEqual(status);
-        done();
+        ;
       });
   });
 

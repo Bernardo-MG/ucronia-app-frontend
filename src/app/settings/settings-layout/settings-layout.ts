@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
@@ -15,6 +15,7 @@ interface MenuSection {
   selector: 'assoc-settings-layout',
   imports: [RouterModule, CardModule, RippleModule],
   templateUrl: './settings-layout.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './settings-layout.scss'
 })
 export class SettingsLayout {

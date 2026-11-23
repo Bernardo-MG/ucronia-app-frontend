@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Role } from '@bernardo-mg/authentication';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -12,6 +12,7 @@ export interface RoleDeleteEvent {
 @Component({
   selector: 'access-role-list',
   imports: [TableModule, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './role-list.html'
 })
 export class RoleList {

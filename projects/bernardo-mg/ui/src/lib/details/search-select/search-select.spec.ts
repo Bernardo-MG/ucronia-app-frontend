@@ -24,12 +24,13 @@ describe('SearchSelect', () => {
 
   it('invalidates a read before the debounced query is sent', fakeAsync(() => {
     const fixture = createSelect();
-    const query = jasmine.createSpy();
-    const cleared = jasmine.createSpy();
+    const query = vi.fn();
+    const cleared = vi.fn();
     fixture.componentInstance.queryChange.subscribe(query);
     fixture.componentInstance.cleared.subscribe(cleared);
     fixture.componentInstance.onValueChange('typing');
-    expect(query).toHaveBeenCalledOnceWith('');
+    expect(query).toHaveBeenCalledTimes(1);
+    expect(query).toHaveBeenCalledWith('');
     expect(cleared).toHaveBeenCalledTimes(1);
     fixture.componentInstance.onSearch(' typing ');
     tick(299);
@@ -40,13 +41,14 @@ describe('SearchSelect', () => {
 
   it('keeps selection options available for member validation', () => {
     const fixture = createSelect();
-    const selected = jasmine.createSpy();
-    const query = jasmine.createSpy();
+    const selected = vi.fn();
+    const query = vi.fn();
     fixture.componentInstance.selected.subscribe(selected);
     fixture.componentInstance.queryChange.subscribe(query);
     const member = { number: 1 };
     fixture.componentInstance.onSelect(member);
-    expect(selected).toHaveBeenCalledOnceWith(member);
+    expect(selected).toHaveBeenCalledTimes(1);
+    expect(selected).toHaveBeenCalledWith(member);
     expect(query).not.toHaveBeenCalled();
   });
 

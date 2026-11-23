@@ -1,4 +1,4 @@
-import { Component, inject, input, Input, output } from '@angular/core';
+import { Component, inject, input, Input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus, isbnValidator } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -13,6 +13,7 @@ import { LibraryConfig } from '../library-config';
 @Component({
   selector: 'assoc-library-book-edition-form',
   imports: [SearchSelect, FormsModule, ReactiveFormsModule, InputTextModule, DatePickerModule, MessageModule, SelectModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-book-edition-form.html'
 })
 export class LibraryBookEditionForm {

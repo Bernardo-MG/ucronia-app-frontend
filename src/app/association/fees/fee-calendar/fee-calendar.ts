@@ -1,4 +1,4 @@
-import { Component, computed, input, linkedSignal, output } from '@angular/core';
+import { Component, computed, input, linkedSignal, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { eachMonthOfInterval, isValid, NormalizedInterval, startOfMonth, subMonths } from 'date-fns';
 import { BadgeModule } from '@openng/optimus-ui/badge';
@@ -14,6 +14,7 @@ export const DEFAULT_FEE_CALENDAR_MONTHS = 6;
 @Component({
   selector: 'assoc-fee-calendar',
   imports: [FormsModule, SelectButtonModule, DatePickerModule, TableModule, ButtonModule, BadgeModule, TooltipModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './fee-calendar.html'
 })
 export class FeeCalendar {

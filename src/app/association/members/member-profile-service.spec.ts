@@ -8,24 +8,25 @@ import { MemberProfileService } from './member-profile-service';
 describe('MemberProfileService', () => {
   let service: MemberProfileService;
 
-  const endpointMock = jasmine.createSpyObj<UcroniaClient['memberProfile']>('MemberProfileEndpoint', [
-    'get',
-    'create',
-    'update',
-    'delete'
-  ]);
-  const messageServiceMock = jasmine.createSpyObj<MessageService>('MessageService', ['add']);
+  const endpointMock = {
+    get: vi.fn().mockName("MemberProfileEndpoint.get"), create: vi.fn().mockName("MemberProfileEndpoint.create"),
+    update: vi.fn().mockName("MemberProfileEndpoint.update"),
+    delete: vi.fn().mockName("MemberProfileEndpoint.delete")
+};
+  const messageServiceMock = {
+    add: vi.fn().mockName("MessageService.add")
+};
 
   beforeEach(() => {
-    endpointMock.delete.calls.reset();
-    endpointMock.get.calls.reset();
-    endpointMock.create.calls.reset();
-    endpointMock.update.calls.reset();
-    messageServiceMock.add.calls.reset();
-    endpointMock.delete.and.returnValue(of(new Member()));
-    endpointMock.get.and.returnValue(of(new Member()));
-    endpointMock.create.and.returnValue(of(new Member()));
-    endpointMock.update.and.returnValue(of(new Member()));
+    endpointMock.delete.mockClear();
+    endpointMock.get.mockClear();
+    endpointMock.create.mockClear();
+    endpointMock.update.mockClear();
+    messageServiceMock.add.mockClear();
+    endpointMock.delete.mockReturnValue(of(new Member()));
+    endpointMock.get.mockReturnValue(of(new Member()));
+    endpointMock.create.mockReturnValue(of(new Member()));
+    endpointMock.update.mockReturnValue(of(new Member()));
 
     TestBed.configureTestingModule({
       providers: [
@@ -39,14 +40,17 @@ describe('MemberProfileService', () => {
 
   it('should delete using the profile number and show the success message', () => {
     const member = Object.assign(new Member(), { number: 12, memberNumber: 37 });
-    endpointMock.delete.and.returnValue(of(member));
+    endpointMock.delete.mockReturnValue(of(member));
     let result: Member | undefined;
 
     service.delete(12).subscribe(response => (result = response));
 
-    expect(endpointMock.delete).toHaveBeenCalledOnceWith(12);
+    expect(endpointMock.delete).toHaveBeenCalledTimes(1);
+
+    expect(endpointMock.delete).toHaveBeenCalledWith(12);
     expect(result).toBe(member);
-    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+    expect(messageServiceMock.add).toHaveBeenCalledTimes(1);
+    expect(messageServiceMock.add).toHaveBeenCalledWith({
       severity: 'info',
       summary: 'Borrado',
       detail: 'Socio borrado',
@@ -56,13 +60,14 @@ describe('MemberProfileService', () => {
 
   it('should propagate deletion failures and show the error message', () => {
     const failure = new Error('Delete failed');
-    endpointMock.delete.and.returnValue(throwError(() => failure));
+    endpointMock.delete.mockReturnValue(throwError(() => failure));
     let result: unknown;
 
     service.delete(12).subscribe({ error: error => (result = error) });
 
     expect(result).toBe(failure);
-    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+    expect(messageServiceMock.add).toHaveBeenCalledTimes(1);
+    expect(messageServiceMock.add).toHaveBeenCalledWith({
       severity: 'error',
       summary: 'Error',
       detail: 'No se pudo borrar el socio',
@@ -76,12 +81,14 @@ describe('MemberProfileService', () => {
 
   it('should load private information using the profile number', () => {
     const member = Object.assign(new Member(), { number: 12, memberNumber: 37 });
-    endpointMock.get.and.returnValue(of(member));
+    endpointMock.get.mockReturnValue(of(member));
     let result: Member | undefined;
 
     service.getOne(12).subscribe(data => (result = data));
 
-    expect(endpointMock.get).toHaveBeenCalledOnceWith(12);
+    expect(endpointMock.get).toHaveBeenCalledTimes(1);
+
+    expect(endpointMock.get).toHaveBeenCalledWith(12);
     expect(result).toBe(member);
     expect(messageServiceMock.add).not.toHaveBeenCalled();
   });
@@ -89,15 +96,17 @@ describe('MemberProfileService', () => {
   it('should pass the creation request directly and show the success message', () => {
     const data = new MemberCreation(3, '', { firstName: 'Ana', lastName: '' });
     const member = new Member();
-    endpointMock.create.and.returnValue(of(member));
+    endpointMock.create.mockReturnValue(of(member));
     let result: Member | undefined;
 
     service.create(data).subscribe(response => (result = response));
 
-    expect(endpointMock.create).toHaveBeenCalledOnceWith(data);
-    expect(endpointMock.create.calls.mostRecent().args[0]).toBe(data);
+    expect(endpointMock.create).toHaveBeenCalledTimes(1);
+    expect(endpointMock.create).toHaveBeenCalledWith(data);
+    expect(vi.mocked(endpointMock.create).mock.lastCall![0]).toBe(data);
     expect(result).toBe(member);
-    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+    expect(messageServiceMock.add).toHaveBeenCalledTimes(1);
+    expect(messageServiceMock.add).toHaveBeenCalledWith({
       severity: 'info',
       summary: 'Creado',
       detail: 'Socio creado',
@@ -118,15 +127,18 @@ describe('MemberProfileService', () => {
       renew: false
     };
     const member = new Member();
-    endpointMock.update.and.returnValue(of(member));
+    endpointMock.update.mockReturnValue(of(member));
     let result: Member | undefined;
 
     service.update(12, data).subscribe(response => (result = response));
 
-    expect(endpointMock.update).toHaveBeenCalledOnceWith(12, data);
-    expect(endpointMock.update.calls.mostRecent().args[1]).toBe(data);
+    expect(endpointMock.update).toHaveBeenCalledTimes(1);
+
+    expect(endpointMock.update).toHaveBeenCalledWith(12, data);
+    expect(vi.mocked(endpointMock.update).mock.lastCall![1]).toBe(data);
     expect(result).toBe(member);
-    expect(messageServiceMock.add).toHaveBeenCalledOnceWith({
+    expect(messageServiceMock.add).toHaveBeenCalledTimes(1);
+    expect(messageServiceMock.add).toHaveBeenCalledWith({
       severity: 'info',
       summary: 'Actualizado',
       detail: 'Socio actualizado',
@@ -136,7 +148,7 @@ describe('MemberProfileService', () => {
 
   it('should propagate creation errors without a success message', () => {
     const failure = new Error('Failed');
-    endpointMock.create.and.returnValue(throwError(() => failure));
+    endpointMock.create.mockReturnValue(throwError(() => failure));
     let result: unknown;
 
     service
@@ -149,7 +161,7 @@ describe('MemberProfileService', () => {
 
   it('should propagate update errors without a success message', () => {
     const failure = new Error('Failed');
-    endpointMock.update.and.returnValue(throwError(() => failure));
+    endpointMock.update.mockReturnValue(throwError(() => failure));
     let result: unknown;
 
     service

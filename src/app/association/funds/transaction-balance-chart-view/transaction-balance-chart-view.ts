@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, DestroyRef, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, input, OnDestroy, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
@@ -12,6 +12,7 @@ import { TransactionBalanceService } from '../transaction-balance-service';
 @Component({
   selector: 'assoc-transaction-balance-chart-view',
   imports: [CommonModule, FormsModule, Select],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './transaction-balance-chart-view.html'
 })
 export class TransactionBalanceChartView implements OnInit, OnDestroy {

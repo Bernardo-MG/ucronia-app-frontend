@@ -53,7 +53,7 @@ describe('LoggedInGuard', () => {
       LoggedInGuard(route, state)
     );
 
-    expect(result instanceof UrlTree).toBeTrue();
+    expect(result instanceof UrlTree).toBe(true);
 
     const tree = result as UrlTree;
     expect(router.serializeUrl(tree)).toBe('/login?returnUrl=%2Faccount');
@@ -67,7 +67,7 @@ describe('LoggedInGuard', () => {
       LoggedInGuard(route, state)
     );
 
-    expect(result).toBeTrue();
+    expect(result).toBe(true);
   });
 
 });

@@ -38,7 +38,7 @@
             <div>
               <span>Donado por <strong>{{ donors || 'Sin información' }}</strong></span>
               @if (book().donation?.date) {
-                <span class="donation-date">{{ book().donation?.date | date:'dd/MM/yyyy' }}</span>
+                <span class="donation-date">{{ $safeNavigationMigration(book().donation?.date) | date:'dd/MM/yyyy' }}</span>
               }
             </div>
           </div>

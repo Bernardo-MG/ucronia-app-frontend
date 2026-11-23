@@ -1,4 +1,4 @@
-import { Component, input, linkedSignal, output } from '@angular/core';
+import { Component, input, linkedSignal, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MemberStatus } from '@ucronia/domain';
 import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
@@ -6,6 +6,7 @@ import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 @Component({
   selector: 'assoc-member-status-selector',
   imports: [FormsModule, SelectButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './member-status-selector.html'
 })
 export class MemberStatusSelector {

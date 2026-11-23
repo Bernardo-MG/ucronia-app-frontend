@@ -1,5 +1,5 @@
 
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@bernardo-mg/authentication';
@@ -12,6 +12,7 @@ import { ContactSettingsForm, SocialSettingsFormEvent } from '../contact-setting
 @Component({
   selector: 'assoc-settings-view',
   imports: [ReactiveFormsModule, FormsModule, ContactSettingsForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './settings-view.html'
 })
 export class SettingsView implements OnInit {

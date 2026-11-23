@@ -13,21 +13,21 @@ describe('FileService', () => {
   const client = {
     asset: {
       file: {
-      page: jasmine.createSpy().and.returnValue(of({ content: [], last: true, page: 1 })),
-      get: jasmine.createSpy().and.returnValue(of(file)),
-      content: jasmine.createSpy().and.returnValue(of(new Blob(['data'], { type: 'application/pdf' }))),
-      contentUrl: jasmine.createSpy().and.returnValue('/assets/1/content?download=true'),
-      create: jasmine.createSpy().and.returnValue(of(file)),
-      update: jasmine.createSpy().and.returnValue(of(file)),
-      patch: jasmine.createSpy().and.returnValue(of(file)),
-      delete: jasmine.createSpy().and.returnValue(of(file))
+      page: vi.fn().mockReturnValue(of({ content: [], last: true, page: 1 })),
+      get: vi.fn().mockReturnValue(of(file)),
+      content: vi.fn().mockReturnValue(of(new Blob(['data'], { type: 'application/pdf' }))),
+      contentUrl: vi.fn().mockReturnValue('/assets/1/content?download=true'),
+      create: vi.fn().mockReturnValue(of(file)),
+      update: vi.fn().mockReturnValue(of(file)),
+      patch: vi.fn().mockReturnValue(of(file)),
+      delete: vi.fn().mockReturnValue(of(file))
       },
       folder: {}
     }
   };
 
   beforeEach(() => {
-    for (const spy of Object.values(client.asset.file)) spy.calls.reset();
+    for (const spy of Object.values(client.asset.file)) spy.mockClear();
     TestBed.configureTestingModule({ providers: [MessageService, { provide: UcroniaClient, useValue: client }] });
     service = TestBed.inject(FileService);
   });
@@ -43,7 +43,7 @@ describe('FileService', () => {
   it('should load all files ordered by name for selectors', () => {
     service.getAllForSelection().subscribe();
 
-    expect(client.asset.file.page).toHaveBeenCalledWith(undefined, 100, jasmine.anything());
+    expect(client.asset.file.page).toHaveBeenCalledWith(undefined, 100, expect.anything());
   });
 
   it('should load file content through the API client', () => {

@@ -1,5 +1,5 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -24,6 +24,7 @@ import { FileService } from '../file-service';
 @Component({
   selector: 'assoc-file-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, FormsModule, FileForm, FileInfo, FileList, InputTextModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './file-view.html'
 })
 export class FileView implements OnInit {

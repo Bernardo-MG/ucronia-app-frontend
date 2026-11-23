@@ -11,11 +11,11 @@ describe('ActivityService', () => {
 
   const mockUcroniaClient = {
     activity: {
-      create: jasmine.createSpy().and.returnValue(of({})),
-      update: jasmine.createSpy().and.returnValue(of({})),
-      get: jasmine.createSpy().and.returnValue(of({})),
-      delete: jasmine.createSpy().and.returnValue(of({})),
-      page: jasmine.createSpy().and.returnValue(of({
+      create: vi.fn().mockReturnValue(of({})),
+      update: vi.fn().mockReturnValue(of({})),
+      get: vi.fn().mockReturnValue(of({})),
+      delete: vi.fn().mockReturnValue(of({})),
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -43,13 +43,14 @@ describe('ActivityService', () => {
 describe('activity-service backend results', () => {
   it('forwards activity dates and preserves the server page without fetching other pages', () => {
     const result = Object.assign(new Page<Activity>(), { content: [new Activity()], totalElements: 50, last: false });
-    const endpoint = { page: jasmine.createSpy().and.returnValue(of(result)) };
+    const endpoint = { page: vi.fn().mockReturnValue(of(result)) };
     TestBed.configureTestingModule({ providers: [
       { provide: UcroniaClient, useValue: { activity: endpoint } }, MessageService
     ] });
     const from = new Date(2025, 0, 1);
     const to = new Date(2025, 11, 31);
     TestBed.inject(ActivityService).getAll(3, new Sorting(), from, to).subscribe(page => expect(page).toBe(result));
-    expect(endpoint.page).toHaveBeenCalledOnceWith(3, undefined, jasmine.any(Sorting), from, to);
+    expect(endpoint.page).toHaveBeenCalledTimes(1);
+    expect(endpoint.page).toHaveBeenCalledWith(3, undefined, expect.any(Sorting), from, to);
   });
 });

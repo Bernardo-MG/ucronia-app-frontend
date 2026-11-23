@@ -1,4 +1,4 @@
-import { HttpClient, provideHttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withXhr } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { FolderEndpoint } from './folder-endpoint';
@@ -9,7 +9,7 @@ describe('FolderEndpoint', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideHttpClient(), provideHttpClientTesting()]
+      providers: [provideHttpClient(withXhr()), provideHttpClientTesting()]
     });
     endpoint = new FolderEndpoint(TestBed.inject(HttpClient), 'http://localhost/api');
     http = TestBed.inject(HttpTestingController);
@@ -45,7 +45,7 @@ describe('FolderEndpoint', () => {
     endpoint.page(3, 'IMAGE').subscribe(page => {
       names = page.content.map(asset => asset.name);
       expect(page.content.map(asset => asset.type)).toEqual(['FILE', 'IMAGE']);
-      expect(page.content[1].publicAccess).toBeTrue();
+      expect(page.content[1].publicAccess).toBe(true);
     });
 
     const request = http.expectOne('http://localhost/api/assets/folders/3/assets');

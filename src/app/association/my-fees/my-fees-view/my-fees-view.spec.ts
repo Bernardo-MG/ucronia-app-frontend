@@ -9,17 +9,19 @@ describe('MyFeesView', () => {
   let component: MyFeesView;
   let fixture: ComponentFixture<MyFeesView>;
 
-  const myFeesMock = jasmine.createSpyObj<MyFeesService>(
-    'MyFeesService',
-    ['getAll', 'hasFees']
-  );
+  const myFeesMock = {
+    getAll: vi.fn(
+    ).mockName("MyFeesService.getAll"),
+    hasFees: vi.fn(
+  ).mockName("MyFeesService.hasFees")
+};
 
   beforeEach(async () => {
-    myFeesMock.getAll.and.returnValue(
+    myFeesMock.getAll.mockReturnValue(
       of(new Page<MyFee>())
     );
 
-    myFeesMock.hasFees.and.returnValue(of(false));
+    myFeesMock.hasFees.mockReturnValue(of(false));
 
     await TestBed.configureTestingModule({
       imports: [MyFeesView],

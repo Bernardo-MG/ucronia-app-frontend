@@ -1,5 +1,5 @@
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
-import { Component, inject, input, output } from '@angular/core';
+import { Component, inject, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { Asset } from '@ucronia/domain';
 import { MessageService } from '@openng/optimus-ui/api';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -9,6 +9,7 @@ import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 @Component({
   selector: 'assoc-file-info',
   imports: [AuditInfo, ButtonModule, InputTextModule, SkeletonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './file-info.html'
 })
 export class FileInfo {

@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { Account } from '@bernardo-mg/security';
 import { DetailField } from '@bernardo-mg/ui';
 
 @Component({
   selector: 'account-info',
   imports: [DetailField],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './account-info.html'
 })
 export class AccountInfo {

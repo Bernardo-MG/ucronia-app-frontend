@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { Profile } from '@ucronia/domain';
 import { AutoComplete } from '@openng/optimus-ui/autocomplete';
 import { MemberSearch } from './member-search';
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 
@@ -41,7 +41,7 @@ describe('MemberSearch', () => {
   });
 
   it('emits the trimmed member query after the shared debounce', fakeAsync(() => {
-    const emitSpy = spyOn(component.searchMember, 'emit');
+    const emitSpy = vi.spyOn(component.searchMember, 'emit').mockReturnValue(undefined);
     const input = fixture.nativeElement.querySelector('input') as HTMLInputElement;
     input.value = ' john ';
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -52,7 +52,7 @@ describe('MemberSearch', () => {
   }));
 
   it('should emit selectMember when onSelect is fired', () => {
-    const emitSpy = spyOn(component.selectMember, 'emit');
+    const emitSpy = vi.spyOn(component.selectMember, 'emit').mockReturnValue(undefined);
 
     const autoComplete = fixture.debugElement.query(
       By.directive(AutoComplete)
@@ -63,10 +63,12 @@ describe('MemberSearch', () => {
       value: member
     });
 
-    expect(emitSpy).toHaveBeenCalledOnceWith(member);
+    expect(emitSpy).toHaveBeenCalledTimes(1);
+
+    expect(emitSpy).toHaveBeenCalledWith(member);
   });
   it('emits clearMember when the user types instead of selecting a suggestion', () => {
-    const emitSpy = spyOn(component.clearMember, 'emit');
+    const emitSpy = vi.spyOn(component.clearMember, 'emit').mockReturnValue(undefined);
 
     component.onMemberChange('another member');
 
@@ -74,7 +76,7 @@ describe('MemberSearch', () => {
   });
 
   it('does not clear a selected suggestion', () => {
-    const emitSpy = spyOn(component.clearMember, 'emit');
+    const emitSpy = vi.spyOn(component.clearMember, 'emit').mockReturnValue(undefined);
 
     component.onMemberChange(member);
 
@@ -82,7 +84,7 @@ describe('MemberSearch', () => {
   });
 
   it('emits clearMember when the autocomplete clears its value', () => {
-    const emitSpy = spyOn(component.clearMember, 'emit');
+    const emitSpy = vi.spyOn(component.clearMember, 'emit').mockReturnValue(undefined);
 
     component.onMemberChange(null);
 
@@ -93,6 +95,7 @@ describe('MemberSearch', () => {
 
 @Component({
   imports: [MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: '<label for="member-picker">Socio</label><assoc-member-search inputId="member-picker" [member]="member" [members]="[]" (clearMember)="member = emptyMember" />'
 })
 class MemberSearchHost {
@@ -124,6 +127,7 @@ describe('MemberSearch selected value', () => {
 
 @Component({
   imports: [ReactiveFormsModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<form [formGroup]="form">
     <assoc-member-search inputId="form-member" [members]="[]"
       (searchMember)="queries.push($event.query)" />

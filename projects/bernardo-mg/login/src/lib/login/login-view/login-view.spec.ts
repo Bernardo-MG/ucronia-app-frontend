@@ -13,7 +13,7 @@ describe('Login', () => {
 
   const mockSecurityClient = {
     login: {
-      login: jasmine.createSpy().and.returnValue(of({}))
+      login: vi.fn().mockReturnValue(of({}))
     }
   };
 
@@ -43,7 +43,7 @@ describe('Login', () => {
 
   it('should call login service when onLogin is triggered', () => {
     const service = TestBed.inject(LoginService);
-    const spy = spyOn(service, 'login').and.returnValue(
+    const spy = vi.spyOn(service, 'login').mockReturnValue(
       of(new SecurityDetails(true))
     );
 
@@ -58,32 +58,32 @@ describe('Login', () => {
     it('should set loading to true while login is in progress', () => {
       const service = TestBed.inject(LoginService);
 
-      spyOn(service, 'login').and.returnValue(NEVER);
+      vi.spyOn(service, 'login').mockReturnValue(NEVER);
 
       component.onLogin(new LoginEvent('username', 'password'));
 
-      expect(component.loading).toBeTrue();
+      expect(component.loading).toBe(true);
     });
 
     it('should set loading to false after login', () => {
       const service = TestBed.inject(LoginService);
 
-      spyOn(service, 'login').and.returnValue(
+      vi.spyOn(service, 'login').mockReturnValue(
         of(new SecurityDetails(true))
       );
 
       component.onLogin(new LoginEvent('username', 'password'));
 
-      expect(component.loading).toBeFalse();
+      expect(component.loading).toBe(false);
     });
 
     it('should set loading to false when there is an error', () => {
       const service = TestBed.inject(LoginService);
-      spyOn(service, 'login').and.returnValue(
+      vi.spyOn(service, 'login').mockReturnValue(
         throwError(() => new Error('login failed'))
       );
 
-      expect(component.loading).toBeFalse();
+      expect(component.loading).toBe(false);
     });
 
   });
@@ -92,35 +92,35 @@ describe('Login', () => {
 
     it('should set failedLogin to false if login succeeds', () => {
       const service = TestBed.inject(LoginService);
-      spyOn(service, 'login').and.returnValue(
+      vi.spyOn(service, 'login').mockReturnValue(
         of(new SecurityDetails(true))
       );
 
       component.onLogin(new LoginEvent('username', 'password'));
 
-      expect(component.failedLogin).toBeFalse();
+      expect(component.failedLogin).toBe(false);
     });
 
     it('should set failedLogin to true if login fails', () => {
       const service = TestBed.inject(LoginService);
-      spyOn(service, 'login').and.returnValue(
+      vi.spyOn(service, 'login').mockReturnValue(
         of(new SecurityDetails(false))
       );
 
       component.onLogin(new LoginEvent('username', 'password'));
 
-      expect(component.failedLogin).toBeTrue();
+      expect(component.failedLogin).toBe(true);
     });
 
     it('should set failedLogin to true on error response', () => {
       const service = TestBed.inject(LoginService);
-      spyOn(service, 'login').and.returnValue(
+      vi.spyOn(service, 'login').mockReturnValue(
         throwError(() => new Error('login failed'))
       );
 
       component.onLogin(new LoginEvent('user', 'pass'));
 
-      expect(component.failedLogin).toBeTrue();
+      expect(component.failedLogin).toBe(true);
     });
 
   });
@@ -129,10 +129,10 @@ describe('Login', () => {
 
     it('should redirect after successful login', () => {
       const router = TestBed.inject(Router);
-      const navigateSpy = spyOn(router, 'navigate');
+      const navigateSpy = vi.spyOn(router, 'navigate').mockResolvedValue(true);
 
       const service = TestBed.inject(LoginService);
-      spyOn(service, 'login').and.returnValue(
+      vi.spyOn(service, 'login').mockReturnValue(
         of(new SecurityDetails(true))
       );
 

@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, output } from '@angular/core';
+import { Component, inject, Input, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -10,6 +10,7 @@ import { TextareaModule } from '@openng/optimus-ui/textarea';
 @Component({
   selector: 'assoc-game-table-form',
   imports: [ReactiveFormsModule, InputTextModule, MessageModule, TextareaModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './game-table-form.html'
 })
 export class GameTableForm {

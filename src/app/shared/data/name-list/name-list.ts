@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { PanelModule } from '@openng/optimus-ui/panel';
@@ -7,6 +7,7 @@ import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 @Component({
   selector: 'shared-name-list',
   imports: [TableModule, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './name-list.html'
 })
 export class NameList {

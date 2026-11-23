@@ -1,5 +1,5 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DetailRequest } from '@app/shared/request/detail-request';
 import { SortingEvent } from '@app/shared/request/sorting-event';
@@ -23,6 +23,7 @@ import { ImageService } from '../image-service';
 @Component({
   selector: 'assoc-image-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, FormsModule, ImageForm, ImageInfo, ImageList, InputTextModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './image-view.html'
 })
 export class ImageView implements OnInit {

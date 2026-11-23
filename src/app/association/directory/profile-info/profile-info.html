@@ -17,7 +17,7 @@
     <p-card class="w-60">
       <div>
         <ui-detail-field [loading]="loading()" icon="pi pi-calendar" name="Tipo de cuota"
-          [value]="data().feeType?.name + ' (' + data().feeType?.amount + '€)'" />
+          [value]="$safeNavigationMigration(data().feeType?.name) + ' (' + $safeNavigationMigration(data().feeType?.amount) + '€)'" />
       </div>
     </p-card>
   </div>

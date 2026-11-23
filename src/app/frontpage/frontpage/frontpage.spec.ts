@@ -8,8 +8,8 @@ describe('Frontpage', () => {
   let fixture: ComponentFixture<Frontpage>;
 
   const frontpageServiceMock = {
-    getContactInfo: jasmine.createSpy().and.returnValue(of({})),
-    getActivities: jasmine.createSpy().and.returnValue(of([]))
+    getContactInfo: vi.fn().mockReturnValue(of({})),
+    getActivities: vi.fn().mockReturnValue(of([]))
   };
 
   beforeEach(async () => {

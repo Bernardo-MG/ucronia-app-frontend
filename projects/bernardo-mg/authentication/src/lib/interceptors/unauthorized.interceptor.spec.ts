@@ -1,3 +1,4 @@
+import type { MockedObject } from 'vitest';
 import { HttpErrorResponse, HttpHandlerFn, HttpInterceptorFn, HttpRequest, HttpResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of, throwError } from 'rxjs';
@@ -10,10 +11,12 @@ describe('unauthorizedInterceptor', () => {
   const apiRequest = new HttpRequest('GET', apiUrl);
   const externalRequest = new HttpRequest('GET', externalUrl);
   let interceptor: HttpInterceptorFn;
-  let mockAuthService: jasmine.SpyObj<AuthService>;
+  let mockAuthService: MockedObject<Pick<AuthService, 'logout'>>;
 
   beforeEach(() => {
-    mockAuthService = jasmine.createSpyObj<AuthService>('AuthService', ['logout']);
+    mockAuthService = {
+      logout: vi.fn().mockName("AuthService.logout")
+  };
 
     const builtInterceptor = unauthorizedInterceptor(apiUrl);
     interceptor = (req, next) => TestBed.runInInjectionContext(() => builtInterceptor(req, next));
@@ -27,48 +30,48 @@ describe('unauthorizedInterceptor', () => {
     expect(interceptor).toBeTruthy();
   });
 
-  it('should pass through requests that are not from API', (done) => {
+  it('should pass through requests that are not from API', async () => {
     const next: HttpHandlerFn = (req) => of(new HttpResponse({ status: 200, body: { message: 'Success' } }));
 
     interceptor(externalRequest, next).subscribe((response) => {
       if (response instanceof HttpResponse) {
         expect(response.status).toBe(200);
-        done();
+        ;
       }
     });
   });
 
-  it('should throw error on 401 error', (done) => {
+  it('should throw error on 401 error', async () => {
     const next: HttpHandlerFn = () => throwError(() => new HttpErrorResponse({ status: 401, url: apiUrl }));
 
     interceptor(apiRequest, next).subscribe({
       error: (err) => {
         expect(err instanceof HttpErrorResponse && err.status).toBe(401);
-        done();
+        ;
       },
     });
   });
 
-  it('should pass through other errors for API requests', (done) => {
+  it('should pass through other errors for API requests', async () => {
     const next: HttpHandlerFn = () => throwError(() => new HttpErrorResponse({ status: 500 }));
 
     interceptor(apiRequest, next).subscribe({
       error: (err) => {
         expect(mockAuthService.logout).not.toHaveBeenCalled();
         expect(err instanceof HttpErrorResponse && err.status).toBe(500);
-        done();
+        ;
       },
     });
   });
 
-  it('should pass through errors for external API requests', (done) => {
+  it('should pass through errors for external API requests', async () => {
     const next: HttpHandlerFn = () => throwError(() => new HttpErrorResponse({ status: 403 }));
 
     interceptor(externalRequest, next).subscribe({
       error: (err) => {
         expect(mockAuthService.logout).not.toHaveBeenCalled();
         expect(err instanceof HttpErrorResponse && err.status).toBe(403);
-        done();
+        ;
       },
     });
   });

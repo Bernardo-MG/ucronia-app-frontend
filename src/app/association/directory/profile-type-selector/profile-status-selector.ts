@@ -1,4 +1,4 @@
-import { Component, output } from '@angular/core';
+import { Component, output, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 import { Profiletype } from '../model/profyle-type';
@@ -6,6 +6,7 @@ import { Profiletype } from '../model/profyle-type';
 @Component({
   selector: 'assoc-profile-status-selector',
   imports: [FormsModule, SelectButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './profile-status-selector.html'
 })
 export class ProfileStatusSelector {

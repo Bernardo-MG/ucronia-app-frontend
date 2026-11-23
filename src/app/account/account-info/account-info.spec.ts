@@ -89,7 +89,7 @@ describe('AccountInfo', () => {
     for (const field of fields) {
       const detailField = field.componentInstance as DetailField;
 
-      expect(detailField.loading()).toBeTrue();
+      expect(detailField.loading()).toBe(true);
     }
   });
 
@@ -103,7 +103,7 @@ describe('AccountInfo', () => {
     for (const field of fields) {
       const detailField = field.componentInstance as DetailField;
 
-      expect(detailField.loading()).toBeFalse();
+      expect(detailField.loading()).toBe(false);
     }
   });
 

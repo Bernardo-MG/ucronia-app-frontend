@@ -9,8 +9,8 @@ describe('AssociationSettingsService', () => {
 
   const ucroniaClientMock = {
     setting: {
-      get: jasmine.createSpy().and.returnValue(of({})),
-      update: jasmine.createSpy().and.returnValue(of({}))
+      get: vi.fn().mockReturnValue(of({})),
+      update: vi.fn().mockReturnValue(of({}))
     }
   };
 

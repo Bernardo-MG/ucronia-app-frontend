@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SettingsInfo } from '@app/settings/settings-info/settings-info';
 import { NameForm } from '@app/shared/data/name-form/name-form';
@@ -18,6 +18,7 @@ import { GameSystemService } from '../game-system-service';
 
 @Component({
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, DrawerModule, NameList, ButtonModule, NameForm, SettingsInfo],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './library-game-system-list-view.html'
 })
 export class LibraryGameSystemListView implements OnInit {

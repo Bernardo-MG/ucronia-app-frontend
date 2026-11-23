@@ -38,7 +38,7 @@
       <td>
         @if (fee.paid) {
           <span class="text-gray-700">
-            {{ fee.transaction?.date | date:'d MMM y' }}
+            {{ $safeNavigationMigration(fee.transaction?.date) | date:'d MMM y' }}
           </span>
         } @else {
           <span class="text-gray-400">—</span>

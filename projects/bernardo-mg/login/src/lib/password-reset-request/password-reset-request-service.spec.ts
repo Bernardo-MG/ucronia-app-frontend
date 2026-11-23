@@ -9,9 +9,9 @@ describe('PasswordResetRequestService', () => {
   const mockSecurityClient = {
     password: {
       reset: {
-        requestReset: jasmine.createSpy().and.returnValue(of({})),
-        reset: jasmine.createSpy().and.returnValue(of({})),
-        validateToken: jasmine.createSpy().and.returnValue(of({}))
+        requestReset: vi.fn().mockReturnValue(of({})),
+        reset: vi.fn().mockReturnValue(of({})),
+        validateToken: vi.fn().mockReturnValue(of({}))
       }
     }
   };

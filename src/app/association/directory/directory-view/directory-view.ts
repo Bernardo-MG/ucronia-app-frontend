@@ -1,5 +1,5 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { ContactMethodService } from '@app/settings/contact-method-service';
 import { FeeTypeService } from '@app/settings/fee-type-service';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
@@ -37,6 +37,7 @@ import { SponsorList } from '../sponsor-list/sponsor-list';
 @Component({
   selector: 'assoc-directory-view',
   imports: [DrawerHeader, DrawerFormActions, DrawerActions, ButtonModule, DrawerModule, CardModule, SkeletonModule, TextFilter, ProfileCreationForm, ProfileEditionForm, ProfileInfo, MembershipEvolutionChartView, ProfileList, MemberProfileList, SponsorList, GuestList, ProfileStatusSelector, MemberStatusSelector],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './directory-view.html'
 })
 export class DirectoryView implements OnInit {

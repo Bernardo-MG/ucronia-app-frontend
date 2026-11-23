@@ -11,7 +11,7 @@ describe('AuditView', () => {
   const securityClientMock = {
     login: {
       register: {
-        page: jasmine.createSpy().and.returnValue(of({
+        page: vi.fn().mockReturnValue(of({
           content: [],
           page: 0,
           size: 10,

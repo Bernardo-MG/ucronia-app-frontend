@@ -9,7 +9,7 @@ describe('MembershipEvolutionService', () => {
   const mockUcroniaClient = {
     library: {
       member: {
-        evolution: jasmine.createSpy().and.returnValue(of({}))
+        evolution: vi.fn().mockReturnValue(of({}))
       }
     }
   };

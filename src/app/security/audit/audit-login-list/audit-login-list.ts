@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { LoginRegister } from '@bernardo-mg/security';
 import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
@@ -8,6 +8,7 @@ import { TagModule } from '@openng/optimus-ui/tag';
 @Component({
   selector: 'access-audit-login-list',
   imports: [TableModule, TagModule, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './audit-login-list.html'
 })
 export class AuditLoginList {

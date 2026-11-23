@@ -10,9 +10,23 @@
     "types": []
   },
   "include": [
-    "src/**/*.ts"
-, "../../ucronia/domain/src/lib/profile/profile.ts", "../../ucronia/domain/src/lib/profile/profile-name.ts", "../../ucronia/api/src/lib/profile/profile-patch.ts", "../../ucronia/api/src/lib/profile/profile-creation.ts", "../../ucronia/domain/src/lib/profile/contact-method.ts", "../../ucronia/api/src/lib/profile/contact-method-update.ts"  ],
+    "**/*.ts",
+    "../../ucronia/domain/src/lib/profile/profile.ts",
+    "../../ucronia/domain/src/lib/profile/profile-name.ts",
+    "../../ucronia/api/src/lib/profile/profile-patch.ts",
+    "../../ucronia/api/src/lib/profile/profile-creation.ts",
+    "../../ucronia/domain/src/lib/profile/contact-method.ts",
+    "../../ucronia/api/src/lib/profile/contact-method-update.ts"
+  ],
   "exclude": [
     "**/*.spec.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import type { Mock } from 'vitest';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
@@ -23,7 +24,7 @@ describe('LibraryBookEditionForm', () => {
     component.onSelectAuthor(author);
     component.onSelectAuthor(author);
     expect(component.selectedAuthors).toEqual([author]);
-    expect(component.form.dirty).toBeTrue();
+    expect(component.form.dirty).toBe(true);
     component.onRemoveAuthor(author);
     expect(component.selectedAuthors).toEqual([]);
   });
@@ -42,10 +43,12 @@ describe('LibraryBookEditionForm', () => {
     component.form.controls.title.controls.title.setValue('Updated');
     component.form.markAsDirty();
 
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     component.onSave();
 
-    expect(saved).toHaveBeenCalledOnceWith({
+    expect(saved).toHaveBeenCalledTimes(1);
+
+    expect(saved).toHaveBeenCalledWith({
       ...fiction,
       title: { ...fiction.title, title: 'Updated' },
       publishDate: undefined,
@@ -58,18 +61,19 @@ describe('LibraryBookEditionForm', () => {
     component.form.patchValue({ title: { title: 'A book' }, language: 'en' });
     component.form.get('title')?.markAsDirty();
     component.form.get('language')?.markAsDirty();
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     component.onSave();
-    expect(saved).toHaveBeenCalledOnceWith(jasmine.objectContaining({ donation: undefined }));
+    expect(saved).toHaveBeenCalledTimes(1);
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({ donation: undefined }));
   });
 });
 
 describe('LibraryBookEditionForm form submission', () => {
-  const scenario = { values: { title: { title: 'A Wizard of Earthsea' }, language: 'es' }, invalid: 'language', expected: jasmine.objectContaining({ title: jasmine.objectContaining({ title: 'A Wizard of Earthsea' }), language: 'es', donation: undefined }) };
+  const scenario = { values: { title: { title: 'A Wizard of Earthsea' }, language: 'es' }, invalid: 'language', expected: expect.objectContaining({ title: expect.objectContaining({ title: 'A Wizard of Earthsea' }), language: 'es', donation: undefined }) };
 
   let fixture: ComponentFixture<LibraryBookEditionForm>;
   let component: LibraryBookEditionForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -89,9 +93,9 @@ describe('LibraryBookEditionForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -103,7 +107,7 @@ describe('LibraryBookEditionForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -111,29 +115,31 @@ describe('LibraryBookEditionForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 
@@ -160,27 +166,30 @@ describe('LibraryBookEditionForm search intents', () => {
   });
 
   it('emits donor search queries for the containing view', () => {
-    const search = spyOn(component.searchDonors, 'emit');
+    const search = vi.spyOn(component.searchDonors, 'emit').mockReturnValue(undefined);
     component.onSearchDonors({ query: 'old' });
-    expect(search).toHaveBeenCalledOnceWith('old');
+    expect(search).toHaveBeenCalledTimes(1);
+    expect(search).toHaveBeenCalledWith('old');
   });
 
   it('emits a clear intent when the input is cleared', () => {
-    const clear = spyOn(component.clearDonorSearch, 'emit');
+    const clear = vi.spyOn(component.clearDonorSearch, 'emit').mockReturnValue(undefined);
     component.onClearDonorSearch();
-    expect(clear).toHaveBeenCalledOnceWith();
+    expect(clear).toHaveBeenCalledTimes(1);
+    expect(clear).toHaveBeenCalledWith();
   });
 
   it('clears donor search results when a donor is selected', () => {
-    const clear = spyOn(component.clearDonorSearch, 'emit');
+    const clear = vi.spyOn(component.clearDonorSearch, 'emit').mockReturnValue(undefined);
     component.onSelectDonor(new Donor());
-    expect(clear).toHaveBeenCalledOnceWith();
+    expect(clear).toHaveBeenCalledTimes(1);
+    expect(clear).toHaveBeenCalledWith();
   });
 
   it('disables author and publisher searches until supported by the backend', () => {
     const inputs = fixture.nativeElement.querySelectorAll('ui-search-select input');
-    expect(inputs[0].disabled).toBeTrue();
-    expect(inputs[1].disabled).toBeTrue();
+    expect(inputs[0].disabled).toBe(true);
+    expect(inputs[1].disabled).toBe(true);
     expect(inputs[0].placeholder).toBe('Búsqueda no disponible');
     expect(inputs[1].placeholder).toBe('Búsqueda no disponible');
   });

@@ -1,4 +1,4 @@
-import { Component, inject, input, output, Input } from '@angular/core';
+import { Component, inject, input, output, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { confirmPasswordValidator, FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
@@ -12,6 +12,7 @@ import { MessageModule } from '@openng/optimus-ui/message';
 @Component({
   selector: 'access-user-activation-form',
   imports: [FormsModule, ReactiveFormsModule, InputTextModule, MessageModule, ButtonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-activation-form.component.html'
 })
 export class UserActivationForm {

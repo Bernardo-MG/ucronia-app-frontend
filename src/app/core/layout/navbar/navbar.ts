@@ -1,4 +1,4 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, output, ChangeDetectionStrategy } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '@bernardo-mg/authentication';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -10,6 +10,7 @@ import { LayoutService } from '../layout-service';
 @Component({
   selector: 'layout-navbar',
   imports: [RouterModule, MenubarModule, ButtonModule, MenuModule, AccountDropdown],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './navbar.html'
 })
 export class Navbar {

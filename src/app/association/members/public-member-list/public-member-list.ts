@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { PublicMember } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -10,6 +10,7 @@ import { MembershipDurationPipe } from '../membership-duration.pipe';
 @Component({
   selector: 'assoc-public-member-list',
   imports: [ButtonModule, TableModule, PublicMemberRenewTag, MembershipDurationPipe, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './public-member-list.html'
 })
 export class PublicMemberList {

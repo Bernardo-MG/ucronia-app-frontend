@@ -16,8 +16,8 @@ describe('PasswordResetView', () => {
   const mockSecurityClient = {
     password: {
       reset: {
-        reset: jasmine.createSpy().and.returnValue(of({})),
-        validateToken: jasmine.createSpy().and.returnValue(of({}))
+        reset: vi.fn().mockReturnValue(of({})),
+        validateToken: vi.fn().mockReturnValue(of({}))
       }
     }
   };
@@ -59,7 +59,7 @@ describe('PasswordResetView', () => {
 
     it('should set token when token is valid', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
+      vi.spyOn(service, 'validateToken').mockReturnValue(of({ valid: true, username: 'username' }));
 
       routeParams.next(convertToParamMap({ token: 'token' }));
       expect(component.status).toBe('valid_token');
@@ -67,7 +67,7 @@ describe('PasswordResetView', () => {
 
     it('should call validateToken with the token from the route', () => {
       const service = TestBed.inject(PasswordResetService);
-      const spy = spyOn(service, 'validateToken').and.returnValue(of({ valid: true, username: 'username' }));
+      const spy = vi.spyOn(service, 'validateToken').mockReturnValue(of({ valid: true, username: 'username' }));
 
       routeParams.next(convertToParamMap({ token: 'token' }));
 
@@ -76,7 +76,7 @@ describe('PasswordResetView', () => {
 
     it('should set status to "invalid_token" when token is invalid', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'validateToken').and.returnValue(of({ valid: false, username: 'username' }));
+      vi.spyOn(service, 'validateToken').mockReturnValue(of({ valid: false, username: 'username' }));
 
       routeParams.next(convertToParamMap({ token: 'token' }));
       expect(component.status).toBe('invalid_token');
@@ -88,7 +88,7 @@ describe('PasswordResetView', () => {
 
     it('should set status to finished on success', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
+      vi.spyOn(service, 'resetPassword').mockReturnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
@@ -98,7 +98,7 @@ describe('PasswordResetView', () => {
 
     it('should call resetPassword with correct token and password', () => {
       const service = TestBed.inject(PasswordResetService);
-      const spy = spyOn(service, 'resetPassword').and.returnValue(of(undefined));
+      const spy = vi.spyOn(service, 'resetPassword').mockReturnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('password');
@@ -113,7 +113,7 @@ describe('PasswordResetView', () => {
     it('should set failures on error with FailureResponse', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'resetPassword').and.returnValue(
+      vi.spyOn(service, 'resetPassword').mockReturnValue(
         throwError(() => new FailureResponse({ 'field': [{ field: 'password', message: 'too weak' }] }))
       );
 
@@ -125,7 +125,7 @@ describe('PasswordResetView', () => {
 
     it('should clear failures on unknown error', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'resetPassword').and.returnValue(
+      vi.spyOn(service, 'resetPassword').mockReturnValue(
         throwError(() => new Error('Unknown'))
       );
 
@@ -137,7 +137,7 @@ describe('PasswordResetView', () => {
 
     it('should clear failures on success', () => {
       const service = TestBed.inject(PasswordResetService);
-      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
+      vi.spyOn(service, 'resetPassword').mockReturnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
@@ -152,36 +152,36 @@ describe('PasswordResetView', () => {
     it('should set waiting to true while password reset is in progress', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'resetPassword').and.returnValue(NEVER);
+      vi.spyOn(service, 'resetPassword').mockReturnValue(NEVER);
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
 
-      expect(component.loading).toBeTrue();
+      expect(component.loading).toBe(true);
     });
 
     it('should set waiting to false after password reset', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'resetPassword').and.returnValue(of(undefined));
+      vi.spyOn(service, 'resetPassword').mockReturnValue(of(undefined));
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
 
-      expect(component.loading).toBeFalse();
+      expect(component.loading).toBe(false);
     });
 
     it('should set waiting to false when there is an error', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'resetPassword').and.returnValue(
+      vi.spyOn(service, 'resetPassword').mockReturnValue(
         throwError(() => new Error('Password reset failed'))
       );
 
       component['token'] = 'token';
       component.onPasswordReset('newpassword');
 
-      expect(component.loading).toBeFalse();
+      expect(component.loading).toBe(false);
     });
 
   });
@@ -192,33 +192,33 @@ describe('PasswordResetView', () => {
     it('should set validating token to true while token validation is in progress', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'validateToken').and.returnValue(NEVER);
+      vi.spyOn(service, 'validateToken').mockReturnValue(NEVER);
 
       routeParams.next(convertToParamMap({ token: 'token' }));
 
-      expect(component.validatingToken).toBeTrue();
+      expect(component.validatingToken).toBe(true);
     });
 
     it('should set validating token to false after token validation', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'validateToken').and.returnValue(of(new UserTokenStatus()));
+      vi.spyOn(service, 'validateToken').mockReturnValue(of(new UserTokenStatus()));
 
       routeParams.next(convertToParamMap({ token: 'token' }));
 
-      expect(component.validatingToken).toBeFalse();
+      expect(component.validatingToken).toBe(false);
     });
 
     it('should set validating token to false when there is an error', () => {
       const service = TestBed.inject(PasswordResetService);
 
-      spyOn(service, 'validateToken').and.returnValue(
+      vi.spyOn(service, 'validateToken').mockReturnValue(
         throwError(() => new Error('Password reset failed'))
       );
 
       routeParams.next(convertToParamMap({ token: 'token' }));
 
-      expect(component.validatingToken).toBeFalse();
+      expect(component.validatingToken).toBe(false);
     });
 
   });

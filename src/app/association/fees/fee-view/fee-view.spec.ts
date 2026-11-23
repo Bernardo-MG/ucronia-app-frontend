@@ -16,27 +16,31 @@ describe('FeeView', () => {
   let component: FeeView;
   let fixture: ComponentFixture<FeeView>;
 
-  const feeCalendarMock = jasmine.createSpyObj<FeeCalendarService>(
-    'FeeCalendarService',
-    ['getCalendar']
-  );
+  const feeCalendarMock = {
+    getCalendar: vi.fn(
 
-  const feeServiceMock = jasmine.createSpyObj<FeeService>(
-    'FeeService',
-    ['update', 'pay', 'create', 'delete', 'getOne', 'searchMembers']
-  );
+  ).mockName("FeeCalendarService.getCalendar")
+};
 
-  const feeReportMock = jasmine.createSpyObj<FeeSummaryService>(
-    'FeeReportService',
-    ['getSummary']
-  );
+  const feeServiceMock = {
+    update: vi.fn(
+    ).mockName("FeeService.update"),
+    pay: vi.fn().mockName("FeeService.pay"), create: vi.fn().mockName("FeeService.create"), delete: vi.fn().mockName("FeeService.delete"), getOne: vi.fn().mockName("FeeService.getOne"), searchMembers: vi.fn(
+  ).mockName("FeeService.searchMembers")
+};
+
+  const feeReportMock = {
+    getSummary: vi.fn(
+
+  ).mockName("FeeReportService.getSummary")
+};
 
   beforeEach(async () => {
-    feeCalendarMock.getCalendar.and.returnValue(
+    feeCalendarMock.getCalendar.mockReturnValue(
       of([])
     );
 
-    feeReportMock.getSummary.and.returnValue(
+    feeReportMock.getSummary.mockReturnValue(
       of(new FeeSummary())
     );
 
@@ -73,13 +77,13 @@ describe('FeeView', () => {
     const active = row(1, true);
     const inactive = row(2, false);
     const unknown = row(3);
-    feeCalendarMock.getCalendar.and.returnValue(of([active, inactive, unknown]));
+    feeCalendarMock.getCalendar.mockReturnValue(of([active, inactive, unknown]));
     component.loadCalendar({ start: new Date(2023, 0, 1), end: new Date(2023, 5, 1) });
     fixture.detectChanges();
 
     const selector: MemberStatusSelector = fixture.debugElement.query(By.directive(MemberStatusSelector)).componentInstance;
     const calendar: FeeCalendar = fixture.debugElement.query(By.directive(FeeCalendar)).componentInstance;
-    feeCalendarMock.getCalendar.calls.reset();
+    feeCalendarMock.getCalendar.mockClear();
 
     expect(selector.status()).toBe(MemberStatus.Active);
     expect(calendar.feeCalendar()).toEqual([active]);
@@ -95,11 +99,12 @@ describe('FeeView', () => {
 
     selector.filter.emit(MemberStatus.Inactive);
     const nextPeriodInactive = row(4, false);
-    feeCalendarMock.getCalendar.and.returnValue(of([active, nextPeriodInactive]));
+    feeCalendarMock.getCalendar.mockReturnValue(of([active, nextPeriodInactive]));
     const nextPeriod = { start: new Date(2024, 10, 1), end: new Date(2025, 1, 1) };
     calendar.periodChange.emit(nextPeriod);
     fixture.detectChanges();
-    expect(feeCalendarMock.getCalendar).toHaveBeenCalledOnceWith(nextPeriod);
+    expect(feeCalendarMock.getCalendar).toHaveBeenCalledTimes(1);
+    expect(feeCalendarMock.getCalendar).toHaveBeenCalledWith(nextPeriod);
     expect(selector.status()).toBe(MemberStatus.Inactive);
     expect(calendar.feeCalendar()).toEqual([nextPeriodInactive]);
   });

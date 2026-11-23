@@ -32,19 +32,19 @@ describe('AccountChangePasswordForm', () => {
   it('should require all fields', () => {
     expect(
       component.form.controls.oldPassword.hasError('required')
-    ).toBeTrue();
+    ).toBe(true);
 
     expect(
       component.form.controls.newPassword.hasError('required')
-    ).toBeTrue();
+    ).toBe(true);
 
     expect(
       component.form.controls.passwordRepeat.hasError('required')
-    ).toBeTrue();
+    ).toBe(true);
   });
 
   it('should disable the save button by default', () => {
-    expect(getSubmitButton().disabled).toBeTrue();
+    expect(getSubmitButton().disabled).toBe(true);
   });
 
   it('should show required messages after submitting an empty form', async () => {
@@ -68,17 +68,17 @@ describe('AccountChangePasswordForm', () => {
   it('should mark all fields as touched after an invalid save', () => {
     component.onSave();
 
-    expect(component.form.controls.oldPassword.touched).toBeTrue();
-    expect(component.form.controls.newPassword.touched).toBeTrue();
-    expect(component.form.controls.passwordRepeat.touched).toBeTrue();
+    expect(component.form.controls.oldPassword.touched).toBe(true);
+    expect(component.form.controls.newPassword.touched).toBe(true);
+    expect(component.form.controls.passwordRepeat.touched).toBe(true);
   });
 
   it('should enable the save button when the form is valid and dirty', () => {
     fillValidForm();
     fixture.detectChanges();
 
-    expect(component.form.valid).toBeTrue();
-    expect(getSubmitButton().disabled).toBeFalse();
+    expect(component.form.valid).toBe(true);
+    expect(getSubmitButton().disabled).toBe(false);
   });
 
   it('should disable the save button when passwords do not match', () => {
@@ -87,16 +87,16 @@ describe('AccountChangePasswordForm', () => {
 
     expect(
       component.form.hasError('passwordsMismatch')
-    ).toBeTrue();
+    ).toBe(true);
 
-    expect(getSubmitButton().disabled).toBeTrue();
+    expect(getSubmitButton().disabled).toBe(true);
   });
 
   it('should not show the mismatch before confirmation is touched', () => {
     fillFormWithPasswordMismatch();
     fixture.detectChanges();
 
-    expect(component.hasPasswordMismatch()).toBeFalse();
+    expect(component.hasPasswordMismatch()).toBe(false);
 
     expect(fixture.nativeElement.textContent).not.toContain(
       'Las contraseñas no coinciden'
@@ -110,7 +110,7 @@ describe('AccountChangePasswordForm', () => {
     fixture.detectChanges();
     await fixture.whenStable();
 
-    expect(component.hasPasswordMismatch()).toBeTrue();
+    expect(component.hasPasswordMismatch()).toBe(true);
 
     expect(fixture.nativeElement.textContent).toContain(
       'Las contraseñas no coinciden'
@@ -118,38 +118,38 @@ describe('AccountChangePasswordForm', () => {
   });
 
   it('should emit a password change when the form is saved', () => {
-    const emitSpy = spyOn(component.save, 'emit');
+    const emitSpy = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     fillValidForm();
     component.onSave();
 
     expect(emitSpy).toHaveBeenCalledTimes(1);
 
-    const emittedValue = emitSpy.calls.mostRecent().args[0];
+    const emittedValue = vi.mocked(emitSpy).mock.lastCall![0];
 
-    expect(emittedValue).toEqual(jasmine.any(PasswordChange));
+    expect(emittedValue).toEqual(expect.any(PasswordChange));
     expect(emittedValue.oldPassword).toBe('current-password');
     expect(emittedValue.newPassword).toBe('new-password');
   });
 
   it('should not include passwordRepeat in the emitted value', () => {
-    const emitSpy = spyOn(component.save, 'emit');
+    const emitSpy = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     fillValidForm();
     component.onSave();
 
-    const emittedValue = emitSpy.calls.mostRecent().args[0];
+    const emittedValue = vi.mocked(emitSpy).mock.lastCall![0];
 
     expect(
       Object.prototype.hasOwnProperty.call(
         emittedValue,
         'passwordRepeat'
       )
-    ).toBeFalse();
+    ).toBe(false);
   });
 
   it('should not emit when the form is invalid', () => {
-    const emitSpy = spyOn(component.save, 'emit');
+    const emitSpy = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     component.onSave();
 
@@ -162,13 +162,13 @@ describe('AccountChangePasswordForm', () => {
     fixture.componentRef.setInput('loading', true);
     fixture.detectChanges();
 
-    expect(component.formStatus.loading).toBeTrue();
-    expect(component.formStatus.saveEnabled).toBeFalse();
-    expect(getSubmitButton().disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(component.formStatus.saveEnabled).toBe(false);
+    expect(getSubmitButton().disabled).toBe(true);
   });
 
   it('should not emit while loading', () => {
-    const emitSpy = spyOn(component.save, 'emit');
+    const emitSpy = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
 
     fillValidForm();
 
@@ -189,9 +189,9 @@ describe('AccountChangePasswordForm', () => {
     fixture.componentRef.setInput('loading', false);
     fixture.detectChanges();
 
-    expect(component.formStatus.loading).toBeFalse();
-    expect(component.formStatus.saveEnabled).toBeTrue();
-    expect(getSubmitButton().disabled).toBeFalse();
+    expect(component.formStatus.loading).toBe(false);
+    expect(component.formStatus.saveEnabled).toBe(true);
+    expect(getSubmitButton().disabled).toBe(false);
   });
 
   function fillValidForm(): void {

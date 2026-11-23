@@ -1,5 +1,5 @@
 
-import { Component, DestroyRef, inject } from '@angular/core';
+import { Component, DestroyRef, inject, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { FailureResponse, FailureStore } from '@bernardo-mg/request';
@@ -16,6 +16,7 @@ import { UserActivationForm } from '../user-activation-form/user-activation-form
  */
 @Component({
   imports: [CardModule, UserActivationForm, BlockUIModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-activation-view.html'
 })
 export class UserActivationView {

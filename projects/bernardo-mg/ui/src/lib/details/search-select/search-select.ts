@@ -1,4 +1,4 @@
-import { Component, effect, input, output } from '@angular/core';
+import { Component, effect, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { AutoCompleteModule } from '@openng/optimus-ui/autocomplete';
@@ -10,6 +10,7 @@ import { FormSearchReset } from '../form-search-reset';
 @Component({
   selector: 'ui-search-select',
   imports: [FormsModule, AutoCompleteModule, InputGroupModule, InputGroupAddonModule, FormSearchReset],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './search-select.html'
 })
 export class SearchSelect<T> {

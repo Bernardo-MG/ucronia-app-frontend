@@ -1,4 +1,4 @@
-import { Component, inject, Input, input, OnChanges, output, SimpleChanges } from '@angular/core';
+import { Component, inject, Input, input, OnChanges, output, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared/member/member-search/member-search';
 import { FormStatus } from '@bernardo-mg/form';
@@ -16,6 +16,7 @@ import { ToggleSwitchModule } from '@openng/optimus-ui/toggleswitch';
 @Component({
   selector: 'assoc-scheduled-game-form',
   imports: [FormsModule, ReactiveFormsModule, ButtonModule, DatePickerModule, InputNumberModule, InputTextModule, MessageModule, SelectModule, TextareaModule, ToggleSwitchModule, MemberSearch],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './scheduled-game-form.html'
 })
 export class ScheduledGameForm implements OnChanges {

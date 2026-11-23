@@ -1,10 +1,11 @@
-import { Component, input } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy } from '@angular/core';
 import { CardModule } from '@openng/optimus-ui/card';
 import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'ui-summary-card',
   imports: [CardModule, SkeletonModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './summary-card.html'
 })
 export class SummaryCard {

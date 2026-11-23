@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { CalendarStatus, ScheduledGame } from '@ucronia/domain';
 import { ButtonModule } from '@openng/optimus-ui/button';
@@ -9,6 +9,7 @@ import { TagModule } from '@openng/optimus-ui/tag';
 @Component({
   selector: 'app-scheduled-game-list',
   imports: [ButtonModule, TableModule, TagModule, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './scheduled-game-list.html'
 })
 export class ScheduledGameList {

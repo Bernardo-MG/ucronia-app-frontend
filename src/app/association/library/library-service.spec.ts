@@ -13,11 +13,11 @@ describe('LibraryService', () => {
   const mockUcroniaClient = {
     library: {
       gameBook: {
-        create: jasmine.createSpy().and.returnValue(of({})),
-        update: jasmine.createSpy().and.returnValue(of({})),
-        get: jasmine.createSpy().and.returnValue(of({})),
-        delete: jasmine.createSpy().and.returnValue(of({})),
-        page: jasmine.createSpy().and.returnValue(of({
+        create: vi.fn().mockReturnValue(of({})),
+        update: vi.fn().mockReturnValue(of({})),
+        get: vi.fn().mockReturnValue(of({})),
+        delete: vi.fn().mockReturnValue(of({})),
+        page: vi.fn().mockReturnValue(of({
           content: [],
           page: 0,
           size: 10,
@@ -27,11 +27,11 @@ describe('LibraryService', () => {
       }
     },
     fictionBook: {
-      create: jasmine.createSpy().and.returnValue(of({})),
-      update: jasmine.createSpy().and.returnValue(of({})),
-      get: jasmine.createSpy().and.returnValue(of({})),
-      delete: jasmine.createSpy().and.returnValue(of({})),
-      page: jasmine.createSpy().and.returnValue(of({
+      create: vi.fn().mockReturnValue(of({})),
+      update: vi.fn().mockReturnValue(of({})),
+      get: vi.fn().mockReturnValue(of({})),
+      delete: vi.fn().mockReturnValue(of({})),
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -40,7 +40,7 @@ describe('LibraryService', () => {
       }))
     },
     bookType: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -49,7 +49,7 @@ describe('LibraryService', () => {
       }))
     },
     gameSystem: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -58,7 +58,7 @@ describe('LibraryService', () => {
       }))
     },
     author: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -67,7 +67,7 @@ describe('LibraryService', () => {
       }))
     },
     publisher: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -76,7 +76,7 @@ describe('LibraryService', () => {
       }))
     },
     member: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -85,14 +85,14 @@ describe('LibraryService', () => {
       }))
     },
     lending: {
-      lend: jasmine.createSpy().and.returnValue(of({})),
-      return: jasmine.createSpy().and.returnValue(of({}))
+      lend: vi.fn().mockReturnValue(of({})),
+      return: vi.fn().mockReturnValue(of({}))
     }
   };
 
   const securityClientMock = {
     profile: {
-      page: jasmine.createSpy().and.returnValue(of({
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -122,11 +122,12 @@ describe('LibraryService', () => {
 describe('library-service backend results', () => {
   it('forwards donor search to the backend and preserves its response', () => {
     const profiles = [Object.assign(new Profile(), { number: 1 }), Object.assign(new Profile(), { number: 2 })];
-    const page = jasmine.createSpy().and.returnValue(of(Object.assign(new Page<Profile>(), { content: profiles })));
+    const page = vi.fn().mockReturnValue(of(Object.assign(new Page<Profile>(), { content: profiles })));
     TestBed.configureTestingModule({ providers: [MessageService,
       { provide: UcroniaClient, useValue: { profile: { page } } }
     ] });
     TestBed.inject(LibraryService).searchDonors('Ana').subscribe(results => expect(results).toBe(profiles));
-    expect(page).toHaveBeenCalledOnceWith(undefined, 10, jasmine.any(Sorting), 'Ana');
+    expect(page).toHaveBeenCalledTimes(1);
+    expect(page).toHaveBeenCalledWith(undefined, 10, expect.any(Sorting), 'Ana');
   });
 });

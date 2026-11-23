@@ -1,4 +1,4 @@
-import { Component, input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, input, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { Role, User } from '@bernardo-mg/authentication';
@@ -12,6 +12,7 @@ import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 @Component({
   selector: 'access-user-info',
   imports: [AuditInfo, FormsModule, ReactiveFormsModule, ButtonModule, CardModule, DetailField, StatusDetail, TableModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-info.html'
 })
 export class UserInfo implements OnChanges {

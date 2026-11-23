@@ -7,13 +7,14 @@ describe('TransactionBalanceChartView', () => {
   let component: TransactionBalanceChartView;
   let fixture: ComponentFixture<TransactionBalanceChartView>;
 
-  const transactionBalanceServiceMock = jasmine.createSpyObj<TransactionBalanceService>(
-    'TransactionBalanceService',
-    ['monthly']
-  );
+  const transactionBalanceServiceMock = {
+    monthly: vi.fn(
+
+  ).mockName("TransactionBalanceService.monthly")
+};
 
   beforeEach(() => {
-    transactionBalanceServiceMock.monthly.and.returnValue(of([]));
+    transactionBalanceServiceMock.monthly.mockReturnValue(of([]));
 
     TestBed.configureTestingModule({
       imports: [TransactionBalanceChartView],

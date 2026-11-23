@@ -1,8 +1,9 @@
+import type { Mock } from 'vitest';
 import { ComponentFixture, fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
 import { UserForm } from './user-form';
 import { Role, User } from '@bernardo-mg/authentication';
 import { Profile } from '@ucronia/domain';
-import { Component, provideZonelessChangeDetection } from '@angular/core';
+import { Component, provideZonelessChangeDetection, ChangeDetectionStrategy } from '@angular/core';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { FormGroup } from '@angular/forms';
 
@@ -21,7 +22,7 @@ describe('UserForm', () => {
   });
 
   it('serializes role names when inviting a user', () => {
-    const saved = spyOn(component.save, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     component.form.patchValue({ username: 'ana', name: 'Ana', email: 'ana@example.com' });
     component.form.get('username')?.markAsDirty();
     component.form.get('name')?.markAsDirty();
@@ -30,25 +31,28 @@ describe('UserForm', () => {
     component.toggleRole(role, true);
     component.toggleRole(role, true);
     component.onSave();
-    expect(saved).toHaveBeenCalledOnceWith({ username: 'ana', name: 'Ana', email: 'ana@example.com', roles: ['Reader'] });
+    expect(saved).toHaveBeenCalledTimes(1);
+    expect(saved).toHaveBeenCalledWith({ username: 'ana', name: 'Ana', email: 'ana@example.com', roles: ['Reader'] });
   });
 
   it('emits an update, preserving role objects and the selected member', () => {
     fixture.componentRef.setInput('create', false);
     fixture.componentRef.setInput('data', Object.assign(new User(), { username: 'ana', name: 'Ana', email: 'ana@example.com', roles: [] }));
     fixture.detectChanges();
-    const saved = spyOn(component.save, 'emit');
-    const updated = spyOn(component.update, 'emit');
+    const saved = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
+    const updated = vi.spyOn(component.update, 'emit').mockReturnValue(undefined);
     const member = Object.assign(new Profile(), { number: 7 });
     component.onSelectMember(member);
     component.onSave();
     expect(saved).not.toHaveBeenCalled();
-    expect(updated).toHaveBeenCalledOnceWith({ name: 'Ana', email: 'ana@example.com', roles: [], member });
+    expect(updated).toHaveBeenCalledTimes(1);
+    expect(updated).toHaveBeenCalledWith({ name: 'Ana', email: 'ana@example.com', roles: [], member });
   });
 });
 
 @Component({
   imports: [UserForm],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `<access-user-form formId="user-search" [create]="false" [selection]="[]"
     [member]="profile" [members]="members" [data]="user" (searchMember)="onQuery($event.query)" />`
 })
@@ -111,7 +115,7 @@ describe('user-form backend results', () => {
     tick();
     fixture.detectChanges();
     expect(fixture.componentInstance.roleOptions).toEqual(roles);
-    expect(fixture.nativeElement.querySelector('input[type="search"]').disabled).toBeTrue();
+    expect(fixture.nativeElement.querySelector('input[type="search"]').disabled).toBe(true);
   }));
 });
 
@@ -120,7 +124,7 @@ describe('UserForm form submission', () => {
 
   let fixture: ComponentFixture<UserForm>;
   let component: UserForm;
-  let emitted: jasmine.Spy;
+  let emitted: Mock;
   let form: FormGroup;
 
   beforeEach(() => {
@@ -139,9 +143,9 @@ describe('UserForm form submission', () => {
     form.patchValue(scenario.values);
 
     form.markAsPristine();
-    emitted = spyOn(component.save, 'emit');
+    emitted = vi.spyOn(component.save, 'emit').mockReturnValue(undefined);
     fixture.detectChanges();
-    expect(form.valid).withContext('explicit fixture must be valid').toBeTrue();
+    expect(form.valid,'explicit fixture must be valid').toBe(true);
   });
 
   function edit(): void {
@@ -153,7 +157,7 @@ describe('UserForm form submission', () => {
   }
 
   it('does not submit valid unchanged data', () => {
-    expect(component.saveEnabled).toBeFalse();
+    expect(component.saveEnabled).toBe(false);
     submit();
     expect(emitted).not.toHaveBeenCalled();
   });
@@ -161,29 +165,31 @@ describe('UserForm form submission', () => {
   it('emits the public payload once through native submission', () => {
     edit();
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('blocks loading submissions and allows retry with the preserved edits', () => {
     edit();
     fixture.componentRef.setInput('loading', true);
-    expect(component.formStatus.loading).toBeTrue();
-    expect(form.disabled).toBeTrue();
+    expect(component.formStatus.loading).toBe(true);
+    expect(form.disabled).toBe(true);
     submit();
     expect(emitted).not.toHaveBeenCalled();
     fixture.componentRef.setInput('loading', false);
-    expect(form.enabled).toBeTrue();
-    expect(form.dirty).toBeTrue();
+    expect(form.enabled).toBe(true);
+    expect(form.dirty).toBe(true);
     submit();
-    expect(emitted).toHaveBeenCalledOnceWith(scenario.expected);
+    expect(emitted).toHaveBeenCalledTimes(1);
+    expect(emitted).toHaveBeenCalledWith(scenario.expected);
   });
 
   it('rejects a real invalid field and exposes its validation state', () => {
     form.get(scenario.invalid)!.setValue(null);
     edit();
-    expect(form.invalid).toBeTrue();
+    expect(form.invalid).toBe(true);
     submit();
-    expect(form.get(scenario.invalid)!.touched).toBeTrue();
+    expect(form.get(scenario.invalid)!.touched).toBe(true);
     expect(emitted).not.toHaveBeenCalled();
   });
 

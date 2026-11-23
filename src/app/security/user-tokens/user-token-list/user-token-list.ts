@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component, inject, input, output, ViewChild } from '@angular/core';
+import { Component, inject, input, output, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { UserToken } from '@bernardo-mg/authentication';
 import { ConfirmationService, MenuItem } from '@openng/optimus-ui/api';
@@ -22,6 +22,7 @@ type TokenSeverity =
 @Component({
   selector: 'access-user-token-list',
   imports: [TableModule, ButtonModule, MenuModule, TagModule, DatePipe],
+  changeDetection: ChangeDetectionStrategy.Eager,
   templateUrl: './user-token-list.html'
 })
 export class UserTokenList {

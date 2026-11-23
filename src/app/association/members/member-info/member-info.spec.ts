@@ -69,7 +69,7 @@ describe('MemberInfo', () => {
   });
 
   it('should emit a retry request without loading data itself', () => {
-    const retry = spyOn(component.retry, 'emit');
+    const retry = vi.spyOn(component.retry, 'emit').mockReturnValue(undefined);
     fixture.componentRef.setInput('showPrivate', true);
     fixture.componentRef.setInput('error', true);
     fixture.detectChanges();

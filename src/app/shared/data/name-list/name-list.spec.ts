@@ -37,7 +37,7 @@ describe('NameList', () => {
   });
 
   it('should emit show event', () => {
-    spyOn(component.show, 'emit' as any);
+    vi.spyOn(component.show, 'emit' as any).mockReturnValue(undefined);
 
     component.onShow({ id: 1, name: 'Test' });
 
@@ -45,7 +45,7 @@ describe('NameList', () => {
   });
 
   it('should emit page changes', () => {
-    spyOn(component.pageChange, 'emit' as any);
+    vi.spyOn(component.pageChange, 'emit' as any).mockReturnValue(undefined);
 
     component.onPageChange({ first: 20, rows: 10 } as any);
 
@@ -53,7 +53,7 @@ describe('NameList', () => {
   });
 
   it('should emit sort changes', () => {
-    spyOn(component.sortChange, 'emit' as any);
+    vi.spyOn(component.sortChange, 'emit' as any).mockReturnValue(undefined);
 
     component.onChangeDirection({ field: 'name', order: 1 });
 

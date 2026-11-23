@@ -11,13 +11,15 @@ describe('ContactMethodView', () => {
   let component: ContactMethodView;
   let fixture: ComponentFixture<ContactMethodView>;
 
-  const contactMethodServiceMock = jasmine.createSpyObj<ContactMethodService>(
-    'ContactMethodService',
-    ['getAll', 'create', 'update', 'delete']
-  );
+  const contactMethodServiceMock = {
+    getAll: vi.fn(
+    ).mockName("ContactMethodService.getAll"),
+    create: vi.fn().mockName("ContactMethodService.create"), update: vi.fn().mockName("ContactMethodService.update"), delete: vi.fn(
+  ).mockName("ContactMethodService.delete")
+};
 
   beforeEach(async () => {
-    contactMethodServiceMock.getAll.and.returnValue(
+    contactMethodServiceMock.getAll.mockReturnValue(
       of(new Page<ContactMethod>())
     );
 

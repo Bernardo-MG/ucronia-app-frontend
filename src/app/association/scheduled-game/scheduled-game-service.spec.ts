@@ -11,11 +11,11 @@ describe('ScheduledGameService', () => {
 
   const mockUcroniaClient = {
     scheduledGame: {
-      create: jasmine.createSpy().and.returnValue(of({})),
-      update: jasmine.createSpy().and.returnValue(of({})),
-      get: jasmine.createSpy().and.returnValue(of({})),
-      delete: jasmine.createSpy().and.returnValue(of({})),
-      page: jasmine.createSpy().and.returnValue(of({
+      create: vi.fn().mockReturnValue(of({})),
+      update: vi.fn().mockReturnValue(of({})),
+      get: vi.fn().mockReturnValue(of({})),
+      delete: vi.fn().mockReturnValue(of({})),
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 0,
         size: 10,
@@ -24,11 +24,11 @@ describe('ScheduledGameService', () => {
       }))
     },
     profile: {
-      get: jasmine.createSpy().and.returnValue(of({}))
+      get: vi.fn().mockReturnValue(of({}))
     },
     gameTable: {
-      get: jasmine.createSpy().and.returnValue(of({})),
-      page: jasmine.createSpy().and.returnValue(of({
+      get: vi.fn().mockReturnValue(of({})),
+      page: vi.fn().mockReturnValue(of({
         content: [],
         page: 1,
         size: 100,
@@ -69,13 +69,14 @@ describe('ScheduledGameService', () => {
 describe('ScheduledGame server pagination', () => {
   it('preserves the server page and totals', () => {
     const result = Object.assign(new Page<ScheduledGame>(), { content: [new ScheduledGame()], totalElements: 35 });
-    const page = jasmine.createSpy().and.returnValue(of(result));
+    const page = vi.fn().mockReturnValue(of(result));
     TestBed.configureTestingModule({ providers: [
       MessageService,
       { provide: UcroniaClient, useValue: { scheduledGame: { page } } }
     ] });
     const sort = new Sorting();
     TestBed.inject(ScheduledGameService).getAll(2, sort).subscribe(response => expect(response).toBe(result));
-    expect(page).toHaveBeenCalledOnceWith(2, undefined, jasmine.any(Sorting));
+    expect(page).toHaveBeenCalledTimes(1);
+    expect(page).toHaveBeenCalledWith(2, undefined, expect.any(Sorting));
   });
 });

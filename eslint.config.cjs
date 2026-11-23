@@ -1,7 +1,5 @@
 const js = require('@eslint/js');
-const angular = require('@angular-eslint/eslint-plugin');
-const template = require('@angular-eslint/eslint-plugin-template');
-const templateParser = require('@angular-eslint/template-parser');
+const angular = require('angular-eslint');
 const typescript = require('@typescript-eslint/eslint-plugin');
 const typescriptParser = require('@typescript-eslint/parser');
 const componentFields = require('./eslint/component-fields.cjs');
@@ -22,10 +20,12 @@ module.exports = [
   {
     files: appTypescript,
     ignores: ['**/calendar-month.component.ts'],
-    processor: template.processors['extract-inline-html'],
-    plugins: { '@angular-eslint': angular },
+    processor: angular.processInlineTemplates,
+    plugins: { '@angular-eslint': angular.tsPlugin },
     rules: {
-      ...angular.configs.recommended.rules,
+      ...Object.assign({}, ...angular.configs.tsRecommended.map(config => config.rules)),
+      // Angular's v22 migration uses Eager to preserve existing component behavior.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       '@angular-eslint/directive-selector': ['error', { type: 'attribute', prefix: prefixes, style: 'camelCase' }],
       '@angular-eslint/component-selector': ['error', { type: 'element', prefix: prefixes, style: 'kebab-case' }],
       '@typescript-eslint/no-explicit-any': 'warn',
@@ -40,9 +40,9 @@ module.exports = [
   },
   {
     files: ['src/**/*.html'],
-    languageOptions: { parser: templateParser },
-    plugins: { '@angular-eslint/template': template },
-    rules: template.configs.recommended.rules
+    languageOptions: { parser: angular.templateParser },
+    plugins: { '@angular-eslint/template': angular.templatePlugin },
+    rules: Object.assign({}, ...angular.configs.templateRecommended.map(config => config.rules))
   },
-  { files: ['projects/**/*.html'], languageOptions: { parser: templateParser } }
+  { files: ['projects/**/*.html'], languageOptions: { parser: angular.templateParser } }
 ];

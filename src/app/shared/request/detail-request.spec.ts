@@ -29,7 +29,7 @@ describe('DetailRequest', () => {
     newResponse.next('new');
     oldResponse.next('old');
 
-    expect(oldSubscription.closed).toBeTrue();
+    expect(oldSubscription.closed).toBe(true);
     expect(selected).toBe('new');
     request.cancel();
   });
@@ -39,8 +39,8 @@ describe('DetailRequest', () => {
     const first = response.pipe(request.untilCancelled()).subscribe();
     const second = response.pipe(request.untilCancelled()).subscribe();
     request.cancel();
-    expect(first.closed).toBeTrue();
-    expect(second.closed).toBeTrue();
+    expect(first.closed).toBe(true);
+    expect(second.closed).toBe(true);
   });
 
   it('runs the old finalizer before the replacement starts loading', () => {
@@ -50,13 +50,13 @@ describe('DetailRequest', () => {
     request.cancel();
     loading = true;
     response.next('late');
-    expect(loading).toBeTrue();
+    expect(loading).toBe(true);
   });
 
   it('cancels pending detail reads when its injection scope is destroyed', () => {
     const response = new Subject<string>();
     const subscription = response.pipe(request.untilCancelled()).subscribe();
     injector.destroy();
-    expect(subscription.closed).toBeTrue();
+    expect(subscription.closed).toBe(true);
   });
 });
