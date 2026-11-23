@@ -124,20 +124,21 @@
     "@bernardo-mg/authentication": {
       "projectType": "library",
       "root": "projects/bernardo-mg/authentication",
-      "sourceRoot": "projects/bernardo-mg/authentication/src",
+      "sourceRoot": "projects/bernardo-mg/authentication",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "options": {
-            "project": "projects/bernardo-mg/authentication/ng-package.json"
+            "tsConfig": "projects/bernardo-mg/authentication/tsconfig.lib.json",
+            "outputPath": "dist/bernardo-mg/authentication"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/bernardo-mg/authentication/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/authentication/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
           "defaultConfiguration": "production"
@@ -173,20 +174,21 @@
     "@bernardo-mg/request": {
       "projectType": "library",
       "root": "projects/bernardo-mg/request",
-      "sourceRoot": "projects/bernardo-mg/request/src",
+      "sourceRoot": "projects/bernardo-mg/request",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "options": {
-            "project": "projects/bernardo-mg/request/ng-package.json"
+            "tsConfig": "projects/bernardo-mg/request/tsconfig.lib.json",
+            "outputPath": "dist/bernardo-mg/request"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/bernardo-mg/request/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/request/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
           "defaultConfiguration": "production"
@@ -222,20 +224,21 @@
     "@bernardo-mg/ui": {
       "projectType": "library",
       "root": "projects/bernardo-mg/ui",
-      "sourceRoot": "projects/bernardo-mg/ui/src",
+      "sourceRoot": "projects/bernardo-mg/ui",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "options": {
-            "project": "projects/bernardo-mg/ui/ng-package.json"
+            "tsConfig": "projects/bernardo-mg/ui/tsconfig.lib.json",
+            "outputPath": "dist/bernardo-mg/ui"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/bernardo-mg/ui/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/ui/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
           "defaultConfiguration": "production"
@@ -271,20 +274,21 @@
     "@bernardo-mg/form": {
       "projectType": "library",
       "root": "projects/bernardo-mg/form",
-      "sourceRoot": "projects/bernardo-mg/form/src",
+      "sourceRoot": "projects/bernardo-mg/form",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "options": {
-            "project": "projects/bernardo-mg/form/ng-package.json"
+            "tsConfig": "projects/bernardo-mg/form/tsconfig.lib.json",
+            "outputPath": "dist/bernardo-mg/form"
           },
           "configurations": {
             "production": {
               "tsConfig": "projects/bernardo-mg/form/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/form/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
           "defaultConfiguration": "production"
@@ -320,20 +324,24 @@
     "@ucronia/domain": {
       "projectType": "library",
       "root": "projects/ucronia/domain",
-      "sourceRoot": "projects/ucronia/domain/src",
+      "sourceRoot": "projects/ucronia/domain",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/ucronia/domain/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ucronia/domain/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "tsConfig": "projects/ucronia/domain/tsconfig.lib.json",
+            "outputPath": "dist/ucronia/domain"
+          }
         },
         "test": {
           "builder": "@angular/build:karma",
@@ -366,20 +374,24 @@
     "@ucronia/api": {
       "projectType": "library",
       "root": "projects/ucronia/api",
-      "sourceRoot": "projects/ucronia/api/src",
+      "sourceRoot": "projects/ucronia/api",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/ucronia/api/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ucronia/api/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "tsConfig": "projects/ucronia/api/tsconfig.lib.json",
+            "outputPath": "dist/ucronia/api"
+          }
         },
         "test": {
           "builder": "@angular/build:karma",
@@ -412,20 +424,24 @@
     "@bernardo-mg/security": {
       "projectType": "library",
       "root": "projects/bernardo-mg/security",
-      "sourceRoot": "projects/bernardo-mg/security/src",
+      "sourceRoot": "projects/bernardo-mg/security",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/bernardo-mg/security/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/security/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "tsConfig": "projects/bernardo-mg/security/tsconfig.lib.json",
+            "outputPath": "dist/bernardo-mg/security"
+          }
         },
         "test": {
           "builder": "@angular/build:karma",
@@ -458,20 +474,24 @@
     "@bernardo-mg/login": {
       "projectType": "library",
       "root": "projects/bernardo-mg/login",
-      "sourceRoot": "projects/bernardo-mg/login/src",
+      "sourceRoot": "projects/bernardo-mg/login",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/bernardo-mg/login/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/bernardo-mg/login/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "tsConfig": "projects/bernardo-mg/login/tsconfig.lib.json",
+            "outputPath": "dist/bernardo-mg/login"
+          }
         },
         "test": {
           "builder": "@angular/build:karma",
@@ -504,20 +524,24 @@
     "@ucronia/auth": {
       "projectType": "library",
       "root": "projects/ucronia/auth",
-      "sourceRoot": "projects/ucronia/auth/src",
+      "sourceRoot": "projects/ucronia/auth",
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular/build:ng-packagr",
+          "builder": "@angular/build:library",
           "configurations": {
             "production": {
               "tsConfig": "projects/ucronia/auth/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/ucronia/auth/tsconfig.lib.json"
+              "compilationMode": "full"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "production",
+          "options": {
+            "tsConfig": "projects/ucronia/auth/tsconfig.lib.json",
+            "outputPath": "dist/ucronia/auth"
+          }
         },
         "test": {
           "builder": "@angular/build:karma",
