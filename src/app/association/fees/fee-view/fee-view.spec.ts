@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MemberStatusSelector } from '@app/shared/member/member-status-selector/member-status-selector';
 import { FeeSummary, MemberStatus } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';

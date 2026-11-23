@@ -13,11 +13,11 @@ import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingPro
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Author, BookLending, BookType, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
-import { SelectButtonChangeEvent, SelectButtonModule } from 'primeng/selectbutton';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { SelectButtonChangeEvent, SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 import { catchError, finalize, forkJoin, map, Observable, of, Subscription, switchMap } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { LibraryBookCreationForm, LibraryBookCreationFormData } from '../library-book-creation-form/library-book-creation-form';

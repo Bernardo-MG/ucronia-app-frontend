@@ -4,7 +4,7 @@ import { MemberSearch, MemberSearchEvent } from '@app/shared/member/member-searc
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { PublicMember } from '@ucronia/domain';
-import { MessageModule } from 'primeng/message';
+import { MessageModule } from '@openng/optimus-ui/message';
 
 @Component({
   selector: 'assoc-member-key-assignment-form',

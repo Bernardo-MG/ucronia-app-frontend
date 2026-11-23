@@ -12,11 +12,11 @@ import { FailureResponse, FailureStore, Page, SearchRequest, Sorting, SortingDir
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { CalendarStatus, GameTable, Profile, ScheduledGame } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 import { finalize, forkJoin, Observable, of, Subscription, switchMap } from 'rxjs';
 import { ScheduledGameForm } from '../scheduled-game-form/scheduled-game-form';
 import { ScheduledGameInfo } from '../scheduled-game-info/scheduled-game-info';

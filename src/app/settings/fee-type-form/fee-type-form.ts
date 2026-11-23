@@ -1,11 +1,11 @@
-import { InputNumberModule } from 'primeng/inputnumber';
+import { InputNumberModule } from '@openng/optimus-ui/inputnumber';
 import { Component, inject, input, Input, output } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { FeeType } from '@ucronia/domain';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
+import { MessageModule } from '@openng/optimus-ui/message';
 
 @Component({
   selector: 'assoc-fee-type-form',

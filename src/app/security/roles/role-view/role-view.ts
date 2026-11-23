@@ -8,9 +8,9 @@ import { DrawerHeader } from '@app/shared/ui/drawer-header/drawer-header';
 import { AuthService, ResourcePermission, Role } from '@bernardo-mg/authentication';
 import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityPermissions } from '@bernardo-mg/security';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { Drawer, DrawerModule } from 'primeng/drawer';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { Drawer, DrawerModule } from '@openng/optimus-ui/drawer';
 import { finalize, Observable, Subscription } from 'rxjs';
 import { RoleChangePermission } from '../role-change-permission/role-change-permission';
 import { RoleForm } from '../role-form/role-form';
@@ -221,7 +221,7 @@ export class RoleView implements OnInit {
 
   private finishLoading(): void {
     this.loading = false;
-    // Async mode changes must refresh PrimeNG's OnPush header/footer outlets.
+    // Async mode changes must refresh Optimus UI's OnPush header/footer outlets.
     this.drawer()?.cd.markForCheck();
   }
 

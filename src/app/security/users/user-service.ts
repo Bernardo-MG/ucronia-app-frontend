@@ -5,7 +5,7 @@ import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient, UserCreation, UserUpdate } from '@bernardo-mg/security';
 import { mergeProperties, UcroniaClient } from '@ucronia/api';
 import { MemberStatus, Profile, PublicMember } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({

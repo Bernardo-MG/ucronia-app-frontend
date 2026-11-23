@@ -5,7 +5,7 @@ import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { BookLending, BookType, Donor, GameBook, GameSystem, MemberStatus, Profile } from '@ucronia/domain';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from '@openng/optimus-ui/api';
 import { of, Subject } from 'rxjs';
 import { BookReportService } from '../book-report-service';
 import { BookReturnedEvent } from '../library-book-return-form/library-book-return-form';

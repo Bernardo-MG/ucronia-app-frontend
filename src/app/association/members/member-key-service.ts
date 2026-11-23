@@ -3,7 +3,7 @@ import { getAllPages } from '@app/shared/request/get-all-pages';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { KeyCreation, KeyUpdate, UcroniaClient } from '@ucronia/api';
 import { Key, KeyAssignment } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({

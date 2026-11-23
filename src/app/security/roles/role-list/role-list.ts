@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { Role } from '@bernardo-mg/authentication';
-import { ButtonModule } from 'primeng/button';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 export interface RoleDeleteEvent {
   event: Event;

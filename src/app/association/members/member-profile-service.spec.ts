@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { MemberCreation, MemberUpdate, UcroniaClient } from '@ucronia/api';
 import { Member } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of, throwError } from 'rxjs';
 import { MemberProfileService } from './member-profile-service';
 

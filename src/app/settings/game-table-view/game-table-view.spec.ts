@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
 import { GameTable } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from '@openng/optimus-ui/api';
 import { of } from 'rxjs';
 import { GameTableService } from '../game-table-service';
 import { GameTableView } from './game-table-view';

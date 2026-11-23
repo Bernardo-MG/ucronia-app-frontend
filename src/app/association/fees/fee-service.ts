@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Sorting, SortingProperty } from '@bernardo-mg/request';
 import { FeeCreation, FeeUpdate, UcroniaClient } from '@ucronia/api';
 import { Fee, FeePayments, MemberStatus, Profile, PublicMember } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { catchError, map, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({

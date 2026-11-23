@@ -4,11 +4,11 @@ import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { isSameMonth } from 'date-fns';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { MessageModule } from 'primeng/message';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { InputGroupModule } from '@openng/optimus-ui/inputgroup';
+import { InputGroupAddonModule } from '@openng/optimus-ui/inputgroupaddon';
+import { MessageModule } from '@openng/optimus-ui/message';
 
 @Component({
   selector: 'assoc-fee-payments-form',

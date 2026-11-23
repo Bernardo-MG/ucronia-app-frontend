@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Page } from '@bernardo-mg/request';
 import { TransactionType } from '@ucronia/domain';
-import { Paginator } from 'primeng/paginator';
+import { Paginator } from '@openng/optimus-ui/paginator';
 import { TransactionTypeList } from './transaction-type-list';
 
 describe('TransactionTypeList', () => {

@@ -4,8 +4,8 @@ import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { Profile } from '@ucronia/domain';
-import { DatePickerModule } from 'primeng/datepicker';
-import { MessageModule } from 'primeng/message';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { MessageModule } from '@openng/optimus-ui/message';
 
 @Component({
   selector: 'assoc-library-book-lending-form',

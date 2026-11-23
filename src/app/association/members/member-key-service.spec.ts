@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { Page } from '@bernardo-mg/request';
 import { UcroniaClient } from '@ucronia/api';
 import { Key, KeyAssignment } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of, throwError } from 'rxjs';
 import { MemberKeyService } from './member-key-service';
 

@@ -1,8 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { MyFee } from '@ucronia/domain';
-import { TagModule } from 'primeng/tag';
-import { TableModule, TablePageEvent } from 'primeng/table';
+import { TagModule } from '@openng/optimus-ui/tag';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
 
 @Component({
   selector: 'app-my-fees-list',

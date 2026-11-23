@@ -1,8 +1,8 @@
 import { Component, input, output } from '@angular/core';
 import { Page } from '@bernardo-mg/request';
 import { TransactionType } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { PaginatorModule, PaginatorState } from '@openng/optimus-ui/paginator';
 
 @Component({
   selector: 'assoc-transaction-type-list',

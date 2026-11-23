@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 import { librarySettingsPermissions } from '@app/association/library/settings/library-settings-permissions';
 import { AuthService } from '@bernardo-mg/authentication';
 import { UcroniaPermissions } from '@ucronia/auth';
-import { ConfirmationService, MenuItem } from 'primeng/api';
-import { ConfirmPopupModule } from 'primeng/confirmpopup';
-import { DrawerModule } from 'primeng/drawer';
-import { RippleModule } from 'primeng/ripple';
-import { ToastModule } from 'primeng/toast';
+import { ConfirmationService, MenuItem } from '@openng/optimus-ui/api';
+import { ConfirmPopupModule } from '@openng/optimus-ui/confirmpopup';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { RippleModule } from '@openng/optimus-ui/ripple';
+import { ToastModule } from '@openng/optimus-ui/toast';
 import { Navbar } from '../navbar/navbar';
 
 @Component({

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProfileEditionForm } from './profile-edition-form';
-import { SelectButtonChangeEvent } from 'primeng/selectbutton';
+import { SelectButtonChangeEvent } from '@openng/optimus-ui/selectbutton';
 import { provideZonelessChangeDetection } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';

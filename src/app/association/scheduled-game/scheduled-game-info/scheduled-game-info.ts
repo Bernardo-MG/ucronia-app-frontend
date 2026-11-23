@@ -2,8 +2,8 @@ import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { CalendarStatus, GameTable, Profile, RecurrenceUnit, ScheduledGame } from '@ucronia/domain';
-import { SkeletonModule } from 'primeng/skeleton';
-import { TagModule } from 'primeng/tag';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
+import { TagModule } from '@openng/optimus-ui/tag';
 
 @Component({
   selector: 'assoc-scheduled-game-info',

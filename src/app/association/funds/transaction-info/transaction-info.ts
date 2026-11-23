@@ -2,7 +2,7 @@ import { AuditInfo } from '@app/shared/audit/audit-info/audit-info';
 import { CurrencyPipe, DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { Transaction, TransactionType } from '@ucronia/domain';
-import { SkeletonModule } from 'primeng/skeleton';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'assoc-transaction-info',

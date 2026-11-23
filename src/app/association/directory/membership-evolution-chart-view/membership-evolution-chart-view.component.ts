@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { Month } from '@bernardo-mg/ui';
 import { MembershipEvolutionMonth } from '@ucronia/domain';
 import Chart from 'chart.js/auto';
-import { Select } from 'primeng/select';
+import { Select } from '@openng/optimus-ui/select';
 import { BehaviorSubject, defer, finalize, switchMap } from 'rxjs';
 import { MembershipEvolutionService } from '../membership-evolution-service';
 

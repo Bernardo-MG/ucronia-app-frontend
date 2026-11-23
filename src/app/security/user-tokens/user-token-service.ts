@@ -3,7 +3,7 @@ import { UserToken } from '@bernardo-mg/authentication';
 import { Page, Sorting, SortingDirection, SortingProperty } from '@bernardo-mg/request';
 import { SecurityClient } from '@bernardo-mg/security';
 import { mergeProperties } from '@ucronia/api';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { Observable, tap } from 'rxjs';
 
 @Injectable({

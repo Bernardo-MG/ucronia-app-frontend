@@ -5,11 +5,11 @@ import { provideRouter } from '@angular/router';
 import { jwtAuthenticationInterceptor, unauthorizedInterceptor } from '@bernardo-mg/authentication';
 import { errorInterceptor } from '@bernardo-mg/request';
 import { SECURITY_API_BASE_URL, SecurityClient } from '@bernardo-mg/security';
-import Aura from '@primeng/themes/aura';
+import Aura from '@openng/optimus-ui-themes/aura';
 import { UCRONIA_API_BASE_URL, UcroniaClient } from '@ucronia/api';
 import { environment } from 'environments/environment';
-import { MessageService } from 'primeng/api';
-import { providePrimeNG } from 'primeng/config';
+import { MessageService } from '@openng/optimus-ui/api';
+import { provideOptimus } from '@openng/optimus-ui/config';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
         errorInterceptor()
       ])
     ),
-    providePrimeNG({
+    provideOptimus({
       translation: {
         firstDayOfWeek: 1
       },

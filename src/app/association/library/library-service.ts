@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Page, Sorting, SortingProperty } from '@bernardo-mg/request';
 import { BookCreation, BookUpdate, GameBookUpdate, mergeProperties, UcroniaClient } from '@ucronia/api';
 import { Author, BookLending, BookType, Donation, Donor, FictionBook, GameBook, GameSystem, MemberStatus, Profile, Publisher, PublicMember } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { catchError, forkJoin, map, Observable, tap, throwError } from 'rxjs';
 import { LibrarySummary } from './model/library-summary';
 

@@ -10,11 +10,11 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Activity } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
-import { SelectButtonModule } from 'primeng/selectbutton';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { SelectButtonModule } from '@openng/optimus-ui/selectbutton';
 import { finalize, Observable, Subscription } from 'rxjs';
 import { ActivityForm, ActivityImageOption } from '../activity-form/activity-form';
 import { ActivityInfo } from '../activity-info/activity-info';

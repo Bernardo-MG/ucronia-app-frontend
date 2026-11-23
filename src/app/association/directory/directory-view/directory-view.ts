@@ -13,11 +13,11 @@ import { FailureResponse, FailureStore, Page, Sorting, SortingDirection, Sorting
 import { TextFilter } from '@bernardo-mg/ui';
 import { UcroniaPermissions } from '@ucronia/auth';
 import { ContactMethod, FeeType, MemberStatus } from '@ucronia/domain';
-import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
-import { SkeletonModule } from 'primeng/skeleton';
+import { ConfirmationService } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 import { finalize, forkJoin, Observable, Subscription } from 'rxjs';
 import { DirectoryService } from '../directory-service';
 import { DirectorySummaryService } from '../directory-summary-service';

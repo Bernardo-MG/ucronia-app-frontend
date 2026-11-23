@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { AuthService, Role, User } from '@bernardo-mg/authentication';
 import { Page } from '@bernardo-mg/request';
-import { ConfirmationService } from 'primeng/api';
+import { ConfirmationService } from '@openng/optimus-ui/api';
 import { of, Subject } from 'rxjs';
 import { Profile } from '@ucronia/domain';
 import { RoleService } from './roles/role-service';

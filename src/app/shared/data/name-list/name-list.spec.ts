@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NameList } from './name-list';
-import { Confirmation, ConfirmationService } from 'primeng/api';
+import { Confirmation, ConfirmationService } from '@openng/optimus-ui/api';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('NameList', () => {

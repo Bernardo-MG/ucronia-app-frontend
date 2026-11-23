@@ -4,14 +4,14 @@ import { MemberSearch, MemberSearchEvent, MemberSearchOption } from '@app/shared
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { GameTable, Profile, RecurrenceUnit, ScheduledGame, ScheduledGameType } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { DatePickerModule } from 'primeng/datepicker';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { MessageModule } from 'primeng/message';
-import { SelectModule } from 'primeng/select';
-import { TextareaModule } from 'primeng/textarea';
-import { ToggleSwitchModule } from 'primeng/toggleswitch';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { DatePickerModule } from '@openng/optimus-ui/datepicker';
+import { InputNumberModule } from '@openng/optimus-ui/inputnumber';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
+import { MessageModule } from '@openng/optimus-ui/message';
+import { SelectModule } from '@openng/optimus-ui/select';
+import { TextareaModule } from '@openng/optimus-ui/textarea';
+import { ToggleSwitchModule } from '@openng/optimus-ui/toggleswitch';
 
 @Component({
   selector: 'assoc-scheduled-game-form',

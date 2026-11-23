@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { UcroniaClient } from '@ucronia/api';
 import { Setting } from '@ucronia/domain';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { map, Observable, tap } from 'rxjs';
 
 @Injectable({

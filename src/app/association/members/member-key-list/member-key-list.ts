@@ -1,11 +1,11 @@
 import { Component, input, OnChanges, output, SimpleChanges } from '@angular/core';
 import { TextFilter } from '@bernardo-mg/ui';
 import { KeyAssignment } from '@ucronia/domain';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { MessageModule } from 'primeng/message';
-import { TableModule } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { MessageModule } from '@openng/optimus-ui/message';
+import { TableModule } from '@openng/optimus-ui/table';
+import { TagModule } from '@openng/optimus-ui/tag';
 
 @Component({
   selector: 'assoc-member-key-list',

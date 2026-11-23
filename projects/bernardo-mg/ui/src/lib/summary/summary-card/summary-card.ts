@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { CardModule } from 'primeng/card';
-import { SkeletonModule } from 'primeng/skeleton';
+import { CardModule } from '@openng/optimus-ui/card';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 
 @Component({
   selector: 'ui-summary-card',

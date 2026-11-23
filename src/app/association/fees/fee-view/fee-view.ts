@@ -12,12 +12,12 @@ import { FailureResponse, FailureStore, SearchRequest } from '@bernardo-mg/reque
 import { UcroniaPermissions } from '@ucronia/auth';
 import { Fee, FeeSummary, MemberStatus } from '@ucronia/domain';
 import { NormalizedInterval, startOfMonth, subMonths } from 'date-fns';
-import { ConfirmationService, MenuItem } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
-import { CardModule } from 'primeng/card';
-import { DrawerModule } from 'primeng/drawer';
-import { MenuModule } from 'primeng/menu';
-import { SkeletonModule } from 'primeng/skeleton';
+import { ConfirmationService, MenuItem } from '@openng/optimus-ui/api';
+import { ButtonModule } from '@openng/optimus-ui/button';
+import { CardModule } from '@openng/optimus-ui/card';
+import { DrawerModule } from '@openng/optimus-ui/drawer';
+import { MenuModule } from '@openng/optimus-ui/menu';
+import { SkeletonModule } from '@openng/optimus-ui/skeleton';
 import { finalize, Observable, Subscription } from 'rxjs';
 import { MemberFees } from '../domain/member-fees';
 import { FeeCalendarService } from '../fee-calendar-service';

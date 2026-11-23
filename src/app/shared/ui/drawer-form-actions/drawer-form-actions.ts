@@ -1,6 +1,6 @@
 import { Component, input, output } from '@angular/core';
 import { DrawerActions } from '@app/shared/ui/drawer-actions/drawer-actions';
-import { ButtonModule } from 'primeng/button';
+import { ButtonModule } from '@openng/optimus-ui/button';
 
 @Component({
   selector: 'shared-drawer-form-actions',

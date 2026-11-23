@@ -2,8 +2,8 @@ import { DatePipe } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { SortingEvent } from '@app/shared/request/sorting-event';
 import { LoginRegister } from '@bernardo-mg/security';
-import { TableModule, TablePageEvent } from 'primeng/table';
-import { TagModule } from 'primeng/tag';
+import { TableModule, TablePageEvent } from '@openng/optimus-ui/table';
+import { TagModule } from '@openng/optimus-ui/tag';
 
 @Component({
   selector: 'access-audit-login-list',

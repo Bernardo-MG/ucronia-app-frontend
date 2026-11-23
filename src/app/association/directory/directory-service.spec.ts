@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { SecurityClient } from '@bernardo-mg/security';
 import { UcroniaClient } from '@ucronia/api';
-import { MessageService } from 'primeng/api';
+import { MessageService } from '@openng/optimus-ui/api';
 import { of, Subject } from 'rxjs';
 import { DirectoryService } from './directory-service';
 import { FullProfile } from './model/full-profile';

@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { CardModule } from 'primeng/card';
+import { CardModule } from '@openng/optimus-ui/card';
 import { PasswordResetRequestForm } from '../password-reset-request-form/password-reset-request-form';
 import { PasswordResetRequestService } from '../password-reset-request-service';
 

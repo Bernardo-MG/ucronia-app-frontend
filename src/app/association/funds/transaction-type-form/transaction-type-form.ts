@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormStatus } from '@bernardo-mg/form';
 import { FailureStore } from '@bernardo-mg/request';
 import { TransactionType } from '@ucronia/domain';
-import { InputTextModule } from 'primeng/inputtext';
+import { InputTextModule } from '@openng/optimus-ui/inputtext';
 
 @Component({
   selector: 'assoc-transaction-type-form',
